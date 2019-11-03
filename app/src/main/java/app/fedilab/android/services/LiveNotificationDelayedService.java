@@ -64,6 +64,7 @@ import app.fedilab.android.sqlite.Sqlite;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 import static app.fedilab.android.helper.Helper.getMainLogo;
+import static app.fedilab.android.helper.Helper.getNotificationIcon;
 import static app.fedilab.android.helper.Helper.sleeps;
 
 
@@ -121,7 +122,7 @@ public class LiveNotificationDelayedService extends Service {
                     .setShowWhen(false)
                     .setContentIntent(pendingIntent)
                     .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(R.drawable.fedilab_notification_icon)
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
                     .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
             startForeground(1, notification);
@@ -272,7 +273,7 @@ public class LiveNotificationDelayedService extends Service {
             android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setShowWhen(false)
                     .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(R.drawable.fedilab_notification_icon)
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
                     .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
             startForeground(1, notificationChannel);
