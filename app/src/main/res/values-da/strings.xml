@@ -419,8 +419,8 @@
     <string name="data_backup_success">%1$s nye toots er importeret</string>
     <string name="data_backup_notification_success">%1$s nye notifikationer er blevet importeret</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Dato, faldende</item>
+        <item>Dato, stigende</item>
     </string-array>
     <string-array name="filter_select">
         <item>Nej</item>
@@ -1131,7 +1131,7 @@
     <string name="long_api_error">Appen har modtaget en meget lang fejlmeddelelse fra API\'en %1$s</string>
     <string name="message_preview">Beskedforhåndsvisning</string>
     <string name="report_mention">Tilføj omtaler i hver besked</string>
-    <string name="fetch_conversation">Fetching conversation</string>
-    <string name="order_by">Order by</string>
+    <string name="fetch_conversation">Henter samtale</string>
+    <string name="order_by">Sortér efter</string>
     <string name="title_video_peertube">Videotitlen</string>
 </resources>
