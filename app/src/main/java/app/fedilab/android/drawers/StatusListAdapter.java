@@ -2360,29 +2360,34 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
 
-            switch (status.getVisibility()) {
-                case "direct":
-                    holder.status_reblog_count.setVisibility(View.GONE);
-                    holder.spark_button_reblog.setVisibility(View.GONE);
-                    break;
-                case "private":
-                    final boolean isOwner = status.getReblog() != null ? status.getReblog().getAccount().getId().equals(userId) : status.getAccount().getId().equals(userId);
-                    if (isOwner) {
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
-                    } else {
+            if( status.getReblog() == null) {
+                switch (status.getVisibility()) {
+                    case "direct":
                         holder.status_reblog_count.setVisibility(View.GONE);
                         holder.spark_button_reblog.setVisibility(View.GONE);
-                    }
-                    break;
-                case "public":
-                case "unlisted":
-                    holder.status_reblog_count.setVisibility(View.VISIBLE);
-                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    holder.status_reblog_count.setVisibility(View.VISIBLE);
-                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
+                        break;
+                    case "private":
+                        final boolean isOwner = status.getReblog() != null ? status.getReblog().getAccount().getId().equals(userId) : status.getAccount().getId().equals(userId);
+                        if (isOwner) {
+                            holder.status_reblog_count.setVisibility(View.VISIBLE);
+                            holder.spark_button_reblog.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.status_reblog_count.setVisibility(View.GONE);
+                            holder.spark_button_reblog.setVisibility(View.GONE);
+                        }
+                        break;
+                    case "public":
+                    case "unlisted":
+                        holder.status_reblog_count.setVisibility(View.VISIBLE);
+                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        holder.status_reblog_count.setVisibility(View.VISIBLE);
+                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
+                }
+            }else{
+                holder.status_reblog_count.setVisibility(View.VISIBLE);
+                holder.spark_button_reblog.setVisibility(View.VISIBLE);
             }
 
             switch (status.getVisibility()) {
