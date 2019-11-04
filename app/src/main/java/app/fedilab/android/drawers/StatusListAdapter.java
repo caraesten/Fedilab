@@ -3501,49 +3501,47 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     @Override
                     public void onClick(View v) {
 
-                        if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
-                            Account account = status.getAccount();
-                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})");
-                            Matcher matcher = instanceHost.matcher(status.getUrl());
-                            String instance = null;
-                            while (matcher.find()) {
-                                instance = matcher.group(1);
+                        if (status.getReblog() != null) {
+                            if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
+                                Account account = status.getReblog().getAccount();
+                                Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})");
+                                Matcher matcher = instanceHost.matcher(status.getUrl());
+                                String instance = null;
+                                while (matcher.find()) {
+                                    instance = matcher.group(1);
+                                }
+                                account.setInstance(instance);
+                                if (BaseMainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                    CrossActions.doCrossProfile(context, account);
+                                else {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putParcelable("account", status.getAccount());
+                                    b.putBoolean("peertubeaccount", true);
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
                             }
-                            account.setInstance(instance);
-                            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                                CrossActions.doCrossProfile(context, account);
-                            else {
-                                Intent intent = new Intent(context, ShowAccountActivity.class);
-                                Bundle b = new Bundle();
-                                b.putParcelable("account", status.getAccount());
-                                b.putBoolean("peertubeaccount", true);
-                                intent.putExtras(b);
-                                context.startActivity(intent);
-                            }
-                        }
-                    }
-                });
-                holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
-                            Account account = status.getReblog().getAccount();
-                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})");
-                            Matcher matcher = instanceHost.matcher(status.getUrl());
-                            String instance = null;
-                            while (matcher.find()) {
-                                instance = matcher.group(1);
-                            }
-                            account.setInstance(instance);
-                            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                                CrossActions.doCrossProfile(context, account);
-                            else {
-                                Intent intent = new Intent(context, ShowAccountActivity.class);
-                                Bundle b = new Bundle();
-                                b.putParcelable("account", status.getAccount());
-                                b.putBoolean("peertubeaccount", true);
-                                intent.putExtras(b);
-                                context.startActivity(intent);
+                        } else {
+                            if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
+                                Account account = status.getAccount();
+                                Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})");
+                                Matcher matcher = instanceHost.matcher(status.getUrl());
+                                String instance = null;
+                                while (matcher.find()) {
+                                    instance = matcher.group(1);
+                                }
+                                account.setInstance(instance);
+                                if (BaseMainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                    CrossActions.doCrossProfile(context, account);
+                                else {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putParcelable("account", status.getAccount());
+                                    b.putBoolean("peertubeaccount", true);
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
                             }
                         }
                     }
