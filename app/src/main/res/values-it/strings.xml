@@ -901,6 +901,7 @@
     <string name="toast_error_instance_reg">Qualcosa è andato storto nel cercare istanze disponibili!</string>
     <string name="join_mastodon">Unisciti a Mastodon</string>
     <string name="pickup_instance_category">Scegli un\'istanza selezionando una categoria, poi clicca sul pulsante con la spunta.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s utenti</string>
     <string name="password_confirm">Conferma password</string>
     <string name="agreement_check">Sono d\'accordo con %1$s e %2$s</string>
@@ -1134,4 +1135,6 @@
     <string name="fetch_conversation">Recupero della conversazione</string>
     <string name="order_by">Ordina per</string>
     <string name="title_video_peertube">Titolo per il video</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
