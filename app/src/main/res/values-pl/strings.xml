@@ -904,6 +904,7 @@
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
     <string name="pickup_instance_category">Choose an instance by picking up a category, then tap on a check button.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s users</string>
     <string name="password_confirm">Confirm password</string>
     <string name="agreement_check">I agree to %1$s and %2$s</string>
@@ -1139,4 +1140,6 @@
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
     <string name="title_video_peertube">Title for the video</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
