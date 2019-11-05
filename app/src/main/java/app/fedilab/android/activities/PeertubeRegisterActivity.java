@@ -19,7 +19,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -48,7 +46,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -62,7 +59,7 @@ import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.InstanceReg;
-import app.fedilab.android.drawers.InstanceRegAdapter;
+import app.fedilab.android.drawers.InstancePeertubeRegAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
@@ -71,11 +68,11 @@ import es.dmoral.toasty.Toasty;
 import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
 
 /**
- * Created by Thomas on 13/06/2019.
+ * Created by Thomas on 04/11/2019.
  * Register activity class
  */
 
-public class MastodonRegisterActivity extends BaseActivity implements OnRetrieveInstanceInterface, OnPostStatusActionInterface {
+public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieveInstanceInterface, OnPostStatusActionInterface {
 
 
     private Button signup;
@@ -102,7 +99,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                 setTheme(R.style.AppThemeDark);
         }
 
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_peertube);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -121,56 +118,12 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             toolbar_title.setText(R.string.sign_up);
             if (theme == Helper.THEME_LIGHT) {
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, MastodonRegisterActivity.this);
+                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeRegisterActivity.this);
             }
         }
 
 
-        MaterialSpinner reg_category = findViewById(R.id.reg_category);
-        Helper.changeMaterialSpinnerColor(MastodonRegisterActivity.this, reg_category);
-        String[] categoriesA = {
-                getString(R.string.category_general),
-                getString(R.string.category_regional),
-                getString(R.string.category_art),
-                getString(R.string.category_journalism),
-                getString(R.string.category_activism),
-                "LGBTQ+",
-                getString(R.string.category_games),
-                getString(R.string.category_tech),
-                getString(R.string.category_adult),
-                getString(R.string.category_furry),
-                getString(R.string.category_food)
-
-        };
-        String[] itemA = {
-                "general",
-                "regional",
-                "art",
-                "journalism",
-                "activism",
-                "lgbt",
-                "games",
-                "tech",
-                "adult",
-                "furry",
-                "food",
-        };
-        ArrayAdapter<String> adcategories = new ArrayAdapter<>(MastodonRegisterActivity.this,
-                android.R.layout.simple_spinner_dropdown_item, categoriesA);
-
-        reg_category.setAdapter(adcategories);
-
-        reg_category.setSelectedIndex(0);
-        //Manage privacies
-        reg_category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, itemA[position], MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
-
-            }
-        });
-
-        new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON,"general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+        new RetrieveInstanceRegAsyncTask(PeertubeRegisterActivity.this,RetrieveInstanceRegAsyncTask.instanceType.PEERTUBE, null, PeertubeRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
 
         signup = findViewById(R.id.signup);
         EditText username = findViewById(R.id.username);
@@ -209,7 +162,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(PeertubeRegisterActivity.this, accountCreation, instance, PeertubeRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 
@@ -228,8 +181,8 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         }
         List<InstanceReg> instanceRegs = apiResponse.getInstanceRegs();
         RecyclerView lv_instances = findViewById(R.id.reg_category_view);
-        InstanceRegAdapter instanceRegAdapter = new InstanceRegAdapter(MastodonRegisterActivity.this, instanceRegs);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(MastodonRegisterActivity.this);
+        InstancePeertubeRegAdapter instanceRegAdapter = new InstancePeertubeRegAdapter(PeertubeRegisterActivity.this, instanceRegs);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(PeertubeRegisterActivity.this);
         lv_instances.setLayoutManager(mLayoutManager);
         lv_instances.setNestedScrollingEnabled(false);
         lv_instances.setAdapter(instanceRegAdapter);
@@ -238,8 +191,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
     }
 
     public void pickupInstance(String instance) {
-
-        checkInstance(MastodonRegisterActivity.this, instance);
+        
         LinearLayout form_container = findViewById(R.id.form_container);
         LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
 
@@ -265,13 +217,13 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if (theme == Helper.THEME_DARK)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.dark_link_toot)), 0, change.length(),
+            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.dark_link_toot)), 0, change.length(),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         else if (theme == Helper.THEME_BLACK)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.black_link_toot)), 0, change.length(),
+            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.black_link_toot)), 0, change.length(),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         else if (theme == Helper.THEME_LIGHT)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.mastodonC4)), 0, change.length(),
+            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.mastodonC4)), 0, change.length(),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         change_instance.setText(change);
         change_instance.setOnClickListener(view -> {
@@ -283,7 +235,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
-                            findViewById(R.id.invitation).setVisibility(View.GONE);
                             form_container.setVisibility(View.GONE);
                         }
                     });
@@ -304,10 +255,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         agreement_text.setText(Html.fromHtml(content_agreement));
     }
 
-
-    private void checkInstance(Context context, String instance) {
-        new checkRegistration(context, instance).executeOnExecutor(THREAD_POOL_EXECUTOR);
-    }
 
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
@@ -333,7 +280,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             signup.setEnabled(true);
             return;
         }
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
@@ -343,7 +290,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         } else {
             style = R.style.Dialog;
         }
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MastodonRegisterActivity.this, style);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PeertubeRegisterActivity.this, style);
         dialogBuilder.setCancelable(false);
         dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
@@ -358,45 +305,4 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         alertDialog.show();
     }
 
-
-    @SuppressLint("StaticFieldLeak")
-    private class checkRegistration extends AsyncTask<Void, Void, String> {
-
-        private String instance;
-        private WeakReference<Context> weakReference;
-
-        checkRegistration(Context context, String instance) {
-            this.instance = instance;
-            this.weakReference = new WeakReference<>(context);
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            String response = null;
-            try {
-                URL url = new URL("https://" + instance + "/auth/sign_up");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    java.util.Scanner s = new java.util.Scanner(connection.getInputStream()).useDelimiter("\\A");
-                    response = s.hasNext() ? s.next() : "";
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-
-            if (result != null && result.contains("invite_request_attributes")) {
-                TextView invitation = ((MastodonRegisterActivity) (weakReference.get())).findViewById(R.id.invitation);
-                if (invitation != null) {
-                    invitation.setVisibility(View.VISIBLE);
-                }
-            }
-
-        }
-    }
 }

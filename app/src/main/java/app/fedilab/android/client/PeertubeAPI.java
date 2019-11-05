@@ -47,6 +47,7 @@ import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
+import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeAccountNotification;
 import app.fedilab.android.client.Entities.PeertubeActorFollow;
@@ -380,6 +381,27 @@ public class PeertubeAPI {
         }
         return account;
     }
+
+
+    /***
+     * Get instance for registering an account *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getInstanceReg() {
+        apiResponse = new APIResponse();
+        try {
+            String response = new HttpsConnection(context, null).get("https://instances.joinpeertube.org/api/v1/instances?start=0&count=50&signup=true&health=100&sort=-totalUsers");
+            JSONObject result = new JSONObject(response);
+            List<InstanceReg> instanceRegs = parseInstanceReg(result.getJSONArray("data"));
+            apiResponse.setInstanceRegs(instanceRegs);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
 
     /***
      * Verifiy credential of the authenticated user *synchronously*
@@ -1645,6 +1667,56 @@ public class PeertubeAPI {
 
 
     /**
+     * Parse json response for several instance reg
+     *
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    public List<InstanceReg> parseInstanceReg(JSONArray jsonArray) {
+
+        List<InstanceReg> instanceRegs = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                InstanceReg instanceReg = parseInstanceReg(resobj);
+                i++;
+                instanceRegs.add(instanceReg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceRegs;
+    }
+
+    /**
+     * Parse json response an unique instance for registering
+     *
+     * @param resobj JSONObject
+     * @return InstanceReg
+     */
+    private InstanceReg parseInstanceReg(JSONObject resobj) {
+        InstanceReg instanceReg = new InstanceReg();
+        try {
+            instanceReg.setDomain(resobj.getString("host"));
+            instanceReg.setVersion(resobj.getString("version"));
+            instanceReg.setDescription(resobj.getString("shortDescription"));
+            instanceReg.setLanguage(resobj.getString("country"));
+            instanceReg.setCategory("");
+            instanceReg.setProxied_thumbnail("");
+            instanceReg.setTotal_users(resobj.getInt("totalUsers"));
+            instanceReg.setTotalInstanceFollowers(resobj.getInt("totalInstanceFollowers"));
+            instanceReg.setTotalInstanceFollowing(resobj.getInt("totalInstanceFollowing"));
+            instanceReg.setLast_week_users(0);
+            instanceReg.setCountry(resobj.getString("country"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceReg;
+    }
+
+
+    /**
      * Parse json response for several howto
      *
      * @param jsonArray JSONArray
@@ -1661,7 +1733,6 @@ public class PeertubeAPI {
                 i++;
                 peertubes.add(peertube);
             }
-
         } catch (JSONException e) {
             setDefaultError(e);
         }
