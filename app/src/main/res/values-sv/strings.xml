@@ -901,6 +901,7 @@
     <string name="toast_error_instance_reg">Något gick fel vid kontroll av tillgängliga instanser!</string>
     <string name="join_mastodon">Gå med i Mastodon</string>
     <string name="pickup_instance_category">Välj en instans genom att välja en kategori, klicka sedan på välj-knappen.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s användare</string>
     <string name="password_confirm">Bekräfta lösenord</string>
     <string name="agreement_check">Jag godkänner %1$s och %2$s</string>
@@ -1134,4 +1135,6 @@
     <string name="fetch_conversation">Hämtar konversation</string>
     <string name="order_by">Sortera efter</string>
     <string name="title_video_peertube">Titel på videon</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
