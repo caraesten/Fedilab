@@ -916,6 +916,7 @@
     <string name="toast_error_instance_reg">حدث خطأ أثناء التحقق من توفر مثيلات الخوادم!</string>
     <string name="join_mastodon">انضم إلى ماستدون</string>
     <string name="pickup_instance_category">اختر مثيل خادم من بين الفئات ، ثم اضغط على زر الاختيار.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s مستخدم</string>
     <string name="password_confirm">تأكيد الكلمة السرية</string>
     <string name="agreement_check">أوافق على %1$s وعلى %2$s</string>
@@ -1153,4 +1154,6 @@
     <string name="fetch_conversation">جارٍ جلب المحادثة</string>
     <string name="order_by">ترتيب حسب</string>
     <string name="title_video_peertube">Title for the video</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
