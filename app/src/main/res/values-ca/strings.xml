@@ -893,6 +893,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="toast_error_instance_reg">Alguna cosa ha fallat en comprovar la disponibilitat d\'instàncies!</string>
     <string name="join_mastodon">Uneix-te a Mastodont</string>
     <string name="pickup_instance_category">Tria una instància mitjançant una categoria, i després clica un botó de comprovació.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s usuaris</string>
     <string name="password_confirm">Confirma contrasenya</string>
     <string name="agreement_check">Estic d\'acord amb %1$s i %2$s</string>
@@ -1126,4 +1127,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="fetch_conversation">S\'està extraient la conversa</string>
     <string name="order_by">Ordenar per</string>
     <string name="title_video_peertube">Títol del vídeo</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
