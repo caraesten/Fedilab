@@ -1004,11 +1004,6 @@
                 app:layout_constraintTop_toBottomOf="@id/status_action_container" />
 
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_normal_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="fedilab_features,content_start_marker" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
