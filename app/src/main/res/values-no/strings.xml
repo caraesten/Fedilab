@@ -890,6 +890,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="toast_error_instance_reg">Noe gikk galt under henting av tilgjengelige instanser!</string>
     <string name="join_mastodon">Opprett Mastodon-konto</string>
     <string name="pickup_instance_category">Velg en instans fra en av kategoriene.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s brukere</string>
     <string name="password_confirm">Bekreft passord</string>
     <string name="agreement_check">Jeg er enig i %1$s og %2$s</string>
@@ -1122,4 +1123,6 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
     <string name="title_video_peertube">Title for the video</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
