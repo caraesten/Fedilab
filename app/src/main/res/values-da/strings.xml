@@ -901,6 +901,7 @@
     <string name="toast_error_instance_reg">Noget gik galt ved søgning efter tilgængelige instanser!</string>
     <string name="join_mastodon">Tilmeld dig Mastodon</string>
     <string name="pickup_instance_category">Vælg en instans fra en af kategorierne ved at klikke på dens afkrydsningsfelt.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s brugere</string>
     <string name="password_confirm">Bekræft adgangskode</string>
     <string name="agreement_check">Jeg accepterer %1$s og %2$s</string>
@@ -1134,4 +1135,6 @@
     <string name="fetch_conversation">Henter samtale</string>
     <string name="order_by">Sortér efter</string>
     <string name="title_video_peertube">Videotitlen</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
