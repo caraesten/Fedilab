@@ -19,16 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.FitCenter;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -81,11 +75,7 @@ public class InstancePeertubeRegAdapter extends RecyclerView.Adapter {
         holder.instance_count_user.setText(context.getString(R.string.users, Helper.withSuffix(instanceReg.getTotal_users())));
         holder.instance_description.setText(instanceReg.getDescription());
         holder.instance_host.setText(instanceReg.getDomain());
-        holder.instance_version.setText(String.format("%s - %s", instanceReg.getCategory(), instanceReg.getVersion()));
-        Glide.with(context)
-                .load(instanceReg.getProxied_thumbnail())
-                .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
-                .into(holder.instance_pp);
+        holder.instance_version.setText(String.format("%s - %s (%s)", instanceReg.getCategory(), instanceReg.getVersion(), instanceReg.getCountry()));
     }
 
     public long getItemId(int position) {
@@ -99,13 +89,11 @@ public class InstancePeertubeRegAdapter extends RecyclerView.Adapter {
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView instance_pp;
         TextView instance_host, instance_version, instance_description, instance_count_user;
         ImageButton instance_choose;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            instance_pp = itemView.findViewById(R.id.instance_pp);
             instance_host = itemView.findViewById(R.id.instance_host);
             instance_version = itemView.findViewById(R.id.instance_version);
             instance_description = itemView.findViewById(R.id.instance_description);
