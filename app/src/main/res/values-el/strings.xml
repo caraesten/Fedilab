@@ -901,6 +901,7 @@
     <string name="toast_error_instance_reg">Κάτι δεν πήγε καλά, κατά τον έλεγχο των διαθέσιμων υποστάσεων.</string>
     <string name="join_mastodon">Συμμετοχή στο Μαστόδοντα</string>
     <string name="pickup_instance_category">Διάλεξε μία υπόσταση, επιλέγοντας μία κατηγορία, και μετά κλίκαρε στο πλήκτρο ελέγχου.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s χρήστες</string>
     <string name="password_confirm">Επιβεβαίωση του κωδικού πρόσβασης</string>
     <string name="agreement_check">Συμφωνώ με τους %1$s και τους %2$s</string>
@@ -1134,4 +1135,6 @@
     <string name="fetch_conversation">Λαμβάνεται η συζήτηση</string>
     <string name="order_by">Ταξινόμηση κατά</string>
     <string name="title_video_peertube">Title for the video</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
