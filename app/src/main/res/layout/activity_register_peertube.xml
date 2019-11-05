@@ -174,8 +174,10 @@
 
             <TextView
                 android:id="@+id/agreement_text"
+                android:text="@string/agreement_check_peertube"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
         <Button

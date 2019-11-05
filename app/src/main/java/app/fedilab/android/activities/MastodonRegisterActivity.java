@@ -209,7 +209,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this,RetrieveInstanceRegAsyncTask.instanceType.MASTODON, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 

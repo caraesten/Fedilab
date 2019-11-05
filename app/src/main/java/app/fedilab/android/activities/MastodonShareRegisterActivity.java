@@ -51,6 +51,7 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.CreateMastodonAccountAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.InstanceReg;
@@ -177,7 +178,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonShareRegisterActivity.this, accountCreation, instance, MastodonShareRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(MastodonShareRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, accountCreation, instance, MastodonShareRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 

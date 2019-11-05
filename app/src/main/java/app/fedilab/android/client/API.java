@@ -900,7 +900,7 @@ public class API {
             params.put("password", accountCreation.getPassword());
             params.put("agreement", "true");
             params.put("locale", Locale.getDefault().getLanguage());
-            response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 10, params, app_token);
+            response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 30, params, app_token);
 
             /*res = new JSONObject(response);
             String access_token = res.getString("access_token");

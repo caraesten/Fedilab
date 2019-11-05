@@ -162,7 +162,7 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(PeertubeRegisterActivity.this, accountCreation, instance, PeertubeRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(PeertubeRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.PEERTUBE, accountCreation, instance, PeertubeRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 
@@ -191,7 +191,7 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
     }
 
     public void pickupInstance(String instance) {
-        
+
         LinearLayout form_container = findViewById(R.id.form_container);
         LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
 
@@ -246,10 +246,8 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
         username_indicator.setText(getString(R.string.username_indicator, instance));
 
         String tos = getString(R.string.tos);
-        String serverrules = getString(R.string.server_rules);
-        String content_agreement = getString(R.string.agreement_check,
-                "<a href='https://" + instance + "/about/more' >" + serverrules + "</a>",
-                "<a href='https://" + instance + "/terms' >" + tos + "</a>"
+        String content_agreement = getString(R.string.agreement_check_peertube,
+                "<a href='https://" + instance + "/about/instance#terms-section' >" + tos + "</a>"
         );
         agreement_text.setMovementMethod(LinkMovementMethod.getInstance());
         agreement_text.setText(Html.fromHtml(content_agreement));

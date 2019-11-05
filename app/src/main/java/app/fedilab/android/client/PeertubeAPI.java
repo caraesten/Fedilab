@@ -39,6 +39,7 @@ import java.util.Map;
 
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Emojis;
@@ -402,6 +403,26 @@ public class PeertubeAPI {
         return apiResponse;
     }
 
+
+
+    public APIResponse createAccount(AccountCreation accountCreation) {
+        apiResponse = new APIResponse();
+
+        try {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("username", accountCreation.getUsername());
+            params.put("email", accountCreation.getEmail());
+            params.put("password", accountCreation.getPassword());
+            String response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/users/register"), 30, params, null);
+
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException  e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
 
     /***
      * Verifiy credential of the authenticated user *synchronously*
