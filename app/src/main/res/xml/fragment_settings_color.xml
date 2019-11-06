@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
-        android:defaultValue="?colorAccent"
+        android:defaultValue="-1"
         android:key="theme_link_color"
         android:summary="@string/link_color"
         android:title="@string/link_color_title"/>
 
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
-        android:defaultValue="?boostcolor"
+        android:defaultValue="-1"
         android:key="theme_boost_header_color"
         android:title="@string/boost_header_color_title"
         android:summary="@string/boost_header_color"/>
 
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
-        android:defaultValue="?backgroundColor"
+        android:defaultValue="-1"
         android:key="theme_statuses_color"
         android:title="@string/background_status_title"
         android:summary="@string/background_status"/>
@@ -25,7 +25,7 @@
 
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
-        android:defaultValue="?iconcolor"
+        android:defaultValue="-1"
         android:key="theme_icons_color"
         android:title="@string/icons_color_title"
         android:summary="@string/icons_color"/>
