@@ -1140,8 +1140,8 @@
     <string name="reset_color">Renkleri sıfırla</string>
     <string name="clik_reset">Tüm özel renklerinizi sıfırlamak için buraya tıklayın</string>
     <string name="reset">Sıfırla</string>
-    <string name="icons_color_title">Icons</string>
-    <string name="icons_color">Color of bottom icons in timelines</string>
-    <string name="background_color_title">Background</string>
-    <string name="background_color">Change the background color for timelines</string>
+    <string name="icons_color_title">Simgeler</string>
+    <string name="icons_color">Zaman çizelgelerinin alt kısmındaki simgelerin rengi</string>
+    <string name="background_color_title">Arka plan</string>
+    <string name="background_color">Zaman çizelgelerinin arka plan rengini değiştir</string>
 </resources>
