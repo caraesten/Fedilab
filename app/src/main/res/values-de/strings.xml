@@ -892,6 +892,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="toast_error_instance_reg">Bei der Überprüfung der verfügbaren Instanzen ist ein Problem aufgetreten!</string>
     <string name="join_mastodon">Mastodon beitreten</string>
     <string name="pickup_instance_category">Instanz durch Anklicken einer Kategorie auswählen und dann auf eine Schaltfläche klicken.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s Nutzer</string>
     <string name="password_confirm">Passwort bestätigen</string>
     <string name="agreement_check">Ich akzeptiere %1$s und %2$s</string>
@@ -1121,4 +1122,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="fetch_conversation">Unterhaltung wird abgerufen</string>
     <string name="order_by">Sortieren nach</string>
     <string name="title_video_peertube">Titel für das Video</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>

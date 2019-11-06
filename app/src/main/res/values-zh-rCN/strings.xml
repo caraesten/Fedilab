@@ -897,6 +897,7 @@
     <string name="toast_error_instance_reg">检查可用实例时出错！</string>
     <string name="join_mastodon">加入乳齿象</string>
     <string name="pickup_instance_category">通过挑选一个类别选择一个实例，然后点击检查按钮。</string>
+    <string name="pickup_instance_peertube">点击检查按钮来选择一个实例。</string>
     <string name="users">%1$s 个用户</string>
     <string name="password_confirm">确认密码</string>
     <string name="agreement_check">我同意 %1$s 和 %2$s</string>
@@ -1129,4 +1130,6 @@
     <string name="fetch_conversation">正在获取对话</string>
     <string name="order_by">排序方式</string>
     <string name="title_video_peertube">视频标题</string>
+    <string name="join_peertube">加入Peertube</string>
+    <string name="agreement_check_peertube">我至少年满16岁，并同意此实例的 %1$s</string>
 </resources>

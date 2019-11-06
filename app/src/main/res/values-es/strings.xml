@@ -895,6 +895,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toast_error_instance_reg">¡Algo salió mal al comprobar las instancias disponibles!</string>
     <string name="join_mastodon">Unirse a Mastodon</string>
     <string name="pickup_instance_category">Elija una instancia escogiendo una categoría, y luego haga clic en un botón de verificación.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s usuarios</string>
     <string name="password_confirm">Confirmar la contraseña</string>
     <string name="agreement_check">Estoy de acuerdo con %1$s y %2$s</string>
@@ -1128,4 +1129,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="fetch_conversation">Obteniendo conversación</string>
     <string name="order_by">Ordenar por</string>
     <string name="title_video_peertube">Título del vídeo</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>

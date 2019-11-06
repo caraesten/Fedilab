@@ -898,6 +898,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="toast_error_instance_reg">Une erreur s\'est produite lors de la vérification des instances disponibles !</string>
     <string name="join_mastodon">Rejoindre Mastodon</string>
     <string name="pickup_instance_category">Choisissez une instance dans l\'une des catégories puis cliquez sur un bouton de vérification.</string>
+    <string name="pickup_instance_peertube">Choisissez une instance en appuyant sur le bouton cocher.</string>
     <string name="users">%1$s utilisateur·rice·s</string>
     <string name="password_confirm">Confirmer le mot de passe</string>
     <string name="agreement_check">J\'accepte les %1$s et les %2$s</string>
@@ -1131,4 +1132,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="fetch_conversation">Récupération de la discussion</string>
     <string name="order_by">Trier par</string>
     <string name="title_video_peertube">Titre de la vidéo</string>
+    <string name="join_peertube">Rejoignez Peertube</string>
+    <string name="agreement_check_peertube">J\'ai au moins 16 ans et je suis d\'accord avec les %1$s de cette instance</string>
 </resources>

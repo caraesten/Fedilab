@@ -902,6 +902,7 @@
     <string name="toast_error_instance_reg">Algo fallou cando comprobamos as instancias dispoñibles!</string>
     <string name="join_mastodon">Únirse a Mastodon</string>
     <string name="pickup_instance_category">Escolla unha instancia escollendo unha categoría, despois pulse no botón de marca.</string>
+    <string name="pickup_instance_peertube">Escolle unha instancia tocando na marca de selección.</string>
     <string name="users">%1$s usuarias</string>
     <string name="password_confirm">Confirmar contrasinal</string>
     <string name="agreement_check">Acepto as %1$s e os %2$s</string>
@@ -1135,4 +1136,6 @@
     <string name="fetch_conversation">Obtendo conversa</string>
     <string name="order_by">Orde por</string>
     <string name="title_video_peertube">Título para o vídeo</string>
+    <string name="join_peertube">Unirse a Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
 </resources>
