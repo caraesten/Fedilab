@@ -1029,16 +1029,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT && !(context instanceof ShowConversationActivity)) {
+                int customBGColor;
                 if (theme == Helper.THEME_DARK) {
-                    holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
-                    holder.main_container.setAlpha(.5f);
+                    customBGColor = ContextCompat.getColor(context, R.color.notif_dark_1);
                 } else if (theme == Helper.THEME_BLACK) {
-                    holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
-                    holder.main_container.setAlpha(.5f);
+                    customBGColor = ContextCompat.getColor(context, R.color.notif_black_1);
                 } else {
-                    holder.main_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
-                    holder.main_container.setAlpha(.5f);
+                    customBGColor = ContextCompat.getColor(context, R.color.notif_light_1);
                 }
+                holder.main_container.setBackgroundColor(customBGColor);
+                holder.main_container.setAlpha(.5f);
             }
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
@@ -1353,105 +1353,88 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             Helper.changeDrawableColor(context, R.drawable.video_preview, R.color.white);
-            if (theme == Helper.THEME_BLACK) {
-                Helper.changeDrawableColor(context, holder.cached_status, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_remove, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_black);
-                Helper.changeDrawableColor(context, holder.status_more, R.color.action_black);
-                Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_black);
-                Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_black);
-                Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_black);
-                Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_black);
-                Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
 
-                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            int iconColor = prefs.getInt("theme_icons_color", -1);
+            int iconColorCompat = prefs.getInt("theme_icons_color", -1);
+            if( iconColor == -1) {
+                if (theme == Helper.THEME_BLACK) {
+                    iconColor = R.color.action_black;
+                    iconColorCompat = ContextCompat.getColor(context, iconColor);
+                    holder.status_cardview.setBackgroundResource(R.drawable.card_border_black);
+                    Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
+                    Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.dark_text);
+                    holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
+                    holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                    holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
+                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.black);
+                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.black);
+                    Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.black);
 
+                } else if (theme == Helper.THEME_DARK) {
+                    iconColor = R.color.action_dark;
+                    iconColorCompat = ContextCompat.getColor(context, iconColor);
+                    Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
+                    Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
+                    Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.mastodonC4);
+                    holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
+                    holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                    holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
+                    holder.status_cardview.setBackgroundResource(R.drawable.card_border_dark);
 
-                Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
-                Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.dark_text);
-                Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.black_text_toot_header);
-
-
-                Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.dark_icon);
-                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
-
-                Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.black);
-                Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.black);
-                Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.black);
-                holder.status_cardview.setBackgroundResource(R.drawable.card_border_black);
-            } else if (theme == Helper.THEME_DARK) {
-                Helper.changeDrawableColor(context, holder.cached_status, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_remove, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_more, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_dark);
-                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.dark_text_toot_header);
-
-                Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
-                Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
-                Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.mastodonC4);
-
-
-                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-                holder.status_cardview.setBackgroundResource(R.drawable.card_border_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.mastodonC1);
-                Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.mastodonC1);
-                Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.mastodonC1);
-            } else {
-                Helper.changeDrawableColor(context, holder.cached_status, R.color.action_light);
-                Helper.changeDrawableColor(context, holder.status_remove, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.action_light);
-                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_more_horiz, R.color.action_light);
-                Helper.changeDrawableColor(context, holder.status_more, R.color.action_light);
-                Helper.changeDrawableColor(context, holder.status_privacy, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_plus_one, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
-
-                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-
-                holder.status_cardview.setBackgroundResource(R.drawable.card_border_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
-                Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
-
-                Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.color.action_light_header);
-
-
-                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.light_black));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.light_black));
-                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.light_black));
-
-                Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.white);
-                Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.white);
-                Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.white);
+                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.mastodonC1);
+                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.mastodonC1);
+                    Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.mastodonC1);
+                } else {
+                    iconColor = R.color.action_light;
+                    iconColorCompat = ContextCompat.getColor(context, iconColor);
+                    holder.status_cardview.setBackgroundResource(R.drawable.card_border_light);
+                    Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
+                    Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
+                    holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                    holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                    holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.white);
+                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.white);
+                    Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.white);
+                }
             }
+
+            Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, iconColor);
+
+
+            Helper.changeDrawableColor(context, holder.status_remove, iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, iconColor);
+            Helper.changeDrawableColor(context, holder.status_reply, iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_conversation, iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_more_horiz, iconColor);
+            Helper.changeDrawableColor(context, holder.status_more, iconColor);
+            Helper.changeDrawableColor(context, holder.status_privacy, iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat, iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_plus_one, iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, iconColor);
+
+            holder.status_reply_count.setTextColor(iconColorCompat);
+            holder.status_favorite_count.setTextColor(iconColorCompat);
+            holder.status_reblog_count.setTextColor(iconColorCompat);
+
+
+
             if (theme == Helper.THEME_DARK) {
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
+                Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.dark_text_toot_header);
+                Helper.changeDrawableColor(context, holder.cached_status,R.color.dark_text_toot_header);
             } else if (theme == Helper.THEME_BLACK) {
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
+                Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.black_text_toot_header);
+                Helper.changeDrawableColor(context, holder.cached_status,R.color.black_text_toot_header);
             } else if (theme == Helper.THEME_LIGHT) {
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.action_light_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.light_black);
+                Helper.changeDrawableColor(context, holder.cached_status,R.color.light_black);
             }
 
 
@@ -1484,31 +1467,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
 
+                int customColor;
                 if (theme == Helper.THEME_BLACK) {
-                    holder.fedilab_features.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
-                    holder.custom_feature_bookmark.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
-                    holder.custom_feature_translate.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
-                    holder.custom_feature_timed_mute.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
-                    holder.custom_feature_schedule.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
-                    holder.custom_feature_mention.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
-                    holder.custom_feature_cache.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_features_button_black));
+                    customColor = ContextCompat.getColor(context, R.color.custom_features_button_black);
                 } else if (theme == Helper.THEME_DARK) {
-                    holder.fedilab_features.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
-                    holder.custom_feature_bookmark.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
-                    holder.custom_feature_translate.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
-                    holder.custom_feature_timed_mute.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
-                    holder.custom_feature_schedule.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
-                    holder.custom_feature_mention.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
-                    holder.custom_feature_cache.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4_));
+                    customColor = ContextCompat.getColor(context, R.color.mastodonC4_);
                 } else {
-                    holder.fedilab_features.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    holder.custom_feature_bookmark.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    holder.custom_feature_translate.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    holder.custom_feature_timed_mute.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    holder.custom_feature_schedule.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    holder.custom_feature_mention.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    holder.custom_feature_cache.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                    customColor = ContextCompat.getColor(context, R.color.mastodonC4);
                 }
+                holder.fedilab_features.setBackgroundColor(customColor);
+                holder.custom_feature_bookmark.setBackgroundColor(customColor);
+                holder.custom_feature_translate.setBackgroundColor(customColor);
+                holder.custom_feature_timed_mute.setBackgroundColor(customColor);
+                holder.custom_feature_schedule.setBackgroundColor(customColor);
+                holder.custom_feature_mention.setBackgroundColor(customColor);
+                holder.custom_feature_cache.setBackgroundColor(customColor);
 
                 if (status.isCustomFeaturesDisplayed()) {
                     holder.fedilab_features_panel.setVisibility(View.VISIBLE);
@@ -1592,15 +1565,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.spark_button_reblog.setDisableCircle(true);
             holder.spark_button_fav.setActiveImageTint(R.color.marked_icon);
             holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
-            if (theme == Helper.THEME_DARK) {
-                holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
-                holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
-            } else if (theme == Helper.THEME_BLACK) {
-                holder.spark_button_fav.setInActiveImageTint(R.color.action_black);
-                holder.spark_button_reblog.setInActiveImageTint(R.color.action_black);
-            } else {
-                holder.spark_button_fav.setInActiveImageTint(R.color.action_light);
-                holder.spark_button_reblog.setInActiveImageTint(R.color.action_light);
+            if( iconColorCompat == -1) {
+                if (theme == Helper.THEME_DARK) {
+                    holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
+                    holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
+                } else if (theme == Helper.THEME_BLACK) {
+                    holder.spark_button_fav.setInActiveImageTint(R.color.action_black);
+                    holder.spark_button_reblog.setInActiveImageTint(R.color.action_black);
+                } else {
+                    holder.spark_button_fav.setInActiveImageTint(R.color.action_light);
+                    holder.spark_button_reblog.setInActiveImageTint(R.color.action_light);
+                }
+                
+            }else{
+                holder.spark_button_fav.setInActiveImageTintColor(iconColorCompat);
+                holder.spark_button_reblog.setInActiveImageTintColor(iconColorCompat);
             }
             holder.spark_button_fav.setColors(R.color.marked_icon, R.color.marked_icon);
             holder.spark_button_fav.setImageSize((int) (20 * iconSizePercent / 100 * scale + 0.5f));
@@ -2112,7 +2091,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_boosted_by_info.setVisibility(View.GONE);
                 }
             }
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             int reblogColor = prefs.getInt("theme_boost_header_color", -1);
             if(  holder.status_boosted_by_info != null && reblogColor != -1  ){
                 holder.status_boosted_by_info.setBackgroundColor(reblogColor);
@@ -2478,12 +2456,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     Helper.changeDrawableColor(context, R.drawable.ic_pin_drop_p, R.color.marked_icon);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
                 } else {
-                    if (theme == Helper.THEME_DARK)
-                        Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
-                    else if (theme == Helper.THEME_BLACK)
-                        Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
-                    else
-                        Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
+                    Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, iconColor);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
                 }
                 assert imgPin != null;

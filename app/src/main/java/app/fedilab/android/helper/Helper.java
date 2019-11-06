@@ -2659,10 +2659,15 @@ public class Helper {
      */
     public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor) {
         Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
-        int color = Color.parseColor(context.getString(hexaColor));
+        int color;
+        try {
+            color = Color.parseColor(context.getString(hexaColor));
+        }catch (Resources.NotFoundException e){
+            color = hexaColor;
+        }
         assert mDrawable != null;
         mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
+        DrawableCompat.setTint(mDrawable, color);
         return mDrawable;
     }
 
@@ -2675,7 +2680,13 @@ public class Helper {
     public static void changeDrawableColor(Context context, ImageView imageView, int hexaColor) {
         if (imageView == null)
             return;
-        imageView.setColorFilter(context.getResources().getColor(hexaColor));
+        int color;
+        try {
+            color = context.getResources().getColor(hexaColor);
+        }catch (Resources.NotFoundException e){
+            color = hexaColor;
+        }
+        imageView.setColorFilter(color);
     }
 
     /**
@@ -2687,7 +2698,13 @@ public class Helper {
     public static void changeDrawableColor(Context context, ImageButton imageButton, int hexaColor) {
         if (imageButton == null)
             return;
-        imageButton.setColorFilter(context.getResources().getColor(hexaColor));
+        int color;
+        try {
+            color = context.getResources().getColor(hexaColor);
+        }catch (Resources.NotFoundException e){
+            color = hexaColor;
+        }
+        imageButton.setColorFilter(color);
     }
 
     /**
@@ -2699,7 +2716,13 @@ public class Helper {
     public static void changeButtonTextColor(Context context, Button button, int hexaColor) {
         if (button == null)
             return;
-        button.setTextColor(context.getResources().getColor(hexaColor));
+        int color;
+        try {
+            color = context.getResources().getColor(hexaColor);
+        }catch (Resources.NotFoundException e){
+            color = hexaColor;
+        }
+        button.setTextColor(color);
     }
 
     /**
