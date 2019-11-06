@@ -1252,4 +1252,9 @@
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
+    <string name="background_status_title">Posts</string>
+    <string name="background_status">Bakground color of posts in timelines</string>
+    <string name="reset_color">Reset colors</string>
+    <string name="clik_reset">Click here to reset all your custom colors</string>
+    <string name="reset">Reset</string>
 </resources>
