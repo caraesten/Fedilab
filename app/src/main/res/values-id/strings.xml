@@ -1146,4 +1146,6 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="reset">Reset</string>
     <string name="icons_color_title">Icons</string>
     <string name="icons_color">Color of bottom icons in timelines</string>
+    <string name="background_color_title">Background</string>
+    <string name="background_color">Change the background color for timelines</string>
 </resources>
