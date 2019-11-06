@@ -37,10 +37,12 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +58,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -707,7 +710,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Button quick_reply_button;
         ImageView quick_reply_privacy;
         View status_reply_indicator_top, reply_indicator_dot, status_reply_indicator_bottom, status_reply_indicator_diag_top, status_reply_indicator_diag_bottom;
-
+        CardView main_card_container;
+        LinearLayout main_linear_container;
         public View getView() {
             return itemView;
         }
@@ -842,6 +846,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
                 }
             }
+            main_card_container = itemView.findViewById(R.id.main_card_container);
+            main_linear_container = itemView.findViewById(R.id.main_linear_container);
         }
 
         void updateAnimatedEmoji() {
@@ -2105,6 +2111,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if (holder.status_boosted_by_info != null) {
                     holder.status_boosted_by_info.setVisibility(View.GONE);
                 }
+            }
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            int reblogColor = prefs.getInt("theme_boost_header_color", -1);
+            if(  holder.status_boosted_by_info != null && reblogColor != -1  ){
+                holder.status_boosted_by_info.setBackgroundColor(reblogColor);
+            }
+            int statusColor = prefs.getInt("theme_statuses_color", -1);
+            if(  holder.main_card_container != null && statusColor != -1  ){
+                holder.main_card_container.setBackgroundColor(statusColor);
+            }
+            if(  holder.main_linear_container != null && statusColor != -1  ){
+                holder.main_linear_container.setBackgroundColor(statusColor);
             }
             if (type == RetrieveFeedsAsyncTask.Type.CONVERSATION && status.getConversationProfilePicture() != null) {
                 holder.status_account_profile.setVisibility(View.GONE);

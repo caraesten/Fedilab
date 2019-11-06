@@ -119,6 +119,7 @@ import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.FEDIV
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.HERO;
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.MASTALAB;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.COLORS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.LANGUAGE;
@@ -177,7 +178,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         INTERFACE,
         COMPOSE,
         LANGUAGE,
-        MENU
+        MENU,
+        COLORS
     }
     private List<Account> translators = new ArrayList<>();
     private AccountSearchDevAdapter translatorManager;

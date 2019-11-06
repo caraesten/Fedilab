@@ -34,6 +34,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -215,6 +216,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         boolean hide_notification_delete = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
 
+
+
         if (theme == Helper.THEME_DARK) {
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
             holder.main_container_trans.setAlpha(.5f);
@@ -231,6 +234,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             style = R.style.DialogBlack;
         } else {
             style = R.style.Dialog;
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int reblogColor = prefs.getInt("theme_statuses_color", -1);
+        if(  holder.main_linear_container != null && reblogColor != -1  ){
+            holder.main_linear_container.setBackgroundColor(reblogColor);
         }
 
         if (hide_notification_delete)
@@ -1492,7 +1501,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         RadioGroup radio_group;
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
-
+        LinearLayout main_linear_container;
         public View getView() {
             return itemView;
         }
@@ -1546,6 +1555,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             remaining_time = itemView.findViewById(R.id.remaining_time);
             submit_vote = itemView.findViewById(R.id.submit_vote);
             refresh_poll = itemView.findViewById(R.id.refresh_poll);
+            main_linear_container = itemView.findViewById(R.id.main_linear_container);
         }
 
 

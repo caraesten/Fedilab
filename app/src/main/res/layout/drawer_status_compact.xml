@@ -66,6 +66,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="4dp"
+        android:id="@+id/main_card_container"
         style="?attr/cardStyleOver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
