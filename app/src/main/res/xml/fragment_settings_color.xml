@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="?colorAccent"
+        android:key="theme_link_color"
+        android:summary="@string/link_color"
+        android:title="@string/link_color_title"/>
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="?boostcolor"
+        android:key="theme_boost_header_color"
+        android:title="@string/boost_header_color_title"
+        android:summary="@string/boost_header_color"/>
+
+</PreferenceScreen>

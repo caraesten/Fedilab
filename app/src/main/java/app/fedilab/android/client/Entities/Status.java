@@ -30,6 +30,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import android.text.Html;
 import android.text.Spannable;
@@ -861,6 +862,19 @@ public class Status implements Parcelable {
             spannableStringT.removeSpan(span);
         }
 
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if( l_c == -1) {
+            if (theme == THEME_DARK)
+                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
+            else if (theme == THEME_BLACK)
+                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
+            else if (theme == THEME_LIGHT)
+                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+        }
+        final int link_color = l_c;
+
         matcher = Helper.twitterPattern.matcher(spannableStringT);
         while (matcher.find()) {
             int matchStart = matcher.start(2);
@@ -888,12 +902,7 @@ public class Status implements Parcelable {
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -940,12 +949,7 @@ public class Status implements Parcelable {
                                                      public void updateDrawState(@NonNull TextPaint ds) {
                                                          super.updateDrawState(ds);
                                                          ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                         ds.setColor(link_color);
                                                      }
                                                  },
                                 startPosition, endPosition,
@@ -1022,12 +1026,7 @@ public class Status implements Parcelable {
                                                      public void updateDrawState(@NonNull TextPaint ds) {
                                                          super.updateDrawState(ds);
                                                          ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                         ds.setColor(link_color);
                                                      }
                                                  },
                                 startPosition, endPosition,
@@ -1059,12 +1058,7 @@ public class Status implements Parcelable {
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -1093,12 +1087,7 @@ public class Status implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -1108,6 +1097,20 @@ public class Status implements Parcelable {
     }
 
     public static void transformTranslation(Context context, Status status) {
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if( l_c == -1) {
+            if (theme == THEME_DARK)
+                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
+            else if (theme == THEME_BLACK)
+                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
+            else if (theme == THEME_LIGHT)
+                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+        }
+        final int link_color = l_c;
 
         if (((Activity) context).isFinishing() || status == null)
             return;
@@ -1128,8 +1131,8 @@ public class Status implements Parcelable {
         }
         SpannableString contentSpanTranslated = status.getContentSpanTranslated();
         Matcher matcherALink = Patterns.WEB_URL.matcher(contentSpanTranslated.toString());
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+
         while (matcherALink.find()) {
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
@@ -1148,12 +1151,7 @@ public class Status implements Parcelable {
                                                   public void updateDrawState(@NonNull TextPaint ds) {
                                                       super.updateDrawState(ds);
                                                       ds.setUnderlineText(false);
-                                                      if (theme == THEME_DARK)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                      else if (theme == THEME_BLACK)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                      else if (theme == THEME_LIGHT)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                      ds.setColor(link_color);
                                                   }
                                               },
                         matchStart, matchEnd,

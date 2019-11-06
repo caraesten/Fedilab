@@ -41,6 +41,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -2105,6 +2107,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if (holder.status_boosted_by_info != null) {
                     holder.status_boosted_by_info.setVisibility(View.GONE);
                 }
+            }
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            int reblogColor = prefs.getInt("theme_boost_header_color", -1);
+            if( reblogColor != -1 ){
+                holder.status_boosted_by_info.setBackgroundColor(reblogColor);
             }
             if (type == RetrieveFeedsAsyncTask.Type.CONVERSATION && status.getConversationProfilePicture() != null) {
                 holder.status_account_profile.setVisibility(View.GONE);

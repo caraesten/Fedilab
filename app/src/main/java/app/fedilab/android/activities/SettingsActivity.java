@@ -36,6 +36,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 import app.fedilab.android.R;
+import app.fedilab.android.fragments.ColorSettingsFragment;
 import app.fedilab.android.fragments.ContentSettingsFragment;
 import app.fedilab.android.helper.Helper;
 
@@ -98,6 +99,7 @@ public class SettingsActivity extends BaseActivity  {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings_category_label_interface)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.compose)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.colors)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.hide_menu_items)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.administration)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.languages)));
@@ -168,12 +170,14 @@ public class SettingsActivity extends BaseActivity  {
                     typeOfSettings = ContentSettingsFragment.type.COMPOSE;
                     break;
                 case 4:
+                    return new ColorSettingsFragment();
+                case 5:
                     typeOfSettings = ContentSettingsFragment.type.MENU;
                     break;
-                case 5:
+                case 6:
                     typeOfSettings = ContentSettingsFragment.type.ADMIN;
                     break;
-                case 6:
+                case 7:
                     typeOfSettings = ContentSettingsFragment.type.LANGUAGE;
                     break;
                 default:
@@ -189,7 +193,7 @@ public class SettingsActivity extends BaseActivity  {
 
         @Override
         public int getCount() {
-            return 7;
+            return 8;
         }
     }
 
