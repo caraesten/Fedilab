@@ -1144,6 +1144,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="reset_color">Réinitialiser les couleurs</string>
     <string name="clik_reset">Cliquez ici pour réinitialiser toutes vos couleurs personnalisées</string>
     <string name="reset">Réinitialiser</string>
-    <string name="icons_color_title">Icons</string>
-    <string name="icons_color">Color of bottom icons in timelines</string>
+    <string name="icons_color_title">Icônes</string>
+    <string name="icons_color">Couleur des icônes du bas dans les fils</string>
 </resources>
