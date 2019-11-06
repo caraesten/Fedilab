@@ -184,6 +184,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.social;
+import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
@@ -829,6 +830,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_reply_indicator_diag_top = itemView.findViewById(R.id.status_reply_indicator_diag_top);
             status_reply_indicator_diag_bottom = itemView.findViewById(R.id.status_reply_indicator_diag_bottom);
             reply_indicator_dot = itemView.findViewById(R.id.reply_indicator_dot);
+            Context context = itemView.getContext();
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if(status_reply_indicator_diag_top != null ) {
+                if (theme == THEME_BLACK) {
+                    status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top_black);
+                    status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom_black);
+                } else {
+                    status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top);
+                    status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
+                }
+            }
         }
 
         void updateAnimatedEmoji() {

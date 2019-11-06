@@ -33,7 +33,6 @@
         android:id="@+id/status_reply_indicator_diag_top"
         android:layout_width="20dp"
         android:layout_height="11dp"
-        android:background="@drawable/diag_top"
         android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -80,7 +79,6 @@
         android:layout_width="20dp"
         android:layout_height="11dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/diag_bottom"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
