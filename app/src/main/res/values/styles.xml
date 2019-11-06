@@ -13,6 +13,7 @@
     <attr format="color" name="textColor" />
     <attr format="color" name="cardBorder" />
     <attr format="color" name="boostcolor" />
+    <attr format="color" name="iconcolor" />
     <attr name="statusBackgroundColor" format="color" />
 
     <!-- Light theme -->
@@ -26,6 +27,7 @@
         <item name="cardBorder">@color/cardBorderLight</item>
         <item name="boostcolor">@color/mastodonC2</item>
         <item name="textColor">@color/black</item>
+        <item name="iconcolor">@color/black</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
         <item name="headerbg">@style/Header.Light</item>
         <item name="android:windowBackground">@color/white</item>
@@ -73,6 +75,7 @@
         <item name="cardBorder">@color/cardBorderLight</item>
         <item name="boostcolor">@color/mastodonC2</item>
         <item name="textColor">@color/black</item>
+        <item name="iconcolor">@color/black</item>
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
@@ -211,6 +214,7 @@
         <item name="cardBorder">@color/cardBorderBlack</item>
         <item name="boostcolor">@color/mastodonC1_</item>
         <item name="textColor">@color/light_grey</item>
+        <item name="iconcolor">@color/light_grey</item>
         <item name="android:buttonStyle">@style/BlackButtonColor</item>
         <item name="headerbg">@style/Header.Black</item>
         <item name="android:windowBackground">@color/black</item>
@@ -245,6 +249,7 @@
         <item name="cardBorder">@color/cardBorderBlack</item>
         <item name="boostcolor">@color/mastodonC1_</item>
         <item name="textColor">@color/light_grey</item>
+        <item name="iconcolor">@color/light_grey</item>
         <item name="android:buttonStyle">@style/BlackButtonColor</item>
         <item name="headerbg">@style/Header.Black</item>
         <item name="android:windowBackground">@color/black</item>
@@ -342,6 +347,7 @@
         <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="cardStyleOver">@style/CardViewStyleOver.Dark</item>
         <item name="textColor">@color/light_grey</item>
+        <item name="iconcolor">@color/light_grey</item>
         <item name="android:buttonStyle">@style/DarkButtonColor</item>
         <item name="headerbg">@style/Header.Dark</item>
         <item name="cardBorder">@color/cardBorderDark</item>
@@ -376,6 +382,7 @@
         <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="cardStyleOver">@style/CardViewStyleOver.Dark</item>
         <item name="textColor">@color/light_grey</item>
+        <item name="iconcolor">@color/light_grey</item>
         <item name="android:buttonStyle">@style/DarkButtonColor</item>
         <item name="cardBorder">@color/cardBorderDark</item>
         <item name="boostcolor">@color/mastodonC1___</item>
@@ -485,6 +492,7 @@
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="cardBorder">@color/cardBorderLight</item>
         <item name="textColor">@color/dark_text</item>
+        <item name="iconcolor">@color/dark_text</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
         <item name="headerbg">@style/Header.Light</item>
         <item name="android:windowBackground">@color/mastodonC1__</item>

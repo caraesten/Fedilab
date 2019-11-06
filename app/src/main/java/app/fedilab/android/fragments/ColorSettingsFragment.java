@@ -45,6 +45,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat {
                         editor.remove("theme_boost_header_color");
                         editor.remove("theme_statuses_color");
                         editor.remove("theme_link_color");
+                        editor.remove("theme_icons_color");
                         editor.commit();
                         dialog.dismiss();
                         setPreferenceScreen(null);
