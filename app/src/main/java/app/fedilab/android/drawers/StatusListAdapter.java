@@ -621,7 +621,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Button status_spoiler_button;
         CustomTextView status_content;
         TextView status_content_translated;
-        LinearLayout status_content_translated_container;
+        ConstraintLayout status_content_translated_container;
         TextView status_account_username;
         TextView status_account_displayname, status_account_displayname_owner;
         ImageView status_account_profile;
