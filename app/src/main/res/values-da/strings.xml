@@ -1147,8 +1147,8 @@
     <string name="reset_color">Reset colors</string>
     <string name="clik_reset">Click here to reset all your custom colors</string>
     <string name="reset">Reset</string>
-    <string name="icons_color_title">Icons</string>
-    <string name="icons_color">Color of bottom icons in timelines</string>
-    <string name="background_color_title">Background</string>
-    <string name="background_color">Change the background color for timelines</string>
+    <string name="icons_color_title">Ikoner</string>
+    <string name="icons_color">Farve på bundikoner på tidslinjer</string>
+    <string name="background_color_title">Baggrund</string>
+    <string name="background_color">Skift baggrundsfarven for tidslinjer</string>
 </resources>
