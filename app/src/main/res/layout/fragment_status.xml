@@ -17,6 +17,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
+    android:id="@+id/main_timeline_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- Listview status -->

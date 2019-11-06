@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -118,7 +119,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if (bundle != null) {
             type = (Type) bundle.get("type");
         }
-
+        RelativeLayout main_timeline_container;
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_notifications);
@@ -151,7 +152,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
             }
         });
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        main_timeline_container = rootView.findViewById(R.id.main_timeline_container);
+        int mainBackgroundColor = prefs.getInt("theme_background_color", -1);
+        if(  main_timeline_container != null && mainBackgroundColor != -1  ){
+            main_timeline_container.setBackgroundColor(mainBackgroundColor);
+        }
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 

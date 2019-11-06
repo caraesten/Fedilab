@@ -30,7 +30,12 @@
         android:title="@string/icons_color_title"
         android:summary="@string/icons_color"/>
 
-
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="-1"
+        android:key="theme_background_color"
+        android:title="@string/background_color_title"
+        android:summary="@string/background_color"/>
     <Preference android:title="@string/reset_color"
         app:iconSpaceReserved="false"
         android:id="@+id/resetButton"
