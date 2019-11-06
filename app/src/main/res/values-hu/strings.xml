@@ -1145,4 +1145,6 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="reset_color">Reset colors</string>
     <string name="clik_reset">Click here to reset all your custom colors</string>
     <string name="reset">Reset</string>
+    <string name="icons_color_title">Icons</string>
+    <string name="icons_color">Color of bottom icons in timelines</string>
 </resources>
