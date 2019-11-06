@@ -1150,4 +1150,6 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="reset_color">Reset colors</string>
     <string name="clik_reset">Click here to reset all your custom colors</string>
     <string name="reset">Reset</string>
+    <string name="icons_color_title">Icons</string>
+    <string name="icons_color">Color of bottom icons in timelines</string>
 </resources>
