@@ -1897,7 +1897,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 builder.setTitle(R.string.insert_emoji);
                 if (emojis != null && emojis.size() > 0) {
                     GridView gridView = new GridView(TootActivity.this);
-                    gridView.setAdapter(new CustomEmojiAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, emojis));
+                    gridView.setAdapter(new CustomEmojiAdapter(emojis));
                     gridView.setNumColumns(5);
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

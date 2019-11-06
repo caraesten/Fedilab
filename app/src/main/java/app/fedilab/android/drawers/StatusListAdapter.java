@@ -1271,7 +1271,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 builder.setTitle(R.string.insert_emoji);
                 if (emojisPicker != null && emojisPicker.size() > 0) {
                     GridView gridView = new GridView(context);
-                    gridView.setAdapter(new CustomEmojiAdapter(context, android.R.layout.simple_list_item_1, emojisPicker));
+                    gridView.setAdapter(new CustomEmojiAdapter(emojisPicker));
                     gridView.setNumColumns(5);
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
