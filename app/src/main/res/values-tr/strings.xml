@@ -1130,4 +1130,18 @@
     <string name="title_video_peertube">Video başlığı</string>
     <string name="join_peertube">Join Peertube</string>
     <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
+    <string name="colors">Renkler</string>
+    <string name="link_color_title">Linkler</string>
+    <string name="link_color">Mesajlardaki linklerin (URL\'ler, bahsedilmeler, etiketler, vb.) rengini değiştirin</string>
+    <string name="boost_header_color_title">Başlığı tekrar bloglar</string>
+    <string name="boost_header_color">Tekrar bloglamalar için başlığın rengini değiştirin</string>
+    <string name="background_status_title">Gönderiler</string>
+    <string name="background_status">Gönderilerin zaman çizelgelerindeki arka plan rengi</string>
+    <string name="reset_color">Renkleri sıfırla</string>
+    <string name="clik_reset">Tüm özel renklerinizi sıfırlamak için buraya tıklayın</string>
+    <string name="reset">Sıfırla</string>
+    <string name="icons_color_title">Icons</string>
+    <string name="icons_color">Color of bottom icons in timelines</string>
+    <string name="background_color_title">Background</string>
+    <string name="background_color">Change the background color for timelines</string>
 </resources>
