@@ -1146,6 +1146,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="reset">Réinitialiser</string>
     <string name="icons_color_title">Icônes</string>
     <string name="icons_color">Couleur des icônes du bas dans les fils</string>
-    <string name="background_color_title">Background</string>
-    <string name="background_color">Change the background color for timelines</string>
+    <string name="background_color_title">Arrière-plan</string>
+    <string name="background_color">Changer la couleur d\'arrière-plan des fils</string>
 </resources>
