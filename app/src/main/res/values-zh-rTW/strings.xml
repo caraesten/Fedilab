@@ -897,7 +897,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="toast_error_instance_reg">在檢查可用站台時發生了些問題！</string>
     <string name="join_mastodon">加入 Mastodon</string>
     <string name="pickup_instance_category">透過挑選分類，然後按下按鈕來選擇站台。</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">點擊勾選按鈕來選擇站臺。</string>
     <string name="users">%1$s 位使用者</string>
     <string name="password_confirm">確認密碼</string>
     <string name="agreement_check">我同意 %1$s 和 %2$s</string>
@@ -1129,6 +1129,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="fetch_conversation">擷取對話</string>
     <string name="order_by">排序由</string>
     <string name="title_video_peertube">影片標題</string>
-    <string name="join_peertube">Join Peertube</string>
-    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
+    <string name="join_peertube">加入 Peertube</string>
+    <string name="agreement_check_peertube">我至少 16 歲並同意此站臺的 %1$s</string>
 </resources>
