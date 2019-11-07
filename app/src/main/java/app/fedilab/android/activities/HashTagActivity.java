@@ -92,8 +92,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
         setContentView(R.layout.activity_hashtag);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(HashTagActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
@@ -168,8 +166,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         return super.onPrepareOptionsMenu(menu);
     }
 

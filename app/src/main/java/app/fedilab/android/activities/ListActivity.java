@@ -96,8 +96,6 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         }
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(ListActivity.this, R.color.black));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -110,13 +110,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         }
         setContentView(R.layout.activity_media_pager);
         CoordinatorLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
-        if (theme == Helper.THEME_LIGHT) {
-            swipeBackLayout.setBackgroundResource(R.color.white);
-        } else if (theme == Helper.THEME_BLACK) {
-            swipeBackLayout.setBackgroundResource(R.color.black);
-        } else if (theme == Helper.THEME_DARK) {
-            swipeBackLayout.setBackgroundResource(R.color.mastodonC1);
-        }
+
         fullscreen = false;
         media_description = findViewById(R.id.media_description);
         flags = getWindow().getDecorView().getSystemUiVisibility();
@@ -178,10 +172,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 }
             });
             toolbar_title.setText("");
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, SlideMediaActivity.this);
-            }
         }
 
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");

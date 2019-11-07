@@ -157,9 +157,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
             });
             TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            if (theme == Helper.THEME_LIGHT) {
-                Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerNotificationActivity.this);
-            }
             toolbarTitle.setText(getString(R.string.owner_cached_notifications));
         }
         notifications = new ArrayList<>();
@@ -198,26 +195,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveNotificationsCacheAsyncTask(OwnerNotificationActivity.this, filterNotifications, null, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.black_3));
-                break;
-        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

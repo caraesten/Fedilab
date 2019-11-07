@@ -206,30 +206,15 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
                 toolbar_title.setText(R.string.add_account);
-                if (theme == Helper.THEME_LIGHT) {
-                    Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                    Helper.colorizeToolbar(toolbar, R.color.black, LoginActivity.this);
-                }
             }
-            if (theme == Helper.THEME_DARK) {
-                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon_item, R.color.mastodonC2);
-            } else {
-                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon_item, R.color.mastodonC3);
-            }
+
 
             TextView create_an_account_message = findViewById(R.id.create_an_account);
             TextView create_an_account_peertube = findViewById(R.id.create_an_account_peertube);
             SpannableString content_create = new SpannableString(getString(R.string.join_mastodon));
             content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
-            if (theme == Helper.THEME_DARK)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.dark_link_toot)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            else if (theme == Helper.THEME_BLACK)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.black_link_toot)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            else if (theme == Helper.THEME_LIGHT)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.colorAccent)), 0, content_create.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             create_an_account_message.setText(content_create);
             create_an_account_message.setOnClickListener(v -> {
                 Intent mainActivity = new Intent(LoginActivity.this, MastodonRegisterActivity.class);
@@ -240,15 +225,8 @@ public class LoginActivity extends BaseActivity {
 
             content_create = new SpannableString(getString(R.string.join_peertube));
             content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
-            if (theme == Helper.THEME_DARK)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.dark_link_toot)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            else if (theme == Helper.THEME_BLACK)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.black_link_toot)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            else if (theme == Helper.THEME_LIGHT)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.colorAccent)), 0, content_create.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             create_an_account_peertube.setText(content_create);
             create_an_account_peertube.setOnClickListener(v -> {
                 Intent mainActivity = new Intent(LoginActivity.this, PeertubeRegisterActivity.class);

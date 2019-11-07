@@ -322,12 +322,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         accountUrl = account.getUrl();
-        if (theme == Helper.THEME_LIGHT) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline, R.color.black);
-        } else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline, R.color.mastodonC3);
-        }
-
         int style;
         if (theme == Helper.THEME_LIGHT)
             style = R.style.Dialog;
@@ -406,15 +400,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final TextView warning_message = findViewById(R.id.warning_message);
         final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        if (theme == Helper.THEME_DARK)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.dark_link_toot)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_BLACK)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.black_link_toot)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_LIGHT)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.colorAccent)), 0, content.length(),
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         warning_message.setText(content);
         warning_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -453,10 +440,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if (account.getMoved_to_account() != null) {
             TextView account_moved = findViewById(R.id.account_moved);
             account_moved.setVisibility(View.VISIBLE);
-            if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK)
-                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel, R.color.dark_icon);
-            else
-                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel, R.color.black);
             Drawable imgTravel = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_card_travel);
             assert imgTravel != null;
             imgTravel.setBounds(0, 0, (int) (20 * scale + 0.5f), (int) (20 * scale + 0.5f));
@@ -652,23 +635,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             break;
                     }
                     if (field != null && labelView != null && valueView != null) {
-                        switch (theme) {
-                            case Helper.THEME_LIGHT:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
-                                break;
-                            case Helper.THEME_DARK:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
-                                break;
-                            case Helper.THEME_BLACK:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
-                                break;
-                            default:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
-                        }
                         field.setVisibility(View.VISIBLE);
                         if (verified) {
                             verifiedView.setBackgroundResource(R.drawable.verified);

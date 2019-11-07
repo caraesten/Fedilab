@@ -93,8 +93,6 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         no_action = findViewById(R.id.no_action);
         Toolbar toolbar = findViewById(R.id.toolbar);
         progess_action = findViewById(R.id.progess_action);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(WhoToFollowActivity.this, R.color.black));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

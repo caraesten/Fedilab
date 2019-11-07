@@ -111,10 +111,6 @@ public class WebviewConnectActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(R.string.add_account);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, WebviewConnectActivity.this);
-            }
         }
         webView = findViewById(R.id.webviewConnect);
         clearCookies(getApplicationContext());

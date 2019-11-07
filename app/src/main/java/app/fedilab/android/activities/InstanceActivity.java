@@ -99,10 +99,6 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
                 }
             });
             toolbar_title.setText(R.string.action_about_instance);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, InstanceActivity.this);
-            }
         }
         setContentView(R.layout.activity_instance);
         Helper.changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline, R.color.white);

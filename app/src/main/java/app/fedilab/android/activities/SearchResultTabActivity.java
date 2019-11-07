@@ -117,10 +117,6 @@ public class SearchResultTabActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(search);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, SearchResultTabActivity.this);
-            }
         }
         setTitle(search);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tags)));

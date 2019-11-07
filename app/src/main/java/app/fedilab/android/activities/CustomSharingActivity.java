@@ -116,10 +116,6 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                     }
                 });
             }
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, CustomSharingActivity.this);
-            }
         } else {
             setTitle(R.string.settings_title_custom_sharing);
         }

@@ -216,10 +216,6 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                 popup.show();
             });
             toolbar_title.setText(R.string.blocked_domains);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, MutedInstanceActivity.this);
-            }
         }
         setContentView(R.layout.activity_muted_instances);
 

@@ -156,9 +156,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             });
             TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            if (theme == Helper.THEME_LIGHT) {
-                Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerStatusActivity.this);
-            }
             toolbarTitle.setText(getString(R.string.owner_cached_toots));
         }
         statuses = new ArrayList<>();
@@ -196,26 +193,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black_3));
-                break;
-        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -252,10 +229,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_owner_cache, menu);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
 

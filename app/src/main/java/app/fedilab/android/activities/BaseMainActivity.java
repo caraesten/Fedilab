@@ -329,19 +329,6 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         delete_instance = findViewById(R.id.delete_instance);
         display_timeline = findViewById(R.id.display_timeline);
-        if (theme == Helper.THEME_LIGHT) {
-            ImageView icon = toolbar_search.findViewById(R.id.search_button);
-            ImageView close = toolbar_search.findViewById(R.id.search_close_btn);
-            if (icon != null)
-                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
-            if (close != null)
-                close.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
-            EditText editText = toolbar_search.findViewById(R.id.search_src_text);
-            editText.setHintTextColor(getResources().getColor(R.color.dark_icon));
-            editText.setTextColor(getResources().getColor(R.color.dark_icon));
-            changeDrawableColor(BaseMainActivity.this, delete_instance, R.color.dark_icon);
-            changeDrawableColor(BaseMainActivity.this, display_timeline, R.color.dark_icon);
-        }
 
         tabLayout = findViewById(R.id.tabLayout);
 
@@ -446,10 +433,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
             iconSub.setImageResource(R.drawable.ic_subscriptions);
 
-            if (theme == Helper.THEME_BLACK)
-                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-            else
-                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
 
 
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
@@ -477,20 +460,6 @@ public abstract class BaseMainActivity extends BaseActivity
             iconLocal.setContentDescription(getString(R.string.local));
 
 
-            if (theme == Helper.THEME_LIGHT) {
-                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconOver.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconTrend.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconAdded.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            } else {
-                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconOver.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconTrend.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconAdded.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            }
-
             toot.setImageResource(R.drawable.ic_cloud_upload);
 
             tabLayout.addTab(pTabsub);
@@ -516,38 +485,16 @@ public abstract class BaseMainActivity extends BaseActivity
                     tootShow();
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
-                    if (tab.getCustomView() != null) {
-                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                        if (icon != null)
-                            if (theme == Helper.THEME_BLACK)
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                            else
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-
-                    }
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
-                    if (tab.getCustomView() != null) {
-                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                        if (icon != null)
-                            if (theme == Helper.THEME_LIGHT)
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                            else
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                    }
+
                 }
 
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
                     if (tab.getCustomView() != null) {
-                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                        if (icon != null)
-                            if (theme == Helper.THEME_BLACK)
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                            else
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
                         if (viewPager.getAdapter() != null) {
                             Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                             DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
@@ -583,11 +530,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
             iconHome.setImageResource(R.drawable.ic_home);
 
-            if (theme == Helper.THEME_BLACK)
-                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-            else
-                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-
 
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconLocal = pfTabLocal.getCustomView().findViewById(R.id.tab_icon);
@@ -607,18 +549,6 @@ public abstract class BaseMainActivity extends BaseActivity
             // iconDiscover.setContentDescription(getString(R.string.overview));
             iconLocal.setContentDescription(getString(R.string.local));
             iconNotif.setContentDescription(getString(R.string.notifications));
-
-            if (theme == Helper.THEME_LIGHT) {
-                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            } else {
-                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            }
 
 
             tabLayout.addTab(pfTabHome);
@@ -645,38 +575,15 @@ public abstract class BaseMainActivity extends BaseActivity
                     tootShow();
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
-                    if (tab.getCustomView() != null) {
-                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                        if (icon != null)
-                            if (theme == Helper.THEME_BLACK)
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                            else
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-
-                    }
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
-                    if (tab.getCustomView() != null) {
-                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                        if (icon != null)
-                            if (theme == Helper.THEME_LIGHT)
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                            else
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                    }
                 }
 
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
                     if (tab.getCustomView() != null) {
-                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                        if (icon != null)
-                            if (theme == Helper.THEME_BLACK)
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                            else
-                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
                         if (viewPager.getAdapter() != null) {
                             Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                             if( fragment instanceof DisplayStatusFragment) {
@@ -711,33 +618,6 @@ public abstract class BaseMainActivity extends BaseActivity
             style = R.style.Dialog;
         }
 
-
-        if (theme == Helper.THEME_LIGHT) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_home, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_people, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_public, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens, R.color.dark_icon);
-
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_subscriptions, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_overview, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_trending_up, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added, R.color.dark_icon);
-
-        } else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_home, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_people, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_public, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens, R.color.dark_text);
-
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_subscriptions, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_overview, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_trending_up, R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added, R.color.dark_text);
-        }
 
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             Helper.startStreaming(BaseMainActivity.this);
@@ -2215,38 +2095,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                if (tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    TextView tv = tab.getCustomView().findViewById(R.id.host_name);
-
-                    if (icon != null)
-                        if (theme == Helper.THEME_BLACK)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-                    else if (tv != null) {
-                        tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
-                    }
-                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if (tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    TextView tv = tab.getCustomView().findViewById(R.id.host_name);
-                    if (icon != null)
-                        if (theme == Helper.THEME_LIGHT)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                    else if (tv != null) {
-                        if (theme == Helper.THEME_LIGHT)
-                            tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
-                        else
-                            tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_text));
-                    }
-                }
             }
 
             @Override
@@ -2293,39 +2145,9 @@ public abstract class BaseMainActivity extends BaseActivity
                         displayStatusFragment.scrollToTop();
                     }
                 }
-                if (tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    if (icon != null)
-                        if (theme == Helper.THEME_BLACK)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-                }
             }
         });
 
-        if (tabLayout.getTabCount() > position) {
-            TabLayout.Tab tab = tabLayout.getTabAt(position);
-            if (tab != null) {
-                tab.select();
-                if (tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    if (icon != null) {
-                        if (theme == Helper.THEME_BLACK)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-                    } else {
-                        TextView tv = tabLayout.getChildAt(0).findViewById(android.R.id.title);
-                        if (tv != null)
-                            if (theme == Helper.THEME_BLACK)
-                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
-                            else
-                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
-                    }
-                }
-            }
-        }
 
         //Scroll to top when top bar is clicked for favourites/blocked/muted
         toolbarTitle.setOnClickListener(new View.OnClickListener() {

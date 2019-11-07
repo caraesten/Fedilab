@@ -116,10 +116,6 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
                 }
             });
             toolbar_title.setText(R.string.sign_up);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeRegisterActivity.this);
-            }
         }
 
 
@@ -214,17 +210,8 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
         TextView change_instance = findViewById(R.id.change_instance);
         final SpannableString change = new SpannableString(String.format("(%s)", getString(R.string.change)));
         change.setSpan(new UnderlineSpan(), 0, change.length(), 0);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.dark_link_toot)), 0, change.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_BLACK)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.black_link_toot)), 0, change.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_LIGHT)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.mastodonC4)), 0, change.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.colorAccent)), 0, change.length(),
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         change_instance.setText(change);
         change_instance.setOnClickListener(view -> {
             drawer_layout.setVisibility(View.VISIBLE);

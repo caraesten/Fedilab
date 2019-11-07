@@ -46,6 +46,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -379,10 +380,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
             });
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, TootActivity.this);
-            }
             title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
@@ -1731,9 +1728,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance(getString(R.string.which_language));  // dialog title
                 if (theme == Helper.THEME_LIGHT) {
-                    picker.setStyle(R.style.AppTheme, R.style.Dialog);
+                    picker.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog);
                 } else {
-                    picker.setStyle(R.style.AppThemeDark, R.style.DialogDark);
+                    picker.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogDark);
                 }
                 if (toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
                     return true;
@@ -2383,8 +2380,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         changeColor();
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);

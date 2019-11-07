@@ -110,15 +110,10 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 }
             });
             toolbar_title.setText(R.string.upload_video);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PlaylistsActivity.this);
-            }
+
         }
         setContentView(R.layout.activity_playlists);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(PlaylistsActivity.this, R.color.black));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -190,27 +185,6 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
                 new ManagePlaylistsAsyncTask(PlaylistsActivity.this, GET_LIST_VIDEOS, playlist, null, null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(PlaylistsActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(PlaylistsActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(PlaylistsActivity.this, R.color.black_3));
-                break;
-        }
 
         new ManagePlaylistsAsyncTask(PlaylistsActivity.this, GET_LIST_VIDEOS, playlist, null, null, PlaylistsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }

@@ -99,10 +99,6 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
                 }
             });
             toolbar_title.setText("Open Collective");
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, OpencollectiveActivity.this);
-            }
         }
         setContentView(R.layout.activity_opencollective);
 

@@ -251,10 +251,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     finish();
                 }
             });
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
-            }
         }
 
 
@@ -372,10 +368,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         menu.findItem(R.id.action_go).setVisible(false);
         menu.findItem(R.id.action_block).setVisible(false);
         menu.findItem(R.id.action_comment).setVisible(true);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             MenuItem item = menu.findItem(R.id.action_comment);
             if (item != null)

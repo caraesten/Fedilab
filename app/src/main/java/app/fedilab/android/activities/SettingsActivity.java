@@ -84,10 +84,6 @@ public class SettingsActivity extends BaseActivity  {
                 }
             });
             toolbar_title.setText(R.string.settings);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, SettingsActivity.this);
-            }
         }
         setContentView(R.layout.activity_settings);
 

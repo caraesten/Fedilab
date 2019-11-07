@@ -337,10 +337,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 }
             });
             toolbar_title.setText(R.string.action_reorder_timeline);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, ReorderTimelinesActivity.this);
-            }
         }
         setContentView(R.layout.activity_reorder_tabs);
 
@@ -372,8 +368,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
     @Override
     public void onUndo(ManageTimelines manageTimelines, int position) {
-        if (theme == Helper.THEME_LIGHT)
-            undo_container.setBackgroundColor(getResources().getColor(R.color.mastodonC3));
         undo_container.setVisibility(View.VISIBLE);
         switch (manageTimelines.getType()) {
             case TAG:

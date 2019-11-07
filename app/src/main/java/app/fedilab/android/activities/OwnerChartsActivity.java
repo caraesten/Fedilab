@@ -146,10 +146,6 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             } else {
                 toolbar_title.setText(R.string.owner_charts);
             }
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, OwnerChartsActivity.this);
-            }
         }
         setContentView(R.layout.activity_ower_charts);
 
@@ -242,13 +238,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         public CustomMarkerView(Context context, int layoutResource) {
             super(context, layoutResource);
             tvContent = findViewById(R.id.tvContent);
-            if (theme == Helper.THEME_DARK) {
-                tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            } else if (theme == Helper.THEME_BLACK) {
-                tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            } else {
-                tvContent.setTextColor(ContextCompat.getColor(context, R.color.black));
-            }
+            tvContent.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
         @Override

@@ -78,10 +78,6 @@ public class PrivacyActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(R.string.action_privacy);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PrivacyActivity.this);
-            }
         }
         setContentView(R.layout.activity_privacy);
         setTitle(getString(R.string.action_privacy));

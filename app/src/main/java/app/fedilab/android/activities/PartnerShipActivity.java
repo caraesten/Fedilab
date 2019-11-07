@@ -101,10 +101,6 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
                 }
             });
             toolbar_title.setText(R.string.action_partnership);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PartnerShipActivity.this);
-            }
         }
 
         TextView about_partnership = findViewById(R.id.about_partnership);

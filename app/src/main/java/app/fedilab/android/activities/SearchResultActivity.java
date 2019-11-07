@@ -113,10 +113,6 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                 }
             });
             toolbar_title.setText(search);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, SearchResultActivity.this);
-            }
         }
         setTitle(search);
         loader.setVisibility(View.VISIBLE);

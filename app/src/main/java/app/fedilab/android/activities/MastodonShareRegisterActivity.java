@@ -112,10 +112,6 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
                 }
             });
             toolbar_title.setText(R.string.sign_up);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, MastodonShareRegisterActivity.this);
-            }
         }
         if (this.getIntent() == null || this.getIntent().getData() == null) {
             Intent mainActivity = new Intent(MastodonShareRegisterActivity.this, MastodonRegisterActivity.class);

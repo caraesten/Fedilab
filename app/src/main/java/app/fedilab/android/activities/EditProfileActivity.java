@@ -147,10 +147,6 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                     }
                 });
             }
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, EditProfileActivity.this);
-            }
         } else {
             setTitle(R.string.settings_title_profile);
         }

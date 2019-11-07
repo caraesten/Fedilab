@@ -112,10 +112,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 }
             });
             toolbar_title.setText(R.string.action_about);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, AboutActivity.this);
-            }
         }
         setContentView(R.layout.activity_about);
         TextView about_version = findViewById(R.id.about_version);

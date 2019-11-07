@@ -297,10 +297,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     }
                 }
             });
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PixelfedComposeActivity.this);
-            }
             title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
