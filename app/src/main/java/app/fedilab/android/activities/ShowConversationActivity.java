@@ -23,18 +23,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -69,7 +63,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     private Status detailsStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView lv_status;
-    private ImageView pp_actionBar;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
     private boolean expanded;
@@ -84,26 +77,13 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.AppTheme_NoActionBar_Fedilab);
+        } else {
+            setTheme(R.style.AppThemeDark_NoActionBar);
         }
-
         setContentView(R.layout.activity_show_conversation);
         lv_status = findViewById(R.id.lv_status);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black));
-        setSupportActionBar(toolbar);
         spoilerShown = spoilerBehaviour = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
         Bundle b = getIntent().getExtras();
         statuses = new ArrayList<>();
@@ -138,99 +118,85 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
         }
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (getSupportActionBar() != null) {
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-            assert inflater != null;
-            View view = inflater.inflate(R.layout.conversation_action_bar, new LinearLayout(getApplicationContext()), false);
-            getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
-            ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
-            ImageView action_expand = getSupportActionBar().getCustomView().findViewById(R.id.action_expand);
-            title.setText(R.string.conversation);
-            ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
-            ImageView action_unhide = getSupportActionBar().getCustomView().findViewById(R.id.action_unhide);
-            if (expanded)
-                action_expand.setImageResource(R.drawable.ic_expand_less);
-            else
-                action_expand.setImageResource(R.drawable.ic_expand_more);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (lv_status != null) {
-                        lv_status.setAdapter(statusListAdapter);
-                    }
+        TextView title = findViewById(R.id.toolbar_title);
+        ImageView pp_actionBar = findViewById(R.id.pp_actionBar);
+        ImageView action_refresh = findViewById(R.id.action_refresh);
+        ImageView action_expand = findViewById(R.id.action_expand);
+        title.setText(R.string.conversation);
+        ImageView close_conversation = findViewById(R.id.close_conversation);
+        ImageView action_unhide = findViewById(R.id.action_unhide);
+        if (expanded)
+            action_expand.setImageResource(R.drawable.ic_expand_less);
+        else
+            action_expand.setImageResource(R.drawable.ic_expand_more);
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (lv_status != null) {
+                    lv_status.setAdapter(statusListAdapter);
                 }
-            });
-            if (close_conversation != null) {
-                close_conversation.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
             }
-            action_refresh.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable("status", detailsStatus);
-                    b.putBoolean("expanded", expanded);
-                    if (expanded && statuses != null && statuses.size() > 0)
-                        b.putParcelable("initialStatus", statuses.get(0));
-                    intent.putExtras(b);
-                    finish();
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }
-            });
-            action_unhide.setOnClickListener(new View.OnClickListener() {
+        });
+        if (close_conversation != null) {
+            close_conversation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (statuses != null && statuses.size() > 0) {
-                        spoilerShown = !spoilerShown;
-                        for (Status status : statuses) {
-                            if (spoilerBehaviour && !status.isSpoilerShown()) {
-                                status.setAutoHiddenCW(true);
-                            } else {
-                                status.setAutoHiddenCW(false);
-                            }
-                            status.setSpoilerShown(spoilerShown);
-                            status.setShowSpoiler(spoilerShown);
-                        }
-                        statusListAdapter.notifyItemRangeChanged(0, statuses.size());
-                    }
-
-                }
-            });
-            action_expand.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    expanded = !expanded;
-                    Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable("status", detailsStatus);
-                    b.putBoolean("expanded", expanded);
-                    if (expanded && statuses != null && statuses.size() > 0)
-                        b.putParcelable("initialStatus", statuses.get(0));
-                    intent.putExtras(b);
                     finish();
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
                 }
             });
-
-            if (theme == Helper.THEME_LIGHT) {
-                Helper.colorizeToolbar(getSupportActionBar().getCustomView().findViewById(R.id.toolbar), R.color.black, ShowConversationActivity.this);
-            }
-        } else {
-            setTitle(R.string.conversation);
         }
+        action_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", detailsStatus);
+                b.putBoolean("expanded", expanded);
+                if (expanded && statuses != null && statuses.size() > 0)
+                    b.putParcelable("initialStatus", statuses.get(0));
+                intent.putExtras(b);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+        action_unhide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (statuses != null && statuses.size() > 0) {
+                    spoilerShown = !spoilerShown;
+                    for (Status status : statuses) {
+                        if (spoilerBehaviour && !status.isSpoilerShown()) {
+                            status.setAutoHiddenCW(true);
+                        } else {
+                            status.setAutoHiddenCW(false);
+                        }
+                        status.setSpoilerShown(spoilerShown);
+                        status.setShowSpoiler(spoilerShown);
+                    }
+                    statusListAdapter.notifyItemRangeChanged(0, statuses.size());
+                }
+
+            }
+        });
+        action_expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expanded = !expanded;
+                Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", detailsStatus);
+                b.putBoolean("expanded", expanded);
+                if (expanded && statuses != null && statuses.size() > 0)
+                    b.putParcelable("initialStatus", statuses.get(0));
+                intent.putExtras(b);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+            }
+        });
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -266,26 +232,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             statusIdToFetch = conversationId;
 
         new RetrieveContextAsyncTask(getApplicationContext(), expanded, detailsStatus.getVisibility().equals("direct"), statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black_3));
-                break;
-        }
         swipeRefreshLayout.setDistanceToTriggerSync(500);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -329,16 +275,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onDestroy() {
@@ -413,21 +349,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 final LinearLayoutManager mLayoutManager;
                 mLayoutManager = new LinearLayoutManager(this);
                 lv_status.setLayoutManager(mLayoutManager);
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                switch (theme) {
-                    case Helper.THEME_LIGHT:
-                        setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                        break;
-                    case Helper.THEME_DARK:
-                        setTheme(R.style.AppThemeDark_NoActionBar);
-                        break;
-                    case Helper.THEME_BLACK:
-                        setTheme(R.style.AppThemeBlack_NoActionBar);
-                        break;
-                    default:
-                        setTheme(R.style.AppThemeDark_NoActionBar);
-                }
 
                 lv_status.setAdapter(statusListAdapter);
             }

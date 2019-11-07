@@ -277,7 +277,8 @@
             android:name="app.fedilab.android.activities.ShowAccountActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.TootInfoActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
@@ -287,7 +288,8 @@
             android:name="app.fedilab.android.activities.HashTagActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.WebviewConnectActivity"
             android:label="@string/app_name"
@@ -299,7 +301,8 @@
         <activity
             android:name="app.fedilab.android.activities.PlaylistsActivity"
             android:label="@string/app_name"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.PhotoEditorActivity"
             android:label="@string/app_name"
@@ -333,23 +336,27 @@
             android:name="app.fedilab.android.activities.ListActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.WhoToFollowActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.ShowConversationActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.OwnerStatusActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.OwnerNotificationChartsActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
@@ -367,7 +374,8 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.AboutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
@@ -482,7 +490,8 @@
             android:name="app.fedilab.android.activities.GroupActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

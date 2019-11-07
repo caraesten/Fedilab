@@ -48,25 +48,12 @@ public class ProxyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC3__));
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC1));
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.black_3));
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC1));
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Cyanea_AlertDialog_Theme_Light);
+        } else {
+            setTheme(R.style.Cyanea_AlertDialog_Theme_Dark);
         }
         setContentView(R.layout.activity_proxy);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

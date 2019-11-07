@@ -55,21 +55,12 @@ public class TootInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
-                break;
-            default:
-                setTheme(R.style.AppThemeDark);
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Cyanea_AlertDialog_Theme_Light);
+        } else {
+            setTheme(R.style.Cyanea_AlertDialog_Theme_Dark);
         }
         setContentView(R.layout.activity_toot_info);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);

@@ -71,7 +71,6 @@ public class InstanceHealthActivity extends BaseActivity {
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;
     private String instance;
-    private RelativeLayout container;
     private LinearLayout instance_container;
     private ImageView back_ground_image;
     private RelativeLayout loader;
@@ -79,25 +78,12 @@ public class InstanceHealthActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC3__));
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC1));
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.black_3));
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC1));
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Cyanea_AlertDialog_Theme_Light);
+        } else {
+            setTheme(R.style.Cyanea_AlertDialog_Theme_Dark);
         }
         setContentView(R.layout.activity_instance_social);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -114,7 +100,6 @@ public class InstanceHealthActivity extends BaseActivity {
         checked_at = findViewById(R.id.checked_at);
         up = findViewById(R.id.up);
         uptime = findViewById(R.id.uptime);
-        container = findViewById(R.id.container);
         instance_container = findViewById(R.id.instance_container);
         loader = findViewById(R.id.loader);
         back_ground_image = findViewById(R.id.back_ground_image);

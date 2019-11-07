@@ -324,9 +324,7 @@ public abstract class BaseMainActivity extends BaseActivity
         //Here, the user is authenticated
         appBar = findViewById(R.id.appBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(BaseMainActivity.this, R.color.black));
-        setSupportActionBar(toolbar);
+
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         delete_instance = findViewById(R.id.delete_instance);
@@ -969,7 +967,6 @@ public abstract class BaseMainActivity extends BaseActivity
         //Hide the default title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().getThemedContext().setTheme(R.style.AppThemeBlack);
         }
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());

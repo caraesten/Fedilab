@@ -11,21 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="app.fedilab.android.activities.HashTagActivity">
-
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                 />
+                 >
+                <include layout="@layout/conversation_action_bar"/>
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
+
         <!-- Framelayout to display Fragments -->
         <RelativeLayout
             android:id="@+id/main_app_container"
