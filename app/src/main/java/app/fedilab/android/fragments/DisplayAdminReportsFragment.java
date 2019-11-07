@@ -212,7 +212,7 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
             //Admin right not granted through the API?
             if (apiResponse.getError().getStatusCode() == 403) {
                 AlertDialog.Builder builderInner;
-                builderInner = new AlertDialog.Builder(context, R.style.AdminDialog);
+                builderInner = new AlertDialog.Builder(context, R.style.AppThemeDark);
                 builderInner.setTitle(R.string.reconnect_account);
                 builderInner.setMessage(R.string.reconnect_account_message);
                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -89,8 +89,6 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="@string/close"
-            android:textColor="@color/mastodonC4"
-            style="?attr/borderlessColored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

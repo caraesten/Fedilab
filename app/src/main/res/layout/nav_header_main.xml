@@ -89,7 +89,6 @@
             <TextView
                 android:gravity="center_vertical"
                 android:id="@+id/displayedName"
-                android:textColor="?attr/textColor"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -109,7 +108,6 @@
 
         <TextView
             android:id="@+id/username"
-            android:textColor="?attr/textColor"
             android:layout_width="wrap_content"
             android:textSize="12sp"
             android:maxLines="1"

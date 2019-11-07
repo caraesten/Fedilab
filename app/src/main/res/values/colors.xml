@@ -174,4 +174,7 @@
 
 
     <color name="dark_blockquote">#5E68A0</color>
+
+    <color name="cyanea_primary_reference">#0288D1</color>
+    <color name="cyanea_accent_reference">#FFA000</color>
 </resources>

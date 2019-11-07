@@ -151,7 +151,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="25dp"
-                    style="?attr/shapeBorder"
                     android:visibility="gone"
                     android:contentDescription="@string/profile_picture" />
             </RelativeLayout>
@@ -259,7 +258,6 @@
             android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?attr/borderless"
             android:text="@string/load_attachment_spoiler" />
     </LinearLayout>
 
@@ -289,7 +287,6 @@
             android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?attr/borderless"
             android:text="@string/display_toot_truncate" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -321,7 +318,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="?attr/statusBackgroundColor"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
                 android:text="Translation"

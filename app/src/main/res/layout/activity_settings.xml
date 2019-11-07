@@ -12,9 +12,9 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/settings_tablayout"
         android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
         android:layout_height="wrap_content"
         app:tabSelectedTextColor="?colorAccent"
-        app:tabTextColor="?attr/textColor"
         app:tabMode="scrollable"
         app:tabGravity="fill" />
     <androidx.viewpager.widget.ViewPager

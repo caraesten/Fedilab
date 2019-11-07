@@ -181,7 +181,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
         if (apiResponse.getError() != null) {
             if (apiResponse.getError().getStatusCode() == 403) {
                 AlertDialog.Builder builderInner;
-                builderInner = new AlertDialog.Builder(AccountReportActivity.this, R.style.AdminDialog);
+                builderInner = new AlertDialog.Builder(AccountReportActivity.this, R.style.AppThemeDark);
                 builderInner.setTitle(R.string.reconnect_account);
                 builderInner.setMessage(R.string.reconnect_account_message);
                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -1731,9 +1731,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance(getString(R.string.which_language));  // dialog title
                 if (theme == Helper.THEME_LIGHT) {
-                    picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
+                    picker.setStyle(R.style.AppTheme, R.style.Dialog);
                 } else {
-                    picker.setStyle(R.style.AppThemeDark, R.style.AlertDialogDark);
+                    picker.setStyle(R.style.AppThemeDark, R.style.DialogDark);
                 }
                 if (toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
                     return true;

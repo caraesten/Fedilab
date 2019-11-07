@@ -33,7 +33,6 @@
         <!-- Profile SETTINGS -->
         <TextView
             android:text="@string/settings_title_profile"
-            style="?attr/shapeBorder"
             android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_marginBottom="10dp"
@@ -73,7 +72,6 @@
                     android:textSize="12sp"
                     android:textAllCaps="false"
                     android:text="@string/choose_picture"
-                    style="?attr/borderlessColored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -123,7 +121,6 @@
             android:gravity="center"
             android:textAllCaps="false"
             android:text="@string/choose_picture"
-            style="?attr/borderlessColored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -143,7 +143,6 @@
 
                     <ImageView
                         android:id="@+id/status_account_profile_boost_by"
-                        style="?attr/shapeBorder"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
@@ -234,7 +233,6 @@
 
             <Button
                 android:id="@+id/status_spoiler_button"
-                style="?attr/borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_remove_red_eye"
@@ -262,7 +260,6 @@
 
             <Button
                 android:id="@+id/status_show_more_content"
-                style="?attr/borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more_toot_content"
@@ -305,7 +302,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:background="?attr/statusBackgroundColor"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
                     android:text="Translation"

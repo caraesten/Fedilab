@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="?attr/popupOverlay" />
+                 />
         </com.google.android.material.appbar.AppBarLayout>
         <!-- Framelayout to display Fragments -->
         <RelativeLayout

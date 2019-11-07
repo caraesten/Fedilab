@@ -88,7 +88,6 @@
                 android:layout_marginLeft="10dp"
                 android:focusableInTouchMode="false"
                 android:id="@+id/scheduled_toot_date"
-                style="?attr/borderlessColored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

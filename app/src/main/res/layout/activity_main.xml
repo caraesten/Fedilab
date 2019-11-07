@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="?attr/popupOverlay">
+                >
 
                 <ImageView
                     android:id="@+id/iconbar"
@@ -71,6 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         app:tabGravity="fill"
+                        android:background="?attr/colorPrimary"
                         app:tabMaxWidth="0dp"
                         app:tabIndicatorHeight="0dp"
                         android:layout_height="wrap_content"
@@ -110,23 +111,21 @@
 
 
         <!-- Framelayout to display Fragments -->
-        <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="app.fedilab.android.activities.MainActivity"></androidx.viewpager.widget.ViewPager>
+            tools:context="app.fedilab.android.activities.MainActivity"/>
 
         <!-- Framelayout to display Fragments -->
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:visibility="gone"
             android:id="@+id/main_app_container"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="app.fedilab.android.activities.MainActivity"></RelativeLayout>
+            tools:context="app.fedilab.android.activities.MainActivity"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/toot"

@@ -67,7 +67,6 @@
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="4dp"
         android:id="@+id/main_card_container"
-        style="?attr/cardStyleOver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
@@ -123,7 +122,6 @@
                 android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?attr/cardStyle"
                 app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -301,7 +299,6 @@
 
                         <Button
                             android:id="@+id/status_spoiler_button"
-                            style="?attr/borderless"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_remove_red_eye"
@@ -340,7 +337,6 @@
 
                             <Button
                                 android:id="@+id/status_show_more_content"
-                                style="?attr/borderless"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_more_toot_content"
@@ -383,7 +379,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
-                                    android:background="?attr/statusBackgroundColor"
                                     android:paddingStart="2dp"
                                     android:paddingEnd="2dp"
                                     android:text="Translation"

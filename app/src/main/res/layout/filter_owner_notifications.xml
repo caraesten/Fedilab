@@ -28,7 +28,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            style="?attr/shapeBorder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -45,7 +44,6 @@
                 android:layout_marginStart="10dp"
                 android:focusableInTouchMode="false"
                 android:id="@+id/settings_time_from"
-                style="?attr/borderlessColored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -58,7 +56,6 @@
             <Button
                 android:layout_marginStart="10dp"
                 android:focusableInTouchMode="false"
-                style="?attr/borderlessColored"
                 android:id="@+id/settings_time_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

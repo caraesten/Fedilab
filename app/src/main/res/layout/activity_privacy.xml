@@ -39,7 +39,6 @@
             <!-- PRIVACY TITLE -->
             <TextView
                 android:text="@string/privacy_API_title"
-                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -64,7 +63,6 @@
             <!-- DATA PRIVACY TITLE -->
             <TextView
                 android:text="@string/privacy_data_title"
-                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -89,7 +87,6 @@
             <!-- APPS AUTHORIZATIONS TITLE -->
             <TextView
                 android:text="@string/privacy_authorizations_title"
-                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -115,7 +112,6 @@
             <!-- API AUTHORIZATIONS TITLE -->
             <TextView
                 android:text="@string/privacy_API_authorizations_title"
-                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -140,7 +136,6 @@
             <!-- TRANSLATION TITLE -->
             <TextView
                 android:text="@string/privacy_API_yandex_title"
-                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"

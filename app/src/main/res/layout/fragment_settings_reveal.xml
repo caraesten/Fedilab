@@ -1219,7 +1219,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            style="?attr/shapeBorder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -1233,7 +1232,6 @@
 
                             <Button
                                 android:id="@+id/settings_time_from"
-                                style="?attr/borderlessColored"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:focusableInTouchMode="false" />
@@ -1245,7 +1243,6 @@
 
                             <Button
                                 android:id="@+id/settings_time_to"
-                                style="?attr/borderlessColored"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:focusableInTouchMode="false" />

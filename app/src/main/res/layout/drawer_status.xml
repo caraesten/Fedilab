@@ -68,7 +68,6 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        style="?attr/cardStyle"
         android:id="@+id/main_card_container"
         app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,14 +81,12 @@
                 android:id="@+id/status_boosted_by_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?boostcolor"
                 android:padding="5dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/status_account_profile_boost_by"
-                    style="?attr/shapeBorder"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/profile_picture"
@@ -347,7 +344,6 @@
 
                     <Button
                         android:id="@+id/status_spoiler_button"
-                        style="?attr/borderless"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_remove_red_eye"
@@ -375,7 +371,6 @@
 
                     <Button
                         android:id="@+id/status_show_more_content"
-                        style="?attr/borderless"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-10dp"
@@ -432,7 +427,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:background="?attr/statusBackgroundColor"
                             android:paddingStart="2dp"
                             android:paddingEnd="2dp"
                             android:text="Translation"

@@ -1180,11 +1180,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         AlertDialog.Builder builderInner;
                         int style;
                         if (theme == Helper.THEME_DARK) {
-                            style = R.style.DialogDark;
+                            style = R.style.Cyanea_AlertDialog_Theme_Dark;
                         } else if (theme == Helper.THEME_BLACK) {
-                            style = R.style.DialogBlack;
+                            style = R.style.Cyanea_AlertDialog_Theme_Dark;
                         } else {
-                            style = R.style.Dialog;
+                            style = R.style.Cyanea_AlertDialog_Theme_Light;
                         }
                         builderInner = new AlertDialog.Builder(context, style);
                         builderInner.setTitle(R.string.comment);
@@ -2528,11 +2528,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 int style;
                 if (theme == Helper.THEME_DARK) {
-                    style = R.style.DialogDark;
+                    style = R.style.Cyanea_AlertDialog_Theme_Dark;
                 } else if (theme == Helper.THEME_BLACK) {
-                    style = R.style.DialogBlack;
+                    style = R.style.Cyanea_AlertDialog_Theme_Dark;
                 } else {
-                    style = R.style.Dialog;
+                    style = R.style.Cyanea_AlertDialog_Theme_Light;
                 }
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
                 dialog.setTitle(R.string.toot_visibility_tilte);
@@ -2950,13 +2950,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
             int style;
             if (theme == Helper.THEME_DARK) {
-                style = R.style.DialogDark;
+                style = R.style.Cyanea_AlertDialog_Theme_Dark;
             } else if (theme == Helper.THEME_BLACK) {
-                style = R.style.DialogBlack;
+                style = R.style.Cyanea_AlertDialog_Theme_Dark;
             } else {
-                style = R.style.Dialog;
+                style = R.style.Cyanea_AlertDialog_Theme_Light;
             }
-
             holder.status_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -4013,11 +4012,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
-            style = R.style.DialogDark;
+            style = R.style.Cyanea_AlertDialog_Theme_Dark;
         } else if (theme == Helper.THEME_BLACK) {
-            style = R.style.DialogBlack;
+            style = R.style.Cyanea_AlertDialog_Theme_Dark;
         } else {
-            style = R.style.Dialog;
+            style = R.style.Cyanea_AlertDialog_Theme_Light;
         }
 
         AlertDialog.Builder dialogBuilderBoost = new AlertDialog.Builder(context, style);
@@ -4174,11 +4173,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             stepSpliToot = 1;
             int style;
             if (theme == Helper.THEME_DARK) {
-                style = R.style.DialogDark;
+                style = R.style.Cyanea_AlertDialog_Theme_Dark;
             } else if (theme == Helper.THEME_BLACK) {
-                style = R.style.DialogBlack;
+                style = R.style.Cyanea_AlertDialog_Theme_Dark;
             } else {
-                style = R.style.Dialog;
+                style = R.style.Cyanea_AlertDialog_Theme_Light;
             }
             AlertDialog.Builder builderInner = new AlertDialog.Builder(context, style);
             builderInner.setTitle(R.string.message_preview);
