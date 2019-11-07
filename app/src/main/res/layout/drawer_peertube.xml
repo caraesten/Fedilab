@@ -69,7 +69,7 @@
             <TextView
                 android:id="@+id/peertube_title"
                 android:textStyle="bold"
-                android:textColor="?colorAccent"
+                android:textColor="?attr/colorAccent"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -30,7 +30,7 @@
         android:layout_width="2dp"
 
         android:layout_height="0dp"
-        android:background="?colorAccent"
+        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -42,7 +42,7 @@
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="16sp"
-        android:background="?colorAccent"
+        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
         android:layout_width="2dp"
         android:layout_height="0dp"
 
-        android:background="?colorAccent"
+        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -834,7 +834,7 @@
                                 android:drawablePadding="2dp"
                                 android:gravity="center_vertical"
                                 android:text="@string/reply"
-                                android:textColor="?colorAccent"
+                                android:textColor="?attr/colorAccent"
                                 android:visibility="gone" />
 
                             <TextView
@@ -847,7 +847,7 @@
                                 android:drawablePadding="2dp"
                                 android:gravity="center_vertical"
                                 android:text="@string/delete"
-                                android:textColor="?colorAccent"
+                                android:textColor="?attr/colorAccent"
                                 android:visibility="gone" />
                         </LinearLayout>
 

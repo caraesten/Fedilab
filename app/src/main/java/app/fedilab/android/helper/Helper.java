@@ -91,6 +91,7 @@ import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -2663,7 +2664,14 @@ public class Helper {
         try {
             color = Color.parseColor(context.getString(hexaColor));
         }catch (Resources.NotFoundException e){
-            color = hexaColor;
+            try {
+                TypedValue typedValue = new TypedValue();
+                Resources.Theme theme = context.getTheme();
+                theme.resolveAttribute(hexaColor, typedValue, true);
+                color = typedValue.data;
+            }catch (Resources.NotFoundException ed) {
+                color = hexaColor;
+            }
         }
         assert mDrawable != null;
         mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);

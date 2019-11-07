@@ -248,7 +248,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="?colorAccent" />
+                    android:textColor="?attr/colorAccent" />
 
                 <Button
                     android:id="@+id/toot_it"

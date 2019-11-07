@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     TagsEditText:allowSpaceInTag="true"
                     TagsEditText:tagsCloseImageRight="@drawable/tag_close"
-                    TagsEditText:tagsTextColor="?colorAccent"
+                    TagsEditText:tagsTextColor="?attr/colorAccent"
                     TagsEditText:tagsTextSize="@dimen/defaultTagsTextSize"
                     TagsEditText:tagsCloseImagePadding="@dimen/defaultTagsCloseImagePadding"
                     android:inputType="textMultiLine" />

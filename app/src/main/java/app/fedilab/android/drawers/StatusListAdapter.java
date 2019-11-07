@@ -1361,47 +1361,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if (theme == Helper.THEME_BLACK) {
                     iconColor = R.color.action_black;
                     iconColorCompat = ContextCompat.getColor(context, iconColor);
-                    holder.status_cardview.setBackgroundResource(R.drawable.card_border_black);
-                    Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
-                    Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.dark_text);
-                    holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
-                    holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                    holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
-                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.black);
-                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.black);
-                    Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.black);
-
                 } else if (theme == Helper.THEME_DARK) {
                     iconColor = R.color.action_dark;
                     iconColorCompat = ContextCompat.getColor(context, iconColor);
-                    Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
-                    Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
-                    Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.mastodonC4);
-                    holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-                    holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                    holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-                    holder.status_cardview.setBackgroundResource(R.drawable.card_border_dark);
-
-                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.mastodonC1);
-                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.mastodonC1);
-                    Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.mastodonC1);
                 } else {
                     iconColor = R.color.action_light;
                     iconColorCompat = ContextCompat.getColor(context, iconColor);
-                    holder.status_cardview.setBackgroundResource(R.drawable.card_border_light);
-                    Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
-                    Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.mastodonC4);
-                    holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.light_black));
-                    holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.light_black));
-                    holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.light_black));
-                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark, R.color.white);
-                    Helper.changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.white);
-                    Helper.changeDrawableColor(context, R.drawable.ic_translate, R.color.white);
                 }
             }
 
+
+            holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
+            holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+            holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
+            holder.status_cardview.setBackgroundResource(R.drawable.card_border_dark);
+
             Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, iconColor);
 
+            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.attr.colorAccent);
+            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.attr.colorAccent);
+            Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.attr.colorAccent);
 
             Helper.changeDrawableColor(context, holder.status_remove, iconColor);
             Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, iconColor);

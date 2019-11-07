@@ -25,14 +25,14 @@
         android:layout_height="1dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="?colorAccent" />
+        android:background="?attr/colorAccent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/file_cache"
-        android:textColor="?colorAccent"
+        android:textColor="?attr/colorAccent"
         android:textSize="16sp" />
 
     <View
@@ -40,7 +40,7 @@
         android:layout_height="1dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="?colorAccent" />
+        android:background="?attr/colorAccent" />
 
     <TextView
         android:layout_marginTop="5dp"
@@ -54,14 +54,14 @@
         android:layout_height="1dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="?colorAccent" />
+        android:background="?attr/colorAccent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/database_cache"
-        android:textColor="?colorAccent"
+        android:textColor="?attr/colorAccent"
         android:textSize="16sp" />
 
     <View
@@ -69,7 +69,7 @@
         android:layout_height="1dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="?colorAccent" />
+        android:background="?attr/colorAccent" />
 
     <CheckBox
         android:id="@+id/cache_timeline"

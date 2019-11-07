@@ -173,7 +173,7 @@
 
                             <TextView
                                 android:id="@+id/account_dn"
-                                android:textColor="?colorAccent"
+                                android:textColor="?attr/colorAccent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"

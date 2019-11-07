@@ -158,7 +158,7 @@
                     android:layout_height="10dp"/>
                 <TextView
                     android:layout_gravity="center_vertical"
-                    android:textColor="?colorAccent"
+                    android:textColor="?attr/colorAccent"
                     android:layout_marginStart="5dp"
                     android:textSize="12sp"
                     android:gravity="center_vertical"
@@ -216,7 +216,7 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="20dp"
                     android:gravity="center_vertical|end"
-                    android:textColor="?colorAccent" />
+                    android:textColor="?attr/colorAccent" />
 
                 <Button
                     android:id="@+id/toot_it"
