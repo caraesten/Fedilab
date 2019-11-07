@@ -58,9 +58,9 @@ public class TootInfoActivity extends BaseActivity {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if (theme == Helper.THEME_LIGHT) {
-            setTheme(R.style.Cyanea_AlertDialog_Theme_Light);
+            setTheme(R.style.Dialog);
         } else {
-            setTheme(R.style.Cyanea_AlertDialog_Theme_Dark);
+            setTheme(R.style.DialogDark);
         }
         setContentView(R.layout.activity_toot_info);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);

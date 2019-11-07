@@ -22,12 +22,9 @@ import android.os.StrictMode;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
-import androidx.core.content.ContextCompat;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
-import com.jaredrummler.cyanea.Cyanea;
-import com.jaredrummler.cyanea.CyaneaApp;
 
 import net.gotev.uploadservice.UploadService;
 
@@ -84,11 +81,9 @@ public class MainApplication extends MultiDexApplication {
         ApplicationJob.cancelAllJob(BackupNotificationsSyncJob.BACKUP_NOTIFICATIONS_SYNC);
         BackupNotificationsSyncJob.schedule(false);
 
-        Cyanea.init(this, super.getResources());
+
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
-
 
 
         try {

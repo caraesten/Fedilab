@@ -116,6 +116,7 @@ import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
@@ -284,19 +285,15 @@ public abstract class BaseMainActivity extends BaseActivity
             return;
         }
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int themeSwitcher;
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
+                themeSwitcher = R.style.AppTheme_NoActionBar_Fedilab;
                 break;
             default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
+                themeSwitcher = R.style.AppThemeDark_NoActionBar;
         }
+        ThemeHelper.changeTheme(BaseMainActivity.this, themeSwitcher);
         setContentView(R.layout.activity_main);
 
         //Test if user is still log in
@@ -485,6 +482,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     tootShow();
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
+
+                    if( tab.getIcon() != null) {
+                        tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
+                    }
                 }
 
                 @Override
@@ -500,6 +501,9 @@ public abstract class BaseMainActivity extends BaseActivity
                             DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                         }
+                    }
+                    if( tab.getIcon() != null) {
+                        tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
                     }
                 }
             });
@@ -2095,6 +2099,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
+                if( tab.getIcon() != null) {
+                    tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
@@ -2144,6 +2151,11 @@ public abstract class BaseMainActivity extends BaseActivity
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
                         displayStatusFragment.scrollToTop();
                     }
+                }
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                if( tab.getIcon() != null) {
+                    tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
                 }
             }
         });

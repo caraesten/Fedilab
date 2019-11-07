@@ -141,6 +141,7 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipQuickReplyInterface;
@@ -1180,11 +1181,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         AlertDialog.Builder builderInner;
                         int style;
                         if (theme == Helper.THEME_DARK) {
-                            style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                            style = R.style.DialogDark;
                         } else if (theme == Helper.THEME_BLACK) {
-                            style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                            style = R.style.DialogDark;
                         } else {
-                            style = R.style.Cyanea_AlertDialog_Theme_Light;
+                            style = R.style.Dialog;
                         }
                         builderInner = new AlertDialog.Builder(context, style);
                         builderInner.setTitle(R.string.comment);
@@ -2074,10 +2075,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if(  holder.status_boosted_by_info != null && reblogColor != -1  ){
                 holder.status_boosted_by_info.setBackgroundColor(reblogColor);
             }
-            int statusColor = prefs.getInt("theme_statuses_color", -1);
-            if(  holder.main_card_container != null && statusColor != -1  ){
-                holder.main_card_container.setCardBackgroundColor(statusColor);
-            }
+            int statusColor = prefs.getInt("theme_statuses_color", ThemeHelper.getAttColor(context, R.attr.cardviewColor));
+            holder.main_card_container.setCardBackgroundColor(ThemeHelper.getAttColor(context, R.attr.cardviewColor));
+
             if(  holder.main_linear_container != null && statusColor != -1  ){
                 holder.main_linear_container.setBackgroundColor(statusColor);
             }
@@ -2528,11 +2528,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 int style;
                 if (theme == Helper.THEME_DARK) {
-                    style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                    style = R.style.DialogDark;
                 } else if (theme == Helper.THEME_BLACK) {
-                    style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                    style = R.style.DialogDark;
                 } else {
-                    style = R.style.Cyanea_AlertDialog_Theme_Light;
+                    style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
                 dialog.setTitle(R.string.toot_visibility_tilte);
@@ -2950,11 +2950,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
             int style;
             if (theme == Helper.THEME_DARK) {
-                style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                style = R.style.DialogDark;
             } else if (theme == Helper.THEME_BLACK) {
-                style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                style = R.style.DialogDark;
             } else {
-                style = R.style.Cyanea_AlertDialog_Theme_Light;
+                style = R.style.Dialog;
             }
             holder.status_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -4012,11 +4012,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int style;
         if (theme == Helper.THEME_DARK) {
-            style = R.style.Cyanea_AlertDialog_Theme_Dark;
+            style = R.style.DialogDark;
         } else if (theme == Helper.THEME_BLACK) {
-            style = R.style.Cyanea_AlertDialog_Theme_Dark;
+            style = R.style.DialogDark;
         } else {
-            style = R.style.Cyanea_AlertDialog_Theme_Light;
+            style = R.style.Dialog;
         }
 
         AlertDialog.Builder dialogBuilderBoost = new AlertDialog.Builder(context, style);
@@ -4173,11 +4173,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             stepSpliToot = 1;
             int style;
             if (theme == Helper.THEME_DARK) {
-                style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                style = R.style.DialogDark;
             } else if (theme == Helper.THEME_BLACK) {
-                style = R.style.Cyanea_AlertDialog_Theme_Dark;
+                style = R.style.DialogDark;
             } else {
-                style = R.style.Cyanea_AlertDialog_Theme_Light;
+                style = R.style.Dialog;
             }
             AlertDialog.Builder builderInner = new AlertDialog.Builder(context, style);
             builderInner.setTitle(R.string.message_preview);

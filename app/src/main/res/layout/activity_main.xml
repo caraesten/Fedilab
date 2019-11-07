@@ -55,7 +55,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:visibility="gone"
                         android:layout_width="0dp"
@@ -87,7 +86,6 @@
                         android:layout_height="wrap_content" />
 
                     <ImageView
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center_vertical"
                         android:visibility="gone"
                         android:id="@+id/display_timeline"
