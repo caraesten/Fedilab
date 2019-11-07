@@ -29,7 +29,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabSelectedTextColor="?attr/colorAccent"
+        app:tabSelectedTextColor="?colorAccent"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabMode="fixed"
         app:tabGravity="fill" />

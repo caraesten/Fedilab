@@ -150,7 +150,7 @@
 
     <TextView
         android:id="@+id/account_follow_request"
-        android:textColor="?attr/colorAccent"
+        android:textColor="?colorAccent"
         android:text="@string/request_sent"
         android:visibility="gone"
         android:layout_width="match_parent"

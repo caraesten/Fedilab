@@ -774,7 +774,7 @@
         android:layout_marginBottom="5dp"
         android:textStyle="italic"
         android:textSize="16sp"
-        android:textColor="?attr/colorAccent" />
+        android:textColor="?colorAccent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/status_action_container"

@@ -50,7 +50,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:text="0"
-        android:textColor="?attr/colorAccent"
+        android:textColor="?colorAccent"
         app:layout_constraintEnd_toStartOf="@id/quick_reply_emoji"
         app:layout_constraintStart_toEndOf="@id/quick_reply_switch_to_full"
         app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />

@@ -53,7 +53,7 @@
             android:gravity="center_vertical"
             android:padding="5dp"
             android:text="@string/about_developer"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?colorAccent"
             android:textSize="16sp"
             android:focusable="true" />
 
@@ -130,7 +130,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:padding="5dp"
             android:text="@string/thanks_text_ux"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?colorAccent"
             android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
@@ -181,7 +181,7 @@
             android:layout_marginTop="10dp"
             android:padding="5dp"
             android:text="@string/thanks_text_logo"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?colorAccent"
             android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
@@ -214,7 +214,7 @@
             android:gravity="center_vertical"
             android:padding="5dp"
             android:text="@string/thanks_text_dev"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?colorAccent"
             android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView

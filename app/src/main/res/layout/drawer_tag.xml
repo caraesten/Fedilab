@@ -24,7 +24,7 @@
         android:id="@+id/tag_search_title"
         android:visibility="gone"
         android:textSize="18sp"
-        android:background="?attr/colorAccent"
+        android:background="?colorAccent"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:layout_marginTop="5dp"

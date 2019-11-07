@@ -74,7 +74,7 @@
                         app:tabMaxWidth="0dp"
                         app:tabIndicatorHeight="0dp"
                         android:layout_height="wrap_content"
-                        app:tabSelectedTextColor="?attr/colorAccent" />
+                        app:tabSelectedTextColor="?colorAccent" />
 
                     <ImageView
                         android:layout_gravity="center_vertical"

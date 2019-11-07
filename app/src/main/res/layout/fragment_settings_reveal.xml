@@ -875,14 +875,14 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/settings_category_notif_customize"
-                                android:textColor="?attr/colorAccent"
+                                android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
                             <View
@@ -890,7 +890,7 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
                         </LinearLayout>
 
                         <Button
@@ -1032,14 +1032,14 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/settings_category_notif_categories"
-                                android:textColor="?attr/colorAccent"
+                                android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
                             <View
@@ -1047,7 +1047,7 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1177,14 +1177,14 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/settings_category_notif_time_slot"
-                                android:textColor="?attr/colorAccent"
+                                android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
                             <View
@@ -1192,7 +1192,7 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1274,14 +1274,14 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/settings_category_notif_advanced"
-                                android:textColor="?attr/colorAccent"
+                                android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
                             <View
@@ -1289,7 +1289,7 @@
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
                                 android:layout_weight="1"
-                                android:background="?attr/colorAccent" />
+                                android:background="?colorAccent" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1512,14 +1512,14 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/set_backup"
-                            android:textColor="?attr/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
                         <View
@@ -1527,7 +1527,7 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1612,14 +1612,14 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/action_cache"
-                            android:textColor="?attr/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
                         <View
@@ -1627,7 +1627,7 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1676,14 +1676,14 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/set_crash_reports"
-                            android:textColor="?attr/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
                         <View
@@ -1691,7 +1691,7 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1836,7 +1836,7 @@
                             TagsEditText:allowSpaceInTag="true"
                             TagsEditText:tagsCloseImagePadding="@dimen/defaultTagsCloseImagePadding"
                             TagsEditText:tagsCloseImageRight="@drawable/tag_close"
-                            TagsEditText:tagsTextColor="?attr/colorAccent"
+                            TagsEditText:tagsTextColor="?colorAccent"
                             TagsEditText:tagsTextSize="@dimen/defaultTagsTextSize" />
 
                         <TextView
@@ -1946,7 +1946,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:maxLines="2"
-                                android:textColor="?attr/colorAccent"
+                                android:textColor="?colorAccent"
                                 android:textStyle="italic" />
                         </LinearLayout>
 
@@ -2650,14 +2650,14 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/communication_menu_title"
-                            android:textColor="?attr/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
                         <View
@@ -2665,7 +2665,7 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2863,14 +2863,14 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/neutral_menu_title"
-                            android:textColor="?attr/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
                         <View
@@ -2878,7 +2878,7 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -2961,14 +2961,14 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/neutral_menu_information"
-                            android:textColor="?attr/colorAccent"
+                            android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
                         <View
@@ -2976,7 +2976,7 @@
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?attr/colorAccent" />
+                            android:background="?colorAccent" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -3061,7 +3061,7 @@
                         android:gravity="center_vertical"
                         android:padding="5dp"
                         android:text="@string/crowdin_manager"
-                        android:textColor="?attr/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="16sp" />
 
                     <app.fedilab.android.helper.ExpandableHeightListView

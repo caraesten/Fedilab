@@ -32,7 +32,7 @@
             android:id="@+id/admin_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabSelectedTextColor="?attr/colorAccent"
+            app:tabSelectedTextColor="?colorAccent"
             app:tabTextColor="?attr/textColor"
             app:tabMode="fixed"
             app:tabGravity="fill" />

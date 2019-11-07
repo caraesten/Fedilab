@@ -68,14 +68,14 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/date_range"
-                    android:textColor="?attr/colorAccent"
+                    android:textColor="?colorAccent"
                     android:textSize="16sp" />
 
                 <View
@@ -83,7 +83,7 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,14 +154,14 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/statuses"
-                    android:textColor="?attr/colorAccent"
+                    android:textColor="?colorAccent"
                     android:textSize="16sp" />
 
                 <View
@@ -169,7 +169,7 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
             </LinearLayout>
 
             <LinearLayout
@@ -317,14 +317,14 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/visibility"
-                    android:textColor="?attr/colorAccent"
+                    android:textColor="?colorAccent"
                     android:textSize="16sp" />
 
                 <View
@@ -332,7 +332,7 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
             </LinearLayout>
 
             <LinearLayout
@@ -422,14 +422,14 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/tags"
-                    android:textColor="?attr/colorAccent"
+                    android:textColor="?colorAccent"
                     android:textSize="16sp" />
 
                 <View
@@ -437,7 +437,7 @@
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="?attr/colorAccent" />
+                    android:background="?colorAccent" />
             </LinearLayout>
 
             <TextView

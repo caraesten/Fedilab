@@ -70,7 +70,7 @@
 
         <TextView
             android:id="@+id/report_action_taken"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?colorAccent"
             android:text="@string/request_sent"
             android:visibility="gone"
             android:layout_width="match_parent"
