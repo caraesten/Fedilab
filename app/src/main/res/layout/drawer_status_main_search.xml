@@ -52,7 +52,6 @@
 
         <LinearLayout
             android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -73,7 +72,6 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -85,7 +83,6 @@
 
             <TextView
                 android:visibility="gone"
-                android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
                 android:textSize="14sp"
                 android:maxLines="1"

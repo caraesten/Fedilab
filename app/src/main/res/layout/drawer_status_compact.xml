@@ -800,7 +800,6 @@
                                         android:background="@drawable/rounded_label_sensitive"
                                         android:gravity="center"
                                         android:padding="12dp"
-                                        android:textColor="#ffffffff"
                                         android:textSize="20sp" />
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -845,7 +844,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="15dp"
-                                android:layout_marginLeft="15dp"
                                 android:drawablePadding="2dp"
                                 android:gravity="center_vertical"
                                 android:text="@string/delete"
@@ -864,7 +862,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginEnd="20dp"
-                            android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:gravity="end"
                             android:maxLines="1"
@@ -954,7 +951,7 @@
                                 android:contentDescription="@string/new_toot"
                                 android:gravity="center_vertical"
                                 android:src="@drawable/ic_fiber_new"
-                                android:tint="?attr/colorAccent"
+                                android:backgroundTint="?attr/colorAccent"
                                 android:visibility="gone"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/status_favorite_count"

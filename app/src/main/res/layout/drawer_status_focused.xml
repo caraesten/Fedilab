@@ -156,7 +156,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:contentDescription="@string/profile_picture"
-                    android:backgroundTint="?attr/colorAccent"
                     android:tint="?attr/colorAccent"
                     android:visibility="gone" />
             </LinearLayout>
@@ -716,7 +715,6 @@
                         android:background="@drawable/rounded_label_sensitive"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:textColor="#ffffffff"
                         android:textSize="20sp" />
                 </RelativeLayout>
             </RelativeLayout>
