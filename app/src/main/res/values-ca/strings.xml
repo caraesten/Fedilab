@@ -893,7 +893,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="toast_error_instance_reg">Alguna cosa ha fallat en comprovar la disponibilitat d\'instàncies!</string>
     <string name="join_mastodon">Uneix-te a Mastodont</string>
     <string name="pickup_instance_category">Tria una instància mitjançant una categoria, i després clica un botó de comprovació.</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">Per triar instància, activa el quadret corresponent.</string>
     <string name="users">%1$s usuaris</string>
     <string name="password_confirm">Confirma contrasenya</string>
     <string name="agreement_check">Estic d\'acord amb %1$s i %2$s</string>
@@ -1127,8 +1127,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="fetch_conversation">S\'està extraient la conversa</string>
     <string name="order_by">Ordenar per</string>
     <string name="title_video_peertube">Títol del vídeo</string>
-    <string name="join_peertube">Join Peertube</string>
-    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
+    <string name="join_peertube">Unir-se al Paertub</string>
+    <string name="agreement_check_peertube">Tinc almenys 16 anys i accepto les %1$s d\'aquesta instància</string>
     <string name="colors">Colors</string>
     <string name="link_color_title">Enllaços</string>
     <string name="link_color">Canviar el color dels enllaços (Url, mencions, etiquetes, etc.) en els missatges</string>
@@ -1140,7 +1140,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="clik_reset">Pitja aquí per restablir tot els colors personalitzats</string>
     <string name="reset">Reiniciar</string>
     <string name="icons_color_title">Icones</string>
-    <string name="icons_color">Color of bottom icons in timelines</string>
+    <string name="icons_color">Color de les icones inferiors a les pissarres</string>
     <string name="background_color_title">Background</string>
     <string name="background_color">Change the background color for timelines</string>
 </resources>
