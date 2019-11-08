@@ -5,6 +5,7 @@
     <attr name="textHeader" type="color"/>
     <attr name="customFeature" type="color"/>
     <attr name="cardviewHeaderBoostColor" type="color"/>
+    <attr name="textColor" type="color"/>
 
     <!-- Light theme -->
     <style name="AppTheme" parent="Theme.Cyanea.Light">
@@ -13,6 +14,8 @@
         <item name="textHeader">@color/black</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC2</item>
+        <item name="textColor">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 
@@ -22,6 +25,8 @@
         <item name="textHeader">@color/black</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC2</item>
+        <item name="textColor">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <!-- BLACK theme -->
     <style name="AppThemeBlack" parent="Theme.Cyanea.Dark">
@@ -30,6 +35,8 @@
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/custom_features_button_black</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC1_</item>
+        <item name="textColor">@color/dark_text</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
     <style name="AppThemeBlack_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
@@ -38,6 +45,8 @@
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/custom_features_button_black</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC1_</item>
+        <item name="textColor">@color/dark_text</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
 
@@ -48,6 +57,8 @@
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC1___</item>
+        <item name="textColor">@color/dark_text</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
     <style name="AppThemeDark_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
@@ -56,18 +67,23 @@
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC1___</item>
+        <item name="textColor">@color/dark_text</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
 
 
     <style name="Dialog" parent="Cyanea.AlertDialog.Theme.Light">
         <item name="iconColor">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="DialogDark" parent="Cyanea.AlertDialog.Theme.Dark">
         <item name="iconColor">@color/dark_icon_theme</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
     <style name="DialogBlack" parent="Cyanea.AlertDialog.Theme.Dark">
         <item name="iconColor">@color/black_icon_theme</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
     <style name="TransparentLight" parent="Theme.Cyanea.Light">black_icon_theme
@@ -75,6 +91,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="TransparentDark" parent="Theme.Cyanea.Dark">
@@ -82,6 +99,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
     <style name="TransparentBlack" parent="Theme.Cyanea.Dark">
@@ -89,6 +107,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 
 
