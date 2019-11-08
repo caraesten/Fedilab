@@ -944,6 +944,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if (type == RetrieveFeedsAsyncTask.Type.CONTEXT && holder.status_reply_indicator_top != null) {
+                holder.status_reply_indicator_top.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+                holder.status_reply_indicator_bottom.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+                holder.reply_indicator_dot.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
                 if (status.isShowTopLine()) {
                     holder.status_reply_indicator_top.setVisibility(View.VISIBLE);
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);

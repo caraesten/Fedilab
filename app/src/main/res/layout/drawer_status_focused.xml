@@ -30,6 +30,7 @@
     >
     <View
         android:visibility="gone"
+        android:background="@drawable/diag_top"
         android:id="@+id/status_reply_indicator_diag_top"
         android:layout_width="20dp"
         android:layout_height="11dp"
@@ -44,7 +45,6 @@
         android:id="@+id/status_reply_indicator_top"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -56,7 +56,6 @@
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="0dp"
-        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +65,6 @@
         android:id="@+id/status_reply_indicator_bottom"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/status_reply_indicator_diag_bottom"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -75,6 +73,7 @@
 
     <View
         android:visibility="gone"
+        android:background="@drawable/diag_bottom"
         android:id="@+id/status_reply_indicator_diag_bottom"
         android:layout_width="20dp"
         android:layout_height="11dp"

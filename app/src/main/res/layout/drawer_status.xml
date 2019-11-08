@@ -29,9 +29,7 @@
         android:id="@+id/status_reply_indicator_top"
         android:visibility="gone"
         android:layout_width="2dp"
-
         android:layout_height="0dp"
-        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -43,7 +41,6 @@
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="16sp"
-        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,8 +50,6 @@
         android:id="@+id/status_reply_indicator_bottom"
         android:layout_width="2dp"
         android:layout_height="0dp"
-
-        android:background="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
