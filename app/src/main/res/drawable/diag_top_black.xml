@@ -11,7 +11,7 @@
                 android:top="1dp">
                 <stroke
                     android:width="2dp"
-                    android:color="@color/dark_icon"/>
+                    android:color="@color/cyanea_accent"/>
             </shape>
         </rotate>
     </item>

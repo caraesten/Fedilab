@@ -79,6 +79,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/status_boosted_by_info"
+                android:background="?attr/cardviewHeaderBoostColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"

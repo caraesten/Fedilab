@@ -79,6 +79,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/status_boosted_by_info"
+                android:background="?attr/cardviewHeaderBoostColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -558,7 +559,6 @@
                                                 android:layout_width="0dp"
                                                 android:layout_height="match_parent"
                                                 android:layout_marginStart="1dp"
-                                                android:layout_marginLeft="1dp"
                                                 android:layout_weight="1">
 
                                                 <ImageView
@@ -618,7 +618,6 @@
                                                 android:layout_width="0dp"
                                                 android:layout_height="match_parent"
                                                 android:layout_marginStart="1dp"
-                                                android:layout_marginLeft="1dp"
                                                 android:layout_weight="1">
 
                                                 <ImageView
@@ -762,7 +761,6 @@
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginStart="2dp"
-                                                android:layout_marginLeft="2dp"
                                                 android:layout_weight="1">
 
                                                 <ImageView
@@ -956,7 +954,7 @@
                                 android:contentDescription="@string/new_toot"
                                 android:gravity="center_vertical"
                                 android:src="@drawable/ic_fiber_new"
-                                android:backgroundTint="?attr/colorAccent"
+                                android:tint="?attr/colorAccent"
                                 android:visibility="gone"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/status_favorite_count"
