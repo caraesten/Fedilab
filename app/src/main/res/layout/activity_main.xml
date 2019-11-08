@@ -71,16 +71,15 @@
                         android:layout_weight="1"
                         app:tabGravity="fill"
                         android:background="?attr/colorPrimary"
+                        app:tabSelectedTextColor="?colorAccent"
                         app:tabMaxWidth="0dp"
-                        app:tabIndicatorHeight="0dp"
-                        android:layout_height="wrap_content"
-                        app:tabSelectedTextColor="?colorAccent" />
+                        android:layout_height="wrap_content" />
 
                     <ImageView
                         android:layout_gravity="center_vertical"
                         android:visibility="gone"
                         android:id="@+id/delete_instance"
-                        app:srcCompat="@drawable/ic_delete"
+                        android:src="@drawable/ic_delete"
                         android:contentDescription="@string/delete_instance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -89,7 +88,7 @@
                         android:layout_gravity="center_vertical"
                         android:visibility="gone"
                         android:id="@+id/display_timeline"
-                        app:srcCompat="@drawable/ic_more_horiz_black"
+                        android:src="@drawable/ic_more_horiz_black"
                         android:contentDescription="@string/display_timeline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
