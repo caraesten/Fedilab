@@ -91,11 +91,6 @@ public class MainApplication extends MultiDexApplication {
         }
 
 
-
-
-
-
-
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);
         ApplicationJob.cancelAllJob(BackupNotificationsSyncJob.BACKUP_NOTIFICATIONS_SYNC);

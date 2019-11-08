@@ -80,7 +80,7 @@
                         android:layout_gravity="center_vertical"
                         android:visibility="gone"
                         android:id="@+id/delete_instance"
-                        android:src="@drawable/ic_delete"
+                        app:srcCompat="@drawable/ic_delete"
                         android:contentDescription="@string/delete_instance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -89,7 +89,7 @@
                         android:layout_gravity="center_vertical"
                         android:visibility="gone"
                         android:id="@+id/display_timeline"
-                        android:src="@drawable/ic_more_horiz_black"
+                        app:srcCompat="@drawable/ic_more_horiz_black"
                         android:contentDescription="@string/display_timeline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

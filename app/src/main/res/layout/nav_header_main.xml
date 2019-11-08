@@ -55,24 +55,24 @@
             <LinearLayout
                 android:id="@+id/more_option_container"
                 android:layout_width="0dp"
-                android:paddingLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                tools:ignore="UselessLeaf"></LinearLayout>
+                tools:ignore="UselessLeaf"/>
 
             <LinearLayout
                 android:id="@+id/more_account_container"
                 android:layout_width="0dp"
-                android:paddingLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                tools:ignore="UselessLeaf"></LinearLayout>
+                tools:ignore="UselessLeaf"/>
 
             <ImageView
                 android:gravity="center_vertical|end"
-                android:src="@drawable/ic_more_vert"
+                app:srcCompat="@drawable/ic_more_vert"
                 android:id="@+id/header_option_menu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -97,7 +97,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
                 android:id="@+id/owner_accounts"
                 android:layout_width="30dp"
@@ -115,7 +114,7 @@
 
         <ImageView
             android:layout_gravity="center_vertical|end"
-            android:src="@drawable/ic_info_outline"
+            app:srcCompat="@drawable/ic_info_outline"
             android:id="@+id/header_option_info"
             android:layout_width="20dp"
             android:layout_height="20dp"
