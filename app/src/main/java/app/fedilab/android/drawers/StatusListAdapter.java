@@ -1332,7 +1332,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             Helper.changeDrawableColor(context, R.drawable.video_preview, R.color.white);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            int iconColor = prefs.getInt("theme_icons_color", ThemeHelper.getAttColor(context, R.attr.iconColor));
+            int iconColor = prefs.getInt("theme_icons_color", -1);
+            if( iconColor == -1){
+                iconColor = ThemeHelper.getAttColor(context, R.attr.iconColor);
+            }
 
 
             holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));

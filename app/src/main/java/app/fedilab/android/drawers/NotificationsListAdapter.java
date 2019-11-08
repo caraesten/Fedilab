@@ -220,6 +220,31 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         boolean hide_notification_delete = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
 
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int iconColor = prefs.getInt("theme_icons_color", -1);
+        if( iconColor == -1){
+            iconColor = ThemeHelper.getAttColor(context, R.attr.iconColor);
+        }
+        Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, iconColor);
+
+        Helper.changeDrawableColor(context, R.drawable.ic_photo, R.attr.colorAccent);
+        Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.attr.colorAccent);
+        Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.attr.colorAccent);
+
+        Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, iconColor);
+        Helper.changeDrawableColor(context, holder.status_reply, iconColor);
+        Helper.changeDrawableColor(context, R.drawable.ic_conversation, iconColor);
+        Helper.changeDrawableColor(context, R.drawable.ic_more_horiz, iconColor);
+        Helper.changeDrawableColor(context, holder.status_more, iconColor);
+        Helper.changeDrawableColor(context, holder.status_privacy, iconColor);
+        Helper.changeDrawableColor(context, R.drawable.ic_repeat, iconColor);
+        Helper.changeDrawableColor(context, R.drawable.ic_plus_one, iconColor);
+        Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, iconColor);
+
+
+        holder.status_reply_count.setTextColor(iconColor);
+        holder.status_favorite_count.setTextColor(iconColor);
+        holder.status_reblog_count.setTextColor(iconColor);
 
         if (theme == Helper.THEME_DARK) {
             style = R.style.DialogDark;
@@ -229,7 +254,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             style = R.style.Dialog;
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
         int reblogColor = prefs.getInt("theme_statuses_color", -1);
         if(  holder.main_linear_container != null && reblogColor != -1  ){
             holder.main_linear_container.setBackgroundColor(reblogColor);
@@ -327,16 +352,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
         holder.spark_button_fav.setDisableCircle(true);
         holder.spark_button_reblog.setDisableCircle(true);
-        if (theme == Helper.THEME_DARK) {
-            holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
-            holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
-        } else if (theme == Helper.THEME_BLACK) {
-            holder.spark_button_fav.setInActiveImageTint(R.color.action_black);
-            holder.spark_button_reblog.setInActiveImageTint(R.color.action_black);
-        } else {
-            holder.spark_button_fav.setInActiveImageTint(R.color.action_light);
-            holder.spark_button_reblog.setInActiveImageTint(R.color.action_light);
-        }
+        holder.spark_button_fav.setInActiveImageTintColor(iconColor);
+        holder.spark_button_reblog.setInActiveImageTintColor(iconColor);
         holder.spark_button_fav.setColors(R.color.marked_icon, R.color.marked_icon);
         holder.spark_button_fav.setImageSize((int) (20 * iconSizePercent / 100 * scale + 0.5f));
         holder.spark_button_fav.setMinimumWidth((int) Helper.convertDpToPixel((20 * iconSizePercent / 100 * scale + 0.5f), context));
@@ -439,13 +456,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             }
 
-
-            if (theme == Helper.THEME_DARK)
-                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_dark);
-            else if (theme == Helper.THEME_BLACK)
-                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_black);
-            else
-                Helper.changeDrawableColor(context, holder.status_reply, R.color.action_light);
 
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
