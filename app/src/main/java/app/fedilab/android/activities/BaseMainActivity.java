@@ -59,6 +59,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -284,15 +285,16 @@ public abstract class BaseMainActivity extends BaseActivity
             return;
         }
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        int themeSwitcher;
         switch (theme) {
             case Helper.THEME_LIGHT:
-                themeSwitcher = R.style.AppTheme_NoActionBar_Fedilab;
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
             default:
-                themeSwitcher = R.style.AppThemeDark_NoActionBar;
+                setTheme(R.style.AppThemeDark_NoActionBar);
         }
-        ThemeHelper.changeTheme(BaseMainActivity.this, themeSwitcher);
         setContentView(R.layout.activity_main);
 
         //Test if user is still log in

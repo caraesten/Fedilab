@@ -207,18 +207,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         TextView account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
         addToList = null;
-        switch (theme) {
-            case THEME_LIGHT:
-                account_pp.setBackgroundResource(R.drawable.account_pp_border_light);
-                break;
-            case THEME_DARK:
-                account_pp.setBackgroundResource(R.drawable.account_pp_border_dark);
-                break;
-            case THEME_BLACK:
-                account_pp.setBackgroundResource(R.drawable.account_pp_border_black);
-                break;
-        }
-
+        account_pp.setBackgroundResource(R.drawable.account_pp_border);
         if (b != null) {
             account = b.getParcelable("account");
             if (account == null) {
