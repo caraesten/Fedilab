@@ -148,6 +148,7 @@
                 android:layout_height="24dp"
                 android:contentDescription="@string/new_toot"
                 android:src="@drawable/ic_fiber_new"
+                android:backgroundTint="?attr/colorAccent"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@id/guide_account_image_end"
                 app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
@@ -228,7 +229,6 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/mastodonC4"
                 android:contentDescription="@string/app_features"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
@@ -254,6 +254,7 @@
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/delete"
                 android:src="@drawable/ic_clear_toot"
+                android:tint="?attr/iconColor"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/fedilab_features"
                 app:layout_constraintStart_toStartOf="@id/fedilab_features"
@@ -281,6 +282,7 @@
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/cached_status"
                 android:src="@drawable/ic_cached_black"
+                android:tint="?attr/iconColor"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/status_account_displayname_owner"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -375,7 +377,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-10dp"
                         android:drawableStart="@drawable/ic_more_toot_content"
-                        android:drawableLeft="@drawable/ic_more_toot_content"
+                        android:tint="?attr/iconColor"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
                         android:maxLines="1"
@@ -391,7 +393,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
                         android:gravity="end"
                         android:maxLines="1"
@@ -542,7 +543,8 @@
                                 android:layout_height="30dp"
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/videos"
-                                android:src="@drawable/video_preview" />
+                                android:src="@drawable/video_preview"
+                                android:tint="@color/white"/>
 
                         </RelativeLayout>
 
@@ -596,6 +598,7 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
+                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -621,6 +624,7 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
+                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
                                 </LinearLayout>
@@ -653,6 +657,7 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
+                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -677,6 +682,7 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
+                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
                                 </LinearLayout>
@@ -687,11 +693,11 @@
                                 android:layout_width="34dp"
                                 android:layout_height="34dp"
                                 android:layout_alignParentStart="true"
-                                android:layout_alignParentLeft="true"
                                 android:layout_alignParentTop="true"
                                 android:contentDescription="@string/show_media"
                                 android:padding="5dp"
-                                android:src="@drawable/ic_remove_red_eye_img" />
+                                android:src="@drawable/ic_remove_red_eye_img"
+                                android:tint="@color/white"/>
                         </RelativeLayout>
 
                         <LinearLayout
@@ -721,6 +727,7 @@
                                     android:layout_height="30dp"
                                     android:layout_centerInParent="true"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
 
                                 <ImageView
@@ -728,11 +735,12 @@
                                     android:layout_width="34dp"
                                     android:layout_height="34dp"
                                     android:layout_alignParentStart="true"
-                                    android:layout_alignParentLeft="true"
                                     android:layout_alignParentTop="true"
                                     android:contentDescription="@string/hide_media"
                                     android:padding="5dp"
-                                    android:src="@drawable/ic_remove_red_eye_img" />
+                                    android:src="@drawable/ic_remove_red_eye_img"
+                                    android:tint="?attr/iconColor"
+                                   />
                             </RelativeLayout>
 
                             <LinearLayout
@@ -740,7 +748,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="2dp"
-                                android:layout_marginLeft="2dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
@@ -763,6 +770,7 @@
                                         android:layout_centerInParent="true"
                                         android:contentDescription="@string/play_video"
                                         android:src="@drawable/ic_play_arrow"
+                                        android:tint="@color/white"
                                         android:visibility="gone" />
                                 </RelativeLayout>
 
@@ -793,6 +801,7 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
+                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -817,6 +826,7 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
+                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -922,6 +932,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_reply"
+                    android:tint="?attr/iconColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -984,6 +995,7 @@
                     android:layout_marginStart="15dp"
                     android:contentDescription="@string/pin_add"
                     android:src="@drawable/ic_pin_drop"
+                    android:tint="?attr/iconColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/status_favorite_count"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -1004,6 +1016,7 @@
                     android:layout_height="25dp"
                     android:contentDescription="@string/display_toot_truncate"
                     android:src="@drawable/ic_more_horiz"
+                    android:tint="?attr/iconColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -385,7 +385,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-        changeColor();
 
 
         //By default the toot is not restored so the id -1 is defined
@@ -2379,8 +2378,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 itemPoll.setVisible(false);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        changeColor();
+
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.0");
@@ -3972,45 +3970,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
-    private void changeColor() {
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
-            changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline_toot, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
-            //bottom action
-            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_picture), R.color.dark_text);
-            changeDrawableColor(TootActivity.this, findViewById(R.id.poll_action), R.color.dark_text);
-            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_visibility), R.color.dark_text);
-            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_emoji), R.color.dark_text);
-            Helper.changeButtonTextColor(TootActivity.this, findViewById(R.id.toot_cw), R.color.dark_text);
-
-        } else {
-            changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline_toot, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
-            //bottom action
-            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_picture), R.color.black);
-            changeDrawableColor(TootActivity.this, findViewById(R.id.poll_action), R.color.black);
-            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_visibility), R.color.black);
-            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_emoji), R.color.black);
-            Helper.changeButtonTextColor(TootActivity.this, findViewById(R.id.toot_cw), R.color.black);
-
-        }
-    }
 
 
     @Override

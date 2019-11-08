@@ -520,30 +520,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
                 tootReply = status;
                 theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
-                    changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
-                    changeDrawableColor(context, R.drawable.ic_public_toot, R.color.dark_text);
-                    changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.dark_text);
-                    changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.dark_text);
-                    changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.dark_text);
-                    changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.dark_text);
-                    if (theme == Helper.THEME_DARK) {
-                        holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background);
-                        changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_dark);
-                    } else {
-                        holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_black);
-                        changeDrawableColor(context, R.drawable.quick_reply_background, R.color.quick_reply_background_black);
-                    }
-                } else {
-                    holder.quick_reply_container.setBackgroundResource(R.drawable.quick_reply_background_light);
-                    changeDrawableColor(context, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
-                    changeDrawableColor(context, R.drawable.ic_public_toot, R.color.black);
-                    changeDrawableColor(context, R.drawable.ic_lock_open_toot, R.color.black);
-                    changeDrawableColor(context, R.drawable.ic_lock_outline_toot, R.color.black);
-                    changeDrawableColor(context, R.drawable.ic_mail_outline_toot, R.color.black);
-                    changeDrawableColor(context, holder.quick_reply_switch_to_full, R.color.black);
-
-                }
 
                 final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);

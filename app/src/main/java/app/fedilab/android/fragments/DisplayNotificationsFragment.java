@@ -27,7 +27,6 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -39,6 +38,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -215,27 +216,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
-                break;
-        }
         if (context != null)
             asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).execute();
         else
@@ -257,7 +237,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         this.context = context;
     }

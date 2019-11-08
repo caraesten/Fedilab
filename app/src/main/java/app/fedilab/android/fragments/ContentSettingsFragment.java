@@ -1599,11 +1599,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         final Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         final ImageView set_toot_visibility = rootView.findViewById(R.id.set_toot_visibility);
-        if (theme == Helper.THEME_DARK) {
-            Helper.changeDrawableColor(context, set_toot_visibility, R.color.dark_text);
-        } else {
-            Helper.changeDrawableColor(context, set_toot_visibility, R.color.white);
-        }
+
         //Only displayed for non locked accounts
         if (account != null) {
             String defaultVisibility = account.isLocked() ? "private" : "public";

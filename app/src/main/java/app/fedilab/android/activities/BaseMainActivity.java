@@ -146,7 +146,6 @@ import app.fedilab.android.interfaces.OnSyncTimelineInterface;
 import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 
 import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 public abstract class BaseMainActivity extends BaseActivity

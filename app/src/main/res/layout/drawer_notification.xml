@@ -101,6 +101,7 @@
                     android:layout_marginBottom="10dp"
                     android:id="@+id/notification_delete"
                     android:src="@drawable/ic_delete"
+                    android:tint="?attr/iconColor"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/delete_notification" />
@@ -181,6 +182,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_width="20dp"
                                 android:src="@drawable/ic_play_arrow"
+                                android:tint="@color/white"
                                 android:layout_height="20dp"
                                 android:contentDescription="@string/play_video" />
                         </RelativeLayout>
@@ -212,6 +214,7 @@
                                     android:layout_centerInParent="true"
                                     android:layout_width="20dp"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:layout_height="20dp"
                                     android:contentDescription="@string/play_video" />
                             </RelativeLayout>
@@ -241,13 +244,13 @@
                                         android:layout_centerInParent="true"
                                         android:layout_width="20dp"
                                         android:src="@drawable/ic_play_arrow"
+                                        android:tint="@color/white"
                                         android:visibility="gone"
                                         android:layout_height="20dp"
                                         android:contentDescription="@string/play_video" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
-                                    android:layout_marginLeft="2dp"
                                     android:layout_marginStart="2dp"
                                     android:layout_weight="1"
                                     android:layout_width="0dp"
@@ -266,6 +269,7 @@
                                         android:visibility="gone"
                                         android:layout_width="20dp"
                                         android:src="@drawable/ic_play_arrow"
+                                        android:tint="@color/white"
                                         android:layout_height="20dp"
                                         android:contentDescription="@string/play_video" />
                                 </RelativeLayout>
@@ -277,7 +281,6 @@
                         android:id="@+id/status_show_more"
                         android:visibility="gone"
                         android:textAllCaps="false"
-                        android:drawableLeft="@drawable/ic_photo"
                         android:drawableStart="@drawable/ic_photo"
                         android:gravity="center"
                         android:drawablePadding="5dp"
@@ -326,6 +329,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_reply"
+                        android:tint="?attr/iconColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -386,6 +390,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="15dp"
+                        android:tint="?attr/iconColor"
                         android:contentDescription="@string/toot_visibility_tilte"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/status_more"
@@ -397,6 +402,7 @@
                         android:layout_height="25dp"
                         android:contentDescription="@string/display_toot_truncate"
                         android:src="@drawable/ic_more_horiz"
+                        android:tint="?attr/iconColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -416,7 +422,7 @@
 
     <RelativeLayout
         android:visibility="gone"
-        android:background="@color/white"
+        android:background="@color/black"
         android:id="@+id/container_trans"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

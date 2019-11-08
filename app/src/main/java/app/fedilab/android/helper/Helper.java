@@ -1499,15 +1499,6 @@ public class Helper {
 
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
-            changeDrawableColor(activity, R.drawable.ic_person_add, R.color.dark_text);
-            changeDrawableColor(activity, R.drawable.ic_person, R.color.dark_text);
-            changeDrawableColor(activity, R.drawable.ic_cancel, R.color.dark_text);
-        } else {
-            changeDrawableColor(activity, R.drawable.ic_person_add, R.color.black);
-            changeDrawableColor(activity, R.drawable.ic_person, R.color.black);
-            changeDrawableColor(activity, R.drawable.ic_cancel, R.color.black);
-        }
 
         if (!menuAccountsOpened) {
             arrow.setImageResource(R.drawable.ic_arrow_drop_up);
@@ -2284,15 +2275,6 @@ public class Helper {
             ImageView owner_accounts = headerLayout.findViewById(R.id.owner_accounts);
             ImageView header_option_info = headerLayout.findViewById(R.id.header_option_info);
             ImageView header_option_menu = headerLayout.findViewById(R.id.header_option_menu);
-            if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
-                changeDrawableColor(activity, owner_accounts, R.color.dark_text);
-                changeDrawableColor(activity, header_option_info, R.color.dark_text);
-                changeDrawableColor(activity, header_option_menu, R.color.dark_text);
-            } else {
-                changeDrawableColor(activity, owner_accounts, R.color.light_black);
-                changeDrawableColor(activity, header_option_info, R.color.light_black);
-                changeDrawableColor(activity, header_option_menu, R.color.light_black);
-            }
             if (!urlHeader.contains("missing.png")) {
                 ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
                 Glide.with(activity.getApplicationContext())

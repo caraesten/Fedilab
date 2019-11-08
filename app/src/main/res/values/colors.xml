@@ -177,4 +177,9 @@
 
     <color name="cyanea_primary_reference">#0288D1</color>
     <color name="cyanea_accent_reference">#FFA000</color>
+
+
+
+    <color name="dark_icon_theme">#f3f3f3</color>
+    <color name="black_icon_theme">#606984</color>
 </resources>
