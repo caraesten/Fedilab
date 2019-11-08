@@ -145,12 +145,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_enable_comments = findViewById(R.id.set_upload_enable_comments);
 
 
-        //Change spinner colors
-        Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_channel);
-        Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_categories);
-        Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_licenses);
-        Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_languages);
-        Helper.changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_privacy);
 
 
         set_upload_delete.setOnClickListener(new View.OnClickListener() {

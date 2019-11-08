@@ -170,8 +170,6 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     set_upload_channel = dialogView.findViewById(R.id.set_upload_channel);
                     set_upload_privacy = dialogView.findViewById(R.id.set_upload_privacy);
 
-                    Helper.changeMaterialSpinnerColor(context, set_upload_privacy);
-                    Helper.changeMaterialSpinnerColor(context, set_upload_channel);
 
                     new RetrievePeertubeChannelsAsyncTask(context, DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 

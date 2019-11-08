@@ -31,8 +31,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -77,9 +75,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.view.menu.ActionMenuItemView;
-import androidx.appcompat.widget.ActionMenuView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import android.text.Html;
 import android.text.SpannableString;
@@ -105,7 +101,6 @@ import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -113,7 +108,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -131,6 +125,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.iceteck.silicompressorr.SiliCompressor;
+import com.jaredrummler.cyanea.Cyanea;
+import com.jaredrummler.cyanea.prefs.CyaneaTheme;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -201,7 +197,6 @@ import javax.net.ssl.SSLContext;
 import app.fedilab.android.BuildConfig;
 import app.fedilab.android.activities.MutedInstanceActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -217,7 +212,6 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.Tag;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Tls12SocketFactory;
-import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
 import app.fedilab.android.sqlite.MainMenuDAO;
@@ -1879,9 +1873,21 @@ public class Helper {
         for (Mention mention : mentions) {
             cw_mention = String.format("@%s %s", mention.getUsername(), cw_mention);
         }
-        SpannableString spannableString = new SpannableString(cw_mention);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( l_c == -1) {
+            if (theme == THEME_DARK)
+                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
+            else if (theme == THEME_BLACK)
+                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
+            else if (theme == THEME_LIGHT)
+                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+        }
+        final int link_color = l_c;
+        SpannableString spannableString = new SpannableString(cw_mention);
+
         for (final Mention mention : mentions) {
             String targetedAccount = "@" + mention.getUsername();
             if (spannableString.toString().contains(targetedAccount)) {
@@ -1903,12 +1909,7 @@ public class Helper {
                                                 public void updateDrawState(@NotNull TextPaint ds) {
                                                     super.updateDrawState(ds);
                                                     ds.setUnderlineText(false);
-                                                    if (theme == THEME_DARK)
-                                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                    else if (theme == THEME_BLACK)
-                                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                    else if (theme == THEME_LIGHT)
-                                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                    ds.setColor(link_color);
                                                 }
                                             },
                             startPosition, endPosition,
@@ -2027,14 +2028,15 @@ public class Helper {
                 }
             });
         }
+        List<CyaneaTheme> list = CyaneaTheme.Companion.from(activity.getAssets(), "themes/cyanea_themes.json");
         buttonLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actionMenu.close(true);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
-                editor.apply();
-                activity.recreate();
+                editor.commit();
+                list.get(0).apply(Cyanea.getInstance()).recreate(activity);
             }
         });
         buttonDark.setOnClickListener(new View.OnClickListener() {
@@ -2043,8 +2045,8 @@ public class Helper {
                 actionMenu.close(true);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
-                editor.apply();
-                activity.recreate();
+                editor.commit();
+                list.get(1).apply(Cyanea.getInstance()).recreate(activity);
             }
         });
         buttonBlack.setOnClickListener(new View.OnClickListener() {
@@ -2053,8 +2055,8 @@ public class Helper {
                 actionMenu.close(true);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
-                editor.apply();
-                activity.recreate();
+                editor.commit();
+                list.get(2).apply(Cyanea.getInstance()).recreate(activity);
             }
         });
 
@@ -2286,17 +2288,9 @@ public class Helper {
 
                                 backgroundImage.setImageBitmap(resource);
                                 if (theme == THEME_LIGHT) {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                        backgroundImage.setImageAlpha(80);
-                                    } else {
-                                        backgroundImage.setAlpha(80);
-                                    }
+                                    backgroundImage.setImageAlpha(80);
                                 } else {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                        backgroundImage.setImageAlpha(60);
-                                    } else {
-                                        backgroundImage.setAlpha(60);
-                                    }
+                                    backgroundImage.setImageAlpha(60);
                                 }
 
                             }
@@ -2408,6 +2402,18 @@ public class Helper {
             matcher = Patterns.WEB_URL.matcher(spannableString);
         else
             matcher = urlPattern.matcher(spannableString);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if( l_c == -1) {
+            if (theme == THEME_DARK)
+                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
+            else if (theme == THEME_BLACK)
+                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
+            else if (theme == THEME_LIGHT)
+                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+        }
+        final int link_color = l_c;
         while (matcher.find()) {
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
@@ -2425,12 +2431,7 @@ public class Helper {
                         public void updateDrawState(@NotNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -2454,12 +2455,7 @@ public class Helper {
                     public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -2481,12 +2477,7 @@ public class Helper {
                                                         public void updateDrawState(@NotNull TextPaint ds) {
                                                             super.updateDrawState(ds);
                                                             ds.setUnderlineText(false);
-                                                            if (theme == THEME_DARK)
-                                                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                            else if (theme == THEME_BLACK)
-                                                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                            else if (theme == THEME_LIGHT)
-                                                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                            ds.setColor(link_color);
                                                         }
                                                     },
                                     startPosition, endPosition,
@@ -2521,12 +2512,7 @@ public class Helper {
                     public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
@@ -2556,12 +2542,7 @@ public class Helper {
                     public void updateDrawState(@NotNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
@@ -4239,25 +4220,6 @@ public class Helper {
         return context.getResources().getBoolean(R.bool.isTablet);
     }
 
-    public static void changeMaterialSpinnerColor(Context context, MaterialSpinner materialSpinner) {
-
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == THEME_BLACK) {
-            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
-            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
-            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-        } else if (theme == THEME_DARK) {
-            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
-            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
-            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-        } else {
-            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.black));
-            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.black));
-        }
-
-    }
 
     public static class CacheTask extends AsyncTask<Void, Void, Void> {
         private float cacheSize;

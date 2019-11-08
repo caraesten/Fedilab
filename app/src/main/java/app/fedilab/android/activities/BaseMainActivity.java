@@ -1213,7 +1213,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     set_live_type_indication.setText(R.string.no_live_indication);
                     break;
             }
-            Helper.changeMaterialSpinnerColor(BaseMainActivity.this, set_live_type);
             set_live_type.setSelectedIndex(Helper.liveNotifType(getApplicationContext()));
             set_live_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override

@@ -140,9 +140,6 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_submit = findViewById(R.id.set_upload_submit);
         video_title = findViewById(R.id.video_title);
 
-        Helper.changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_privacy);
-        Helper.changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_channel);
-
         new RetrievePeertubeChannelsAsyncTask(PeertubeUploadActivity.this, PeertubeUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         channels = new HashMap<>();
 

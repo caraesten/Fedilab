@@ -123,7 +123,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
 
         MaterialSpinner reg_category = findViewById(R.id.reg_category);
-        Helper.changeMaterialSpinnerColor(MastodonRegisterActivity.this, reg_category);
         String[] categoriesA = {
                 getString(R.string.category_general),
                 getString(R.string.category_regional),
