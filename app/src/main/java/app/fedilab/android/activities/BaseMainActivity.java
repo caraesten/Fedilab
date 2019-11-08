@@ -484,9 +484,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
 
-                    if( tab.getIcon() != null) {
-                        tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
-                    }
                 }
 
                 @Override
@@ -502,9 +499,6 @@ public abstract class BaseMainActivity extends BaseActivity
                             DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                         }
-                    }
-                    if( tab.getIcon() != null) {
-                        tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
                     }
                 }
             });
@@ -2099,9 +2093,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                if( tab.getIcon() != null) {
-                    tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
-                }
             }
 
             @Override
@@ -2154,9 +2145,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                if( tab.getIcon() != null) {
-                    tab.getIcon().setColorFilter(R.attr.colorAccent, PorterDuff.Mode.SRC_IN);
-                }
             }
         });
 
