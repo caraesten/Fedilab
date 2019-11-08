@@ -67,6 +67,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
                     .build());
         }*/
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

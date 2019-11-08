@@ -26,6 +26,7 @@ import androidx.multidex.MultiDexApplication;
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.jaredrummler.cyanea.Cyanea;
+import com.jaredrummler.cyanea.prefs.CyaneaTheme;
 
 import net.gotev.uploadservice.UploadService;
 
@@ -76,7 +77,25 @@ public class MainApplication extends MultiDexApplication {
         if( Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
              NotificationsSyncJob.schedule(false);
         }
+
         Cyanea.init(this, super.getResources());
+        List<CyaneaTheme> list = CyaneaTheme.Companion.from(getAssets(), "themes/cyanea_themes.json");
+
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if (theme == Helper.THEME_LIGHT) {
+            list.get(0).apply(Cyanea.getInstance());
+        } else if (theme == Helper.THEME_BLACK) {
+            list.get(2).apply(Cyanea.getInstance());
+        } else {
+            list.get(1).apply(Cyanea.getInstance());
+        }
+
+
+
+
+
+
+
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);
         ApplicationJob.cancelAllJob(BackupNotificationsSyncJob.BACKUP_NOTIFICATIONS_SYNC);
