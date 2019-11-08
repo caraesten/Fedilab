@@ -16,7 +16,6 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/container"
     android:layout_height="@dimen/nav_header_height">
@@ -37,7 +36,7 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +71,8 @@
 
             <ImageView
                 android:gravity="center_vertical|end"
-                app:srcCompat="@drawable/ic_more_vert"
+                android:src="@drawable/ic_more_vert"
+                android:tint="?attr/iconColor"
                 android:id="@+id/header_option_menu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -93,16 +93,17 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+               />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:gravity="center_vertical"
                 android:layout_marginStart="5dp"
                 android:id="@+id/owner_accounts"
+                android:src="@drawable/ic_arrow_drop_down"
+                android:tint="?attr/iconColor"
                 android:layout_width="30dp"
-                app:srcCompat="@drawable/ic_arrow_drop_down"
                 android:layout_height="30dp"
-                tools:ignore="ContentDescription,VectorDrawableCompat" />
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView
@@ -114,7 +115,8 @@
 
         <ImageView
             android:layout_gravity="center_vertical|end"
-            app:srcCompat="@drawable/ic_info_outline"
+            android:src="@drawable/ic_info_outline"
+            android:tint="?attr/iconColor"
             android:id="@+id/header_option_info"
             android:layout_width="20dp"
             android:layout_height="20dp"
