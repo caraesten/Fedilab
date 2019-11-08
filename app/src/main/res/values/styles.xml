@@ -3,55 +3,55 @@
     <attr name="cardviewColor" type="color"/>
 
     <!-- Light theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.Cyanea.Light.DarkActionBar">
         <item name="cardviewColor">@color/white</item>
     </style>
 
 
-    <style name="AppTheme_NoActionBar_Fedilab" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme_NoActionBar_Fedilab" parent="Theme.Cyanea.Light.NoActionBar">
         <item name="cardviewColor">@color/white</item>
     </style>
     <!-- BLACK theme -->
-    <style name="AppThemeBlack" parent="Theme.AppCompat">
+    <style name="AppThemeBlack" parent="Theme.Cyanea.Dark">
         <item name="cardviewColor">@color/black</item>
     </style>
 
-    <style name="AppThemeBlack_NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppThemeBlack_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
         <item name="cardviewColor">@color/black</item>
     </style>
 
 
     <!-- Dark theme -->
-    <style name="AppThemeDark" parent="Theme.AppCompat">
+    <style name="AppThemeDark" parent="Theme.Cyanea.Dark">
         <item name="cardviewColor">@color/mastodonC1</item>
     </style>
 
-    <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppThemeDark_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
         <item name="cardviewColor">@color/mastodonC1</item>
     </style>
 
 
 
-    <style name="Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="Dialog" parent="Cyanea.AlertDialog.Theme.Light">
     </style>
-    <style name="DialogDark" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="DialogDark" parent="Cyanea.AlertDialog.Theme.Dark">
     </style>
-    <style name="DialogBlack" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="DialogBlack" parent="Cyanea.AlertDialog.Theme.Dark">
     </style>
 
-    <style name="TransparentLight" parent="Theme.AppCompat.Light">
+    <style name="TransparentLight" parent="Theme.Cyanea.Light">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="TransparentDark" parent="Theme.AppCompat">
+    <style name="TransparentDark" parent="Theme.Cyanea.Dark">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="TransparentBlack" parent="Theme.AppCompat">
+    <style name="TransparentBlack" parent="Theme.Cyanea.Dark">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -65,7 +65,7 @@
 
 
     <!-- Light theme -->
-    <style name="AppAdminTheme" parent="Theme.AppCompat">
+    <style name="AppAdminTheme" parent="Theme.Cyanea.Dark">
 
     </style>
 

@@ -25,6 +25,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
+import com.jaredrummler.cyanea.Cyanea;
 
 import net.gotev.uploadservice.UploadService;
 
@@ -75,7 +76,7 @@ public class MainApplication extends MultiDexApplication {
         if( Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
              NotificationsSyncJob.schedule(false);
         }
-
+        Cyanea.init(this, super.getResources());
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);
         ApplicationJob.cancelAllJob(BackupNotificationsSyncJob.BACKUP_NOTIFICATIONS_SYNC);

@@ -8,26 +8,24 @@ import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
 
-import com.afollestad.aesthetic.Aesthetic;
-import com.afollestad.aesthetic.AestheticActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.franmontiel.localechanger.LocaleChanger;
+import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.one.EmojiOneProvider;
 
 import java.util.Timer;
 
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.helper.ThemeHelper;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -36,7 +34,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AestheticActivity {
+public class BaseActivity extends CyaneaAppCompatActivity {
 
 
     public static final int READ_WRITE_STORAGE = 52;
