@@ -71,7 +71,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +88,6 @@ import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.UserNote;
 import app.fedilab.android.client.HttpsConnection;
-import app.fedilab.android.drawers.AccountsInAListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
@@ -179,9 +177,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
@@ -200,7 +195,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_pp = findViewById(R.id.account_pp);
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
-        TextView account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
         addToList = null;
         account_pp.setBackgroundResource(R.drawable.account_pp_border);
@@ -245,10 +239,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
 
-        final ImageButton account_menu = findViewById(R.id.account_menu);
-        ImageButton action_more = findViewById(R.id.action_more);
-        ImageButton reload_tabs = findViewById(R.id.reload_tabs);
-        ImageButton action_back = findViewById(R.id.action_back);
+        final ImageView account_menu = findViewById(R.id.account_menu);
+        ImageView action_more = findViewById(R.id.action_more);
+        ImageView reload_tabs = findViewById(R.id.reload_tabs);
+        ImageView action_back = findViewById(R.id.action_back);
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

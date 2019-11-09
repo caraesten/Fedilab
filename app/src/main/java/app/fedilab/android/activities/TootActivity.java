@@ -294,9 +294,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;
@@ -315,8 +312,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
         autocomplete = false;
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -718,7 +714,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 String defaultVisibility = account.isLocked() ? "private" : "public";
                 visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             }
-            assert visibility != null;
             switch (visibility) {
                 case "public":
                     toot_visibility.setImageResource(R.drawable.ic_public_toot);
@@ -812,14 +807,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             @Override
             public void onClick(View v) {
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(TootActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                        return;
-                    }
+                if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(TootActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return;
                 }
                 Intent intent;
                 intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -832,9 +825,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     startActivityForResult(intent, PICK_IMAGE);
                 } else {
                     intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    }
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
@@ -1698,7 +1689,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
                 else
-                    //noinspection deprecation
                     input.setText(Html.fromHtml(content));
                 alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -2457,11 +2447,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         media_picture.setImageBitmap(resource);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            media_picture.setImageAlpha(60);
-                        } else {
-                            media_picture.setAlpha(60);
-                        }
+                        media_picture.setImageAlpha(60);
                     }
                 });
 
@@ -3523,23 +3509,21 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     initialTootVisibility = 1;
                     break;
             }
-            if (settingsVisibility != null) {
-                switch (settingsVisibility) {
-                    case "public":
-                        ownerTootVisibility = 4;
-                        break;
-                    case "unlisted":
-                        ownerTootVisibility = 3;
-                        break;
-                    case "private":
-                        visibility = "private";
-                        ownerTootVisibility = 2;
-                        break;
-                    case "direct":
-                        visibility = "direct";
-                        ownerTootVisibility = 1;
-                        break;
-                }
+            switch (settingsVisibility) {
+                case "public":
+                    ownerTootVisibility = 4;
+                    break;
+                case "unlisted":
+                    ownerTootVisibility = 3;
+                    break;
+                case "private":
+                    visibility = "private";
+                    ownerTootVisibility = 2;
+                    break;
+                case "direct":
+                    visibility = "direct";
+                    ownerTootVisibility = 1;
+                    break;
             }
             int tootVisibility;
             if (ownerTootVisibility >= initialTootVisibility) {
