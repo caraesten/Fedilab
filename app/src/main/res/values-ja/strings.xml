@@ -442,11 +442,12 @@
         - <b>フォロー</b>：フォロー、フォロー解除、ブロック、ブロック解除を行います。\n\n
         <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    </string>
     <string name="privacy_API_title">トラッキングとライブラリ</string>
-    <string name="privacy_API">        アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
+    <string name="privacy_API">        このアプリケーションは<b>トラッキングツールを使用しておらず</b>（利用者監視、エラー報告など）、広告もありません。\n\n
         ライブラリの使用は最小限です：\n
         - <b>Glide</b>: メディアの管理\n
         - <b>Android-Job</b>: サービスの管理\n
-        - <b>PhotoView</b>: 画像の管理\n    </string>
+        - <b>PhotoView</b>: 画像の管理\n
+    </string>
     <string name="privacy_API_yandex_title">トゥートの翻訳</string>
     <string name="privacy_API_yandex_authorizations">        このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
         Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    </string>
@@ -889,7 +890,7 @@
     <string name="toast_error_instance_reg">有効なインスタンスのチェック中に問題が発生しました！</string>
     <string name="join_mastodon">Mastodonに参加</string>
     <string name="pickup_instance_category">カテゴリーを選択してインスタンスを選択し、チェックボタンをタップしてください。</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">チェックボタンをタップしてインスタンスを選択します。</string>
     <string name="users">%1$s人のユーザー</string>
     <string name="password_confirm">パスワードの確認</string>
     <string name="agreement_check">%1$sと%2$sに同意する</string>
@@ -1121,11 +1122,11 @@
     <string name="fetch_conversation">会話を取得</string>
     <string name="order_by">並び順</string>
     <string name="title_video_peertube">動画のタイトル</string>
-    <string name="join_peertube">Join Peertube</string>
-    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
-    <string name="colors">Colors</string>
-    <string name="link_color_title">Links</string>
-    <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
+    <string name="join_peertube">Peertubeに参加</string>
+    <string name="agreement_check_peertube">私は16歳以上で、インスタンスの %1$s に同意します。</string>
+    <string name="colors">色</string>
+    <string name="link_color_title">リンク</string>
+    <string name="link_color">メッセージ内のリンク(URL、メンション、タグなど)の色を変更する</string>
     <string name="boost_header_color_title">ブーストヘッダー</string>
     <string name="boost_header_color">ブースト時のヘッダーの色を変更する</string>
     <string name="background_status_title">投稿</string>
