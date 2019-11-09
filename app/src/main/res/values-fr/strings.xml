@@ -1148,10 +1148,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="icons_color">Couleur des icônes du bas dans les fils</string>
     <string name="background_color_title">Arrière-plan</string>
     <string name="background_color">Changer la couleur d\'arrière-plan des fils</string>
-    <string name="pin_tag">Pin this tag</string>
-    <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
-    <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
+    <string name="pin_tag">Épingler ce tag</string>
+    <string name="logo_of_the_instance">Logo de l\'instance</string>
+    <string name="edit_profile">Éditer le profil</string>
+    <string name="make_an_action">Faire une action</string>
+    <string name="translation">Traduction</string>
+    <string name="image_preview">Aperçu de l\'image</string>
 </resources>
