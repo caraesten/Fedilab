@@ -218,7 +218,7 @@
     <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをタップします。</string>
     <!-- Notifications -->
     <string name="no_notifications">通知はありません</string>
-    <string name="notif_mention">メンションされました</string>
+    <string name="notif_mention">にメンションされました</string>
     <string name="notif_reblog">がブーストしました</string>
     <string name="notif_favourite">がお気に入りに登録しました</string>
     <string name="notif_follow">があなたをフォローしました</string>
@@ -1138,4 +1138,10 @@
     <string name="icons_color">タイムラインの下部アイコンの色</string>
     <string name="background_color_title">背景</string>
     <string name="background_color">タイムラインの背景色を変更する</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>
