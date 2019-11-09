@@ -1144,4 +1144,10 @@
     <string name="icons_color">Zaman çizelgelerinin alt kısmındaki simgelerin rengi</string>
     <string name="background_color_title">Arka plan</string>
     <string name="background_color">Zaman çizelgelerinin arka plan rengini değiştir</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>
