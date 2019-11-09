@@ -1149,4 +1149,10 @@
     <string name="icons_color">Denbora-lerroen azpialdeko botoien kolorea</string>
     <string name="background_color_title">Atzealdea</string>
     <string name="background_color">Aldatu denbora-lerroen atzealdearen kolorea</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>
