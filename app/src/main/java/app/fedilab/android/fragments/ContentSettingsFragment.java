@@ -16,7 +16,6 @@ package app.fedilab.android.fragments;
 
 
 import android.annotation.TargetApi;
-import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.ContentUris;
@@ -27,7 +26,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -39,6 +37,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -79,14 +77,12 @@ import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.LiveNotificationSettingsAccountsActivity;
 import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.MainApplication;
 import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.asynctasks.DownloadTrackingDomainsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Application;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.MainMenuItem;
 import app.fedilab.android.client.Entities.Relationship;
@@ -119,7 +115,6 @@ import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.FEDIV
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.HERO;
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.MASTALAB;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.ADMIN;
-import static app.fedilab.android.fragments.ContentSettingsFragment.type.COLORS;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.COMPOSE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFACE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.LANGUAGE;
@@ -186,12 +181,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
     private EditText your_api_key;
-    private int count1, count2, count3, count4, count5;
     private static final int ACTIVITY_CHOOSE_SOUND = 412;
-    int count6 = 0;
-    int count7 = 0;
-    int count8 = 0;
-    int count9 = 0;
     private int style;
 
     public static ContentSettingsFragment newInstance(int resId) {
@@ -342,12 +332,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
 
-        count1 = 0;
-        count2 = 0;
-        count3 = 0;
-        count4 = 0;
-        count5 = 0;
-
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
 
@@ -434,37 +418,34 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         switch (attachmentAction) {
             case Helper.ATTACHMENT_ALWAYS:
-                set_attachment_group.setSelection(0);
+                set_attachment_group.setSelection(0, false);
                 break;
             case Helper.ATTACHMENT_WIFI:
-                set_attachment_group.setSelection(1);
+                set_attachment_group.setSelection(1, false);
                 break;
             case Helper.ATTACHMENT_ASK:
-                set_attachment_group.setSelection(2);
+                set_attachment_group.setSelection(2, false);
                 break;
         }
 
         set_attachment_group.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count9 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
-                        case 0:
-                            editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_WIFI);
-                            editor.apply();
-                            break;
-                        case 2:
-                            editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ASK);
-                            editor.apply();
-                            break;
-                    }
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position) {
+                    case 0:
+                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_WIFI);
+                        editor.apply();
+                        break;
+                    case 2:
+                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ASK);
+                        editor.apply();
+                        break;
                 }
-                count9++;
             }
 
             @Override
@@ -489,28 +470,25 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         int positionVideoMode = 0;
         if (videoMode == Helper.VIDEO_MODE_DIRECT)
             positionVideoMode = 1;
-        video_mode_spinner.setSelection(positionVideoMode);
+        video_mode_spinner.setSelection(positionVideoMode, false);
         video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count5 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position) {
                         /*case 0:
                             editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
                             editor.apply();
                             break;*/
-                        case 0:
-                            editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_WEBVIEW);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
-                            editor.apply();
-                            break;
-                    }
+                    case 0:
+                        editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_WEBVIEW);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
+                        editor.apply();
+                        break;
                 }
-                count5++;
             }
 
             @Override
@@ -1082,29 +1060,26 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         set_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count8 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
-                        case 0:
-                            editor = sharedpreferences.edit();
-                            editor.putBoolean(Helper.SET_COMPACT_MODE, false);
-                            editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putBoolean(Helper.SET_COMPACT_MODE, true);
-                            editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
-                            editor.apply();
-                            break;
-                        case 2:
-                            editor = sharedpreferences.edit();
-                            editor.putBoolean(Helper.SET_COMPACT_MODE, false);
-                            editor.putBoolean(Helper.SET_CONSOLE_MODE, true);
-                            editor.apply();
-                            break;
-                    }
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position) {
+                    case 0:
+                        editor = sharedpreferences.edit();
+                        editor.putBoolean(Helper.SET_COMPACT_MODE, false);
+                        editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putBoolean(Helper.SET_COMPACT_MODE, true);
+                        editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
+                        editor.apply();
+                        break;
+                    case 2:
+                        editor = sharedpreferences.edit();
+                        editor.putBoolean(Helper.SET_COMPACT_MODE, false);
+                        editor.putBoolean(Helper.SET_CONSOLE_MODE, true);
+                        editor.apply();
+                        break;
                 }
-                count8++;
             }
 
             @Override
@@ -1279,53 +1254,50 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 set_live_type_indication.setText(R.string.no_live_indication);
                 break;
         }
-        set_live_type.setSelection(Helper.liveNotifType(context));
+        set_live_type.setSelection(Helper.liveNotifType(context), false);
         set_live_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count2 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
-                        case Helper.NOTIF_LIVE:
-                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
-                            live_notif_per_account.setVisibility(View.VISIBLE);
-                            editor.apply();
-                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-                            ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
-                            break;
-                        case Helper.NOTIF_DELAYED:
-                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
-                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
-                            live_notif_per_account.setVisibility(View.VISIBLE);
-                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                            editor.apply();
-                            ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
-                            break;
-                        case Helper.NOTIF_NONE:
-                            editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
-                            editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
-                            live_notif_per_account.setVisibility(View.GONE);
-                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-                            NotificationsSyncJob.schedule(false);
-                            editor.apply();
-                            break;
-                    }
-                    Helper.startStreaming(context);
-                    switch (Helper.liveNotifType(context)){
-                        case Helper.NOTIF_LIVE:
-                            set_live_type_indication.setText(R.string.live_notif_indication);
-                            break;
-                        case Helper.NOTIF_DELAYED:
-                            set_live_type_indication.setText(R.string.set_live_type_indication);
-                            break;
-                        case Helper.NOTIF_NONE:
-                            set_live_type_indication.setText(R.string.no_live_indication);
-                            break;
-                    }
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position) {
+                    case Helper.NOTIF_LIVE:
+                        editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                        editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
+                        live_notif_per_account.setVisibility(View.VISIBLE);
+                        editor.apply();
+                        context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                        ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                        break;
+                    case Helper.NOTIF_DELAYED:
+                        editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                        editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
+                        live_notif_per_account.setVisibility(View.VISIBLE);
+                        context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                        editor.apply();
+                        ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                        break;
+                    case Helper.NOTIF_NONE:
+                        editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                        editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
+                        live_notif_per_account.setVisibility(View.GONE);
+                        context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                        context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                        NotificationsSyncJob.schedule(false);
+                        editor.apply();
+                        break;
                 }
-                count2++;
+                Helper.startStreaming(context);
+                switch (Helper.liveNotifType(context)){
+                    case Helper.NOTIF_LIVE:
+                        set_live_type_indication.setText(R.string.live_notif_indication);
+                        break;
+                    case Helper.NOTIF_DELAYED:
+                        set_live_type_indication.setText(R.string.set_live_type_indication);
+                        break;
+                    case Helper.NOTIF_NONE:
+                        set_live_type_indication.setText(R.string.no_live_indication);
+                        break;
+                }
             }
 
             @Override
@@ -1494,35 +1466,33 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             default:
                 positionSpinnerTheme = 0;
         }
-        set_night_mode.setSelection(positionSpinnerTheme);
+        set_night_mode.setSelection(positionSpinnerTheme, false);
         set_night_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count1 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                    switch (position) {
-                        case 0:
-                            editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
-                            editor.apply();
-                            break;
-                        case 2:
-                            editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
-                            editor.apply();
-                            break;
-                    }
-                    Bundle b = new Bundle();
-                    b.putString("menu", "theme");
-                    Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
-                    intentBC.putExtras(b);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
-                    ((SettingsActivity) context).recreate();
+                switch (position) {
+                    case 0:
+                        editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+                        editor.apply();
+                        break;
+                    case 2:
+                        editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
+                        editor.apply();
+                        break;
                 }
-                count1++;
+                Bundle b = new Bundle();
+                b.putString("menu", "theme");
+                Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
+                intentBC.putExtras(b);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
+                ((SettingsActivity) context).recreate();
+
             }
 
             @Override
@@ -1797,42 +1767,40 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 your_api_key.setVisibility(View.VISIBLE);
                 positionSpinnerTrans = 0;
         }
-        translation_layout_spinner.setSelection(positionSpinnerTrans);
+        translation_layout_spinner.setSelection(positionSpinnerTrans, false);
         translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count3 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
-                        case 0:
-                            your_api_key.setVisibility(View.VISIBLE);
-                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
-                            break;
-                        case 1:
-                            your_api_key.setVisibility(View.VISIBLE);
-                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null));
-                            break;
-                        case 2:
-                            your_api_key.setVisibility(View.GONE);
-                            set_trans_forced.isChecked();
-                            editor.putBoolean(Helper.SET_TRANS_FORCED, false);
-                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
-                            editor.apply();
-                            break;
-                    }
-                    if (getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(Helper.INTENT_ACTION, Helper.BACK_TO_SETTINGS);
-                    startActivity(intent);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position) {
+                    case 0:
+                        your_api_key.setVisibility(View.VISIBLE);
+                        editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                        editor.apply();
+                        if (sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
+                        break;
+                    case 1:
+                        your_api_key.setVisibility(View.VISIBLE);
+                        editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
+                        editor.apply();
+                        if (sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null) != null)
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null));
+                        break;
+                    case 2:
+                        your_api_key.setVisibility(View.GONE);
+                        set_trans_forced.isChecked();
+                        editor.putBoolean(Helper.SET_TRANS_FORCED, false);
+                        editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
+                        editor.apply();
+                        break;
                 }
-                count3++;
+                Log.v(Helper.TAG,"count3");
+                if (getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(Helper.INTENT_ACTION, Helper.BACK_TO_SETTINGS);
+                startActivity(intent);
             }
 
             @Override
@@ -2093,25 +2061,22 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             default:
                 positionNotificationAntion = 0;
         }
-        action_notification.setSelection(positionNotificationAntion);
+        action_notification.setSelection(positionNotificationAntion, false);
         action_notification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count7 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                    switch (position) {
-                        case 0:
-                            editor.putInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_SILENT);
-                            editor.apply();
-                            break;
-                    }
+                switch (position) {
+                    case 0:
+                        editor.putInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_SILENT);
+                        editor.apply();
+                        break;
                 }
-                count7++;
             }
 
             @Override
@@ -2215,18 +2180,15 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(getContext(), R.array.led_colours, android.R.layout.simple_spinner_item);
             led_colour_spinner.setAdapter(adapterLEDColour);
             int positionSpinnerLEDColour = (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR));
-            led_colour_spinner.setSelection(positionSpinnerLEDColour);
+            led_colour_spinner.setSelection(positionSpinnerLEDColour, false);
 
             led_colour_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (count6 > 0) {
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putInt(Helper.SET_LED_COLOUR, position);
-                        editor.apply();
-                    } else {
-                        count6++;
-                    }
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_LED_COLOUR, position);
+                    editor.apply();
+
                 }
 
                 @Override
@@ -2334,108 +2296,105 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         set_change_locale.setAdapter(adapterLocale);
 
         int positionSpinnerLanguage = Helper.languageSpinnerPosition(context);
-        set_change_locale.setSelection(positionSpinnerLanguage);
+        set_change_locale.setSelection(positionSpinnerLanguage, false);
         set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (count2 > 0) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
-                        case 0:
-                            editor.remove(Helper.SET_DEFAULT_LOCALE_NEW);
-                            editor.commit();
-                            break;
-                        case 1:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "en");
-                            editor.commit();
-                            break;
-                        case 2:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "fr");
-                            editor.commit();
-                            break;
-                        case 3:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "de");
-                            editor.commit();
-                            break;
-                        case 4:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "it");
-                            editor.commit();
-                            break;
-                        case 5:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ja");
-                            editor.commit();
-                            break;
-                        case 6:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-TW");
-                            editor.commit();
-                            break;
-                        case 7:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-CN");
-                            editor.commit();
-                            break;
-                        case 8:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "eu");
-                            editor.commit();
-                            break;
-                        case 9:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ar");
-                            editor.commit();
-                            break;
-                        case 10:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "nl");
-                            editor.commit();
-                            break;
-                        case 11:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "gl");
-                            editor.commit();
-                            break;
-                        case 12:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "el");
-                            editor.commit();
-                            break;
-                        case 13:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pt");
-                            editor.commit();
-                            break;
-                        case 14:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "es");
-                            editor.commit();
-                            break;
-                        case 15:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pl");
-                            editor.commit();
-                            break;
-                        case 16:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "sr");
-                            editor.commit();
-                            break;
-                        case 17:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "uk");
-                            editor.commit();
-                            break;
-                        case 18:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
-                            editor.commit();
-                            break;
-                        case 19:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "no");
-                            editor.commit();
-                            break;
-                        case 20:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "kab");
-                            editor.commit();
-                            break;
-                    }
-
-                    PackageManager packageManager = context.getPackageManager();
-                    Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
-                    assert intent != null;
-                    ComponentName componentName = intent.getComponent();
-                    Intent mainIntent = Intent.makeRestartActivityTask(componentName);
-                    startActivity(mainIntent);
-                    Runtime.getRuntime().exit(0);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position) {
+                    case 0:
+                        editor.remove(Helper.SET_DEFAULT_LOCALE_NEW);
+                        editor.commit();
+                        break;
+                    case 1:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "en");
+                        editor.commit();
+                        break;
+                    case 2:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "fr");
+                        editor.commit();
+                        break;
+                    case 3:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "de");
+                        editor.commit();
+                        break;
+                    case 4:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "it");
+                        editor.commit();
+                        break;
+                    case 5:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ja");
+                        editor.commit();
+                        break;
+                    case 6:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-TW");
+                        editor.commit();
+                        break;
+                    case 7:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-CN");
+                        editor.commit();
+                        break;
+                    case 8:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "eu");
+                        editor.commit();
+                        break;
+                    case 9:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ar");
+                        editor.commit();
+                        break;
+                    case 10:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "nl");
+                        editor.commit();
+                        break;
+                    case 11:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "gl");
+                        editor.commit();
+                        break;
+                    case 12:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "el");
+                        editor.commit();
+                        break;
+                    case 13:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pt");
+                        editor.commit();
+                        break;
+                    case 14:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "es");
+                        editor.commit();
+                        break;
+                    case 15:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pl");
+                        editor.commit();
+                        break;
+                    case 16:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "sr");
+                        editor.commit();
+                        break;
+                    case 17:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "uk");
+                        editor.commit();
+                        break;
+                    case 18:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
+                        editor.commit();
+                        break;
+                    case 19:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "no");
+                        editor.commit();
+                        break;
+                    case 20:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "kab");
+                        editor.commit();
+                        break;
                 }
-                count2++;
+
+                PackageManager packageManager = context.getPackageManager();
+                Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+                assert intent != null;
+                ComponentName componentName = intent.getComponent();
+                Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+                startActivity(mainIntent);
+                Runtime.getRuntime().exit(0);
             }
 
             @Override
