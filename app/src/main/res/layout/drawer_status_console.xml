@@ -192,7 +192,7 @@
             <ImageView
                 android:id="@+id/cached_status"
                 android:src="@drawable/ic_cached_black"
-                android:tint="?attr/iconColor"
+                android:tint="?attr/iconColorMenu"
                 android:visibility="gone"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -429,7 +429,7 @@
                 <ImageView
                     android:layout_centerInParent="true"
                     android:layout_width="30dp"
-                    android:src="@drawable/video_preview"
+                    android:src="@drawable/ic_play_arrow"
                     android:tint="@color/white"
                     android:layout_height="30dp"
                     android:contentDescription="@string/play_video" />

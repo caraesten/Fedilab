@@ -189,7 +189,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
-                        android:tint="?attr/iconColor"
+                        android:tint="?attr/iconColorMenu"
                         android:visibility="gone" />
 
                     <TextView
@@ -408,7 +408,7 @@
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/play_video"
-                        android:src="@drawable/video_preview"
+                        android:src="@drawable/ic_play_arrow"
                         android:tint="@color/white"/>
 
                 </RelativeLayout>

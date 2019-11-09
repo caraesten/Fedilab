@@ -34,7 +34,7 @@
     <ImageView
         android:id="@+id/toolbar_close"
         android:src="@drawable/ic_close"
-        android:tint="?attr/iconColor"
+        android:tint="?attr/iconColorMenu"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"

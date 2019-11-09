@@ -72,7 +72,7 @@
             <ImageView
                 android:gravity="center_vertical|end"
                 android:src="@drawable/ic_more_vert"
-                android:tint="?attr/iconColor"
+                android:tint="?attr/iconColorMenu"
                 android:id="@+id/header_option_menu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -100,7 +100,7 @@
                 android:layout_marginStart="5dp"
                 android:id="@+id/owner_accounts"
                 android:src="@drawable/ic_arrow_drop_down"
-                android:tint="?attr/iconColor"
+                android:tint="?attr/iconColorMenu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 tools:ignore="ContentDescription" />
@@ -116,7 +116,7 @@
         <ImageView
             android:layout_gravity="center_vertical|end"
             android:src="@drawable/ic_info_outline"
-            android:tint="?attr/iconColor"
+            android:tint="?attr/iconColorMenu"
             android:id="@+id/header_option_info"
             android:layout_width="20dp"
             android:layout_height="20dp"

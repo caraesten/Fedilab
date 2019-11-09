@@ -1351,7 +1351,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_privacy.setVisibility(View.VISIBLE);
 
 
-            Helper.changeDrawableColor(context, R.drawable.video_preview, R.color.white);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             int iconColor = prefs.getInt("theme_icons_color", -1);

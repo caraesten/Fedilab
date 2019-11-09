@@ -2,6 +2,7 @@
 
     <attr name="cardviewColor" type="color"/>
     <attr name="iconColor" type="color"/>
+    <attr name="iconColorMenu" type="color"/>
     <attr name="textHeader" type="color"/>
     <attr name="customFeature" type="color"/>
     <attr name="cardviewHeaderBoostColor" type="color"/>
@@ -11,6 +12,7 @@
     <style name="AppTheme_Fedilab" parent="Theme.Cyanea.Light">
         <item name="cardviewColor">@color/white</item>
         <item name="iconColor">@color/black</item>
+        <item name="iconColorMenu">@color/black</item>
         <item name="textHeader">@color/black</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="cardviewHeaderBoostColor">@color/mastodonC2</item>
@@ -23,6 +25,7 @@
     <style name="AppTheme_NoActionBar_Fedilab" parent="Theme.Cyanea.Light.NoActionBar">
         <item name="cardviewColor">@color/white</item>
         <item name="iconColor">@color/black</item>
+        <item name="iconColorMenu">@color/black</item>
         <item name="textHeader">@color/black</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="colorPrimary">@color/white</item>
@@ -34,6 +37,7 @@
     <style name="AppThemeBlack" parent="Theme.Cyanea.Dark">
         <item name="cardviewColor">@color/black</item>
         <item name="iconColor">@color/black_icon_theme</item>
+        <item name="iconColorMenu">@color/dark_icon_theme</item>
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/custom_features_button_black</item>
         <item name="colorPrimary">@color/black</item>
@@ -45,6 +49,7 @@
     <style name="AppThemeBlack_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
         <item name="cardviewColor">@color/black</item>
         <item name="iconColor">@color/black_icon_theme</item>
+        <item name="iconColorMenu">@color/dark_icon_theme</item>
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/custom_features_button_black</item>
         <item name="colorPrimary">@color/black</item>
@@ -58,6 +63,7 @@
     <style name="AppThemeDark" parent="Theme.Cyanea.Dark">
         <item name="cardviewColor">@color/mastodonC1_</item>
         <item name="iconColor">@color/dark_icon_theme</item>
+        <item name="iconColorMenu">@color/dark_icon_theme</item>
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="colorPrimary">@color/mastodonC1</item>
@@ -69,6 +75,7 @@
     <style name="AppThemeDark_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
         <item name="cardviewColor">@color/mastodonC1_</item>
         <item name="iconColor">@color/dark_icon_theme</item>
+        <item name="iconColorMenu">@color/dark_icon_theme</item>
         <item name="textHeader">@color/dark_text_toot_header</item>
         <item name="customFeature">@color/mastodonC4</item>
         <item name="colorPrimary">@color/mastodonC1</item>

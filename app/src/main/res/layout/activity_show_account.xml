@@ -526,7 +526,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_refresh"
-                    android:tint="?attr/iconColor"
+                    android:tint="?attr/iconColorMenu"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:contentDescription="@string/refresh" />
@@ -537,7 +537,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_more_vert"
-                    android:tint="?attr/iconColor"
+                    android:tint="?attr/iconColorMenu"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:contentDescription="@string/display_toot_truncate" />

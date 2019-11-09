@@ -133,7 +133,8 @@
                 android:src="@drawable/ic_bot"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
+                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info"
+                android:contentDescription="@string/bot" />
 
             <!-- New badge -->
             <ImageView
@@ -276,7 +277,7 @@
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/cached_status"
                 android:src="@drawable/ic_cached_black"
-                android:tint="?attr/iconColor"
+                android:tint="?attr/iconColorMenu"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/status_account_displayname_owner"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -343,7 +344,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_remove_red_eye"
-                        android:drawableLeft="@drawable/ic_remove_red_eye"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
                         android:maxLines="1"
@@ -424,7 +424,7 @@
                             android:layout_marginStart="10dp"
                             android:paddingStart="2dp"
                             android:paddingEnd="2dp"
-                            android:text="Translation"
+                            android:text="@string/translation"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -479,7 +479,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
@@ -530,14 +529,15 @@
                                 android:id="@+id/webview_preview_card"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop" />
+                                android:scaleType="centerCrop"
+                                android:contentDescription="@string/card_view_image" />
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/videos"
-                                android:src="@drawable/video_preview"
+                                android:src="@drawable/ic_play_arrow"
                                 android:tint="@color/white"/>
 
                         </RelativeLayout>
@@ -583,7 +583,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:adjustViewBounds="true"
-                                            android:scaleType="fitCenter" />
+                                            android:scaleType="fitCenter"
+                                            android:contentDescription="@string/image_preview" />
 
                                         <ImageView
                                             android:id="@+id/status_prev1_play_h"
@@ -601,7 +602,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="1dp"
-                                        android:layout_marginLeft="1dp"
                                         android:layout_weight="1">
 
                                         <ImageView
@@ -609,7 +609,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:adjustViewBounds="true"
-                                            android:scaleType="fitCenter" />
+                                            android:scaleType="fitCenter"
+                                            android:contentDescription="@string/image_preview" />
 
                                         <ImageView
                                             android:id="@+id/status_prev2_play_h"
@@ -642,6 +643,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:adjustViewBounds="true"
+                                            android:contentDescription="@string/image_preview"
                                             android:scaleType="fitCenter" />
 
                                         <ImageView
@@ -659,7 +661,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="1dp"
-                                        android:layout_marginLeft="1dp"
                                         android:layout_weight="1">
 
                                         <ImageView
@@ -667,6 +668,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:adjustViewBounds="true"
+                                            android:contentDescription="@string/image_preview"
                                             android:scaleType="fitCenter" />
 
                                         <ImageView
@@ -721,7 +723,7 @@
                                     android:layout_height="30dp"
                                     android:layout_centerInParent="true"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
+                                    android:contentDescription="@string/image_preview"
                                     android:visibility="gone" />
 
                                 <ImageView
@@ -755,6 +757,7 @@
                                         android:id="@+id/status_prev2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:contentDescription="@string/image_preview"
                                         android:scaleType="centerCrop" />
 
                                     <ImageView
@@ -786,6 +789,7 @@
                                             android:id="@+id/status_prev3"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:contentDescription="@string/image_preview"
                                             android:scaleType="centerCrop" />
 
                                         <ImageView
@@ -804,13 +808,13 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="2dp"
-                                        android:layout_marginLeft="2dp"
                                         android:layout_weight="1">
 
                                         <ImageView
                                             android:id="@+id/status_prev4"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:contentDescription="@string/image_preview"
                                             android:scaleType="centerCrop" />
 
                                         <ImageView
@@ -925,6 +929,7 @@
                     android:layout_height="30dp"
                     android:src="@drawable/ic_reply"
                     android:tint="?attr/iconColor"
+                    android:contentDescription="@string/reply"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

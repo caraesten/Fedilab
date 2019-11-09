@@ -262,7 +262,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
-                        android:tint="?attr/iconColor"
+                        android:tint="?attr/iconColorMenu"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -494,7 +494,7 @@
                                         android:layout_height="30dp"
                                         android:layout_centerInParent="true"
                                         android:contentDescription="@string/play_video"
-                                        android:src="@drawable/video_preview"
+                                        android:src="@drawable/ic_play_arrow"
                                         android:tint="@color/white"/>
                                 </RelativeLayout>
 
@@ -965,7 +965,7 @@
                                 android:layout_marginTop="5dp"
                                 android:contentDescription="@string/delete"
                                 android:src="@drawable/ic_clear_toot"
-                                android:tint="?attr/iconColor"
+                                android:tint="?attr/iconColorMenu"
                                 android:visibility="gone"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/new_element"
