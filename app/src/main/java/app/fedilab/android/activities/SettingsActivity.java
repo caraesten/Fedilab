@@ -55,7 +55,7 @@ public class SettingsActivity extends BaseActivity  {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);

@@ -8,7 +8,7 @@
     <attr name="textColor" type="color"/>
 
     <!-- Light theme -->
-    <style name="AppTheme" parent="Theme.Cyanea.Light">
+    <style name="AppTheme_Fedilab" parent="Theme.Cyanea.Light">
         <item name="cardviewColor">@color/white</item>
         <item name="iconColor">@color/black</item>
         <item name="textHeader">@color/black</item>
