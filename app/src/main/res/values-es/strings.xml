@@ -1145,4 +1145,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="icons_color">Color de los iconos inferiores en las líneas de tiempo</string>
     <string name="background_color_title">Fondo</string>
     <string name="background_color">Cambiar el color de fondo de las líneas de tiempo</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>
