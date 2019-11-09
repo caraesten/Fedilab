@@ -15,7 +15,8 @@
             android:id="@+id/back_ground_image"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:contentDescription="@string/logo_of_the_instance" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/instance_container"
@@ -28,7 +29,6 @@
         <TextView
             android:id="@+id/name"
             android:textSize="20sp"
-            android:textColor="@color/mastodonC3"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -36,7 +36,6 @@
 
         <TextView
             android:id="@+id/values"
-            android:textColor="@color/dark_text"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:gravity="center"
@@ -45,7 +44,6 @@
 
 
         <TextView
-            android:textColor="@color/dark_text"
             android:layout_marginTop="10dp"
             android:id="@+id/checked_at"
             android:layout_gravity="center"
@@ -63,7 +61,6 @@
 
 
         <TextView
-            android:textColor="@color/dark_text"
             android:id="@+id/uptime"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
@@ -75,7 +72,6 @@
             android:id="@+id/ref_instance"
             android:layout_gravity="end|center_vertical"
             android:text="via instances.social"
-            android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -84,11 +80,13 @@
 
         <Button
             android:layout_marginTop="20dp"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:id="@+id/close"
             android:textSize="16sp"
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="@string/close"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

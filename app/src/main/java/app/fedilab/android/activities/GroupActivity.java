@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -91,8 +90,6 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         setContentView(R.layout.activity_group);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(GroupActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
@@ -167,13 +164,11 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

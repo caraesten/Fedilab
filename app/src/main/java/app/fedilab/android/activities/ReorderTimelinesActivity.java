@@ -96,21 +96,16 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
-    private int theme;
-    private String instance;
     private boolean refresh_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);

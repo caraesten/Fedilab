@@ -50,7 +50,6 @@ public class TootInfoActivity extends BaseActivity {
     private String toot_id;
     private TabLayout tabLayout;
     private ViewPager mPager;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +77,6 @@ public class TootInfoActivity extends BaseActivity {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             finish();
         }
-        userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         tabLayout = findViewById(R.id.tabLayout);
         mPager = findViewById(R.id.viewpager);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " (" + toot_reblogs_count + ")"));

@@ -24,7 +24,6 @@
         <TextView
             android:id="@+id/set_text_size_value"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:layout_width="50dp"
             android:layout_height="wrap_content" />
@@ -33,7 +32,7 @@
             android:layout_gravity="center_vertical"
             android:id="@+id/set_text_size"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></SeekBar>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <TextView
@@ -53,7 +52,6 @@
 
         <TextView
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:id="@+id/set_icon_size_value"
             android:layout_gravity="center"
             android:layout_width="50dp"
@@ -63,6 +61,6 @@
             android:layout_gravity="center_vertical"
             android:id="@+id/set_icon_size"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></SeekBar>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

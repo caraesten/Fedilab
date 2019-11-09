@@ -1262,4 +1262,5 @@
     <string name="background_color_title">Background</string>
     <string name="background_color">Change the background color for timelines</string>
     <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
 </resources>
