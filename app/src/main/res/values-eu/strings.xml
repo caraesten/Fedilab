@@ -900,7 +900,7 @@
     <string name="toast_error_instance_reg">Arazoren bat egon da instantzia eskuragarriak egiaztatzean!</string>
     <string name="join_mastodon">Elkartu Mastodon-era</string>
     <string name="pickup_instance_category">Aukeratu instantzia bat kategoria bat hautatuz, gero sakatu egiaztatu botoia.</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">Aukeratu instantzia egiaztatze botoian sakatuz.</string>
     <string name="users">%1$s erabiltzaile</string>
     <string name="password_confirm">Berretsi pasahitza</string>
     <string name="agreement_check">%1$s eta %2$s onartzen ditut</string>
@@ -1133,7 +1133,7 @@
     <string name="fetch_conversation">Elkarrizketa jasotzen</string>
     <string name="order_by">Ordena</string>
     <string name="title_video_peertube">Bideoaren izenburua</string>
-    <string name="join_peertube">Join Peertube</string>
+    <string name="join_peertube">Elkartu Peertube-ra</string>
     <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
     <string name="colors">Colors</string>
     <string name="link_color_title">Links</string>
