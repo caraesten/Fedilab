@@ -323,7 +323,8 @@ public abstract class BaseMainActivity extends BaseActivity
         //Here, the user is authenticated
         appBar = findViewById(R.id.appBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
-
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         delete_instance = findViewById(R.id.delete_instance);

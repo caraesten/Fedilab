@@ -30,7 +30,6 @@
     >
     <View
         android:visibility="gone"
-        android:background="@drawable/diag_top"
         android:id="@+id/status_reply_indicator_diag_top"
         android:layout_width="20dp"
         android:layout_height="11dp"
@@ -73,7 +72,6 @@
 
     <View
         android:visibility="gone"
-        android:background="@drawable/diag_bottom"
         android:id="@+id/status_reply_indicator_diag_bottom"
         android:layout_width="20dp"
         android:layout_height="11dp"
@@ -154,8 +152,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="?attr/colorAccent"
                     android:contentDescription="@string/profile_picture"
-                    android:tint="?attr/colorAccent"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -191,7 +189,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
-                        android:tint="?attr/colorAccent"
+                        android:tint="?attr/iconColor"
                         android:visibility="gone" />
 
                     <TextView

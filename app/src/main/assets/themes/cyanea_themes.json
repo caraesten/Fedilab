@@ -2,7 +2,7 @@
   {
     "theme_name":"Light",
     "base_theme":"LIGHT",
-    "primary":"#FFFFFFFF",
+    "primary":"#FFFFFF",
     "primary_dark":"#FFFFFFFF",
     "primary_light":"#FFd9e1e8",
     "accent":"#FF2b90d9",

@@ -944,13 +944,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if (type == RetrieveFeedsAsyncTask.Type.CONTEXT && holder.status_reply_indicator_top != null) {
-                holder.status_reply_indicator_top.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
-                holder.status_reply_indicator_bottom.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
-                holder.reply_indicator_dot.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    holder.status_reply_indicator_top.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                    holder.status_reply_indicator_bottom.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                    holder.reply_indicator_dot.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                }else{
+                    holder.status_reply_indicator_top.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+                    holder.status_reply_indicator_bottom.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+                    holder.reply_indicator_dot.setBackgroundColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+                }
+
                 if (status.isShowTopLine()) {
                     holder.status_reply_indicator_top.setVisibility(View.VISIBLE);
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);
                     if( holder.status_reply_indicator_diag_top != null){
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                            holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top_android4);
+                        }else {
+                            holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top);
+                        }
                         holder.status_reply_indicator_diag_top.setVisibility(View.VISIBLE);
                     }
                 }
@@ -958,6 +971,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);
                     holder.status_reply_indicator_bottom.setVisibility(View.VISIBLE);
                     if( holder.status_reply_indicator_diag_bottom != null){
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                            holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom_android4);
+                        }else {
+                            holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
+                        }
+
                         holder.status_reply_indicator_diag_bottom.setVisibility(View.VISIBLE);
                     }
                 }
