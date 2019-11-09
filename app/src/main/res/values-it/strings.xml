@@ -1151,4 +1151,10 @@
     <string name="icons_color">Colore delle icone sul fondo nelle timeline</string>
     <string name="background_color_title">Sfondo</string>
     <string name="background_color">Cambia il colore di sfondo per le timeline</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>
