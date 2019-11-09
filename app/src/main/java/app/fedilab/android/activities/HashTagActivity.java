@@ -42,6 +42,7 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
@@ -158,15 +159,19 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NotNull Menu menu) {
+        getMenuInflater().inflate(R.menu.tag_pin, menu);
+
         SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searchInDb = new SearchDAO(HashTagActivity.this, db).getSearchByKeyword(tag.trim());
-        if (searchInDb == null || searchInDb.size() == 0) {
-            menu.clear();
-            menu.add(0, 777, Menu.NONE, R.string.pin_add).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if ( searchInDb != null && searchInDb.size() > 0) {
+            menu.findItem(R.id.action_pin).setVisible(false);
         }
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        return super.onPrepareOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -175,7 +180,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
             case android.R.id.home:
                 finish();
                 return true;
-            case 777:
+            case R.id.action_pin:
                 SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new SearchDAO(HashTagActivity.this, db).insertSearch(tag);
                 Intent intent = new Intent(HashTagActivity.this, MainActivity.class);

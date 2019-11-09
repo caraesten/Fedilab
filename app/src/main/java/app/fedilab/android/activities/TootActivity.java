@@ -303,9 +303,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;

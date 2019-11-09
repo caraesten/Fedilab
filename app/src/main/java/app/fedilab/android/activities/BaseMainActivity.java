@@ -147,6 +147,7 @@ import app.fedilab.android.interfaces.OnSyncTimelineInterface;
 import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 
 import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
+import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -331,6 +332,24 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = findViewById(R.id.viewpager);
+        toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
+        toolbar_search = toolbar.findViewById(R.id.toolbar_search);
+        delete_instance = findViewById(R.id.delete_instance);
+        display_timeline = findViewById(R.id.display_timeline);
+        //TODO: without that code the search bar is invisible in light theme, should be fixed in another way.
+        if (theme == Helper.THEME_LIGHT) {
+            ImageView icon = toolbar_search.findViewById(R.id.search_button);
+            ImageView close = toolbar_search.findViewById(R.id.search_close_btn);
+            if (icon != null)
+                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+            if (close != null)
+                close.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+            EditText editText = toolbar_search.findViewById(R.id.search_src_text);
+            editText.setHintTextColor(getResources().getColor(R.color.dark_icon));
+            editText.setTextColor(getResources().getColor(R.color.dark_icon));
+            changeDrawableColor(BaseMainActivity.this, delete_instance, R.color.dark_icon);
+            changeDrawableColor(BaseMainActivity.this, display_timeline, R.color.dark_icon);
+        }
 
         display_timeline.setOnClickListener(new View.OnClickListener() {
             @Override

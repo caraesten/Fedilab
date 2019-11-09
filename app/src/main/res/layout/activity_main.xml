@@ -95,7 +95,6 @@
                         android:layout_marginStart="5dp" />
 
                     <androidx.appcompat.widget.SearchView
-                        android:background="@null"
                         android:id="@+id/toolbar_search"
                         android:gravity="end"
                         android:layout_gravity="center_vertical"

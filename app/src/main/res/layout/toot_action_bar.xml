@@ -38,7 +38,6 @@
         android:layout_height="30dp"
         android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:contentDescription="@string/close" />
 
     <ImageView
@@ -48,7 +47,6 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:contentDescription="@string/profile_picture" />
 
     <ProgressBar
@@ -58,7 +56,6 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="30dp"
         android:layout_height="30dp" />
 

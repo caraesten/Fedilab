@@ -162,8 +162,6 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         return super.onPrepareOptionsMenu(menu);
     }
 

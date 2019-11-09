@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    android:divider="@null"></androidx.recyclerview.widget.RecyclerView>
+                    android:divider="@null"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <RelativeLayout

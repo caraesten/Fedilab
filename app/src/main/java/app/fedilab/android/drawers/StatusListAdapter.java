@@ -2357,8 +2357,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
                 Drawable imgPin;
                 if (status.isPinned() || (status.getReblog() != null && status.getReblog().isPinned())) {
-                    Helper.changeDrawableColor(context, R.drawable.ic_pin_drop_p, R.color.marked_icon);
-                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
+                    Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.marked_icon);
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
                 } else {
                     Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, iconColor);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);

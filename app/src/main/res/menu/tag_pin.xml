@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:itemTextColor="?attr/iconColor"
+    app:itemIconTint="?attr/iconColor">
+    <item
+        android:id="@+id/action_pin"
+        android:icon="@drawable/ic_add"
+        android:title="@string/pin_tag"
+        app:showAsAction="always" />
+</menu>

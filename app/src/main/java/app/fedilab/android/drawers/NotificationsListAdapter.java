@@ -495,19 +495,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }
 
 
-            if (theme == Helper.THEME_DARK) {
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
-            } else if (theme == Helper.THEME_BLACK) {
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
-            } else {
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-                holder.status_reply_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
-            }
+
             if (type.equals("favourite") || type.equals("reblog")) {
                 holder.status_document_container.setVisibility(View.GONE);
                 holder.status_show_more.setVisibility(View.GONE);
@@ -1085,9 +1073,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 return false;
             }
         });
-        if (theme == Helper.THEME_LIGHT) {
-            holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
-        }
+
 
         //Profile picture
         Helper.loadGiF(context, notification.getAccount().getAvatar(), holder.notification_account_profile);

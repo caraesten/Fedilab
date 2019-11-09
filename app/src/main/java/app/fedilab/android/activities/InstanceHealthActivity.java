@@ -161,10 +161,10 @@ public class InstanceHealthActivity extends BaseActivity {
                             name.setText(instanceSocial.getName());
                             if (instanceSocial.isUp()) {
                                 up.setText("Is up!");
-                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green_1));
                             } else {
                                 up.setText("Is down!");
-                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_1));
                             }
                             uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime() * 100)));
                             if (instanceSocial.getChecked_at() != null)

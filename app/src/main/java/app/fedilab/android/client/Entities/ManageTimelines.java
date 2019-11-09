@@ -361,13 +361,8 @@ public class ManageTimelines {
                 }
                 TextView tv = (TextView) LayoutInflater.from(context).inflate(R.layout.custom_tab_instance, null);
                 tv.setText(name);
-                if (theme == THEME_LIGHT) {
-                    tv.setTextColor(ContextCompat.getColor(context, R.color.action_light_header));
-                }
+
                 tb.setCustomView(tv);
-                if (tl.getPosition() == 0) {
-                    tv.setTextColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                }
                 tabLayout.addTab(tb);
             }
 
