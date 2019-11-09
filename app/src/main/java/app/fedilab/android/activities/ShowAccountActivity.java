@@ -119,10 +119,6 @@ import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.timelines;
-import static app.fedilab.android.helper.Helper.THEME_BLACK;
-import static app.fedilab.android.helper.Helper.THEME_DARK;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.getLiveInstance;
 
 
@@ -389,7 +385,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final TextView warning_message = findViewById(R.id.warning_message);
         final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.colorAccent)), 0, content.length(),
+        content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.cyanea_accent_reference)), 0, content.length(),
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         warning_message.setText(content);
         warning_message.setOnClickListener(new View.OnClickListener() {

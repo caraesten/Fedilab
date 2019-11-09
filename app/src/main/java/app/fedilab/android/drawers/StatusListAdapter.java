@@ -1367,9 +1367,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, iconColor);
 
-            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.attr.colorAccent);
-            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.attr.colorAccent);
-            Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.attr.colorAccent);
+            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.cyanea_accent_reference);
+            Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.cyanea_accent_reference);
+            Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.cyanea_accent_reference);
 
             Helper.changeDrawableColor(context, holder.status_remove, iconColor);
             Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, iconColor);
@@ -2366,8 +2366,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.spark_button_reblog.playAnimation();
             }
 
-            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.attr.colorAccent);
-            Helper.changeDrawableColor(context, R.drawable.ic_more_toot_content, R.attr.colorAccent);
+            Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.cyanea_accent_reference);
+            Helper.changeDrawableColor(context, R.drawable.ic_more_toot_content, R.color.cyanea_accent_reference);
 
 
             final boolean isOwner = status.getReblog() != null ? status.getReblog().getAccount().getId().equals(userId) : status.getAccount().getId().equals(userId);

@@ -15,10 +15,8 @@
 package app.fedilab.android.activities;
 
 
-import android.Manifest;
-import android.annotation.SuppressLint;
+import android.Manifest;;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -50,7 +48,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -115,7 +112,6 @@ import org.apache.poi.util.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -175,7 +171,6 @@ import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.CustomEmojiAdapter;
 import app.fedilab.android.drawers.DraftsListAdapter;
 import app.fedilab.android.drawers.EmojisSearchAdapter;
-import app.fedilab.android.drawers.SliderAdapter;
 import app.fedilab.android.drawers.SuggestionsAdapter;
 import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
@@ -208,7 +203,6 @@ import static app.fedilab.android.helper.Helper.MORSE;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
 import static app.fedilab.android.helper.Helper.THEME_DARK;
 import static app.fedilab.android.helper.Helper.THEME_LIGHT;
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
 
 
@@ -234,7 +228,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private Status tootReply = null;
     private String tootMention = null;
     private String urlMention = null;
-    private String fileMention = null;
     private String sharedContent, sharedSubject, sharedContentIni;
     private CheckBox toot_sensitive;
     public long currentToId;
@@ -275,8 +268,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private Poll poll;
     private ImageButton poll_action;
     public static boolean autocomplete;
-    private String newContent;
-    private TextWatcher textWatcher;
     private int pollCountItem;
     private UploadServiceSingleBroadcastReceiver uploadReceiver;
     private String quickmessagecontent, quickmessagevisibility;
@@ -563,7 +554,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             tootMention = b.getString("tootMention", null);
             urlMention = b.getString("urlMention", null);
-            fileMention = b.getString("fileMention", null);
+            String fileMention = b.getString("fileMention", null);
             sharedContent = b.getString("sharedContent", null);
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
@@ -869,7 +860,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
 
-        textWatcher = initializeTextWatcher(getApplicationContext(), social, null, toot_content, toot_cw_content, toot_space_left, pp_actionBar, pp_progress, TootActivity.this, TootActivity.this, TootActivity.this);
+        TextWatcher textWatcher = initializeTextWatcher(getApplicationContext(), social, null, toot_content, toot_cw_content, toot_space_left, pp_actionBar, pp_progress, TootActivity.this, TootActivity.this, TootActivity.this);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             toot_content.addTextChangedListener(textWatcher);
 

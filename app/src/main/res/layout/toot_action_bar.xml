@@ -34,6 +34,7 @@
     <ImageView
         android:id="@+id/close_toot"
         android:src="@drawable/ic_close"
+        android:tint="?attr/iconColor"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"

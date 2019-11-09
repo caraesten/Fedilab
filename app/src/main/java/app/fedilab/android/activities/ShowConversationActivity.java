@@ -77,10 +77,15 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT) {
-            setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-        } else {
-            setTheme(R.style.AppThemeDark_NoActionBar);
+        switch (theme) {
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_show_conversation);
         lv_status = findViewById(R.id.lv_status);

@@ -227,9 +227,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
         Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, iconColor);
 
-        Helper.changeDrawableColor(context, R.drawable.ic_photo, R.attr.colorAccent);
-        Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.attr.colorAccent);
-        Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.attr.colorAccent);
+        Helper.changeDrawableColor(context, R.drawable.ic_photo, R.color.cyanea_accent_reference);
+        Helper.changeDrawableColor(context, R.drawable.ic_remove_red_eye, R.color.cyanea_accent_reference);
+        Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.cyanea_accent_reference);
 
         Helper.changeDrawableColor(context, R.drawable.ic_fetch_more, iconColor);
         Helper.changeDrawableColor(context, holder.status_reply, iconColor);
