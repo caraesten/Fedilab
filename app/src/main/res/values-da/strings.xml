@@ -1151,10 +1151,10 @@
     <string name="icons_color">Farve på bundikoner på tidslinjer</string>
     <string name="background_color_title">Baggrund</string>
     <string name="background_color">Skift baggrundsfarven for tidslinjer</string>
-    <string name="pin_tag">Pin this tag</string>
-    <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
-    <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
+    <string name="pin_tag">Fastgør dette tag</string>
+    <string name="logo_of_the_instance">Instansens logo</string>
+    <string name="edit_profile">Redigér profil</string>
+    <string name="make_an_action">Opret en handling</string>
+    <string name="translation">Oversættelse</string>
+    <string name="image_preview">Billedforhåndsvisning</string>
 </resources>
