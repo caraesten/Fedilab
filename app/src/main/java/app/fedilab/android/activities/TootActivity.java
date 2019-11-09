@@ -303,6 +303,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
                 break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark);
+                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;
@@ -321,7 +324,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
         autocomplete = false;
-        setContentView(R.layout.activity_toot);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -377,12 +381,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
             });
+
             title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-
+        setContentView(R.layout.activity_toot);
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;

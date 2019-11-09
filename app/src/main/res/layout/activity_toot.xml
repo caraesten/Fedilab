@@ -166,7 +166,7 @@
                     android:gravity="center_vertical"
                     android:maxHeight="100dp"
                     android:orientation="horizontal"
-                    android:padding="5dp"></LinearLayout>
+                    android:padding="5dp"/>
             </HorizontalScrollView>
 
             <LinearLayout
@@ -206,12 +206,12 @@
                     android:layout_height="28dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
                     android:adjustViewBounds="true"
                     android:background="@color/transparent"
                     android:contentDescription="@string/toot_select_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_insert_photo" />
+                    android:src="@drawable/ic_insert_photo"
+                    android:tint="?attr/iconColor"/>
 
                 <ImageButton
                     android:id="@+id/poll_action"
@@ -225,6 +225,7 @@
                     android:contentDescription="@string/poll"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_view_list_poll"
+                    android:tint="?attr/iconColor"
                     android:visibility="gone" />
 
                 <ImageButton
@@ -238,19 +239,17 @@
                     android:background="@color/transparent"
                     android:contentDescription="@string/toot_visibility_tilte"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_public" />
+                    android:src="@drawable/ic_public"
+                    android:tint="?attr/iconColor"/>
 
                 <Button
                     android:id="@+id/toot_cw"
-                    android:layout_width="40dp"
-                    android:layout_height="28dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
+                    style="@style/Widget.AppCompat.Button.Small"
                     android:text="@string/cw"
-                    android:textSize="20sp" />
+                    />
 
                 <ImageButton
                     android:id="@+id/toot_emoji"
@@ -265,7 +264,8 @@
                     android:minWidth="0dp"
                     android:minHeight="0dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_insert_emoticon" />
+                    android:src="@drawable/ic_insert_emoticon"
+                    android:tint="?attr/iconColor"/>
 
                 <TextView
                     android:id="@+id/toot_space_left"
