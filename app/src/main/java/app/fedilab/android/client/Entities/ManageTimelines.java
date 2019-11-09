@@ -308,8 +308,6 @@ public class ManageTimelines {
                     icon = tb.getCustomView().findViewById(R.id.tab_icon);
             }
             if (icon != null) {
-                if (tl.getPosition() == 0)
-                    icon.setColorFilter(ContextCompat.getColor(context, R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
                 switch (tl.getType()) {
                     case HOME:
                         icon.setImageResource(R.drawable.ic_home);
@@ -339,11 +337,6 @@ public class ManageTimelines {
                         icon.setImageResource(R.drawable.ic_video_peertube);
                         icon.setContentDescription(context.getString(R.string.peertube_menu));
                         break;
-                }
-                if (theme == THEME_LIGHT) {
-                    icon.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                } else {
-                    icon.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 }
                 tabLayout.addTab(tb);
             } else {

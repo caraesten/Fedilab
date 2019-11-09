@@ -2056,10 +2056,7 @@ public abstract class BaseMainActivity extends BaseActivity
         ReorderTimelinesActivity.updated = false;
         tabLayout = new ManageTimelines().createTabs(BaseMainActivity.this, tabLayout, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final NavigationView navigationView = findViewById(R.id.nav_view);
-
-
         timelines = manageTimelines;
         if (position >= manageTimelines.size()) {
             position = manageTimelines.size() - 1;
