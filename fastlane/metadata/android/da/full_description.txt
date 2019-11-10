@@ -4,7 +4,7 @@ Den understøtter:
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 
 
-The app has advanced features (especially for Pleroma and Mastodon):
+Appen har avancerede funktioner (især for Pleroma og Mastodon):
 
 - Flerkontiunderstøttelse
 - Skedulér beskeder fra enheden
@@ -12,7 +12,7 @@ The app has advanced features (especially for Pleroma and Mastodon):
 - Bogmærk beskeder
 - Følg og interagér med fjerninstanser
 - Gør konti tavse jf. tidsintervaller
-- Cross-account actions with a long press
+- Krydskontohandlinger via langt tryk
 - Oversættelsesfunktion
 - Kunsttidslinjer
 - Videotidslinjer
