@@ -901,7 +901,7 @@
     <string name="toast_error_instance_reg">Κάτι δεν πήγε καλά, κατά τον έλεγχο των διαθέσιμων υποστάσεων.</string>
     <string name="join_mastodon">Συμμετοχή στο Μαστόδοντα</string>
     <string name="pickup_instance_category">Διάλεξε μία υπόσταση, επιλέγοντας μία κατηγορία, και μετά κλίκαρε στο πλήκτρο ελέγχου.</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">Επέλεξε μια υπόσταση πατώντας στο πλήκτρο επιλογής.</string>
     <string name="users">%1$s χρήστες</string>
     <string name="password_confirm">Επιβεβαίωση του κωδικού πρόσβασης</string>
     <string name="agreement_check">Συμφωνώ με τους %1$s και τους %2$s</string>
@@ -1025,7 +1025,7 @@
     <string name="set_enable_crash_report_indication">Αν ενεργοποιηθεί, θα δημιουργηθεί, τοπικά, μια αναφορά κατάρρευσης και, μετά, θα μπορείς να τη μοιραστείς.</string>
     <string name="crash_title">Το Φέντιλαμπ σταμάτησε :(</string>
     <string name="crash_message">Μπορείς να μου στείλεις την αναφορά κατάρρευσης με ηλεκτρονικό ταχυδρομείο. Αυτό θα βοηθήσει στην βελτίωση του Φέντιλαμπ. :)\n\n Μπορείς να προσθέσεις και επιπλέον στοιχεία. Ευχαριστώ!</string>
-    <string name="set_wysiwyg">Use the wysiwyg</string>
+    <string name="set_wysiwyg">Χρήση του «Ό,τι Βλέπεις Παίρνεις»</string>
     <string name="set_wysiwyg_indication">Όταν ενεργοποιηθεί. θα μπορείς να μορφοποιήσεις εύκολα τα κείμενά σου χρησιμοποιώντας εργαλεία.</string>
     <string name="action_stats">Στατιστικά</string>
     <string name="total_statuses">Σύνολο των καταστάσεων</string>
