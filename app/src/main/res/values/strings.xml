@@ -1267,4 +1267,6 @@
     <string name="make_an_action">Make an action</string>
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
+    <string name="change_theme">Change the theme</string>
+
 </resources>

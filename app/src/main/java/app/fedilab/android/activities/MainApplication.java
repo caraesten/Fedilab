@@ -19,9 +19,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
+import android.util.Log;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
+import androidx.preference.PreferenceManager;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
@@ -89,7 +91,21 @@ public class MainApplication extends MultiDexApplication {
         } else {
             list.get(1).apply(Cyanea.getInstance());
         }
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int accent = prefs.getInt("theme_accent", -1);
+        int primary = prefs.getInt("theme_primary", -1);
+        int pref_color_background = prefs.getInt("pref_color_background", -1);
+        boolean pref_color_navigation_bar = prefs.getBoolean("pref_color_navigation_bar", true);
+        if( primary != -1 ) {
+            Cyanea.getInstance().edit().primary(primary).apply();
+        }
+        if( accent != -1){
+            Cyanea.getInstance().edit().accent(accent).apply();
+        }
+        if( pref_color_background != -1){
+            Cyanea.getInstance().edit().background(pref_color_background).apply();
+        }
+        Cyanea.getInstance().edit().shouldTintNavBar(pref_color_navigation_bar).apply();
 
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);

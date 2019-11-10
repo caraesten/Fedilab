@@ -9,6 +9,11 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.jaredrummler.cyanea.Cyanea;
+import com.jaredrummler.cyanea.prefs.CyaneaTheme;
+
+import java.util.List;
+
 import app.fedilab.android.R;
 import app.fedilab.android.helper.Helper;
 
@@ -47,6 +52,10 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat {
                         editor.remove("theme_link_color");
                         editor.remove("theme_icons_color");
                         editor.remove("theme_background_color");
+                        editor.remove("pref_color_background");
+                        editor.remove("pref_color_navigation_bar");
+                        editor.remove("theme_accent");
+                        editor.remove("theme_primary");
                         editor.commit();
                         dialog.dismiss();
                         setPreferenceScreen(null);

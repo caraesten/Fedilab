@@ -27,7 +27,7 @@
         android:id="@+id/search_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="?colorPrimary"
         app:tabSelectedTextColor="?colorAccent"
         app:tabMode="fixed"
         app:tabGravity="fill" />

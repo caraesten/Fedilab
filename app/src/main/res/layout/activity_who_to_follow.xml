@@ -37,12 +37,12 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:background="?colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"

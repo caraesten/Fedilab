@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
         android:defaultValue="-1"
@@ -36,6 +37,45 @@
         android:key="theme_background_color"
         android:title="@string/background_color_title"
         android:summary="@string/background_color"/>
+
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="-1"
+        android:key="theme_primary"
+        android:summary="@string/pref_primary_color_summary"
+        android:title="@string/pref_primary_color_title"
+        app:cpv_dialogTitle="@string/pref_primary_color_title"/>
+
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="-1"
+        android:key="theme_accent"
+        android:summary="@string/pref_accent_color_summary"
+        android:title="@string/pref_accent_color_title"
+        app:cpv_dialogTitle="@string/pref_accent_color_title"/>
+
+
+    <androidx.preference.SwitchPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="@bool/should_tint_nav_bar"
+        android:key="pref_color_navigation_bar"
+        android:summary="@string/pref_colored_navigation_bar_summary"
+        android:title="@string/pref_colored_navigation_bar_title"
+        />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="@color/cyanea_background_light"
+        android:key="pref_color_background"
+        android:summary="@string/pref_background_color_summary"
+        android:title="@string/pref_background_color_title"
+        app:cpv_colorPresets="@array/cyanea_background_color_presets"
+        app:cpv_dialogTitle="@string/pref_background_color_title"
+        app:cpv_showColorShades="false"
+        tools:ignore="PrivateResource"/>
+
     <Preference android:title="@string/reset_color"
         app:iconSpaceReserved="false"
         android:id="@+id/resetButton"

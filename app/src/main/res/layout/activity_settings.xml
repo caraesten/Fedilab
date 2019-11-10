@@ -12,7 +12,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/settings_tablayout"
         android:layout_width="match_parent"
-        android:background="?attr/colorPrimary"
+        android:background="?colorPrimary"
         app:tabSelectedTextColor="?colorAccent"
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
