@@ -36,13 +36,15 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/pf_pp"
                 android:layout_gravity="center"
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:contentDescription="@string/profile_picture" />
 
             <TextView
                 android:layout_marginLeft="15dp"
@@ -125,6 +127,7 @@
                     android:id="@+id/pf_comment"
                     android:contentDescription="@string/leave_a_comment"
                     android:src="@drawable/ic_pixelfed_comment"
+                    android:tint="?attr/iconColor"
                     android:layout_width="30dp"
                     android:layout_height="30dp" />
 
@@ -143,7 +146,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_more_pixelfed"
-                    android:layout_gravity="end|center_vertical" />
+                    android:tint="?attr/iconColor"
+                    android:layout_gravity="end|center_vertical"
+                    android:contentDescription="@string/display_toot_truncate" />
             </LinearLayout>
 
             <LinearLayout

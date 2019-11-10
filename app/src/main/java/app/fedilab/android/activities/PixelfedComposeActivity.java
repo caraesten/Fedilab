@@ -56,10 +56,8 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -67,7 +65,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -92,7 +89,6 @@ import org.apache.poi.util.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -133,7 +129,6 @@ import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.Version;
-import app.fedilab.android.drawers.AccountsReplyAdapter;
 import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.EmojisSearchAdapter;
 import app.fedilab.android.drawers.SliderAdapter;
@@ -155,7 +150,6 @@ import app.fedilab.android.sqlite.StatusStoredDAO;
 import es.dmoral.toasty.Toasty;
 import static app.fedilab.android.helper.Helper.ALPHA;
 import static app.fedilab.android.helper.Helper.MORSE;
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
 
 
@@ -195,10 +189,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     private int style;
     private StoredStatus scheduledstatus;
     private boolean isScheduled;
-    private List<Boolean> checkedValues;
-    private List<Account> contacts;
-    private ListView lv_accounts_search;
-    private RelativeLayout loader;
     private int max_media_count;
     public static HashMap<String, Uri> filesMap;
     public static boolean autocomplete;
@@ -302,15 +292,10 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-        changeColor();
-
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         restoredScheduled = false;
-        String contentType = null;
-        checkedValues = new ArrayList<>();
-        contacts = new ArrayList<>();
         toot_it = findViewById(R.id.toot_it);
         attachments = new ArrayList<>();
         imageSlider = findViewById(R.id.imageSlider);
@@ -1395,9 +1380,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
-        changeColor();
         return true;
     }
 
@@ -1669,17 +1651,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
     @Override
     public void onRetrieveContact(APIResponse apiResponse) {
-        if (apiResponse.getError() != null || apiResponse.getAccounts() == null)
-            return;
-        this.contacts = new ArrayList<>();
-        this.checkedValues = new ArrayList<>();
-        this.contacts.addAll(apiResponse.getAccounts());
-        for (Account account : contacts) {
-            this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
-        }
-        this.loader.setVisibility(View.GONE);
-        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(new WeakReference<>(PixelfedComposeActivity.this), this.contacts, this.checkedValues);
-        this.lv_accounts_search.setAdapter(contactAdapter);
     }
 
     @Override
@@ -2045,42 +2016,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         } catch (Exception e) {
             if (message)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void changeColor() {
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_public_toot, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_lock_open_toot, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_lock_outline_toot, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_mail_outline_toot, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_insert_photo, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_check, R.color.dark_text);
-            //bottom action
-            changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.poll_action), R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.toot_visibility), R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.toot_emoji), R.color.dark_text);
-            Helper.changeButtonTextColor(PixelfedComposeActivity.this, findViewById(R.id.toot_cw), R.color.dark_text);
-
-        } else {
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_public_toot, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_lock_open_toot, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_lock_outline_toot, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_mail_outline_toot, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_insert_photo, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_previous, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_next, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_check, R.color.white);
-            //bottom action
-            changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.poll_action), R.color.black);
-            changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.toot_visibility), R.color.black);
-            changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.toot_emoji), R.color.black);
-            Helper.changeButtonTextColor(PixelfedComposeActivity.this, findViewById(R.id.toot_cw), R.color.black);
-
         }
     }
 

@@ -33,6 +33,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -92,6 +93,7 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveContextInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
@@ -487,6 +489,19 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     context.startActivity(intent);
                 }
             });
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            int iconColor = prefs.getInt("theme_icons_color", -1);
+            if( iconColor == -1){
+                iconColor = ThemeHelper.getAttColor(context, R.attr.iconColor);
+            }
+            int reblogColor = prefs.getInt("theme_boost_header_color", -1);
+            int statusColor = prefs.getInt("theme_statuses_color", -1);
+            if(  holder.pf_cardview != null && statusColor != -1) {
+                holder.pf_cardview.setCardBackgroundColor(statusColor);
+            }else if(holder.pf_cardview != null){
+                holder.pf_cardview.setCardBackgroundColor(ThemeHelper.getAttColor(context, R.attr.cardviewColor));
+            }
 
             holder.quick_reply_switch_to_full.setVisibility(View.GONE);
             if (status.isShortReply()) {
@@ -1026,28 +1041,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
 
-            if (theme == Helper.THEME_BLACK) {
-                holder.pf_fav.setInActiveImageTint(R.color.action_black);
-                holder.pf_share.setInActiveImageTint(R.color.action_black);
-                Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_black);
-                Helper.changeDrawableColor(context, holder.pf_comment, R.color.action_black);
-                Helper.changeDrawableColor(context, holder.status_more, R.color.action_black);
-                holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
-            } else if (theme == Helper.THEME_DARK) {
-                holder.pf_fav.setInActiveImageTint(R.color.action_dark);
-                holder.pf_share.setInActiveImageTint(R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.pf_comment, R.color.action_dark);
-                Helper.changeDrawableColor(context, holder.status_more, R.color.action_dark);
-                Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_dark);
-                holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1_));
-            } else {
-                holder.pf_fav.setInActiveImageTint(R.color.action_light);
-                holder.pf_share.setInActiveImageTint(R.color.action_light);
-                Helper.changeDrawableColor(context, holder.pf_comment, R.color.action_light);
-                Helper.changeDrawableColor(context, holder.status_more, R.color.action_light);
-                Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_light);
-                holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
-            }
+            holder.pf_fav.setInActiveImageTintColor(iconColor);
+            holder.pf_share.setInActiveImageTintColor(iconColor);
+            Helper.changeDrawableColor(context, holder.pf_comment, iconColor);
+            Helper.changeDrawableColor(context, holder.status_more,iconColor);
+            Helper.changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, iconColor);
 
 
             holder.pf_fav.pressOnTouch(false);
@@ -1151,7 +1149,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
             else
-                //noinspection deprecation
                 statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent()).toString();
             //TODO: removes the replaceAll once fixed with the lib
             myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
@@ -1335,9 +1332,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     hour = timePicker.getHour();
                     minute = timePicker.getMinute();
                 } else {
-                    //noinspection deprecation
                     hour = timePicker.getCurrentHour();
-                    //noinspection deprecation
                     minute = timePicker.getCurrentMinute();
                 }
                 Calendar calendar = new GregorianCalendar(datePicker.getYear(),
