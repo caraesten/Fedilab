@@ -118,9 +118,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
@@ -136,8 +133,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                         new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
