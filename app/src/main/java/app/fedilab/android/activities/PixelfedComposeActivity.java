@@ -2060,7 +2060,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
             changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_check, R.color.dark_text);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
             //bottom action
             changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.poll_action), R.color.dark_text);
             changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.toot_visibility), R.color.dark_text);
@@ -2076,7 +2075,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_previous, R.color.white);
             changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(PixelfedComposeActivity.this, R.drawable.ic_check, R.color.white);
-            changeDrawableColor(PixelfedComposeActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
             //bottom action
             changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.poll_action), R.color.black);
             changeDrawableColor(PixelfedComposeActivity.this, findViewById(R.id.toot_visibility), R.color.black);
