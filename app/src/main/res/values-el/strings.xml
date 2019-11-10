@@ -929,12 +929,12 @@
     <string name="no_reports">Δεν υπάρχουν αναφορές προς εμφάνιση.</string>
     <string name="reconnect_account">Επανασύνδεση του λογαριασμού</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
-    <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
+    <string name="unresolved">Αδιευθέτητο</string>
+    <string name="resolved">Διευθετημένο</string>
     <string name="remote">Απομακρυσμένο</string>
-    <string name="active">Active</string>
-    <string name="pending">Pending</string>
-    <string name="disabled">Disabled</string>
+    <string name="active">Ενεργό</string>
+    <string name="pending">Εκκρεμές</string>
+    <string name="disabled">Απενεργοποιημένο</string>
     <string name="silenced">Φιμωμένος</string>
     <string name="suspended">Σε αναστολή</string>
     <string name="permissions">Δικαιώματα</string>
@@ -1096,7 +1096,7 @@
     <string name="total_notifications">Σύνολο των ειδοποιήσεων</string>
     <string name="hide_menu_items">Απόκρυψη των στοιχείων του μενού</string>
     <string name="top_notification">Το Φέντιλαμπ τρέχει ζωντανές ειδοποιήσεις</string>
-    <string name="top_notification_message">For %1$s accounts with %2$s events</string>
+    <string name="top_notification_message">Για %1$s λογαριασμούς με %2$s γεγονότα</string>
     <string name="set_allow_live_notifications">Ζωντανές ειδοποιήσεις για το %1$s</string>
     <string name="set_allow_live_notifications_indication">Οι ζωντανές ειδοποιήσεις θα είναι ενεργές γι αυτό το λογαριασμό.</string>
     <string name="set_clear_cache_exit">Εκκαθάριση της μικραποθήκευσης κατά την έξοδο</string>
@@ -1134,8 +1134,8 @@
     <string name="report_mention">Προσθήκη μνημονεύσεων σε κάθε μήνυμα</string>
     <string name="fetch_conversation">Λαμβάνεται η συζήτηση</string>
     <string name="order_by">Ταξινόμηση κατά</string>
-    <string name="title_video_peertube">Title for the video</string>
-    <string name="join_peertube">Join Peertube</string>
+    <string name="title_video_peertube">Τίτλος του βίντεου</string>
+    <string name="join_peertube">Συμμετοχή στο Peertube</string>
     <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
     <string name="colors">Colors</string>
     <string name="link_color_title">Links</string>
