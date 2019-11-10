@@ -523,7 +523,6 @@ public class Helper {
 
     private static boolean menuAccountsOpened = false;
 
-    public static boolean canPin;
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
 

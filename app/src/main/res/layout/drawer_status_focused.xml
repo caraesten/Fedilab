@@ -875,13 +875,12 @@
 
             <ImageView
                 android:id="@+id/status_pin"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:contentDescription="@string/pin_add"
                 android:src="@drawable/ic_pin_drop"
-                android:tint="?attr/iconColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/status_remove"
                 app:layout_constraintTop_toTopOf="parent" />

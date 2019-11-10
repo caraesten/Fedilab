@@ -669,9 +669,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             .inflate(R.menu.option_filter_toots_account, popup.getMenu());
                     Menu menu = popup.getMenu();
 
-                    if (!Helper.canPin) {
-                        popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
-                    }
+                    popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
                     final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
                     final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
                     final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);

@@ -318,7 +318,6 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         }
         //For old Mastodon releases that can't pin, this support could be removed
-        Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         appBar = findViewById(R.id.appBar);
@@ -2005,7 +2004,6 @@ public abstract class BaseMainActivity extends BaseActivity
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.INSTANCE_VERSION + userId + instance, apiResponse.getInstance().getVersion());
         editor.apply();
-        Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
     }
 
     @Override
