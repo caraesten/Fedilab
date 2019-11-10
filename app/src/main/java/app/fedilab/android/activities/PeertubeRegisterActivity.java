@@ -210,7 +210,7 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
         TextView change_instance = findViewById(R.id.change_instance);
         final SpannableString change = new SpannableString(String.format("(%s)", getString(R.string.change)));
         change.setSpan(new UnderlineSpan(), 0, change.length(), 0);
-        change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.colorAccent)), 0, change.length(),
+        change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(PeertubeRegisterActivity.this, R.color.cyanea_accent_reference)), 0, change.length(),
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         change_instance.setText(change);
         change_instance.setOnClickListener(view -> {

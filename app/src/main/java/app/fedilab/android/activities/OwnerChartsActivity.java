@@ -235,7 +235,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         public CustomMarkerView(Context context, int layoutResource) {
             super(context, layoutResource);
             tvContent = findViewById(R.id.tvContent);
-            tvContent.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            tvContent.setTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
         }
 
         @Override

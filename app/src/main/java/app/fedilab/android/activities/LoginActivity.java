@@ -213,7 +213,7 @@ public class LoginActivity extends BaseActivity {
             TextView create_an_account_peertube = findViewById(R.id.create_an_account_peertube);
             SpannableString content_create = new SpannableString(getString(R.string.join_mastodon));
             content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
-            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.colorAccent)), 0, content_create.length(),
+            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_accent_reference)), 0, content_create.length(),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             create_an_account_message.setText(content_create);
             create_an_account_message.setOnClickListener(v -> {
@@ -225,7 +225,7 @@ public class LoginActivity extends BaseActivity {
 
             content_create = new SpannableString(getString(R.string.join_peertube));
             content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
-            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.colorAccent)), 0, content_create.length(),
+            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_accent_reference)), 0, content_create.length(),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             create_an_account_peertube.setText(content_create);
             create_an_account_peertube.setOnClickListener(v -> {

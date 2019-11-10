@@ -259,7 +259,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         change.setSpan(new UnderlineSpan(), 0, change.length(), 0);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.colorAccent)), 0, change.length(),
+        change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.cyanea_accent_reference)), 0, change.length(),
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         change_instance.setText(change);
