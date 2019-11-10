@@ -973,7 +973,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_follow.setVisibility(View.VISIBLE);
             doAction = action.UNFOLLOW;
         } else if (relationship.isFollowing()) {
-            account_follow.setImageResource(R.drawable.ic_user_times);
+            account_follow.setImageResource(R.drawable.ic_user_minus);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.red_1)));
             }

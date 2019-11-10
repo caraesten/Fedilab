@@ -119,7 +119,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                 doAction = null;
             } else if (account.getFollowType() == Account.followAction.FOLLOW) {
                 holder.account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.unfollow)));
-                holder.account_follow.setImageResource(R.drawable.ic_user_times);
+                holder.account_follow.setImageResource(R.drawable.ic_user_minus);
                 doAction = API.StatusAction.UNFOLLOW;
                 holder.account_follow.show();
                 holder.account_follow_request.setVisibility(View.GONE);
