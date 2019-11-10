@@ -797,7 +797,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         AlertDialog.Builder unfollowConfirm = new AlertDialog.Builder(ShowAccountActivity.this, style);
                         unfollowConfirm.setTitle(getString(R.string.unfollow_confirm));
                         unfollowConfirm.setMessage(account.getAcct());
-                        unfollowConfirm.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        unfollowConfirm.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -847,7 +847,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 input.setText(userNote.getNote());
                 input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
                 builderInner.setView(input);
-                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -1363,7 +1363,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             }
                             AlertDialog.Builder builderSingle = new AlertDialog.Builder(ShowAccountActivity.this, style);
                             builderSingle.setTitle(getString(R.string.action_lists_add_to));
-                            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -1427,7 +1427,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         input.setLayoutParams(lp);
                         builderInner.setView(input);
                         doActionAccount = API.StatusAction.REPORT;
-                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -1461,7 +1461,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         }
                         input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
                         builderInner.setView(input);
-                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -1501,7 +1501,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     default:
                         return true;
                 }
-                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -214,7 +214,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                         dialog.dismiss();
                     }
                 });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

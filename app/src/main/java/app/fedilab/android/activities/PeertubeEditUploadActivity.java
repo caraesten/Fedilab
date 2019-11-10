@@ -163,7 +163,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 }
                 builderInner = new AlertDialog.Builder(PeertubeEditUploadActivity.this, style);
                 builderInner.setMessage(getString(R.string.delete_video_confirmation));
-                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -149,7 +149,7 @@ public class SearchTootsListAdapter extends BaseAdapter {
                                 dialog.dismiss();
                             }
                         })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        .setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

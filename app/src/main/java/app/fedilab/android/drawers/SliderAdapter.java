@@ -163,7 +163,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                     }
                 });
 
-        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -208,7 +208,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         AlertDialog.Builder dialog = new AlertDialog.Builder(contextWeakReference.get(), style);
 
         dialog.setMessage(R.string.toot_delete_media);
-        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        dialog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

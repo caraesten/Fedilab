@@ -1195,7 +1195,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
                         input.setLayoutParams(lp);
                         builderInner.setView(input);
-                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -1234,7 +1234,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         builderInner = new AlertDialog.Builder(context, style);
                         builderInner.setTitle(R.string.delete_comment);
                         builderInner.setMessage(R.string.delete_comment_confirm);
-                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -2481,7 +2481,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 dialog.setTitle(R.string.toot_visibility_tilte);
                 final String[] stringArray = context.getResources().getStringArray(R.array.toot_visibility);
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
-                dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position) {
                         dialog.dismiss();
@@ -2899,7 +2899,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         input.setLayoutParams(lp);
                         builderInner.setView(input);
                     }
-                    builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -3300,7 +3300,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 input.setLayoutParams(lp);
                                 builderInner.setView(input);
                             }
-                            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -4129,7 +4129,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
-            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

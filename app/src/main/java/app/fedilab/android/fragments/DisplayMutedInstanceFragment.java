@@ -194,7 +194,7 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
                             }
                         }
                     });
-                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();

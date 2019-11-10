@@ -393,7 +393,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                                 dialog.dismiss();
                             }
                         })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

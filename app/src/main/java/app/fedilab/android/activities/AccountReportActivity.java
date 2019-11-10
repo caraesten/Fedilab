@@ -184,7 +184,7 @@ public class AccountReportActivity extends BaseActivity implements OnAdminAction
                 builderInner = new AlertDialog.Builder(AccountReportActivity.this, R.style.AppThemeDark);
                 builderInner.setTitle(R.string.reconnect_account);
                 builderInner.setMessage(R.string.reconnect_account_message);
-                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

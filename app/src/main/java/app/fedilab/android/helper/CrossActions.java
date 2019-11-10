@@ -226,7 +226,7 @@ public class CrossActions {
                 accountArray[i] = account;
                 i++;
             }
-            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -509,7 +509,7 @@ public class CrossActions {
                 accountArray[i] = account;
                 i++;
             }
-            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -596,7 +596,7 @@ public class CrossActions {
                     accountArray[i] = account;
                     i++;
                 }
-                builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -753,7 +753,7 @@ public class CrossActions {
                 accountArray[i] = account;
                 i++;
             }
-            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -845,7 +845,7 @@ public class CrossActions {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -920,7 +920,7 @@ public class CrossActions {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
