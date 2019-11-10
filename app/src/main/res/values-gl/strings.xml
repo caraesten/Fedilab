@@ -1152,4 +1152,10 @@
     <string name="icons_color">Cor das iconas inferiores nas liñas temporais</string>
     <string name="background_color_title">Fondo</string>
     <string name="background_color">Cambiar a cor de fondo nas liñas temporais</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>

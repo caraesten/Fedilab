@@ -1141,4 +1141,10 @@
     <string name="icons_color">Color of bottom icons in timelines</string>
     <string name="background_color_title">Background</string>
     <string name="background_color">Change the background color for timelines</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edite profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
 </resources>
