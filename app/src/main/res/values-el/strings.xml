@@ -993,10 +993,10 @@
     <string name="set_display_fedilab_features_button_indication">Προβολή ενός Φενδιλάμπιου πλήκτρου κάτω από την εικόνα του προσώπου. Είναι μια συντόμευση, η οποία επιτρέπει την πρόσβαση σε λειτουργίες της εφαρμογής.</string>
     <string name="set_quick_reply_indication">Επιτρέπει την άμεση απόκριση, στις χρονοστήλες, κάτω από τις καταστάσεις</string>
     <string name="set_fit_preview_indication">Οι προεπισκοπήσεις δεν θα περικόπτονται στις χρονοστήλες</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_display_video_preview_indication">Να επιτρέπεται η αναπαραγωγή βίντεων μέσα στις χρονοστήλες</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
-    <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
+    <string name="set_video_mode_indication">Αποκλειστικά για βίντεα του Πειρτιούμπ: Κάνε εναλλαγή αυτής της λειτουργίας αν δεν αναπαράγονται σωστά.</string>
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Αυτόματη εισαγωγή μίας νέας γραμμής, μετά από μια μνημόνευση, και μετατροπή του πρώτου γράμματος σε κεφαλαίο</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
@@ -1004,7 +1004,7 @@
     <string name="u_interface">Περιβάλλον Χρήσης</string>
     <string name="battery">Μπαταρία</string>
     <string name="compose">Δημιουργία</string>
-    <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
+    <string name="upload_image_maximum_retry_times">Μέγιστο πλήθος προσπαθειών όταν ανεβαίνουν πολυμέσα</string>
     <string name="new_folder">Δημιουργία, εδώ, ενός νέου Φάκελου</string>
     <string name="folder_name">Εισαγωγή του ονόματος του φάκελου</string>
     <string name="valid_folder_name">Παρακαλώ, εισήγαγε ένα έγκυρο όνομα φακέλου</string>
@@ -1153,8 +1153,8 @@
     <string name="background_color">Αλλαγή του χρώματος παρασκηνίου στις χρονοστήλες</string>
     <string name="pin_tag">Καρφίτσωμα αυτής της ετικέτας</string>
     <string name="logo_of_the_instance">Το λογότυπο της υπόστασης</string>
-    <string name="edit_profile">Edite profile</string>
+    <string name="edit_profile">Επεξεργασία του προσώπου</string>
     <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
+    <string name="translation">Μετάφραση</string>
+    <string name="image_preview">Προεπισκόπηση εικόνας</string>
 </resources>
