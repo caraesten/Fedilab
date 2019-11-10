@@ -28,7 +28,6 @@
         android:id="@+id/status_reply_indicator_top"
         android:visibility="gone"
         android:layout_width="2dp"
-
         android:layout_height="0dp"
         android:background="?colorAccent"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
@@ -52,7 +51,6 @@
         android:id="@+id/status_reply_indicator_bottom"
         android:layout_width="2dp"
         android:layout_height="0dp"
-
         android:background="?colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
@@ -60,117 +58,98 @@
         app:layout_constraintTop_toTopOf="@id/reply_indicator_dot" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/main_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="4dp"
-        android:id="@+id/main_card_container"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginStart="2dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/status_boosted_by_info"
-                android:background="?attr/cardviewHeaderBoostColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/status"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/status_account_profile_boost_by"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:contentDescription="@string/profile_picture"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/status_account_displayname"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:ellipsize="end"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/status_boosted_time"
-                    app:layout_constraintStart_toEndOf="@id/status_account_profile_boost_by"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/status_boosted_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info">
+        app:layout_goneMarginStart="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="6dp">
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/status_boosted_by_info"
+                        android:background="?attr/cardviewHeaderBoostColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/status_account_profile_boost_by"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/profile_picture"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/status_account_displayname"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:ellipsize="end"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/status_boosted_time"
+                            app:layout_constraintStart_toEndOf="@id/status_account_profile_boost_by"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/status_boosted_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guide_profile_images_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_begin="40dp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guide_profile_images_bottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="40dp" />
+                        app:layout_constraintGuide_begin="50dp" />
 
                     <ImageView
                         android:id="@+id/status_account_profile"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_margin="5dp"
                         android:contentDescription="@string/profile_picture"
-                        app:layout_constraintBottom_toTopOf="@id/guide_profile_images_bottom"
                         app:layout_constraintEnd_toStartOf="@id/guide_profile_images_end"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
 
                     <ImageView
                         android:id="@+id/status_account_bot"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_margin="5dp"
                         android:background="@drawable/bot_background_round_corner"
                         android:padding="3dp"
                         android:src="@drawable/ic_bot"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
 
-                    <!-- Todo -->
                     <!-- Views used when multiple profile images are displayed (e.g.-In DM tab)-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/conversation_pp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_margin="5dp"
                         android:orientation="horizontal"
                         android:visibility="gone"
@@ -238,9 +217,11 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/status_account_username"
                         app:layout_constraintEnd_toStartOf="@id/cached_status"
                         app:layout_constraintStart_toEndOf="@id/guide_profile_images_end"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info"
+                        app:layout_constraintVertical_chainStyle="packed" />
 
                     <TextView
                         android:id="@+id/status_account_username"
@@ -252,6 +233,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/barrier_status_account_info"
                         app:layout_constraintEnd_toStartOf="@id/status_toot_date"
                         app:layout_constraintStart_toEndOf="@id/guide_profile_images_end"
                         app:layout_constraintTop_toBottomOf="@id/status_account_displayname_owner" />
@@ -260,21 +242,25 @@
                         android:id="@+id/cached_status"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
                         android:tint="?attr/iconColorMenu"
                         android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/status_account_displayname_owner"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/status_account_displayname_owner" />
 
                     <TextView
                         android:id="@+id/status_toot_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
                         android:maxLines="1"
                         android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/status_account_username"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/status_account_displayname_owner"
+                        app:layout_constraintTop_toTopOf="@id/status_account_username"
                         app:layout_constraintVertical_bias="0" />
 
                     <androidx.constraintlayout.widget.Barrier
@@ -285,44 +271,40 @@
                         app:constraint_referenced_ids="status_toot_date,status_account_username,conversation_pp,status_account_profile" />
 
                     <LinearLayout
-                        app:layout_constraintTop_toBottomOf="@id/barrier_status_account_info"
-                        android:id="@+id/status_spoiler_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        app:layout_constraintTop_toBottomOf="@id/barrier_status_account_info">
 
-                        <app.fedilab.android.helper.CustomTextView
-                            android:id="@+id/status_spoiler"
+                        <LinearLayout
+                            android:id="@+id/status_spoiler_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:textIsSelectable="true" />
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                        <Button
-                            android:id="@+id/status_spoiler_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_remove_red_eye"
-                            android:drawableLeft="@drawable/ic_remove_red_eye"
-                            android:drawablePadding="5dp"
-                            android:gravity="center_vertical"
-                            android:maxLines="1"
-                            android:paddingStart="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingBottom="5dp"
-                            android:text="@string/load_attachment_spoiler"
-                            android:textAllCaps="false" />
-                    </LinearLayout>
+                            <app.fedilab.android.helper.CustomTextView
+                                android:id="@+id/status_spoiler"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:textIsSelectable="true" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@id/status_spoiler_container">
+                            <Button
+                                android:id="@+id/status_spoiler_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_remove_red_eye"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="@string/load_attachment_spoiler"
+                                android:textAllCaps="false" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/status_content_container"
@@ -1043,10 +1025,6 @@
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
