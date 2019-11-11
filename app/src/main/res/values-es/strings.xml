@@ -1153,8 +1153,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="image_preview">Vista previa de imagen</string>
     <string name="change_theme">Cambiar el tema</string>
     <string name="text_color_title">Color del texto</string>
-    <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="text_color">Cambiar el color del texto en las publicaciones</string>
+    <string name="apply_changes">Aplicar cambios</string>
+    <string name="restart_message">Necesitas reiniciar la aplicación para aplicar los cambios</string>
+    <string name="restart">Reiniciar</string>
 </resources>
