@@ -217,7 +217,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                         dialog.dismiss();
                     }
                 });
-                dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
@@ -259,7 +259,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                                 dialog.dismiss();
                             }
                         })
-                        .setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

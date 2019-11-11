@@ -270,7 +270,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                                     finish();
                                 }
                             });
-                            dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.dismiss();
@@ -1259,7 +1259,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                             if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
                                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
                                 builderSingle.setTitle(getString(R.string.choose_schedule));
-                                builderSingle.setNeutralButton(R.string.device_schedule, new DialogInterface.OnClickListener() {
+                                builderSingle.setNegativeButton(R.string.device_schedule, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         deviceSchedule(time[0]);
@@ -1425,7 +1425,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         dialog.setTitle(R.string.toot_visibility_tilte);
         final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(PixelfedComposeActivity.this, android.R.layout.simple_list_item_1, stringArray);
-        dialog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int position) {
                 dialog.dismiss();
@@ -1502,7 +1502,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                         finish();
                     }
                 });
-                dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

@@ -261,7 +261,7 @@ public class WebviewActivity extends BaseActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this, style);
                 builder.setTitle(R.string.list_of_blocked_domains);
 
-                builder.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

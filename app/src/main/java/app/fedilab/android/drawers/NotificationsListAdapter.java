@@ -1028,7 +1028,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             input.setLayoutParams(lp);
                             builderInner.setView(input);
                         }
-                        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -1175,7 +1175,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             new PostNotificationsAsyncTask(context, notification.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
-                }).setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

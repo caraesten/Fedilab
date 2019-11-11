@@ -125,7 +125,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                             add_new.setEnabled(false);
                         }
                     });
-                    dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();

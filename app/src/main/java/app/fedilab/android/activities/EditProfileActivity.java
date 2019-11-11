@@ -483,7 +483,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         new UpdateCredentialAsyncTask(getApplicationContext(), newCustomFields, profile_username, profile_note, profile_picture, avatarName, header_picture, headerName, profile_privacy, sensitive, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
-                dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

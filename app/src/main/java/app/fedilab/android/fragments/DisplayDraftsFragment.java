@@ -124,7 +124,7 @@ public class DisplayDraftsFragment extends Fragment {
                                     dialogConfirm.dismiss();
                                 }
                             })
-                            .setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogConfirm, int which) {
                                     dialogConfirm.dismiss();

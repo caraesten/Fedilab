@@ -1104,7 +1104,7 @@ public class Helper {
                     }
 
                 })
-                .setNeutralButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -1578,7 +1578,7 @@ public class Helper {
                                                 item.setVisible(false);
                                             }
                                         })
-                                        .setNeutralButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // do nothing
                                             }
@@ -4306,7 +4306,7 @@ public class Helper {
                             dialog.dismiss();
                         }
                     })
-                    .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
@@ -4718,7 +4718,7 @@ public class Helper {
                         dialog.dismiss();
                     }
                 });
-                dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
@@ -4800,7 +4800,7 @@ public class Helper {
                 dialog.dismiss();
             }
         });
-        dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();

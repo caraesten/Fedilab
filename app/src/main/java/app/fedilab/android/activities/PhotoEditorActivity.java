@@ -461,14 +461,14 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
                 saveImage();
             }
         });
-        builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
 
-        builder.setNeutralButton(R.string.discard, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();

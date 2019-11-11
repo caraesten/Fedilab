@@ -351,7 +351,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     finish();
                                 }
                             });
-                            dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.dismiss();
@@ -1695,7 +1695,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         dialog.dismiss();
                     }
                 });
-                alert.setNeutralButton(R.string.accounts, new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(R.string.accounts, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply.getReblog() != null ? tootReply.getReblog() : tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
@@ -1832,7 +1832,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 dialog.dismiss();
                             }
                         });
-                        transAlert.setNeutralButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        transAlert.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
                                 TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
@@ -1868,7 +1868,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 int paddingPixel = 15;
                 float density = getResources().getDisplayMetrics().density;
                 int paddingDp = (int) (paddingPixel * density);
-                builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
@@ -1950,7 +1950,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 });
                 builderSingle.setView(dialogView);
-                builderSingle.setNeutralButton(R.string.validate, new DialogInterface.OnClickListener() {
+                builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -2004,7 +2004,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         ids[i] = draft.getId();
                         i++;
                     }
-                    builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -2024,7 +2024,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                             dialog.dismiss();
                                         }
                                     })
-                                    .setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
+                                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogConfirm, int which) {
                                             dialogConfirm.dismiss();
@@ -2125,7 +2125,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
                                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
                                 builderSingle.setTitle(getString(R.string.choose_schedule));
-                                builderSingle.setNeutralButton(R.string.device_schedule, new DialogInterface.OnClickListener() {
+                                builderSingle.setNegativeButton(R.string.device_schedule, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         deviceSchedule(time[0]);
@@ -2231,7 +2231,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 }
 
-                builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         toot_it.setEnabled(true);
@@ -2451,7 +2451,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     }
                 });
 
-        builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -2486,7 +2486,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
 
         dialog.setMessage(R.string.toot_delete_media);
-        dialog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -2535,7 +2535,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         dialog.setTitle(R.string.toot_visibility_tilte);
         final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(TootActivity.this, android.R.layout.simple_list_item_1, stringArray);
-        dialog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int position) {
                 dialog.dismiss();
@@ -2612,7 +2612,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         finish();
                     }
                 });
-                dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
@@ -3792,7 +3792,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
         }
-        alertPoll.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
+        alertPoll.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 if (poll != null)
                     poll = null;
@@ -3960,7 +3960,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
         AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(new WeakReference<>(TootActivity.this), accounts, checkedValues);
         builderSingle.setTitle(getString(R.string.select_accounts)).setAdapter(accountsReplyAdapter, null);
-        builderSingle.setNeutralButton(R.string.validate, new DialogInterface.OnClickListener() {
+        builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

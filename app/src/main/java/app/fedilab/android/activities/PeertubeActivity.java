@@ -443,7 +443,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                             LinearLayout.LayoutParams.WRAP_CONTENT);
                     input.setLayoutParams(lp);
                     builderInner.setView(input);
-                    builderInner.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -820,7 +820,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(PeertubeActivity.this, android.R.layout.select_dialog_item);
         for (String resolution : peertube.getResolution())
             arrayAdapter.add(resolution + "p");
-        builderSingle.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

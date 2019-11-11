@@ -236,7 +236,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                                 AlertDialog.Builder unfollowConfirm = new AlertDialog.Builder(context, style);
                                 unfollowConfirm.setTitle(context.getString(R.string.unfollow_confirm));
                                 unfollowConfirm.setMessage(account.getAcct());
-                                unfollowConfirm.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                unfollowConfirm.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();

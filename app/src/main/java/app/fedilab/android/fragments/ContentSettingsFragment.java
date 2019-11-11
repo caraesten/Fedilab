@@ -1601,7 +1601,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 dialog.setTitle(R.string.toot_visibility_tilte);
                 final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
-                dialog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position) {
                         dialog.dismiss();
@@ -2409,7 +2409,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
             View icon_selector = inflater.inflate(R.layout.dialog_icon_selector, null);
             dialogBuilder.setView(icon_selector);
-            dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
