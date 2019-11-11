@@ -1158,4 +1158,6 @@
     <string name="translation">Μετάφραση</string>
     <string name="image_preview">Προεπισκόπηση εικόνας</string>
     <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
 </resources>
