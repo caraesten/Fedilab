@@ -1160,7 +1160,7 @@
     <string name="change_theme">Change the theme</string>
     <string name="text_color_title">Text color</string>
     <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="apply_changes">Tillämpa ändringar</string>
+    <string name="restart_message">Du måste starta om programmet för att tillämpa ändringarna</string>
+    <string name="restart">Starta om</string>
 </resources>
