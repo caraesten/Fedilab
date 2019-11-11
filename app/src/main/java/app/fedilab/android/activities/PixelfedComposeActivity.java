@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -69,6 +70,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -136,6 +138,7 @@ import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
@@ -311,6 +314,8 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         toot_content.setInputType(newInputType);
 
+
+
         //There is no media the button is hidden
         upload_media.setVisibility(View.INVISIBLE);
         toot_sensitive = findViewById(R.id.toot_sensitive);
@@ -332,6 +337,17 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         }
 
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            int iconColor = prefs.getInt("theme_icons_color", -1);
+            if( iconColor == -1){
+                iconColor = ThemeHelper.getAttColor(getApplicationContext(), R.attr.iconColor);
+            }
+            Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
+            Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
+            toot_sensitive.setButtonTintList(ColorStateList.valueOf(iconColor));
+            toot_sensitive.setTextColor(iconColor);
+        }
         Bundle b = getIntent().getExtras();
         ArrayList<Uri> sharedUri = new ArrayList<>();
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
