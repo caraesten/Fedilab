@@ -712,6 +712,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         View status_reply_indicator_top, reply_indicator_dot, status_reply_indicator_bottom, status_reply_indicator_diag_top, status_reply_indicator_diag_bottom;
         CardView main_card_container;
         LinearLayout main_linear_container;
+        View translation_border_view;
         public View getView() {
             return itemView;
         }
@@ -839,6 +840,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             main_card_container = itemView.findViewById(R.id.main_card_container);
             main_linear_container = itemView.findViewById(R.id.main_linear_container);
+            translation_border_view = itemView.findViewById(R.id.translation_border_view);
         }
 
         void updateAnimatedEmoji() {
@@ -2291,6 +2293,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.isTranslationShown() && status.getContentSpanTranslated() != null) {
                 holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
                 holder.status_content_translated_container.setVisibility(View.VISIBLE);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    holder.translation_border_view.setBackgroundResource(R.drawable.translation_border_android4);
+                }else{
+                    holder.translation_border_view.setBackgroundResource(R.drawable.translation_border);
+                }
+
             } else { //Toot is not translated
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
