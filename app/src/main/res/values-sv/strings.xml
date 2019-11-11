@@ -1151,7 +1151,7 @@
     <string name="icons_color">Färg på bottenikoner i tidslinjer</string>
     <string name="background_color_title">Bakgrund</string>
     <string name="background_color">Ändra bakgrundsfärgen på tidslinjen</string>
-    <string name="pin_tag">Pin this tag</string>
+    <string name="pin_tag">Pinna denna tagg</string>
     <string name="logo_of_the_instance">Logo of the instance</string>
     <string name="edit_profile">Edit profile</string>
     <string name="make_an_action">Make an action</string>
