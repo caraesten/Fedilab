@@ -1130,7 +1130,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="boost_header_color_title">Reblogs header</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
-    <string name="background_status">Bakground color of posts in timelines</string>
+    <string name="background_status">Background color of posts in timelines</string>
     <string name="reset_color">Reset colors</string>
     <string name="clik_reset">Click here to reset all your custom colors</string>
     <string name="reset">Reset</string>
@@ -1140,8 +1140,9 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="background_color">Change the background color for timelines</string>
     <string name="pin_tag">Pin this tag</string>
     <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
+    <string name="edit_profile">Edit profile</string>
     <string name="make_an_action">Make an action</string>
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
+    <string name="change_theme">Change the theme</string>
 </resources>
