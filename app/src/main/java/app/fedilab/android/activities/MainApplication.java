@@ -102,7 +102,10 @@ public class MainApplication extends MultiDexApplication {
             Cyanea.getInstance().edit().accent(accent).apply();
         }
         if( pref_color_background != -1){
-            Cyanea.getInstance().edit().background(pref_color_background).apply();
+            Cyanea.getInstance().edit()
+                    .background(pref_color_background)
+                    .backgroundLight(pref_color_background)
+                    .backgroundDark(pref_color_background).apply();
         }
 
         Cyanea.getInstance().edit().shouldTintNavBar(pref_color_navigation_bar).apply();

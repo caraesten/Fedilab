@@ -31,16 +31,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.jaredrummler.cyanea.Cyanea;
 
 import org.jetbrains.annotations.NotNull;
 import app.fedilab.android.R;
@@ -169,9 +166,6 @@ public class SettingsActivity extends BaseActivity  {
             Bundle bundle = new Bundle();
             ContentSettingsFragment.type typeOfSettings;
             switch (position) {
-                case 0:
-                    typeOfSettings = ContentSettingsFragment.type.TIMELINES;
-                    break;
                 case 1:
                     typeOfSettings = ContentSettingsFragment.type.NOTIFICATIONS;
                     break;
@@ -211,17 +205,7 @@ public class SettingsActivity extends BaseActivity  {
 
 
     private void showDialog(){
-        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        int style;
-        if (theme == Helper.THEME_DARK) {
-            style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK) {
-            style = R.style.DialogBlack;
-        } else {
-            style = R.style.Dialog;
-        }
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SettingsActivity.this, style);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SettingsActivity.this);
         dialogBuilder.setMessage(R.string.restart_message);
         dialogBuilder.setTitle(R.string.apply_changes);
         dialogBuilder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {

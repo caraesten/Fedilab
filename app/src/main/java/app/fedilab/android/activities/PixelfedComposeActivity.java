@@ -340,13 +340,13 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             int iconColor = prefs.getInt("theme_icons_color", -1);
-            if( iconColor == -1){
-                iconColor = ThemeHelper.getAttColor(getApplicationContext(), R.attr.iconColor);
+            if( iconColor != -1){
+                Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
+                Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
+                toot_sensitive.setButtonTintList(ColorStateList.valueOf(iconColor));
+                toot_sensitive.setTextColor(iconColor);
             }
-            Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
-            Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
-            toot_sensitive.setButtonTintList(ColorStateList.valueOf(iconColor));
-            toot_sensitive.setTextColor(iconColor);
+
         }
         Bundle b = getIntent().getExtras();
         ArrayList<Uri> sharedUri = new ArrayList<>();

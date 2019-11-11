@@ -57,6 +57,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -405,13 +406,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         int iconColor = prefs.getInt("theme_icons_color", -1);
-        if( iconColor == -1){
-            iconColor = ThemeHelper.getAttColor(getApplicationContext(), R.attr.iconColor);
+        if( iconColor != -1){
+            Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
+            Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
+            Helper.changeDrawableColor(getApplicationContext(), poll_action, iconColor);
+            Helper.changeDrawableColor(getApplicationContext(), toot_picture, iconColor);
         }
-        Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
-        Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
-        Helper.changeDrawableColor(getApplicationContext(), poll_action, iconColor);
-        Helper.changeDrawableColor(getApplicationContext(), toot_picture, iconColor);
+
         isScheduled = false;
         if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
             final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);

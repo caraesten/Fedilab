@@ -20,7 +20,6 @@ import app.fedilab.android.helper.Helper;
 public class ColorSettingsFragment  extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-    private HashMap<String, Object> initialPref;
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -28,23 +27,14 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
 
         Preference button = findPreference("reset_pref");
         FragmentActivity context = getActivity();
-        int style;
+        assert context != null;
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK) {
-            style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK) {
-            style = R.style.DialogBlack;
-        } else {
-            style = R.style.Dialog;
-        }
-        initialPref = new HashMap<>();
 
         PreferenceFragmentCompat preferenceFragmentCompat = this;
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 dialogBuilder.setMessage(R.string.reset_color);
                 dialogBuilder.setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
                     @Override
@@ -58,6 +48,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                         editor.remove("pref_color_background");
                         editor.remove("pref_color_navigation_bar");
                         editor.remove("theme_accent");
+                        editor.remove("theme_text_color");
                         editor.remove("theme_primary");
                         editor.commit();
                         dialog.dismiss();
