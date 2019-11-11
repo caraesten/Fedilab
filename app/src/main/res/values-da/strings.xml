@@ -1160,7 +1160,7 @@
     <string name="change_theme">Skift tema</string>
     <string name="text_color_title">Tekstfarve</string>
     <string name="text_color">Skift tekstfarve på kontainer</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="apply_changes">Effektuér ændringer</string>
+    <string name="restart_message">Appen skal genstartes for at effektuere ændringerne</string>
+    <string name="restart">Genstart</string>
 </resources>
