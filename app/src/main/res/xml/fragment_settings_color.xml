@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
+
+
+    <ListPreference
+        app:iconSpaceReserved="false"
+        android:key="pref_theme_picker"
+        android:entries="@array/settings_theme"
+        android:summary="@string/pref_theme_summary"
+        android:title="@string/pref_theme_title"/>
+
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
         android:defaultValue="-1"

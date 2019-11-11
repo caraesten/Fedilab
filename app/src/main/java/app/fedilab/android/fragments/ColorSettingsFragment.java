@@ -1,16 +1,25 @@
 package app.fedilab.android.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 
-import java.util.HashMap;
+import com.jaredrummler.cyanea.Cyanea;
+import com.jaredrummler.cyanea.prefs.CyaneaTheme;
+
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.SettingsActivity;
@@ -30,7 +39,21 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         assert context != null;
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        PreferenceFragmentCompat preferenceFragmentCompat = this;
+
+        final ListPreference listPreference = (ListPreference) findPreference("pref_theme_picker");
+        List<String> array = Arrays.asList(getResources().getStringArray(R.array.settings_theme));
+        CharSequence[] entries = array.toArray(new CharSequence[array.size()]);
+        CharSequence[] entryValues = new CharSequence[3];
+        final SharedPreferences sharedpref = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpref.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        entryValues[0] = String.valueOf(Helper.THEME_LIGHT);
+        entryValues[1] = String.valueOf(Helper.THEME_DARK);
+        entryValues[2] = String.valueOf(Helper.THEME_BLACK);
+        listPreference.setEntries(entries);
+        listPreference.setDefaultValue(String.valueOf(theme));
+        listPreference.setEntryValues(entryValues);
+
+
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -69,7 +92,6 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                 return true;
             }
         });
-
     }
 
 
@@ -84,7 +106,6 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
     @Override
     public void onPause() {
         super.onPause();
-
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
@@ -92,5 +113,26 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         SettingsActivity.needRestart = true;
+
+        if( key.compareTo("pref_theme_picker") == 0){
+            String theme = sharedPreferences.getString("pref_theme_picker", null);
+            List<CyaneaTheme> list = CyaneaTheme.Companion.from(Objects.requireNonNull(getActivity()).getAssets(), "themes/cyanea_themes.json");
+            if( getActivity() != null && theme != null) {
+                SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                int i = 0;
+                if( theme.compareTo("2") == 0 ) {
+                    editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+                }else  if( theme.compareTo("1") == 0 ) {
+                    editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    i = 1;
+                }else  if( theme.compareTo("3") == 0 ) {
+                    editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
+                    i = 2;
+                }
+                editor.commit();
+                list.get(i).apply(Cyanea.getInstance()).recreate(getActivity());
+            }
+        }
     }
 }
