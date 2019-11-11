@@ -86,17 +86,24 @@
 
 
 
+    <style name="DialogButton" parent="Cyanea.ColoredButton">
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+    </style>
     <style name="Dialog" parent="Cyanea.AlertDialog.Theme.Light">
         <item name="iconColor">@color/black</item>
         <item name="android:textColor">@color/black</item>
+        <item name="buttonBarButtonStyle">@style/DialogButton</item>
     </style>
     <style name="DialogDark" parent="Cyanea.AlertDialog.Theme.Dark">
         <item name="iconColor">@color/dark_icon_theme</item>
         <item name="android:textColor">@color/dark_text</item>
+        <item name="buttonBarButtonStyle">@style/DialogButton</item>
     </style>
     <style name="DialogBlack" parent="Cyanea.AlertDialog.Theme.Dark">
         <item name="iconColor">@color/black_icon_theme</item>
         <item name="android:textColor">@color/dark_text</item>
+        <item name="buttonBarButtonStyle">@style/DialogButton</item>
     </style>
 
     <style name="TransparentLight" parent="Theme.Cyanea.Light">black_icon_theme
