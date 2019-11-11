@@ -323,7 +323,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_more_toot_content"
-                        android:drawableLeft="@drawable/ic_more_toot_content"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
                         android:maxLines="1"
@@ -420,7 +419,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="2dp"
-                            android:layout_marginLeft="2dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
@@ -515,7 +513,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="1dp"
-                                        android:layout_marginLeft="1dp"
                                         android:layout_weight="1">
 
                                         <ImageView
@@ -575,7 +572,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="1dp"
-                                        android:layout_marginLeft="1dp"
                                         android:layout_weight="1">
 
                                         <ImageView
@@ -883,7 +879,6 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         android:contentDescription="@string/reblog"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/status_reply_count"
@@ -906,7 +901,6 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         android:contentDescription="@string/favourite"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/status_reblog_count"
