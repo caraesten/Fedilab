@@ -95,20 +95,22 @@ public class MainApplication extends MultiDexApplication {
         int primary = prefs.getInt("theme_primary", -1);
         int pref_color_background = prefs.getInt("pref_color_background", -1);
         boolean pref_color_navigation_bar = prefs.getBoolean("pref_color_navigation_bar", true);
+
+        Cyanea.Editor editor = Cyanea.getInstance().edit();
         if( primary != -1 ) {
-            Cyanea.getInstance().edit().primary(primary).apply();
+            editor.primary(primary);
         }
         if( accent != -1){
-            Cyanea.getInstance().edit().accent(accent).apply();
+            editor.accent(accent);
         }
         if( pref_color_background != -1){
-            Cyanea.getInstance().edit()
-                    .background(pref_color_background)
-                    .backgroundLight(pref_color_background)
-                    .backgroundDark(pref_color_background).apply();
+            editor
+                .background(pref_color_background)
+                .backgroundLight(pref_color_background)
+                .backgroundDark(pref_color_background).apply();
         }
 
-        Cyanea.getInstance().edit().shouldTintNavBar(pref_color_navigation_bar).apply();
+        editor.shouldTintNavBar(pref_color_navigation_bar).apply();
 
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);
@@ -118,8 +120,6 @@ public class MainApplication extends MultiDexApplication {
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
-
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
 
