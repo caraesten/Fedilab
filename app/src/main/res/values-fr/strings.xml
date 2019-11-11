@@ -1157,4 +1157,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="change_theme">Changer le thème</string>
     <string name="text_color_title">Couleur du texte</string>
     <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>
