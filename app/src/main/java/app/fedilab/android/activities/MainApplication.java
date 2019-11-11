@@ -105,6 +105,10 @@ public class MainApplication extends MultiDexApplication {
         if( pref_color_background != -1){
             Cyanea.getInstance().edit().background(pref_color_background).apply();
         }
+        Log.v(Helper.TAG,"primary: " + primary);
+        Log.v(Helper.TAG,"accent: " + accent);
+        Log.v(Helper.TAG,"pref_color_background: " + pref_color_background);
+
         Cyanea.getInstance().edit().shouldTintNavBar(pref_color_navigation_bar).apply();
 
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);

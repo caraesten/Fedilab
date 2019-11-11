@@ -2023,6 +2023,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if(  holder.status_boosted_by_info != null && reblogColor != -1){
                 holder.status_boosted_by_info.setBackgroundColor(reblogColor);
             }
+            int theme_text_color = prefs.getInt("theme_text_color", -1);
+            if(  holder.status_content != null && theme_text_color != -1){
+                holder.status_content.setTextColor(theme_text_color);
+                holder.status_content_translated.setTextColor(theme_text_color);
+                holder.status_spoiler.setTextColor(theme_text_color);
+            }
             int statusColor = prefs.getInt("theme_statuses_color", -1);
             if(  holder.main_card_container != null && statusColor != -1) {
                 holder.main_card_container.setCardBackgroundColor(statusColor);

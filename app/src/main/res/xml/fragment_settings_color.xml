@@ -34,9 +34,9 @@
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
         android:defaultValue="-1"
-        android:key="theme_background_color"
-        android:title="@string/background_color_title"
-        android:summary="@string/background_color"/>
+        android:key="theme_text_color"
+        android:title="@string/text_color_title"
+        android:summary="@string/text_color"/>
 
 
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
@@ -67,14 +67,11 @@
 
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
-        android:defaultValue="@color/cyanea_background_light"
+        android:defaultValue="-1"
         android:key="pref_color_background"
         android:summary="@string/pref_background_color_summary"
         android:title="@string/pref_background_color_title"
-        app:cpv_colorPresets="@array/cyanea_background_color_presets"
-        app:cpv_dialogTitle="@string/pref_background_color_title"
-        app:cpv_showColorShades="false"
-        tools:ignore="PrivateResource"/>
+        />
 
     <Preference android:title="@string/reset_color"
         app:iconSpaceReserved="false"
