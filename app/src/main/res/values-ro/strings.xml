@@ -1163,4 +1163,7 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="change_theme">Change the theme</string>
     <string name="text_color_title">Text color</string>
     <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>
