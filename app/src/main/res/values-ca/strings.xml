@@ -1150,4 +1150,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
     <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
 </resources>
