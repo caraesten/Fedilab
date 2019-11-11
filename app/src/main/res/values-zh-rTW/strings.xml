@@ -1145,10 +1145,16 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="icons_color">時間軸底部圖示的顏色</string>
     <string name="background_color_title">背景</string>
     <string name="background_color">變更時間軸背景的顏色</string>
-    <string name="pin_tag">Pin this tag</string>
-    <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
-    <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
+    <string name="pin_tag">釘選此標籤</string>
+    <string name="logo_of_the_instance">站臺圖示</string>
+    <string name="edit_profile">編輯個人資料</string>
+    <string name="make_an_action">做動作</string>
+    <string name="translation">翻譯</string>
+    <string name="image_preview">圖片預覽</string>
+    <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>

@@ -1051,7 +1051,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <string name="owner_charts">Charts</string>
     <string name="display_charts">Display charts</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
+    <string name="collecting_data_wait">The application collects your local data, please wait…</string>
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
@@ -1140,9 +1140,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="boost_header_color_title">Reblogs header</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
-    <string name="background_status">Bakground color of posts in timelines</string>
+    <string name="background_status">Background color of posts in timelines</string>
     <string name="reset_color">Reset colors</string>
-    <string name="clik_reset">Click here to reset all your custom colors</string>
+    <string name="clik_reset">Tap here to reset all your custom colors</string>
     <string name="reset">Reset</string>
     <string name="icons_color_title">Icons</string>
     <string name="icons_color">Color of bottom icons in timelines</string>
@@ -1150,8 +1150,14 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="background_color">Change the background color for timelines</string>
     <string name="pin_tag">Pin this tag</string>
     <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
+    <string name="edit_profile">Edit profile</string>
     <string name="make_an_action">Make an action</string>
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
+    <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>

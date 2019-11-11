@@ -1143,10 +1143,16 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="icons_color">Color de les icones inferiors a les pissarres</string>
     <string name="background_color_title">Background</string>
     <string name="background_color">Change the background color for timelines</string>
-    <string name="pin_tag">Pin this tag</string>
-    <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
-    <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
+    <string name="pin_tag">Fixa l\'etiqueta</string>
+    <string name="logo_of_the_instance">Logo de la instància</string>
+    <string name="edit_profile">Edita el perfil</string>
+    <string name="make_an_action">Endega un acció</string>
+    <string name="translation">Traducció</string>
+    <string name="image_preview">Previsualització d\'imatge</string>
+    <string name="change_theme">Canvia el tema</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>

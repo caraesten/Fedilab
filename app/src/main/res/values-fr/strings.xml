@@ -1154,4 +1154,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="make_an_action">Faire une action</string>
     <string name="translation">Traduction</string>
     <string name="image_preview">Aperçu de l\'image</string>
+    <string name="change_theme">Changer le thème</string>
+    <string name="text_color_title">Couleur du texte</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Appliquer les modifications</string>
+    <string name="restart_message">Vous devez redémarrer l\'application pour appliquer les modifications</string>
+    <string name="restart">Redémarrer</string>
 </resources>

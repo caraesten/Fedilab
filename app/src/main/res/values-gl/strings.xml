@@ -1137,7 +1137,7 @@
     <string name="order_by">Orde por</string>
     <string name="title_video_peertube">Título para o vídeo</string>
     <string name="join_peertube">Unirse a Peertube</string>
-    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
+    <string name="agreement_check_peertube">Teño 16 anos ao menos e acepto os %1$s de esta instancia</string>
     <string name="colors">Cores</string>
     <string name="link_color_title">Ligazóns</string>
     <string name="link_color">Cambiar cor das ligazóns (URLs, mencións, etiquetas, etc.) nas mensaxes</string>
@@ -1152,10 +1152,16 @@
     <string name="icons_color">Cor das iconas inferiores nas liñas temporais</string>
     <string name="background_color_title">Fondo</string>
     <string name="background_color">Cambiar a cor de fondo nas liñas temporais</string>
-    <string name="pin_tag">Pin this tag</string>
-    <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
-    <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
+    <string name="pin_tag">Fixar esta etiqueta</string>
+    <string name="logo_of_the_instance">Logo da instancia</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="make_an_action">Tomar decisión</string>
+    <string name="translation">Tradución</string>
+    <string name="image_preview">Vista previa da imaxe</string>
+    <string name="change_theme">Cambiar decorado</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>

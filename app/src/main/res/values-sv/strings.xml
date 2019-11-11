@@ -1151,10 +1151,16 @@
     <string name="icons_color">Färg på bottenikoner i tidslinjer</string>
     <string name="background_color_title">Bakgrund</string>
     <string name="background_color">Ändra bakgrundsfärgen på tidslinjen</string>
-    <string name="pin_tag">Pin this tag</string>
+    <string name="pin_tag">Pinna denna tagg</string>
     <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
+    <string name="edit_profile">Edit profile</string>
     <string name="make_an_action">Make an action</string>
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
+    <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Tillämpa ändringar</string>
+    <string name="restart_message">Du måste starta om programmet för att tillämpa ändringarna</string>
+    <string name="restart">Starta om</string>
 </resources>

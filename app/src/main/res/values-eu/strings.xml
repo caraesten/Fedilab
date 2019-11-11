@@ -1155,4 +1155,10 @@
     <string name="make_an_action">Burutu ekintza bat</string>
     <string name="translation">Itzulpena</string>
     <string name="image_preview">Irudiaren aurrebista</string>
+    <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
 </resources>
