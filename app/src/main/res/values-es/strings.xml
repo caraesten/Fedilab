@@ -1151,4 +1151,5 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="make_an_action">Realizar una acción</string>
     <string name="translation">Traducción</string>
     <string name="image_preview">Vista previa de imagen</string>
+    <string name="change_theme">Change the theme</string>
 </resources>
