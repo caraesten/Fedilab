@@ -1151,16 +1151,16 @@
     <string name="icons_color">Colore delle icone sul fondo nelle timeline</string>
     <string name="background_color_title">Sfondo</string>
     <string name="background_color">Cambia il colore di sfondo per le timeline</string>
-    <string name="pin_tag">Pin this tag</string>
+    <string name="pin_tag">Metti etichetta in evidenza</string>
     <string name="logo_of_the_instance">Logo dell\'istanza</string>
     <string name="edit_profile">Modifica profilo</string>
     <string name="make_an_action">Make an action</string>
-    <string name="translation">Translation</string>
-    <string name="image_preview">Image preview</string>
-    <string name="change_theme">Change the theme</string>
-    <string name="text_color_title">Text color</string>
+    <string name="translation">Traduzione</string>
+    <string name="image_preview">Anteprima immagine</string>
+    <string name="change_theme">Cambia il tema</string>
+    <string name="text_color_title">Colore del testo</string>
     <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="apply_changes">Applica le modifiche</string>
+    <string name="restart_message">È necessario riavviare l\'applicazione per applicare le modifiche</string>
+    <string name="restart">Riavvia</string>
 </resources>
