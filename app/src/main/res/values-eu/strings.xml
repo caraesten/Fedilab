@@ -1156,4 +1156,6 @@
     <string name="translation">Itzulpena</string>
     <string name="image_preview">Irudiaren aurrebista</string>
     <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
 </resources>
