@@ -1170,7 +1170,7 @@
     <string name="change_theme">Изменить тему</string>
     <string name="text_color_title">Цвет текста</string>
     <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="apply_changes">Применить изменения</string>
+    <string name="restart_message">Вам понадобится перезапустить клиент, чтобы применить изменения</string>
+    <string name="restart">Перезапустить</string>
 </resources>
