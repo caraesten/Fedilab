@@ -1155,4 +1155,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="translation">Traduction</string>
     <string name="image_preview">Aperçu de l\'image</string>
     <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
 </resources>
