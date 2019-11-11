@@ -19,7 +19,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
-import android.util.Log;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
@@ -105,9 +104,6 @@ public class MainApplication extends MultiDexApplication {
         if( pref_color_background != -1){
             Cyanea.getInstance().edit().background(pref_color_background).apply();
         }
-        Log.v(Helper.TAG,"primary: " + primary);
-        Log.v(Helper.TAG,"accent: " + accent);
-        Log.v(Helper.TAG,"pref_color_background: " + pref_color_background);
 
         Cyanea.getInstance().edit().shouldTintNavBar(pref_color_navigation_bar).apply();
 

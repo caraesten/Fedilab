@@ -37,7 +37,6 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1795,7 +1794,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                         editor.apply();
                         break;
                 }
-                Log.v(Helper.TAG,"count3");
                 if (getActivity() != null)
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);

@@ -9,17 +9,18 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import com.jaredrummler.cyanea.Cyanea;
-import com.jaredrummler.cyanea.prefs.CyaneaTheme;
 
-import java.util.List;
+import java.util.HashMap;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.SettingsActivity;
 import app.fedilab.android.helper.Helper;
 
 
-public class ColorSettingsFragment  extends PreferenceFragmentCompat {
+public class ColorSettingsFragment  extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+
+    private HashMap<String, Object> initialPref;
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -37,6 +38,8 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat {
         } else {
             style = R.style.Dialog;
         }
+        initialPref = new HashMap<>();
+
         PreferenceFragmentCompat preferenceFragmentCompat = this;
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -76,5 +79,27 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat {
             }
         });
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getPreferenceScreen().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        getPreferenceScreen().getSharedPreferences()
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        SettingsActivity.needRestart = true;
     }
 }
