@@ -1152,4 +1152,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="translation">翻譯</string>
     <string name="image_preview">圖片預覽</string>
     <string name="change_theme">Change the theme</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
 </resources>
