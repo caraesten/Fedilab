@@ -1146,8 +1146,9 @@
     <string name="background_color">Zaman çizelgelerinin arka plan rengini değiştir</string>
     <string name="pin_tag">Pin this tag</string>
     <string name="logo_of_the_instance">Logo of the instance</string>
-    <string name="edit_profile">Edite profile</string>
+    <string name="edit_profile">Edit profile</string>
     <string name="make_an_action">Make an action</string>
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
+    <string name="change_theme">Change the theme</string>
 </resources>
