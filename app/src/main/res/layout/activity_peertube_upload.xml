@@ -19,6 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="app.fedilab.android.activities.PeertubeUploadActivity">
 
     <LinearLayout
@@ -66,6 +67,7 @@
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:textSize="16sp"
                 android:id="@+id/set_upload_channel"
+                app:ms_background_color="?colorPrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -89,6 +91,7 @@
 
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:textSize="16sp"
+                app:ms_background_color="?colorPrimaryDark"
                 android:id="@+id/set_upload_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

@@ -15,6 +15,7 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeContainer"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
@@ -34,11 +35,11 @@
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:layout_marginBottom="20dp"
         android:id="@+id/set_live_type"
+        app:ms_background_color="?colorPrimaryDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/set_live_type_indication"
-        android:textColor="@color/mastodonC2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

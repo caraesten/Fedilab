@@ -15,6 +15,7 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/fab_margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
 
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:textSize="16sp"
+            app:ms_background_color="?colorPrimaryDark"
             android:id="@+id/reg_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

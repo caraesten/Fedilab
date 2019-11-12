@@ -20,6 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:TagsEditText="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="@dimen/fab_margin"
     android:layout_marginStart="@dimen/fab_margin"
     android:layout_marginRight="@dimen/fab_margin"
@@ -121,6 +122,7 @@
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/set_upload_channel"
                     android:layout_width="match_parent"
+                    app:ms_background_color="?colorPrimaryDark"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -142,6 +144,7 @@
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/set_upload_categories"
+                    app:ms_background_color="?colorPrimaryDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -164,6 +167,7 @@
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/set_upload_licenses"
+                    app:ms_background_color="?colorPrimaryDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -186,6 +190,7 @@
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/set_upload_languages"
+                    app:ms_background_color="?colorPrimaryDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -206,6 +211,7 @@
                     android:text="@string/action_privacy" />
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
+                    app:ms_background_color="?colorPrimaryDark"
                     android:id="@+id/set_upload_privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
