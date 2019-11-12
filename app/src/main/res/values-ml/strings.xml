@@ -108,21 +108,21 @@
     <string name="favourite_remove">ഈ ടൂട്ടിനെ പ്രിയപ്പെ ട്ടവയിൽ നിന്ന് മാറ്റട്ടെ?</string>
     <string name="reblog_add">ഈ ടൂട്ടിനെ ബൂസ്റ്റ് ചെയ്യട്ടെ?</string>
     <string name="reblog_remove">ഈ ടൂട്ടിൻറെ ബൂസ്റ്റ് നീക്കം ചെയ്യട്ടെ?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="pin_add">ഈ ടൂട്ട് പിൻചെയ്തു വയ്ക്കട്ടെ?</string>
+    <string name="pin_remove">ഈ ടൂട്ട് പിൻചെയ്തത് നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="more_action_1">നിശബ്ദം</string>
+    <string name="more_action_2">തടയുക</string>
+    <string name="more_action_3">റിപ്പോര്‍ട്ടുചെയ്യുക</string>
+    <string name="more_action_4">നീക്കുക</string>
+    <string name="more_action_5">പകര്‍ത്തുക</string>
+    <string name="more_action_6">പങ്കിടുക</string>
+    <string name="more_action_7">പ്രതിപാദിക്കുക</string>
+    <string name="more_action_8">സമയബന്ധിതമായി നിശബ്ദമാക്കുക</string>
+    <string name="more_action_9">കളയുക &amp; വീണ്ടും എഴുതുക</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
+        <item>ഈ അക്കൗണ്ട് നിശബ്ദമാക്കട്ടെ?</item>
+        <item>ഈ അക്കൗണ്ട് തടയട്ടെ?</item>
+        <item>ഈ ടൂട്ടിനെ റിപ്പോർട്ട് ചെയ്യട്ടെ?</item>
         <item>Block this domain?</item>
         <item>Unmute this account?</item>
     </string-array>
