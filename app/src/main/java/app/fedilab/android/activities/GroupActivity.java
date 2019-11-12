@@ -105,9 +105,9 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-        int c1 = getResources().getColor(R.color.cyanea_accent_reference);
-        int c2 = getResources().getColor(R.color.cyanea_primary_dark_reference);
-        int c3 = getResources().getColor(R.color.cyanea_primary_reference);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
         swipeRefreshLayout.setColorSchemeColors(
                 c1, c2, c1
