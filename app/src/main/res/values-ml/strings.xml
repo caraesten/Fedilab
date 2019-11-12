@@ -7,8 +7,8 @@
     <string name="action_about_instance">About the instance</string>
     <string name="action_privacy">സ്വകാര്യത</string>
     <string name="action_cache">Cache</string>
-    <string name="action_logout">Logout</string>
-    <string name="login">Login</string>
+    <string name="action_logout">പുറത്തിറങ്ങുക</string>
+    <string name="login">അകത്തു കയറുക</string>
     <!-- common -->
     <string name="close">Close</string>
     <string name="yes">Yes</string>
