@@ -1160,4 +1160,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="apply_changes">Appliquer les modifications</string>
     <string name="restart_message">Vous devez redémarrer l\'application pour appliquer les modifications</string>
     <string name="restart">Redémarrer</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
