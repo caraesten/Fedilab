@@ -17,6 +17,7 @@
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="20dp"
             android:paddingLeft="@dimen/drawer_padding"
             android:paddingRight="@dimen/drawer_padding"
             android:scrollbars="none"
@@ -1906,7 +1907,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp" />
+                            />
                         </LinearLayout>
 
                         <EditText
@@ -1940,7 +1941,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:maxLines="2"
                                 android:textColor="?colorAccent"
@@ -2497,7 +2497,6 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
                             android:contentDescription="@string/toot_visibility_tilte"
                             android:padding="5dp"
                             android:src="@drawable/ic_public" />

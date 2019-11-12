@@ -267,19 +267,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             style = R.style.Dialog;
         }
 
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
-                break;
-            case Helper.THEME_BLACK:
-                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.black));
-                break;
-            default:
-                containerFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
-        }
         LinearLayout settings_timeline = rootView.findViewById(R.id.settings_timeline);
         LinearLayout settings_notifications = rootView.findViewById(R.id.settings_notifications);
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
