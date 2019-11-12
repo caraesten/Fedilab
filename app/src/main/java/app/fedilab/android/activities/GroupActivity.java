@@ -105,7 +105,13 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-
+        int c1 = getResources().getColor(R.color.cyanea_accent_reference);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark_reference);
+        int c3 = getResources().getColor(R.color.cyanea_primary_reference);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         //lv_status.addItemDecoration(new DividerItemDecoration(GroupActivity.this, DividerItemDecoration.VERTICAL));

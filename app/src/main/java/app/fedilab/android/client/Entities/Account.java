@@ -29,6 +29,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import android.text.Html;
 import android.text.Spannable;
@@ -63,6 +64,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.helper.ThemeHelper;
 import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.HashTagActivity;
@@ -719,6 +721,14 @@ public class Account implements Parcelable {
         if (account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
         ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( l_c == -1) {
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
+        }
+        final int link_color = l_c;
         if (account.getFields() != null && account.getFields().size() > 0) {
             Iterator it = account.getFields().entrySet().iterator();
             while (it.hasNext()) {
@@ -753,7 +763,6 @@ public class Account implements Parcelable {
             SpannableString keySpan = (SpannableString) pair.getKey();
 
             Matcher matcher = Helper.xmppPattern.matcher(fieldSpan);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             while (matcher.find()) {
                 URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
@@ -778,12 +787,7 @@ public class Account implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     fieldsSpan.put(keySpan, fieldSpan);
@@ -816,12 +820,7 @@ public class Account implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     fieldsSpan.put(keySpan, fieldSpan);
@@ -851,12 +850,7 @@ public class Account implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
@@ -881,12 +875,7 @@ public class Account implements Parcelable {
                                                       public void updateDrawState(@NonNull TextPaint ds) {
                                                           super.updateDrawState(ds);
                                                           ds.setUnderlineText(false);
-                                                          if (theme == THEME_DARK)
-                                                              ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                          else if (theme == THEME_BLACK)
-                                                              ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                          else if (theme == THEME_LIGHT)
-                                                              ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                          ds.setColor(link_color);
                                                       }
                                                   },
                                         startPosition, endPosition,
@@ -904,7 +893,6 @@ public class Account implements Parcelable {
             Map.Entry pair = (Map.Entry) it.next();
             SpannableString fieldSpan = (SpannableString) pair.getValue();
             SpannableString keySpan = (SpannableString) pair.getKey();
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             Matcher matcher;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
                 matcher = Patterns.WEB_URL.matcher(fieldSpan);
@@ -929,13 +917,7 @@ public class Account implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            ds.setColor(link_color);
 
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -947,7 +929,6 @@ public class Account implements Parcelable {
 
 
         final List<Emojis> emojis = account.getEmojis();
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         if (emojis != null && emojis.size() > 0) {
 

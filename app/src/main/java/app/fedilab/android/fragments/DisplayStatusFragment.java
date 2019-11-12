@@ -191,6 +191,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent_reference);
+        int c2 = getResources().getColor(R.color.white);
+        swipeRefreshLayout.setColorSchemeColors(
+                c2, c1, c2
+        );
         lv_status = rootView.findViewById(R.id.lv_status);
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);

@@ -108,7 +108,13 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-
+        int c1 = getResources().getColor(R.color.cyanea_accent_reference);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark_reference);
+        int c3 = getResources().getColor(R.color.cyanea_primary_reference);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);

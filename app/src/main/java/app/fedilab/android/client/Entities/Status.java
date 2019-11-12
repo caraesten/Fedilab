@@ -82,6 +82,7 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomQuoteSpan;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 
@@ -866,12 +867,7 @@ public class Status implements Parcelable {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int l_c = prefs.getInt("theme_link_color", -1);
         if( l_c == -1) {
-            if (theme == THEME_DARK)
-                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
-            else if (theme == THEME_BLACK)
-                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
-            else if (theme == THEME_LIGHT)
-                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
 
@@ -1100,15 +1096,9 @@ public class Status implements Parcelable {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         int l_c = prefs.getInt("theme_link_color", -1);
         if( l_c == -1) {
-            if (theme == THEME_DARK)
-                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
-            else if (theme == THEME_BLACK)
-                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
-            else if (theme == THEME_LIGHT)
-                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
 

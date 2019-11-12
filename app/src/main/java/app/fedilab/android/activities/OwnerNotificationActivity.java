@@ -189,6 +189,13 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent_reference);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark_reference);
+        int c3 = getResources().getColor(R.color.cyanea_primary_reference);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         new RetrieveNotificationsCacheAsyncTask(OwnerNotificationActivity.this, filterNotifications, null, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

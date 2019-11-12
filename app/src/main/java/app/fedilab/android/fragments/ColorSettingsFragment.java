@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
@@ -50,9 +51,8 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         entryValues[1] = String.valueOf(Helper.THEME_DARK);
         entryValues[2] = String.valueOf(Helper.THEME_BLACK);
         listPreference.setEntries(entries);
-        listPreference.setDefaultValue(String.valueOf(theme));
         listPreference.setEntryValues(entryValues);
-
+        listPreference.setDefaultValue(String.valueOf(theme));
 
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

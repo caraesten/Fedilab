@@ -1875,14 +1875,8 @@ public class Helper {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int l_c = prefs.getInt("theme_link_color", -1);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( l_c == -1) {
-            if (theme == THEME_DARK)
-                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
-            else if (theme == THEME_BLACK)
-                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
-            else if (theme == THEME_LIGHT)
-                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
         SpannableString spannableString = new SpannableString(cw_mention);
@@ -2405,12 +2399,7 @@ public class Helper {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int l_c = prefs.getInt("theme_link_color", -1);
         if( l_c == -1) {
-            if (theme == THEME_DARK)
-                l_c = ContextCompat.getColor(context, R.color.dark_link_toot);
-            else if (theme == THEME_BLACK)
-                l_c = ContextCompat.getColor(context, R.color.black_link_toot);
-            else if (theme == THEME_LIGHT)
-                l_c = ContextCompat.getColor(context, R.color.light_link_toot);
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
         while (matcher.find()) {
