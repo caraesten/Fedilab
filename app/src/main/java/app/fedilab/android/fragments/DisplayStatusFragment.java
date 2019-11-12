@@ -162,13 +162,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         if (ischannel)
             type = RetrieveFeedsAsyncTask.Type.CHANNEL;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        RelativeLayout main_timeline_container = rootView.findViewById(R.id.main_timeline_container);
-        int mainBackgroundColor = prefs.getInt("theme_background_color", -1);
-        if(  main_timeline_container != null && mainBackgroundColor != -1  ){
-            main_timeline_container.setBackgroundColor(mainBackgroundColor);
-        }
 
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //instanceType should not be null only for Peertube accounts

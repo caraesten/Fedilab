@@ -11,6 +11,15 @@
         android:summary="@string/pref_theme_summary"
         android:title="@string/pref_theme_title"/>
 
+
+    <androidx.preference.SwitchPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="false"
+        android:key="use_custom_theme"
+        android:summary="@string/pref_custom_theme_summary"
+        android:title="@string/pref_custom_theme"
+        />
+
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
         android:defaultValue="-1"

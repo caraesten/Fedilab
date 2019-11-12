@@ -160,12 +160,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
             }
         });
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        main_timeline_container = rootView.findViewById(R.id.main_timeline_container);
-        int mainBackgroundColor = prefs.getInt("theme_background_color", -1);
-        if(  main_timeline_container != null && mainBackgroundColor != -1  ){
-            main_timeline_container.setBackgroundColor(mainBackgroundColor);
-        }
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
