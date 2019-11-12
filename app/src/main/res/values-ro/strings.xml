@@ -1166,4 +1166,7 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="apply_changes">Apply changes</string>
     <string name="restart_message">You need to restart the application to apply changes</string>
     <string name="restart">Restart</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
