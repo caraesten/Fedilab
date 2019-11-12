@@ -1163,4 +1163,7 @@
     <string name="apply_changes">Tillämpa ändringar</string>
     <string name="restart_message">Du måste starta om programmet för att tillämpa ändringarna</string>
     <string name="restart">Starta om</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
