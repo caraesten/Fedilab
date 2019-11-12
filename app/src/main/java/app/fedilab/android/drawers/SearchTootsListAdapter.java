@@ -96,16 +96,7 @@ public class SearchTootsListAdapter extends BaseAdapter {
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT) {
-            holder.search_container.setBackgroundResource(R.color.mastodonC3__);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.black);
-        } else if (theme == Helper.THEME_DARK) {
-            holder.search_container.setBackgroundResource(R.color.mastodonC1_);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
-        } else if (theme == Helper.THEME_BLACK) {
-            holder.search_container.setBackgroundResource(R.color.black_2);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
-        }
+        Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.attr.iconColorMenu);
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.search_title.setText(search);
         final float scale = context.getResources().getDisplayMetrics().density;
