@@ -28,6 +28,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import app.fedilab.android.client.APIResponse;
@@ -78,7 +80,7 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         this.context = context;
     }
