@@ -4,17 +4,17 @@
     <string name="navigation_drawer_open">മെനു തുറക്കുക</string>
     <string name="navigation_drawer_close">മെനു അടയ്ക്കുക</string>
     <string name="action_about">വിവരം</string>
-    <string name="action_about_instance">About the instance</string>
+    <string name="action_about_instance">ഇതിനെക്കുറിച്ചുള്ള വിവരങ്ങൾ</string>
     <string name="action_privacy">സ്വകാര്യത</string>
     <string name="action_cache">Cache</string>
     <string name="action_logout">പുറത്തിറങ്ങുക</string>
     <string name="login">അകത്തു കയറുക</string>
     <!-- common -->
-    <string name="close">Close</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="close">അടയ്ക്കുക</string>
+    <string name="yes">ശരി</string>
+    <string name="no">വേണ്ട</string>
     <string name="cancel">റദ്ദാക്കുക</string>
-    <string name="download">Download</string>
+    <string name="download">ഇറക്കിവെക്കുക</string>
     <string name="download_file">Download %1$s</string>
     <string name="download_over">ഡൗൺലോഡ് പൂർത്തിയായി</string>
     <string name="save_file">Save %1$s</string>
