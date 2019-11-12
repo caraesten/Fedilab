@@ -1151,10 +1151,10 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="make_an_action">做動作</string>
     <string name="translation">翻譯</string>
     <string name="image_preview">圖片預覽</string>
-    <string name="change_theme">Change the theme</string>
-    <string name="text_color_title">Text color</string>
-    <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="change_theme">變更佈景主題</string>
+    <string name="text_color_title">文字色彩</string>
+    <string name="text_color">變更 pots 中的文字色彩</string>
+    <string name="apply_changes">套用變更</string>
+    <string name="restart_message">您必須重新啟動應用程式以套用變更</string>
+    <string name="restart">重新啟動</string>
 </resources>
