@@ -4,17 +4,17 @@
     <string name="navigation_drawer_open">മെനു തുറക്കുക</string>
     <string name="navigation_drawer_close">മെനു അടയ്ക്കുക</string>
     <string name="action_about">വിവരം</string>
-    <string name="action_about_instance">About the instance</string>
+    <string name="action_about_instance">ഇതിനെക്കുറിച്ചുള്ള വിവരങ്ങൾ</string>
     <string name="action_privacy">സ്വകാര്യത</string>
     <string name="action_cache">Cache</string>
-    <string name="action_logout">Logout</string>
-    <string name="login">Login</string>
+    <string name="action_logout">പുറത്തിറങ്ങുക</string>
+    <string name="login">അകത്തു കയറുക</string>
     <!-- common -->
-    <string name="close">Close</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="close">അടയ്ക്കുക</string>
+    <string name="yes">ശരി</string>
+    <string name="no">വേണ്ട</string>
     <string name="cancel">റദ്ദാക്കുക</string>
-    <string name="download">Download</string>
+    <string name="download">ഇറക്കിവെക്കുക</string>
     <string name="download_file">Download %1$s</string>
     <string name="download_over">ഡൗൺലോഡ് പൂർത്തിയായി</string>
     <string name="save_file">Save %1$s</string>
@@ -43,25 +43,25 @@
     <string name="camera">Camera</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
-    <string name="translate_toot">Translate this toot.</string>
+    <string name="delete_all">എല്ലാം മായ്ക്കുക</string>
+    <string name="translate_toot">ഈ ടൂട്ടിനെ മൊഴി മാറ്റം നടത്തുക.</string>
     <string name="schedule">Schedule</string>
-    <string name="text_size">Text and icon sizes</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="open_with">Open with</string>
-    <string name="validate">Validate</string>
+    <string name="text_size">അക്ഷരങ്ങളുടെയും ചിഹ്നങ്ങളുടെയും അളവുകൾ</string>
+    <string name="text_size_change">അക്ഷരത്തിന്റെ അളവ് മാറ്റുക:</string>
+    <string name="icon_size_change">ചിഹ്നത്തിന്റെ അളവ് മാറ്റുക:</string>
+    <string name="next">അടുത്തത്</string>
+    <string name="previous">മുൻപത്തേത്</string>
+    <string name="open_with">ഇതുപയോഗിച്ച് തുറക്കുക</string>
+    <string name="validate">നിർണ്ണയം</string>
     <string name="media">Media</string>
-    <string name="share_with">Share with</string>
-    <string name="shared_via">Shared via Fedilab</string>
-    <string name="replies">Replies</string>
-    <string name="username">User name</string>
+    <string name="share_with">ഇവരുമായി പങ്കിടുക</string>
+    <string name="shared_via">ഫെഡിലാബ് വഴി പങ്കിടുക</string>
+    <string name="replies">മറുപടികൾ</string>
+    <string name="username">ഉപയോക്തൃ നാമം</string>
     <string name="drafts">Drafts</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
-    <string name="favourite">Favourites</string>
-    <string name="follow">New followers</string>
+    <string name="new_data">പുതിയ വിവരം ലഭ്യമാണ്. അത് പ്രദർശിപ്പിക്കട്ടെ?</string>
+    <string name="favourite">പ്രിയപ്പെട്ടവ</string>
+    <string name="follow">പുതിയ അനുയായികൾ</string>
     <string name="mention">Mentions</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
@@ -87,42 +87,42 @@
     <string name="make_a_choice">What do you want to do?</string>
     <string name="delete_account_title">Delete an account</string>
     <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Tap on the path to change it</string>
-    <string name="failed">Failed!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
+    <string name="send_email">ഇ മെയിൽ അയക്കൂ</string>
+    <string name="choose_file">ദയവായി ഒരു ഫയൽ തെരഞ്ഞെടുക്കുക</string>
+    <string name="choose_file_error">ഫയൽ എക്സ്പ്ലോറർ കണ്ടെത്തിയില്ല!</string>
+    <string name="click_to_change">മാറ്റണമെങ്കിൽ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ</string>
+    <string name="failed">പരാജയപ്പെട്ടു!</string>
+    <string name="scheduled_toots">മുൻകൂട്ടി നിശ്ചയിച്ച സമയപ്രകാരം ഉള്ള ടൂട്ടുകൾ</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="insert_emoji">ഇമോജി ഇടൂ</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">തത്സമയ അറിയിപ്പുകൾ</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="no_status">പ്രദർശിപ്പിക്കാൻ ടൂട്ടുകൾ ഇല്ല</string>
+    <string name="fav_added">ഈ ടൂട്ടിനെ പ്രിയപ്പെട്ടവയിലേക്ക് ചേർത്തിരിക്കുന്നു</string>
+    <string name="fav_removed">ഈ ടൂട്ടിനെ പ്രിയപ്പെട്ടവയിൽ നിന്ന് മാറ്റിയിരിക്കുന്നു!</string>
+    <string name="reblog_added">ഈ ടൂട്ടിനെ ബൂസ്റ്റ് ചെയ്തിരിക്കുന്നു!</string>
+    <string name="reblog_removed">ഈ ടൂട്ട് ബൂസ്റ്റിൽ നിന്ന് മാറ്റിയിരിക്കുന്നു!</string>
+    <string name="reblog_by">ബൂസ്റ്റ് ചെയ്തത് %1$s</string>
+    <string name="favourite_add">ഈ ടൂട്ടിനെ പ്രിയപ്പെ ട്ടവയിലേക്ക് ചേർക്കട്ടെ?</string>
+    <string name="favourite_remove">ഈ ടൂട്ടിനെ പ്രിയപ്പെ ട്ടവയിൽ നിന്ന് മാറ്റട്ടെ?</string>
+    <string name="reblog_add">ഈ ടൂട്ടിനെ ബൂസ്റ്റ് ചെയ്യട്ടെ?</string>
+    <string name="reblog_remove">ഈ ടൂട്ടിൻറെ ബൂസ്റ്റ് നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="pin_add">ഈ ടൂട്ട് പിൻചെയ്തു വയ്ക്കട്ടെ?</string>
+    <string name="pin_remove">ഈ ടൂട്ട് പിൻചെയ്തത് നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="more_action_1">നിശബ്ദം</string>
+    <string name="more_action_2">തടയുക</string>
+    <string name="more_action_3">റിപ്പോര്‍ട്ടുചെയ്യുക</string>
+    <string name="more_action_4">നീക്കുക</string>
+    <string name="more_action_5">പകര്‍ത്തുക</string>
+    <string name="more_action_6">പങ്കിടുക</string>
+    <string name="more_action_7">പ്രതിപാദിക്കുക</string>
+    <string name="more_action_8">സമയബന്ധിതമായി നിശബ്ദമാക്കുക</string>
+    <string name="more_action_9">കളയുക &amp; വീണ്ടും എഴുതുക</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
+        <item>ഈ അക്കൗണ്ട് നിശബ്ദമാക്കട്ടെ?</item>
+        <item>ഈ അക്കൗണ്ട് തടയട്ടെ?</item>
+        <item>ഈ ടൂട്ടിനെ റിപ്പോർട്ട് ചെയ്യട്ടെ?</item>
         <item>Block this domain?</item>
         <item>Unmute this account?</item>
     </string-array>
