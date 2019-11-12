@@ -1156,11 +1156,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="image_preview">Aperçu de l\'image</string>
     <string name="change_theme">Changer le thème</string>
     <string name="text_color_title">Couleur du texte</string>
-    <string name="text_color">Change the text color in pots</string>
+    <string name="text_color">Changer la couleur du texte dans les publications/messages</string>
     <string name="apply_changes">Appliquer les modifications</string>
     <string name="restart_message">Vous devez redémarrer l\'application pour appliquer les modifications</string>
     <string name="restart">Redémarrer</string>
-    <string name="pref_custom_theme">Use a custom theme</string>
-    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
-    <string name="theming">Theming</string>
+    <string name="pref_custom_theme">Utiliser un thème personnalisé</string>
+    <string name="pref_custom_theme_summary">Permettre de modifier les couleurs du thème sélectionné ci-dessus</string>
+    <string name="theming">Thème</string>
 </resources>
