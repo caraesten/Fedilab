@@ -713,6 +713,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         CardView main_card_container;
         LinearLayout main_linear_container;
         View translation_border_view;
+        TextView translation_label;
         public View getView() {
             return itemView;
         }
@@ -841,6 +842,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             main_card_container = itemView.findViewById(R.id.main_card_container);
             main_linear_container = itemView.findViewById(R.id.main_linear_container);
             translation_border_view = itemView.findViewById(R.id.translation_border_view);
+            translation_label = itemView.findViewById(R.id.translation_label);
         }
 
         void updateAnimatedEmoji() {
@@ -2033,9 +2035,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int statusColor = prefs.getInt("theme_statuses_color", -1);
             if(  holder.main_card_container != null && statusColor != -1) {
                 holder.main_card_container.setCardBackgroundColor(statusColor);
+                if( holder.translation_label != null){
+                    holder.translation_label.setBackgroundColor(statusColor);
+                }
             }else if(holder.main_card_container != null){
                 holder.main_card_container.setCardBackgroundColor(ThemeHelper.getAttColor(context, R.attr.cardviewColor));
+                if( holder.translation_label != null){
+                    holder.translation_label.setBackgroundColor(ThemeHelper.getAttColor(context, R.attr.cardviewColor));
+                }
             }
+
             if (type == RetrieveFeedsAsyncTask.Type.CONVERSATION && status.getConversationProfilePicture() != null) {
                 holder.status_account_profile.setVisibility(View.GONE);
                 holder.conversation_pp.setVisibility(View.VISIBLE);
