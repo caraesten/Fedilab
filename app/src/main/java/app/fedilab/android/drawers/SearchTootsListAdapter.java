@@ -42,7 +42,6 @@ import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.HashTagActivity;
 
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -52,7 +51,6 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 public class SearchTootsListAdapter extends BaseAdapter {
 
     private List<String> searches;
-    private LayoutInflater layoutInflater;
     private Context context;
     private SearchTootsListAdapter searchTootsListAdapter;
     private RelativeLayout textviewNoAction;
@@ -82,7 +80,7 @@ public class SearchTootsListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         context = parent.getContext();
-        layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         final String search = searches.get(position);
         final ViewHolder holder;
         if (convertView == null) {

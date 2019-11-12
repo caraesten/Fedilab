@@ -115,6 +115,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         notifications = new ArrayList<>();
         swiped = false;
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
