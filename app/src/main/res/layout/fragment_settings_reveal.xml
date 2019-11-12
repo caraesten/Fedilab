@@ -2078,26 +2078,6 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- THEME -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/set_theme"
-                            android:textSize="16sp" />
-
-                        <Spinner
-                            android:id="@+id/set_night_mode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
 
                     <!-- NSFW Timeout -->
                     <TextView

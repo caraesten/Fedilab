@@ -38,7 +38,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
 
 
         createPref();
-      
+
 
 
     }

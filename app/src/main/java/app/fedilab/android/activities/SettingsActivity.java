@@ -65,9 +65,6 @@ public class SettingsActivity extends BaseActivity  {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;
@@ -108,7 +105,7 @@ public class SettingsActivity extends BaseActivity  {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings_category_label_interface)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.compose)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.colors)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.theming)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.hide_menu_items)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.administration)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.languages)));

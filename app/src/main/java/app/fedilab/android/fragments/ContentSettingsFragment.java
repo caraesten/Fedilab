@@ -1433,60 +1433,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             fileListerDialog.show();
         });
 
-        final Spinner set_night_mode = rootView.findViewById(R.id.set_night_mode);
-        ArrayAdapter<CharSequence> adapterTheme = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_theme, android.R.layout.simple_spinner_item);
-        set_night_mode.setAdapter(adapterTheme);
-
-        int positionSpinnerTheme;
-        switch (sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK)) {
-            case Helper.THEME_DARK:
-                positionSpinnerTheme = 0;
-                break;
-            case Helper.THEME_LIGHT:
-                positionSpinnerTheme = 1;
-                break;
-            case Helper.THEME_BLACK:
-                positionSpinnerTheme = 2;
-                break;
-            default:
-                positionSpinnerTheme = 0;
-        }
-        set_night_mode.setSelection(positionSpinnerTheme, false);
-        set_night_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                switch (position) {
-                    case 0:
-                        editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
-                        editor.apply();
-                        break;
-                    case 1:
-                        editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
-                        editor.apply();
-                        break;
-                    case 2:
-                        editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
-                        editor.apply();
-                        break;
-                }
-                Bundle b = new Bundle();
-                b.putString("menu", "theme");
-                Intent intentBC = new Intent(Helper.RECEIVE_HIDE_ITEM);
-                intentBC.putExtras(b);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
-                ((SettingsActivity) context).recreate();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
         SeekBar toot_per_page = rootView.findViewById(R.id.set_toot_per_page);
         final TextView set_toot_per_page_count = rootView.findViewById(R.id.set_toot_per_page_count);
