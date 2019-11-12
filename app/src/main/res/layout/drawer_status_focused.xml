@@ -176,6 +176,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="2dp"
                     android:maxLines="1"
+                    android:textAlignment="viewStart"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -198,6 +199,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="2dp"
                         android:maxLines="1"
+                        android:textAlignment="viewStart"
                         android:textStyle="bold" />
                 </LinearLayout>
 
