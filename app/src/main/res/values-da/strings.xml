@@ -1163,4 +1163,7 @@
     <string name="apply_changes">Effektuér ændringer</string>
     <string name="restart_message">Appen skal genstartes for at effektuere ændringerne</string>
     <string name="restart">Genstart</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
