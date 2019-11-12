@@ -5,7 +5,7 @@
     android:id="@+id/quick_reply_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/quick_reply_background"
+    android:background="?attr/cardviewColor"
     android:padding="10dp"
     android:visibility="gone">
 

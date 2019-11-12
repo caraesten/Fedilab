@@ -2044,6 +2044,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.translation_label.setBackgroundColor(ThemeHelper.getAttColor(context, R.attr.cardviewColor));
                 }
             }
+            if( statusColor != -1) {
+                holder.quick_reply_container.setBackgroundColor(statusColor);
+            }
 
             if (type == RetrieveFeedsAsyncTask.Type.CONVERSATION && status.getConversationProfilePicture() != null) {
                 holder.status_account_profile.setVisibility(View.GONE);
