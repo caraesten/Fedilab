@@ -1163,4 +1163,7 @@
     <string name="apply_changes">Applica le modifiche</string>
     <string name="restart_message">È necessario riavviare l\'applicazione per applicare le modifiche</string>
     <string name="restart">Riavvia</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
