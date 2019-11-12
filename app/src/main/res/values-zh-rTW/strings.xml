@@ -1157,4 +1157,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="apply_changes">套用變更</string>
     <string name="restart_message">您必須重新啟動應用程式以套用變更</string>
     <string name="restart">重新啟動</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
