@@ -22,7 +22,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:background="?colorPrimary"
+        android:background="?backgroundColor"
         app:tabSelectedTextColor="?colorAccent"
         android:layout_width="match_parent"
         app:tabGravity="fill"

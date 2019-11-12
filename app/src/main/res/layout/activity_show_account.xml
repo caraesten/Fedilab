@@ -27,11 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:background="?backgroundColor"
         >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:id="@+id/collapsingToolbarLayout"
+
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:expandedTitleMarginStart="48dp"
@@ -558,7 +560,7 @@
             android:id="@+id/account_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?colorPrimary"
+            android:background="?backgroundColor"
             app:tabSelectedTextColor="?colorAccent"
             app:tabMode="fixed"
             app:tabGravity="fill" />
