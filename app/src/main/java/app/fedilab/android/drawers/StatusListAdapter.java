@@ -1422,7 +1422,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
 
-                int customColor = ThemeHelper.getAttColor(context, R.attr.customFeature);
+                int customColor = ContextCompat.getColor(context, R.color.cyanea_accent_reference);
                 holder.fedilab_features.setBackgroundColor(customColor);
                 holder.custom_feature_bookmark.setBackgroundColor(customColor);
                 holder.custom_feature_translate.setBackgroundColor(customColor);
