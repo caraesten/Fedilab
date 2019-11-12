@@ -1173,4 +1173,7 @@
     <string name="apply_changes">Применить изменения</string>
     <string name="restart_message">Вам понадобится перезапустить клиент, чтобы применить изменения</string>
     <string name="restart">Перезапустить</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
 </resources>
