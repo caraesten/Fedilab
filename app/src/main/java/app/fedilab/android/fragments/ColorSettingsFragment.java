@@ -82,7 +82,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                 FragmentActivity context = getActivity();
                 assert context != null;
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                dialogBuilder.setMessage(R.string.reset_color);
+                dialogBuilder.setMessage(R.string.restore_default_theme);
                 dialogBuilder.setPositiveButton(R.string.disable, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
