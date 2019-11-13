@@ -1,19 +1,23 @@
 package app.fedilab.android.fragments;
 
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -26,8 +30,12 @@ import com.jaredrummler.cyanea.Cyanea;
 import com.jaredrummler.cyanea.prefs.CyaneaTheme;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -36,19 +44,23 @@ import java.util.List;
 import java.util.Objects;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SettingsActivity;
+import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class ColorSettingsFragment  extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
+    private final int PICK_IMPORT_THEME = 5557;
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -136,6 +148,95 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMPORT_THEME && resultCode == RESULT_OK) {
+            if (data == null || data.getData() == null) {
+                Toasty.error(getActivity(), getString(R.string.theme_file_error), Toast.LENGTH_LONG).show();
+                return;
+            }
+            if( data.getData() != null) {
+                BufferedReader br = null;
+                try {
+                    InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData() );
+                    assert inputStream != null;
+                    br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String sCurrentLine;
+                    int i = 0;
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    while ((sCurrentLine = br.readLine()) != null) {
+                        if( i > 0 ){
+                            String[] line = sCurrentLine.split(",");
+                            if( line.length > 1 ) {
+                                String key = line[0];
+                                String value = line[1];
+                                if( key.compareTo("base_theme") == 0){
+                                    SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor appEditor = sharedpreferences.edit();
+                                    if( value.compareTo("2") == 0 ) {
+                                        appEditor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+                                    }else  if( value.compareTo("1") == 0 ) {
+                                        appEditor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
+                                    }else  if( value.compareTo("3") == 0 ) {
+                                        appEditor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
+                                    }
+                                    appEditor.apply();
+                                }else if( key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0){
+                                    editor.putBoolean(key, Boolean.valueOf(value));
+                                    editor.apply();
+                                }else{
+                                    editor.putInt(key, Integer.valueOf(value));
+                                    editor.commit();
+                                }
+                            }
+                        }
+                        i++;
+                    }
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                    dialogBuilder.setMessage(R.string.restart_message);
+                    dialogBuilder.setTitle(R.string.apply_changes);
+                    dialogBuilder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent mStartActivity = new Intent(getActivity(), MainActivity.class);
+                            int mPendingIntentId = 123456;
+                            PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                            AlarmManager mgr = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+                            assert mgr != null;
+                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                            System.exit(0);
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (br != null)br.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+            }else{
+                Toasty.error(getActivity(), getString(R.string.theme_file_error), Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+
+
     private void createPref(){
         getPreferenceScreen().removeAll();
         addPreferencesFromResource(R.xml.fragment_settings_color);
@@ -154,6 +255,8 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         Preference pref_color_navigation_bar = findPreference("pref_color_navigation_bar");
         Preference pref_color_status_bar = findPreference("pref_color_status_bar");
         Preference pref_color_background = findPreference("pref_color_background");
+        Preference pref_import = findPreference("pref_import");
+        Preference pref_export = findPreference("pref_export");
         Preference reset_pref = findPreference("reset_pref");
         if( !sharedpreferences.getBoolean("use_custom_theme", false)){
             preferenceScreen.removePreference(theme_link_color);
@@ -167,7 +270,10 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
             preferenceScreen.removePreference(pref_color_status_bar);
             preferenceScreen.removePreference(pref_color_background);
             preferenceScreen.removePreference(reset_pref);
+            preferenceScreen.removePreference(pref_export);
 
+        }else{
+            preferenceScreen.removePreference(pref_import);
         }
         List<String> array = Arrays.asList(getResources().getStringArray(R.array.settings_theme));
         CharSequence[] entries = array.toArray(new CharSequence[array.size()]);
@@ -181,6 +287,43 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         pref_theme_picker.setEntryValues(entryValues);
         pref_theme_picker.setDefaultValue(String.valueOf(theme));
 
+
+        pref_export.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                exportColors();
+                return true;
+            }
+        });
+
+
+        pref_import.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return true;
+                }
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    intent.setType("*/*");
+                    String[] mimetypes = {"*/*"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, PICK_IMPORT_THEME);
+                } else {
+                    intent.setType("*/*");
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+                    startActivityForResult(chooserIntent, PICK_IMPORT_THEME);
+                }
+                return true;
+            }
+        });
 
         reset_pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -254,48 +397,48 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
 
-            builder.append("\"").append("base_theme").append("\"").append(',');
-            builder.append("\"").append(theme).append("\"").append(',');
+            builder.append("base_theme").append(',');
+            builder.append(theme).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_boost_header_color").append("\"").append(',');
-            builder.append("\"").append(theme_boost_header_color).append("\"").append(',');
+            builder.append("theme_boost_header_color").append(',');
+            builder.append(theme_boost_header_color).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_statuses_color").append("\"").append(',');
-            builder.append("\"").append(theme_statuses_color).append("\"").append(',');
+            builder.append("theme_statuses_color").append(',');
+            builder.append(theme_statuses_color).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_link_color").append("\"").append(',');
-            builder.append("\"").append(theme_link_color).append("\"").append(',');
+            builder.append("theme_link_color").append(',');
+            builder.append(theme_link_color).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_icons_color").append("\"").append(',');
-            builder.append("\"").append(theme_icons_color).append("\"").append(',');
+            builder.append("theme_icons_color").append(',');
+            builder.append(theme_icons_color).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("pref_color_background").append("\"").append(',');
-            builder.append("\"").append(pref_color_background).append("\"").append(',');
+            builder.append("pref_color_background").append(',');
+            builder.append(pref_color_background).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("pref_color_navigation_bar").append("\"").append(',');
-            builder.append("\"").append(pref_color_navigation_bar).append("\"").append(',');
+            builder.append("pref_color_navigation_bar").append(',');
+            builder.append(pref_color_navigation_bar).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("pref_color_status_bar").append("\"").append(',');
-            builder.append("\"").append(pref_color_status_bar).append("\"").append(',');
+            builder.append("pref_color_status_bar").append(',');
+            builder.append(pref_color_status_bar).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_accent").append("\"").append(',');
-            builder.append("\"").append(theme_accent).append("\"").append(',');
+            builder.append("theme_accent").append(',');
+            builder.append(theme_accent).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_text_color").append("\"").append(',');
-            builder.append("\"").append(theme_text_color).append("\"").append(',');
+            builder.append("theme_text_color").append(',');
+            builder.append(theme_text_color).append(',');
             builder.append('\n');
 
-            builder.append("\"").append("theme_primary").append("\"").append(',');
-            builder.append("\"").append(theme_primary).append("\"").append(',');
+            builder.append("theme_primary").append(',');
+            builder.append(theme_primary).append(',');
             builder.append('\n');
 
 

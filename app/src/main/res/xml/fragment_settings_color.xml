@@ -104,4 +104,15 @@
         android:id="@+id/resetButton"
         android:key="reset_pref"
         android:summary="@string/clik_reset"/>
+
+
+    <Preference android:title="@string/import_theme"
+        app:iconSpaceReserved="false"
+        android:key="pref_import"
+        android:summary="@string/import_theme_title"/>
+
+    <Preference android:title="@string/export_theme"
+        app:iconSpaceReserved="false"
+        android:key="pref_export"
+        android:summary="@string/export_theme_title"/>
 </PreferenceScreen>
