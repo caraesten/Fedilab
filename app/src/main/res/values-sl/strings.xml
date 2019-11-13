@@ -1176,4 +1176,10 @@
     <string name="pref_custom_theme">Use a custom theme</string>
     <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
     <string name="theming">Theming</string>
+    <string name="store_before">Store before</string>
+    <string name="data_export_theme">The theme was exported</string>
+    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
+    <string name="pref_colored_status_bar_title">Status bar color</string>
+    <string name="restore_default_theme">Restore a default theme</string>
 </resources>
