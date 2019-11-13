@@ -115,6 +115,7 @@
 
     <style name="TransparentLight" parent="Theme.Cyanea.Light">black_icon_theme
         <item name="iconColor">@color/black</item>
+        <item name="iconColorMenu">@color/black</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -125,6 +126,7 @@
 
     <style name="TransparentDark" parent="Theme.Cyanea.Dark">
         <item name="iconColor">@color/dark_icon_theme</item>
+        <item name="iconColorMenu">@color/dark_icon_theme</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -134,6 +136,7 @@
 
     <style name="TransparentBlack" parent="Theme.Cyanea.Dark">
         <item name="iconColor">@color/black_icon_theme</item>
+        <item name="iconColorMenu">@color/dark_icon_theme</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>

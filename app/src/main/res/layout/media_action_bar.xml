@@ -34,6 +34,7 @@
     <ImageView
         android:id="@+id/toolbar_close"
         android:src="@drawable/ic_close"
+        android:tint="?attr/menuIconColor"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"
@@ -51,8 +52,8 @@
 
     <ImageView
         android:id="@+id/media_save"
-        android:background="@color/transparent"
         android:src="@drawable/ic_save_white"
+        android:tint="?attr/menuIconColor"
         android:scaleType="fitXY"
         android:layout_width="25dp"
         android:layout_height="25dp"
@@ -63,8 +64,8 @@
         android:contentDescription="@string/download" />
     <ImageView
         android:id="@+id/media_share"
-        android:background="@color/transparent"
         android:src="@drawable/ic_share_media"
+        android:tint="?attr/menuIconColor"
         android:scaleType="fitXY"
         android:layout_width="25dp"
         android:layout_height="25dp"

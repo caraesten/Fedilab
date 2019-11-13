@@ -95,7 +95,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                 assert context != null;
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 dialogBuilder.setMessage(R.string.restore_default_theme);
-                dialogBuilder.setPositiveButton(R.string.disable, new DialogInterface.OnClickListener() {
+                dialogBuilder.setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         reset();

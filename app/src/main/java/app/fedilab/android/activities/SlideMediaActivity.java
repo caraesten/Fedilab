@@ -100,9 +100,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
             case Helper.THEME_LIGHT:
                 setTheme(R.style.TransparentLight);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.TransparentDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.TransparentBlack);
                 break;
@@ -110,7 +107,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 setTheme(R.style.TransparentDark);
         }
         setContentView(R.layout.activity_media_pager);
-        CoordinatorLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
 
         fullscreen = false;
         media_description = findViewById(R.id.media_description);
@@ -119,7 +115,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         swipeEnabled = true;
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SlideMediaActivity.this, R.color.cyanea_primary)));
+            //actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SlideMediaActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.media_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -159,7 +155,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                     int position = mPager.getCurrentItem();
                     Attachment attachment = attachments.get(position);
                     if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
-                        new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
+                        downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
                     } else {
                         if (Build.VERSION.SDK_INT >= 23) {
                             if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
