@@ -100,6 +100,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                     public void onClick(DialogInterface dialog, int id) {
                         reset();
                         dialog.dismiss();
+                        restart();
                     }
                 });
                 dialogBuilder.setNegativeButton(R.string.store_before, new DialogInterface.OnClickListener() {
@@ -109,6 +110,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                         exportColors();
                         reset();
                         dialog.dismiss();
+                        restart();
                     }
                 });
                 dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -166,6 +168,8 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                     int i = 0;
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     SharedPreferences.Editor editor = prefs.edit();
+
+                    editor.putBoolean("use_custom_theme", true);
                     while ((sCurrentLine = br.readLine()) != null) {
                         if( i > 0 ){
                             String[] line = sCurrentLine.split(",");
@@ -182,31 +186,24 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                                     }else  if( value.compareTo("3") == 0 ) {
                                         appEditor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
                                     }
-                                    appEditor.apply();
+                                    appEditor.commit();
                                 }else if( key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0){
                                     editor.putBoolean(key, Boolean.valueOf(value));
-                                    editor.apply();
                                 }else{
                                     editor.putInt(key, Integer.valueOf(value));
-                                    editor.commit();
                                 }
                             }
                         }
                         i++;
                     }
+                    editor.commit();
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
                     dialogBuilder.setMessage(R.string.restart_message);
                     dialogBuilder.setTitle(R.string.apply_changes);
                     dialogBuilder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent mStartActivity = new Intent(getActivity(), MainActivity.class);
-                            int mPendingIntentId = 123456;
-                            PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                            AlarmManager mgr = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-                            assert mgr != null;
-                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                            System.exit(0);
+                            restart();
                         }
                     });
                     dialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -236,6 +233,15 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
     }
 
 
+    private void restart(){
+        Intent mStartActivity = new Intent(getActivity(), MainActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        assert mgr != null;
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
+    }
 
     private void createPref(){
         getPreferenceScreen().removeAll();
