@@ -17,9 +17,9 @@
     <string name="download">ഇറക്കിവെക്കുക</string>
     <string name="download_file">Download %1$s</string>
     <string name="download_over">ഡൗൺലോഡ് പൂർത്തിയായി</string>
-    <string name="save_file">Save %1$s</string>
-    <string name="save_over">Media saved</string>
-    <string name="download_from" formatted="false">File: %1$s</string>
+    <string name="save_file">സൂക്ഷിക്കൂ %1$s</string>
+    <string name="save_over">മാധ്യമം സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു</string>
+    <string name="download_from" formatted="false">ഫയൽ %1$s</string>
     <string name="password">Password</string>
     <string name="email">ഇമെയിൽ</string>
     <string name="accounts">അക്കൗണ്ടുകൾ</string>
