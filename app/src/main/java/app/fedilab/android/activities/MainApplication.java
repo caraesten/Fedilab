@@ -95,7 +95,7 @@ public class MainApplication extends MultiDexApplication {
         int primary = prefs.getInt("theme_primary", -1);
         int pref_color_background = prefs.getInt("pref_color_background", -1);
         boolean pref_color_navigation_bar = prefs.getBoolean("pref_color_navigation_bar", true);
-
+        boolean pref_color_status_bar = prefs.getBoolean("pref_color_status_bar", true);
         Cyanea.Editor editor = Cyanea.getInstance().edit();
         if( primary != -1 ) {
             editor.primary(primary);
@@ -109,7 +109,7 @@ public class MainApplication extends MultiDexApplication {
                 .backgroundLight(pref_color_background)
                 .backgroundDark(pref_color_background).apply();
         }
-
+        editor.shouldTintStatusBar(pref_color_status_bar).apply();
         editor.shouldTintNavBar(pref_color_navigation_bar).apply();
 
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);

@@ -83,6 +83,14 @@
         android:title="@string/pref_colored_navigation_bar_title"
         />
 
+    <androidx.preference.SwitchPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:defaultValue="@bool/should_tint_status_bar"
+        android:key="pref_color_status_bar"
+        android:summary="@string/pref_colored_status_bar_summary"
+        android:title="@string/pref_colored_status_bar_title"
+        />
+
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         app:iconSpaceReserved="false"
         android:defaultValue="-1"
