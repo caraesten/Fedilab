@@ -1167,9 +1167,9 @@
     <string name="pref_colored_status_bar_summary">将首要颜色应用到状态栏</string>
     <string name="pref_colored_status_bar_title">状态颜色</string>
     <string name="restore_default_theme">恢复默认主题</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="import_theme">导入主题</string>
+    <string name="import_theme_title">点击此处从先前导出的主题导入主题</string>
+    <string name="export_theme">导出主题</string>
+    <string name="export_theme_title">点击此处以导出当前主题</string>
+    <string name="theme_file_error">选择主题文件时出错</string>
 </resources>
