@@ -1167,4 +1167,10 @@
     <string name="pref_custom_theme">Usar decorado personalizado</string>
     <string name="pref_custom_theme_summary">Permitir obviar as cores do decorado seleccionado</string>
     <string name="theming">Decoración</string>
+    <string name="store_before">Store before</string>
+    <string name="data_export_theme">The theme was exported</string>
+    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
+    <string name="pref_colored_status_bar_title">Status bar color</string>
+    <string name="restore_default_theme">Restore a default theme</string>
 </resources>
