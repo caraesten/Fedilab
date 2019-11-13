@@ -1135,7 +1135,7 @@ public class Helper {
         }
         final String fileName = URLUtil.guessFileName(url, null, null);
         request.allowScanningByMediaScanner();
-        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.DIRECTORY_DOWNLOADS);
         request.setDestinationInExternalPublicDir(myDir, fileName);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);

@@ -1473,7 +1473,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
                 error = true;
             }
-            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
+            if( activityWeakReference.get().findViewById(R.id.compression_loader) != null) {
+                activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
+            }
 
         }
 
