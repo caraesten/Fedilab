@@ -21,9 +21,9 @@
     <string name="save_over">Media saved</string>
     <string name="download_from" formatted="false">File: %1$s</string>
     <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="accounts">Accounts</string>
-    <string name="toots">Toots</string>
+    <string name="email">ഇമെയിൽ</string>
+    <string name="accounts">അക്കൗണ്ടുകൾ</string>
+    <string name="toots">ടൂട്ടുകൾ</string>
     <string name="tags">ടാഗുകൾ</string>
     <string name="token">Token</string>
     <string name="save">Save</string>
