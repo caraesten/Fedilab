@@ -119,6 +119,7 @@
                     <TextView
                         android:id="@+id/peertube_like_count"
                         android:layout_gravity="center_horizontal"
+                        android:drawableTop="@drawable/ic_thumb_up_peertube"
                         android:gravity="center_horizontal"
                         android:drawablePadding="5dp"
                         android:layout_width="wrap_content"
@@ -133,6 +134,7 @@
                     <TextView
                         android:id="@+id/peertube_dislike_count"
                         android:layout_gravity="center_horizontal"
+                        android:drawableTop="@drawable/ic_thumb_down_peertube"
                         android:gravity="center_horizontal"
                         android:drawablePadding="5dp"
                         android:layout_width="wrap_content"
@@ -251,7 +253,6 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"

@@ -16,7 +16,6 @@ package app.fedilab.android.activities;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -41,7 +40,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -52,7 +50,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -73,6 +70,8 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
@@ -143,7 +142,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private DefaultTrackSelector trackSelector;
     private int mode;
     private LinearLayout write_comment_container;
-    private ImageView my_pp, send;
+    private ImageView send;
     private TextView add_comment_read;
     private EditText add_comment_write;
     private String instance;
@@ -185,7 +184,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         CustomWebview webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
         write_comment_container = findViewById(R.id.write_comment_container);
-        my_pp = findViewById(R.id.my_pp);
+        ImageView my_pp = findViewById(R.id.my_pp);
         add_comment_read = findViewById(R.id.add_comment_read);
         add_comment_write = findViewById(R.id.add_comment_write);
         peertube_playlist = findViewById(R.id.peertube_playlist);
@@ -201,7 +200,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
             }
         });
-        Helper.changeDrawableColor(getApplicationContext(), send, R.color.mastodonC4);
+        Helper.changeDrawableColor(getApplicationContext(), send, R.color.cyanea_accent);
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             write_comment_container.setVisibility(View.GONE);
         }
@@ -295,9 +294,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             webview_video.setWebChromeClient(mastalabWebChromeClient);
             webview_video.getSettings().setDomStorageEnabled(true);
             webview_video.getSettings().setAppCacheEnabled(true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
-            }
+            webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
             webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
             webview_video.loadUrl("https://" + peertubeInstance + "/videos/embed/" + videoId);
         } else {
@@ -365,7 +362,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
         menu.findItem(R.id.action_go).setVisible(false);
         menu.findItem(R.id.action_block).setVisible(false);
@@ -931,19 +928,14 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     private void changeColor() {
         if (peertube.getMyRating() != null && peertube.getMyRating().equals("like")) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.positive_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.neutral_thumbs);
+            changeDrawableColor(PeertubeActivity.this, R.drawable.ic_thumb_up_peertube, R.color.positive_thumbs);
+            Drawable thumbUp = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_thumb_up_peertube);
+            peertube_like_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbUp, null, null);
         } else if (peertube.getMyRating() != null && peertube.getMyRating().equals("dislike")) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.neutral_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.negative_thumbs);
-        } else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.neutral_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.neutral_thumbs);
+            changeDrawableColor(PeertubeActivity.this, R.drawable.ic_thumb_down_peertube, R.color.negative_thumbs);
+            Drawable thumbDown = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_thumb_down_peertube);
+            peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbDown, null, null);
         }
-        Drawable thumbUp = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_up_peertube);
-        Drawable thumbDown = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_down_peertube);
-        peertube_like_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbUp, null, null);
-        peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbDown, null, null);
     }
 
     @Override
