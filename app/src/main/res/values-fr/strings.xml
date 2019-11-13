@@ -1156,8 +1156,22 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="image_preview">Aperçu de l\'image</string>
     <string name="change_theme">Changer le thème</string>
     <string name="text_color_title">Couleur du texte</string>
-    <string name="text_color">Change the text color in pots</string>
+    <string name="text_color">Changer la couleur du texte dans les publications/messages</string>
     <string name="apply_changes">Appliquer les modifications</string>
     <string name="restart_message">Vous devez redémarrer l\'application pour appliquer les modifications</string>
     <string name="restart">Redémarrer</string>
+    <string name="pref_custom_theme">Utiliser un thème personnalisé</string>
+    <string name="pref_custom_theme_summary">Permettre de modifier les couleurs du thème sélectionné ci-dessus</string>
+    <string name="theming">Thème</string>
+    <string name="store_before">Store before</string>
+    <string name="data_export_theme">The theme was exported</string>
+    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
+    <string name="pref_colored_status_bar_title">Status bar color</string>
+    <string name="restore_default_theme">Restore a default theme</string>
+    <string name="import_theme">Import a theme</string>
+    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
+    <string name="export_theme">Export the theme</string>
+    <string name="export_theme_title">Tap here to export the current theme</string>
+    <string name="theme_file_error">An error occurred when selecting the theme file</string>
 </resources>

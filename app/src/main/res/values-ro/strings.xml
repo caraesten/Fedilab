@@ -1166,4 +1166,18 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="apply_changes">Apply changes</string>
     <string name="restart_message">You need to restart the application to apply changes</string>
     <string name="restart">Restart</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
+    <string name="store_before">Store before</string>
+    <string name="data_export_theme">The theme was exported</string>
+    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
+    <string name="pref_colored_status_bar_title">Status bar color</string>
+    <string name="restore_default_theme">Restore a default theme</string>
+    <string name="import_theme">Import a theme</string>
+    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
+    <string name="export_theme">Export the theme</string>
+    <string name="export_theme_title">Tap here to export the current theme</string>
+    <string name="theme_file_error">An error occurred when selecting the theme file</string>
 </resources>

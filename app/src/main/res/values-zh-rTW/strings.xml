@@ -1157,4 +1157,18 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="apply_changes">套用變更</string>
     <string name="restart_message">您必須重新啟動應用程式以套用變更</string>
     <string name="restart">重新啟動</string>
+    <string name="pref_custom_theme">使用自訂佈景主題</string>
+    <string name="pref_custom_theme_summary">允許覆寫在上方選定的佈景主題的顏色</string>
+    <string name="theming">主題</string>
+    <string name="store_before">Store before</string>
+    <string name="data_export_theme">The theme was exported</string>
+    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
+    <string name="pref_colored_status_bar_title">Status bar color</string>
+    <string name="restore_default_theme">Restore a default theme</string>
+    <string name="import_theme">Import a theme</string>
+    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
+    <string name="export_theme">Export the theme</string>
+    <string name="export_theme_title">Tap here to export the current theme</string>
+    <string name="theme_file_error">An error occurred when selecting the theme file</string>
 </resources>
