@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -411,6 +412,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (lastReadTootDate != null)
                 editor.putString(Helper.LAST_READ_TOOT_DATE + userId + instance, Helper.dateToString(lastReadTootDate));
             editor.apply();
+        }
+        if( getActivity() != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if( imm != null && getView() != null) {
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+            }
         }
     }
 
