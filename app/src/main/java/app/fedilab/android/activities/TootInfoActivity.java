@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -78,6 +79,7 @@ public class TootInfoActivity extends BaseActivity {
             finish();
         }
         tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(TootInfoActivity.this, R.color.cyanea_primary));
         mPager = findViewById(R.id.viewpager);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " (" + toot_reblogs_count + ")"));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite) + " (" + toot_favorites_count + ")"));

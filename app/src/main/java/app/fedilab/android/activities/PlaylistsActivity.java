@@ -17,6 +17,7 @@ package app.fedilab.android.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -96,6 +97,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(PlaylistsActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);

@@ -70,6 +70,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -227,7 +228,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
         tabLayout = findViewById(R.id.account_tabLayout);
-
+        tabLayout.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.cyanea_primary));
         account_note = findViewById(R.id.account_note);
 
 

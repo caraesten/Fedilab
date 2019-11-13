@@ -16,10 +16,12 @@ package app.fedilab.android.activities;
 
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -38,6 +40,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplaySearchTagsFragment;
@@ -96,6 +100,7 @@ public class SearchResultTabActivity extends BaseActivity {
             finish();
 
         tabLayout = findViewById(R.id.search_tabLayout);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(SearchResultTabActivity.this, R.color.cyanea_primary));
         search_viewpager = findViewById(R.id.search_viewpager);
 
 
@@ -103,6 +108,7 @@ public class SearchResultTabActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SearchResultTabActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);

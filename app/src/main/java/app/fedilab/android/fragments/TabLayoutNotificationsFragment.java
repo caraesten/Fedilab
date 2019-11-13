@@ -35,6 +35,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.Objects;
+
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.SwipeControledViewPager;
 import app.fedilab.android.R;
@@ -60,7 +62,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.tablayout_notifications, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
-
+        tabLayout.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.cyanea_primary));
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)));
 

@@ -16,6 +16,7 @@ package app.fedilab.android.activities;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -36,6 +38,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Objects;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
@@ -72,6 +76,7 @@ public class AdminActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(AdminActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -93,6 +98,7 @@ public class AdminActivity extends BaseActivity {
         ViewPager admin_viewpager = findViewById(R.id.admin_viewpager);
 
         TabLayout admin_tablayout = findViewById(R.id.admin_tablayout);
+        admin_tablayout.setBackgroundColor(ContextCompat.getColor(AdminActivity.this, R.color.cyanea_primary));
         admin_tablayout.addTab(admin_tablayout.newTab().setText(getString(R.string.reports)));
         admin_tablayout.addTab(admin_tablayout.newTab().setText(getString(R.string.accounts)));
 

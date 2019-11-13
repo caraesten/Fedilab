@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -29,7 +30,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Objects;
+
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
@@ -52,6 +56,7 @@ public class TabLayoutTootsFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.tablayout_toots, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.cyanea_primary));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.replies)));
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {

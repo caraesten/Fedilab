@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -40,6 +42,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import app.fedilab.android.R;
 import app.fedilab.android.fragments.ColorSettingsFragment;
 import app.fedilab.android.fragments.ContentSettingsFragment;
@@ -75,6 +80,7 @@ public class SettingsActivity extends BaseActivity  {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SettingsActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -100,7 +106,7 @@ public class SettingsActivity extends BaseActivity  {
 
         ViewPager mPager = findViewById(R.id.settings_viewpager);
         TabLayout tabLayout = findViewById(R.id.settings_tablayout);
-
+        tabLayout.setBackgroundColor(ContextCompat.getColor(SettingsActivity.this, R.color.cyanea_primary));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings_category_label_timelines)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings_category_label_interface)));

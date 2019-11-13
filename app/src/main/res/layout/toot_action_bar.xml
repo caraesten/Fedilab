@@ -28,13 +28,11 @@
     app:contentInsetEnd="0dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?colorPrimary"
     tools:ignore="UnusedAttribute">
 
     <ImageView
         android:id="@+id/close_toot"
         android:src="@drawable/ic_close"
-        android:tint="?attr/iconColorMenu"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"

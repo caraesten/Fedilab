@@ -16,11 +16,13 @@ package app.fedilab.android.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -80,6 +82,7 @@ public class OpencollectiveActivity extends BaseActivity implements OnRetrieveRe
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OpencollectiveActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);

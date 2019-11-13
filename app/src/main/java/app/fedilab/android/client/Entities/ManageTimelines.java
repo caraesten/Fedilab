@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.sqlite.InstancesDAO;
@@ -745,6 +746,7 @@ public class ManageTimelines {
 
         PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
         TabLayout tabLayout = ((MainActivity) context).findViewById(R.id.tabLayout);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(context), R.color.cyanea_primary));
         SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);

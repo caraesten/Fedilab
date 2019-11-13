@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -328,7 +329,7 @@ public abstract class BaseMainActivity extends BaseActivity
         display_timeline = findViewById(R.id.display_timeline);
 
         tabLayout = findViewById(R.id.tabLayout);
-
+        tabLayout.setBackgroundColor(ContextCompat.getColor(BaseMainActivity.this, R.color.cyanea_primary));
         viewPager = findViewById(R.id.viewpager);
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
@@ -863,6 +864,7 @@ public abstract class BaseMainActivity extends BaseActivity
         //Hide the default title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(BaseMainActivity.this, R.color.cyanea_primary)));
         }
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
@@ -2052,6 +2054,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void syncedTimelines(List<ManageTimelines> manageTimelines, int position) {
         ReorderTimelinesActivity.updated = false;
         tabLayout = new ManageTimelines().createTabs(BaseMainActivity.this, tabLayout, manageTimelines);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(BaseMainActivity.this, R.color.cyanea_primary));
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final NavigationView navigationView = findViewById(R.id.nav_view);
         timelines = manageTimelines;
