@@ -31,7 +31,7 @@
     <string name="two_factor_authentification">രണ്ടു പടിയായി ഉള്ള പ്രമാണീകരണം?</string>
     <string name="no_result">ഫലങ്ങൾ ഇല്ല!</string>
     <string name="instance">പതിപ്പ്</string>
-    <string name="instance_example">പതിപ്പ്: മാസ്റ്റോഡോൺ.സോഷ്യൽ</string>
+    <string name="instance_example">പതിപ്പ്: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">ഇപ്പോൾ അക്കൗണ്ടിന്റെ കൂടെ പ്രവർത്തിക്കുന്നു %1$s</string>
     <string name="add_account">ഒരു അക്കൗണ്ട് ചേർക്കുക</string>
     <string name="clipboard">ഈ ടൂട്ടിന്റെ ഉള്ളടക്കം ക്ലിപ്ബോർഡിലേക്ക് പകർത്തിയിരിക്കുന്നു</string>
