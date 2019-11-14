@@ -224,7 +224,9 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onPostAction(statusCode, apiAction, targetedId, error);
+        if( listener != null) {
+            listener.onPostAction(statusCode, apiAction, targetedId, error);
+        }
     }
 
 }

@@ -141,6 +141,8 @@ public class API {
     public enum StatusAction {
         FAVOURITE,
         UNFAVOURITE,
+        BOOKMARK,
+        UNBOOKMARK,
         REBLOG,
         UNREBLOG,
         MUTE,
@@ -2685,6 +2687,12 @@ public class API {
                 break;
             case UNFAVOURITE:
                 action = String.format("/statuses/%s/unfavourite", targetedId);
+                break;
+            case BOOKMARK:
+                action = String.format("/statuses/%s/bookmark", targetedId);
+                break;
+            case UNBOOKMARK:
+                action = String.format("/statuses/%s/unbookmark", targetedId);
                 break;
             case REBLOG:
                 action = String.format("/statuses/%s/reblog", targetedId);

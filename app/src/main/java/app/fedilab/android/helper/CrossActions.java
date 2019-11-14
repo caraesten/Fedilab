@@ -482,18 +482,21 @@ public class CrossActions {
 
     public static void doCrossBookmark(final Context context, final Status status, StatusListAdapter statusListAdapter) {
         List<Account> accounts = connectedAccounts(context, status, false);
-
+        API.StatusAction doAction;
         if (accounts.size() == 1) {
             status.setBookmarked(!status.isBookmarked());
             try {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 if (status.isBookmarked()) {
+                    doAction = API.StatusAction.BOOKMARK;
                     new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
                     Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                 } else {
+                    doAction = API.StatusAction.UNBOOKMARK;
                     new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
                     Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                 }
+                new PostActionAsyncTask(context, accounts.get(0), status, doAction, null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 statusListAdapter.notifyStatusChanged(status);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -546,13 +549,17 @@ public class CrossActions {
                             if (statuses != null && statuses.size() > 0) {
                                 final SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                 app.fedilab.android.client.Entities.Status statusBookmarked = new StatusCacheDAO(contextReference.get(), db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0).getId(), account.getId(), account.getInstance());
+                                API.StatusAction doAction;
                                 if (statusBookmarked == null) {
+                                    doAction = API.StatusAction.BOOKMARK;
                                     new StatusCacheDAO(contextReference.get(), db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
                                     Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                                 } else {
+                                    doAction = API.StatusAction.UNBOOKMARK;
                                     new StatusCacheDAO(contextReference.get(), db).remove(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
                                     Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                 }
+                                new PostActionAsyncTask(context, account, status, doAction, null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 statusListAdapter.notifyStatusChanged(statuses.get(0));
                             }
                         }
