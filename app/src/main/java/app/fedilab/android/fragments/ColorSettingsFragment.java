@@ -179,13 +179,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                                 if( key.compareTo("base_theme") == 0){
                                     SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor appEditor = sharedpreferences.edit();
-                                    if( value.compareTo("2") == 0 ) {
-                                        appEditor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
-                                    }else  if( value.compareTo("1") == 0 ) {
-                                        appEditor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
-                                    }else  if( value.compareTo("3") == 0 ) {
-                                        appEditor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
-                                    }
+                                    appEditor.putInt(Helper.SET_THEME, Integer.parseInt(value));
                                     appEditor.commit();
                                 }else if( key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0){
                                     editor.putBoolean(key, Boolean.valueOf(value));
@@ -196,6 +190,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                         }
                         i++;
                     }
+                    editor.putBoolean("use_custom_theme", true);
                     editor.commit();
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
                     dialogBuilder.setMessage(R.string.restart_message);
@@ -241,6 +236,9 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         assert mgr != null;
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
         System.exit(0);
+        if( getActivity() != null) {
+            getActivity().finish();
+        }
     }
 
     private void createPref(){
@@ -373,6 +371,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         editor.remove("theme_accent");
         editor.remove("theme_text_color");
         editor.remove("theme_primary");
+        editor.remove("use_custom_theme");
         editor.commit();
     }
 
