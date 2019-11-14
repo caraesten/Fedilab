@@ -1160,8 +1160,8 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="pref_colored_status_bar_title">Statusleistenfarbe</string>
     <string name="restore_default_theme">Standard-Theme wiederherstellen</string>
     <string name="import_theme">Theme importieren</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
+    <string name="import_theme_title">Hier tippen, um ein Theme aus einem vorherigen Export zu importieren</string>
     <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
+    <string name="export_theme_title">Hier tippen, um das aktuelle Theme zu exportieren</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
 </resources>
