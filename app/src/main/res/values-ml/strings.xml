@@ -203,8 +203,8 @@
     <string name="following_cnt">പിന്തുടരുന്നു \n %1$s</string>
     <string name="followers_cnt">പിന്തുടർച്ചക്കാർ \n %1$s</string>
     <string name="pins_cnt">പിൻ കുത്തി വച്ചിരിക്കുന്നു \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="authorize">അംഗീകരണം</string>
+    <string name="reject">നിരാകരിക്കുക</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
