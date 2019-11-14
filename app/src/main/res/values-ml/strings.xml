@@ -178,8 +178,8 @@
     <string name="no_draft">No drafts!</string>
     <string name="choose_toot">Choose a toot</string>
     <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
+    <string name="select_accounts">ചില അക്കൗണ്ടുകൾ തിരഞ്ഞെടുക്കൂ</string>
+    <string name="remove_draft">ഡ്രാഫ്റ്റ് നീക്കം ചെയ്യട്ടെ?</string>
     <string name="show_reply">Tap on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
