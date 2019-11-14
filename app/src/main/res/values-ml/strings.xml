@@ -6,7 +6,7 @@
     <string name="action_about">വിവരം</string>
     <string name="action_about_instance">ഇതിനെക്കുറിച്ചുള്ള വിവരങ്ങൾ</string>
     <string name="action_privacy">സ്വകാര്യത</string>
-    <string name="action_cache">Cache</string>
+    <string name="action_cache">കാഷേ</string>
     <string name="action_logout">പുറത്തിറങ്ങുക</string>
     <string name="login">അകത്തു കയറുക</string>
     <!-- common -->
@@ -15,17 +15,17 @@
     <string name="no">വേണ്ട</string>
     <string name="cancel">റദ്ദാക്കുക</string>
     <string name="download">ഇറക്കിവെക്കുക</string>
-    <string name="download_file">Download %1$s</string>
+    <string name="download_file">ഡൗൺലോഡ് %1$s</string>
     <string name="download_over">ഡൗൺലോഡ് പൂർത്തിയായി</string>
     <string name="save_file">സൂക്ഷിക്കൂ %1$s</string>
     <string name="save_over">മാധ്യമം സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു</string>
     <string name="download_from" formatted="false">ഫയൽ %1$s</string>
-    <string name="password">Password</string>
+    <string name="password">രഹസ്യവാക്ക്</string>
     <string name="email">ഇമെയിൽ</string>
     <string name="accounts">അക്കൗണ്ടുകൾ</string>
     <string name="toots">ടൂട്ടുകൾ</string>
     <string name="tags">ടാഗുകൾ</string>
-    <string name="token">Token</string>
+    <string name="token">ടോക്കൺ</string>
     <string name="save">സൂക്ഷിക്കൂ</string>
     <string name="restore">പുനഃസ്ഥാപിക്കുക</string>
     <string name="two_factor_authentification">രണ്ടു പടിയായി ഉള്ള പ്രമാണീകരണം?</string>
@@ -212,24 +212,24 @@
     <string name="media_count">മാധ്യമം: %d</string>
     <string name="toot_scheduled">ടൂട്ട് ഷെഡ്യൂൾ ചെയ്യപ്പെട്ടു!</string>
     <string name="toot_scheduled_date">ഷെഡ്യൂൾ ചെയ്ത സമയം ഇപ്പോഴുള്ള സമയത്തേക്കാൾ വൈകി ആയിരിക്കണം!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="warning_battery">ബാറ്ററി സേവർ പ്രവർത്തിക്കുന്നു. ഉദ്ദേശിക്കുന്നത് പോലെ ഈ പ്രവർത്തി നടക്കണം എന്നില്ല.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from their profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Tap here to unmute the account.</string>
+    <string name="timed_mute_date_error">നിശ്ശബ്ദമാക്കാനുള്ള സമയം ഒരു മിനുട്ടിൽ കൂടുതൽ വേണം.</string>
+    <string name="timed_mute_date">%2$s വരെ %1$s നെ നിശ്ശബ്ദമാക്കിയിട്ടുണ്ട്. \n വേണമെങ്കിൽ ഈ അക്കൗണ്ടിനെ അവരുടെ പ്രൊഫൈൽ പേജിൽ നിന്ന് പഴയ പടി ആക്കാം.</string>
+    <string name="timed_mute_profile">%2$s വരെ %1$s നെ നിശ്ശബ്ദമാക്കിയിട്ടുണ്ട്. \n പഴയപടി ആക്കാൻ ഇവിടെ ഞെക്കൂ.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="no_notifications">പ്രദർശിപ്പിക്കാൻ അറിയിപ്പുകൾ ഇല്ല</string>
+    <string name="notif_mention">താങ്കളെ പ്രതിപാദിച്ചിരിക്കുന്നു</string>
+    <string name="notif_reblog">തങ്ങളുടെ സ്റ്റാറ്റസ് ബൂസ്റ്റ് ചെയ്യപ്പെട്ടിരിക്കുന്നു</string>
+    <string name="notif_favourite">താങ്കളുടെ സ്റ്റാറ്റസ് പ്രിയപെട്ടവയിൽ ചേർത്തിരിക്കുന്നു</string>
+    <string name="notif_follow">നിങ്ങളെ പിന്തുടരുന്നു</string>
+    <string name="notif_pouet">%1$s ൽ നിന്ന് പുതിയ ടൂട്ട്</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
+        <item quantity="one">മറ്റൊരു അറിയിപ്പ്</item>
         <item quantity="other">and %d other notifications</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
+        <item quantity="one">കണ്ടു പിടിക്കാൻ മറ്റൊരു ടൂട്ട്</item>
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <plurals name="likes">
