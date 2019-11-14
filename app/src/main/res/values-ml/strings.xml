@@ -206,12 +206,12 @@
     <string name="authorize">അംഗീകരണം</string>
     <string name="reject">നിരാകരിക്കുക</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+    <string name="no_scheduled_toots">കാണിക്കാൻ സമയബന്ധിത ടൂട്ടുകൾ ഇല്ല!</string>
+    <string name="no_scheduled_toots_indications">ടൂട്ട് എഴുതിയ മുകളിൽ മെനുവിൽ നിന്ന് <b>ഷെഡ്യൂൾ</b> തിരഞ്ഞെടുക്കുക.</string>
+    <string name="remove_scheduled">സമയബന്ധിത ടൂട്ട് നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="media_count">മാധ്യമം: %d</string>
+    <string name="toot_scheduled">ടൂട്ട് ഷെഡ്യൂൾ ചെയ്യപ്പെട്ടു!</string>
+    <string name="toot_scheduled_date">ഷെഡ്യൂൾ ചെയ്ത സമയം ഇപ്പോഴുള്ള സമയത്തേക്കാൾ വൈകി ആയിരിക്കണം!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
