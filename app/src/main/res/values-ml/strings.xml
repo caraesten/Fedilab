@@ -86,16 +86,16 @@
     <string name="profile">രൂപരേഖ</string>
     <string name="make_a_choice">താങ്കൾക്ക് എന്താണ് ചെയ്യേണ്ടത്?</string>
     <string name="delete_account_title">അക്കൗണ്ട് ഇല്ലാതാക്കുക</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
+    <string name="delete_account_message" formatted="false">ഈ അപ്പ്ളിക്കേഷനിൽ നിന്നും %1$s അക്കൗണ്ട് നീക്കം ചെയ്യട്ടെ?</string>
     <string name="send_email">ഇ മെയിൽ അയക്കൂ</string>
     <string name="choose_file">ദയവായി ഒരു ഫയൽ തെരഞ്ഞെടുക്കുക</string>
     <string name="choose_file_error">ഫയൽ എക്സ്പ്ലോറർ കണ്ടെത്തിയില്ല!</string>
     <string name="click_to_change">മാറ്റണമെങ്കിൽ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ</string>
     <string name="failed">പരാജയപ്പെട്ടു!</string>
     <string name="scheduled_toots">മുൻകൂട്ടി നിശ്ചയിച്ച സമയപ്രകാരം ഉള്ള ടൂട്ടുകൾ</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">താഴെ കൊടുത്തിരിക്കുന്ന വിവരങ്ങൾ ഈ ഉപയോക്താവിന്റെ പ്രൊഫൈൽ അപൂർണ്ണമായി പ്രതിഫലിപ്പിക്കുന്നു.</string>
     <string name="insert_emoji">ഇമോജി ഇടൂ</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="no_emoji">ഈ ആപ് ഇപ്പോൾ വ്യക്തി അധിഷ്ഠിത ഇമോജികൾ സ്വീകരിക്കുന്നതല്ല.</string>
     <string name="live_notif">തത്സമയ അറിയിപ്പുകൾ</string>
     <!-- Status -->
     <string name="no_status">പ്രദർശിപ്പിക്കാൻ ടൂട്ടുകൾ ഇല്ല</string>
@@ -123,23 +123,23 @@
         <item>ഈ അക്കൗണ്ട് നിശബ്ദമാക്കട്ടെ?</item>
         <item>ഈ അക്കൗണ്ട് തടയട്ടെ?</item>
         <item>ഈ ടൂട്ടിനെ റിപ്പോർട്ട് ചെയ്യട്ടെ?</item>
-        <item>Block this domain?</item>
-        <item>Unmute this account?</item>
+        <item>ഈ ഡൊമെയിൻ തടയട്ടെ?</item>
+        <item>ഈ അക്കൗണ്ട് ശബ്ദിക്കട്ടെ?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>അറിയിക്കുക</item>
+        <item>നിശബ്‌ദം</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>ഈ ടൂട്ടിനെ നീക്കം ചെയ്യട്ടെ?</item>
+        <item>ഈ ടൂത്ത് മായ്ച്ചു കളഞ്ഞു ആദ്യമേ എഴുതട്ടെ?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d മറുപടി</item>
+        <item quantity="other">%d മറുപടി</item>
     </plurals>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
+    <string name="bookmarks">ബുക്ക്മാർക്കുകൾ</string>
+    <string name="bookmark_add">ബുക്ക്‌മാർക്കിലേക്ക് ചേർക്കൂ</string>
     <string name="bookmark_remove">Remove bookmark</string>
     <string name="bookmarks_empty">No bookmarks to display</string>
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
