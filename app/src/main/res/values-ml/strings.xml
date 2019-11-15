@@ -296,7 +296,7 @@
     <string name="set_disable_gif">ജിഫ് അവതാരങ്ങൾ പ്രവർത്തനരഹിതമാക്കുക</string>
     <string name="set_folder_title">വഴി: </string>
     <string name="set_auto_store_toot">ഡ്രാഫ്റ്റുകൾ സ്വയമേ സൂക്ഷിക്കുക</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_bubble_counter">കൗണ്ടറുകൾ പ്രദർശിപ്പിക്കൂ</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
