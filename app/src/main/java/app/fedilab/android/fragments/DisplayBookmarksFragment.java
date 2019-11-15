@@ -15,9 +15,7 @@ package app.fedilab.android.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -46,8 +44,6 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
@@ -101,7 +97,6 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
 
-        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         mainLoader.setVisibility(View.GONE);
         FloatingActionButton delete_all = null;
         try {
@@ -109,7 +104,6 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         } catch (Exception ignored) {
         }
         final boolean isOnWifi = Helper.isOnWIFI(context);
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         statuses = apiResponse.getStatuses();
         if (statuses != null && statuses.size() > 0) {
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
@@ -121,44 +115,33 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         }
 
         if (delete_all != null)
-            delete_all.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                    int style;
-                    if (theme == Helper.THEME_DARK) {
-                        style = R.style.DialogDark;
-                    } else if (theme == Helper.THEME_BLACK) {
-                        style = R.style.DialogBlack;
-                    } else {
-                        style = R.style.Dialog;
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
-                    builder.setTitle(R.string.delete_all);
-                    builder.setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogConfirm, int which) {
-
-                                    statuses = new ArrayList<>();
-                                    statuses.clear();
-                                    statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
-                                    lv_status.setAdapter(statusListAdapter);
-                                    statusListAdapter.notifyDataSetChanged();
-                                    textviewNoAction.setVisibility(View.VISIBLE);
-                                    new PostActionAsyncTask(context, API.StatusAction.UNBOOKMARK).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    dialogConfirm.dismiss();
-                                }
-                            })
-                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogConfirm, int which) {
-                                    dialogConfirm.dismiss();
-                                }
-                            })
-                            .show();
+            delete_all.setOnClickListener(view -> {
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK) {
+                    style = R.style.DialogBlack;
+                } else {
+                    style = R.style.Dialog;
                 }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                builder.setTitle(R.string.delete_all);
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(R.string.yes, (dialogConfirm, which) -> {
+
+                            statuses = new ArrayList<>();
+                            statuses.clear();
+                            statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
+                            lv_status.setAdapter(statusListAdapter);
+                            statusListAdapter.notifyDataSetChanged();
+                            textviewNoAction.setVisibility(View.VISIBLE);
+                            new PostActionAsyncTask(context, API.StatusAction.UNBOOKMARK).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            dialogConfirm.dismiss();
+                        })
+                        .setNegativeButton(R.string.no, (dialogConfirm, which) -> dialogConfirm.dismiss())
+                        .show();
             });
     }
 }

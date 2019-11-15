@@ -1732,6 +1732,10 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), MutedInstanceActivity.class);
             startActivity(intent);
             return false;
+        }else if ( id == R.id.nav_bookmarks && ( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
+            Intent intent = new Intent(getApplicationContext(), BookmarkActivity.class);
+            startActivity(intent);
+            return false;
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         Helper.unCheckAllMenuItems(navigationView);
@@ -1864,10 +1868,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
             toot.hide();
         } else if (id == R.id.nav_bookmarks ) {
-            DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
-            fragmentTag = "BOOKMARKS";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
+                DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
+                fragmentTag = "BOOKMARKS";
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
             toot.hide();
         } else if (id == R.id.nav_pixelfed_bookmarks) {
             DisplayBookmarksPixelfedFragment displayBookmarksPixelfedFragment = new DisplayBookmarksPixelfedFragment();
