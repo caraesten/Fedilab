@@ -1174,7 +1174,7 @@
     <string name="restore_default_theme">Restore a default theme</string>
     <string name="import_theme">Import a theme</string>
     <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="export_theme">Exportera tema</string>
+    <string name="export_theme_title">Tryck här för att exportera nuvarande tema</string>
+    <string name="theme_file_error">Ett fel uppstod när tema valdes</string>
 </resources>
