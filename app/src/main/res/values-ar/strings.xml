@@ -16,8 +16,6 @@
     <string name="cancel">إلغاء</string>
     <string name="download">تنزيل</string>
     <string name="download_file">تنزيل %1$s</string>
-    <string name="download_over">اكتمل التنزيل</string>
-    <string name="save_file">حفظ %1$s</string>
     <string name="save_over">تم حفظ الصورة</string>
     <string name="download_from" formatted="false">ملف: %1$s</string>
     <string name="password">كلمة السر</string>
@@ -25,10 +23,8 @@
     <string name="accounts">الحسابات</string>
     <string name="toots">التبويقات</string>
     <string name="tags">الوسوم</string>
-    <string name="token">الرمز المميز</string>
     <string name="save">حفظ</string>
     <string name="restore">استعادة</string>
-    <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
     <string name="no_result">لم يتم العثور على أية نتيجة!</string>
     <string name="instance">مثيل الخادم</string>
     <string name="instance_example">مثيل الخادم: mastodon.social</string>
@@ -39,10 +35,7 @@
     <string name="change">تعديل</string>
     <string name="choose_picture">حدد صورة…</string>
     <string name="clear">تنظيف</string>
-    <string name="microphone">الميكروفون</string>
     <string name="camera">آلة التصوير</string>
-    <string name="speech_prompt">قل شيئا من فضلك</string>
-    <string name="speech_not_supported">معذرة! إنّ جهازك لا يدعَم الإدخال الصوتي!</string>
     <string name="delete_all">حذف الكل</string>
     <string name="translate_toot">ترجم هذا التبويق.</string>
     <string name="schedule">برمجة</string>
@@ -59,7 +52,6 @@
     <string name="replies">الردود</string>
     <string name="username">اسم المستخدم</string>
     <string name="drafts">المسودات</string>
-    <string name="new_data">هناك بيانات جديدة متوفرة! هل تودّ عرضها؟</string>
     <string name="favourite">المفضلة</string>
     <string name="follow">متابِعون جدد</string>
     <string name="mention">الإشارات</string>
@@ -78,18 +70,12 @@
     <string name="communication_menu_title">التواصل</string>
     <string name="muted_menu">الحسابات المكتومة</string>
     <string name="blocked_menu">الحسابات المحظورة</string>
-    <string name="remote_follow_menu">تابع عن بعد</string>
     <string name="notifications">الإشعارات</string>
     <string name="follow_request">طلبات المتابعة</string>
-    <string name="optimization">التحسينات</string>
     <string name="settings">الإعدادات</string>
-    <string name="profile">الملف الشخصي</string>
-    <string name="make_a_choice">ماذا تريد أن تفعل؟</string>
     <string name="delete_account_title">حذف حساب</string>
     <string name="delete_account_message" formatted="false">هل تود إزالة حساب %1$s من التطبيق ؟</string>
     <string name="send_email">إرسال بريد إلكتروني</string>
-    <string name="choose_file">يرجى اختيار ملف</string>
-    <string name="choose_file_error">لم يتم العثور على أي تطبيق لإدارة الملفات!</string>
     <string name="click_to_change">اضغط على رابط المسار لتعديله</string>
     <string name="failed">فشل!</string>
     <string name="scheduled_toots">التبويقات المبرمجة</string>
@@ -99,10 +85,6 @@
     <string name="live_notif">الإشعارات الحية</string>
     <!-- Status -->
     <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
-    <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
-    <string name="fav_removed">تمت إزالة التبويق من مفضلاتك!</string>
-    <string name="reblog_added">تمت ترقية التبويق!</string>
-    <string name="reblog_removed">تم إلغاء ترقية التبويق!</string>
     <string name="reblog_by">رقاه %1$s</string>
     <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
     <string name="favourite_remove">هل تود إزالة هذا التبويق من مفضلاتك ؟</string>
@@ -134,14 +116,6 @@
         <item>هل تود حذف هذا التبويق؟</item>
         <item>هل تريد حقا حذف و إعادة صياغة هذا التبويق؟</item>
     </string-array>
-    <plurals name="preview_replies">
-        <item quantity="zero">%d رد</item>
-        <item quantity="one">ردّ واحد %d</item>
-        <item quantity="two">%d ردّين</item>
-        <item quantity="few">%d ردود</item>
-        <item quantity="many">%d ردود</item>
-        <item quantity="other">%d ردود</item>
-    </plurals>
     <string name="bookmarks">الفواصل المرجعية</string>
     <string name="bookmark_add">إضافة إلى الفواصل المرجعية</string>
     <string name="bookmark_remove">حذف الفاصلة المرجعية</string>
@@ -163,7 +137,6 @@
     <string name="toot_title_reply">الرد على تبويق</string>
     <string name="queet_title">كتابة كويت</string>
     <string name="queet_title_reply">رد على كويت</string>
-    <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به!</string>
     <string name="toot_select_image">تحديد وسائط</string>
     <string name="toot_select_image_error">طرأ هناك خطأ أثناء اختيار الوسائط!</string>
     <string name="toot_delete_media">هل تود حذف هذه الصورة؟</string>
@@ -197,7 +170,6 @@
     <string name="about_yandex">ترجمة التبويقات:</string>
     <string name="about_thekinrar">البحث عن مثيلات الخوادم:</string>
     <string name="thanks_text_logo">مصمم الأيقونات:</string>
-    <string name="thanks_text_banner">مُصمِّم الرأسية:</string>
     <!-- Conversation -->
     <string name="conversation">محادثة</string>
     <!-- Accounts -->
@@ -227,7 +199,6 @@
     <string name="notif_reblog">رقى تبويقك</string>
     <string name="notif_favourite">أُعجِب بتبويقك</string>
     <string name="notif_follow">يتابعك</string>
-    <string name="notif_pouet">تبويق حديث مِن %1$s</string>
     <plurals name="other_notifications">
         <item quantity="zero">و اشعار آخَر</item>
         <item quantity="one">و إشعار آخر</item>
@@ -235,14 +206,6 @@
         <item quantity="few">و %d اشعارات</item>
         <item quantity="many">و %d اشعارات</item>
         <item quantity="other">و %d إشعارات أخرى</item>
-    </plurals>
-    <plurals name="other_notif_hometimeline">
-        <item quantity="zero">وتبويقين %d آخرين لاكتشافهما</item>
-        <item quantity="one">وتبويق آخر لاكتشافه</item>
-        <item quantity="two">وتبويقين آخرين لاكتشافهما</item>
-        <item quantity="few">و %d تبويقات أخرى لاكتشافها</item>
-        <item quantity="many">و %d تبويقات أخرى لاكتشافها</item>
-        <item quantity="other">و %d تبويقات أخرى لاكتشافها</item>
     </plurals>
     <plurals name="likes">
         <item quantity="zero">%d إعجاب</item>
@@ -283,7 +246,6 @@
     <string name="toast_error_instance">يبدو أنّ اسم نطاق مثيل الخادوم غير صالح!</string>
     <string name="toast_error_loading_account">طرأ هناك خطأ أثناء التحوّل مِن حساب إلى آخر!</string>
     <string name="toast_error_search">وقع خطأ أثناء عملية البحث!</string>
-    <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك!</string>
     <string name="toast_update_credential_ok">تم حفظ بيانات الملف الشخصي بنجاح!</string>
     <string name="nothing_to_do">لا يمكن اتخاذ أي إجراء</string>
     <string name="toast_saved">تم حفظ الصورة بنجاح!</string>
@@ -292,12 +254,8 @@
     <string name="toast_toot_saved">تم حِفظ المُسوَدَّة!</string>
     <string name="toast_error_char_limit">هل أنت متأكد من أنّ مثيل الخادوم هذا يسمح بهذا الكمّ من الأحرف؟ عادةً ما تكون القيمة تقرب من 500 حرف.</string>
     <string name="toast_visibility_changed">لقد تم تغيير نمط عرض التبويقات على الحساب %1$s</string>
-    <string name="toast_empty_search">لا يمكن أن يكون اسم المثيل واسم الشاشة فارغين!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">تحسين التحميل</string>
     <string name="set_toots_page">عدد التبويقات التي يتم تحميلها كل مرة</string>
-    <string name="set_accounts_page">عدد الحسابات التي يتم تحميلها كل مرة</string>
-    <string name="set_notifications_page">عدد الإخطارات التي يتم تحميلها كل مرة</string>
     <string name="set_attachment_always">دائما</string>
     <string name="set_attachment_wifi">واي فاي</string>
     <string name="set_attachment_ask">أُطلُب</string>
@@ -306,13 +264,9 @@
     <string name="load_attachment_spoiler">عرض المزيد…</string>
     <string name="load_attachment_spoiler_less">اعرض أقل…</string>
     <string name="load_sensitive_attachment">محتوى حساس</string>
-    <string name="set_display_reply">إظهار نص الرسالة السابقة في الردود</string>
-    <string name="set_display_local">إظهار الخيط المحلي</string>
-    <string name="set_display_global">إظهار الخيط الفديرالي</string>
     <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
     <string name="set_folder_title">المسار: </string>
     <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
-    <string name="set_bubble_counter">عرض العدادات</string>
     <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
     <string name="set_notif_follow">تنبيهي عندما يتبعني أحدهم</string>
     <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
@@ -324,7 +278,6 @@
     <string name="set_wifi_only">تفعيل الإخطار في وضع الواي فاي فقط</string>
     <string name="set_notify">هل تود الإشعار؟</string>
     <string name="set_notif_silent">كتم الاشعارات</string>
-    <string name="set_night_mode">الوضع الليلي</string>
     <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
     <string name="settings_title_profile">تعديل الملف الشخصي</string>
     <string name="settings_title_custom_sharing">المشاركة المخصصة</string>
@@ -348,12 +301,6 @@
     <string name="use_javascript">تفعيل الجافاسكريبت</string>
     <string name="expand_cw">توسيع نافذة التحذير عن المحتوى تلقائيًا</string>
     <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
-    <string name="settings_ui_layout">نسق الخيوط: </string>
-    <string-array name="settings_menu_tabs">
-        <item>التبويبات</item>
-        <item>القائمة</item>
-        <item>التبويبات والقائمة</item>
-    </string-array>
     <string-array name="settings_translation">
         <item>يانديكس</item>
         <item>DeepL</item>
@@ -365,15 +312,6 @@
         <item>فاتحة</item>
         <item>سوداء</item>
     </string-array>
-    <string-array name="settings_resize_picture">
-        <item>لا</item>
-        <item>512 ك.ب</item>
-        <item>1 م.ب</item>
-        <item>2 م.ب</item>
-        <item>4 م.ب</item>
-        <item>6 م.ب</item>
-        <item>8 م.ب</item>
-    </string-array>
     <string name="set_led_colour">اختيار لون الإشعار الضوئي:</string>
     <string-array name="led_colours">
         <item>أزرق</item>
@@ -384,13 +322,9 @@
         <item>أصفر</item>
         <item>أبيض</item>
     </string-array>
-    <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
     <string name="action_follow">اتبع</string>
-    <string name="action_unfollow">إلغاء المتابعة</string>
-    <string name="action_block">حظر</string>
     <string name="action_unblock">إلغاء الحظر</string>
     <string name="action_mute">كتم</string>
-    <string name="action_no_action">بلا إجراء</string>
     <string name="action_unmute">إلغاء الكتم</string>
     <string name="request_sent">تم إرسال الطلب</string>
     <string name="followed_by">يتابعك</string>
@@ -403,8 +337,6 @@
     <string name="settings_popup_message">        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
         بإمكانك تفعيل أو تعطيل هذه الإشعارات لاحقًا عبر الإعدادات (في تبويب الإخطارات).
     </string>
-    <string name="settings_popup_timeline">للتبويقات غير المقروءة على الخط الزمني الرئيسي ؟</string>
-    <string name="settings_popup_notification">للإشعارات غير المقروءة ؟</string>
     <!-- CACHE -->
     <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
     <string name="cache_message">هناك %1$s من البيانات في ذاكرة التخزين المؤقتة.\n\nهل تودّ إزالتها ؟</string>
@@ -414,7 +346,6 @@
     <string name="title_header_custom_sharing">العنوان</string>
     <string name="title_hint_custom_sharing">العنوان&#8230;</string>
     <string name="description_header_custom_sharing">الوصف</string>
-    <string name="description_hint_custom_sharing">الوصف&#8230;</string>
     <string name="keywords_header_custom_sharing">الكلمات المفتاحية</string>
     <string name="keywords_hint_custom_sharing">الكلمات المفتاحية&#8230;</string>
     <!-- ACTIVITY CACHE -->
@@ -431,7 +362,6 @@
     <string name="show_pinned">إظهار المدبسة</string>
     <string name="filter_no_result">لا توجد أي نتيجة تتطابق طلب البحث!</string>
     <string name="data_backup_toots">النسخ الاحتياطي لتبويقات حساب %1$s</string>
-    <string name="data_backup_notifications">نسخ احتياطي لإشعارات %1$s</string>
     <string name="data_backup_success">تمت عملية استرجاع %1$s تبويقات جديدة</string>
     <string name="data_backup_notification_success">%1$s إشعارات جديدة تم استيرادها</string>
     <string-array name="filter_order">
@@ -486,18 +416,14 @@
     <string name="action_lists_confirm_delete">هل تود فعلا حذف هذه القائمة ؟</string>
     <string name="action_lists_empty_content">لا تزال هذه القائمة فارغة إلى حد الآن. سوف تظهر هنا تبويقات الأعضاء المنتمين إليها حالَما يقومون بالنشر.</string>
     <string name="action_lists_add_to">إضافة إلى القائمة</string>
-    <string name="action_lists_remove_from">إزالة من القائمة</string>
     <string name="action_lists_create">إنشاء قائمة جديدة</string>
     <string name="action_lists_delete">حذف القائمة</string>
     <string name="action_lists_update">تعديل القائمة</string>
     <string name="action_lists_title_placeholder">عنوان جديد للقائمة</string>
-    <string name="action_lists_search_users">البحث فيما بين الحسابات التي تتبعها</string>
-    <string name="action_lists_owner">قوائمك</string>
     <string name="action_lists_add_user">تمت إضافة الحساب إلى القائمة!</string>
     <string name="action_lists_empty">لا توجد لديك أية قوائم إلى حدّ الآن!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
-    <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
     <string name="issue_login_message"> b&gt;وهنا بعض الاختبارات التي قد تساعدكم:&lt;/b&gt;\n\n
         - تحققوا من عدم وجود الأخطاء الإملائية في اسم مثيل الخادم\n\n
@@ -514,25 +440,19 @@
     <string name="data_export_success">تم تصدير %1$s تبويقات من أصل %2$s.</string>
     <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
     <string name="data_export_error_simple">حدث خطأ ما عند تصدير البيانات!</string>
-    <string name="data_import_success_simple">تم استيراد البيانات!</string>
     <string name="data_import_error_simple">حدث خطأ ما عند استيراد البيانات!</string>
     <!-- Proxy -->
     <string name="proxy_set">البروكسي</string>
-    <string name="proxy_type">النوع</string>
     <string name="proxy_enable">تشغيل البروكسي؟</string>
     <string name="poxy_host">المضيف</string>
     <string name="poxy_port">المنفذ</string>
     <string name="poxy_login">اسم المستخدم</string>
     <string name="poxy_password">كلمة السر</string>
-    <string name="set_theme">السمة:</string>
-    <string name="set_compact_mode">الوضع المختصر</string>
     <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
     <string name="support_the_app_on_liberapay">ادعم التطبيق على ليبيراباي</string>
     <string name="alert_regex">هناك خطأ في العبارة المنطقية!</string>
-    <string name="no_account_yet">ليس لديك حساب بعد؟</string>
     <string name="toast_instance_unavailable">لم يتم العثور على أي خيط زمني في مثيل الخادم هذا!</string>
     <string name="delete_instance">هل تريد إزالة مثيل الخادم هذا؟</string>
-    <string name="warning_delete_instance">إنّك بصدد حذف %s مِن قائمة مثيلات الخوادم التي تتبعها.</string>
     <string name="which_language">ترجِم إلى</string>
     <string name="follow_instance">اتبع مثيل الخادم</string>
     <string name="toast_instance_already_added">إنّك مُتابِع لمثيل الخادم هذا!</string>
@@ -541,10 +461,8 @@
     <string name="neutral_menu_information">معلومات</string>
     <string name="hide_boost">إخفاء ترقيات %s</string>
     <string name="endorse">أوصِ به على صفحتك</string>
-    <string name="hide_everything">إخفاء كل شيء مِن %s</string>
     <string name="show_boost">إظهار ترقيات %s</string>
     <string name="unendorse">إلغاء التوصية مِن صفحتك</string>
-    <string name="show_everything">إظهار كل شيء قادم مِن %s</string>
     <string name="toast_endorse">تمت توصية الحساب على صفحتك الشخصية</string>
     <string name="toast_unendorse">تم إلغاء توصية هذا الحساب مِن صفحتك</string>
     <string name="toast_show_boost">سيتم إظهار الترقيات الآن!</string>
@@ -565,7 +483,6 @@
     <string name="filter_context">سياق عامل التصفية</string>
     <string name="filter_context_explanations">مجالات تطبيق عامل التصفية</string>
     <string name="filter_expire">تنتهي صلاحيته بعد</string>
-    <string name="add_new_filter">إضافة عامل تصفية جديد</string>
     <string name="action_filter_delete">متأكد مِن حذف عامل التصفية؟</string>
     <string name="action_update_filter">تحديث عامل التصفية</string>
     <string name="action_filter_create">إنشاء عامل تصفية</string>
@@ -580,13 +497,11 @@
     <string name="account_added_list_trunk">تمت عملية إضافة الحسابات إلى القائمة</string>
     <string name="adding_account_list_trunk">إضافة الحسابات إلى القائمة</string>
     <string name="action_list_add">لم تقم بعد بإنشاء قائمة. اضغط على زر \"+\" لإنشاء قائمة.</string>
-    <string name="action_remote_instance_add">إنك لا تتابع حاليا أي مثيل خادم عن بُعد. اضغط على زر \"+\" لإضافة واحد.</string>
     <string name="about_trunk">حسابات للمُتابَعة</string>
     <string name="about_trunk_action">جذع API</string>
     <string name="toast_impossible_to_follow">لا يمكن متابعة الحساب·ات</string>
     <string name="retrieve_remote_account">جلب الحسابات عن بُعد</string>
     <string name="expand_image">توسيع الوسائط المخفية تلقائيًا</string>
-    <string name="set_display_follow_instance">إظهار زر متابَعة مثيلات الخوادم</string>
     <string name="channel_notif_follow">مُتابِع جديد</string>
     <string name="channel_notif_boost">ترقية جديدة</string>
     <string name="channel_notif_fav">مفضلة جديدة</string>
@@ -611,7 +526,6 @@
     <string name="retrieve_remote_status">جارٍ جلب المنشور عن بُعد</string>
     <string name="comment">تعليق</string>
     <string name="peertube_instance">مثيل خادم بيرتيوب</string>
-    <string name="set_display_direct">عرض الخيط المحلي للرسائل الخاصة</string>
     <string name="no_comments">كن الأول في التعليق على هذا الفيديو بالضغط على الزر الأيمن في الأعلى!</string>
     <string name="number_view_video">%s مشاهدات</string>
     <string name="duration_video">المدة: %s</string>
@@ -623,10 +537,6 @@
     <string name="bookmark_remove_peertube">تم إزالة الفيديو من الفواصل المرجعية!</string>
     <string name="bookmark_peertube_empty">لا توجد أية فيديوهات بيرتيوب في مفضلاتك!</string>
     <string name="channel">قناة</string>
-    <string name="no_peertube_channels">لا توجد أية قناة بيرتيوب</string>
-    <string name="no_peertube_instances">لا توجد أية مثيلات خوادم بيرتيوب</string>
-    <string name="no_mastodon_instances">لا توجد أية مثيلات خوادم ماستدون</string>
-    <string name="no_lists">ليس هناك أية قائمة</string>
     <string name="videos">الفيديوهات</string>
     <string name="channels">القنوات</string>
     <string name="set_display_emoji">استخدم إيموجي وان</string>
@@ -634,12 +544,7 @@
     <string name="set_display_card">عرض المعاينات في كافة التبويقات</string>
     <string name="thanks_text_ux">مصمم واجهة المستخدم الجديدة</string>
     <string name="set_display_video_preview">عرض معاينات الفيديوهات</string>
-    <string name="thanks_text_support">الدعم عبر غيت لاب</string>
-    <string name="action_bug_report">الابلاغ عن عِلّة</string>
-    <string name="no_mail_client">لا توجد هناك برامج بريد الكترونية مثبتة.</string>
-    <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
     <string name="account_id_clipbloard">تم نسخ معرف الحساب إلى الحافظة!</string>
-    <string name="settings_title_battery">تحسينات طاقة البطارية</string>
     <string name="set_change_locale">تغيير اللغة</string>
     <string name="default_language">اللغة الافتراضية</string>
     <string name="truncate_long_toots">تقسيم التبويقات الطويلة</string>
@@ -651,7 +556,6 @@
     <string name="tags_stored">تم حفظ الوسم!</string>
     <string name="tags_renamed">تم تعديل الوسم بنجاح!</string>
     <string name="tags_deleted">تم حذف الوسم!</string>
-    <string name="set_display_art">إظهار الخيط الفني</string>
     <string name="schedule_boost">برمجة الترقية</string>
     <string name="boost_scheduled">تمت برمجة الترقية!</string>
     <string name="no_scheduled_boosts">ليس هناك أية برمجة للترقية للعرض!</string>
@@ -690,12 +594,7 @@
         يمكنكم الشروع في كتابة الحروف الأولى وستُقترَحُ عليكم أسماء.\n\n
         ⚠ زِرّ \"تسجيل الدخول\" سوف يعمل فقط إذا كان الخادم شغّالاً واسمه صالح!
     </string>
-    <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
-    </string>
-    <string name="showcase_pwd">        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
-    </string>
     <string name="more_information">تفاصيل أكثر</string>
-    <string name="showcase_2FA">إن كنت قد قمت بتفعيل المصادقة بخطوتين (2FA)، يمكنك استخدام هذا الرابط.\nيمكنك استخدامه كذلك إن كنت لا ترغب في ادخال بيانات تسجيل الدخول الخاصة بك هنا.</string>
     <!-- languages not translated -->
     <string name="languages">اللغات</string>
     <string name="show_media_only">الوسائط فقط</string>
@@ -707,16 +606,13 @@
     <string name="bot">بوت</string>
     <string name="pixelfed_instance">مثيل خادم بيكسل فد</string>
     <string name="mastodon_instance">مثيل خادم ماستدون</string>
-    <string name="no_pixelfed_instance">لا توجد مثيلات خوادم لبيكسل فد</string>
     <string name="any_tags">إحدى هذه الكلمات</string>
     <string name="all_tags">كل هذه الكلمات</string>
     <string name="none_tags">لا شيء من هذه</string>
     <string name="some_words_any">أي من هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_words_all">كافة هذه الكلمات (مفصولة بمسافة)</string>
-    <string name="some_words_none">لاشيء من هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_tags">أضف بعض الكلمات للتصفية (مفصولة بمسافة)</string>
     <string name="change_tag_column">تغيير اسم العمود</string>
-    <string name="no_misskey_instance">لا توجد أية مثيلات خوادم ميسكي</string>
     <string name="misskey_instance">مثيل خادم ميسكي</string>
     <string name="toast_no_apps">ليس هناك أي تطبيق مثبّت على جهازك يدعم هذا الرابط.</string>
     <string name="subscriptions">الاشتراكات</string>
@@ -733,7 +629,6 @@
     <string name="file_to_upload">اختر الملف المراد ارساله</string>
     <string name="my_videos">فيديوهاتي</string>
     <string name="title">العنوان</string>
-    <string name="categories">الفئات</string>
     <string name="license">الرخصة</string>
     <string name="category">الفئة</string>
     <string name="language">اللغة</string>
@@ -748,14 +643,10 @@
     <string name="video_uploaded_action">اضغط هنا لتعديل بيانات الفيديو.</string>
     <string name="delete_video">احذف الفيديو</string>
     <string name="delete_video_confirmation">هل أنت متأكد أنك تود حذف هذا الفيديو؟</string>
-    <string name="no_video_uploaded">لم يتم إرسال أية فيديوهات بعد!</string>
     <string name="display_nsfw_videos">عرض الفيديوهات الحساسة</string>
-    <string name="default_channel_of">القناة الافتراضية لـ %s</string>
     <string name="no_video_to_display">لا توجد أية فيديوهات لعرضها!</string>
-    <string name="add_image_to_favorite">إضافة الوسائط إلى المفضلة</string>
     <string name="leave_a_comment">اترك تعليقاً</string>
     <string name="share">شارك</string>
-    <string name="my_pictures">صوري</string>
     <string name="choose_schedule">اختر أسلوب برمجة التبويقات</string>
     <string name="device_schedule">عبر الجهاز</string>
     <string name="server_schedule">عبر الخادِم</string>
@@ -763,12 +654,8 @@
     <string name="toots_client">التبويقات (الجهاز)</string>
     <string name="modify">تغيير</string>
     <string name="set_display_content_after_fetch_more">إظهار التبويقات الجديدة فوق زر \"عرض المزيد\"</string>
-    <string name="settings_category_label_confirmations">التأكيدات</string>
     <string name="settings_category_label_timelines">الخيوط الزمنية</string>
-    <string name="settings_category_label_notification">خدمة الإشعارات</string>
     <string name="settings_category_label_interface">الواجهة</string>
-    <string name="settings_category_label_hiddencontent">المحتوى المخفي</string>
-    <string name="settings_category_label_composing">التحرير</string>
     <string name="contact">المتراسلون</string>
     <string name="peertube_comment_on_video"><![CDATA[علّق <b>%1$s</b> على الفيديو <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> يتابع قناتك <b>%2$s</b> الآن]]></string>
@@ -783,7 +670,6 @@
     <string name="import_data">استورد البيانات</string>
     <string name="toot_select_import">حدّد الملف الذي تريد استيراده</string>
     <string name="toot_select_file_error">حدث خطأ عند اختيار ملف النسخ الاحتياطي!</string>
-    <string name="data_import_start">رجاءً لا تقم بإيقاف التطبيق ريثما تكتمل العملية. لن يأخذ ذلك وقتًا كثيرا.</string>
     <string name="add_public_comment">أضف تعليقًا عامًا</string>
     <string name="send_comment">ارسل تعليق</string>
     <string name="toast_toot_saved_error">لا يوجد اتصال بالإنترنت. تم تخزين رسالتك في المسودات.</string>
@@ -824,18 +710,14 @@
     <string name="poll_finish_at">ينتهي في %s</string>
     <string name="refresh_poll">تحديث استطلاع الرأي</string>
     <string name="vote">تصويت</string>
-    <string name="poll_not_private">لا يمكن إرفاق استطلاع للرأي في الرسائل المباشِرة!</string>
     <string name="notif_poll">لقد انقضت مدة استطلاع رأي قد قُمتَ بالتصويت عليه مِن قَبل</string>
     <string name="notif_poll_self">لقد انتهت مدة استطلاع رأي قد قُمتَ بنشره</string>
     <string name="settings_category_notif_customize">تخصيص</string>
     <string name="settings_category_notif_categories">الفئات</string>
-    <string name="settings_category_notif_news">الأخبار</string>
     <string name="settings_category_notif_time_slot">الفترة الزمنية</string>
     <string name="settings_category_notif_advanced">خيارات متقدمة</string>
     <string name="set_display_new_badge">عرض شارة \'new\' على التبويقات غير المقروءة</string>
-    <string name="set_display_peertube">عرض الخيط الزمني لبيرتيوب</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">إخفاء اللسان</string>
     <string name="move_timeline">نقل الخيط الزمني</string>
     <string name="hide_timeline">إخفاء الخيط الزمني</string>
     <string name="reorder_timelines">إعادة ترتيب الخيوط الزمنية</string>
@@ -845,10 +727,8 @@
     <string name="undo">إلغاء</string>
     <string name="visible_tabs_needed">يجب الإبقاء على لسانَين ظاهرين!</string>
     <string name="action_reorder_timeline">إعادة ترتيب الخيوط الزمنية</string>
-    <string name="warning_list_deletion">استخدم القوائم قصد حذف هذه القائمة!</string>
     <string name="warning_main_timeline">الخيوط الرئيسية يمكن فقط إخفاءها!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">إضافة خيط زمني</string>
     <string name="set_sensitive_content">اعتبار الوسائط دائما كحساسة</string>
     <string name="gnu_instance">مثيل خادم GNU</string>
     <string name="cached_status">منشور مُخزَّن</string>
@@ -863,14 +743,11 @@
     <string name="history">التاريخ</string>
     <string name="playlists">قوائم التشغيل</string>
     <string name="display_name">الاسم العلني</string>
-    <string name="privacy">الخصوصية</string>
-    <string name="create">إنشاء</string>
     <string name="action_playlist_add">ليس لديك أي قوائم تشغيل. انقر على أيقونة \"+\" لإضافة قائمة تشغيل جديدة</string>
     <string name="error_display_name">يجب عليك إدخال اسم علني!</string>
     <string name="error_channel_mandatory">القناة لازمة إن كانت قائمة التشغيل متاحة للعامة.</string>
     <string name="action_playlist_create">إنشاء قائمة تشغيل</string>
     <string name="action_playlist_empty_content">قائمة التشغيل هذه فارغة حاليا.</string>
-    <string name="edit_media">تحرير الوسائط</string>
     <string name="redo">إعادة</string>
     <string name="gallery">المعرض</string>
     <string name="label_emoji">إيموجي</string>
@@ -878,7 +755,6 @@
     <string name="label_eraser">مِمْحاة</string>
     <string name="label_text">نص</string>
     <string name="label_filter">فلتر</string>
-    <string name="label_adjust">ضبط</string>
     <string name="label_brush">فرشاة</string>
     <string name="confirm_exit_editing">هل أنت متأكد من الخروج دون حفظ الصورة؟</string>
     <string name="discard">تجاهل</string>
@@ -886,7 +762,6 @@
     <string name="image_saved">تم حفظ الصورة بنجاح!</string>
     <string name="save_image_failed">فشل في حفظ الصورة</string>
     <string name="opacity">الشفافيّة</string>
-    <string name="label_crop">اقتصاص</string>
     <string name="set_photo_editor">تمكين محرر الصور</string>
     <string name="add_poll_item">إضافة خيار إلى الاستطلاع</string>
     <string name="remove_poll_item">إزالة آخر عنصر في الاستطلاع</string>
@@ -898,10 +773,8 @@
     <string name="timed_mute">فترة الكتم</string>
     <string name="mention_account">اذكر الحساب</string>
     <string name="refresh_cache">تحديث ذاكرة التخزين المؤقت</string>
-    <string name="see_boost_and_fav">اعرض من رقاه أو أضافه إلى مفضلته</string>
     <string name="mention_status">اذكر هذا المنشور</string>
     <string name="action_news">الأخبار</string>
-    <string name="set_display_news_from_fedilab">عرض أخبار حساب Fedilab</string>
     <string name="category_general">عام</string>
     <string name="category_regional">إقليمية</string>
     <string name="category_art">فن</string>
@@ -945,7 +818,6 @@
     <string name="reconnect_account">أعد توصيل الحساب</string>
     <string name="reconnect_account_message">لقد فشل التطبيق في الوصول إلى ميزات الإشراف. قد تحتاج إلى إعادة توصيل الحساب قصد الحصول على التصريحات اللازمة لذلك.</string>
     <string name="unresolved">لم يتم حله</string>
-    <string name="resolved">تم حله</string>
     <string name="remote">عن بعد</string>
     <string name="active">نشط</string>
     <string name="pending">معلّق</string>
@@ -961,7 +833,6 @@
     <string name="disable">تعطيل</string>
     <string name="silence">اكتمه</string>
     <string name="email_user">أخبر المستخدم عبر البريد الإلكتروني</string>
-    <string name="perform_action">نفّذ الإجراء</string>
     <string name="custom_warning">تحذير مخصص</string>
     <string name="user">المستخدم</string>
     <string name="moderator">المُشرف</string>
@@ -993,7 +864,6 @@
     <string name="toast_empty_content">محتوى فارغ!</string>
     <string name="set_display_fedilab_features_button">اعرض زر ميزات Fedilab</string>
     <string name="audio">يحتاج التطبيق إلى الوصول إلى تسجيل الصوت</string>
-    <string name="toot_message_record_error">حدث خطأ عند تسجيل الرسالة الصوتية!</string>
     <string name="voice_message">رسالة صوتية</string>
     <string name="set_quick_reply">تمكين الرد السريع</string>
     <string name="reply_might_be_useless">لا يتمكن الحساب الذي يتم الرد عليه من قد رؤية رسالتك!</string>
@@ -1001,9 +871,7 @@
     <string name="set_blur_sensitive_indication">عند التعطيل سيتم حجب المحتوى الحساس بواسطة زر</string>
     <string name="set_long_press_media_indication">حفظ الوسائط بالحجم الكامل بضغطة مطولة على معاينات</string>
     <string name="set_display_timeline_in_list_indication">إضافة زر بعلامات الحذف في أعلى يمين كل العلامات والمنشورات والقوائم والمثيلات</string>
-    <string name="set_display_news_from_fedilab_indication">عرض عنصر في القائمة الرئيسية من أجل الوصول السريع إلى الخط الزمني مستهدفا #Fedilab الوسم</string>
     <string name="live_notif_indication">الحفاظ على اتصال مفتوح إلى API البث للإخطارات الفورية.</string>
-    <string name="set_keep_background_process_indication">عندما يكون التطبيق في الخلفية, سوف يبقا على اتصال بواجهة برمجة التطبيقات API. قم بتعطيله إذا كنت ترغب في الحفاظ على البطارية.</string>
     <string name="set_enable_time_slot_indication">خلال هذه الفتحة الزمنية سيقوم التطبيق بإرسال إخطارات. يمكنك عكس (أي تصميت) هذا الفتحة الزمنية باستخدام الزر الموافق.</string>
     <string name="set_display_fedilab_features_button_indication">اعرض زر فيديلاب تحت الصورة الشخصية على شكل اختصار لولوج خاصيات البرنامج.</string>
     <string name="set_quick_reply_indication">إتاحة الرد مباشرة في الخط الزمني أدنى المنشورات</string>
@@ -1015,9 +883,6 @@
     <string name="featured_hashtags_indication">تمكن هذه الأوسمة من تصفية المنشورات من الحسابات. سيتوجب استخدام قائمة السياق لمعاينتهم.</string>
     <string name="set_capitalize_indication">إدراج سطر جديد تلقائيا بعد الذكر لتكبير الحرف الأول</string>
     <string name="settings_title_custom_sharing_indication">تمكين صناع المحتوى من مشاركة المنشورات في RSS الخاص بهم</string>
-    <string name="timelines">الخيوط</string>
-    <string name="u_interface">الواجهة</string>
-    <string name="battery">البطارية</string>
     <string name="compose">التحرير</string>
     <string name="upload_image_maximum_retry_times">عدد المحاولة الأقصى عند تحميل وسائط</string>
     <string name="new_folder">إنشاء مجلد جديد هنا</string>
@@ -1028,9 +893,7 @@
     <string name="default_directory">المجلد الافتراضي</string>
     <string name="folder">المجلد</string>
     <string name="create_folder">إنشاء مجلد</string>
-    <string name="custom_tabs_indication">استعمال المتصفح المفضل داخل التطبيق. عند تعطيل الروابط سيتم فتحها خارجيا</string>
     <string name="set_display_confirm">عرض رسالة بعد تمام العمليات كالدعم والتفضيل وغيرها؟</string>
-    <string name="export_muted_instance">تصدير مثيلات الخوادم المكتومة</string>
     <string name="muted_instance_exported">لقد تم تصدير مثيلات الخوادم المكتومة!</string>
     <string name="add_instances">إضافة مثيل خادم</string>
     <string name="export_instances">تصدير مثيلات الخوادم</string>
@@ -1130,7 +993,6 @@
     <string name="set_nitter_host">أدخل مضيفك المخصص أو اتركه فارغًا لاستخدام nitter.net</string>
     <string name="set_hide_status_bar">أخفِ شريط إشعارات Fedilab</string>
     <string name="set_hide_status_bar_indication">لإخفاء الإشعارات المتبقية على شريط الحالة ، اضغط على زر أيقونة العين ثم قم بإلغاء تحديد: \"العرض على شريط الحالة\"</string>
-    <string name="set_live_type_title">تمكين الإشعارات المتأخرة</string>
     <string name="set_live_type_indication">سيتم تأجيل الإشعارات كل 30 ثانية. الشيء الذي من شأنه أن يسمح باستنزاف أقل للبطارية.</string>
     <string name="live_delayed">تم تأخير الإشعارات الحية</string>
     <string name="no_live_notif">ليس هناك إشعارات حية</string>
@@ -1156,10 +1018,11 @@
     <string name="title_video_peertube">عنوان للفيديو</string>
     <string name="join_peertube">انظم إلى PeerTube</string>
     <string name="agreement_check_peertube">أبلُغ مِن العُمر 16 سنة علئ الأقل وأوافق على %1$s لهذا الخادم</string>
-    <string name="colors">الألوان</string>
     <string name="link_color_title">الروابط</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">رأسية إعادات النشر</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">يغيّر لون الرأسية الخاصة بإعادة النشر</string>
     <string name="background_status_title">المنشورات</string>
     <string name="background_status">لون خلفية المنشورات على الخيوط</string>
@@ -1168,15 +1031,12 @@
     <string name="reset">صفّر</string>
     <string name="icons_color_title">الأيقونات</string>
     <string name="icons_color">لون الأيقونات السفلية على الخيوط</string>
-    <string name="background_color_title">الخلفية</string>
-    <string name="background_color">تغيير لون خلفية الخيوط العامة</string>
     <string name="pin_tag">دبّس هذا الوسم</string>
     <string name="logo_of_the_instance">شعار مثيل الخادم</string>
     <string name="edit_profile">عدّل الصفحة التعريفية</string>
     <string name="make_an_action">القيام بإجراء</string>
     <string name="translation">الترجمة</string>
     <string name="image_preview">معاينة الصورة</string>
-    <string name="change_theme">Change the theme</string>
     <string name="text_color_title">Text color</string>
     <string name="text_color">Change the text color in pots</string>
     <string name="apply_changes">Apply changes</string>
