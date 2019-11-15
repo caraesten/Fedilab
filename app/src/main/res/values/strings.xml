@@ -86,6 +86,7 @@
     <string name="live_notif">Live notifications</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
+    <string name="no_stories">No stories to display</string>
     <string name="reblog_by">Boosted by %1$s</string>
 
 

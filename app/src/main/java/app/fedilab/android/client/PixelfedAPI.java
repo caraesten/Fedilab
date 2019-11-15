@@ -270,51 +270,7 @@ public class PixelfedAPI {
         return pixelFedStoryItem;
     }
 
-    /**
-     * Retrieves Pixelfed Own Stories *synchronously*
-     *
-     * @return APIResponse
-     */
-    public APIResponse getMyStories() {
 
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/me"), 10, null, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            pixelFedStory = parseStory(new JSONObject(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
-            e.printStackTrace();
-        }
-        if (apiResponse == null)
-            apiResponse = new APIResponse();
-        apiResponse.setPixelFedStory(pixelFedStory);
-        return apiResponse;
-    }
-
-    /**
-     * Delete a Pixelfed Story *synchronously*
-     *
-     * @return APIResponse
-     */
-    public int deleteStory(String id) {
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("id", id);
-        HttpsConnection httpsConnection;
-        try {
-            httpsConnection = new HttpsConnection(context, this.instance);
-            httpsConnection.delete(getAbsoluteUrl("/delete"), 10, params, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return actionCode;
-    }
 
     /**
      * Set the error message
