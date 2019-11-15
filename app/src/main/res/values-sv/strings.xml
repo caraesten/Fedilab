@@ -1177,4 +1177,6 @@
     <string name="export_theme">Exportera tema</string>
     <string name="export_theme_title">Tryck här för att exportera nuvarande tema</string>
     <string name="theme_file_error">Ett fel uppstod när tema valdes</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
 </resources>
