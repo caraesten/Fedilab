@@ -1172,4 +1172,6 @@
     <string name="export_theme">导出主题</string>
     <string name="export_theme_title">点击此处以导出当前主题</string>
     <string name="theme_file_error">选择主题文件时出错</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
 </resources>
