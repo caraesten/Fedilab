@@ -1039,4 +1039,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="export_theme">Exporter le thème</string>
     <string name="export_theme_title">Appuyez ici pour exporter le thème actuel</string>
     <string name="theme_file_error">Une erreur s\'est produite lors de la sélection du fichier de thème</string>
+    <string name="export_bookmarks">Exporter les signets vers l\'instance</string>
+    <string name="import_bookmarks">Importer les signets de l\'instance</string>
 </resources>

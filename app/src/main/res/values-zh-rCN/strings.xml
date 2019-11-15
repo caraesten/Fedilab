@@ -1039,4 +1039,6 @@
     <string name="export_theme">导出主题</string>
     <string name="export_theme_title">点击此处以导出当前主题</string>
     <string name="theme_file_error">选择主题文件时出错</string>
+    <string name="export_bookmarks">导出书签到实例</string>
+    <string name="import_bookmarks">从实例导入书签</string>
 </resources>
