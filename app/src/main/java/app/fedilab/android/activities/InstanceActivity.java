@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,13 +23,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,15 +34,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import es.dmoral.toasty.Toasty;
 
 
 /**

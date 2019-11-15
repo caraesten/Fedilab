@@ -26,10 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -41,24 +37,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveScheduledTootsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.drawers.ScheduledTootsListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
+import app.fedilab.android.interfaces.OnRetrieveScheduledTootsInterface;
 import app.fedilab.android.sqlite.BoostScheduleDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveScheduledTootsAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
-import app.fedilab.android.interfaces.OnRetrieveScheduledTootsInterface;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -77,12 +74,6 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     private List<StoredStatus> storedStatuses;
     private boolean firstCall;
     private ScheduledTootsListAdapter scheduledTootsListAdapter;
-
-    public enum typeOfSchedule {
-        TOOT,
-        BOOST,
-        SERVER
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,10 +109,10 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
         if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
-            if(apiResponse.getError().getError().length() < 100) {
+            if (apiResponse.getError().getError().length() < 100) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -202,7 +193,6 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         super.onCreate(saveInstance);
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -214,7 +204,6 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
 
     @Override
     public void onRetrieveScheduledToots(List<StoredStatus> storedStatuses) {
@@ -240,5 +229,12 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
                 no_action_text_subtitle.setText(message, TextView.BufferType.SPANNABLE);
             }
         }
+    }
+
+
+    public enum typeOfSchedule {
+        TOOT,
+        BOOST,
+        SERVER
     }
 }

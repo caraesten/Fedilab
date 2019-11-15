@@ -3,57 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_view_reply"
-        android:title="@string/show_reply"
         android:icon="@drawable/ic_visibility"
+        android:title="@string/show_reply"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_emoji"
-        android:title="@string/insert_emoji"
         android:icon="@drawable/ic_insert_emoticon"
+        android:title="@string/insert_emoji"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_photo_camera"
-        android:title="@string/camera"
         android:icon="@drawable/ic_photo_camera"
+        android:title="@string/camera"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_poll"
-        android:title="@string/poll"
         android:icon="@drawable/ic_view_list_poll"
+        android:title="@string/poll"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_contacts"
-        android:title="@string/contact"
         android:icon="@drawable/ic_contacts"
+        android:title="@string/contact"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_microphone"
-        android:title="@string/voice_message"
         android:icon="@drawable/ic_mic"
+        android:title="@string/voice_message"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_translate"
-        android:title="@string/translate"
         android:icon="@drawable/ic_translate"
+        android:title="@string/translate"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_store"
-        android:title="@string/save"
         android:icon="@drawable/ic_save_white"
+        android:title="@string/save"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_restore"
-        android:title="@string/restore"
         android:icon="@drawable/ic_restore"
+        android:title="@string/restore"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_schedule"
-        android:title="@string/schedule"
         android:icon="@drawable/ic_schedule"
+        android:title="@string/schedule"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_tags"
-        android:title="@string/tags"
         android:icon="@drawable/ic_edit_toot"
+        android:title="@string/tags"
         app:showAsAction="never" />
 </menu>

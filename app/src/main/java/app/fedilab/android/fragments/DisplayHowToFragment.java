@@ -17,10 +17,6 @@ package app.fedilab.android.fragments;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +24,20 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveHowToAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.HowToVideo;
 import app.fedilab.android.drawers.HowToVideosAdapter;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveHowToAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveHowToInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -96,10 +95,10 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
     public void onRetrieveHowTo(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            if(apiResponse.getError().getError().length() < 100) {
+            if (apiResponse.getError().getError().length() < 100) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }

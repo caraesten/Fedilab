@@ -21,6 +21,29 @@ import android.text.TextUtils;
 
 public class PollOptions implements Parcelable {
 
+    public static final Creator<PollOptions> CREATOR = new Creator<PollOptions>() {
+        @Override
+        public PollOptions createFromParcel(Parcel source) {
+            return new PollOptions(source);
+        }
+
+        @Override
+        public PollOptions[] newArray(int size) {
+            return new PollOptions[size];
+        }
+    };
+    private String title;
+    private SpannableString titleSpan;
+    private int votes_count;
+
+    public PollOptions() {
+    }
+    protected PollOptions(Parcel in) {
+        this.title = in.readString();
+        this.votes_count = in.readInt();
+        this.titleSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -37,11 +60,6 @@ public class PollOptions implements Parcelable {
         this.votes_count = votes_count;
     }
 
-    private String title;
-    private SpannableString titleSpan;
-    private int votes_count;
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -53,27 +71,6 @@ public class PollOptions implements Parcelable {
         dest.writeInt(this.votes_count);
         TextUtils.writeToParcel(this.titleSpan, dest, flags);
     }
-
-    public PollOptions() {
-    }
-
-    protected PollOptions(Parcel in) {
-        this.title = in.readString();
-        this.votes_count = in.readInt();
-        this.titleSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-    }
-
-    public static final Creator<PollOptions> CREATOR = new Creator<PollOptions>() {
-        @Override
-        public PollOptions createFromParcel(Parcel source) {
-            return new PollOptions(source);
-        }
-
-        @Override
-        public PollOptions[] newArray(int size) {
-            return new PollOptions[size];
-        }
-    };
 
     public SpannableString getTitleSpan() {
         return titleSpan;

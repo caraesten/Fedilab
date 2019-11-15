@@ -19,7 +19,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -44,7 +43,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -167,7 +165,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             }
         });
 
-        new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON,"general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+        new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, "general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
 
         signup = findViewById(R.id.signup);
         EditText username = findViewById(R.id.username);
@@ -206,7 +204,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this,RetrieveInstanceRegAsyncTask.instanceType.MASTODON, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 

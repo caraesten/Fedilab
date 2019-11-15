@@ -19,32 +19,28 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.drawers.DraftsListAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.R;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**

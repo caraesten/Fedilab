@@ -15,10 +15,10 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <View
         android:layout_width="0dp"
@@ -43,11 +43,11 @@
         android:background="?colorAccent" />
 
     <TextView
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:id="@+id/message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
 
     <View
         android:layout_width="0dp"
@@ -73,27 +73,27 @@
 
     <CheckBox
         android:id="@+id/cache_timeline"
-        android:text="@string/cache_timeline_clear"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text="@string/cache_timeline_clear" />
 
     <CheckBox
         android:id="@+id/cache_owntoots"
-        android:text="@string/cache_owntoots_clear"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text="@string/cache_owntoots_clear" />
 
     <CheckBox
         android:id="@+id/cache_bookmarks"
         style="?android:attr/textAppearanceMedium"
-        android:text="@string/cache_bookmarks_clear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text="@string/cache_bookmarks_clear" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,18 +102,18 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/all_accounts" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/clean_all"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:gravity="center" />
     </LinearLayout>
 </LinearLayout>
 

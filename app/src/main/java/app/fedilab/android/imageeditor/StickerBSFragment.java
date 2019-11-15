@@ -5,21 +5,19 @@ import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,20 +25,7 @@ import app.fedilab.android.R;
 
 public class StickerBSFragment extends BottomSheetDialogFragment {
 
-    public StickerBSFragment() {
-        // Required empty public constructor
-    }
-
     private StickerListener mStickerListener;
-
-    public void setStickerListener(StickerListener stickerListener) {
-        mStickerListener = stickerListener;
-    }
-
-    public interface StickerListener {
-        void onStickerClick(Bitmap bitmap);
-    }
-
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
 
         @Override
@@ -56,6 +41,13 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
         }
     };
 
+    public StickerBSFragment() {
+        // Required empty public constructor
+    }
+
+    public void setStickerListener(StickerListener stickerListener) {
+        mStickerListener = stickerListener;
+    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -82,6 +74,25 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    private String convertEmoji(String emoji) {
+        String returnedEmoji = "";
+        try {
+            int convertEmojiToInt = Integer.parseInt(emoji.substring(2), 16);
+            returnedEmoji = getEmojiByUnicode(convertEmojiToInt);
+        } catch (NumberFormatException e) {
+            returnedEmoji = "";
+        }
+        return returnedEmoji;
+    }
+
+    private String getEmojiByUnicode(int unicode) {
+        return new String(Character.toChars(unicode));
+    }
+
+    public interface StickerListener {
+        void onStickerClick(Bitmap bitmap);
     }
 
     public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHolder> {
@@ -139,20 +150,5 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
                 });
             }
         }
-    }
-
-    private String convertEmoji(String emoji) {
-        String returnedEmoji = "";
-        try {
-            int convertEmojiToInt = Integer.parseInt(emoji.substring(2), 16);
-            returnedEmoji = getEmojiByUnicode(convertEmojiToInt);
-        } catch (NumberFormatException e) {
-            returnedEmoji = "";
-        }
-        return returnedEmoji;
-    }
-
-    private String getEmojiByUnicode(int unicode) {
-        return new String(Character.toChars(unicode));
     }
 }

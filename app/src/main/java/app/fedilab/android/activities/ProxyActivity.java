@@ -18,13 +18,9 @@ package app.fedilab.android.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,8 +28,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
+import app.fedilab.android.helper.Helper;
 
 
 /**

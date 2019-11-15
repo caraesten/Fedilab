@@ -20,10 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +29,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.ShowAccountActivity;
+import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -47,15 +49,12 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.StatusCacheDAO;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.ShowAccountActivity;
-import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
+import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.StatusCacheDAO;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -64,11 +63,11 @@ import app.fedilab.android.interfaces.OnRetrieveRepliesInterface;
  */
 public class ArtListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
 
+    private static final int DISPLAYED_STATUS = 1;
+    private final int HIDDEN_STATUS = 0;
     private Context context;
     private List<Status> statuses;
     private ArtListAdapter statusListAdapter;
-    private final int HIDDEN_STATUS = 0;
-    private static final int DISPLAYED_STATUS = 1;
 
 
     public ArtListAdapter(List<Status> statuses) {
@@ -103,38 +102,10 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         notifyStatusChanged(modifiedStatus.get(0));
     }
 
-
-    private class ViewHolderEmpty extends RecyclerView.ViewHolder {
-        ViewHolderEmpty(View itemView) {
-            super(itemView);
-        }
-    }
-
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
     }
-
-
-    private class ViewHolderArt extends RecyclerView.ViewHolder {
-        ImageView art_media, art_pp;
-        TextView art_username, art_acct;
-        LinearLayout art_author;
-        RelativeLayout status_show_more;
-        ImageView show_more_button_art;
-
-        ViewHolderArt(View itemView) {
-            super(itemView);
-            art_media = itemView.findViewById(R.id.art_media);
-            art_pp = itemView.findViewById(R.id.art_pp);
-            art_username = itemView.findViewById(R.id.art_username);
-            art_acct = itemView.findViewById(R.id.art_acct);
-            art_author = itemView.findViewById(R.id.art_author);
-            status_show_more = itemView.findViewById(R.id.status_show_more);
-            show_more_button_art = itemView.findViewById(R.id.show_more_button_art);
-        }
-    }
-
 
     public Status getItem(int position) {
         if (statuses.size() > position && position >= 0)
@@ -167,7 +138,6 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -236,7 +206,6 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         }
 
     }
-
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
@@ -324,7 +293,6 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         }
     }
 
-
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
         if (status != null) {
@@ -345,6 +313,31 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     @Override
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
 
+    }
+
+    private class ViewHolderEmpty extends RecyclerView.ViewHolder {
+        ViewHolderEmpty(View itemView) {
+            super(itemView);
+        }
+    }
+
+    private class ViewHolderArt extends RecyclerView.ViewHolder {
+        ImageView art_media, art_pp;
+        TextView art_username, art_acct;
+        LinearLayout art_author;
+        RelativeLayout status_show_more;
+        ImageView show_more_button_art;
+
+        ViewHolderArt(View itemView) {
+            super(itemView);
+            art_media = itemView.findViewById(R.id.art_media);
+            art_pp = itemView.findViewById(R.id.art_pp);
+            art_username = itemView.findViewById(R.id.art_username);
+            art_acct = itemView.findViewById(R.id.art_acct);
+            art_author = itemView.findViewById(R.id.art_author);
+            status_show_more = itemView.findViewById(R.id.status_show_more);
+            show_more_button_art = itemView.findViewById(R.id.show_more_button_art);
+        }
     }
 
 }

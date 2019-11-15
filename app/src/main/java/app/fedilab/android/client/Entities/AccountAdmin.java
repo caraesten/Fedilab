@@ -23,6 +23,17 @@ import app.fedilab.android.client.API;
 
 public class AccountAdmin implements Parcelable {
 
+    public static final Creator<AccountAdmin> CREATOR = new Creator<AccountAdmin>() {
+        @Override
+        public AccountAdmin createFromParcel(Parcel source) {
+            return new AccountAdmin(source);
+        }
+
+        @Override
+        public AccountAdmin[] newArray(int size) {
+            return new AccountAdmin[size];
+        }
+    };
     private String id;
     private String username;
     private Date created_at;
@@ -37,6 +48,28 @@ public class AccountAdmin implements Parcelable {
     private Account account;
     private API.adminAction action;
     private boolean approved;
+
+    public AccountAdmin() {
+    }
+
+    protected AccountAdmin(Parcel in) {
+        this.id = in.readString();
+        this.username = in.readString();
+        long tmpCreated_at = in.readLong();
+        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+        this.email = in.readString();
+        this.role = in.readString();
+        this.ip = in.readString();
+        this.domain = in.readString();
+        this.confirmed = in.readByte() != 0;
+        this.suspended = in.readByte() != 0;
+        this.silenced = in.readByte() != 0;
+        this.disabled = in.readByte() != 0;
+        this.account = in.readParcelable(Account.class.getClassLoader());
+        int tmpAction = in.readInt();
+        this.action = tmpAction == -1 ? null : API.adminAction.values()[tmpAction];
+        this.approved = in.readByte() != 0;
+    }
 
     public String getId() {
         return id;
@@ -126,10 +159,6 @@ public class AccountAdmin implements Parcelable {
         this.account = account;
     }
 
-
-    public AccountAdmin() {
-    }
-
     public String getDomain() {
         return domain;
     }
@@ -176,35 +205,4 @@ public class AccountAdmin implements Parcelable {
         dest.writeInt(this.action == null ? -1 : this.action.ordinal());
         dest.writeByte(this.approved ? (byte) 1 : (byte) 0);
     }
-
-    protected AccountAdmin(Parcel in) {
-        this.id = in.readString();
-        this.username = in.readString();
-        long tmpCreated_at = in.readLong();
-        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
-        this.email = in.readString();
-        this.role = in.readString();
-        this.ip = in.readString();
-        this.domain = in.readString();
-        this.confirmed = in.readByte() != 0;
-        this.suspended = in.readByte() != 0;
-        this.silenced = in.readByte() != 0;
-        this.disabled = in.readByte() != 0;
-        this.account = in.readParcelable(Account.class.getClassLoader());
-        int tmpAction = in.readInt();
-        this.action = tmpAction == -1 ? null : API.adminAction.values()[tmpAction];
-        this.approved = in.readByte() != 0;
-    }
-
-    public static final Creator<AccountAdmin> CREATOR = new Creator<AccountAdmin>() {
-        @Override
-        public AccountAdmin createFromParcel(Parcel source) {
-            return new AccountAdmin(source);
-        }
-
-        @Override
-        public AccountAdmin[] newArray(int size) {
-            return new AccountAdmin[size];
-        }
-    };
 }

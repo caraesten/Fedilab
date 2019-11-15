@@ -26,22 +26,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -60,9 +44,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,13 +66,19 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -96,25 +98,18 @@ import app.fedilab.android.fragments.TabLayoutTootsFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.InstancesDAO;
-import app.fedilab.android.sqlite.NotesDAO;
-import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.TempMuteDAO;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
+import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.InstancesDAO;
+import app.fedilab.android.sqlite.NotesDAO;
+import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TempMuteDAO;
+import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.timelines;
@@ -157,15 +152,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private ScheduledExecutorService scheduledExecutorService;
     private AsyncTask<Void, Void, Void> accountAsync;
     private AsyncTask<Void, Void, Void> retrieveRelationship;
-
-
-    public enum action {
-        FOLLOW,
-        UNFOLLOW,
-        UNBLOCK,
-        NOTHING
-    }
-
     private action doAction;
     private API.StatusAction doActionAccount;
 
@@ -296,7 +282,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             ManageAccount();
         }
     }
-
 
     private void ManageAccount() {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -831,10 +816,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
 
         UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
-        if( userNote != null ){
+        if (userNote != null) {
 
             account_personal_note.setVisibility(View.VISIBLE);
-            account_personal_note.setOnClickListener(view->{
+            account_personal_note.setOnClickListener(view -> {
                 AlertDialog.Builder builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
                 builderInner.setTitle(R.string.note_for_account);
                 EditText input = new EditText(ShowAccountActivity.this);
@@ -856,15 +841,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
-                        if( userNote == null) {
+                        if (userNote == null) {
                             userNote = new UserNote();
                             userNote.setAcct(account.getAcct());
                         }
                         userNote.setNote(input.getText().toString());
                         new NotesDAO(getApplicationContext(), db).insertInstance(userNote);
-                        if( input.getText().toString().trim().length() > 0 ){
+                        if (input.getText().toString().trim().length() > 0) {
                             account_personal_note.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             account_personal_note.setVisibility(View.GONE);
                         }
                         dialog.dismiss();
@@ -903,7 +888,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }).start();
     }
 
-
     @Override
     public void onRetrieveFeedsAccount(List<Status> statuses) {
         if (statuses != null) {
@@ -929,15 +913,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
     }
 
-
     @Override
     public void onRetrieveRelationship(Relationship relationship, Error error) {
 
         if (error != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -982,90 +965,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = action.FOLLOW;
             account_follow.setVisibility(View.VISIBLE);
-            ;
         } else {
             account_follow.setVisibility(View.GONE);
             doAction = action.NOTHING;
-        }
-    }
-
-    /**
-     * Pager adapter for the 4 fragments
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-
-        ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            switch (position) {
-                case 0:
-                    if (!peertubeAccount) {
-                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-                            TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                            bundle.putString("targetedid", account.getId());
-                            tabLayoutTootsFragment.setArguments(bundle);
-                            return tabLayoutTootsFragment;
-                        }else{
-                            DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                            bundle = new Bundle();
-                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                            bundle.putString("instanceType", "PIXELFED");
-                            bundle.putString("targetedid", account.getId());
-                            displayStatusFragment.setArguments(bundle);
-                            return displayStatusFragment;
-                        }
-                    } else {
-                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                        bundle = new Bundle();
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                        bundle.putString("targetedid", account.getAcct());
-                        bundle.putString("instanceType", "PEERTUBE");
-                        bundle.putBoolean("showReply", false);
-                        bundle.putBoolean("ischannel", ischannel);
-                        displayStatusFragment.setArguments(bundle);
-                        return displayStatusFragment;
-                    }
-                case 1:
-                    if (peertubeAccount) {
-                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
-                        bundle.putString("targetedid", account.getId());
-                        bundle.putString("instance", Helper.getLiveInstance(ShowAccountActivity.this));
-                        bundle.putString("name", account.getAcct());
-                        displayAccountsFragment.setArguments(bundle);
-                        return displayAccountsFragment;
-                    } else {
-                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
-                        bundle.putString("targetedid", account.getId());
-                        displayAccountsFragment.setArguments(bundle);
-                        return displayAccountsFragment;
-                    }
-
-                case 2:
-                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
-                    bundle.putString("targetedid", account.getId());
-                    displayAccountsFragment.setArguments(bundle);
-                    return displayAccountsFragment;
-
-            }
-            return null;
-        }
-
-
-        @Override
-        public int getCount() {
-            if (ischannel)
-                return 1;
-            else if (peertubeAccount)
-                return 2;
-            else
-                return 3;
         }
     }
 
@@ -1122,7 +1024,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     labelView.setText(label);
                 }
                 if (field != null && labelView != null && valueView != null) {
-                    boolean verified = fieldsVerified.get((String) pair.getKey().toString());
+                    boolean verified = fieldsVerified.get(pair.getKey().toString());
                     if (verified) {
                         valueView.setBackgroundResource(R.drawable.verified);
                         value.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, value.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -1455,7 +1357,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
                         input.setLayoutParams(lp);
                         input.setSingleLine(false);
-                        if( userNote != null) {
+                        if (userNote != null) {
                             input.setText(userNote.getNote());
                         }
                         input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
@@ -1470,15 +1372,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
-                                if( userNote == null) {
+                                if (userNote == null) {
                                     userNote = new UserNote();
                                     userNote.setAcct(account.getAcct());
                                 }
                                 userNote.setNote(input.getText().toString());
                                 new NotesDAO(getApplicationContext(), db).insertInstance(userNote);
-                                if( input.getText().toString().trim().length() > 0 ){
+                                if (input.getText().toString().trim().length() > 0) {
                                     account_personal_note.setVisibility(View.VISIBLE);
-                                }else{
+                                } else {
                                     account_personal_note.setVisibility(View.GONE);
                                 }
                                 dialog.dismiss();
@@ -1526,12 +1428,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         popup.show();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
 
     @Override
     public void onStop() {
@@ -1551,10 +1451,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         if (error != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -1576,19 +1476,17 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         retrieveRelationship = new RetrieveRelationshipAsyncTask(getApplicationContext(), target, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
 
         if (error != null || account == null || account.getAcct() == null) {
             if (error == null)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            else
-                if(error.getError().length() < 100) {
-                    Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
-                }
+            else if (error.getError().length() < 100) {
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         this.account = account;
@@ -1607,13 +1505,100 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
     }
 
-
     public boolean showReplies() {
         return show_replies;
     }
 
     public boolean showBoosts() {
         return show_boosts;
+    }
+
+
+    public enum action {
+        FOLLOW,
+        UNFOLLOW,
+        UNBLOCK,
+        NOTHING
+    }
+
+    /**
+     * Pager adapter for the 4 fragments
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            switch (position) {
+                case 0:
+                    if (!peertubeAccount) {
+                        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                            TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
+                            bundle.putString("targetedid", account.getId());
+                            tabLayoutTootsFragment.setArguments(bundle);
+                            return tabLayoutTootsFragment;
+                        } else {
+                            DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                            bundle = new Bundle();
+                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                            bundle.putString("instanceType", "PIXELFED");
+                            bundle.putString("targetedid", account.getId());
+                            displayStatusFragment.setArguments(bundle);
+                            return displayStatusFragment;
+                        }
+                    } else {
+                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                        bundle.putString("targetedid", account.getAcct());
+                        bundle.putString("instanceType", "PEERTUBE");
+                        bundle.putBoolean("showReply", false);
+                        bundle.putBoolean("ischannel", ischannel);
+                        displayStatusFragment.setArguments(bundle);
+                        return displayStatusFragment;
+                    }
+                case 1:
+                    if (peertubeAccount) {
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
+                        bundle.putString("targetedid", account.getId());
+                        bundle.putString("instance", Helper.getLiveInstance(ShowAccountActivity.this));
+                        bundle.putString("name", account.getAcct());
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    } else {
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
+                        bundle.putString("targetedid", account.getId());
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    }
+
+                case 2:
+                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
+                    bundle.putString("targetedid", account.getId());
+                    displayAccountsFragment.setArguments(bundle);
+                    return displayAccountsFragment;
+
+            }
+            return null;
+        }
+
+
+        @Override
+        public int getCount() {
+            if (ischannel)
+                return 1;
+            else if (peertubeAccount)
+                return 2;
+            else
+                return 3;
+        }
     }
 
 }

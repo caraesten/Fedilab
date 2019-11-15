@@ -27,6 +27,17 @@ import android.os.Parcelable;
 
 public class Card implements Parcelable {
 
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+        @Override
+        public Card createFromParcel(Parcel in) {
+            return new Card(in);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
     private String url;
     private String title;
     private String description;
@@ -43,18 +54,6 @@ public class Card implements Parcelable {
 
     public Card() {
     }
-
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
-        @Override
-        public Card createFromParcel(Parcel in) {
-            return new Card(in);
-        }
-
-        @Override
-        public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
 
     protected Card(Parcel in) {
         url = in.readString();

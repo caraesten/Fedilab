@@ -14,18 +14,12 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,9 +30,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Relationship;
@@ -46,12 +46,9 @@ import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.drawers.AccountSearchDevAdapter;
 import app.fedilab.android.helper.ExpandableHeightListView;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**

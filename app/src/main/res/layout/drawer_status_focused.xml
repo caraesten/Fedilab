@@ -16,54 +16,53 @@
 -->
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_container"
     android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
     android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    >
+    android:layout_marginEnd="5dp"
+    android:layout_marginRight="5dp">
+
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_diag_top"
         android:layout_width="20dp"
         android:layout_height="11dp"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_top"
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toBottomOf="@id/status_reply_indicator_diag_top" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/reply_indicator_dot"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_bottom"
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/status_reply_indicator_diag_bottom"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -71,25 +70,25 @@
 
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_diag_bottom"
         android:layout_width="20dp"
         android:layout_height="11dp"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/main_linear_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -412,7 +411,7 @@
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/play_video"
                         android:src="@drawable/ic_play_arrow"
-                        android:tint="@color/white"/>
+                        android:tint="@color/white" />
 
                 </RelativeLayout>
 
@@ -563,7 +562,7 @@
                         android:contentDescription="@string/hide_media"
                         android:padding="5dp"
                         android:src="@drawable/ic_remove_red_eye_img"
-                        android:tint="?attr/iconColor"/>
+                        android:tint="?attr/iconColor" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -605,7 +604,7 @@
                             android:contentDescription="@string/hide_media"
                             android:padding="5dp"
                             android:src="@drawable/ic_remove_red_eye_img"
-                            android:tint="?attr/iconColor"/>
+                            android:tint="?attr/iconColor" />
                     </RelativeLayout>
 
                     <LinearLayout

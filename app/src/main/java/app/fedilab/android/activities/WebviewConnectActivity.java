@@ -23,12 +23,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,18 +37,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 
 /**
  * Created by Thomas on 24/04/2017.
@@ -68,6 +66,23 @@ public class WebviewConnectActivity extends BaseActivity {
     private String clientId, clientSecret;
     private String instance;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
+
+    @SuppressWarnings("deprecation")
+    public static void clearCookies(Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else {
+            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +167,7 @@ public class WebviewConnectActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 super.shouldOverrideUrlLoading(view, url);
                 if (url.contains(Helper.REDIRECT_CONTENT_WEB)) {
-                    String val[] = url.split("code=");
+                    String[] val = url.split("code=");
                     if (val.length < 2) {
                         Toasty.error(getApplicationContext(), getString(R.string.toast_code_error), Toast.LENGTH_LONG).show();
                         Intent myIntent = new Intent(WebviewConnectActivity.this, LoginActivity.class);
@@ -201,7 +216,6 @@ public class WebviewConnectActivity extends BaseActivity {
         webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(getApplicationContext(), social, clientId, instance));
     }
 
-
     @Override
     public void onBackPressed() {
         if (webView != null && webView.canGoBack()) {
@@ -211,30 +225,12 @@ public class WebviewConnectActivity extends BaseActivity {
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (alert != null) {
             alert.dismiss();
             alert = null;
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public static void clearCookies(Context context) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            CookieManager.getInstance().removeAllCookies(null);
-            CookieManager.getInstance().flush();
-        } else {
-            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
-            cookieSyncMngr.startSync();
-            CookieManager cookieManager = CookieManager.getInstance();
-            cookieManager.removeAllCookie();
-            cookieManager.removeSessionCookie();
-            cookieSyncMngr.stopSync();
-            cookieSyncMngr.sync();
         }
     }
 }

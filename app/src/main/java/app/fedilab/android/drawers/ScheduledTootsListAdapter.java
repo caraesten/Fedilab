@@ -14,7 +14,6 @@ package app.fedilab.android.drawers;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,9 +22,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -42,17 +38,26 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.ShowConversationActivity;
+import app.fedilab.android.activities.TootActivity;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
+import app.fedilab.android.fragments.DisplayScheduledTootsFragment;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.jobs.ApplicationJob;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
@@ -60,15 +65,6 @@ import app.fedilab.android.sqlite.BoostScheduleDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.ShowConversationActivity;
-import app.fedilab.android.activities.TootActivity;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.fragments.DisplayScheduledTootsFragment;
-import app.fedilab.android.interfaces.OnPostActionInterface;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**

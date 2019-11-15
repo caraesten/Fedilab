@@ -34,15 +34,15 @@
 
     <ImageView
         android:id="@+id/quick_reply_switch_to_full"
-        android:tint="?iconColor"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:contentDescription="@string/fullscreen"
         android:src="@drawable/ic_zoom_out"
+        android:tint="?iconColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quick_reply_text"
-        android:contentDescription="@string/fullscreen" />
+        app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
 
     <TextView
         android:id="@+id/toot_space_left"
@@ -84,11 +84,11 @@
         app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />
 
     <Button
-        style="@style/Widget.AppCompat.Button.Small"
         android:id="@+id/quick_reply_button"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_height="40dp"
+        android:layout_marginTop="5dp"
         android:text="@string/reply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/quick_reply_text" />

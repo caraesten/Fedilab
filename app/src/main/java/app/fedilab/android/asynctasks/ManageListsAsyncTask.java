@@ -31,18 +31,6 @@ import app.fedilab.android.interfaces.OnListActionInterface;
 
 public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum action {
-        GET_LIST,
-        GET_LIST_TIMELINE,
-        GET_LIST_ACCOUNT,
-        CREATE_LIST,
-        DELETE_LIST,
-        UPDATE_LIST,
-        ADD_USERS,
-        DELETE_USERS,
-        SEARCH_USER
-    }
-
     private OnListActionInterface listener;
     private APIResponse apiResponse;
     private int statusCode;
@@ -55,7 +43,6 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String max_id, since_id;
     private int limit;
     private String search;
-
     public ManageListsAsyncTask(Context context, action apiAction, String[] accountsId, String targetedId, String listId, String title, OnListActionInterface onListActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onListActionInterface;
@@ -110,6 +97,18 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onActionDone(this.apiAction, apiResponse, statusCode);
+    }
+
+    public enum action {
+        GET_LIST,
+        GET_LIST_TIMELINE,
+        GET_LIST_ACCOUNT,
+        CREATE_LIST,
+        DELETE_LIST,
+        UPDATE_LIST,
+        ADD_USERS,
+        DELETE_USERS,
+        SEARCH_USER
     }
 
 }

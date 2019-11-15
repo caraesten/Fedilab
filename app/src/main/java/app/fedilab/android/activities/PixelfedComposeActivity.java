@@ -139,7 +139,6 @@ import app.fedilab.android.drawers.TagsSearchAdapter;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
-import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
@@ -152,6 +151,7 @@ import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
 import es.dmoral.toasty.Toasty;
+
 import static app.fedilab.android.helper.Helper.ALPHA;
 import static app.fedilab.android.helper.Helper.MORSE;
 import static app.fedilab.android.helper.Helper.countWithEmoji;
@@ -165,16 +165,26 @@ import static app.fedilab.android.helper.Helper.countWithEmoji;
 public class PixelfedComposeActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface {
 
 
-    private String visibility;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
+    public static final int SEND_VOICE_MESSAGE = 1423;
+    public static HashMap<String, Uri> filesMap;
+    public static boolean autocomplete;
+    public static Uri photoFileUri = null;
+    static boolean active = false;
+    private static String instance;
+    private static int searchDeep = 15;
     private final int PICK_IMAGE = 56556;
     private final int TAKE_PHOTO = 56532;
+    public long currentToId;
+    String mCurrentPhotoPath;
+    File photoFile = null;
+    private String visibility;
     private ArrayList<Attachment> attachments;
     private boolean isSensitive = false;
     private ImageButton toot_visibility;
     private Button toot_it;
     private MastalabAutoCompleteTextView toot_content;
     private CheckBox toot_sensitive;
-    public long currentToId;
     private long restored;
     private TextView title;
     private ImageView pp_actionBar;
@@ -182,379 +192,48 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     private Toast mToast;
     private TextView toot_space_left;
     private String initialContent;
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private Account accountReply;
     private String userId;
-    private static String instance;
     private Account account;
     private boolean removed;
     private boolean restoredScheduled;
-    static boolean active = false;
     private int style;
     private StoredStatus scheduledstatus;
     private boolean isScheduled;
     private int max_media_count;
-    public static HashMap<String, Uri> filesMap;
-    public static boolean autocomplete;
     private UploadServiceSingleBroadcastReceiver uploadReceiver;
-    public static final int SEND_VOICE_MESSAGE = 1423;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
     private Button upload_media;
     private LinearLayout pickup_picture;
-    private static int searchDeep = 15;
     private SliderView imageSlider;
     private SliderAdapter sliderAdapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
-        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
-                break;
-            default:
-                setTheme(R.style.AppThemeDark);
-        }
-        if (theme == Helper.THEME_DARK) {
-            style = R.style.DialogDark;
-        } else if (theme == Helper.THEME_BLACK) {
-            style = R.style.DialogBlack;
-        } else {
-            style = R.style.Dialog;
-        }
-        filesMap = new HashMap<>();
-        social = MainActivity.social;
-
-
-        autocomplete = false;
-        setContentView(R.layout.activity_pixelfed_compose);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(PixelfedComposeActivity.this, R.color.cyanea_primary)));
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-            assert inflater != null;
-            View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
-            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
-
-            close_toot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    assert inputMethodManager != null;
-                    inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
-                    boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-                    if (!storeToot) {
-                        if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1)) {
-                            finish();
-                        } else if (initialContent.trim().equals(toot_content.getText().toString().trim())) {
-                            finish();
-                        } else {
-                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
-                            dialogBuilder.setMessage(R.string.save_draft);
-                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    if (accountReply == null) {
-                                        storeToot(true, false);
-                                    } else {
-                                        storeToot(false, false);
-                                    }
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            });
-                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            });
-                            AlertDialog alertDialog = dialogBuilder.create();
-                            alertDialog.setCancelable(false);
-                            alertDialog.show();
-                        }
-
-                    } else {
-                        finish();
-                    }
-                }
-            });
-            title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
-
-        }
-
-        //By default the toot is not restored so the id -1 is defined
-        currentToId = -1;
-        restoredScheduled = false;
-        toot_it = findViewById(R.id.toot_it);
-        attachments = new ArrayList<>();
-        imageSlider = findViewById(R.id.imageSlider);
-        sliderAdapter = new SliderAdapter(new WeakReference<>(PixelfedComposeActivity.this), true, attachments);
-        imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
-        imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        imageSlider.setSliderAdapter(sliderAdapter);
-        upload_media = findViewById(R.id.upload_media);
-        toot_space_left = findViewById(R.id.toot_space_left);
-        toot_visibility = findViewById(R.id.toot_visibility);
-        pickup_picture = findViewById(R.id.pickup_picture);
-        toot_content = findViewById(R.id.toot_content);
-        int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        toot_content.setInputType(newInputType);
-
-
-
-        //There is no media the button is hidden
-        upload_media.setVisibility(View.INVISIBLE);
-        toot_sensitive = findViewById(R.id.toot_sensitive);
-        LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
-        ImageButton toot_emoji = findViewById(R.id.toot_emoji);
-
-        isScheduled = false;
-        if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
-            final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
-
-            toot_emoji.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    emojiPopup.toggle(); // Toggles visibility of the Popup.
-                }
-            });
-        } else {
-            toot_emoji.setVisibility(View.GONE);
-        }
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            int iconColor = prefs.getInt("theme_icons_color", -1);
-            if( iconColor != -1){
-                Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
-                Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
-                toot_sensitive.setButtonTintList(ColorStateList.valueOf(iconColor));
-                toot_sensitive.setTextColor(iconColor);
+    private BroadcastReceiver imageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String imgpath = intent.getStringExtra("imgpath");
+            if (imgpath != null) {
+                prepareUpload(PixelfedComposeActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
             }
-
         }
-        Bundle b = getIntent().getExtras();
-        ArrayList<Uri> sharedUri = new ArrayList<>();
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        restored = -1;
-        if (b != null) {
-            scheduledstatus = b.getParcelable("storedStatus");
-            String accountReplyToken = b.getString("accountReplyToken", null);
-            accountReply = null;
-            if (accountReplyToken != null) {
-                String[] val = accountReplyToken.split("\\|");
-                if (val.length == 2) {
-                    accountReply = new AccountDAO(getApplicationContext(), db).getUniqAccount(val[0], val[1]);
-                }
-            }
-            removed = b.getBoolean("removed");
-            visibility = b.getString("visibility", null);
-            restoredScheduled = b.getBoolean("restoredScheduled", false);
-            // ACTION_SEND route
-            if (b.getInt("uriNumberMast", 0) == 1) {
-                Uri fileUri = b.getParcelable("sharedUri");
-                if (fileUri != null) {
-                    sharedUri.add(fileUri);
-                }
-            }
-            // ACTION_SEND_MULTIPLE route
-            else if (b.getInt("uriNumberMast", 0) > 1) {
-                ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
+    };
+    private BroadcastReceiver add_new_media = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-                if (fileUri != null) {
-                    sharedUri.addAll(fileUri);
-                }
+            JSONObject response = null;
+            ArrayList<String> successfullyUploadedFiles = null;
+            try {
+                response = new JSONObject(intent.getStringExtra("response"));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            restored = b.getLong("restored", -1);
+            successfullyUploadedFiles = intent.getStringArrayListExtra("uploadInfo");
+            addNewMedia(response, successfullyUploadedFiles);
         }
-        if (scheduledstatus != null)
-            toot_it.setText(R.string.modify);
-        if (restoredScheduled) {
-            toot_it.setVisibility(View.GONE);
-            invalidateOptionsMenu();
-        }
-        String userIdReply, instanceReply;
-        if (accountReply == null) {
-            userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            instanceReply = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
-        } else {
-            userIdReply = accountReply.getId();
-            instanceReply = accountReply.getInstance();
-        }
-        if (accountReply == null)
-            account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userIdReply, instanceReply);
-        else
-            account = accountReply;
-
-        max_media_count = 4;
-
-        setTitle(R.string.compose);
-        toot_content.requestFocus();
-
-
-        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
-
-
-
-        if (visibility == null) {
-            String defaultVisibility = account.isLocked() ? "private" : "public";
-            visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
-        }
-        switch (visibility) {
-            case "public":
-                toot_visibility.setImageResource(R.drawable.ic_public_toot);
-                break;
-            case "unlisted":
-                toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
-                break;
-            case "private":
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                break;
-            case "direct":
-                toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                break;
-        }
-
-        toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isSensitive = isChecked;
-            }
-        });
-
-
-        toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
-
-
-        toot_visibility.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tootVisibilityDialog();
-            }
-        });
-
-        toot_it.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendToot(null);
-            }
-        });
-
-
-        pickup_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (ContextCompat.checkSelfPermission(PixelfedComposeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(PixelfedComposeActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                    return;
-                }
-                Intent intent;
-                intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    intent.setType("*/*");
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    String[] mimetypes = {"image/*", "video/*", "audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/ogg"};
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                    startActivityForResult(intent, PICK_IMAGE);
-                } else {
-                    intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    }
-                    Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-                    startActivityForResult(chooserIntent, PICK_IMAGE);
-                }
-
-            }
-        });
-
-        upload_media.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (ContextCompat.checkSelfPermission(PixelfedComposeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(PixelfedComposeActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                    return;
-                }
-                Intent intent;
-                intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    intent.setType("*/*");
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    String[] mimetypes = {"image/*", "video/*", "audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/ogg"};
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                    startActivityForResult(intent, PICK_IMAGE);
-                } else {
-                    intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    }
-                    Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-                    startActivityForResult(chooserIntent, PICK_IMAGE);
-                }
-
-            }
-        });
-
-
-        TextWatcher textWatcher = initializeTextWatcher(getApplicationContext(), social, toot_content, toot_space_left, pp_actionBar, pp_progress, PixelfedComposeActivity.this, PixelfedComposeActivity.this, PixelfedComposeActivity.this);
-        toot_content.addTextChangedListener(textWatcher);
-
-
-        if (scheduledstatus != null)
-            restoreServerSchedule(scheduledstatus.getStatus());
-
-        if (restored != -1) {
-            restoreToot(restored);
-        }
-
-        toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
-
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(imageReceiver,
-                        new IntentFilter(Helper.INTENT_SEND_MODIFIED_IMAGE));
-
-        uploadReceiver = new UploadServiceSingleBroadcastReceiver(this);
-        uploadReceiver.register(this);
-
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(add_new_media,
-                        new IntentFilter(Helper.INTENT_ADD_UPLOADED_MEDIA));
-
-    }
+    };
 
     public static TextWatcher initializeTextWatcher(Context context, UpdateAccountInfoAsyncTask.SOCIAL social,
-                                                    MastalabAutoCompleteTextView toot_content,TextView toot_space_left,
+                                                    MastalabAutoCompleteTextView toot_content, TextView toot_space_left,
                                                     ImageView pp_actionBar, ProgressBar pp_progress,
                                                     OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
     ) {
@@ -707,11 +386,11 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     autocomplete = true;
                     return;
                 }
-                String[] searchInArray =(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])).split("\\s");
-                if( searchInArray.length < 1){
+                String[] searchInArray = (s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])).split("\\s");
+                if (searchInArray.length < 1) {
                     return;
                 }
-                String searchIn = searchInArray[searchInArray.length-1];
+                String searchIn = searchInArray[searchInArray.length - 1];
                 Matcher m, mt;
                 m = sPattern.matcher(searchIn);
                 if (m.matches()) {
@@ -753,33 +432,443 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         return textw;
     }
 
+    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+        String uploadId = UUID.randomUUID().toString();
+        if (uploadReceiver != null) {
+            uploadReceiver.setUploadID(uploadId);
+        }
+        Uri uri;
+        InputStream tempInput = null;
+        FileOutputStream tempOut = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if (suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            File file;
+            tempInput = activity.getContentResolver().openInputStream(inUri);
+            if (fname.startsWith("fedilabins_")) {
+                file = File.createTempFile("fedilabins_randomTemp1", suffix, activity.getCacheDir());
+            } else {
+                file = File.createTempFile("randomTemp1", suffix, activity.getCacheDir());
+            }
 
-    private BroadcastReceiver imageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String imgpath = intent.getStringExtra("imgpath");
-            if (imgpath != null) {
-                prepareUpload(PixelfedComposeActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
+            filesMap.put(file.getAbsolutePath(), inUri);
+            tempOut = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read;
+            assert tempInput != null;
+            while ((read = tempInput.read(buff)) > 0) {
+                tempOut.write(buff, 0, read);
+            }
+            if (BuildConfig.DONATIONS) {
+                uri = FileProvider.getUriForFile(activity,
+                        "fr.gouv.etalab.mastodon.fileProvider",
+                        file);
+            } else {
+                uri = FileProvider.getUriForFile(activity,
+                        "app.fedilab.android.fileProvider",
+                        file);
+            }
+            tempInput.close();
+            tempOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(tempOut);
+        }
+
+        try {
+            final String fileName = FileNameCleaner.cleanFileName(fname);
+            SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME + Helper.getLiveInstance(activity), "https");
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
+            String url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/v1/media";
+            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+            uploadConfig
+                    .setClearOnActionForAllStatuses(true);
+            uploadConfig.getProgress().message = activity.getString(R.string.uploading);
+            uploadConfig.getCompleted().autoClear = true;
+            MultipartUploadRequest request = new MultipartUploadRequest(activity, uploadId, url);
+            request.addHeader("Authorization", "Bearer " + token);
+            request.setNotificationConfig(uploadConfig);
+            request.addFileToUpload(uri.toString().replace("file://", ""), "file");
+            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
+                    .startUpload();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content) {
+        if (toot_content == null) {
+            return -1;
+        }
+        String content = toot_content.getText().toString();
+        String contentCount = content;
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9.\\-]+[a-z0-9]+)", "$1@$3");
+            Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
+            while (matcherALink.find()) {
+                final String url = matcherALink.group(1);
+                assert url != null;
+                contentCount = contentCount.replace(url, "abcdefghijklmnopkrstuvw");
             }
         }
-    };
 
-    private BroadcastReceiver add_new_media = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+        return contentCount.length() - countWithEmoji(content);
+    }
 
-            JSONObject response = null;
-            ArrayList<String> successfullyUploadedFiles = null;
-            try {
-                response = new JSONObject(intent.getStringExtra("response"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            successfullyUploadedFiles = intent.getStringArrayListExtra("uploadInfo");
-            addNewMedia(response, successfullyUploadedFiles);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme) {
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_Fedilab);
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark);
         }
-    };
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK) {
+            style = R.style.DialogBlack;
+        } else {
+            style = R.style.Dialog;
+        }
+        filesMap = new HashMap<>();
+        social = MainActivity.social;
 
+
+        autocomplete = false;
+        setContentView(R.layout.activity_pixelfed_compose);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(PixelfedComposeActivity.this, R.color.cyanea_primary)));
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
+
+            close_toot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    assert inputMethodManager != null;
+                    inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
+                    boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+                    if (!storeToot) {
+                        if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1)) {
+                            finish();
+                        } else if (initialContent.trim().equals(toot_content.getText().toString().trim())) {
+                            finish();
+                        } else {
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
+                            dialogBuilder.setMessage(R.string.save_draft);
+                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    if (accountReply == null) {
+                                        storeToot(true, false);
+                                    } else {
+                                        storeToot(false, false);
+                                    }
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                            AlertDialog alertDialog = dialogBuilder.create();
+                            alertDialog.setCancelable(false);
+                            alertDialog.show();
+                        }
+
+                    } else {
+                        finish();
+                    }
+                }
+            });
+            title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
+
+        }
+
+        //By default the toot is not restored so the id -1 is defined
+        currentToId = -1;
+        restoredScheduled = false;
+        toot_it = findViewById(R.id.toot_it);
+        attachments = new ArrayList<>();
+        imageSlider = findViewById(R.id.imageSlider);
+        sliderAdapter = new SliderAdapter(new WeakReference<>(PixelfedComposeActivity.this), true, attachments);
+        imageSlider.setIndicatorAnimation(IndicatorAnimations.WORM);
+        imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        imageSlider.setSliderAdapter(sliderAdapter);
+        upload_media = findViewById(R.id.upload_media);
+        toot_space_left = findViewById(R.id.toot_space_left);
+        toot_visibility = findViewById(R.id.toot_visibility);
+        pickup_picture = findViewById(R.id.pickup_picture);
+        toot_content = findViewById(R.id.toot_content);
+        int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        toot_content.setInputType(newInputType);
+
+
+        //There is no media the button is hidden
+        upload_media.setVisibility(View.INVISIBLE);
+        toot_sensitive = findViewById(R.id.toot_sensitive);
+        LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
+        ImageButton toot_emoji = findViewById(R.id.toot_emoji);
+
+        isScheduled = false;
+        if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
+            final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
+
+            toot_emoji.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    emojiPopup.toggle(); // Toggles visibility of the Popup.
+                }
+            });
+        } else {
+            toot_emoji.setVisibility(View.GONE);
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            int iconColor = prefs.getInt("theme_icons_color", -1);
+            if (iconColor != -1) {
+                Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
+                Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
+                toot_sensitive.setButtonTintList(ColorStateList.valueOf(iconColor));
+                toot_sensitive.setTextColor(iconColor);
+            }
+
+        }
+        Bundle b = getIntent().getExtras();
+        ArrayList<Uri> sharedUri = new ArrayList<>();
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        restored = -1;
+        if (b != null) {
+            scheduledstatus = b.getParcelable("storedStatus");
+            String accountReplyToken = b.getString("accountReplyToken", null);
+            accountReply = null;
+            if (accountReplyToken != null) {
+                String[] val = accountReplyToken.split("\\|");
+                if (val.length == 2) {
+                    accountReply = new AccountDAO(getApplicationContext(), db).getUniqAccount(val[0], val[1]);
+                }
+            }
+            removed = b.getBoolean("removed");
+            visibility = b.getString("visibility", null);
+            restoredScheduled = b.getBoolean("restoredScheduled", false);
+            // ACTION_SEND route
+            if (b.getInt("uriNumberMast", 0) == 1) {
+                Uri fileUri = b.getParcelable("sharedUri");
+                if (fileUri != null) {
+                    sharedUri.add(fileUri);
+                }
+            }
+            // ACTION_SEND_MULTIPLE route
+            else if (b.getInt("uriNumberMast", 0) > 1) {
+                ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
+
+                if (fileUri != null) {
+                    sharedUri.addAll(fileUri);
+                }
+            }
+            restored = b.getLong("restored", -1);
+        }
+        if (scheduledstatus != null)
+            toot_it.setText(R.string.modify);
+        if (restoredScheduled) {
+            toot_it.setVisibility(View.GONE);
+            invalidateOptionsMenu();
+        }
+        String userIdReply, instanceReply;
+        if (accountReply == null) {
+            userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            instanceReply = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
+        } else {
+            userIdReply = accountReply.getId();
+            instanceReply = accountReply.getInstance();
+        }
+        if (accountReply == null)
+            account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userIdReply, instanceReply);
+        else
+            account = accountReply;
+
+        max_media_count = 4;
+
+        setTitle(R.string.compose);
+        toot_content.requestFocus();
+
+
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
+
+
+        if (visibility == null) {
+            String defaultVisibility = account.isLocked() ? "private" : "public";
+            visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+        }
+        switch (visibility) {
+            case "public":
+                toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                break;
+            case "unlisted":
+                toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                break;
+            case "private":
+                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                break;
+            case "direct":
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
+                break;
+        }
+
+        toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isSensitive = isChecked;
+            }
+        });
+
+
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
+
+
+        toot_visibility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tootVisibilityDialog();
+            }
+        });
+
+        toot_it.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToot(null);
+            }
+        });
+
+
+        pickup_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ContextCompat.checkSelfPermission(PixelfedComposeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PixelfedComposeActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return;
+                }
+                Intent intent;
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    String[] mimetypes = {"image/*", "video/*", "audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/ogg"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, PICK_IMAGE);
+                } else {
+                    intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    }
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+                    startActivityForResult(chooserIntent, PICK_IMAGE);
+                }
+
+            }
+        });
+
+        upload_media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ContextCompat.checkSelfPermission(PixelfedComposeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PixelfedComposeActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return;
+                }
+                Intent intent;
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    String[] mimetypes = {"image/*", "video/*", "audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/ogg"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, PICK_IMAGE);
+                } else {
+                    intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    }
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+                    startActivityForResult(chooserIntent, PICK_IMAGE);
+                }
+
+            }
+        });
+
+
+        TextWatcher textWatcher = initializeTextWatcher(getApplicationContext(), social, toot_content, toot_space_left, pp_actionBar, pp_progress, PixelfedComposeActivity.this, PixelfedComposeActivity.this, PixelfedComposeActivity.this);
+        toot_content.addTextChangedListener(textWatcher);
+
+
+        if (scheduledstatus != null)
+            restoreServerSchedule(scheduledstatus.getStatus());
+
+        if (restored != -1) {
+            restoreToot(restored);
+        }
+
+        toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(imageReceiver,
+                        new IntentFilter(Helper.INTENT_SEND_MODIFIED_IMAGE));
+
+        uploadReceiver = new UploadServiceSingleBroadcastReceiver(this);
+        uploadReceiver.register(this);
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(add_new_media,
+                        new IntentFilter(Helper.INTENT_ADD_UPLOADED_MEDIA));
+
+    }
 
     private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
 
@@ -794,7 +883,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             }
             index++;
         }
-        if( attachment.getPreview_url().contains("no-preview.png") && successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0){
+        if (attachment.getPreview_url().contains("no-preview.png") && successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
             attachment.setPreview_url(successfullyUploadedFiles.get(0));
         }
         if (!alreadyAdded) {
@@ -820,7 +909,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -837,7 +926,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         mToast = Toasty.error(getApplicationContext(), message, Toast.LENGTH_SHORT);
         mToast.show();
     }
-
 
     // Handles uploading shared images
     public void uploadSharedImage(ArrayList<Uri> uri) {
@@ -863,10 +951,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             }
         }
     }
-
-    String mCurrentPhotoPath;
-    File photoFile = null;
-    public static Uri photoFileUri = null;
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -894,7 +978,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             }
         }
     }
-
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -974,145 +1057,12 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         }
     }
 
-
     private void prepareUpload(Activity activity, Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
         if (uploadReceiver == null) {
             uploadReceiver = new UploadServiceSingleBroadcastReceiver(PixelfedComposeActivity.this);
             uploadReceiver.register(this);
         }
         new asyncPicture(activity, social, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    static class asyncPicture extends AsyncTask<Void, Void, Void> {
-
-        String commpressedFilePath = null;
-        WeakReference<Activity> activityWeakReference;
-        Uri uriFile;
-        boolean error = false;
-        UploadServiceSingleBroadcastReceiver uploadReceiver;
-        String filename;
-        UpdateAccountInfoAsyncTask.SOCIAL social;
-
-        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
-            this.activityWeakReference = new WeakReference<>(activity);
-            this.uriFile = uri;
-            this.uploadReceiver = uploadReceiver;
-            this.filename = filename;
-            this.social = social;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            if (uriFile == null) {
-                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                error = true;
-            }
-            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
-
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if (error) {
-                return null;
-            }
-            commpressedFilePath = Helper.compressImagePath(activityWeakReference.get(), uriFile);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
-            if (!error) {
-                if( commpressedFilePath != null){
-                    uriFile = Uri.fromFile(new File(commpressedFilePath));
-                }
-                Button upload_media = this.activityWeakReference.get().findViewById(R.id.upload_media);
-                Button toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
-                upload_media.setEnabled(false);
-                toot_it.setEnabled(false);
-                if (filename == null) {
-                    filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
-                }
-                filesMap.put(filename, uriFile);
-                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
-            }
-        }
-    }
-
-
-    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
-        String uploadId = UUID.randomUUID().toString();
-        if (uploadReceiver != null) {
-            uploadReceiver.setUploadID(uploadId);
-        }
-        Uri uri;
-        InputStream tempInput = null;
-        FileOutputStream tempOut = null;
-        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
-        int suffixPosition = filename.lastIndexOf(".");
-        String suffix = "";
-        if (suffixPosition > 0) suffix = filename.substring(suffixPosition);
-        try {
-            File file;
-            tempInput = activity.getContentResolver().openInputStream(inUri);
-            if (fname.startsWith("fedilabins_")) {
-                file = File.createTempFile("fedilabins_randomTemp1", suffix, activity.getCacheDir());
-            } else {
-                file = File.createTempFile("randomTemp1", suffix, activity.getCacheDir());
-            }
-
-            filesMap.put(file.getAbsolutePath(), inUri);
-            tempOut = new FileOutputStream(file.getAbsoluteFile());
-            byte[] buff = new byte[1024];
-            int read;
-            assert tempInput != null;
-            while ((read = tempInput.read(buff)) > 0) {
-                tempOut.write(buff, 0, read);
-            }
-            if (BuildConfig.DONATIONS) {
-                uri = FileProvider.getUriForFile(activity,
-                        "fr.gouv.etalab.mastodon.fileProvider",
-                        file);
-            } else {
-                uri = FileProvider.getUriForFile(activity,
-                        "app.fedilab.android.fileProvider",
-                        file);
-            }
-            tempInput.close();
-            tempOut.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            uri = inUri;
-        } finally {
-            IOUtils.closeQuietly(tempInput);
-            IOUtils.closeQuietly(tempOut);
-        }
-
-        try {
-            final String fileName = FileNameCleaner.cleanFileName(fname);
-            SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME + Helper.getLiveInstance(activity), "https");
-            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
-            String url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/v1/media";
-            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
-            uploadConfig
-                    .setClearOnActionForAllStatuses(true);
-            uploadConfig.getProgress().message = activity.getString(R.string.uploading);
-            uploadConfig.getCompleted().autoClear = true;
-            MultipartUploadRequest request = new MultipartUploadRequest(activity, uploadId, url);
-            request.addHeader("Authorization", "Bearer " + token);
-            request.setNotificationConfig(uploadConfig);
-            request.addFileToUpload(uri.toString().replace("file://", ""), "file");
-            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
-                    .startUpload();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -1158,7 +1108,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     public void onCancelled(Context context, UploadInfo uploadInfo) {
         // your code here
     }
-
 
 
     @Override
@@ -1435,8 +1384,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
 
-
-
     private void tootVisibilityDialog() {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
@@ -1643,7 +1590,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                                 deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                             else {
                                 if (currentCursorPosition >= oldContent.length())
-                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                             }
 
                             if (!search.equals(""))
@@ -1653,7 +1600,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                             newContent += "@" + account.getAcct() + " ";
                             int newPosition = newContent.length();
                             if (currentCursorPosition < oldContent.length())
-                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                newContent += oldContent.substring(currentCursorPosition);
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
                             toot_content.setSelection(newPosition);
@@ -1710,7 +1657,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                             deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                         else {
                             if (currentCursorPosition >= oldContent.length())
-                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                         }
 
                         if (!search.equals(""))
@@ -1720,7 +1667,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                         newContent += ":" + shortcode + ": ";
                         int newPosition = newContent.length();
                         if (currentCursorPosition < oldContent.length())
-                            newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                            newContent += oldContent.substring(currentCursorPosition);
                         toot_content.setText(newContent);
                         toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
                         toot_content.setSelection(newPosition);
@@ -1773,7 +1720,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                         deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                     else {
                         if (currentCursorPosition >= oldContent.length())
-                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                     }
 
                     if (!search.equals(""))
@@ -1783,7 +1730,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     newContent += "#" + tag + " ";
                     int newPosition = newContent.length();
                     if (currentCursorPosition < oldContent.length())
-                        newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                        newContent += oldContent.substring(currentCursorPosition);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(countLength(social, toot_content)));
                     toot_content.setSelection(newPosition);
@@ -1888,9 +1835,9 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
 
-    public void redraw(){
+    public void redraw() {
         int position = imageSlider.getCurrentPagePosition();
-        if( position > attachments.size()){
+        if (position > attachments.size()) {
             position = attachments.size();
         }
         sliderAdapter = new SliderAdapter(new WeakReference<>(PixelfedComposeActivity.this), true, attachments);
@@ -2004,7 +1951,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         String currentContent;
         currentContent = toot_content.getText().toString().trim();
         if (!forced) {
-            if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1) )
+            if (currentContent.length() == 0 && (attachments == null || attachments.size() < 1))
                 return;
             if (initialContent == null || initialContent.trim().equals(currentContent))
                 return;
@@ -2038,7 +1985,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -2051,24 +1997,62 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         active = false;
     }
 
+    static class asyncPicture extends AsyncTask<Void, Void, Void> {
 
-    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content) {
-        if (toot_content == null) {
-            return -1;
+        String commpressedFilePath = null;
+        WeakReference<Activity> activityWeakReference;
+        Uri uriFile;
+        boolean error = false;
+        UploadServiceSingleBroadcastReceiver uploadReceiver;
+        String filename;
+        UpdateAccountInfoAsyncTask.SOCIAL social;
+
+        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+            this.activityWeakReference = new WeakReference<>(activity);
+            this.uriFile = uri;
+            this.uploadReceiver = uploadReceiver;
+            this.filename = filename;
+            this.social = social;
         }
-        String content = toot_content.getText().toString();
-        String contentCount = content;
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9.\\-]+[a-z0-9]+)", "$1@$3");
-            Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
-            while (matcherALink.find()) {
-                final String url = matcherALink.group(1);
-                assert url != null;
-                contentCount = contentCount.replace(url, "abcdefghijklmnopkrstuvw");
+
+        @Override
+        protected void onPreExecute() {
+            if (uriFile == null) {
+                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                error = true;
+            }
+            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
+
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if (error) {
+                return null;
+            }
+            commpressedFilePath = Helper.compressImagePath(activityWeakReference.get(), uriFile);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
+            if (!error) {
+                if (commpressedFilePath != null) {
+                    uriFile = Uri.fromFile(new File(commpressedFilePath));
+                }
+                Button upload_media = this.activityWeakReference.get().findViewById(R.id.upload_media);
+                Button toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
+                upload_media.setEnabled(false);
+                toot_it.setEnabled(false);
+                if (filename == null) {
+                    filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
+                }
+                filesMap.put(filename, uriFile);
+                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
             }
         }
-
-        return contentCount.length() - countWithEmoji(content);
     }
 
 }

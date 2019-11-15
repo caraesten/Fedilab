@@ -16,7 +16,6 @@ package app.fedilab.android.activities;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -27,15 +26,8 @@ import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +38,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -68,13 +64,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
+import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 
@@ -82,12 +78,12 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
 
 
     private final int PICK_IVDEO = 52378;
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
     private Button set_upload_file, set_upload_submit;
     private MaterialSpinner set_upload_privacy, set_upload_channel;
     private TextView set_upload_file_name;
     private EditText video_title;
     private HashMap<String, String> channels;
-    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
     private Uri uri;
     private String filename;
     private HashMap<Integer, String> privacyToSend;
@@ -231,11 +227,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
-        if( peertubeInformation == null){
+        if (peertubeInformation == null) {
             return;
         }
         LinkedHashMap<String, String> translations = null;
-        if ( peertubeInformation.getTranslations() != null)
+        if (peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
 
         LinkedHashMap<Integer, String> privaciesInit = new LinkedHashMap<>(peertubeInformation.getPrivacies());
@@ -249,7 +245,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
                 privaciesA[i] = translations.get(pair.getValue());
@@ -356,7 +352,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         uploadConfig.getCancelled().message = getString(R.string.toast_cancelled);
                         uploadConfig.getCompleted().actions.add(new UploadNotificationAction(R.drawable.ic_check, getString(R.string.video_uploaded_action), clickIntent));
 
-                        if( video_title != null && video_title.getText() != null && video_title.getText().toString().trim().length() > 0 ){
+                        if (video_title != null && video_title.getText() != null && video_title.getText().toString().trim().length() > 0) {
                             filename = video_title.getText().toString().trim();
                         }
                         String uploadId = UUID.randomUUID().toString();

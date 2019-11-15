@@ -49,16 +49,6 @@ public class BackupNotificationsSyncJob extends Job {
         Helper.installProvider();
     }
 
-    @NonNull
-    @Override
-    protected Result onRunJob(@NonNull Params params) {
-        //Code refresh here
-
-        backupService();
-        return Result.SUCCESS;
-    }
-
-
     public static int schedule(boolean updateCurrent) {
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(BACKUP_NOTIFICATIONS_SYNC);
@@ -81,6 +71,14 @@ public class BackupNotificationsSyncJob extends Job {
         return jobRequestschedule;
     }
 
+    @NonNull
+    @Override
+    protected Result onRunJob(@NonNull Params params) {
+        //Code refresh here
+
+        backupService();
+        return Result.SUCCESS;
+    }
 
     /**
      * Task in background starts here.

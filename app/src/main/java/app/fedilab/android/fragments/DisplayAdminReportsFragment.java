@@ -18,19 +18,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,8 +38,6 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.LoginActivity;
-import app.fedilab.android.activities.PeertubeActivity;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.PostAdminActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.client.API;
@@ -51,7 +45,6 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AdminAction;
 import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.drawers.ReportsListAdapter;
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnAdminActionInterface;
 import es.dmoral.toasty.Toasty;
 
@@ -217,10 +210,10 @@ public class DisplayAdminReportsFragment extends Fragment implements OnAdminActi
                 });
                 builderInner.show();
             } else {
-                if(apiResponse.getError().getError().length() < 100) {
+                if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
                 }
             }
             return;

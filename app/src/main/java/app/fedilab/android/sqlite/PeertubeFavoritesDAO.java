@@ -38,8 +38,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class PeertubeFavoritesDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public PeertubeFavoritesDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

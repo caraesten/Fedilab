@@ -33,8 +33,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class AccountDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
 
     public AccountDAO(Context context, SQLiteDatabase db) {
@@ -161,7 +161,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER_STATIC, account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
-        if( account.getSocial() != null ) {
+        if (account.getSocial() != null) {
             values.put(Sqlite.COL_SOCIAL, account.getSocial());
         }
         if (account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {

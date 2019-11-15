@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_export_bookmarks"
-        android:title="@string/export_bookmarks"
         android:icon="@drawable/ic_export_bookmarks"
+        android:title="@string/export_bookmarks"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_import_bookmarks"
-        android:title="@string/import_bookmarks"
         android:icon="@drawable/ic_import_bookmarks"
+        android:title="@string/import_bookmarks"
         app:showAsAction="always" />
 
 </menu>

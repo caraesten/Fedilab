@@ -21,50 +21,50 @@
 
     <ImageView
         android:id="@+id/back_ground_image"
-        android:alpha="0.2"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/profile_banner" />
+        android:adjustViewBounds="true"
+        android:alpha="0.2"
+        android:contentDescription="@string/profile_banner"
+        android:scaleType="centerCrop" />
 
     <RelativeLayout
-        android:padding="@dimen/fab_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fab_margin">
         <!-- Profile picture -->
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/dialog_profile_picture"
             android:layout_width="80dp"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:layout_centerHorizontal="true"
             android:layout_height="80dp"
-            android:contentDescription="@string/profile_picture" />
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/profile_picture"
+            android:scaleType="centerCrop" />
         <!-- Screen name -->
         <TextView
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/dialog_profile_picture"
-            android:layout_centerHorizontal="true"
-            android:textSize="18sp"
-            android:gravity="center_horizontal|top"
             android:id="@+id/dialog_profile_name"
             android:layout_width="match_parent"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_profile_picture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal|top"
             android:maxLines="1"
-            android:layout_height="wrap_content" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
         <!-- Description -->
         <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/dialog_profile_name"
-            android:layout_marginTop="10dp"
+            android:id="@+id/dialog_profile_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dialog_profile_description"
-            android:minLines="4"
+            android:layout_below="@+id/dialog_profile_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:lines="4"
-            android:maxLines="5" />
+            android:maxLines="5"
+            android:minLines="4" />
     </RelativeLayout>
 
 

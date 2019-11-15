@@ -25,10 +25,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
-
 import com.jaredrummler.cyanea.Cyanea;
 import com.jaredrummler.cyanea.prefs.CyaneaTheme;
-
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,6 +36,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +56,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class ColorSettingsFragment  extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class ColorSettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private final int PICK_IMPORT_THEME = 5557;
@@ -89,7 +88,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         SettingsActivity.needRestart = true;
 
         if (key.equals("use_custom_theme")) {
-            if( !sharedPreferences.getBoolean("use_custom_theme", false)){
+            if (!sharedPreferences.getBoolean("use_custom_theme", false)) {
 
                 FragmentActivity context = getActivity();
                 assert context != null;
@@ -127,19 +126,19 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
             }
             createPref();
         }
-        if( key.compareTo("pref_theme_picker") == 0){
+        if (key.compareTo("pref_theme_picker") == 0) {
             String theme = sharedPreferences.getString("pref_theme_picker", null);
             List<CyaneaTheme> list = CyaneaTheme.Companion.from(Objects.requireNonNull(getActivity()).getAssets(), "themes/cyanea_themes.json");
-            if( getActivity() != null && theme != null) {
+            if (getActivity() != null && theme != null) {
                 SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 int i = 0;
-                if( theme.compareTo("2") == 0 ) {
+                if (theme.compareTo("2") == 0) {
                     editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
-                }else  if( theme.compareTo("1") == 0 ) {
+                } else if (theme.compareTo("1") == 0) {
                     editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
                     i = 1;
-                }else  if( theme.compareTo("3") == 0 ) {
+                } else if (theme.compareTo("3") == 0) {
                     editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
                     i = 2;
                 }
@@ -158,12 +157,12 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                 Toasty.error(getActivity(), getString(R.string.theme_file_error), Toast.LENGTH_LONG).show();
                 return;
             }
-            if( data.getData() != null) {
+            if (data.getData() != null) {
                 BufferedReader br = null;
                 try {
-                    InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData() );
+                    InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
                     assert inputStream != null;
-                    br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                     String sCurrentLine;
                     int i = 0;
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -171,19 +170,19 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
 
                     editor.putBoolean("use_custom_theme", true);
                     while ((sCurrentLine = br.readLine()) != null) {
-                        if( i > 0 ){
+                        if (i > 0) {
                             String[] line = sCurrentLine.split(",");
-                            if( line.length > 1 ) {
+                            if (line.length > 1) {
                                 String key = line[0];
                                 String value = line[1];
-                                if( key.compareTo("base_theme") == 0){
+                                if (key.compareTo("base_theme") == 0) {
                                     SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor appEditor = sharedpreferences.edit();
                                     appEditor.putInt(Helper.SET_THEME, Integer.parseInt(value));
                                     appEditor.commit();
-                                }else if( key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0){
+                                } else if (key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0) {
                                     editor.putBoolean(key, Boolean.valueOf(value));
-                                }else{
+                                } else {
                                     editor.putInt(key, Integer.valueOf(value));
                                 }
                             }
@@ -214,13 +213,13 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
                     e.printStackTrace();
                 } finally {
                     try {
-                        if (br != null)br.close();
+                        if (br != null) br.close();
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 }
 
-            }else{
+            } else {
                 Toasty.error(getActivity(), getString(R.string.theme_file_error), Toast.LENGTH_LONG).show();
             }
 
@@ -228,20 +227,20 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
     }
 
 
-    private void restart(){
+    private void restart() {
         Intent mStartActivity = new Intent(getActivity(), MainActivity.class);
         int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         assert mgr != null;
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
         System.exit(0);
-        if( getActivity() != null) {
+        if (getActivity() != null) {
             getActivity().finish();
         }
     }
 
-    private void createPref(){
+    private void createPref() {
         getPreferenceScreen().removeAll();
         addPreferencesFromResource(R.xml.fragment_settings_color);
         PreferenceScreen preferenceScreen = getPreferenceScreen();
@@ -262,7 +261,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         Preference pref_import = findPreference("pref_import");
         Preference pref_export = findPreference("pref_export");
         Preference reset_pref = findPreference("reset_pref");
-        if( !sharedpreferences.getBoolean("use_custom_theme", false)){
+        if (!sharedpreferences.getBoolean("use_custom_theme", false)) {
             preferenceScreen.removePreference(theme_link_color);
             preferenceScreen.removePreference(theme_boost_header_color);
             preferenceScreen.removePreference(theme_statuses_color);
@@ -276,7 +275,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
             preferenceScreen.removePreference(reset_pref);
             preferenceScreen.removePreference(pref_export);
 
-        }else{
+        } else {
             preferenceScreen.removePreference(pref_import);
         }
         List<String> array = Arrays.asList(getResources().getStringArray(R.array.settings_theme));
@@ -358,7 +357,7 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
         });
     }
 
-    private void reset(){
+    private void reset() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("theme_boost_header_color");
@@ -376,14 +375,13 @@ public class ColorSettingsFragment  extends PreferenceFragmentCompat implements 
     }
 
 
-
     private void exportColors() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         try {
             String fileName = "Fedilab_color_export_" + Helper.dateFileToString(getActivity(), new Date()) + ".csv";
             String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
             String fullPath = filePath + "/" + fileName;
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(fullPath)), "UTF-8"));
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(fullPath)), StandardCharsets.UTF_8));
             StringBuilder builder = new StringBuilder();
             builder.append("type").append(',');
             builder.append("value").append(',');

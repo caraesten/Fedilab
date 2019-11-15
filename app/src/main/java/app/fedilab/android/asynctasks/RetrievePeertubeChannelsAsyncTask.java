@@ -25,9 +25,9 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 
 
 /**

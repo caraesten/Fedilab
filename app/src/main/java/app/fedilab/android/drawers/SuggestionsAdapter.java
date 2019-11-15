@@ -58,17 +58,6 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_suggestions, parent, false));
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView suggestion_content;
-        private ImageView suggestion_image;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            suggestion_content = itemView.findViewById(R.id.suggestion_content);
-            suggestion_image = itemView.findViewById(R.id.suggestion_image);
-        }
-    }
-
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         final ViewHolder holder = (ViewHolder) viewHolder;
@@ -91,6 +80,17 @@ public class SuggestionsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return suggestions.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView suggestion_content;
+        private ImageView suggestion_image;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            suggestion_content = itemView.findViewById(R.id.suggestion_content);
+            suggestion_image = itemView.findViewById(R.id.suggestion_image);
+        }
     }
 
 

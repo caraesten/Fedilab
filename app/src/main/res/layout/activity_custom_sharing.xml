@@ -17,17 +17,17 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeContainer"
-    android:paddingLeft="@dimen/drawer_padding"
-    android:paddingRight="@dimen/drawer_padding"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/drawer_padding"
+    android:paddingRight="@dimen/drawer_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="@dimen/fab_margin"
         android:orientation="vertical"
+        android:padding="@dimen/fab_margin"
         tools:ignore="UselessParent">
 
         <!-- Custom Sharing SETTINGS -->
@@ -49,14 +49,14 @@
             android:text="@string/title_header_custom_sharing" />
 
         <EditText
-            android:layout_marginTop="10dp"
+            android:id="@+id/set_custom_sharing_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/set_custom_sharing_title"
-            android:minLines="1"
+            android:layout_marginTop="10dp"
+            android:hint="@string/title_hint_custom_sharing"
             android:lines="2"
             android:maxLines="2"
-            android:hint="@string/title_hint_custom_sharing" />
+            android:minLines="1" />
 
 
         <!-- Description -->
@@ -68,11 +68,11 @@
             android:text="@string/description_header_custom_sharing" />
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:id="@+id/set_custom_sharing_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:id="@+id/set_custom_sharing_description" />
+            android:layout_marginTop="10dp"
+            android:textSize="18sp" />
 
 
         <!-- Keywords -->
@@ -84,26 +84,26 @@
             android:text="@string/keywords_header_custom_sharing" />
 
         <EditText
-            android:layout_marginTop="10dp"
+            android:id="@+id/set_custom_sharing_keywords"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/set_custom_sharing_keywords"
-            android:minLines="1"
+            android:layout_marginTop="10dp"
+            android:hint="@string/keywords_hint_custom_sharing"
             android:lines="2"
             android:maxLines="2"
-            android:hint="@string/keywords_hint_custom_sharing" />
+            android:minLines="1" />
 
 
         <Button
-            android:layout_marginTop="5dp"
             android:id="@+id/set_custom_sharing_save"
-            android:layout_gravity="center"
-            android:gravity="center"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:maxWidth="150dp"
-            android:text="Submit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:maxWidth="150dp"
+            android:text="Submit" />
     </LinearLayout>
 </ScrollView>
 

@@ -15,13 +15,12 @@
     see <http://www.gnu.org/licenses>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_timeline_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- Listview Notifications -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
         android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -33,28 +32,28 @@
 
     <RelativeLayout
         android:id="@+id/no_action"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <TextView
-            android:padding="10dp"
-            android:gravity="center"
-            android:textSize="25sp"
-            android:layout_gravity="center"
-            android:textStyle="italic|bold"
-            android:typeface="serif"
-            android:text="@string/no_notifications"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/no_notifications"
+            android:textSize="25sp"
+            android:textStyle="italic|bold"
+            android:typeface="serif" />
     </RelativeLayout>
     <!-- Main Loader -->
     <RelativeLayout
         android:id="@+id/loader"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -64,12 +63,12 @@
     <!-- Loader for next notifications -->
     <RelativeLayout
         android:id="@+id/loading_next_notifications"
-        android:visibility="gone"
         android:layout_width="match_parent"
+        android:layout_height="20dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|center_horizontal"
         android:gravity="bottom|center_horizontal"
-        android:layout_height="20dp">
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="match_parent"

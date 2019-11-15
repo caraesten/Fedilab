@@ -20,9 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.view.Window;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +41,6 @@ import app.fedilab.android.sqlite.Sqlite;
  */
 
 public class LiveNotificationSettingsAccountsActivity extends BaseActivity {
-
 
 
     @Override

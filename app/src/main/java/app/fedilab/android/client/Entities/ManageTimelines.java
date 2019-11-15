@@ -15,22 +15,12 @@ package app.fedilab.android.client.Entities;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -40,19 +30,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import app.fedilab.android.sqlite.InstancesDAO;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.ListActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
@@ -60,23 +53,24 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
+import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.sqlite.Sqlite.DB_NAME;
 
 
 public class ManageTimelines {
 
+    private static String userId;
+    private static String instance;
     private int position;
     private int id;
     private boolean displayed;
     private Type type;
-    private static String userId;
-    private static String instance;
     private RemoteInstance remoteInstance;
     private TagTimeline tagTimeline;
     private List listTimeline;
@@ -84,89 +78,6 @@ public class ManageTimelines {
 
 
     private boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
-
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public boolean isDisplayed() {
-        return displayed;
-    }
-
-    public void setDisplayed(boolean displayed) {
-        this.displayed = displayed;
-    }
-
-    public ManageTimelines.Type getType() {
-        return type;
-    }
-
-    public void setType(ManageTimelines.Type type) {
-        this.type = type;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-
-    public String getInstance() {
-        return instance;
-    }
-
-
-    public RemoteInstance getRemoteInstance() {
-        return remoteInstance;
-    }
-
-    public void setRemoteInstance(RemoteInstance remoteInstance) {
-        this.remoteInstance = remoteInstance;
-    }
-
-    public TagTimeline getTagTimeline() {
-        return tagTimeline;
-    }
-
-    public void setTagTimeline(TagTimeline tagTimeline) {
-        this.tagTimeline = tagTimeline;
-    }
-
-
-    public List getListTimeline() {
-        return listTimeline;
-    }
-
-    public void setListTimeline(List listTimeline) {
-        this.listTimeline = listTimeline;
-    }
-
-    public enum Type {
-        HOME,
-        DIRECT,
-        NOTIFICATION,
-        LOCAL,
-        PUBLIC,
-        ART,
-        PEERTUBE,
-        TAG,
-        LIST,
-        INSTANCE
-    }
-
 
     public static Type typeFromDb(String value) {
         switch (value) {
@@ -219,7 +130,6 @@ public class ManageTimelines {
         }
         return null;
     }
-
 
     public static RetrieveFeedsAsyncTask.Type transform(Context context, Type type) {
 
@@ -293,6 +203,69 @@ public class ManageTimelines {
         return null;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public boolean isDisplayed() {
+        return displayed;
+    }
+
+    public void setDisplayed(boolean displayed) {
+        this.displayed = displayed;
+    }
+
+    public ManageTimelines.Type getType() {
+        return type;
+    }
+
+    public void setType(ManageTimelines.Type type) {
+        this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getInstance() {
+        return instance;
+    }
+
+    public RemoteInstance getRemoteInstance() {
+        return remoteInstance;
+    }
+
+    public void setRemoteInstance(RemoteInstance remoteInstance) {
+        this.remoteInstance = remoteInstance;
+    }
+
+    public TagTimeline getTagTimeline() {
+        return tagTimeline;
+    }
+
+    public void setTagTimeline(TagTimeline tagTimeline) {
+        this.tagTimeline = tagTimeline;
+    }
+
+    public List getListTimeline() {
+        return listTimeline;
+    }
+
+    public void setListTimeline(List listTimeline) {
+        this.listTimeline = listTimeline;
+    }
 
     public TabLayout createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines) {
 
@@ -417,7 +390,6 @@ public class ManageTimelines {
         return tabLayout;
     }
 
-
     private void notificationClik(Context context, ManageTimelines tl, TabLayout tabLayout) {
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
@@ -522,7 +494,6 @@ public class ManageTimelines {
             }
 
     }
-
 
     private void manageFilters(Context context, ManageTimelines tl, LinearLayout tabStrip, int position) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -739,7 +710,6 @@ public class ManageTimelines {
             popup.show();
         }
     }
-
 
     private void tagClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position) {
 
@@ -961,7 +931,6 @@ public class ManageTimelines {
 
     }
 
-
     private void instanceClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position) {
 
 
@@ -1162,6 +1131,20 @@ public class ManageTimelines {
 
         popup.show();
 
+    }
+
+
+    public enum Type {
+        HOME,
+        DIRECT,
+        NOTIFICATION,
+        LOCAL,
+        PUBLIC,
+        ART,
+        PEERTUBE,
+        TAG,
+        LIST,
+        INSTANCE
     }
 
 }

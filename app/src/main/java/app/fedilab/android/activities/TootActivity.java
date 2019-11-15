@@ -15,7 +15,7 @@
 package app.fedilab.android.activities;
 
 
-import android.Manifest;;
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -38,21 +38,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
@@ -89,6 +74,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -101,7 +100,6 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
 import com.vanniktech.emoji.EmojiPopup;
-
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
@@ -180,7 +178,6 @@ import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.helper.RecyclerItemClickListener;
-import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
@@ -218,9 +215,22 @@ import static app.fedilab.android.helper.Helper.countWithEmoji;
 public class TootActivity extends BaseActivity implements UploadStatusDelegate, OnPostActionInterface, OnRetrieveSearcAccountshInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface, OnRetrieveAttachmentInterface, OnRetrieveRelationshipInterface {
 
 
-    private String visibility;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
+    public static final int REQUEST_CAMERA_PERMISSION_RESULT = 1653;
+    public static final int SEND_VOICE_MESSAGE = 1423;
+    public static HashMap<String, Uri> filesMap;
+    public static boolean autocomplete;
+    public static Uri photoFileUri = null;
+    static boolean active = false;
+    private static String instance;
+    private static int searchDeep = 15;
     private final int PICK_IMAGE = 56556;
     private final int TAKE_PHOTO = 56532;
+    public long currentToId;
+    List<Emojis> emojis;
+    String mCurrentPhotoPath;
+    File photoFile = null;
+    private String visibility;
     private ImageButton toot_picture;
     private LinearLayout toot_picture_container;
     private ArrayList<Attachment> attachments;
@@ -234,7 +244,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private String urlMention = null;
     private String sharedContent, sharedSubject, sharedContentIni;
     private CheckBox toot_sensitive;
-    public long currentToId;
     private long restored;
     private TextView title;
     private ImageView pp_actionBar;
@@ -244,7 +253,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private HorizontalScrollView picture_scrollview;
     private TextView toot_space_left;
     private String initialContent;
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private Account accountReply;
     private View popup_trans;
     private AlertDialog dialogTrans;
@@ -252,13 +260,11 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private String mentionAccount;
     private Status idRedirect;
     private String userId;
-    private static String instance;
     private Account account;
     private ArrayList<String> splitToot;
     private int stepSpliToot;
     private boolean removed;
     private boolean restoredScheduled;
-    static boolean active = false;
     private int style;
     private StoredStatus scheduledstatus;
     private boolean isScheduled;
@@ -268,24 +274,431 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private RelativeLayout loader;
     private String contentType;
     private int max_media_count;
-    public static HashMap<String, Uri> filesMap;
     private Poll poll;
     private ImageButton poll_action;
-    public static boolean autocomplete;
     private int pollCountItem;
     private UploadServiceSingleBroadcastReceiver uploadReceiver;
     private String quickmessagecontent, quickmessagevisibility;
-
-    public static final int REQUEST_CAMERA_PERMISSION_RESULT = 1653;
-    public static final int SEND_VOICE_MESSAGE = 1423;
     private TextView warning_message;
     private Editor wysiwyg;
     private EditText wysiwygEditText;
     private String url_for_media;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
-    List<Emojis> emojis;
+    private BroadcastReceiver imageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String imgpath = intent.getStringExtra("imgpath");
+            if (imgpath != null) {
+                prepareUpload(TootActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
+            }
+        }
+    };
+    private BroadcastReceiver add_new_media = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-    private static int searchDeep = 15;
+            JSONObject response = null;
+            ArrayList<String> successfullyUploadedFiles = null;
+            try {
+                response = new JSONObject(intent.getStringExtra("response"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            successfullyUploadedFiles = intent.getStringArrayListExtra("uploadInfo");
+            addNewMedia(response, successfullyUploadedFiles);
+        }
+    };
+
+    public static TextWatcher initializeTextWatcher(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, Status status,
+                                                    MastalabAutoCompleteTextView toot_content, EditText toot_cw_content, TextView toot_space_left,
+                                                    ImageView pp_actionBar, ProgressBar pp_progress,
+                                                    OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
+    ) {
+
+        String pattern = "(.|\\s)*(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)";
+        final Pattern sPattern = Pattern.compile(pattern);
+
+        String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
+        final Pattern tPattern = Pattern.compile(patternTag);
+
+        String patternEmoji = "^(.|\\s)*(:([\\w_]+))$";
+        final Pattern ePattern = Pattern.compile(patternEmoji);
+        final int[] currentCursorPosition = {toot_content.getSelectionStart()};
+        final String[] newContent = {null};
+        final int[] searchLength = {searchDeep};
+        TextWatcher textw = null;
+        TextWatcher finalTextw = textw;
+        textw = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (status != null) {
+                    status.setQuickReplyContent(s.toString());
+                }
+                if (autocomplete) {
+                    toot_content.removeTextChangedListener(finalTextw);
+                    Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            String fedilabHugsTrigger = ":fedilab_hugs:";
+                            String fedilabMorseTrigger = ":fedilab_morse:";
+
+                            if (s.toString().contains(fedilabHugsTrigger)) {
+                                newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
+                                int currentLength = countLength(social, toot_content, toot_cw_content);
+                                int toFill = 500 - currentLength;
+                                if (toFill <= 0) {
+                                    return;
+                                }
+
+
+                                StringBuilder hugs = new StringBuilder();
+                                for (int i = 0; i < toFill; i++) {
+                                    hugs.append(new String(Character.toChars(0x1F917)));
+                                }
+
+                                Handler mainHandler = new Handler(Looper.getMainLooper());
+
+                                Runnable myRunnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        newContent[0] = newContent[0] + hugs.toString();
+                                        toot_content.setText(newContent[0]);
+                                        toot_content.setSelection(toot_content.getText().length());
+                                        // toot_content.addTextChangedListener(finalTextw);
+                                        autocomplete = false;
+                                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
+                                    }
+                                };
+                                mainHandler.post(myRunnable);
+                            } else if (s.toString().contains(fedilabMorseTrigger)) {
+                                newContent[0] = s.toString().replaceAll(fedilabMorseTrigger, "").trim();
+                                List<String> mentions = new ArrayList<>();
+                                String mentionPattern = "@[a-z0-9_]+(@[a-z0-9\\.\\-]+[a-z0-9]+)?";
+                                final Pattern mPattern = Pattern.compile(mentionPattern, Pattern.CASE_INSENSITIVE);
+                                Matcher matcherMentions = mPattern.matcher(newContent[0]);
+                                while (matcherMentions.find()) {
+                                    mentions.add(matcherMentions.group());
+                                }
+                                for (String mention : mentions) {
+                                    newContent[0] = newContent[0].replace(mention, "");
+                                }
+                                newContent[0] = Normalizer.normalize(newContent[0], Normalizer.Form.NFD);
+                                newContent[0] = newContent[0].replaceAll("[^\\p{ASCII}]", "");
+
+                                HashMap<String, String> ALPHA_TO_MORSE = new HashMap<>();
+                                for (int i = 0; i < ALPHA.length && i < MORSE.length; i++) {
+                                    ALPHA_TO_MORSE.put(ALPHA[i], MORSE[i]);
+                                }
+                                StringBuilder builder = new StringBuilder();
+                                String[] words = newContent[0].trim().split(" ");
+
+                                for (String word : words) {
+                                    for (int i = 0; i < word.length(); i++) {
+                                        String morse = ALPHA_TO_MORSE.get(word.substring(i, i + 1).toLowerCase());
+                                        builder.append(morse).append(" ");
+                                    }
+
+                                    builder.append("  ");
+                                }
+                                newContent[0] = "";
+                                for (String mention : mentions) {
+                                    newContent[0] += mention + " ";
+                                }
+                                newContent[0] += builder.toString();
+
+                                Handler mainHandler = new Handler(Looper.getMainLooper());
+
+                                Runnable myRunnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toot_content.setText(newContent[0]);
+                                        toot_content.setSelection(toot_content.getText().length());
+                                        autocomplete = false;
+                                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
+                                    }
+                                };
+                                mainHandler.post(myRunnable);
+                            }
+                        }
+                    };
+                    thread.start();
+                    return;
+                }
+
+                if (toot_content.getSelectionStart() != 0)
+                    currentCursorPosition[0] = toot_content.getSelectionStart();
+                if (s.toString().length() == 0)
+                    currentCursorPosition[0] = 0;
+                //Only check last 15 characters before cursor position to avoid lags
+                if (currentCursorPosition[0] < searchDeep) { //Less than 15 characters are written before the cursor position
+                    searchLength[0] = currentCursorPosition[0];
+                } else {
+                    searchLength[0] = searchDeep;
+                }
+
+
+                int totalChar = countLength(social, toot_content, toot_cw_content);
+                toot_space_left.setText(String.valueOf(totalChar));
+                if (currentCursorPosition[0] - (searchLength[0] - 1) < 0 || currentCursorPosition[0] == 0 || currentCursorPosition[0] > s.toString().length())
+                    return;
+
+                String patternh = "^(.|\\s)*(:fedilab_hugs:)$";
+                final Pattern hPattern = Pattern.compile(patternh);
+                Matcher mh = hPattern.matcher((s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])));
+
+                if (mh.matches()) {
+                    autocomplete = true;
+                    return;
+                }
+
+                String patternM = "^(.|\\s)*(:fedilab_morse:)$";
+                final Pattern mPattern = Pattern.compile(patternM);
+                Matcher mm = mPattern.matcher((s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])));
+                if (mm.matches()) {
+                    autocomplete = true;
+                    return;
+                }
+                String[] searchInArray = (s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])).split("\\s");
+                if (searchInArray.length < 1) {
+                    return;
+                }
+                String searchIn = searchInArray[searchInArray.length - 1];
+                Matcher m, mt;
+                m = sPattern.matcher(searchIn);
+                if (m.matches()) {
+                    String search = m.group();
+                    if (pp_progress != null && pp_actionBar != null) {
+                        pp_progress.setVisibility(View.VISIBLE);
+                        pp_actionBar.setVisibility(View.GONE);
+                    }
+                    new RetrieveSearchAccountsAsyncTask(context, search, listenerAccount).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
+                    mt = tPattern.matcher(searchIn);
+                    if (mt.matches()) {
+                        String search = mt.group(3);
+                        if (pp_progress != null && pp_actionBar != null) {
+                            pp_progress.setVisibility(View.VISIBLE);
+                            pp_actionBar.setVisibility(View.GONE);
+                        }
+                        new RetrieveSearchAsyncTask(context, search, true, listener).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        mt = ePattern.matcher(searchIn);
+                        if (mt.matches()) {
+                            String shortcode = mt.group(3);
+                            if (pp_progress != null && pp_actionBar != null) {
+                                pp_progress.setVisibility(View.VISIBLE);
+                                pp_actionBar.setVisibility(View.GONE);
+                            }
+                            new RetrieveEmojiAsyncTask(context, shortcode, listenerEmoji).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } else {
+                            toot_content.dismissDropDown();
+                        }
+                    }
+                }
+
+
+                totalChar = countLength(social, toot_content, toot_cw_content);
+                toot_space_left.setText(String.valueOf(totalChar));
+            }
+        };
+        return textw;
+    }
+
+    static private void upload(Activity activity, Account account, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+        String uploadId = UUID.randomUUID().toString();
+        if (uploadReceiver != null) {
+            uploadReceiver.setUploadID(uploadId);
+        }
+        Uri uri;
+        InputStream tempInput = null;
+        FileOutputStream tempOut = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if (suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            File file;
+            tempInput = activity.getContentResolver().openInputStream(inUri);
+            if (fname.startsWith("fedilabins_")) {
+                file = File.createTempFile("fedilabins_randomTemp1", suffix, activity.getCacheDir());
+            } else {
+                file = File.createTempFile("randomTemp1", suffix, activity.getCacheDir());
+            }
+
+            filesMap.put(file.getAbsolutePath(), inUri);
+            tempOut = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read;
+            assert tempInput != null;
+            while ((read = tempInput.read(buff)) > 0) {
+                tempOut.write(buff, 0, read);
+            }
+            if (BuildConfig.DONATIONS) {
+                uri = FileProvider.getUriForFile(activity,
+                        "fr.gouv.etalab.mastodon.fileProvider",
+                        file);
+            } else {
+                uri = FileProvider.getUriForFile(activity,
+                        "app.fedilab.android.fileProvider",
+                        file);
+            }
+            tempInput.close();
+            tempOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(tempOut);
+        }
+
+        try {
+            final String fileName = FileNameCleaner.cleanFileName(fname);
+            SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME + account.getInstance(), "https");
+            String token = account.getToken();
+
+            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
+            String url;
+            if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                url = scheme + "://" + account.getInstance() + "/api/v1/media";
+            } else {
+                url = scheme + "://" + account.getInstance() + "/api/media/upload.json";
+            }
+            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+            uploadConfig
+                    .setClearOnActionForAllStatuses(true);
+            uploadConfig.getProgress().message = activity.getString(R.string.uploading);
+            uploadConfig.getCompleted().autoClear = true;
+            MultipartUploadRequest request = new MultipartUploadRequest(activity, uploadId, url);
+            if (token != null && !token.startsWith("Basic "))
+                request.addHeader("Authorization", "Bearer " + token);
+            else if (token != null && token.startsWith("Basic "))
+                request.addHeader("Authorization", token);
+            request.setNotificationConfig(uploadConfig);
+            if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                request.addFileToUpload(uri.toString().replace("file://", ""), "file");
+            } else {
+                request.addFileToUpload(uri.toString().replace("file://", ""), "media");
+            }
+            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
+                    .startUpload();
+        } catch (MalformedURLException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void manageMentions(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, String userIdReply, MastalabAutoCompleteTextView contentView, EditText CWView, TextView counterView, Status tootReply) {
+
+        //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+        ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int cursorReply = 0;
+
+        if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
+            contentView.setText(String.format("@%s", tootReply.getAccount().getAcct()));
+            mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
+            //Evaluate the cursor position => mention length + 1 char for carriage return
+            cursorReply = contentView.getText().toString().length() + 1;
+        }
+        if (tootReply.getMentions() != null) {
+            //Put other accounts mentioned at the bottom
+            boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
+            if (capitalize)
+                contentView.setText(String.format("%s", (contentView.getText().toString() + "\n\n")));
+            else
+                contentView.setText(String.format("%s", (contentView.getText().toString() + " ")));
+            for (Mention mention : tootReply.getMentions()) {
+                if (mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                    mentionedAccountsAdded.add(mention.getAcct());
+                    String tootTemp = String.format("@%s ", mention.getAcct());
+                    contentView.setText(String.format("%s ", (contentView.getText().toString() + tootTemp.trim())));
+                }
+            }
+
+            contentView.setText(contentView.getText().toString().trim());
+            if (contentView.getText().toString().startsWith("@")) {
+                if (capitalize)
+                    contentView.append("\n");
+                else
+                    contentView.append(" ");
+            }
+            counterView.setText(String.valueOf(countLength(social, contentView, CWView)));
+            contentView.requestFocus();
+
+            if (capitalize) {
+                if (mentionedAccountsAdded.size() == 1) {
+                    contentView.setSelection(contentView.getText().length()); //Put cursor at the end
+                } else {
+                    if (cursorReply > 0 && cursorReply < contentView.getText().length())
+                        contentView.setSelection(cursorReply);
+                    else
+                        contentView.setSelection(contentView.getText().length()); //Put cursor at the end
+                }
+            } else {
+                contentView.setSelection(contentView.getText().length()); //Put cursor at the end
+            }
+        }
+    }
+
+    public static String manageMentions(Context context, String userIdReply, Status tootReply) {
+        String contentView = "";
+        //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+        ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+
+        if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
+            contentView = String.format("@%s", tootReply.getAccount().getAcct());
+            mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
+            //Evaluate the cursor position => mention length + 1 char for carriage return
+        }
+        if (tootReply.getMentions() != null) {
+            //Put other accounts mentioned at the bottom
+            contentView = String.format("%s", (contentView + " "));
+            for (Mention mention : tootReply.getMentions()) {
+                if (mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                    mentionedAccountsAdded.add(mention.getAcct());
+                    String tootTemp = String.format("@%s ", mention.getAcct());
+                    contentView = String.format("%s ", (contentView + tootTemp.trim()));
+                }
+            }
+            contentView = contentView.trim();
+            if (contentView.startsWith("@")) {
+                contentView += " ";
+            }
+        }
+        return contentView;
+    }
+
+    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content, EditText toot_cw_content) {
+        if (toot_content == null || toot_cw_content == null) {
+            return -1;
+        }
+        String content = toot_content.getText().toString();
+        String cwContent = toot_cw_content.getText().toString();
+        String contentCount = content;
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
+            Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
+            while (matcherALink.find()) {
+                final String url = matcherALink.group(1);
+                contentCount = contentCount.replace(url, "abcdefghijklmnopkrstuvw");
+            }
+        }
+
+        int contentLength = contentCount.length() - countWithEmoji(content);
+        int cwLength = cwContent.length() - countWithEmoji(cwContent);
+        return cwLength + contentLength;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -408,7 +821,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         int iconColor = prefs.getInt("theme_icons_color", -1);
-        if( iconColor != -1){
+        if (iconColor != -1) {
             Helper.changeDrawableColor(getApplicationContext(), toot_emoji, iconColor);
             Helper.changeDrawableColor(getApplicationContext(), toot_visibility, iconColor);
             Helper.changeDrawableColor(getApplicationContext(), poll_action, iconColor);
@@ -479,8 +892,8 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                     if (currentCursorPosition - (searchLength - 1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                         return;
 
-                    String[] searchInArray =(s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition)).split("\\s");
-                    String searchIn = searchInArray[searchInArray.length-1];
+                    String[] searchInArray = (s.toString().substring(currentCursorPosition - searchLength, currentCursorPosition)).split("\\s");
+                    String searchIn = searchInArray[searchInArray.length - 1];
                     Matcher m, mt;
                     m = sPattern.matcher(searchIn);
                     if (m.matches()) {
@@ -899,238 +1312,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static TextWatcher initializeTextWatcher(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, Status status,
-                                                    MastalabAutoCompleteTextView toot_content, EditText toot_cw_content, TextView toot_space_left,
-                                                    ImageView pp_actionBar, ProgressBar pp_progress,
-                                                    OnRetrieveSearchInterface listener, OnRetrieveSearcAccountshInterface listenerAccount, OnRetrieveEmojiInterface listenerEmoji
-    ) {
-
-        String pattern = "(.|\\s)*(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)";
-        final Pattern sPattern = Pattern.compile(pattern);
-
-        String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
-        final Pattern tPattern = Pattern.compile(patternTag);
-
-        String patternEmoji = "^(.|\\s)*(:([\\w_]+))$";
-        final Pattern ePattern = Pattern.compile(patternEmoji);
-        final int[] currentCursorPosition = {toot_content.getSelectionStart()};
-        final String[] newContent = {null};
-        final int[] searchLength = {searchDeep};
-        TextWatcher textw = null;
-        TextWatcher finalTextw = textw;
-        textw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if( status != null ) {
-                    status.setQuickReplyContent(s.toString());
-                }
-                if (autocomplete) {
-                    toot_content.removeTextChangedListener(finalTextw);
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            String fedilabHugsTrigger = ":fedilab_hugs:";
-                            String fedilabMorseTrigger = ":fedilab_morse:";
-
-                            if (s.toString().contains(fedilabHugsTrigger)) {
-                                newContent[0] = s.toString().replaceAll(fedilabHugsTrigger, "");
-                                int currentLength = countLength(social, toot_content, toot_cw_content);
-                                int toFill = 500 - currentLength;
-                                if (toFill <= 0) {
-                                    return;
-                                }
-
-
-                                StringBuilder hugs = new StringBuilder();
-                                for (int i = 0; i < toFill; i++) {
-                                    hugs.append(new String(Character.toChars(0x1F917)));
-                                }
-
-                                Handler mainHandler = new Handler(Looper.getMainLooper());
-
-                                Runnable myRunnable = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        newContent[0] = newContent[0] + hugs.toString();
-                                        toot_content.setText(newContent[0]);
-                                        toot_content.setSelection(toot_content.getText().length());
-                                        // toot_content.addTextChangedListener(finalTextw);
-                                        autocomplete = false;
-                                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
-                                    }
-                                };
-                                mainHandler.post(myRunnable);
-                            } else if (s.toString().contains(fedilabMorseTrigger)) {
-                                newContent[0] = s.toString().replaceAll(fedilabMorseTrigger, "").trim();
-                                List<String> mentions = new ArrayList<>();
-                                String mentionPattern = "@[a-z0-9_]+(@[a-z0-9\\.\\-]+[a-z0-9]+)?";
-                                final Pattern mPattern = Pattern.compile(mentionPattern, Pattern.CASE_INSENSITIVE);
-                                Matcher matcherMentions = mPattern.matcher(newContent[0]);
-                                while (matcherMentions.find()) {
-                                    mentions.add(matcherMentions.group());
-                                }
-                                for (String mention : mentions) {
-                                    newContent[0] = newContent[0].replace(mention, "");
-                                }
-                                newContent[0] = Normalizer.normalize(newContent[0], Normalizer.Form.NFD);
-                                newContent[0] = newContent[0].replaceAll("[^\\p{ASCII}]", "");
-
-                                HashMap<String, String> ALPHA_TO_MORSE = new HashMap<>();
-                                for (int i = 0; i < ALPHA.length && i < MORSE.length; i++) {
-                                    ALPHA_TO_MORSE.put(ALPHA[i], MORSE[i]);
-                                }
-                                StringBuilder builder = new StringBuilder();
-                                String[] words = newContent[0].trim().split(" ");
-
-                                for (String word : words) {
-                                    for (int i = 0; i < word.length(); i++) {
-                                        String morse = ALPHA_TO_MORSE.get(word.substring(i, i + 1).toLowerCase());
-                                        builder.append(morse).append(" ");
-                                    }
-
-                                    builder.append("  ");
-                                }
-                                newContent[0] = "";
-                                for (String mention : mentions) {
-                                    newContent[0] += mention + " ";
-                                }
-                                newContent[0] += builder.toString();
-
-                                Handler mainHandler = new Handler(Looper.getMainLooper());
-
-                                Runnable myRunnable = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        toot_content.setText(newContent[0]);
-                                        toot_content.setSelection(toot_content.getText().length());
-                                        autocomplete = false;
-                                        toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
-                                    }
-                                };
-                                mainHandler.post(myRunnable);
-                            }
-                        }
-                    };
-                    thread.start();
-                    return;
-                }
-
-                if (toot_content.getSelectionStart() != 0)
-                    currentCursorPosition[0] = toot_content.getSelectionStart();
-                if (s.toString().length() == 0)
-                    currentCursorPosition[0] = 0;
-                //Only check last 15 characters before cursor position to avoid lags
-                if (currentCursorPosition[0] < searchDeep) { //Less than 15 characters are written before the cursor position
-                    searchLength[0] = currentCursorPosition[0];
-                } else {
-                    searchLength[0] = searchDeep;
-                }
-
-
-                int totalChar = countLength(social, toot_content, toot_cw_content);
-                toot_space_left.setText(String.valueOf(totalChar));
-                if (currentCursorPosition[0] - (searchLength[0] - 1) < 0 || currentCursorPosition[0] == 0 || currentCursorPosition[0] > s.toString().length())
-                    return;
-
-                String patternh = "^(.|\\s)*(:fedilab_hugs:)$";
-                final Pattern hPattern = Pattern.compile(patternh);
-                Matcher mh = hPattern.matcher((s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])));
-
-                if (mh.matches()) {
-                    autocomplete = true;
-                    return;
-                }
-
-                String patternM = "^(.|\\s)*(:fedilab_morse:)$";
-                final Pattern mPattern = Pattern.compile(patternM);
-                Matcher mm = mPattern.matcher((s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])));
-                if (mm.matches()) {
-                    autocomplete = true;
-                    return;
-                }
-                String[] searchInArray =(s.toString().substring(currentCursorPosition[0] - searchLength[0], currentCursorPosition[0])).split("\\s");
-                if( searchInArray.length < 1){
-                    return;
-                }
-                String searchIn = searchInArray[searchInArray.length-1];
-                Matcher m, mt;
-                m = sPattern.matcher(searchIn);
-                if (m.matches()) {
-                    String search = m.group();
-                    if (pp_progress != null && pp_actionBar != null) {
-                        pp_progress.setVisibility(View.VISIBLE);
-                        pp_actionBar.setVisibility(View.GONE);
-                    }
-                    new RetrieveSearchAccountsAsyncTask(context, search, listenerAccount).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                } else {
-                    mt = tPattern.matcher(searchIn);
-                    if (mt.matches()) {
-                        String search = mt.group(3);
-                        if (pp_progress != null && pp_actionBar != null) {
-                            pp_progress.setVisibility(View.VISIBLE);
-                            pp_actionBar.setVisibility(View.GONE);
-                        }
-                        new RetrieveSearchAsyncTask(context, search, true, listener).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    } else {
-                        mt = ePattern.matcher(searchIn);
-                        if (mt.matches()) {
-                            String shortcode = mt.group(3);
-                            if (pp_progress != null && pp_actionBar != null) {
-                                pp_progress.setVisibility(View.VISIBLE);
-                                pp_actionBar.setVisibility(View.GONE);
-                            }
-                            new RetrieveEmojiAsyncTask(context, shortcode, listenerEmoji).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } else {
-                            toot_content.dismissDropDown();
-                        }
-                    }
-                }
-
-
-                totalChar = countLength(social, toot_content, toot_cw_content);
-                toot_space_left.setText(String.valueOf(totalChar));
-            }
-        };
-        return textw;
-    }
-
-
-    private BroadcastReceiver imageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String imgpath = intent.getStringExtra("imgpath");
-            if (imgpath != null) {
-                prepareUpload(TootActivity.this, Uri.fromFile(new File(imgpath)), null, uploadReceiver);
-            }
-        }
-    };
-
-    private BroadcastReceiver add_new_media = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            JSONObject response = null;
-            ArrayList<String> successfullyUploadedFiles = null;
-            try {
-                response = new JSONObject(intent.getStringExtra("response"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            successfullyUploadedFiles = intent.getStringArrayListExtra("uploadInfo");
-            addNewMedia(response, successfullyUploadedFiles);
-        }
-    };
-
-
     private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
         Attachment attachment;
         //response = new JSONObject(serverResponse.getBodyAsString());
@@ -1141,7 +1322,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         boolean alreadyAdded = false;
         int index = 0;
-        if( attachments == null ){
+        if (attachments == null) {
             attachments = new ArrayList<>();
         }
         for (Attachment attach_ : attachments) {
@@ -1206,7 +1387,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                         fileName = (String) pair.getKey();
                                         it.remove();
                                     }
-                                    if (fileName != null && fileName.toString().contains("fedilabins_")) {
+                                    if (fileName != null && fileName.contains("fedilabins_")) {
                                         wysiwyg.insertImage(resource);
                                     }
                                 }
@@ -1271,7 +1452,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -1297,7 +1478,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         mToast = Toasty.error(getApplicationContext(), message, Toast.LENGTH_SHORT);
         mToast.show();
     }
-
 
     // Handles uploading shared images
     public void uploadSharedImage(ArrayList<Uri> uri) {
@@ -1325,10 +1505,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
-    String mCurrentPhotoPath;
-    File photoFile = null;
-    public static Uri photoFileUri = null;
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -1355,7 +1531,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }
     }
-
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -1438,169 +1613,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
-
     private void prepareUpload(Activity activity, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
         if (uploadReceiver == null) {
             uploadReceiver = new UploadServiceSingleBroadcastReceiver(TootActivity.this);
             uploadReceiver.register(this);
         }
         new asyncPicture(activity, account, social, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    static class asyncPicture extends AsyncTask<Void, Void, Void> {
-
-        String commpressedFilePath;
-        WeakReference<Activity> activityWeakReference;
-        android.net.Uri uriFile;
-        boolean error = false;
-        UploadServiceSingleBroadcastReceiver uploadReceiver;
-        String filename;
-        UpdateAccountInfoAsyncTask.SOCIAL social;
-        private Account account;
-
-        asyncPicture(Activity activity, Account account, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
-            this.activityWeakReference = new WeakReference<>(activity);
-            this.uriFile = uri;
-            this.uploadReceiver = uploadReceiver;
-            this.filename = filename;
-            this.social = social;
-            this.account = account;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            if (uriFile == null) {
-                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                error = true;
-            }
-            if( activityWeakReference.get().findViewById(R.id.compression_loader) != null) {
-                activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
-            }
-
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if (error) {
-                return null;
-            }
-            commpressedFilePath = Helper.compressImagePath(activityWeakReference.get(), uriFile);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
-            activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
-            if (!error) {
-                if( commpressedFilePath != null){
-                    uriFile = Uri.fromFile(new File(commpressedFilePath));
-                }
-                ImageButton toot_picture;
-                Button toot_it;
-                LinearLayout toot_picture_container;
-                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
-                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
-                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
-
-                toot_picture_container.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                toot_it.setEnabled(false);
-                if (filename == null) {
-                    filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
-                }
-                filesMap.put(filename, uriFile);
-
-                upload(activityWeakReference.get(), account, social, uriFile, filename, uploadReceiver);
-            }
-        }
-    }
-
-
-    static private void upload(Activity activity, Account account, UpdateAccountInfoAsyncTask.SOCIAL social, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
-        String uploadId = UUID.randomUUID().toString();
-        if (uploadReceiver != null) {
-            uploadReceiver.setUploadID(uploadId);
-        }
-        Uri uri;
-        InputStream tempInput = null;
-        FileOutputStream tempOut = null;
-        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
-        int suffixPosition = filename.lastIndexOf(".");
-        String suffix = "";
-        if (suffixPosition > 0) suffix = filename.substring(suffixPosition);
-        try {
-            File file;
-            tempInput = activity.getContentResolver().openInputStream(inUri);
-            if (fname.startsWith("fedilabins_")) {
-                file = File.createTempFile("fedilabins_randomTemp1", suffix, activity.getCacheDir());
-            } else {
-                file = File.createTempFile("randomTemp1", suffix, activity.getCacheDir());
-            }
-
-            filesMap.put(file.getAbsolutePath(), inUri);
-            tempOut = new FileOutputStream(file.getAbsoluteFile());
-            byte[] buff = new byte[1024];
-            int read;
-            assert tempInput != null;
-            while ((read = tempInput.read(buff)) > 0) {
-                tempOut.write(buff, 0, read);
-            }
-            if (BuildConfig.DONATIONS) {
-                uri = FileProvider.getUriForFile(activity,
-                        "fr.gouv.etalab.mastodon.fileProvider",
-                        file);
-            } else {
-                uri = FileProvider.getUriForFile(activity,
-                        "app.fedilab.android.fileProvider",
-                        file);
-            }
-            tempInput.close();
-            tempOut.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            uri = inUri;
-        } finally {
-            IOUtils.closeQuietly(tempInput);
-            IOUtils.closeQuietly(tempOut);
-        }
-
-        try {
-            final String fileName = FileNameCleaner.cleanFileName(fname);
-            SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String scheme = sharedpreferences.getString(Helper.SET_ONION_SCHEME +account.getInstance(), "https");
-            String token = account.getToken();
-
-            int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
-            String url;
-            if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                url = scheme + "://" + account.getInstance() + "/api/v1/media";
-            } else {
-                url = scheme + "://" + account.getInstance() + "/api/media/upload.json";
-            }
-            UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
-            uploadConfig
-                    .setClearOnActionForAllStatuses(true);
-            uploadConfig.getProgress().message = activity.getString(R.string.uploading);
-            uploadConfig.getCompleted().autoClear = true;
-            MultipartUploadRequest request = new MultipartUploadRequest(activity, uploadId, url);
-            if (token != null && !token.startsWith("Basic "))
-                request.addHeader("Authorization", "Bearer " + token);
-            else if (token != null && token.startsWith("Basic "))
-                request.addHeader("Authorization", token);
-            request.setNotificationConfig(uploadConfig);
-            if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                request.addFileToUpload(uri.toString().replace("file://", ""), "file");
-            } else {
-                request.addFileToUpload(uri.toString().replace("file://", ""), "media");
-            }
-            ;
-            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
-                    .startUpload();
-        } catch (MalformedURLException | FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -1612,7 +1630,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             resetForNextToot();
         }
     }
-
 
     @Override
     public void onProgress(Context context, UploadInfo uploadInfo) {
@@ -1655,7 +1672,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
 
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -2174,7 +2190,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
-
     private void sendToot(String timestamp, String content_type) {
         toot_it.setEnabled(false);
         if (!displayWYSIWYG() && toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0) {
@@ -2211,7 +2226,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             createAndSendToot(tootContent, content_type, timestamp);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
-            if( splitToot.size() > 0 ) {
+            if (splitToot.size() > 0) {
                 tootContent = splitToot.get(0);
                 stepSpliToot = 1;
 
@@ -2263,7 +2278,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 });
                 AlertDialog alertDialog = builderInner.create();
                 alertDialog.show();
-            }else{ //Failed to split the toot.
+            } else { //Failed to split the toot.
                 if (!displayWYSIWYG()) {
                     tootContent = toot_content.getText().toString().trim();
                 } else {
@@ -2276,7 +2291,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    private void createAndSendToot(String tootContent, String content_type, String timestamp){
+    private void createAndSendToot(String tootContent, String content_type, String timestamp) {
         Status toot = new Status();
         if (content_type != null)
             toot.setContentType(content_type);
@@ -2316,7 +2331,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
     }
 
-
     private void serverSchedule(String time) {
         sendToot(time, null);
         isScheduled = true;
@@ -2331,7 +2345,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         ScheduledTootsSyncJob.schedule(getApplicationContext(), currentToId, time);
         resetForNextToot();
     }
-
 
     private void resetForNextToot() {
         //Clear content
@@ -2408,7 +2421,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         }
         return true;
     }
-
 
     @Override
     public void onDownloaded(String pathToFile, String url, Error error) {
@@ -2491,7 +2503,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         alertDialog.show();
     }
 
-
     /**
      * Removes a media
      *
@@ -2544,7 +2555,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-
     private void tootVisibilityDialog() {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
@@ -2585,12 +2595,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         dialog.show();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
     }
-
 
     @Override
     public void onPause() {
@@ -2789,7 +2797,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                                 else {
                                     if (currentCursorPosition >= oldContent.length())
-                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                                 }
 
                                 if (!search.equals(""))
@@ -2799,7 +2807,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 newContent += "@" + account.getAcct() + " ";
                                 int newPosition = newContent.length();
                                 if (currentCursorPosition < oldContent.length())
-                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                    newContent += oldContent.substring(currentCursorPosition);
                                 toot_content.setText(newContent);
                                 toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                                 toot_content.setSelection(newPosition);
@@ -2845,7 +2853,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                                 else {
                                     if (currentCursorPosition >= oldContent.length())
-                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                                 }
 
                                 if (!search.equals(""))
@@ -2855,7 +2863,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 newContent += "@" + suggestion.getContent() + " ";
                                 int newPosition = newContent.length();
                                 if (currentCursorPosition < oldContent.length())
-                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                    newContent += oldContent.substring(currentCursorPosition);
                                 wysiwygEditText.setText(newContent);
                                 toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
                                 wysiwygEditText.setSelection(newPosition);
@@ -2881,7 +2889,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
         }
         this.loader.setVisibility(View.GONE);
-        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(new WeakReference<>(TootActivity.this),this.contacts, this.checkedValues);
+        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(new WeakReference<>(TootActivity.this), this.contacts, this.checkedValues);
         this.lv_accounts_search.setAdapter(contactAdapter);
     }
 
@@ -2925,7 +2933,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                             else {
                                 if (currentCursorPosition >= oldContent.length())
-                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                             }
 
                             if (!search.equals(""))
@@ -2935,7 +2943,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             newContent += ":" + shortcode + ": ";
                             int newPosition = newContent.length();
                             if (currentCursorPosition < oldContent.length())
-                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                newContent += oldContent.substring(currentCursorPosition);
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                             toot_content.setSelection(newPosition);
@@ -2981,7 +2989,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                                 else {
                                     if (currentCursorPosition >= oldContent.length())
-                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                                 }
 
                                 if (!search.equals(""))
@@ -2991,7 +2999,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 newContent += ":" + suggestion.getContent() + ": ";
                                 int newPosition = newContent.length();
                                 if (currentCursorPosition < oldContent.length())
-                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                    newContent += oldContent.substring(currentCursorPosition);
                                 wysiwygEditText.setText(newContent);
                                 toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
                                 wysiwygEditText.setSelection(newPosition);
@@ -3004,7 +3012,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         }
     }
-
 
     private void checkMastodon(Uri inUri) {
         try {
@@ -3027,7 +3034,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onRetrieveSearch(APIResponse apiResponse) {
@@ -3069,7 +3075,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                             deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                         else {
                             if (currentCursorPosition >= oldContent.length())
-                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                         }
 
                         if (!search.equals(""))
@@ -3079,7 +3085,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         newContent += "#" + tag + " ";
                         int newPosition = newContent.length();
                         if (currentCursorPosition < oldContent.length())
-                            newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                            newContent += oldContent.substring(currentCursorPosition);
                         toot_content.setText(newContent);
                         toot_space_left.setText(String.valueOf(countLength(social, toot_content, toot_cw_content)));
                         toot_content.setSelection(newPosition);
@@ -3124,7 +3130,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
                                 else {
                                     if (currentCursorPosition >= oldContent.length())
-                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                                        deltaSearch = oldContent.substring(currentCursorPosition - searchLength);
                                 }
 
                                 if (!search.equals(""))
@@ -3134,7 +3140,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                 newContent += "#" + suggestion.getContent() + " ";
                                 int newPosition = newContent.length();
                                 if (currentCursorPosition < oldContent.length())
-                                    newContent += oldContent.substring(currentCursorPosition, oldContent.length());
+                                    newContent += oldContent.substring(currentCursorPosition);
                                 wysiwygEditText.setText(newContent);
                                 toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
                                 wysiwygEditText.setSelection(newPosition);
@@ -3337,7 +3343,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot_space_left.setText(String.valueOf(countLength(wysiwyg, toot_cw_content)));
         }
     }
-
 
     private void restoreServerSchedule(Status status) {
 
@@ -3587,90 +3592,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         }
         initialContent = displayWYSIWYG() ? wysiwyg.getContentAsHTML() : toot_content.getText().toString();
-    }
-
-
-    public static void manageMentions(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, String userIdReply, MastalabAutoCompleteTextView contentView, EditText CWView, TextView counterView, Status tootReply) {
-
-        //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
-        ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int cursorReply = 0;
-
-        if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
-            contentView.setText(String.format("@%s", tootReply.getAccount().getAcct()));
-            mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
-            //Evaluate the cursor position => mention length + 1 char for carriage return
-            cursorReply = contentView.getText().toString().length() + 1;
-        }
-        if (tootReply.getMentions() != null) {
-            //Put other accounts mentioned at the bottom
-            boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
-            if (capitalize)
-                contentView.setText(String.format("%s", (contentView.getText().toString() + "\n\n")));
-            else
-                contentView.setText(String.format("%s", (contentView.getText().toString() + " ")));
-            for (Mention mention : tootReply.getMentions()) {
-                if (mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
-                    mentionedAccountsAdded.add(mention.getAcct());
-                    String tootTemp = String.format("@%s ", mention.getAcct());
-                    contentView.setText(String.format("%s ", (contentView.getText().toString() + tootTemp.trim())));
-                }
-            }
-
-            contentView.setText(contentView.getText().toString().trim());
-            if (contentView.getText().toString().startsWith("@")) {
-                if (capitalize)
-                    contentView.append("\n");
-                else
-                    contentView.append(" ");
-            }
-            counterView.setText(String.valueOf(countLength(social, contentView, CWView)));
-            contentView.requestFocus();
-
-            if (capitalize) {
-                if (mentionedAccountsAdded.size() == 1) {
-                    contentView.setSelection(contentView.getText().length()); //Put cursor at the end
-                } else {
-                    if (cursorReply > 0 && cursorReply < contentView.getText().length())
-                        contentView.setSelection(cursorReply);
-                    else
-                        contentView.setSelection(contentView.getText().length()); //Put cursor at the end
-                }
-            } else {
-                contentView.setSelection(contentView.getText().length()); //Put cursor at the end
-            }
-        }
-    }
-
-
-    public static String manageMentions(Context context, String userIdReply, Status tootReply) {
-        String contentView = "";
-        //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
-        ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-
-        if (tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
-            contentView = String.format("@%s", tootReply.getAccount().getAcct());
-            mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
-            //Evaluate the cursor position => mention length + 1 char for carriage return
-        }
-        if (tootReply.getMentions() != null) {
-            //Put other accounts mentioned at the bottom
-            contentView = String.format("%s", (contentView + " "));
-            for (Mention mention : tootReply.getMentions()) {
-                if (mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
-                    mentionedAccountsAdded.add(mention.getAcct());
-                    String tootTemp = String.format("@%s ", mention.getAcct());
-                    contentView = String.format("%s ", (contentView + tootTemp.trim()));
-                }
-            }
-            contentView = contentView.trim();
-            if (contentView.startsWith("@")) {
-                contentView += " ";
-            }
-        }
-        return contentView;
     }
 
     private void displayPollPopup() {
@@ -3964,7 +3885,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
 
-
     @Override
     public void onRetrieveAccountsReply(ArrayList<Account> accounts) {
         final boolean[] checkedValues = new boolean[accounts.size()];
@@ -4030,27 +3950,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
     }
 
-    public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content, EditText toot_cw_content) {
-        if (toot_content == null || toot_cw_content == null) {
-            return -1;
-        }
-        String content = toot_content.getText().toString();
-        String cwContent = toot_cw_content.getText().toString();
-        String contentCount = content;
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
-            Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
-            while (matcherALink.find()) {
-                final String url = matcherALink.group(1);
-                contentCount = contentCount.replace(url, "abcdefghijklmnopkrstuvw");
-            }
-        }
-
-        int contentLength = contentCount.length() - countWithEmoji(content);
-        int cwLength = cwContent.length() - countWithEmoji(cwContent);
-        return cwLength + contentLength;
-    }
-
     int countLength(Editor wysiwyg, EditText toot_cw_content) {
         if (wysiwyg == null || toot_cw_content == null) {
             return -1;
@@ -4080,7 +3979,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 // Start recording
                 .record();
     }
-
 
     private boolean displayWYSIWYG() {
         if (social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
@@ -4225,5 +4123,75 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         int g = Color.green(color);
         int b = Color.blue(color);
         return String.format(Locale.getDefault(), "#%02X%02X%02X", r, g, b);
+    }
+
+    static class asyncPicture extends AsyncTask<Void, Void, Void> {
+
+        String commpressedFilePath;
+        WeakReference<Activity> activityWeakReference;
+        android.net.Uri uriFile;
+        boolean error = false;
+        UploadServiceSingleBroadcastReceiver uploadReceiver;
+        String filename;
+        UpdateAccountInfoAsyncTask.SOCIAL social;
+        private Account account;
+
+        asyncPicture(Activity activity, Account account, UpdateAccountInfoAsyncTask.SOCIAL social, android.net.Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+            this.activityWeakReference = new WeakReference<>(activity);
+            this.uriFile = uri;
+            this.uploadReceiver = uploadReceiver;
+            this.filename = filename;
+            this.social = social;
+            this.account = account;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            if (uriFile == null) {
+                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                error = true;
+            }
+            if (activityWeakReference.get().findViewById(R.id.compression_loader) != null) {
+                activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.VISIBLE);
+            }
+
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if (error) {
+                return null;
+            }
+            commpressedFilePath = Helper.compressImagePath(activityWeakReference.get(), uriFile);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
+            activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
+            if (!error) {
+                if (commpressedFilePath != null) {
+                    uriFile = Uri.fromFile(new File(commpressedFilePath));
+                }
+                ImageButton toot_picture;
+                Button toot_it;
+                LinearLayout toot_picture_container;
+                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
+                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
+
+                toot_picture_container.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                toot_it.setEnabled(false);
+                if (filename == null) {
+                    filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
+                }
+                filesMap.put(filename, uriFile);
+
+                upload(activityWeakReference.get(), account, social, uriFile, filename, uploadReceiver);
+            }
+        }
     }
 }

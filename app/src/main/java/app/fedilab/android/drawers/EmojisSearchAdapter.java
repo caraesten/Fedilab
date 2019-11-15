@@ -16,9 +16,6 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +25,15 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.R;
+import app.fedilab.android.client.Entities.Emojis;
 
 
 /**
@@ -46,64 +44,6 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
     private List<Emojis> emojis, tempEmojis, suggestions;
     private LayoutInflater layoutInflater;
-
-    public EmojisSearchAdapter(Context context, List<Emojis> emojis) {
-        super(context, android.R.layout.simple_list_item_1, emojis);
-        this.emojis = emojis;
-        this.tempEmojis = new ArrayList<>(emojis);
-        this.suggestions = new ArrayList<>(emojis);
-        layoutInflater = LayoutInflater.from(context);
-    }
-
-
-    @Override
-    public int getCount() {
-        return emojis.size();
-    }
-
-    @Override
-    public Emojis getItem(int position) {
-        return emojis.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @NonNull
-    @Override
-    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
-
-        final Emojis emoji = emojis.get(position);
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_emoji_search, parent, false);
-            holder = new ViewHolder();
-            holder.emoji_icon = convertView.findViewById(R.id.emoji_icon);
-            holder.emoji_shortcode = convertView.findViewById(R.id.emoji_shortcode);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        if (emoji != null) {
-            holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
-            //Profile picture
-            Glide.with(holder.emoji_icon.getContext())
-                    .load(emoji.getUrl())
-                    .into(holder.emoji_icon);
-        }
-        return convertView;
-    }
-
-    @NonNull
-    @Override
-    public Filter getFilter() {
-        return emojiFilter;
-    }
-
-
     private Filter emojiFilter = new Filter() {
         @Override
         public CharSequence convertResultToString(Object resultValue) {
@@ -142,6 +82,61 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
         }
     };
+
+
+    public EmojisSearchAdapter(Context context, List<Emojis> emojis) {
+        super(context, android.R.layout.simple_list_item_1, emojis);
+        this.emojis = emojis;
+        this.tempEmojis = new ArrayList<>(emojis);
+        this.suggestions = new ArrayList<>(emojis);
+        layoutInflater = LayoutInflater.from(context);
+    }
+
+    @Override
+    public int getCount() {
+        return emojis.size();
+    }
+
+    @Override
+    public Emojis getItem(int position) {
+        return emojis.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @NonNull
+    @Override
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
+
+        final Emojis emoji = emojis.get(position);
+        final ViewHolder holder;
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.drawer_emoji_search, parent, false);
+            holder = new ViewHolder();
+            holder.emoji_icon = convertView.findViewById(R.id.emoji_icon);
+            holder.emoji_shortcode = convertView.findViewById(R.id.emoji_shortcode);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        if (emoji != null) {
+            holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
+            //Profile picture
+            Glide.with(holder.emoji_icon.getContext())
+                    .load(emoji.getUrl())
+                    .into(holder.emoji_icon);
+        }
+        return convertView;
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return emojiFilter;
+    }
 
     private class ViewHolder {
         ImageView emoji_icon;

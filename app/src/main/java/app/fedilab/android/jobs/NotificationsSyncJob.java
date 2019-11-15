@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -40,12 +39,10 @@ import com.evernote.android.job.JobRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -79,15 +76,6 @@ public class NotificationsSyncJob extends Job {
         Helper.installProvider();
     }
 
-    @NonNull
-    @Override
-    protected Result onRunJob(@NonNull Params params) {
-        //Code refresh here
-        callAsynchronousTask();
-        return Result.SUCCESS;
-    }
-
-
     public static int schedule(boolean updateCurrent) {
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(NOTIFICATION_REFRESH);
@@ -110,6 +98,13 @@ public class NotificationsSyncJob extends Job {
         return jobRequestschedule;
     }
 
+    @NonNull
+    @Override
+    protected Result onRunJob(@NonNull Params params) {
+        //Code refresh here
+        callAsynchronousTask();
+        return Result.SUCCESS;
+    }
 
     /**
      * Task in background starts here.
@@ -118,7 +113,7 @@ public class NotificationsSyncJob extends Job {
         if (!canNotify(getContext()))
             return;
         int liveNotifications = Helper.liveNotifType(getContext());
-        if( liveNotifications != Helper.NOTIF_NONE){
+        if (liveNotifications != Helper.NOTIF_NONE) {
             return;
         }
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

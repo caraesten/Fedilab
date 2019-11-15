@@ -18,11 +18,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
@@ -30,19 +30,16 @@ import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.RetrieveFeedsParam;
-import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.FilterToots;
-import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 
 
 /**
@@ -70,62 +67,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String currentfilter;
     private String social;
 
-    public enum Type {
-        HOME,
-        LOCAL,
-        DIRECT,
-        CONVERSATION,
-        PUBLIC,
-        HASHTAG,
-        LIST,
-        USER,
-        FAVOURITES,
-        ONESTATUS,
-        CONTEXT,
-        TAG,
-        REMOTE_INSTANCE,
-        REMOTE_INSTANCE_FILTERED,
-        ART,
-        PEERTUBE,
-        NOTIFICATION,
-        SEARCH,
-        NEWS,
-
-        PSUBSCRIPTIONS,
-        POVERVIEW,
-        PTRENDING,
-        PRECENTLYADDED,
-        PMYVIDEOS,
-        PLOCAL,
-        CHANNEL,
-        MYVIDEOS,
-        PEERTUBE_HISTORY,
-
-        PIXELFED,
-        PF_HOME,
-        PF_LOCAL,
-        PF_DISCOVER,
-        PF_NOTIFICATION,
-        PF_REPLIES,
-
-
-        GNU_HOME,
-        GNU_LOCAL,
-        GNU_WHOLE,
-        GNU_NOTIFICATION,
-        GNU_DM,
-        GNU_ART,
-        GNU_TAG,
-        GNU_GROUP_TIMELINE,
-
-        SCHEDULED_TOOTS,
-        CACHE_BOOKMARKS,
-        CACHE_BOOKMARKS_PEERTUBE,
-        CACHE_STATUS,
-
-    }
-
-
     public RetrieveFeedsAsyncTask(Context context, FilterToots filterToots, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = Type.CACHE_STATUS;
@@ -141,6 +82,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
     }
+
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
@@ -213,7 +155,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.instanceName = retrieveFeedsParam.getInstanceName();
         this.remoteInstance = retrieveFeedsParam.getRemoteInstance();
     }
-
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -495,5 +436,60 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveFeeds(apiResponse);
+    }
+
+    public enum Type {
+        HOME,
+        LOCAL,
+        DIRECT,
+        CONVERSATION,
+        PUBLIC,
+        HASHTAG,
+        LIST,
+        USER,
+        FAVOURITES,
+        ONESTATUS,
+        CONTEXT,
+        TAG,
+        REMOTE_INSTANCE,
+        REMOTE_INSTANCE_FILTERED,
+        ART,
+        PEERTUBE,
+        NOTIFICATION,
+        SEARCH,
+        NEWS,
+
+        PSUBSCRIPTIONS,
+        POVERVIEW,
+        PTRENDING,
+        PRECENTLYADDED,
+        PMYVIDEOS,
+        PLOCAL,
+        CHANNEL,
+        MYVIDEOS,
+        PEERTUBE_HISTORY,
+
+        PIXELFED,
+        PF_HOME,
+        PF_LOCAL,
+        PF_DISCOVER,
+        PF_NOTIFICATION,
+        PF_REPLIES,
+
+
+        GNU_HOME,
+        GNU_LOCAL,
+        GNU_WHOLE,
+        GNU_NOTIFICATION,
+        GNU_DM,
+        GNU_ART,
+        GNU_TAG,
+        GNU_GROUP_TIMELINE,
+
+        SCHEDULED_TOOTS,
+        CACHE_BOOKMARKS,
+        CACHE_BOOKMARKS_PEERTUBE,
+        CACHE_STATUS,
+
     }
 }

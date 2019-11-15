@@ -15,25 +15,25 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    tools:context="app.fedilab.android.activities.InstanceHealthActivity"
-    android:layout_margin="@dimen/fab_margin"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="app.fedilab.android.activities.InstanceHealthActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:background="?colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabSelectedTextColor="?colorAccent"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        android:background="?colorPrimary"
+        app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabGravity="fill" />
+        app:tabSelectedTextColor="?colorAccent"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

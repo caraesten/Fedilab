@@ -14,21 +14,11 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +28,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +61,7 @@ import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET
 public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionInterface {
 
 
+    LinearLayoutManager mLayoutManager;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
@@ -72,8 +71,6 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
     private boolean firstLoad;
     private boolean flag_loading;
     private PeertubeAdapter peertubeAdapter;
-    LinearLayoutManager mLayoutManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

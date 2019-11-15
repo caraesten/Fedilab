@@ -27,6 +27,17 @@ import java.util.List;
 
 public class RemoteInstance implements Parcelable {
 
+    public static final Creator<RemoteInstance> CREATOR = new Creator<RemoteInstance>() {
+        @Override
+        public RemoteInstance createFromParcel(Parcel source) {
+            return new RemoteInstance(source);
+        }
+
+        @Override
+        public RemoteInstance[] newArray(int size) {
+            return new RemoteInstance[size];
+        }
+    };
     private String host;
     private String type;
     private String id;
@@ -34,9 +45,18 @@ public class RemoteInstance implements Parcelable {
     private List<String> tags;
     private String filteredWith;
 
+
     public RemoteInstance() {
     }
 
+    protected RemoteInstance(Parcel in) {
+        this.host = in.readString();
+        this.type = in.readString();
+        this.id = in.readString();
+        this.dbID = in.readString();
+        this.tags = in.createStringArrayList();
+        this.filteredWith = in.readString();
+    }
 
     public String getHost() {
         return host;
@@ -100,25 +120,4 @@ public class RemoteInstance implements Parcelable {
         dest.writeStringList(this.tags);
         dest.writeString(this.filteredWith);
     }
-
-    protected RemoteInstance(Parcel in) {
-        this.host = in.readString();
-        this.type = in.readString();
-        this.id = in.readString();
-        this.dbID = in.readString();
-        this.tags = in.createStringArrayList();
-        this.filteredWith = in.readString();
-    }
-
-    public static final Creator<RemoteInstance> CREATOR = new Creator<RemoteInstance>() {
-        @Override
-        public RemoteInstance createFromParcel(Parcel source) {
-            return new RemoteInstance(source);
-        }
-
-        @Override
-        public RemoteInstance[] newArray(int size) {
-            return new RemoteInstance[size];
-        }
-    };
 }

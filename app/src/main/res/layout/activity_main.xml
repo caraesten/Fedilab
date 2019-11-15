@@ -31,16 +31,14 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                >
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <ImageView
                     android:id="@+id/iconbar"
@@ -49,57 +47,56 @@
                     android:contentDescription="@string/open_menu" />
 
                 <LinearLayout
-                    android:id="@+id/toolbar_search_container"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginStart="10dp"
-                        android:visibility="gone"
+                        android:id="@+id/toolbar_title"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
                         android:textSize="16sp"
-                        android:id="@+id/toolbar_title" />
+                        android:visibility="gone" />
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tabLayout"
-                        app:tabMode="scrollable"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:tabGravity="fill"
                         android:background="?colorPrimary"
-                        app:tabSelectedTextColor="?colorAccent"
+                        app:tabGravity="fill"
                         app:tabMaxWidth="0dp"
-                        android:layout_height="wrap_content" />
+                        app:tabMode="scrollable"
+                        app:tabSelectedTextColor="?colorAccent" />
 
                     <ImageView
-                        android:layout_gravity="center_vertical"
-                        android:visibility="gone"
                         android:id="@+id/delete_instance"
-                        android:src="@drawable/ic_delete"
-                        android:contentDescription="@string/delete_instance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <ImageView
-                        android:layout_gravity="center_vertical"
-                        android:visibility="gone"
-                        android:id="@+id/display_timeline"
-                        android:src="@drawable/ic_more_horiz_black"
-                        android:contentDescription="@string/display_timeline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp" />
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/delete_instance"
+                        android:src="@drawable/ic_delete"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/display_timeline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:contentDescription="@string/display_timeline"
+                        android:src="@drawable/ic_more_horiz_black"
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/toolbar_search"
-                        android:gravity="end"
-                        android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="end" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
@@ -112,47 +109,47 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="app.fedilab.android.activities.MainActivity"/>
+            tools:context="app.fedilab.android.activities.MainActivity" />
 
         <!-- Framelayout to display Fragments -->
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/main_app_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="app.fedilab.android.activities.MainActivity"/>
+            tools:context="app.fedilab.android.activities.MainActivity" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/toot"
-            android:contentDescription="@string/toot_it"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin_floating"
+            android:contentDescription="@string/toot_it"
             android:src="@drawable/ic_edit"
             tools:ignore="VectorDrawableCompat" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/delete_all"
-            android:visibility="gone"
-            android:contentDescription="@string/delete_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin_floating"
+            android:contentDescription="@string/delete_all"
             android:src="@drawable/ic_delete_floating"
+            android:visibility="gone"
             tools:ignore="VectorDrawableCompat" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new"
-            android:visibility="gone"
-            android:contentDescription="@string/add_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin_floating"
+            android:contentDescription="@string/add_new"
             android:src="@drawable/ic_action_add_new"
+            android:visibility="gone"
             tools:ignore="VectorDrawableCompat" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

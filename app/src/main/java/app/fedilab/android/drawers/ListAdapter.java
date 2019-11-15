@@ -19,9 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +27,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.List;
 
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.ListActivity;
-
+import app.fedilab.android.helper.Helper;
 
 
 /**

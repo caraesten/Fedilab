@@ -23,6 +23,17 @@ import java.util.List;
 
 public class Report implements Parcelable {
 
+    public static final Creator<Report> CREATOR = new Creator<Report>() {
+        @Override
+        public Report createFromParcel(Parcel source) {
+            return new Report(source);
+        }
+
+        @Override
+        public Report[] newArray(int size) {
+            return new Report[size];
+        }
+    };
     private String id;
     private boolean action_taken;
     private String comment;
@@ -34,6 +45,24 @@ public class Report implements Parcelable {
     private AccountAdmin action_taken_by_account;
     private List<Status> statuses;
 
+    public Report() {
+    }
+
+
+    protected Report(Parcel in) {
+        this.id = in.readString();
+        this.action_taken = in.readByte() != 0;
+        this.comment = in.readString();
+        long tmpCreated_at = in.readLong();
+        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+        long tmpUpdated_at = in.readLong();
+        this.updated_at = tmpUpdated_at == -1 ? null : new Date(tmpUpdated_at);
+        this.account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.target_account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.assigned_account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.action_taken_by_account = in.readParcelable(AccountAdmin.class.getClassLoader());
+        this.statuses = in.createTypedArrayList(Status.CREATOR);
+    }
 
     public String getId() {
         return id;
@@ -42,7 +71,6 @@ public class Report implements Parcelable {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getComment() {
         return comment;
@@ -74,10 +102,6 @@ public class Report implements Parcelable {
 
     public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
-    }
-
-
-    public Report() {
     }
 
     public AccountAdmin getAccount() {
@@ -138,31 +162,4 @@ public class Report implements Parcelable {
         dest.writeParcelable(this.action_taken_by_account, flags);
         dest.writeTypedList(this.statuses);
     }
-
-    protected Report(Parcel in) {
-        this.id = in.readString();
-        this.action_taken = in.readByte() != 0;
-        this.comment = in.readString();
-        long tmpCreated_at = in.readLong();
-        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
-        long tmpUpdated_at = in.readLong();
-        this.updated_at = tmpUpdated_at == -1 ? null : new Date(tmpUpdated_at);
-        this.account = in.readParcelable(AccountAdmin.class.getClassLoader());
-        this.target_account = in.readParcelable(AccountAdmin.class.getClassLoader());
-        this.assigned_account = in.readParcelable(AccountAdmin.class.getClassLoader());
-        this.action_taken_by_account = in.readParcelable(AccountAdmin.class.getClassLoader());
-        this.statuses = in.createTypedArrayList(Status.CREATOR);
-    }
-
-    public static final Creator<Report> CREATOR = new Creator<Report>() {
-        @Override
-        public Report createFromParcel(Parcel source) {
-            return new Report(source);
-        }
-
-        @Override
-        public Report[] newArray(int size) {
-            return new Report[size];
-        }
-    };
 }

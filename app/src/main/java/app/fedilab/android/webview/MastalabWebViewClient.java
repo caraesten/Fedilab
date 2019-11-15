@@ -18,10 +18,6 @@ package app.fedilab.android.webview;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -31,6 +27,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;
@@ -49,14 +48,13 @@ import app.fedilab.android.helper.Helper;
 
 public class MastalabWebViewClient extends WebViewClient {
 
+    public List<String> domains = new ArrayList<>();
     private Activity activity;
     private int count = 0;
 
     public MastalabWebViewClient(Activity activity) {
         this.activity = activity;
     }
-
-    public List<String> domains = new ArrayList<>();
 
     @Override
     public void onPageFinished(WebView view, String url) {

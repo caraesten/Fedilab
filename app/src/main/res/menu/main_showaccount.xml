@@ -3,43 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_direct_message"
-        android:title="@string/direct_message"
         android:icon="@drawable/ic_mail_outline_toot"
+        android:title="@string/direct_message"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_add_to_list"
-        android:title="@string/action_lists_add_to"
         android:icon="@drawable/ic_list"
+        android:title="@string/action_lists_add_to"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_open_browser"
-        android:title="@string/action_open_in_web"
         android:icon="@drawable/ic_open_with"
+        android:title="@string/action_open_in_web"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_add_notes"
-        android:title="@string/action_add_notes"
         android:icon="@drawable/ic_note"
+        android:title="@string/action_add_notes"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_mute"
-        android:title="@string/more_action_1"
         android:icon="@drawable/ic_volume_mute"
+        android:title="@string/more_action_1"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_block"
-        android:title="@string/more_action_2"
         android:icon="@drawable/ic_block"
+        android:title="@string/more_action_2"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_mention"
-        android:title="@string/more_action_7"
         android:icon="@drawable/ic_chat_bubble_outline"
+        android:title="@string/more_action_7"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_filter"
-        android:visible="false"
         android:title="@string/filter_timeline_with_a_tag"
+        android:visible="false"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_hide_boost"
@@ -58,17 +58,17 @@
 
     <item
         android:id="@+id/action_follow_instance"
-        android:title="@string/follow_instance"
         android:icon="@drawable/ic_public_world"
+        android:title="@string/follow_instance"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_report"
-        android:title="@string/more_action_3"
         android:icon="@drawable/ic_block"
+        android:title="@string/more_action_3"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_block_instance"
-        android:title="@string/block_domain"
         android:icon="@drawable/ic_block"
+        android:title="@string/block_domain"
         app:showAsAction="ifRoom" />
 </menu>

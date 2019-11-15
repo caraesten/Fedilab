@@ -17,8 +17,8 @@ package app.fedilab.android.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -27,17 +27,15 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Toast;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 
 
 /**

@@ -20,13 +20,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
+import android.text.SpannableStringBuilder;
+import android.util.AttributeSet;
 
 import androidx.annotation.DimenRes;
 import androidx.annotation.Px;
 import androidx.appcompat.widget.AppCompatTextView;
-
-import android.text.SpannableStringBuilder;
-import android.util.AttributeSet;
 
 import com.vanniktech.emoji.EmojiManager;
 

@@ -5,13 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
+import android.util.AttributeSet;
+import android.view.KeyEvent;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.DimenRes;
 import androidx.annotation.Px;
-
-import android.util.AttributeSet;
-import android.view.KeyEvent;
 
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.emoji.Emoji;
@@ -78,6 +77,11 @@ public class MastalabAutoCompleteTextView extends androidx.appcompat.widget.AppC
     }
 
     @Override
+    public final void setEmojiSize(@Px final int pixels) {
+        setEmojiSize(pixels, true);
+    }
+
+    @Override
     @CallSuper
     public void input(final Emoji emoji) {
         if (emoji != null && !autocomplete) {
@@ -90,11 +94,6 @@ public class MastalabAutoCompleteTextView extends androidx.appcompat.widget.AppC
                 getText().replace(Math.min(start, end), Math.max(start, end), emoji.getUnicode(), 0, emoji.getUnicode().length());
             }
         }
-    }
-
-    @Override
-    public final void setEmojiSize(@Px final int pixels) {
-        setEmojiSize(pixels, true);
     }
 
     @Override

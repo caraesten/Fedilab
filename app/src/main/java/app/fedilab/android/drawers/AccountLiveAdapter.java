@@ -15,19 +15,19 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
+
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
@@ -71,7 +71,7 @@ public class AccountLiveAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_ALLOW_STREAM +  accounts.get(i).getId() + accounts.get(i).getInstance(), holder.account_acct_live_notifications.isChecked());
+                editor.putBoolean(Helper.SET_ALLOW_STREAM + accounts.get(i).getId() + accounts.get(i).getInstance(), holder.account_acct_live_notifications.isChecked());
                 editor.apply();
                 if (holder.account_acct_live_notifications.isChecked()) {
                     LiveNotificationDelayedService.totalAccount++;

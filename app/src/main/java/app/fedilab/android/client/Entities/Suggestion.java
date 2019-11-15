@@ -20,12 +20,6 @@ public class Suggestion {
     private String imageUrl;
     private suggestionType type;
 
-    public enum suggestionType {
-        TAG,
-        ACCOUNT,
-        EMOJI
-    }
-
     public suggestionType getType() {
         return type;
     }
@@ -48,5 +42,11 @@ public class Suggestion {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public enum suggestionType {
+        TAG,
+        ACCOUNT,
+        EMOJI
     }
 }

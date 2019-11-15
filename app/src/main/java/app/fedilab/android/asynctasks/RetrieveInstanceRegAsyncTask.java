@@ -38,11 +38,6 @@ public class RetrieveInstanceRegAsyncTask extends AsyncTask<Void, Void, Void> {
     private String category;
     private instanceType type;
 
-    public enum instanceType{
-        MASTODON,
-        PEERTUBE
-    }
-
     public RetrieveInstanceRegAsyncTask(Context context, instanceType type, String category, OnRetrieveInstanceInterface onRetrieveInstanceInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveInstanceInterface;
@@ -52,9 +47,9 @@ public class RetrieveInstanceRegAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( type == instanceType.MASTODON) {
+        if (type == instanceType.MASTODON) {
             apiResponse = new API(this.contextReference.get()).getInstanceReg(category);
-        }else if( type == instanceType.PEERTUBE){
+        } else if (type == instanceType.PEERTUBE) {
             apiResponse = new PeertubeAPI(this.contextReference.get()).getInstanceReg();
         }
         return null;
@@ -63,6 +58,11 @@ public class RetrieveInstanceRegAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveInstance(apiResponse);
+    }
+
+    public enum instanceType {
+        MASTODON,
+        PEERTUBE
     }
 
 }

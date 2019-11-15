@@ -79,19 +79,19 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
 
-        if( attachments.size() > 1) {
+        if (attachments.size() > 1) {
             viewHolder.textViewDescription.setText(String.format("%s/%s", (position + 1), attachments.size()));
         }
 
-        if( canDelete){
+        if (canDelete) {
             viewHolder.delete_media.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             viewHolder.delete_media.setVisibility(View.GONE);
         }
         String url;
-        if(attachments.get(position).getPreview_url().endsWith("no-preview.png") ){
+        if (attachments.get(position).getPreview_url().endsWith("no-preview.png")) {
             url = attachments.get(position).getUrl();
-        }else{
+        } else {
             url = attachments.get(position).getPreview_url();
         }
         Glide.with(viewHolder.imageViewBackground.getContext())
@@ -99,7 +99,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                 .thumbnail(0.1f)
                 .into(viewHolder.imageViewBackground);
         viewHolder.imageViewBackground.setContentDescription(attachments.get(position).getDescription());
-        if( !this.canDelete) {
+        if (!this.canDelete) {
             viewHolder.imageViewBackground.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -112,7 +112,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                     contextWeakReference.get().startActivity(intent);
                 }
             });
-        }else{
+        } else {
             viewHolder.imageViewBackground.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,7 +120,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                 }
             });
 
-            viewHolder.delete_media.setOnClickListener(view ->{
+            viewHolder.delete_media.setOnClickListener(view -> {
                 showRemove(position);
             });
         }
@@ -187,7 +187,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     }
 
 
-
     /**
      * Removes a media
      *
@@ -219,7 +218,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             public void onClick(DialogInterface dialog, int which) {
                 attachments.remove(attachments.get(position));
                 sliderAdapter.notifyDataSetChanged();
-                if( contextWeakReference.get() instanceof PixelfedComposeActivity){
+                if (contextWeakReference.get() instanceof PixelfedComposeActivity) {
                     ((PixelfedComposeActivity) contextWeakReference.get()).redraw();
                 }
                 dialog.dismiss();

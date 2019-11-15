@@ -22,33 +22,32 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveContextInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveContextInterface;
 
 
 /**
@@ -300,9 +299,9 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         swipeRefreshLayout.setRefreshing(false);
         loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            if( apiResponse.getError().getError() != null) {
+            if (apiResponse.getError().getError() != null) {
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
+            } else {
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             }
             return;
@@ -317,7 +316,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     statuses.addAll(0, apiResponse.getContext().getAncestors());
                     statusListAdapter.notifyItemRangeInserted(0, apiResponse.getContext().getAncestors().size());
                 }
-                int targetedPosition = statuses.size()-1;
+                int targetedPosition = statuses.size() - 1;
                 if (apiResponse.getContext().getDescendants() != null && apiResponse.getContext().getDescendants().size() > 0) {
                     statuses.addAll(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants());
                     statusListAdapter.notifyItemRangeChanged(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants().size());
@@ -369,23 +368,23 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     }
 
 
-    private void decorate(int targetedPosition){
-        for(int i =0 ; i < statuses.size() ; i++){
+    private void decorate(int targetedPosition) {
+        for (int i = 0; i < statuses.size(); i++) {
             if (i == targetedPosition) {
-                if( targetedPosition < statuses.size()-1 )
+                if (targetedPosition < statuses.size() - 1)
                     statuses.get(targetedPosition).setShowBottomLine(true);
-                if( targetedPosition > 0 && statuses.get(targetedPosition).getIn_reply_to_id().compareTo(statuses.get(targetedPosition-1).getId()) == 0){
-                    statuses.get(targetedPosition-1).setShowBottomLine(true);
+                if (targetedPosition > 0 && statuses.get(targetedPosition).getIn_reply_to_id().compareTo(statuses.get(targetedPosition - 1).getId()) == 0) {
+                    statuses.get(targetedPosition - 1).setShowBottomLine(true);
                     statuses.get(targetedPosition).setShowTopLine(true);
                 }
             } else if (0 < i && i <= statuses.size() - 1) {
-                if( statuses.get(i-1).getId().compareTo(statuses.get(i).getIn_reply_to_id()) == 0){
-                    statuses.get(i-1).setShowBottomLine(true);
+                if (statuses.get(i - 1).getId().compareTo(statuses.get(i).getIn_reply_to_id()) == 0) {
+                    statuses.get(i - 1).setShowBottomLine(true);
                     statuses.get(i).setShowTopLine(true);
                 }
             }
         }
-        statusListAdapter.notifyItemRangeChanged(0,statuses.size());
+        statusListAdapter.notifyItemRangeChanged(0, statuses.size());
     }
 
 }

@@ -24,6 +24,17 @@ import android.os.Parcelable;
 
 public class Attachment implements Parcelable {
 
+    public static final Creator<Attachment> CREATOR = new Creator<Attachment>() {
+        @Override
+        public Attachment createFromParcel(Parcel in) {
+            return new Attachment(in);
+        }
+
+        @Override
+        public Attachment[] newArray(int size) {
+            return new Attachment[size];
+        }
+    };
     private String id;
     private String type;
     private String url;
@@ -42,18 +53,6 @@ public class Attachment implements Parcelable {
         text_url = in.readString();
         description = in.readString();
     }
-
-    public static final Creator<Attachment> CREATOR = new Creator<Attachment>() {
-        @Override
-        public Attachment createFromParcel(Parcel in) {
-            return new Attachment(in);
-        }
-
-        @Override
-        public Attachment[] newArray(int size) {
-            return new Attachment[size];
-        }
-    };
 
     public Attachment() {
 

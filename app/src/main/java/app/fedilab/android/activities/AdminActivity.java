@@ -14,7 +14,6 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -39,16 +38,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Objects;
-
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.fragments.DisplayAdminAccountsFragment;
 import app.fedilab.android.fragments.DisplayAdminReportsFragment;
-import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.Helper;
-
-import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 
 
 /**

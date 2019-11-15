@@ -16,9 +16,7 @@
 -->
 
 
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_container"
@@ -27,29 +25,29 @@
 
     <View
         android:id="@+id/status_reply_indicator_top"
-        android:visibility="gone"
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/reply_indicator_dot"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_bottom"
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -57,16 +55,16 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/main_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="2dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="5dp"
-        android:id="@+id/main_card_container"
-        app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
+        android:layout_marginBottom="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,9 +73,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/status_boosted_by_info"
-                android:background="?attr/cardviewHeaderBoostColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/cardviewHeaderBoostColor"
                 android:padding="5dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
@@ -120,11 +118,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
-                app:layout_goneMarginTop="8dp"
                 android:contentDescription="@string/profile_picture"
                 app:layout_constraintEnd_toStartOf="@id/guide_account_image_end"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
+                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info"
+                app:layout_goneMarginTop="8dp" />
 
             <!-- Bot icon -->
             <ImageView
@@ -132,21 +130,21 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/bot_background_round_corner"
+                android:contentDescription="@string/bot"
                 android:padding="3dp"
                 android:src="@drawable/ic_bot"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info"
-                android:contentDescription="@string/bot" />
+                app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
 
             <!-- New badge -->
             <ImageView
                 android:id="@+id/new_element"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:backgroundTint="?attr/colorAccent"
                 android:contentDescription="@string/new_toot"
                 android:src="@drawable/ic_fiber_new"
-                android:backgroundTint="?attr/colorAccent"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@id/guide_account_image_end"
                 app:layout_constraintTop_toBottomOf="@id/status_boosted_by_info" />
@@ -264,8 +262,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:drawablePadding="2dp"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textAlignment="viewStart"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/status_account_username"
@@ -377,7 +375,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-10dp"
                         android:drawableStart="@drawable/ic_more_toot_content"
-                        android:tint="?attr/iconColor"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
                         android:maxLines="1"
@@ -385,6 +382,7 @@
                         android:paddingBottom="2dp"
                         android:text="@string/display_toot_truncate"
                         android:textAllCaps="false"
+                        android:tint="?attr/iconColor"
                         android:visibility="gone" />
 
                     <TextView
@@ -536,8 +534,8 @@
                                 android:id="@+id/webview_preview_card"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:contentDescription="@string/card_view_image" />
+                                android:contentDescription="@string/card_view_image"
+                                android:scaleType="centerCrop" />
 
                             <ImageView
                                 android:layout_width="30dp"
@@ -545,7 +543,7 @@
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/videos"
                                 android:src="@drawable/ic_play_arrow"
-                                android:tint="@color/white"/>
+                                android:tint="@color/white" />
 
                         </RelativeLayout>
 
@@ -590,8 +588,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:adjustViewBounds="true"
-                                            android:scaleType="fitCenter"
-                                            android:contentDescription="@string/image_preview" />
+                                            android:contentDescription="@string/image_preview"
+                                            android:scaleType="fitCenter" />
 
                                         <ImageView
                                             android:id="@+id/status_prev1_play_h"
@@ -616,8 +614,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:adjustViewBounds="true"
-                                            android:scaleType="fitCenter"
-                                            android:contentDescription="@string/image_preview" />
+                                            android:contentDescription="@string/image_preview"
+                                            android:scaleType="fitCenter" />
 
                                         <ImageView
                                             android:id="@+id/status_prev2_play_h"
@@ -700,7 +698,7 @@
                                 android:contentDescription="@string/show_media"
                                 android:padding="5dp"
                                 android:src="@drawable/ic_remove_red_eye_img"
-                                android:tint="@color/white"/>
+                                android:tint="@color/white" />
                         </RelativeLayout>
 
                         <LinearLayout
@@ -729,8 +727,8 @@
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_play_arrow"
                                     android:contentDescription="@string/image_preview"
+                                    android:src="@drawable/ic_play_arrow"
                                     android:visibility="gone" />
 
                                 <ImageView
@@ -742,8 +740,7 @@
                                     android:contentDescription="@string/hide_media"
                                     android:padding="5dp"
                                     android:src="@drawable/ic_remove_red_eye_img"
-                                    android:tint="?attr/iconColor"
-                                   />
+                                    android:tint="?attr/iconColor" />
                             </RelativeLayout>
 
                             <LinearLayout
@@ -934,9 +931,9 @@
                     android:id="@+id/status_reply"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:contentDescription="@string/reply"
                     android:src="@drawable/ic_reply"
                     android:tint="?attr/iconColor"
-                    android:contentDescription="@string/reply"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -1053,7 +1050,6 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/status_action_container" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

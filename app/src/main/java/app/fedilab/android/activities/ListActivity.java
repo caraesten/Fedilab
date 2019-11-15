@@ -19,15 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,18 +31,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.interfaces.OnListActionInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -62,6 +61,7 @@ import app.fedilab.android.interfaces.OnListActionInterface;
 public class ListActivity extends BaseActivity implements OnListActionInterface {
 
 
+    LinearLayoutManager mLayoutManager;
     private String title, listId;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -71,8 +71,6 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
     private boolean firstLoad;
     private boolean flag_loading;
     private StatusListAdapter statusListAdapter;
-    LinearLayoutManager mLayoutManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

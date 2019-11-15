@@ -23,13 +23,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -43,8 +43,6 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 import app.fedilab.android.R;
 import app.fedilab.android.fragments.ColorSettingsFragment;
 import app.fedilab.android.fragments.ContentSettingsFragment;
@@ -55,7 +53,7 @@ import app.fedilab.android.helper.Helper;
  * Settings activity
  */
 
-public class SettingsActivity extends BaseActivity  {
+public class SettingsActivity extends BaseActivity {
 
     public static boolean needRestart;
 
@@ -91,9 +89,9 @@ public class SettingsActivity extends BaseActivity  {
             toolbar_close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( needRestart){
+                    if (needRestart) {
                         showDialog();
-                    }else{
+                    } else {
                         finish();
                     }
 
@@ -147,6 +145,7 @@ public class SettingsActivity extends BaseActivity  {
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -156,6 +155,43 @@ public class SettingsActivity extends BaseActivity  {
 
     }
 
+    private void showDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SettingsActivity.this);
+        dialogBuilder.setMessage(R.string.restart_message);
+        dialogBuilder.setTitle(R.string.apply_changes);
+        dialogBuilder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Intent mStartActivity = new Intent(getApplicationContext(), MainActivity.class);
+                int mPendingIntentId = 123456;
+                PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                assert mgr != null;
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                System.exit(0);
+            }
+        });
+        dialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+
+        needRestart = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (needRestart) {
+            showDialog();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private class SettingsPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -203,46 +239,6 @@ public class SettingsActivity extends BaseActivity  {
         @Override
         public int getCount() {
             return 8;
-        }
-    }
-
-
-    private void showDialog(){
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SettingsActivity.this);
-        dialogBuilder.setMessage(R.string.restart_message);
-        dialogBuilder.setTitle(R.string.apply_changes);
-        dialogBuilder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                Intent mStartActivity = new Intent(getApplicationContext(), MainActivity.class);
-                int mPendingIntentId = 123456;
-                PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager mgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-                assert mgr != null;
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                System.exit(0);
-            }
-        });
-        dialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-
-        needRestart = false;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if( needRestart){
-            showDialog();
-        }else{
-            super.onBackPressed();
         }
     }
 }

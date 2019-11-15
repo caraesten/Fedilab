@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,7 +40,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -49,15 +47,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -87,6 +79,7 @@ import es.dmoral.toasty.Toasty;
 
 public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDomainsInterface, OnPostActionInterface {
 
+    private final int PICK_IMPORT_INSTANCE = 5326;
     private boolean flag_loading;
     private AsyncTask<Void, Void, Void> asyncTask;
     private DomainsListAdapter domainsListAdapter;
@@ -97,7 +90,6 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private RecyclerView lv_domains;
-    private final int PICK_IMPORT_INSTANCE = 5326;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -392,10 +384,10 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if (error != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }

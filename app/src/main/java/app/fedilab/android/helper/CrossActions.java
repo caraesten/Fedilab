@@ -23,12 +23,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.Html;
-import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.net.URI;
@@ -36,13 +35,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.API;
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Mention;
-import app.fedilab.android.client.Entities.Results;
-import app.fedilab.android.client.Entities.Status;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
@@ -50,6 +42,12 @@ import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.client.API;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Mention;
+import app.fedilab.android.client.Entities.Results;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.PixelfedListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
@@ -57,6 +55,7 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Will handle cross actions between accounts boost/favourites/pin and replies
@@ -281,8 +280,8 @@ public class CrossActions {
 
     public static void followPeertubeChannel(final Context context, Account remoteAccount, OnPostActionInterface onPostActionInterface) {
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -320,8 +319,8 @@ public class CrossActions {
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -405,8 +404,8 @@ public class CrossActions {
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -447,8 +446,8 @@ public class CrossActions {
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -484,7 +483,7 @@ public class CrossActions {
         List<Account> accounts = connectedAccounts(context, status, false);
         API.StatusAction doAction;
         //Only bookmark the initial status
-        if( status.getReblog() != null){
+        if (status.getReblog() != null) {
             status = status.getReblog();
         }
         if (accounts.size() == 1 || limitedToOwner) {
@@ -528,8 +527,8 @@ public class CrossActions {
                 public void onClick(final DialogInterface dialog, int which) {
                     final Account account = accountArray[which];
                     new AsyncTask<Void, Void, Void>() {
-                        private WeakReference<Context> contextReference = new WeakReference<>(context);
                         Results response;
+                        private WeakReference<Context> contextReference = new WeakReference<>(context);
 
                         @Override
                         protected void onPreExecute() {

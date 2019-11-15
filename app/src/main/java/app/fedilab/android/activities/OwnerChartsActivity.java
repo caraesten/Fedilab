@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -35,16 +34,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
@@ -76,7 +72,6 @@ import app.fedilab.android.interfaces.OnRetrieveChartsInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
-import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -94,6 +89,31 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
     private int theme;
     private RelativeLayout loader;
     private ImageButton validate;
+    private DatePickerDialog.OnDateSetListener iniDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    dateIni = new Date(c.getTimeInMillis());
+                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private DatePickerDialog.OnDateSetListener endDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
+
+                    dateEnd = new Date(c.getTimeInMillis());
+                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,59 +251,6 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
 
     }
 
-    public class CustomMarkerView extends MarkerView {
-        private TextView tvContent;
-
-        public CustomMarkerView(Context context, int layoutResource) {
-            super(context, layoutResource);
-            tvContent = findViewById(R.id.tvContent);
-            tvContent.setTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
-        }
-
-        @Override
-        public void refreshContent(Entry e, Highlight highlight) {
-            Date date = new Date(((long) e.getX()));
-            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " + (int) e.getY()));
-            super.refreshContent(e, highlight);
-        }
-
-        private MPPointF mOffset;
-
-        @Override
-        public MPPointF getOffset() {
-            if (mOffset == null) {
-                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
-            }
-            return mOffset;
-        }
-    }
-
-    private DatePickerDialog.OnDateSetListener iniDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
-                    dateIni = new Date(c.getTimeInMillis());
-                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-    private DatePickerDialog.OnDateSetListener endDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
-
-                    dateEnd = new Date(c.getTimeInMillis());
-                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -310,7 +277,6 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
     public void onDestroy() {
         super.onDestroy();
     }
-
 
     @Override
     public void onCharts(Charts charts) {
@@ -442,6 +408,31 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         chart.invalidate();
     }
 
+    public class CustomMarkerView extends MarkerView {
+        private TextView tvContent;
+        private MPPointF mOffset;
+
+        public CustomMarkerView(Context context, int layoutResource) {
+            super(context, layoutResource);
+            tvContent = findViewById(R.id.tvContent);
+            tvContent.setTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+        }
+
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            Date date = new Date(((long) e.getX()));
+            tvContent.setText(Helper.shortDateToString(date) + " - " + (int) e.getY());
+            super.refreshContent(e, highlight);
+        }
+
+        @Override
+        public MPPointF getOffset() {
+            if (mOffset == null) {
+                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
+            }
+            return mOffset;
+        }
+    }
 
     public class MyXAxisValueFormatter extends ValueFormatter {
         private DateFormat mDataFormat;

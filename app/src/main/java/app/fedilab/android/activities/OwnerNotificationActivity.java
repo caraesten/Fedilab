@@ -39,7 +39,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,9 +57,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveNotificationStatsAsyncTask;
@@ -68,14 +65,12 @@ import app.fedilab.android.asynctasks.RetrieveNotificationsCacheAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
-import app.fedilab.android.client.Entities.Statistics;
 import app.fedilab.android.client.Entities.StatisticsNotification;
 import app.fedilab.android.drawers.NotificationsListAdapter;
 import app.fedilab.android.helper.FilterNotifications;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveCacheNotificationsInterface;
 import app.fedilab.android.interfaces.OnRetrieveNotificationStatsInterface;
-import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.services.BackupNotificationInDataBaseService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.NotificationCacheDAO;
@@ -91,6 +86,7 @@ import es.dmoral.toasty.Toasty;
 public class OwnerNotificationActivity extends BaseActivity implements OnRetrieveCacheNotificationsInterface, OnRetrieveNotificationStatsInterface {
 
 
+    LinearLayoutManager mLayoutManager;
     private ImageView pp_actionBar;
     private NotificationsListAdapter notificationsListAdapter;
     private String max_id;
@@ -100,14 +96,47 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private boolean flag_loading;
-    LinearLayoutManager mLayoutManager;
     private int style;
     private Button settings_time_from, settings_time_to;
     private FilterNotifications filterNotifications;
     private Date dateIni, dateEnd;
     private View statsDialogView;
     private StatisticsNotification statistics;
+    private DatePickerDialog.OnDateSetListener iniDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
 
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    dateIni = new Date(c.getTimeInMillis());
+                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private DatePickerDialog.OnDateSetListener endDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
+
+                    dateEnd = new Date(c.getTimeInMillis());
+                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private BroadcastReceiver backupFinishedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            max_id = null;
+            firstLoad = true;
+            flag_loading = true;
+            swiped = true;
+            new RetrieveNotificationsCacheAsyncTask(OwnerNotificationActivity.this, filterNotifications, null, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,32 +266,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         getMenuInflater().inflate(R.menu.option_owner_cache, menu);
         return true;
     }
-
-    private DatePickerDialog.OnDateSetListener iniDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
-                    dateIni = new Date(c.getTimeInMillis());
-                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-    private DatePickerDialog.OnDateSetListener endDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
-
-                    dateEnd = new Date(c.getTimeInMillis());
-                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -414,18 +417,6 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-    private BroadcastReceiver backupFinishedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            max_id = null;
-            firstLoad = true;
-            flag_loading = true;
-            swiped = true;
-            new RetrieveNotificationsCacheAsyncTask(OwnerNotificationActivity.this, filterNotifications, null, OwnerNotificationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-    };
 
     @Override
     public void onDestroy() {

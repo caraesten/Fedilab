@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -28,18 +27,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
@@ -60,24 +47,43 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.varunest.sparkbutton.SparkButton;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
 import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.activities.CustomSharingActivity;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.OwnerNotificationChartsActivity;
+import app.fedilab.android.activities.ShowAccountActivity;
+import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.activities.SlideMediaActivity;
+import app.fedilab.android.activities.TootActivity;
+import app.fedilab.android.activities.TootInfoActivity;
+import app.fedilab.android.asynctasks.ManagePollAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.PostNotificationsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -92,27 +98,15 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.ThemeHelper;
-import app.fedilab.android.interfaces.OnRetrieveImageInterface;
-import br.com.felix.horizontalbargraph.HorizontalBar;
-import br.com.felix.horizontalbargraph.model.BarItem;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.CustomSharingActivity;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.ShowAccountActivity;
-import app.fedilab.android.activities.ShowConversationActivity;
-import app.fedilab.android.activities.TootActivity;
-import app.fedilab.android.activities.TootInfoActivity;
-import app.fedilab.android.asynctasks.ManagePollAsyncTask;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.PostNotificationsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnPollInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnPostNotificationsActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
+import app.fedilab.android.interfaces.OnRetrieveImageInterface;
+import br.com.felix.horizontalbargraph.HorizontalBar;
+import br.com.felix.horizontalbargraph.model.BarItem;
+import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.social;
@@ -125,6 +119,7 @@ import static app.fedilab.android.activities.BaseMainActivity.social;
 
 public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface, OnRetrieveEmojiAccountInterface, OnPollInterface, OnRetrieveImageInterface {
 
+    private final Object lock = new Object();
     private Context context;
     private List<Notification> notifications;
     private LayoutInflater layoutInflater;
@@ -135,8 +130,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private int style;
     private RecyclerView mRecyclerView;
     private List<NotificationsListAdapter.ViewHolder> lstHolders;
-    private final Object lock = new Object();
-
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
         public void run() {
@@ -222,7 +215,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int iconColor = prefs.getInt("theme_icons_color", -1);
-        if( iconColor == -1){
+        if (iconColor == -1) {
             iconColor = ThemeHelper.getAttColor(context, R.attr.iconColor);
         }
         Helper.changeDrawableColor(context, R.drawable.ic_audio_wave, iconColor);
@@ -256,7 +249,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
         int reblogColor = prefs.getInt("theme_statuses_color", -1);
-        if(  holder.main_linear_container != null && reblogColor != -1  ){
+        if (holder.main_linear_container != null && reblogColor != -1) {
             holder.main_linear_container.setBackgroundColor(reblogColor);
         }
 
@@ -273,9 +266,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_mention));
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_chat_bubble_outline);
-                if(notification.getStatus().getVisibility().equals("direct")) {
+                if (notification.getStatus().getVisibility().equals("direct")) {
                     holder.main_container_trans.setVisibility(View.GONE);
-                }else{
+                } else {
                     holder.main_container_trans.setVisibility(View.VISIBLE);
                     holder.main_container_trans.setAlpha(.1f);
                 }
@@ -284,7 +277,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             case "poll":
                 holder.status_action_container.setVisibility(View.GONE);
                 typeString = context.getString(R.string.notif_poll);
-                ;
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_view_list_poll_notif);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
                 holder.status_more.setVisibility(View.GONE);
@@ -493,7 +485,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.notification_status_container.setVisibility(View.VISIBLE);
                 }
             }
-
 
 
             if (type.equals("favourite") || type.equals("reblog")) {
@@ -1410,9 +1401,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView number_votes, remaining_time;
         Button submit_vote, refresh_poll;
         LinearLayout main_linear_container;
-        public View getView() {
-            return itemView;
-        }
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -1466,6 +1454,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             main_linear_container = itemView.findViewById(R.id.main_linear_container);
         }
 
+        public View getView() {
+            return itemView;
+        }
 
         void updateAnimatedEmoji() {
             notification_status_content.invalidate();

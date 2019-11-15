@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -29,11 +30,10 @@ import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.GNUAPI;
+import app.fedilab.android.interfaces.OnRetrieveMissingFeedsInterface;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.interfaces.OnRetrieveMissingFeedsInterface;
 
 
 /**

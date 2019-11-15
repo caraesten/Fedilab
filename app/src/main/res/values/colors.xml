@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources tools:ignore="PrivateResource" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="PrivateResource">
 
 
     <!-- Header Profile-->
-    <color name="header1">#0288D1</color>
-    <color name="header2">#03A9F4</color>
-    <color name="header3">#4FC3F7</color>
     <!-- Header Profile DARK-->
-    <color name="header1D">#263238</color>
-    <color name="header2D">#455A64</color>
-    <color name="header3D">#607D8B</color>
 
     <color name="dark_text_toot_header">#d9d9d9</color>
-
-
-    <color name="black_text_toot_header">#d9d9d9</color>
 
 
     <color name="dark_text">#f3f3f3</color>
@@ -24,24 +15,15 @@
     <color name="transparent">#00000000</color>
 
 
-    <color name="splashc">#F5F5F5</color>
-    <color name="splashc_dark">#546E7A</color>
-
     <color name="white">#FFF</color>
-    <color name="blue_light">#C5CAE9</color>
-    <color name="light_grey">#E0E0E0</color>
-
-    <color name="light_black">#2c2c2c</color>
 
     <color name="background_image">#282c37</color>
     <color name="green_1">#009688</color>
     <color name="red_1">#F44336</color>
     <color name="green">#B2DFDB</color>
     <color name="red">#FFCDD2</color>
-    <color name="buttonb">#B3E5FC</color>
     <color name="titleb">#D7CCC8</color>
     <color name="black">#000</color>
-    <color name="black_2">#050505</color>
     <color name="black_3">#222</color>
     <!-- Mastodon color scheme -->
     <color name="mastodonC1__">#585c67</color>
@@ -50,33 +32,18 @@
     <color name="mastodonC1_">#313543</color>
     <color name="mastodonC2">#9baec8</color>
     <color name="mastodonC3">#d9e1e8</color>
-    <color name="mastodonC3_">#ebf3fa</color>
     <color name="mastodonC3__">#efefef</color>
     <color name="mastodonC4__">#772b90d9</color>
     <color name="mastodonC4">#2b90d9</color>
-    <color name="mastodonC4_">#1b80c9</color>
 
 
-    <color name="black_button_disabled">#8089A4</color>
-    <color name="black_button_pressed">#404964</color>
     <!-- Primary & accent colors -->
     <color name="notif_dark_1">#313543</color>
-    <color name="notif_dark_2">#353947</color>
     <color name="notif_dark_3">#393f4f</color>
-    <color name="notif_dark_4">#494f5f</color>
-    <color name="notif_dark_private">#393f4f</color>
 
     <color name="notif_black_1">#000000</color>
-    <color name="notif_black_2">#151515</color>
-    <color name="notif_black_3">#202020</color>
-    <color name="notif_black_4">#252525</color>
-    <color name="notif_black_private">#202020</color>
 
     <color name="notif_light_1">#ffffff</color>
-    <color name="notif_light_2">#fcfcfc</color>
-    <color name="notif_light_3">#f9f9f9</color>
-    <color name="notif_light_4">#f3f3f3</color>
-    <color name="notif_light_private">#ccd7e0</color>
 
     <color name="verified_text">#79bd9a</color>
     <color name="verified_background">#5579bd9a</color>
@@ -93,7 +60,6 @@
     <!-- Card border -->
     <color name="cardBorderLight">#393f4f</color>
     <color name="cardBorderDark">#393f4f</color>
-    <color name="cardBorderBlack">#d9d9d9</color>
 
 
     <color name="black_link_toot">#27a7fc</color>
@@ -101,7 +67,6 @@
     <color name="light_link_toot">#27a7fc</color>
 
 
-    <color name="neutral_thumbs">#606984</color>
     <color name="positive_thumbs">#2b90d9</color>
     <color name="negative_thumbs">#F44336</color>
 
@@ -128,26 +93,12 @@
     <color name="violet_color_picker">#8359A3</color>
     <color name="yellow_color_picker">#FBE870</color>
     <color name="yellow_green_color_picker">#C5E17A</color>
-    <color name="tool_bg">#151414</color>
 
-
-    <color name="ucrop_color_toolbar">#000000</color>
-    <color name="ucrop_color_statusbar" tools:ignore="MissingDefaultResource">#000000</color>
-    <color name="ucrop_color_toolbar_widget">#f5f5f5</color>
-
-    <color name="ucrop_color_widget_active">#f5f5f5</color>
-    <color name="ucrop_color_active_controls_color">#FFFFFF</color>
-    <color name="ucrop_color_widget_rotate_mid_line">#000000</color>
-    <color name="ucrop_color_widget_background">#000000</color>
 
     <color name="custom_features_button_black">#144365</color>
 
     <color name="custom_features_panel_background">#14161B</color>
     <color name="custom_features_panel_background_light">#E0E0E0</color>
-
-    <color name="quick_reply_background_dark">#2d313c</color>
-    <color name="quick_reply_background_black">#1A1A1A</color>
-    <color name="quick_reply_background_light">#E0E0E0</color>
 
 
     <color name="chart_boost">#D32F2F</color>
@@ -159,11 +110,8 @@
     <color name="chart_notif_fav">#388E3C</color>
     <color name="chart_notif_mention">#0288D1</color>
     <color name="chart_notif_follow">#512DA8</color>
-    <color name="chart_notif_poll">#FBC02D</color>
 
     <!-- TOASTY -->
-    <color name="toasty_text">#2e2e2e</color>
-    <color name="toasty_background">#c8c8c8</color>
 
     <color name="defaultTextColor">#2e2e2e</color>
     <color name="errorColor">#c8c8c8</color>
@@ -177,7 +125,6 @@
 
     <color name="cyanea_primary_reference">#0288D1</color>
     <color name="cyanea_accent_reference">#FFA000</color>
-
 
 
     <color name="dark_icon_theme">#f3f3f3</color>

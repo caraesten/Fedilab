@@ -36,27 +36,20 @@ import app.fedilab.android.sqlite.StatusCacheDAO;
 
 public class SyncBookmarksAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum sync{
-        EXPORT,
-        IMPORT
-    }
-
     private List<app.fedilab.android.client.Entities.Status> statusList;
     private OnSyncBookmarksInterface listener;
     private WeakReference<Context> contextReference;
     private sync type;
-
     public SyncBookmarksAsyncTask(Context context, sync type, OnSyncBookmarksInterface onSyncBookmarksInterface) {
         this.contextReference = new WeakReference<>(context);
         this.type = type;
         this.listener = onSyncBookmarksInterface;
     }
 
-
     @Override
     protected Void doInBackground(Void... params) {
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( type == sync.IMPORT){
+        if (type == sync.IMPORT) {
             String max_id = null;
             do {
                 APIResponse apiResponse = new API(contextReference.get()).getBookmarks(max_id);
@@ -64,7 +57,7 @@ public class SyncBookmarksAsyncTask extends AsyncTask<Void, Void, Void> {
                 List<app.fedilab.android.client.Entities.Status> statuses = apiResponse.getStatuses();
                 for (app.fedilab.android.client.Entities.Status tmpStatus : statuses) {
                     app.fedilab.android.client.Entities.Status status = new StatusCacheDAO(contextReference.get(), db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, tmpStatus.getId());
-                    if( status == null) {
+                    if (status == null) {
                         new StatusCacheDAO(contextReference.get(), db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, tmpStatus);
                     }
                 }
@@ -74,9 +67,9 @@ public class SyncBookmarksAsyncTask extends AsyncTask<Void, Void, Void> {
                     SystemClock.sleep(200);
                 }
             } while (max_id != null);
-        }else{
+        } else {
             List<app.fedilab.android.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
-            if( statuses != null) {
+            if (statuses != null) {
                 for (app.fedilab.android.client.Entities.Status tmpStatus : statuses) {
                     new API(contextReference.get()).postAction(API.StatusAction.BOOKMARK, tmpStatus.getId());
                     try {
@@ -94,6 +87,11 @@ public class SyncBookmarksAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveBookmarks(statusList);
+    }
+
+    public enum sync {
+        EXPORT,
+        IMPORT
     }
 
 }

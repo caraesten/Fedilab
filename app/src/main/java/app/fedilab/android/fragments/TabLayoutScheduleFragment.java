@@ -15,20 +15,18 @@ package app.fedilab.android.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 

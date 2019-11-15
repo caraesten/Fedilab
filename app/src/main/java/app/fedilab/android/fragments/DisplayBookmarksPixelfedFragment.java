@@ -44,7 +44,6 @@ import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.PixelfedListAdapter;
-import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.Sqlite;
@@ -110,7 +109,7 @@ public class DisplayBookmarksPixelfedFragment extends Fragment implements OnRetr
         statuses = apiResponse.getStatuses();
         if (statuses != null && statuses.size() > 0) {
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
-            pixelfedListAdapter = new PixelfedListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS,  this.statuses);
+            pixelfedListAdapter = new PixelfedListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, this.statuses);
             lv_status.setAdapter(pixelfedListAdapter);
             lv_status.setLayoutManager(mLayoutManager);
         } else {

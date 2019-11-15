@@ -18,10 +18,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,19 +25,22 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.client.Entities.TrunkAccount;
 import app.fedilab.android.drawers.WhoToFollowAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveWhoToFollowInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**

@@ -35,6 +35,7 @@ public class Statistics {
     private Date lastTootDate;
     private float frequency;
     private Map<String, Integer> tagsTrend = new HashMap<>();
+    private int v_direct;
 
     public Date getFirstTootDate() {
         return firstTootDate;
@@ -147,8 +148,6 @@ public class Statistics {
     public void setV_direct(int v_direct) {
         this.v_direct = v_direct;
     }
-
-    private int v_direct;
 
     public Map<String, Integer> getTagsTrend() {
         return tagsTrend;

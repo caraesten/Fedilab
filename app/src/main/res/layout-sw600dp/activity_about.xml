@@ -26,22 +26,22 @@
         android:orientation="vertical">
         <!-- About app name -->
         <TextView
-            android:layout_marginTop="20dp"
-            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:text="@string/app_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="22sp" />
         <!-- About version -->
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/about_version"
-            android:textSize="18sp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textSize="18sp" />
 
         <!-- About developer -->
         <TextView
@@ -50,12 +50,12 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginTop="10dp"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:padding="5dp"
             android:text="@string/about_developer"
             android:textColor="?colorAccent"
-            android:textSize="16sp"
-            android:focusable="true" />
+            android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_developers"
@@ -69,60 +69,59 @@
 
         <TextView
             android:id="@+id/txt_developers"
-            android:visibility="gone"
-            android:textSize="18sp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/about_support"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="@string/support_the_app_on_liberapay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="@string/support_the_app_on_liberapay" />
 
         <Button
             android:id="@+id/about_support_paypal"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="PayPal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="PayPal" />
 
         <TextView
             android:id="@+id/about_wiki"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:autoLink="web"
-            android:text="WIKI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="WIKI"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/about_website"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:autoLink="web"
-            android:text="https://fedilab.app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="https://fedilab.app"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
         <!-- About UX/UI designer -->
         <TextView
-            android:id="@+id/about_thanks_ux"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -145,36 +144,33 @@
 
         <TextView
             android:id="@+id/txt_ux"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/txt_support"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/txt_banners"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            android:visibility="gone" />
         <!-- About logo designer -->
         <TextView
-            android:id="@+id/about_thanks_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -196,17 +192,16 @@
 
         <TextView
             android:id="@+id/txt_designers"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            android:visibility="gone" />
         <!-- About contributors -->
 
         <TextView
-            android:id="@+id/about_thanks_dev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -229,39 +224,39 @@
 
         <TextView
             android:id="@+id/txt_thankyou1"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_thankyou2"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <!-- About license -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <TextView
-                android:text="@string/about_license"
-                android:textSize="18sp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content" />
+                android:text="@string/about_license"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/about_license"
@@ -273,19 +268,19 @@
 
         <!-- About license -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="18sp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="18sp">
 
             <TextView
-                android:text="@string/about_code"
-                android:textSize="16sp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content" />
+                android:text="@string/about_code"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_code"
@@ -298,21 +293,21 @@
 
         <!-- About The Kinrar\'s API -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <TextView
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:clickable="true"
                 android:layout_width="200dp"
-                android:text="@string/about_thekinrar"
                 android:layout_height="wrap_content"
-                android:focusable="true" />
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/about_thekinrar"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/about_thekinrar"
@@ -324,21 +319,21 @@
 
         <!-- About Trunk\'s API -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <TextView
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:clickable="true"
                 android:layout_width="200dp"
-                android:text="@string/about_trunk"
                 android:layout_height="wrap_content"
-                android:focusable="true" />
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/about_trunk"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/about_trunk"
@@ -350,19 +345,19 @@
 
         <!-- About translation -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="18sp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="18sp">
 
             <TextView
-                android:text="@string/about_yandex"
-                android:textSize="16sp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content" />
+                android:text="@string/about_yandex"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/about_translation"

@@ -25,12 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -43,6 +37,10 @@ import android.text.style.URLSpan;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -64,19 +62,16 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import app.fedilab.android.helper.ThemeHelper;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.HashTagActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
+import es.dmoral.toasty.Toasty;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
-import static app.fedilab.android.helper.Helper.THEME_BLACK;
-import static app.fedilab.android.helper.Helper.THEME_DARK;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.drawableToBitmap;
 import static app.fedilab.android.helper.Helper.hashtagPattern;
 
@@ -88,6 +83,17 @@ import static app.fedilab.android.helper.Helper.hashtagPattern;
 
 public class Account implements Parcelable {
 
+    public static final Creator<Account> CREATOR = new Creator<Account>() {
+        @Override
+        public Account createFromParcel(Parcel source) {
+            return new Account(source);
+        }
+
+        @Override
+        public Account[] newArray(int size) {
+            return new Account[size];
+        }
+    };
     private String id;
     private String uuid;
     private String username;
@@ -133,72 +139,11 @@ public class Account implements Parcelable {
     private boolean isAdmin = false;
     private String privacy = "public";
     private boolean sensitive = false;
-
     private String locale;
     private String invite_request;
     private String created_by_application_id;
     private String invited_by_account_id;
     private boolean emojiFound = false;
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.uuid);
-        dest.writeString(this.username);
-        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
-        dest.writeString(this.acct);
-        dest.writeString(this.display_name);
-        dest.writeString(this.stored_displayname);
-        dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
-        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
-        dest.writeLong(this.updated_at != null ? this.updated_at.getTime() : -1);
-        dest.writeInt(this.followers_count);
-        dest.writeInt(this.following_count);
-        dest.writeInt(this.statuses_count);
-        dest.writeString(this.followers_count_str);
-        dest.writeString(this.following_count_str);
-        dest.writeString(this.statuses_count_str);
-        dest.writeString(this.note);
-        TextUtils.writeToParcel(this.noteSpan, dest, flags);
-        dest.writeString(this.url);
-        dest.writeString(this.avatar);
-        dest.writeString(this.avatar_static);
-        dest.writeString(this.header);
-        dest.writeString(this.header_static);
-        dest.writeString(this.token);
-        dest.writeString(this.instance);
-        dest.writeByte(this.isFollowing ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.followType == null ? -1 : this.followType.ordinal());
-        dest.writeByte(this.isMakingAction ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.moved_to_account, flags);
-        dest.writeByte(this.muting_notifications ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.metaDataSize);
-        dest.writeInt(this.metaDataSizeVerified);
-        dest.writeSerializable(this.fields);
-        dest.writeSerializable(this.fieldsVerified);
-        dest.writeSerializable(this.fieldsSpan);
-        dest.writeTypedList(this.emojis);
-        dest.writeString(this.host);
-        dest.writeByte(this.isBot ? (byte) 1 : (byte) 0);
-        dest.writeString(this.social);
-        dest.writeString(this.client_id);
-        dest.writeString(this.client_secret);
-        dest.writeString(this.refresh_token);
-        dest.writeByte(this.isModerator ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isAdmin ? (byte) 1 : (byte) 0);
-        dest.writeString(this.privacy);
-        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
-        dest.writeString(this.locale);
-        dest.writeString(this.invite_request);
-        dest.writeString(this.created_by_application_id);
-        dest.writeString(this.invited_by_account_id);
-    }
 
     public Account() {
     }
@@ -259,17 +204,125 @@ public class Account implements Parcelable {
         this.invited_by_account_id = in.readString();
     }
 
-    public static final Creator<Account> CREATOR = new Creator<Account>() {
-        @Override
-        public Account createFromParcel(Parcel source) {
-            return new Account(source);
-        }
+    public static void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account) {
+        if (((Activity) context).isFinishing())
+            return;
 
-        @Override
-        public Account[] newArray(int size) {
-            return new Account[size];
+        account.setdisplayNameSpan(new SpannableString(account.getDisplay_name()));
+        SpannableString displayNameSpan = account.getdisplayNameSpan();
+        if (displayNameSpan == null)
+            return;
+        final List<Emojis> emojis = account.getEmojis();
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+        if (emojis != null && emojis.size() > 0) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                try {
+                    Glide.with(context)
+                            .asDrawable()
+                            .load(emoji.getUrl())
+                            .into(new SimpleTarget<Drawable>() {
+                                @Override
+                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                    if (displayNameSpan.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
+                                                ImageSpan imageSpan;
+                                                if (!disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                } else {
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
+                                                displayNameSpan.setSpan(
+                                                        imageSpan, startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }
+                                        }
+                                    }
+                                    i[0]++;
+                                    if (i[0] == (emojis.size())) {
+                                        account.setdisplayNameSpan(displayNameSpan);
+                                        if (listener != null)
+                                            listener.onRetrieveEmojiAccount(account);
+                                    }
+                                }
+
+
+                            });
+                } catch (Exception ignored) {
+                }
+
+            }
         }
-    };
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.uuid);
+        dest.writeString(this.username);
+        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
+        dest.writeString(this.acct);
+        dest.writeString(this.display_name);
+        dest.writeString(this.stored_displayname);
+        dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeLong(this.updated_at != null ? this.updated_at.getTime() : -1);
+        dest.writeInt(this.followers_count);
+        dest.writeInt(this.following_count);
+        dest.writeInt(this.statuses_count);
+        dest.writeString(this.followers_count_str);
+        dest.writeString(this.following_count_str);
+        dest.writeString(this.statuses_count_str);
+        dest.writeString(this.note);
+        TextUtils.writeToParcel(this.noteSpan, dest, flags);
+        dest.writeString(this.url);
+        dest.writeString(this.avatar);
+        dest.writeString(this.avatar_static);
+        dest.writeString(this.header);
+        dest.writeString(this.header_static);
+        dest.writeString(this.token);
+        dest.writeString(this.instance);
+        dest.writeByte(this.isFollowing ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.followType == null ? -1 : this.followType.ordinal());
+        dest.writeByte(this.isMakingAction ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.moved_to_account, flags);
+        dest.writeByte(this.muting_notifications ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.metaDataSize);
+        dest.writeInt(this.metaDataSizeVerified);
+        dest.writeSerializable(this.fields);
+        dest.writeSerializable(this.fieldsVerified);
+        dest.writeSerializable(this.fieldsSpan);
+        dest.writeTypedList(this.emojis);
+        dest.writeString(this.host);
+        dest.writeByte(this.isBot ? (byte) 1 : (byte) 0);
+        dest.writeString(this.social);
+        dest.writeString(this.client_id);
+        dest.writeString(this.client_secret);
+        dest.writeString(this.refresh_token);
+        dest.writeByte(this.isModerator ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isAdmin ? (byte) 1 : (byte) 0);
+        dest.writeString(this.privacy);
+        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
+        dest.writeString(this.locale);
+        dest.writeString(this.invite_request);
+        dest.writeString(this.created_by_application_id);
+        dest.writeString(this.invited_by_account_id);
+    }
 
     public followAction getFollowType() {
         return followType;
@@ -303,21 +356,20 @@ public class Account implements Parcelable {
         this.muting_notifications = muting_notifications;
     }
 
-    public void setFields(LinkedHashMap<String, String> fields) {
-        this.fields = fields;
-    }
-
     public LinkedHashMap<String, String> getFields() {
         return fields;
     }
 
-    public void setFieldsSpan(LinkedHashMap<SpannableString, SpannableString> fieldsSpan) {
-        this.fieldsSpan = fieldsSpan;
+    public void setFields(LinkedHashMap<String, String> fields) {
+        this.fields = fields;
     }
-
 
     public LinkedHashMap<SpannableString, SpannableString> getFieldsSpan() {
         return fieldsSpan;
+    }
+
+    public void setFieldsSpan(LinkedHashMap<SpannableString, SpannableString> fieldsSpan) {
+        this.fieldsSpan = fieldsSpan;
     }
 
     public LinkedHashMap<String, Boolean> getFieldsVerified() {
@@ -471,17 +523,6 @@ public class Account implements Parcelable {
     public void setEmojiFound(boolean emojiFound) {
         this.emojiFound = emojiFound;
     }
-
-
-    public enum followAction {
-        FOLLOW,
-        NOT_FOLLOW,
-        BLOCK,
-        MUTE,
-        REQUEST_SENT,
-        NOTHING
-    }
-
 
     public String getId() {
         return id;
@@ -725,7 +766,7 @@ public class Account implements Parcelable {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int l_c = prefs.getInt("theme_link_color", -1);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( l_c == -1) {
+        if (l_c == -1) {
             l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
@@ -1055,71 +1096,18 @@ public class Account implements Parcelable {
 
     }
 
-
-    public static void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account) {
-        if (((Activity) context).isFinishing())
-            return;
-
-        account.setdisplayNameSpan(new SpannableString(account.getDisplay_name()));
-        SpannableString displayNameSpan = account.getdisplayNameSpan();
-        if (displayNameSpan == null)
-            return;
-        final List<Emojis> emojis = account.getEmojis();
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
-        if (emojis != null && emojis.size() > 0) {
-            final int[] i = {0};
-            for (final Emojis emoji : emojis) {
-                try {
-                    Glide.with(context)
-                            .asDrawable()
-                            .load(emoji.getUrl())
-                            .into(new SimpleTarget<Drawable>() {
-                                @Override
-                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                                    if (displayNameSpan.toString().contains(targetedEmoji)) {
-                                        //emojis can be used several times so we have to loop
-                                        for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
-                                            final int endPosition = startPosition + targetedEmoji.length();
-                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition) {
-                                                ImageSpan imageSpan;
-                                                if (!disableAnimatedEmoji) {
-                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
-                                                    resource.setVisible(true, true);
-                                                    imageSpan = new ImageSpan(resource);
-                                                } else {
-                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
-                                                    imageSpan = new ImageSpan(context,
-                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
-                                                                    (int) Helper.convertDpToPixel(20, context), false));
-                                                }
-                                                displayNameSpan.setSpan(
-                                                        imageSpan, startPosition,
-                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                            }
-                                        }
-                                    }
-                                    i[0]++;
-                                    if (i[0] == (emojis.size())) {
-                                        account.setdisplayNameSpan(displayNameSpan);
-                                        if (listener != null)
-                                            listener.onRetrieveEmojiAccount(account);
-                                    }
-                                }
-
-
-                            });
-                } catch (Exception ignored) {
-                }
-
-            }
-        }
-    }
-
     @NotNull
     public String toString() {
         return this.getAcct() + " - " + this.getUrl();
+    }
+
+    public enum followAction {
+        FOLLOW,
+        NOT_FOLLOW,
+        BLOCK,
+        MUTE,
+        REQUEST_SENT,
+        NOTHING
     }
 
 

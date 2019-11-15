@@ -19,27 +19,24 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.drawers.TagsEditAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 
 /**

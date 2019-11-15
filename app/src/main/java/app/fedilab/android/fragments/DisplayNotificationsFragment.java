@@ -24,43 +24,41 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.PreferenceManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.RetrieveMissingNotificationsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveNotificationsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.NotificationsListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
+import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.RetrieveMissingNotificationsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveNotificationsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
-import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.countNewNotifications;
@@ -73,6 +71,8 @@ import static app.fedilab.android.activities.BaseMainActivity.countNewNotificati
 public class DisplayNotificationsFragment extends Fragment implements OnRetrieveNotificationsInterface, OnRetrieveMissingNotificationsInterface {
 
 
+    LinearLayoutManager mLayoutManager;
+    Type type;
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -86,23 +86,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private RecyclerView lv_notifications;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
-    LinearLayoutManager mLayoutManager;
     private BroadcastReceiver receive_action;
     private BroadcastReceiver receive_data;
 
     public DisplayNotificationsFragment() {
     }
-
-    public enum Type {
-        ALL,
-        MENTION,
-        FAVORITE,
-        BOOST,
-        POLL,
-        FOLLOW
-    }
-
-    Type type;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -230,12 +218,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         return rootView;
     }
 
-
     @Override
     public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
     @Override
     public void onAttach(@NotNull Context context) {
@@ -292,10 +278,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if (apiResponse.getError() != null) {
 
-            if(apiResponse.getError().getError().length() < 100) {
+            if (apiResponse.getError().getError().length() < 100) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
@@ -409,7 +395,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, null, DisplayNotificationsFragment.this).execute();
     }
 
-
     public void refresh(Notification notification) {
         if (context == null)
             return;
@@ -437,7 +422,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         }
     }
-
 
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
@@ -484,7 +468,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-
     /**
      * Records the id of the notification only if its greater than the previous one.
      *
@@ -502,7 +485,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-
     /**
      * Records the id of the notification only if its greater than the previous one.
      */
@@ -516,5 +498,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 editor.apply();
             }
         }
+    }
+
+
+    public enum Type {
+        ALL,
+        MENTION,
+        FAVORITE,
+        BOOST,
+        POLL,
+        FOLLOW
     }
 }

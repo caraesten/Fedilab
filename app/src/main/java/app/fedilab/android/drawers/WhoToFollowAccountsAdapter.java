@@ -16,9 +16,6 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +23,14 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.TrunkAccount;
 import app.fedilab.android.helper.CrossActions;
-import app.fedilab.android.R;
 
 
 /**

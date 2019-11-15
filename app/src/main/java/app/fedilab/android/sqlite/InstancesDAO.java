@@ -25,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 import app.fedilab.android.client.Entities.RemoteInstance;
-import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.Helper;
 
 
@@ -35,8 +34,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class InstancesDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public InstancesDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

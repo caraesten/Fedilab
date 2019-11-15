@@ -19,12 +19,12 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
-import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 
 /**

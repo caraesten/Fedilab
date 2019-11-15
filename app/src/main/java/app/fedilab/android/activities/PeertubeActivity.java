@@ -32,15 +32,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,6 +50,14 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -82,7 +81,13 @@ import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeSingleAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeSingleCommentsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -96,6 +101,8 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.FullScreenMediaController;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnPlaylistActionInterface;
+import app.fedilab.android.interfaces.OnPostActionInterface;
+import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -103,14 +110,6 @@ import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeSingleAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeSingleCommentsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnPostActionInterface;
-import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 
 import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_PLAYLIST;
 import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_PLAYLIST_FOR_VIDEO;
@@ -124,6 +123,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface, OnPlaylistActionInterface {
 
+    public static String video_id;
     private String peertubeInstance, videoId;
     private FullScreenMediaController.fullscreen fullscreen;
     private RelativeLayout loader;
@@ -132,7 +132,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private int stopPosition;
     private Peertube peertube;
     private TextView toolbar_title;
-    public static String video_id;
     private SimpleExoPlayerView playerView;
     private SimpleExoPlayer player;
     private boolean fullScreenMode;
@@ -148,6 +147,13 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private String instance;
     private List<String> playlistForVideo;
     private List<Playlist> playlists;
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,7 +345,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         if ((ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
                 v instanceof EditText &&
                 v.getId() == R.id.add_comment_write) {
-            int scrcoords[] = new int[2];
+            int[] scrcoords = new int[2];
             v.getLocationOnScreen(scrcoords);
             float x = ev.getRawX() + v.getLeft() - scrcoords[0];
             float y = ev.getRawY() + v.getTop() - scrcoords[1];
@@ -352,13 +358,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
     }
 
     @Override

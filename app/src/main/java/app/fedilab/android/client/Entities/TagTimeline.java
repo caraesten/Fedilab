@@ -26,6 +26,17 @@ import java.util.List;
 
 public class TagTimeline implements Parcelable {
 
+    public static final Creator<TagTimeline> CREATOR = new Creator<TagTimeline>() {
+        @Override
+        public TagTimeline createFromParcel(Parcel source) {
+            return new TagTimeline(source);
+        }
+
+        @Override
+        public TagTimeline[] newArray(int size) {
+            return new TagTimeline[size];
+        }
+    };
     private int id;
     private String name;
     private String displayname;
@@ -34,6 +45,20 @@ public class TagTimeline implements Parcelable {
     private List<String> any;
     private List<String> all;
     private List<String> none;
+
+    public TagTimeline() {
+    }
+
+    protected TagTimeline(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.displayname = in.readString();
+        this.isART = in.readByte() != 0;
+        this.isNSFW = in.readByte() != 0;
+        this.any = in.createStringArrayList();
+        this.all = in.createStringArrayList();
+        this.none = in.createStringArrayList();
+    }
 
     public String getName() {
         return name;
@@ -91,10 +116,6 @@ public class TagTimeline implements Parcelable {
         this.displayname = displayname;
     }
 
-    public TagTimeline() {
-    }
-
-
     public int getId() {
         return id;
     }
@@ -119,27 +140,4 @@ public class TagTimeline implements Parcelable {
         dest.writeStringList(this.all);
         dest.writeStringList(this.none);
     }
-
-    protected TagTimeline(Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        this.displayname = in.readString();
-        this.isART = in.readByte() != 0;
-        this.isNSFW = in.readByte() != 0;
-        this.any = in.createStringArrayList();
-        this.all = in.createStringArrayList();
-        this.none = in.createStringArrayList();
-    }
-
-    public static final Creator<TagTimeline> CREATOR = new Creator<TagTimeline>() {
-        @Override
-        public TagTimeline createFromParcel(Parcel source) {
-            return new TagTimeline(source);
-        }
-
-        @Override
-        public TagTimeline[] newArray(int size) {
-            return new TagTimeline[size];
-        }
-    };
 }

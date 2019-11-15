@@ -33,8 +33,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class TempMuteDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public TempMuteDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

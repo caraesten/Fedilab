@@ -35,30 +35,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import com.jaredrummler.materialspinner.MaterialSpinner;
-
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -75,6 +51,28 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -87,6 +85,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import app.fedilab.android.BuildConfig;
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.ManageFiltersAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveMetaDataAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
+import app.fedilab.android.asynctasks.SyncTimelinesAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Filters;
@@ -115,6 +124,13 @@ import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
+import app.fedilab.android.interfaces.OnFilterActionInterface;
+import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
+import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
+import app.fedilab.android.interfaces.OnRetrieveMetaDataInterface;
+import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
+import app.fedilab.android.interfaces.OnSyncTimelineInterface;
+import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
@@ -124,24 +140,6 @@ import app.fedilab.android.sqlite.TempMuteDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageFiltersAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveMetaDataAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
-import app.fedilab.android.asynctasks.SyncTimelinesAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoByIDAsyncTask;
-import app.fedilab.android.interfaces.OnFilterActionInterface;
-import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
-import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
-import app.fedilab.android.interfaces.OnRetrieveMetaDataInterface;
-import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
-import app.fedilab.android.interfaces.OnSyncTimelineInterface;
-import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 
 import static app.fedilab.android.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static app.fedilab.android.helper.Helper.changeDrawableColor;
@@ -151,51 +149,40 @@ public abstract class BaseMainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface {
 
 
+    public static String currentLocale;
+    public static List<Filters> filters = new ArrayList<>();
+    public static int countNewStatus;
+    public static int countNewNotifications;
+    public static String lastHomeId = null, lastNotificationId = null;
+    public static String displayPeertube = null;
+    public static UpdateAccountInfoAsyncTask.SOCIAL social;
+    public static List<ManageTimelines> timelines;
+    public static HashMap<Integer, Fragment> mPageReferenceMap;
+    public static HashMap<String, Integer> poll_limits = new HashMap<>();
+    public static List<String> mutedAccount = new ArrayList<>();
+    public static String regex_home, regex_local, regex_public;
+    public static boolean show_boosts, show_replies, show_art_nsfw;
+    public static iconLauncher mLauncher = iconLauncher.BUBBLES;
+    private static boolean notificationChecked = false;
+    private final int PICK_IMPORT = 5556;
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
     private SearchView toolbar_search;
     private View headerLayout;
-    public static String currentLocale;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
-    public static List<Filters> filters = new ArrayList<>();
-    public static int countNewStatus;
-    public static int countNewNotifications;
-    public static String lastHomeId = null, lastNotificationId = null;
     private AppBarLayout appBar;
     private String userId;
     private String instance;
     private PagerAdapter adapter;
     private ImageView delete_instance, display_timeline;
-    public static String displayPeertube = null;
     private int style;
     private Activity activity;
-    public static UpdateAccountInfoAsyncTask.SOCIAL social;
-    private final int PICK_IMPORT = 5556;
-    public static List<ManageTimelines> timelines;
     private BroadcastReceiver hidde_menu, update_topbar;
-
-    public static HashMap<Integer, Fragment> mPageReferenceMap;
-    private static boolean notificationChecked = false;
-    public static HashMap<String, Integer> poll_limits = new HashMap<>();
     private Instance instanceClass;
-    public static List<String> mutedAccount = new ArrayList<>();
-    public static String regex_home, regex_local, regex_public;
-    public static boolean show_boosts, show_replies, show_art_nsfw;
-
-    public enum iconLauncher{
-        BUBBLES,
-        FEDIVERSE,
-        HERO,
-        ATOM,
-        BRAINCRASH,
-        MASTALAB
-    }
-    public static iconLauncher mLauncher = iconLauncher.BUBBLES;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +249,7 @@ public abstract class BaseMainActivity extends BaseActivity
         countNewNotifications = 0;
 
         //TODO: remove that line
-       // social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+        // social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
 
         regex_home = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
         regex_local = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
@@ -447,7 +434,6 @@ public abstract class BaseMainActivity extends BaseActivity
             iconSub.setImageResource(R.drawable.ic_subscriptions);
 
 
-
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconOver = pTabOver.getCustomView().findViewById(R.id.tab_icon);
             iconOver.setImageResource(R.drawable.ic_overview);
@@ -600,10 +586,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     if (tab.getCustomView() != null) {
                         if (viewPager.getAdapter() != null) {
                             Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-                            if( fragment instanceof DisplayStatusFragment) {
+                            if (fragment instanceof DisplayStatusFragment) {
                                 DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                                 displayStatusFragment.scrollToTop();
-                            }else if(fragment instanceof  DisplayNotificationsFragment){
+                            } else if (fragment instanceof DisplayNotificationsFragment) {
                                 DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                                 displayNotificationsFragment.scrollToTop();
                             }
@@ -690,7 +676,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 int position = 0;
                 if (tabLayout != null)
                     position = tabLayout.getSelectedTabPosition();
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, true,BaseMainActivity.this).execute();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, true, BaseMainActivity.this).execute();
             }
         };
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(hidde_menu, new IntentFilter(Helper.RECEIVE_HIDE_ITEM));
@@ -710,8 +696,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 //Peertube search
                 if (tabLayout != null && timelines != null && timelines.size() > tabLayout.getSelectedTabPosition() &&
                         (timelines.get(tabLayout.getSelectedTabPosition()).getType() == ManageTimelines.Type.PEERTUBE ||
-                        (timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null &&
-                         timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE")))) {
+                                (timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance() != null &&
+                                        timelines.get(tabLayout.getSelectedTabPosition()).getRemoteInstance().getType().equals("PEERTUBE")))) {
                     DisplayStatusFragment statusFragment;
                     Bundle bundle = new Bundle();
                     statusFragment = new DisplayStatusFragment();
@@ -873,7 +859,7 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.getTabAt(0).select();
         */
         if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            if( social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+            if (social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                 toot.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -888,7 +874,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         return false;
                     }
                 });
-            }else{
+            } else {
                 toot.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1207,10 +1193,10 @@ public abstract class BaseMainActivity extends BaseActivity
             final MaterialSpinner set_live_type = dialogView.findViewById(R.id.set_live_type);
             String[] labels = {getString(R.string.live_notif), getString(R.string.live_delayed), getString(R.string.no_live_notif)};
             ArrayAdapter<String> adapterLive = new ArrayAdapter<>(getApplicationContext(),
-                    android.R.layout.simple_spinner_dropdown_item,labels );
+                    android.R.layout.simple_spinner_dropdown_item, labels);
             set_live_type.setAdapter(adapterLive);
             TextView set_live_type_indication = dialogView.findViewById(R.id.set_live_type_indication);
-            switch (Helper.liveNotifType(getApplicationContext())){
+            switch (Helper.liveNotifType(getApplicationContext())) {
                 case Helper.NOTIF_LIVE:
                     set_live_type_indication.setText(R.string.live_notif_indication);
                     break;
@@ -1247,7 +1233,7 @@ public abstract class BaseMainActivity extends BaseActivity
                             editor.apply();
                             break;
                     }
-                    switch (Helper.liveNotifType(getApplicationContext())){
+                    switch (Helper.liveNotifType(getApplicationContext())) {
                         case Helper.NOTIF_LIVE:
                             set_live_type_indication.setText(R.string.live_notif_indication);
                             break;
@@ -1260,7 +1246,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     }
                 }
             });
-
 
 
             dialogBuilderOptin.setTitle(R.string.settings_popup_title);
@@ -1277,7 +1262,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 dialogBuilderOptin.show();
             } catch (Exception ignored) {
             }
-            ;
 
         }
         Helper.switchLayout(BaseMainActivity.this);
@@ -1326,7 +1310,6 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     protected abstract void rateThisApp();
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -1421,13 +1404,13 @@ public abstract class BaseMainActivity extends BaseActivity
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.REDRAW_MENU) {
                 Helper.hideMenuItem(BaseMainActivity.this, navigationView.getMenu());
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_TAG) {
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, false,BaseMainActivity.this).execute();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, -1, false, BaseMainActivity.this).execute();
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.REFRESH_TIMELINE) {
                 int position = 0;
                 boolean refreshList = extras.getBoolean(Helper.REFRESH_LIST_TIMELINE, false);
                 if (tabLayout != null)
                     position = tabLayout.getSelectedTabPosition();
-                new SyncTimelinesAsyncTask(BaseMainActivity.this, position,  refreshList,BaseMainActivity.this).execute();
+                new SyncTimelinesAsyncTask(BaseMainActivity.this, position, refreshList, BaseMainActivity.this).execute();
             } else if (extras.getInt(Helper.INTENT_ACTION) == Helper.SEARCH_REMOTE) {
                 String url = extras.getString(Helper.SEARCH_URL);
                 intent.replaceExtras(new Bundle());
@@ -1610,7 +1593,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onResume() {
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", true).apply();
-        
+
         //Proceeds to update of the authenticated account
         /*if (Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1636,7 +1619,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
     }
-
 
     @Override
     protected void onPause() {
@@ -1729,7 +1711,7 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), MutedInstanceActivity.class);
             startActivity(intent);
             return false;
-        }else if ( id == R.id.nav_bookmarks){
+        } else if (id == R.id.nav_bookmarks) {
             Intent intent = new Intent(getApplicationContext(), BookmarkActivity.class);
             startActivity(intent);
             return false;
@@ -1784,7 +1766,7 @@ public abstract class BaseMainActivity extends BaseActivity
             toot.hide();
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                 bundle.putString("instanceType", "PIXELFED");
             }
             statusFragment.setArguments(bundle);
@@ -1844,7 +1826,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "HOW_TO_VIDEOS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayHowToFragment, fragmentTag).commit();
-        } else if (id == R.id.nav_muted ) {
+        } else if (id == R.id.nav_muted) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.MUTED);
@@ -1870,7 +1852,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayBookmarksPixelfedFragment, fragmentTag).commit();
             toot.hide();
-        }else if (id == R.id.nav_peertube) {
+        } else if (id == R.id.nav_peertube) {
             DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
             fragmentTag = "BOOKMARKS_PEERTUBE";
             fragmentManager.beginTransaction()
@@ -1922,7 +1904,6 @@ public abstract class BaseMainActivity extends BaseActivity
         return true;
     }
 
-
     public void populateTitleWithTag(String tag, String title, int index) {
         if (tag == null)
             return;
@@ -1969,7 +1950,6 @@ public abstract class BaseMainActivity extends BaseActivity
             Toasty.error(getApplicationContext(), getString(R.string.toot_select_file_error), Toast.LENGTH_LONG).show();
         }
     }
-
 
     @Override
     public void onRetrieveMetaData(boolean error, String sharedSubject, String sharedText, String image, String title, String description) {
@@ -2036,7 +2016,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-
     public void displayTimelineMoreButton(boolean displayed) {
         if (displayed) {
             display_timeline.setVisibility(View.VISIBLE);
@@ -2061,7 +2040,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if (position < 0)
             position = 0;
         if (toolbarTitle != null)
-        viewPager.setOffscreenPageLimit(2);
+            viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
 
         boolean iconOnly = true;
@@ -2205,6 +2184,127 @@ public abstract class BaseMainActivity extends BaseActivity
                 i++;
             }
         }
+    }
+
+    public void updateHomeCounter() {
+        int i = 0;
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        int tootperpage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
+        if (timelines != null && timelines.size() > 0) {
+            for (ManageTimelines tl : timelines) {
+                if (tl.getType() == ManageTimelines.Type.HOME) {
+                    if (tabLayout.getTabCount() > i) {
+                        View tabHome = tabLayout.getTabAt(i).getCustomView();
+                        if (tabHome != null) {
+                            TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
+                            if (countNewStatus == tootperpage) {
+                                tabCounterHome.setText(String.format(Locale.getDefault(), "%d+", countNewStatus));
+                            } else {
+                                tabCounterHome.setText(String.valueOf(countNewStatus));
+                            }
+                            if (countNewStatus > 0) {
+                                //New data are available
+                                //The fragment is not displayed, so the counter is displayed
+                                tabCounterHome.setVisibility(View.VISIBLE);
+                            } else {
+                                tabCounterHome.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
+
+        }
+    }
+
+    public void manageTab(RetrieveFeedsAsyncTask.Type type, int value) {
+        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<ManageTimelines> tls = new TimelinesDAO(BaseMainActivity.this, db).getDisplayedTimelines();
+        for (ManageTimelines tl : tls) {
+            if (type == ManageTimelines.transform(BaseMainActivity.this, tl.getType())) {
+                View tabCustom = tabLayout.getTabAt(tl.getPosition()).getCustomView();
+                assert tabCustom != null;
+                TextView tabCountertCustom = tabCustom.findViewById(R.id.tab_counter);
+                tabCountertCustom.setText(String.valueOf(value));
+                if (value > 0) {
+                    tabCountertCustom.setVisibility(View.VISIBLE);
+                } else {
+                    tabCountertCustom.setVisibility(View.GONE);
+                }
+                break;
+            }
+        }
+    }
+
+    public void updateNotifCounter() {
+        if (timelines == null)
+            return;
+        int i = 0;
+        int position = -1;
+        for (ManageTimelines tl : timelines) {
+            if (tl.getType() == ManageTimelines.Type.NOTIFICATION) {
+                if (tabLayout.getTabAt(i) != null) {
+                    position = i;
+                }
+                break;
+            }
+            i++;
+        }
+        if (position == -1)
+            return;
+        View tabNotif = tabLayout.getTabAt(position).getCustomView();
+        if (tabNotif == null)
+            return;
+        TextView tabCounterNotif = tabNotif.findViewById(R.id.tab_counter);
+        if (tabCounterNotif == null)
+            return;
+        if (countNewNotifications == Helper.NOTIFICATIONS_PER_PAGE) {
+            tabCounterNotif.setText(String.format(Locale.getDefault(), "%d+", countNewNotifications));
+        } else {
+            tabCounterNotif.setText(String.valueOf(countNewNotifications));
+        }
+        if (countNewNotifications > 0) {
+            tabCounterNotif.setVisibility(View.VISIBLE);
+        } else {
+            tabCounterNotif.setVisibility(View.GONE);
+        }
+        try {
+            TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(position);
+            ViewPager notifViewPager = tabLayoutNotificationsFragment.getViewPager();
+
+            if (notifViewPager != null && notifViewPager.getAdapter() != null) {
+                DisplayNotificationsFragment displayNotificationsFragment = (DisplayNotificationsFragment) notifViewPager.getAdapter().instantiateItem(notifViewPager, 0);
+                displayNotificationsFragment.updateNotificationRead();
+            }
+        } catch (Exception ignored) {
+        }
+
+    }
+
+    public void manageFloatingButton(boolean display) {
+        if (display) {
+            tootShow();
+        } else {
+            toot.hide();
+        }
+    }
+
+    public void tootShow() {
+        toot.show();
+    }
+
+    public boolean getFloatingVisibility() {
+        return toot.getVisibility() == View.VISIBLE;
+    }
+
+    public enum iconLauncher {
+        BUBBLES,
+        FEDIVERSE,
+        HERO,
+        ATOM,
+        BRAINCRASH,
+        MASTALAB
     }
 
     /**
@@ -2359,121 +2459,6 @@ public abstract class BaseMainActivity extends BaseActivity
         public int getCount() {
             return mNumOfTabs;
         }
-    }
-
-
-    public void updateHomeCounter() {
-        int i = 0;
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int tootperpage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
-        if (timelines != null && timelines.size() > 0) {
-            for (ManageTimelines tl : timelines) {
-                if (tl.getType() == ManageTimelines.Type.HOME) {
-                    if (tabLayout.getTabCount() > i) {
-                        View tabHome = tabLayout.getTabAt(i).getCustomView();
-                        if (tabHome != null) {
-                            TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
-                            if (countNewStatus == tootperpage) {
-                                tabCounterHome.setText(String.format(Locale.getDefault(), "%d+", countNewStatus));
-                            } else {
-                                tabCounterHome.setText(String.valueOf(countNewStatus));
-                            }
-                            if (countNewStatus > 0) {
-                                //New data are available
-                                //The fragment is not displayed, so the counter is displayed
-                                tabCounterHome.setVisibility(View.VISIBLE);
-                            } else {
-                                tabCounterHome.setVisibility(View.GONE);
-                            }
-                        }
-                    }
-                }
-                i++;
-            }
-
-        }
-    }
-
-    public void manageTab(RetrieveFeedsAsyncTask.Type type, int value) {
-        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<ManageTimelines> tls = new TimelinesDAO(BaseMainActivity.this, db).getDisplayedTimelines();
-        for (ManageTimelines tl : tls) {
-            if (type == ManageTimelines.transform(BaseMainActivity.this, tl.getType())) {
-                View tabCustom = tabLayout.getTabAt(tl.getPosition()).getCustomView();
-                assert tabCustom != null;
-                TextView tabCountertCustom = tabCustom.findViewById(R.id.tab_counter);
-                tabCountertCustom.setText(String.valueOf(value));
-                if (value > 0) {
-                    tabCountertCustom.setVisibility(View.VISIBLE);
-                } else {
-                    tabCountertCustom.setVisibility(View.GONE);
-                }
-                break;
-            }
-        }
-    }
-
-    public void updateNotifCounter() {
-        if (timelines == null)
-            return;
-        int i = 0;
-        int position = -1;
-        for (ManageTimelines tl : timelines) {
-            if (tl.getType() == ManageTimelines.Type.NOTIFICATION) {
-                if (tabLayout.getTabAt(i) != null) {
-                    position = i;
-                }
-                break;
-            }
-            i++;
-        }
-        if (position == -1)
-            return;
-        View tabNotif = tabLayout.getTabAt(position).getCustomView();
-        if (tabNotif == null)
-            return;
-        TextView tabCounterNotif = tabNotif.findViewById(R.id.tab_counter);
-        if (tabCounterNotif == null)
-            return;
-        if (countNewNotifications == Helper.NOTIFICATIONS_PER_PAGE) {
-            tabCounterNotif.setText(String.format(Locale.getDefault(), "%d+", countNewNotifications));
-        } else {
-            tabCounterNotif.setText(String.valueOf(countNewNotifications));
-        }
-        if (countNewNotifications > 0) {
-            tabCounterNotif.setVisibility(View.VISIBLE);
-        } else {
-            tabCounterNotif.setVisibility(View.GONE);
-        }
-        try {
-            TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(position);
-            ViewPager notifViewPager = tabLayoutNotificationsFragment.getViewPager();
-
-            if (notifViewPager != null && notifViewPager.getAdapter() != null) {
-                DisplayNotificationsFragment displayNotificationsFragment = (DisplayNotificationsFragment) notifViewPager.getAdapter().instantiateItem(notifViewPager, 0);
-                displayNotificationsFragment.updateNotificationRead();
-            }
-        } catch (Exception ignored) {
-        }
-
-    }
-
-
-    public void manageFloatingButton(boolean display) {
-        if (display) {
-            tootShow();
-        } else {
-            toot.hide();
-        }
-    }
-
-    public void tootShow() {
-        toot.show();
-    }
-
-
-    public boolean getFloatingVisibility() {
-        return toot.getVisibility() == View.VISIBLE;
     }
 
 

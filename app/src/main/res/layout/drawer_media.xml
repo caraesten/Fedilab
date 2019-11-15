@@ -15,16 +15,16 @@
     see <http://www.gnu.org/licenses>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_container"
     android:layout_width="wrap_content"
     android:layout_height="110dp"
-    android:id="@+id/main_container"
     android:divider="?android:dividerHorizontal"
-    android:padding="1dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="1dp">
 
     <ImageView
         android:id="@+id/media"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 </RelativeLayout>

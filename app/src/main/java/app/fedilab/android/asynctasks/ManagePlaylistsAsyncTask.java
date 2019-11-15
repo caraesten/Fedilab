@@ -20,7 +20,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -39,17 +38,6 @@ import app.fedilab.android.sqlite.Sqlite;
 
 public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum action {
-        GET_PLAYLIST,
-        GET_LIST_VIDEOS,
-        CREATE_PLAYLIST,
-        DELETE_PLAYLIST,
-        UPDATE_PLAYLIST,
-        ADD_VIDEOS,
-        DELETE_VIDEOS,
-        GET_PLAYLIST_FOR_VIDEO,
-    }
-
     private OnPlaylistActionInterface listener;
     private APIResponse apiResponse;
     private int statusCode;
@@ -58,7 +46,6 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String max_id;
     private Playlist playlist;
     private String videoId;
-
     public ManagePlaylistsAsyncTask(Context context, action apiAction, Playlist playlist, String videoId, String max_id, OnPlaylistActionInterface onPlaylistActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onPlaylistActionInterface;
@@ -67,7 +54,6 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.playlist = playlist;
         this.videoId = videoId;
     }
-
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -95,6 +81,17 @@ public class ManagePlaylistsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onActionDone(this.apiAction, apiResponse, statusCode);
+    }
+
+    public enum action {
+        GET_PLAYLIST,
+        GET_LIST_VIDEOS,
+        CREATE_PLAYLIST,
+        DELETE_PLAYLIST,
+        UPDATE_PLAYLIST,
+        ADD_VIDEOS,
+        DELETE_VIDEOS,
+        GET_PLAYLIST_FOR_VIDEO,
     }
 
 }

@@ -42,14 +42,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import app.fedilab.android.BuildConfig;
+import app.fedilab.android.R;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.jobs.ApplicationJob;
 import app.fedilab.android.jobs.BackupNotificationsSyncJob;
 import app.fedilab.android.jobs.BackupStatusesSyncJob;
 import app.fedilab.android.jobs.NotificationsSyncJob;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.BuildConfig;
-import app.fedilab.android.R;
 
 import static app.fedilab.android.helper.Helper.initNetCipher;
 
@@ -66,6 +66,10 @@ public class MainApplication extends MultiDexApplication {
 
     private static MainApplication app;
 
+    public static MainApplication getApp() {
+        return app;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -75,8 +79,8 @@ public class MainApplication extends MultiDexApplication {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
-        if( Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
-             NotificationsSyncJob.schedule(false);
+        if (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
+            NotificationsSyncJob.schedule(false);
         }
 
         Cyanea.init(this, super.getResources());
@@ -97,17 +101,17 @@ public class MainApplication extends MultiDexApplication {
         boolean pref_color_navigation_bar = prefs.getBoolean("pref_color_navigation_bar", true);
         boolean pref_color_status_bar = prefs.getBoolean("pref_color_status_bar", true);
         Cyanea.Editor editor = Cyanea.getInstance().edit();
-        if( primary != -1 ) {
+        if (primary != -1) {
             editor.primary(primary);
         }
-        if( accent != -1){
+        if (accent != -1) {
             editor.accent(accent);
         }
-        if( pref_color_background != -1){
+        if (pref_color_background != -1) {
             editor
-                .background(pref_color_background)
-                .backgroundLight(pref_color_background)
-                .backgroundDark(pref_color_background).apply();
+                    .background(pref_color_background)
+                    .backgroundLight(pref_color_background)
+                    .backgroundDark(pref_color_background).apply();
         }
         editor.shouldTintStatusBar(pref_color_status_bar).apply();
         editor.shouldTintNavBar(pref_color_navigation_bar).apply();
@@ -166,14 +170,9 @@ public class MainApplication extends MultiDexApplication {
         Toasty.Config.getInstance().apply();
     }
 
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(MainApplication.this);
-    }
-
-    public static MainApplication getApp() {
-        return app;
     }
 }

@@ -4,8 +4,8 @@
     <group>
         <!-- MASTODON MENU -->
         <item
-            android:title="@string/communication_menu_title"
-            android:id="@+id/nav_main_com">
+            android:id="@+id/nav_main_com"
+            android:title="@string/communication_menu_title">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
@@ -15,17 +15,17 @@
                     <item
                         android:id="@+id/nav_news"
                         android:icon="@drawable/ic_new_releases_black"
-                        app:actionLayout="@layout/item_menu_news"
-                        android:title="@string/action_news" />
+                        android:title="@string/action_news"
+                        app:actionLayout="@layout/item_menu_news" />
                     <item
                         android:id="@+id/nav_list"
                         android:icon="@drawable/ic_list"
                         android:title="@string/action_lists" />
                     <item
                         android:id="@+id/nav_group"
-                        android:visible="false"
                         android:icon="@drawable/ic_group_work"
-                        android:title="@string/action_groups" />
+                        android:title="@string/action_groups"
+                        android:visible="false" />
                     <item
                         android:id="@+id/nav_scheduled"
                         android:icon="@drawable/ic_schedule"
@@ -75,8 +75,8 @@
         </item>
         <!-- PEERTUBE MENU -->
         <item
-            android:title="@string/communication_menu_title"
-            android:id="@+id/nav_peertube_comm">
+            android:id="@+id/nav_peertube_comm"
+            android:title="@string/communication_menu_title">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
@@ -110,8 +110,8 @@
         </item>
         <!-- PIXELFED MENU -->
         <item
-            android:title="@string/communication_menu_title"
-            android:id="@+id/nav_pixelfed_comm">
+            android:id="@+id/nav_pixelfed_comm"
+            android:title="@string/communication_menu_title">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
@@ -134,8 +134,8 @@
             </menu>
         </item>
         <item
-            android:title="@string/neutral_menu_title"
-            android:id="@+id/nav_main_opt">
+            android:id="@+id/nav_main_opt"
+            android:title="@string/neutral_menu_title">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
@@ -161,9 +161,7 @@
                 </group>
             </menu>
         </item>
-        <item
-            android:title="@string/neutral_menu_information"
-            android:id="@+id/nav_main_info">
+        <item android:title="@string/neutral_menu_information">
             <menu>
                 <group android:checkableBehavior="single">
                     <item

@@ -35,8 +35,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class StatusStoredDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
 
     public StatusStoredDAO(Context context, SQLiteDatabase db) {

@@ -20,33 +20,31 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.RetrievePeertubeNotificationsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.PeertubeNotification;
 import app.fedilab.android.drawers.PeertubeNotificationsListAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.RetrievePeertubeNotificationsAsyncTask;
 import app.fedilab.android.interfaces.OnRetrievePeertubeNotificationsInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -54,22 +52,6 @@ import app.fedilab.android.interfaces.OnRetrievePeertubeNotificationsInterface;
  * Fragment to display peertube notifications
  */
 public class DisplayPeertubeNotificationsFragment extends Fragment implements OnRetrievePeertubeNotificationsInterface {
-
-
-    private boolean flag_loading;
-    private Context context;
-    private AsyncTask<Void, Void, Void> asyncTask;
-    private PeertubeNotificationsListAdapter notificationsListAdapter;
-    private String max_id;
-    private List<PeertubeNotification> notifications;
-    private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
-    private boolean firstLoad;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean swiped;
-    private RecyclerView lv_notifications;
-    private String userId, instance;
-    private SharedPreferences sharedpreferences;
-    LinearLayoutManager mLayoutManager;
 
 
     //Peertube notification type
@@ -84,6 +66,20 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
     public static int NEW_USER_REGISTRATION = 9;
     public static int NEW_FOLLOW = 10;
     public static int COMMENT_MENTION = 11;
+    LinearLayoutManager mLayoutManager;
+    private boolean flag_loading;
+    private Context context;
+    private AsyncTask<Void, Void, Void> asyncTask;
+    private PeertubeNotificationsListAdapter notificationsListAdapter;
+    private String max_id;
+    private List<PeertubeNotification> notifications;
+    private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
+    private boolean firstLoad;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean swiped;
+    private RecyclerView lv_notifications;
+    private String userId, instance;
+    private SharedPreferences sharedpreferences;
 
     public DisplayPeertubeNotificationsFragment() {
     }
@@ -234,10 +230,10 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
         nextElementLoader.setVisibility(View.GONE);
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if (apiResponse.getError() != null) {
-            if(apiResponse.getError().getError().length() < 100) {
+            if (apiResponse.getError().getError().length() < 100) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);

@@ -20,35 +20,32 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.helper.ThemeHelper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 
 
 /**
@@ -174,7 +171,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
         SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searchInDb = new SearchDAO(HashTagActivity.this, db).getSearchByKeyword(tag.trim());
-        if ( searchInDb != null && searchInDb.size() > 0) {
+        if (searchInDb != null && searchInDb.size() > 0) {
             menu.findItem(R.id.action_pin).setVisible(false);
         }
         return true;

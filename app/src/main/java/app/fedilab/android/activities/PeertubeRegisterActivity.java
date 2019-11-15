@@ -16,12 +16,10 @@ package app.fedilab.android.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableString;
@@ -42,16 +40,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import app.fedilab.android.R;
@@ -121,7 +113,7 @@ public class PeertubeRegisterActivity extends BaseActivity implements OnRetrieve
         }
 
 
-        new RetrieveInstanceRegAsyncTask(PeertubeRegisterActivity.this,RetrieveInstanceRegAsyncTask.instanceType.PEERTUBE, null, PeertubeRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+        new RetrieveInstanceRegAsyncTask(PeertubeRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.PEERTUBE, null, PeertubeRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
 
         signup = findViewById(R.id.signup);
         EditText username = findViewById(R.id.username);

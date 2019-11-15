@@ -20,9 +20,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -33,18 +30,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Status;
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.HashTagActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.activities.ShowConversationActivity;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.helper.Helper;
 
 
 /**
@@ -53,15 +52,13 @@ import app.fedilab.android.activities.ShowConversationActivity;
  */
 public class SearchListAdapter extends BaseAdapter {
 
+    private static final int STATUS_TYPE = 0;
+    private static final int ACCOUNT_TYPE = 1;
+    private static final int TAG_TYPE = 2;
     private Context context;
     private List<Status> statuses;
     private List<Account> accounts;
     private List<String> tags;
-
-
-    private static final int STATUS_TYPE = 0;
-    private static final int ACCOUNT_TYPE = 1;
-    private static final int TAG_TYPE = 2;
     private LayoutInflater layoutInflater;
 
     public SearchListAdapter(Context context, List<Status> statuses, List<Account> accounts, List<String> tags) {
@@ -299,9 +296,7 @@ public class SearchListAdapter extends BaseAdapter {
             return true;
         else if (position == statuses.size() && type == ACCOUNT_TYPE)
             return true;
-        else if (position == (statuses.size() + accounts.size()) && type == TAG_TYPE)
-            return true;
-        return false;
+        else return position == (statuses.size() + accounts.size()) && type == TAG_TYPE;
     }
 
     private class ViewHolderStatus {

@@ -30,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -44,7 +43,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
@@ -156,7 +154,7 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
     @Override
     public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         getMenuInflater().inflate(R.menu.bookmarks, menu);
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             menu.findItem(R.id.action_export_bookmarks).setVisible(false);
             menu.findItem(R.id.action_import_bookmarks).setVisible(false);
         }
@@ -221,7 +219,7 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
 
     @Override
     public void onRetrieveBookmarks(List<Status> bookmarks) {
-        if( bookmarks != null) {
+        if (bookmarks != null) {
             statuses = new ArrayList<>();
             statuses.clear();
             statuses.addAll(bookmarks);
@@ -229,7 +227,7 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
             statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusListAdapter.notifyDataSetChanged();
-            if( statuses.size() == 0 ) {
+            if (statuses.size() == 0) {
                 textviewNoAction.setVisibility(View.VISIBLE);
             }
         }

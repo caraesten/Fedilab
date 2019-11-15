@@ -16,7 +16,6 @@ package app.fedilab.android.activities;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,14 +30,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -54,6 +45,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 
 import java.io.BufferedInputStream;
@@ -64,21 +61,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveAccountInfoAsyncTask;
+import app.fedilab.android.asynctasks.UpdateCredentialAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Version;
+import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
+import app.fedilab.android.interfaces.OnUpdateCredentialInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveAccountInfoAsyncTask;
-import app.fedilab.android.asynctasks.UpdateCredentialAsyncTask;
-import app.fedilab.android.client.Glide.GlideApp;
-import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
-import app.fedilab.android.interfaces.OnUpdateCredentialInterface;
 
 
 /**
@@ -89,22 +86,22 @@ import app.fedilab.android.interfaces.OnUpdateCredentialInterface;
 public class EditProfileActivity extends BaseActivity implements OnRetrieveAccountInterface, OnUpdateCredentialInterface {
 
 
+    private static final int PICK_IMAGE_HEADER = 4565;
+    private static final int PICK_IMAGE_PROFILE = 6545;
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE = 755;
     private EditText set_profile_name, set_profile_description;
     private LinearLayout custom_fields_container;
     private ImageView set_profile_picture, set_header_picture;
     private Button set_change_profile_picture, set_change_header_picture, set_profile_save;
     private TextView set_header_picture_overlay;
     private CheckBox set_lock_account, set_sensitive_content;
-    private static final int PICK_IMAGE_HEADER = 4565;
-    private static final int PICK_IMAGE_PROFILE = 6545;
     private String profile_username, profile_note;
     private ByteArrayInputStream profile_picture, header_picture;
     private API.accountPrivacy profile_privacy;
     private boolean sensitive;
     private Bitmap profile_picture_bmp, profile_header_bmp;
     private ImageView pp_actionBar;
-    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
-    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE = 755;
     private String avatarName, headerName;
 
     @Override
@@ -155,7 +152,6 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
 
 
-
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
         custom_fields_container = findViewById(R.id.custom_fields_container);
         set_profile_name = findViewById(R.id.set_profile_name);
@@ -179,7 +175,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             set_sensitive_content.setVisibility(View.GONE);
         }
 
-        if(account.getSocial().toUpperCase().equals("MASTODON")){
+        if (account.getSocial().toUpperCase().equals("MASTODON")) {
             custom_fields_container.setVisibility(View.VISIBLE);
         }
 
@@ -501,7 +497,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER: {
                 // If request is cancelled, the result arrays are empty.

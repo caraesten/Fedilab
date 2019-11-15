@@ -61,22 +61,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.browser.customtabs.CustomTabsIntent;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.exifinterface.media.ExifInterface;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.preference.PreferenceManager;
-
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -111,6 +95,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.exifinterface.media.ExifInterface;
+import androidx.preference.PreferenceManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -121,13 +117,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.iceteck.silicompressorr.SiliCompressor;
-import com.jaredrummler.cyanea.Cyanea;
-import com.jaredrummler.cyanea.prefs.CyaneaTheme;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -195,8 +189,19 @@ import java.util.regex.Pattern;
 import javax.net.ssl.SSLContext;
 
 import app.fedilab.android.BuildConfig;
+import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.activities.HashTagActivity;
+import app.fedilab.android.activities.LoginActivity;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.activities.MainApplication;
 import app.fedilab.android.activities.MutedInstanceActivity;
+import app.fedilab.android.activities.ShowAccountActivity;
+import app.fedilab.android.activities.WebviewActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.RemoveAccountAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -214,24 +219,13 @@ import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Tls12SocketFactory;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
+import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.MainMenuDAO;
+import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.webview.CustomWebview;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
-import app.fedilab.android.activities.HashTagActivity;
-import app.fedilab.android.activities.LoginActivity;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.MainApplication;
-import app.fedilab.android.activities.ShowAccountActivity;
-import app.fedilab.android.activities.WebviewActivity;
-import app.fedilab.android.asynctasks.RemoveAccountAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.Sqlite;
 import info.guardianproject.netcipher.client.StrongBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
 import okhttp3.ConnectionSpec;
@@ -239,6 +233,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static app.fedilab.android.activities.BaseMainActivity.filters;
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.regex_home;
 import static app.fedilab.android.activities.BaseMainActivity.regex_local;
@@ -247,7 +242,6 @@ import static app.fedilab.android.helper.Helper.NotifType.MENTION;
 import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
 import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
 import static com.koushikdutta.async.util.StreamUtility.copyStream;
-import static app.fedilab.android.activities.BaseMainActivity.filters;
 
 
 /**
@@ -520,63 +514,76 @@ public class Helper {
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
     public static final String VIDEO_ID = "video_id_update";
-
-    private static boolean menuAccountsOpened = false;
-
-
-    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
-
     public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
 
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_A-zÀ-ÿ]+)");
     public static final Pattern groupPattern = Pattern.compile("(\\![\\w_]+(\\s|$))");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
-
     public static final Pattern youtubePattern = Pattern.compile("(www\\.|m\\.)?(youtube\\.com|youtu\\.be|youtube-nocookie\\.com)\\/(((?!(\"|'|<)).)*)");
     public static final Pattern nitterPattern = Pattern.compile("(mobile\\.|www\\.)?twitter.com([\\w-/]+)");
-    private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
-    private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
-    private static final Pattern mentionSearchPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)");
     public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");
-
-
     //Default values
     public final static int DEFAULT_VIDEO_WIDTH = 640;
     public final static int DEFAULT_VIDEO_HEIGHT = 360;
     public final static int DEFAULT_VIDEO_BITRATE = 450000;
+    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
+    private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
+    private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
+    private static final Pattern mentionSearchPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+|@[\\w_-]+)");
+    /*
+     * List from ClearUrls
+     * https://gitlab.com/KevinRoebert/ClearUrls/blob/master/data/data.min.json#L106
+     */
+    private static final String[] UTM_PARAMS = {
+            "utm_\\w+",
+            "ga_source",
+            "ga_medium",
+            "ga_term",
+            "ga_content",
+            "ga_campaign",
+            "ga_place",
+            "yclid",
+            "_openstat",
+            "fb_action_ids",
+            "fb_action_types",
+            "fb_source",
+            "fb_ref",
+            "fbclid",
+            "action_object_map",
+            "action_type_map",
+            "action_ref_map",
+            "gs_l",
+            "mkt_tok",
+            "hmb_campaign",
+            "hmb_medium",
+            "hmb_source",
+            "[\\?|&]ref[\\_]?"
 
-    //Event Type
-    public enum EventStreaming {
-        UPDATE,
-        NOTIFICATION,
-        DELETE,
-        NONE
-    }
+    };
+    public static volatile boolean orbotConnected = false;
+    public static String[] ALPHA = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
+            "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", ",", "?",
+            ".", "'"};
+    public static String[] MORSE = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..",
+            "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----",
+            "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----", "-.-.--", "--..--",
+            "..--..", ".-.-.-", ".----.",};
+    public static HashMap<String, Integer> sleeps = new HashMap<>();
+    private static boolean menuAccountsOpened = false;
+    //Emoji manager
+    private static Map<String, String> emoji = new HashMap<>();
 
-    public enum NotifType {
-        FOLLLOW,
-        MENTION,
-        BOOST,
-        FAV,
-        POLL,
-        BACKUP,
-        STORE,
-        TOOT
-    }
-
-
-    public static int liveNotifType(Context context){
+    public static int liveNotifType(Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean live = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, false );
-        boolean delayed = sharedpreferences.getBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true );
-        if( delayed){
+        boolean live = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+        boolean delayed = sharedpreferences.getBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
+        if (delayed) {
             return Helper.NOTIF_DELAYED;
-        }else if( live ){
+        } else if (live) {
             return Helper.NOTIF_LIVE;
-        }else {
+        } else {
             return Helper.NOTIF_NONE;
         }
     }
@@ -612,15 +619,12 @@ public class Helper {
         return input;
     }
 
-    //Emoji manager
-    private static Map<String, String> emoji = new HashMap<>();
-
     public static void fillMapEmoji(Context context) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("emoji.csv")));
             String line;
             while ((line = br.readLine()) != null) {
-                String str[] = line.split(",");
+                String[] str = line.split(",");
                 String unicode = null;
                 if (str.length == 2)
                     unicode = new String(new int[]{Integer.parseInt(str[1].replace("0x", "").trim(), 16)}, 0, 1);
@@ -734,7 +738,6 @@ public class Helper {
 
     }
 
-
     /**
      * Convert String date from Mastodon
      *
@@ -826,7 +829,7 @@ public class Helper {
      * @return String
      */
     public static String longDateToString(Date date) {
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT, Locale.getDefault());
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         return df.format(date);
     }
 
@@ -951,7 +954,6 @@ public class Helper {
         return (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
     }
 
-
     public static String dateDiffFull(Date dateToot) {
         SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, Locale.getDefault());
         try {
@@ -1063,7 +1065,6 @@ public class Helper {
             Toasty.success(context, message, Toast.LENGTH_LONG).show();
     }
 
-
     /**
      * Manage downloads with URLs
      *
@@ -1115,8 +1116,6 @@ public class Helper {
         alert.show();
     }
 
-
-
     /**
      * Manage downloads with URLs
      *
@@ -1143,7 +1142,6 @@ public class Helper {
         return dm.enqueue(request);
     }
 
-
     public static String getMimeType(String url) {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
@@ -1152,7 +1150,6 @@ public class Helper {
         }
         return type;
     }
-
 
     public static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");
@@ -1313,7 +1310,6 @@ public class Helper {
         notificationManager.notify(0, summaryNotification);
     }
 
-
     /**
      * Manage downloads with URLs
      *
@@ -1404,7 +1400,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Copy a file by transferring bytes from in to out
      *
@@ -1461,7 +1456,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Converts dp to pixel
      *
@@ -1474,7 +1468,6 @@ public class Helper {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
-
 
     /**
      * Toggle for the menu (ie: main menu or accounts menu)
@@ -1731,7 +1724,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Changes the user in shared preferences
      *
@@ -1776,13 +1768,12 @@ public class Helper {
         activity.startActivity(changeAccount);
     }
 
-
-    public static int getNotificationIcon(Context context){
+    public static int getNotificationIcon(Context context) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String logo = sharedpreferences.getString(Helper.LOGO_LAUNCHER, "bubbles");
         switch (logo) {
             case "bubbles":
-                 return R.drawable.ic_plain_bubbles;
+                return R.drawable.ic_plain_bubbles;
             case "fediverse":
                 return R.drawable.ic_plain_fediverse;
             case "hero":
@@ -1798,7 +1789,7 @@ public class Helper {
         }
     }
 
-    public static int getMainLogo(Context context){
+    public static int getMainLogo(Context context) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String logo = sharedpreferences.getString(Helper.LOGO_LAUNCHER, "bubbles");
         switch (logo) {
@@ -1819,8 +1810,6 @@ public class Helper {
         }
     }
 
-
-
     @SuppressWarnings("SameParameterValue")
     private static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundPixelSize) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
@@ -1835,7 +1824,6 @@ public class Helper {
         return output;
     }
 
-
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, new Comparator<Object>() {
@@ -1847,7 +1835,7 @@ public class Helper {
 
         Map<K, V> result = new LinkedHashMap<>();
         for (Iterator<Map.Entry<K, V>> it = list.iterator(); it.hasNext(); ) {
-            Map.Entry<K, V> entry = (Map.Entry<K, V>) it.next();
+            Map.Entry<K, V> entry = it.next();
             result.put(entry.getKey(), entry.getValue());
         }
         return result;
@@ -1863,7 +1851,6 @@ public class Helper {
         loadGiF(activity, account.getAvatar(), imageView);
     }
 
-
     public static SpannableString makeMentionsClick(final Context context, List<Mention> mentions) {
 
         String cw_mention = "";
@@ -1875,7 +1862,7 @@ public class Helper {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int l_c = prefs.getInt("theme_link_color", -1);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( l_c == -1) {
+        if (l_c == -1) {
             l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
@@ -2189,7 +2176,6 @@ public class Helper {
         });
     }
 
-
     /**
      * Retrieves the cache size
      *
@@ -2232,7 +2218,6 @@ public class Helper {
             return dir != null && dir.isFile() && dir.delete();
         }
     }
-
 
     /***
      * Check if the account bio contents urls & tags and fills the content with ClickableSpan
@@ -2278,7 +2263,7 @@ public class Helper {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int l_c = prefs.getInt("theme_link_color", -1);
-        if( l_c == -1) {
+        if (l_c == -1) {
             l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
         }
         final int link_color = l_c;
@@ -2419,7 +2404,6 @@ public class Helper {
         return spannableString;
     }
 
-
     public static CustomWebview initializeWebview(Activity activity, int webviewId) {
 
         CustomWebview webView = activity.findViewById(webviewId);
@@ -2458,7 +2442,6 @@ public class Helper {
         return webView;
     }
 
-
     public static String md5(final String s) {
         final String MD5 = "MD5";
         try {
@@ -2466,7 +2449,7 @@ public class Helper {
             MessageDigest digest = java.security.MessageDigest
                     .getInstance(MD5);
             digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
+            byte[] messageDigest = digest.digest();
 
             // Create Hex String
             StringBuilder hexString = new StringBuilder();
@@ -2494,13 +2477,13 @@ public class Helper {
         int color;
         try {
             color = Color.parseColor(context.getString(hexaColor));
-        }catch (Resources.NotFoundException e){
+        } catch (Resources.NotFoundException e) {
             try {
                 TypedValue typedValue = new TypedValue();
                 Resources.Theme theme = context.getTheme();
                 theme.resolveAttribute(hexaColor, typedValue, true);
                 color = typedValue.data;
-            }catch (Resources.NotFoundException ed) {
+            } catch (Resources.NotFoundException ed) {
                 color = hexaColor;
             }
         }
@@ -2522,7 +2505,7 @@ public class Helper {
         int color;
         try {
             color = context.getResources().getColor(hexaColor);
-        }catch (Resources.NotFoundException e){
+        } catch (Resources.NotFoundException e) {
             color = hexaColor;
         }
         imageView.setColorFilter(color);
@@ -2540,7 +2523,7 @@ public class Helper {
         int color;
         try {
             color = context.getResources().getColor(hexaColor);
-        }catch (Resources.NotFoundException e){
+        } catch (Resources.NotFoundException e) {
             color = hexaColor;
         }
         imageButton.setColorFilter(color);
@@ -2558,7 +2541,7 @@ public class Helper {
         int color;
         try {
             color = context.getResources().getColor(hexaColor);
-        }catch (Resources.NotFoundException e){
+        } catch (Resources.NotFoundException e) {
             color = hexaColor;
         }
         button.setTextColor(color);
@@ -2583,7 +2566,6 @@ public class Helper {
         locale = locale.split("_")[0];
         return locale;
     }
-
 
     /**
      * Compare date with these in shared pref.
@@ -2621,7 +2603,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Tells if the the service can notify depending of the current hour and minutes
      *
@@ -2642,8 +2623,8 @@ public class Helper {
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
-        String hourS = String.valueOf(hour).length() == 1 ? "0" + String.valueOf(hour) : String.valueOf(hour);
-        String minuteS = String.valueOf(minute).length() == 1 ? "0" + String.valueOf(minute) : String.valueOf(minute);
+        String hourS = String.valueOf(hour).length() == 1 ? "0" + hour : String.valueOf(hour);
+        String minuteS = String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute);
         String currentDate = hourS + ":" + minuteS;
         try {
             Locale userLocale;
@@ -2666,7 +2647,6 @@ public class Helper {
             return true;
         }
     }
-
 
     /**
      * Unserialized a
@@ -2698,7 +2678,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Unserialized a TagTimeline
      *
@@ -2729,7 +2708,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Unserialized a RemoteInstance
      *
@@ -2759,7 +2737,6 @@ public class Helper {
             return null;
         }
     }
-
 
     /**
      * Unserialized a Locale
@@ -2911,7 +2888,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Serialized a Account class
      *
@@ -2944,7 +2920,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Serialized a List of Emojis class
      *
@@ -2975,7 +2950,6 @@ public class Helper {
             return null;
         }
     }
-
 
     /**
      * Serialized a List of a Attachment class
@@ -3009,7 +2983,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Serialized a List of a Mention class
      *
@@ -3040,7 +3013,6 @@ public class Helper {
             return null;
         }
     }
-
 
     /**
      * Serialized a List of a Tag class
@@ -3073,7 +3045,6 @@ public class Helper {
         }
     }
 
-
     /**
      * Check if a job id is in array of ids
      *
@@ -3089,7 +3060,6 @@ public class Helper {
         }
         return false;
     }
-
 
     public static void unCheckAllMenuItems(NavigationView navigationView) {
         navigationView.setCheckedItem(R.id.menu_none);
@@ -3107,7 +3077,6 @@ public class Helper {
             }
         }
     }
-
 
     /**
      * Changes the menu layout
@@ -3141,7 +3110,6 @@ public class Helper {
         }
         tableLayout.setVisibility(View.VISIBLE);
     }
-
 
     /**
      * Get a bitmap from a view
@@ -3186,7 +3154,6 @@ public class Helper {
         return returnedBitmap;
     }
 
-
     @SuppressLint("DefaultLocale")
     public static String withSuffix(long count) {
         if (count < 1000) return "" + count;
@@ -3205,7 +3172,6 @@ public class Helper {
                     count / Math.pow(1000, exp),
                     "kMGTPE".charAt(exp - 1));
     }
-
 
     public static Bitmap addBorder(Bitmap resource, Context context) {
         int w = resource.getWidth();
@@ -3322,7 +3288,6 @@ public class Helper {
 
     }
 
-
     /**
      * Manage URLs to open (built-in or external app)
      *
@@ -3365,7 +3330,6 @@ public class Helper {
         }
     }
 
-
     public static void installProvider() {
 
         boolean patch_provider = true;
@@ -3383,18 +3347,11 @@ public class Helper {
         }
     }
 
-
-    public enum MediaType {
-        MEDIA,
-        PROFILE
-    }
-
-
     public static String compressImagePath(Context context, android.net.Uri uriFile) {
 
         ContentResolver cr = context.getContentResolver();
         String mime = cr.getType(uriFile);
-        File destinationDirectory = new File(context.getCacheDir().getAbsolutePath()+"/compress");
+        File destinationDirectory = new File(context.getCacheDir().getAbsolutePath() + "/compress");
         if (!destinationDirectory.exists()) {
             destinationDirectory.mkdirs();
         }
@@ -3424,32 +3381,33 @@ public class Helper {
             }
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
-            if( compressed) {
+            if (compressed) {
                 try {
                     return SiliCompressor.with(context).compress(uriFile.toString(), destinationDirectory);
-                }catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
         } else {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
-            if( compressed) {
+            if (compressed) {
                 try {
                     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                    retriever.setDataSource(getRealPathFromURI(context,uriFile));
+                    retriever.setDataSource(getRealPathFromURI(context, uriFile));
                     int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                     int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
                     retriever.release();
                     int newHeight = height;
-                    if( width > DEFAULT_VIDEO_WIDTH) {
+                    if (width > DEFAULT_VIDEO_WIDTH) {
                         newHeight = height * DEFAULT_VIDEO_WIDTH / width;
                     }
-                    return SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
-                } catch (Exception ignored) { }
+                    return SiliCompressor.with(context).compressVideo(getRealPathFromURI(context, uriFile), context.getCacheDir().getAbsolutePath() + "/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
+                } catch (Exception ignored) {
+                }
             }
         }
         return null;
     }
-
 
     public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile) {
 
@@ -3457,7 +3415,7 @@ public class Helper {
         String mime = cr.getType(uriFile);
         ByteArrayInputStream bs = null;
 
-        File destinationDirectory = new File(context.getCacheDir().getAbsolutePath()+"/compress");
+        File destinationDirectory = new File(context.getCacheDir().getAbsolutePath() + "/compress");
         if (!destinationDirectory.exists()) {
             destinationDirectory.mkdirs();
         }
@@ -3489,21 +3447,21 @@ public class Helper {
             }
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_PICTURE_COMPRESSED, true);
-            if( compressed) {
+            if (compressed) {
                 try {
                     String filePath = SiliCompressor.with(context).compress(uriFile.toString(), destinationDirectory);
                     resizedIS = new FileInputStream(filePath);
-                } catch (IOException|ArithmeticException e) {
+                } catch (IOException | ArithmeticException e) {
                     e.printStackTrace();
                 }
-                if( resizedIS == null){
+                if (resizedIS == null) {
                     try {
                         resizedIS = context.getContentResolver().openInputStream(uriFile);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-            }else{
+            } else {
                 try {
                     resizedIS = context.getContentResolver().openInputStream(uriFile);
                 } catch (IOException e) {
@@ -3526,19 +3484,19 @@ public class Helper {
         } else {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean compressed = sharedpreferences.getBoolean(Helper.SET_VIDEO_COMPRESSED, true);
-            if( compressed) {
+            if (compressed) {
                 String filePath = null;
                 try {
                     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                    retriever.setDataSource(getRealPathFromURI(context,uriFile));
+                    retriever.setDataSource(getRealPathFromURI(context, uriFile));
                     int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                     int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
                     retriever.release();
                     int newHeight = height;
-                    if( width > DEFAULT_VIDEO_WIDTH) {
+                    if (width > DEFAULT_VIDEO_WIDTH) {
                         newHeight = height * DEFAULT_VIDEO_WIDTH / width;
                     }
-                    filePath = SiliCompressor.with(context).compressVideo(getRealPathFromURI(context,uriFile), context.getCacheDir().getAbsolutePath()+"/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
+                    filePath = SiliCompressor.with(context).compressVideo(getRealPathFromURI(context, uriFile), context.getCacheDir().getAbsolutePath() + "/compress/", DEFAULT_VIDEO_WIDTH, newHeight, DEFAULT_VIDEO_BITRATE);
 
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
@@ -3549,14 +3507,14 @@ public class Helper {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                if( resizedIS == null){
+                if (resizedIS == null) {
                     try {
                         resizedIS = context.getContentResolver().openInputStream(uriFile);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-            }else{
+            } else {
                 try {
                     resizedIS = context.getContentResolver().openInputStream(uriFile);
                 } catch (FileNotFoundException e) {
@@ -3582,8 +3540,7 @@ public class Helper {
         return bs;
     }
 
-
-    public static String getRealPathFromURI(Context context, Uri uri) throws URISyntaxException  {
+    public static String getRealPathFromURI(Context context, Uri uri) throws URISyntaxException {
         String selection = null;
         String[] selectionArgs = null;
         // Uri is different in versions after KITKAT (Android 4.4), we need to
@@ -3656,7 +3613,6 @@ public class Helper {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-
     public static String getFileName(Context context, Uri uri) {
         ContentResolver resolver = context.getContentResolver();
         Cursor returnCursor =
@@ -3669,16 +3625,16 @@ public class Helper {
             returnCursor.close();
             Random r = new Random();
             int suf = r.nextInt(9999 - 1000) + 1000;
-            return String.valueOf(suf) + name;
+            return suf + name;
         } catch (Exception e) {
             Random r = new Random();
             int suf = r.nextInt(9999 - 1000) + 1000;
             ContentResolver cr = context.getContentResolver();
             String mime = cr.getType(uri);
             if (mime != null && mime.split("/").length > 1)
-                return "__" + String.valueOf(suf) + "." + mime.split("/")[1];
+                return "__" + suf + "." + mime.split("/")[1];
             else
-                return "__" + String.valueOf(suf) + ".jpg";
+                return "__" + suf + ".jpg";
         }
     }
 
@@ -3697,7 +3653,6 @@ public class Helper {
         return bmToCompress;
     }
 
-
     @SuppressWarnings({"WeakerAccess", "unused"})
     public static void largeLog(String content) {
         if (content.length() > 4000) {
@@ -3707,7 +3662,6 @@ public class Helper {
             Log.v(Helper.TAG, content);
         }
     }
-
 
     /**
      * Allows to split the toot by dot "." for sentences - adds number at the end automatically
@@ -3723,7 +3677,7 @@ public class Helper {
         ArrayList<String> mentions = new ArrayList<>();
         int mentionLength = 0;
         StringBuilder mentionString = new StringBuilder();
-        if( reportMentions) {
+        if (reportMentions) {
             Matcher matcher = mentionLongPattern.matcher(content);
             while (matcher.find()) {
                 String mentionLong = matcher.group(1);
@@ -3767,11 +3721,11 @@ public class Helper {
         if (reply.size() > 1) {
             int i = 0;
             for (String r : reply) {
-                if (mentions.size() > 0 ) {
+                if (mentions.size() > 0) {
                     String tmpMention = mentionString.toString();
                     for (String mention : mentions) {
-                        if(r.contains(mention)){
-                            tmpMention = tmpMention.replace(mention,"");
+                        if (r.contains(mention)) {
+                            tmpMention = tmpMention.replace(mention, "");
                         }
                     }
                     reply.set(i, r + " " + tmpMention + " - " + (i + 1) + "/" + reply.size());
@@ -3783,7 +3737,6 @@ public class Helper {
         }
         return reply;
     }
-
 
     public static int countLength(String text) {
         if (text == null) {
@@ -3804,7 +3757,6 @@ public class Helper {
         }
         return text.length() - countWithEmoji(text);
     }
-
 
     public static int countWithEmoji(String text) {
         int emojiCount = 0;
@@ -3890,11 +3842,9 @@ public class Helper {
                     return false;
             }
         }
-        if (mutedAccount != null && mutedAccount.size() > 0 && (mutedAccount.contains(status.getAccount().getId()) || (status.getReblog() != null && mutedAccount.contains(status.getReblog().getAccount().getId()))) )
+        if (mutedAccount != null && mutedAccount.size() > 0 && (mutedAccount.contains(status.getAccount().getId()) || (status.getReblog() != null && mutedAccount.contains(status.getReblog().getAccount().getId()))))
             return false;
-        if (status.isNotice())
-            return false;
-        return true;
+        return !status.isNotice();
     }
 
     public static void colorizeIconMenu(Menu menu, int toolbarIconsColor) {
@@ -3940,7 +3890,6 @@ public class Helper {
             v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
         }
     }
-
 
     public static String getLocalesTwoChars(int stringLocaleId) {
         switch (stringLocaleId) {
@@ -3996,7 +3945,6 @@ public class Helper {
                 return Locale.getDefault().getLanguage();
         }
     }
-
 
     public static int languageSpinnerPosition(Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -4088,104 +4036,6 @@ public class Helper {
         return context.getResources().getBoolean(R.bool.isTablet);
     }
 
-
-    public static class CacheTask extends AsyncTask<Void, Void, Void> {
-        private float cacheSize;
-        private WeakReference<Context> contextReference;
-
-        public CacheTask(Context context) {
-            contextReference = new WeakReference<>(context);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            long sizeCache = Helper.cacheSize(contextReference.get().getCacheDir().getParentFile());
-            cacheSize = 0;
-            if (sizeCache > 0) {
-                cacheSize = (float) sizeCache / 1000000.0f;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            int style;
-            SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            if (theme == Helper.THEME_DARK) {
-                style = R.style.DialogDark;
-            } else if (theme == Helper.THEME_BLACK) {
-                style = R.style.DialogBlack;
-            } else {
-                style = R.style.Dialog;
-            }
-            AlertDialog.Builder builder = new AlertDialog.Builder(contextReference.get(), style);
-            LayoutInflater inflater = ((MainActivity) contextReference.get()).getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.popup_cache, new LinearLayout((MainActivity) contextReference.get()), false);
-            TextView message = dialogView.findViewById(R.id.message);
-            message.setText(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))));
-            builder.setView(dialogView);
-            builder.setTitle(R.string.cache_title);
-            final CheckBox cache_timeline = dialogView.findViewById(R.id.cache_timeline);
-            final CheckBox cache_owntoots = dialogView.findViewById(R.id.cache_owntoots);
-            final CheckBox cache_bookmarks = dialogView.findViewById(R.id.cache_bookmarks);
-            final SwitchCompat clean_all = dialogView.findViewById(R.id.clean_all);
-            final float finalCacheSize = cacheSize;
-            builder
-                    .setPositiveButton(R.string.clear, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            AsyncTask.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        String path = contextReference.get().getCacheDir().getParentFile().getPath();
-                                        File dir = new File(path);
-                                        if (dir.isDirectory()) {
-                                            Helper.deleteDir(dir);
-                                        }
-                                        SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                        new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
-                                        if (clean_all.isChecked()) {
-                                            if (cache_timeline.isChecked()) {
-                                                new TimelineCacheDAO(contextReference.get(), db).removeAll();
-                                            }
-                                            if (cache_owntoots.isChecked()) {
-                                                new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
-                                            }
-                                            if (cache_bookmarks.isChecked()) {
-                                                new StatusCacheDAO(contextReference.get(), db).removeAll(BOOKMARK_CACHE);
-                                            }
-                                        } else {
-                                            if (cache_timeline.isChecked()) {
-                                                new TimelineCacheDAO(contextReference.get(), db).removeAllConnected();
-                                            }
-                                            if (cache_owntoots.isChecked()) {
-                                                new StatusCacheDAO(contextReference.get(), db).removeAllStatus(ARCHIVE_CACHE);
-                                            }
-                                            if (cache_bookmarks.isChecked()) {
-                                                new StatusCacheDAO(contextReference.get(), db).removeAllStatus(BOOKMARK_CACHE);
-                                            }
-                                        }
-                                    } catch (Exception ignored) {
-                                    }
-                                }
-                            });
-                            Toasty.success(contextReference.get(), contextReference.get().getString(R.string.toast_cache_clear, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), contextReference.get().getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
-    }
-
-
     public static String getFilePathFromURI(Context context, Uri contentUri) {
         //copy file and send new file path
         String fileName = getFileName(contentUri);
@@ -4220,38 +4070,6 @@ public class Helper {
             e.printStackTrace();
         }
     }
-
-
-    /*
-     * List from ClearUrls
-     * https://gitlab.com/KevinRoebert/ClearUrls/blob/master/data/data.min.json#L106
-     */
-    private static final String[] UTM_PARAMS = {
-            "utm_\\w+",
-            "ga_source",
-            "ga_medium",
-            "ga_term",
-            "ga_content",
-            "ga_campaign",
-            "ga_place",
-            "yclid",
-            "_openstat",
-            "fb_action_ids",
-            "fb_action_types",
-            "fb_source",
-            "fb_ref",
-            "fbclid",
-            "action_object_map",
-            "action_type_map",
-            "action_ref_map",
-            "gs_l",
-            "mkt_tok",
-            "hmb_campaign",
-            "hmb_medium",
-            "hmb_source",
-            "[\\?|&]ref[\\_]?"
-
-    };
 
     public static String remove_tracking_param(String original_content) {
         if (original_content == null)
@@ -4377,9 +4195,6 @@ public class Helper {
         return Uri.parse(path);
     }
 
-
-    public static volatile boolean orbotConnected = false;
-
     public static void initNetCipher(Context context) {
         Context appContext = context.getApplicationContext();
 
@@ -4409,7 +4224,6 @@ public class Helper {
         } catch (Exception ignored) {
         }
     }
-
 
     public static OkHttpClient getHttpClient(Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -4447,7 +4261,7 @@ public class Helper {
             } catch (Exception e) {
                 proxy = null;
             }
-            if( proxy != null) {
+            if (proxy != null) {
                 clientBuilder.proxy(proxy);
             }
         }
@@ -4478,7 +4292,6 @@ public class Helper {
         return client;
     }
 
-
     public static void exportInstanceBlock(Context context, String username) {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
@@ -4488,8 +4301,8 @@ public class Helper {
 
 
         new AsyncTask<Void, Void, List<String>>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             APIResponse apiResponse;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -4599,7 +4412,6 @@ public class Helper {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-
     public static void importInstanceBlock(Context context, HashMap<String, String> instances) {
 
 
@@ -4679,8 +4491,8 @@ public class Helper {
         alertDialog.show();
 
         new AsyncTask<Void, Void, List<String>>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             APIResponse apiResponse;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -4704,15 +4516,6 @@ public class Helper {
 
     }
 
-
-    public static String[] ALPHA = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-            "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", ",", "?",
-            ".", "'"};
-    public static String[] MORSE = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..",
-            "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----",
-            "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----", "-.-.--", "--..--",
-            "..--..", ".-.-.-", ".----.",};
-
     public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
 
@@ -4735,12 +4538,10 @@ public class Helper {
         return bitmap;
     }
 
-    public static HashMap<String, Integer> sleeps = new HashMap<>();
-
     public static void startStreaming(Context context) {
         int liveNotifications = Helper.liveNotifType(context);
         Intent streamingIntent = null;
-        switch (liveNotifications){
+        switch (liveNotifications) {
             case Helper.NOTIF_LIVE:
                 streamingIntent = new Intent(context, LiveNotificationService.class);
                 break;
@@ -4748,7 +4549,7 @@ public class Helper {
                 streamingIntent = new Intent(context, LiveNotificationDelayedService.class);
                 break;
         }
-        if( streamingIntent != null) {
+        if (streamingIntent != null) {
             try {
                 if (Build.VERSION.SDK_INT >= 26) {
                     context.startForegroundService(streamingIntent);
@@ -4756,14 +4557,14 @@ public class Helper {
                     context.startService(streamingIntent);
                 }
                 context.startService(streamingIntent);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
     }
 
-
-    public static boolean canFetchList(Context context, Account account){
+    public static boolean canFetchList(Context context, Account account) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String lastDateListRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_FETCH+account.getId()+account.getInstance(), null);
+        String lastDateListRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_FETCH + account.getId() + account.getInstance(), null);
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.HOUR, -24);
@@ -4772,9 +4573,9 @@ public class Helper {
         return (lastRefresh == null || lastRefresh.before(dateAllowed));
     }
 
-    public static UpdateAccountInfoAsyncTask.SOCIAL setSoftware(String social, boolean updateSocial){
+    public static UpdateAccountInfoAsyncTask.SOCIAL setSoftware(String social, boolean updateSocial) {
         //Update the static variable which manages account type
-        if( updateSocial) {
+        if (updateSocial) {
             if (social == null || social.equals("MASTODON"))
                 MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
             else if (social.equals("PEERTUBE"))
@@ -4802,6 +4603,127 @@ public class Helper {
         else if (social.equals("FRIENDICA"))
             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
         return socialNetwork;
+    }
+
+    //Event Type
+    public enum EventStreaming {
+        UPDATE,
+        NOTIFICATION,
+        DELETE,
+        NONE
+    }
+
+    public enum NotifType {
+        FOLLLOW,
+        MENTION,
+        BOOST,
+        FAV,
+        POLL,
+        BACKUP,
+        STORE,
+        TOOT
+    }
+
+
+    public enum MediaType {
+        MEDIA,
+        PROFILE
+    }
+
+    public static class CacheTask extends AsyncTask<Void, Void, Void> {
+        private float cacheSize;
+        private WeakReference<Context> contextReference;
+
+        public CacheTask(Context context) {
+            contextReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            long sizeCache = Helper.cacheSize(contextReference.get().getCacheDir().getParentFile());
+            cacheSize = 0;
+            if (sizeCache > 0) {
+                cacheSize = (float) sizeCache / 1000000.0f;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            int style;
+            SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK) {
+                style = R.style.DialogBlack;
+            } else {
+                style = R.style.Dialog;
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(contextReference.get(), style);
+            LayoutInflater inflater = ((MainActivity) contextReference.get()).getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.popup_cache, new LinearLayout(contextReference.get()), false);
+            TextView message = dialogView.findViewById(R.id.message);
+            message.setText(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))));
+            builder.setView(dialogView);
+            builder.setTitle(R.string.cache_title);
+            final CheckBox cache_timeline = dialogView.findViewById(R.id.cache_timeline);
+            final CheckBox cache_owntoots = dialogView.findViewById(R.id.cache_owntoots);
+            final CheckBox cache_bookmarks = dialogView.findViewById(R.id.cache_bookmarks);
+            final SwitchCompat clean_all = dialogView.findViewById(R.id.clean_all);
+            final float finalCacheSize = cacheSize;
+            builder
+                    .setPositiveButton(R.string.clear, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        String path = contextReference.get().getCacheDir().getParentFile().getPath();
+                                        File dir = new File(path);
+                                        if (dir.isDirectory()) {
+                                            Helper.deleteDir(dir);
+                                        }
+                                        SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        new StatusCacheDAO(contextReference.get(), db).removeDuplicate();
+                                        if (clean_all.isChecked()) {
+                                            if (cache_timeline.isChecked()) {
+                                                new TimelineCacheDAO(contextReference.get(), db).removeAll();
+                                            }
+                                            if (cache_owntoots.isChecked()) {
+                                                new StatusCacheDAO(contextReference.get(), db).removeAll(ARCHIVE_CACHE);
+                                            }
+                                            if (cache_bookmarks.isChecked()) {
+                                                new StatusCacheDAO(contextReference.get(), db).removeAll(BOOKMARK_CACHE);
+                                            }
+                                        } else {
+                                            if (cache_timeline.isChecked()) {
+                                                new TimelineCacheDAO(contextReference.get(), db).removeAllConnected();
+                                            }
+                                            if (cache_owntoots.isChecked()) {
+                                                new StatusCacheDAO(contextReference.get(), db).removeAllStatus(ARCHIVE_CACHE);
+                                            }
+                                            if (cache_bookmarks.isChecked()) {
+                                                new StatusCacheDAO(contextReference.get(), db).removeAllStatus(BOOKMARK_CACHE);
+                                            }
+                                        }
+                                    } catch (Exception ignored) {
+                                    }
+                                }
+                            });
+                            Toasty.success(contextReference.get(), contextReference.get().getString(R.string.toast_cache_clear, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), contextReference.get().getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
 }

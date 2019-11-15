@@ -15,10 +15,9 @@
     see <http://www.gnu.org/licenses>.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:aztec="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools"
     android:fillViewport="true">
 
     <RelativeLayout
@@ -32,16 +31,16 @@
         android:paddingBottom="@dimen/fab_margin">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/warning_message"
-            android:text="@string/reply_might_be_useless"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/red_border"
-            android:textColor="@color/red_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/red_border"
+            android:gravity="center"
+            android:text="@string/reply_might_be_useless"
+            android:textColor="@color/red_1"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/toot_cw_content"
@@ -54,14 +53,14 @@
 
         <ScrollView
             android:id="@+id/composer_container"
-            android:layout_below="@+id/toot_cw_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar_tooting"
+            android:layout_below="@+id/toot_cw_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="0dp"
             android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:fillViewport="true">
@@ -79,39 +78,39 @@
 
         <HorizontalScrollView
             android:id="@+id/toolbar_scrollview"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e6e6e6"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:visibility="gone">
 
             <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
         </HorizontalScrollView>
 
         <ScrollView
             android:id="@+id/wysiwyg_container"
-            android:visibility="gone"
-            android:layout_below="@+id/toolbar_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar_tooting"
+            android:layout_below="@+id/toolbar_scrollview"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
             android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:visibility="gone">
 
             <com.github.irshulx.Editor
-                android:layout_width="match_parent"
                 android:id="@+id/editor"
-                app:render_type="Editor"
-                android:hint="@string/toot_placeholder"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="100dp" />
+                android:hint="@string/toot_placeholder"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="100dp"
+                app:render_type="Editor" />
         </ScrollView>
 
         <LinearLayout

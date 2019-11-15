@@ -23,15 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -42,26 +33,33 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.activities.GroupActivity;
-import app.fedilab.android.client.API;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.helper.CrossActions;
-import app.fedilab.android.helper.Helper;
-import app.fedilab.android.sqlite.InstancesDAO;
-import app.fedilab.android.sqlite.Sqlite;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
+import app.fedilab.android.activities.GroupActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.client.API;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.helper.CrossActions;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
+import app.fedilab.android.sqlite.InstancesDAO;
+import app.fedilab.android.sqlite.Sqlite;
+import es.dmoral.toasty.Toasty;
 
 
 /**

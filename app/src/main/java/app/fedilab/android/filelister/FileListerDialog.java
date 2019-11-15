@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.io.File;
 
-
 import app.fedilab.android.R;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
@@ -22,36 +21,8 @@ import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 public class FileListerDialog {
 
-    /**
-     * File Filter for the FileListerDialog
-     */
-    public enum FILE_FILTER {
-        /**
-         * List All Files
-         */
-        ALL_FILES,
-        /**
-         * List only directories
-         */
-        DIRECTORY_ONLY,
-        /**
-         * List Directory and Image files
-         */
-        IMAGE_ONLY,
-        /**
-         * List Directory and Video files
-         */
-        VIDEO_ONLY,
-        /**
-         * List Directory and Audio files
-         */
-        AUDIO_ONLY
-    }
-
     private AlertDialog alertDialog;
-
     private FilesListerView filesListerView;
-
     private OnFileSelectedListener onFileSelectedListener;
 
     private FileListerDialog(@NonNull Context context) {
@@ -180,6 +151,32 @@ public class FileListerDialog {
      */
     public void setFileFilter(FILE_FILTER fileFilter) {
         filesListerView.setFileFilter(fileFilter);
+    }
+
+    /**
+     * File Filter for the FileListerDialog
+     */
+    public enum FILE_FILTER {
+        /**
+         * List All Files
+         */
+        ALL_FILES,
+        /**
+         * List only directories
+         */
+        DIRECTORY_ONLY,
+        /**
+         * List Directory and Image files
+         */
+        IMAGE_ONLY,
+        /**
+         * List Directory and Video files
+         */
+        VIDEO_ONLY,
+        /**
+         * List Directory and Audio files
+         */
+        AUDIO_ONLY
     }
 
 }

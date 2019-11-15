@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    tools:context="app.fedilab.android.activities.SettingsActivity"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="app.fedilab.android.activities.SettingsActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/settings_tablayout"
         android:layout_width="match_parent"
-        android:background="?colorPrimary"
-        app:tabSelectedTextColor="?colorAccent"
         android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        app:tabGravity="fill"
         app:tabMode="scrollable"
-        app:tabGravity="fill" />
+        app:tabSelectedTextColor="?colorAccent" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/settings_viewpager"
         android:layout_width="match_parent"

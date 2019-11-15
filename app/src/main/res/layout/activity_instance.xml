@@ -21,62 +21,62 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:paddingLeft="@dimen/drawer_padding"
-        android:paddingRight="@dimen/drawer_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/fab_margin">
+        android:padding="@dimen/fab_margin"
+        android:paddingLeft="@dimen/drawer_padding"
+        android:paddingRight="@dimen/drawer_padding">
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:id="@+id/instance_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
             <!-- Instance title -->
             <TextView
                 android:id="@+id/instance_title"
-                android:gravity="center_horizontal"
-                android:textSize="20sp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_height="wrap_content" />
+                android:gravity="center_horizontal"
+                android:textSize="20sp" />
 
             <!-- Instance description -->
             <TextView
                 android:id="@+id/instance_description"
-                android:gravity="center_horizontal"
-                android:textSize="16sp"
-                android:autoLink="web"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_height="wrap_content" />
+                android:autoLink="web"
+                android:gravity="center_horizontal"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginBottom="20dp"
+                android:gravity="center"
                 android:orientation="horizontal">
                 <!-- Instance version -->
                 <TextView
                     android:id="@+id/instance_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textStyle="italic" />
                 <!-- Instance URI -->
                 <TextView
+                    android:id="@+id/instance_uri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
-                    android:id="@+id/instance_uri"
                     android:gravity="center_horizontal"
                     android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,17 +85,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/ic_mail_outline"
                 android:contentDescription="@string/contact_instance_admin"
+                app:srcCompat="@drawable/ic_mail_outline"
                 tools:ignore="VectorDrawableCompat" />
         </LinearLayout>
         <!-- Main Loader -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/loader"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <ProgressBar
                 android:layout_width="wrap_content"

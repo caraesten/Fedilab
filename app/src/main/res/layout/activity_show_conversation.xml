@@ -11,63 +11,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="app.fedilab.android.activities.HashTagActivity">
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                 >
-                <include layout="@layout/conversation_action_bar"/>
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <include layout="@layout/conversation_action_bar" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Framelayout to display Fragments -->
         <RelativeLayout
             android:id="@+id/main_app_container"
-            android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="app.fedilab.android.activities.ShowConversationActivity">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:layout_width="match_parent"
                 android:id="@+id/swipeContainer"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/lv_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    android:divider="@null" />
+                    android:divider="@null"
+                    android:scrollbars="none" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
             <LinearLayout
-                android:visibility="gone"
+                android:id="@+id/loader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="70dp"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:id="@+id/loader">
+                android:visibility="gone">
+
                 <ProgressBar
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:indeterminate="true"
-                    />
+                    android:indeterminate="true" />
+
                 <TextView
-                    android:layout_marginStart="20dp"
-                    android:text="@string/fetch_conversation"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/fetch_conversation" />
             </LinearLayout>
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

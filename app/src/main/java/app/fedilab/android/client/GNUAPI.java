@@ -81,11 +81,6 @@ public class GNUAPI {
     private Error APIError;
     private String userId;
 
-    public enum accountPrivacy {
-        PUBLIC,
-        LOCKED
-    }
-
     public GNUAPI(Context context) {
         this.context = context;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -133,153 +128,6 @@ public class GNUAPI {
             this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
         apiResponse = new APIResponse();
         APIError = null;
-    }
-
-
-    /***
-     * Update credential of the authenticated user *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields) {
-
-        HashMap<String, String> requestParams = new HashMap<>();
-        if (display_name != null)
-            try {
-                requestParams.put("name", URLEncoder.encode(display_name, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("name", display_name);
-            }
-        if (note != null)
-            try {
-                requestParams.put("description", URLEncoder.encode(note, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("description", note);
-            }
-        if (privacy != null)
-            requestParams.put("locked", privacy == accountPrivacy.LOCKED ? "true" : "false");
-        try {
-            if (requestParams.size() > 0)
-                new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
-            if (avatar != null && avatarName != null)
-                new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile_image"), 60, null, avatar, avatarName, null, null, prefKeyOauthTokenT);
-
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            e.printStackTrace();
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return apiResponse;
-    }
-
-    /***
-     * Verifiy credential of the authenticated user *synchronously*
-     * @return Account
-     */
-    public Account verifyCredentials() {
-        account = new Account();
-        InstanceNodeInfo nodeinfo = new API(context).displayNodeInfo(instance);
-        String social = null;
-        if( nodeinfo != null){
-            social = nodeinfo.getName();
-        }
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/account/verify_credentials.json"), 60, null, prefKeyOauthTokenT);
-            account = parseAccountResponse(context, new JSONObject(response));
-            if( social != null ) {
-                account.setSocial(social.toUpperCase());
-            }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
-            e.printStackTrace();
-        }
-        return account;
-    }
-
-    /**
-     * Returns an account
-     *
-     * @param accountId String account fetched
-     * @return Account entity
-     */
-    public Account getAccount(String accountId) {
-
-        account = new Account();
-        HashMap<String, String> params = new HashMap<>();
-        params.put("user_id", accountId);
-        try {
-            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
-            account = parseAccountResponse(context, new JSONObject(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return account;
-    }
-
-
-    /**
-     * Retrieves group *synchronously*
-     *
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    public APIResponse getGroups(String max_id) {
-        return getGroups(max_id, null);
-    }
-
-    /**
-     * Retrieves group *synchronously*
-     *
-     * @param max_id   String id max
-     * @param since_id String since the id
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    private APIResponse getGroups(String max_id, String since_id) {
-
-        HashMap<String, String> params = new HashMap<>();
-        if (max_id != null)
-            params.put("max_id", max_id);
-        if (since_id != null)
-            params.put("since_id", since_id);
-        accounts = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/statusnet/groups/list.json"), 60, params, prefKeyOauthTokenT);
-            accounts = parseGroups(context, new JSONArray(response));
-            if (accounts.size() > 0) {
-                apiResponse.setSince_id(accounts.get(0).getId());
-                apiResponse.setMax_id(accounts.get(accounts.size() - 1).getId());
-            }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setAccounts(accounts);
-        return apiResponse;
     }
 
     /**
@@ -344,6 +192,524 @@ public class GNUAPI {
         return group;
     }
 
+    /**
+     * Parse json response for several status
+     *
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    public static List<Status> parseStatuses(Context context, JSONArray jsonArray) {
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Status status = parseStatuses(context, resobj);
+                i++;
+                statuses.add(status);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    /**
+     * Parse json response for unique status
+     *
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Status parseStatuses(Context context, JSONObject resobj) {
+        Status status = new Status();
+        try {
+            status.setId(resobj.get("id").toString());
+            try {
+                status.setUri(resobj.get("uri").toString());
+            } catch (Exception ignored) {
+                status.setUri(resobj.get("id").toString());
+            }
+            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            if (resobj.has("in_reply_to_status_id"))
+                status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
+            if (resobj.has("in_reply_to_user_id"))
+                status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
+            status.setSensitive(false);
+            status.setSpoiler_text(null);
+            if (!resobj.has("sender"))
+                status.setVisibility("public");
+            else
+                status.setVisibility("direct");
+            if (resobj.has("geo"))
+                status.setLanguage(resobj.isNull("geo") ? null : resobj.getString("geo"));
+            if (resobj.has("external_url"))
+                status.setUrl(resobj.get("external_url").toString());
+            //Retrieves attachments
+            try {
+                JSONArray arrayAttachement = resobj.getJSONArray("attachments");
+                ArrayList<Attachment> attachments = new ArrayList<>(parseAttachmentResponse(arrayAttachement));
+                status.setMedia_attachments(attachments);
+            } catch (Exception ignored) {
+                status.setMedia_attachments(new ArrayList<>());
+            }
+
+            status.setCard(null);
+            try {
+                status.setConversationId(resobj.get("statusnet_conversation_id").toString());
+            } catch (Exception ignored) {
+                if (resobj.has("friendica_parent_uri"))
+                    status.setConversationId(resobj.get("friendica_parent_uri").toString());
+                else
+                    status.setConversationId(resobj.get("id").toString());
+            }
+            //Retrieves mentions
+            List<Mention> mentions = new ArrayList<>();
+            if (resobj.has("attentions")) {
+                JSONArray arrayMention = resobj.getJSONArray("attentions");
+                if (arrayMention != null) {
+                    for (int j = 0; j < arrayMention.length(); j++) {
+                        JSONObject menObj = arrayMention.getJSONObject(j);
+                        Mention mention = new Mention();
+                        mention.setId(menObj.get("id").toString());
+                        mention.setUrl(menObj.get("profileurl").toString());
+                        mention.setAcct(menObj.get("screen_name").toString());
+                        mention.setUsername(menObj.get("fullname").toString());
+                        mentions.add(mention);
+                    }
+                }
+                status.setMentions(mentions);
+            } else {
+                status.setMentions(new ArrayList<>());
+            }
+
+            //Retrieves tags
+            status.setTags(null);
+            //Retrieves emjis
+            status.setEmojis(new ArrayList<>());
+            //Retrieve Application
+            Application application = new Application();
+            try {
+                if (resobj.getJSONObject("source") != null) {
+                    application.setName(resobj.getJSONObject("source").toString());
+                    application.setWebsite(resobj.getJSONObject("source_link").toString());
+                }
+            } catch (Exception e) {
+                application = new Application();
+            }
+            status.setApplication(application);
+            if (resobj.has("user"))
+                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
+            else if (resobj.has("sender"))
+                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("sender")));
+            if (resobj.has("statusnet_html"))
+                status.setContent(resobj.get("statusnet_html").toString());
+            else if (resobj.has("text"))
+                status.setContent(resobj.get("text").toString());
+            if (resobj.has("fave_num"))
+                status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
+            else
+                status.setFavourites_count(0);
+            if (resobj.has("repeat_num"))
+                status.setReblogs_count(Integer.valueOf(resobj.get("repeat_num").toString()));
+            else
+                status.setReblogs_count(0);
+            status.setReplies_count(0);
+            try {
+                status.setReblogged(Boolean.valueOf(resobj.get("repeated").toString()));
+            } catch (Exception e) {
+                status.setReblogged(false);
+            }
+            try {
+                status.setFavourited(Boolean.valueOf(resobj.get("favorited").toString()));
+            } catch (Exception e) {
+                status.setFavourited(false);
+            }
+            if (resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")) {
+                status.setFavourited(false);
+                JSONArray jsonArray = resobj.getJSONObject("friendica_activities").getJSONArray("like");
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject like = jsonArray.getJSONObject(i);
+                    if (like.getString("id").equals(userId)) {
+                        status.setFavourited(true);
+                        break;
+                    }
+                }
+
+            }
+            status.setMuted(false);
+            status.setPinned(false);
+            try {
+                status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
+            } catch (Exception ignored) {
+                status.setReblog(null);
+            }
+            if (status.getContent().contains(status.getUri()))
+                status.setNotice(true);
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
+        status.setViewType(context);
+        return status;
+    }
+
+    /**
+     * Parse json response for unique schedule
+     *
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Status parseSchedule(Context context, JSONObject resobj) {
+        Status status = new Status();
+        try {
+            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
+            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
+            status.setSpoiler_text(resobj.get("spoiler_text").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            } catch (Exception e) {
+                status.setVisibility("public");
+            }
+            status.setContent(resobj.get("text").toString());
+        } catch (JSONException ignored) {
+        }
+        return status;
+    }
+
+    /**
+     * Parse json response an unique account
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    public static Account parseAccountResponse(Context context, JSONObject resobj) {
+
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("id").toString());
+            if (resobj.has("ostatus_uri"))
+                account.setUuid(resobj.get("ostatus_uri").toString());
+            else
+                account.setUuid(resobj.get("id").toString());
+            account.setUsername(resobj.get("screen_name").toString());
+            account.setAcct(resobj.get("screen_name").toString());
+            account.setDisplay_name(resobj.get("name").toString());
+            account.setLocked(Boolean.parseBoolean(resobj.get("protected").toString()));
+            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
+            account.setFollowing_count(Integer.valueOf(resobj.get("friends_count").toString()));
+            account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
+            account.setNote(resobj.get("description").toString());
+            account.setBot(false);
+            account.setMoved_to_account(null);
+            account.setUrl(resobj.get("url").toString());
+            account.setAvatar(resobj.get("profile_image_url_https").toString());
+            account.setAvatar_static(resobj.get("profile_image_url_https").toString());
+            if (!resobj.isNull("background_image")) {
+                account.setHeader(resobj.get("background_image").toString());
+                account.setHeader_static(resobj.get("background_image").toString());
+            } else {
+                account.setHeader("null");
+                account.setHeader_static("null");
+            }
+
+            if (resobj.has("cid"))
+                account.setSocial("FRIENDICA");
+            else
+                account.setSocial("GNU");
+            account.setEmojis(new ArrayList<>());
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    /**
+     * Parse json response for list of relationship
+     *
+     * @param jsonArray JSONArray
+     * @return List<Relationship>
+     */
+    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray) {
+
+        List<Attachment> attachments = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Attachment attachment = parseAttachmentResponse(resobj);
+                attachments.add(attachment);
+                i++;
+            }
+        } catch (JSONException ignored) {
+        }
+        return attachments;
+    }
+
+    /**
+     * Parse json response an unique attachment
+     *
+     * @param resobj JSONObject
+     * @return Relationship
+     */
+    static Attachment parseAttachmentResponse(JSONObject resobj) {
+
+        Attachment attachment = new Attachment();
+        try {
+            if (resobj.has("id"))
+                attachment.setId(resobj.get("id").toString());
+            if (resobj.has("url")) {
+                attachment.setUrl(resobj.getString("url"));
+                attachment.setPreview_url(resobj.getString("url"));
+                attachment.setRemote_url(resobj.getString("url"));
+            }
+
+            if (attachment.getUrl().endsWith("png") || attachment.getUrl().endsWith("jpg") || attachment.getUrl().endsWith("jpeg")) {
+                attachment.setType("image");
+            } else if (attachment.getUrl().endsWith("gif") || attachment.getUrl().endsWith("apng")) {
+                attachment.setType("gifv");
+            } else if (attachment.getUrl().endsWith("mp4")) {
+                attachment.setType("video");
+            } else {
+                attachment.setType("web");
+            }
+
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setRemote_url(resobj.get("url").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setPreview_url(resobj.get("thumb_url").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setMeta(resobj.get("meta").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setText_url(resobj.get("text_url").toString());
+            } catch (JSONException ignore) {
+            }
+
+        } catch (JSONException ignored) {
+        }
+        return attachment;
+    }
+
+    /**
+     * Parse json response an unique attachment
+     *
+     * @param resobj JSONObject
+     * @return Relationship
+     */
+    public static Attachment parseUploadedAttachmentResponse(JSONObject resobj) {
+
+        Attachment attachment = new Attachment();
+        try {
+            if (resobj.has("media_id"))
+                attachment.setId(resobj.get("media_id").toString());
+            if (resobj.has("image") && resobj.getJSONObject("image").has("image_type"))
+                attachment.setType("Image");
+            else if (resobj.has("image") && resobj.getJSONObject("gif").has("image_type"))
+                attachment.setType("GifV");
+            else
+                attachment.setType("video");
+
+            try {
+                attachment.setRemote_url(resobj.get("url").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setPreview_url(resobj.get("thumb_url").toString());
+            } catch (JSONException ignore) {
+            }
+
+            if (resobj.has("image") && resobj.getJSONObject("image").has("friendica_preview_url")) {
+                attachment.setUrl(resobj.getJSONObject("image").getString("friendica_preview_url"));
+                attachment.setPreview_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
+                attachment.setRemote_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
+            }
+            if (resobj.has("media_url"))
+                attachment.setUrl(resobj.get("media_url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            } catch (JSONException ignore) {
+            }
+
+            try {
+                attachment.setMeta(resobj.get("meta").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setText_url(resobj.get("text_url").toString());
+            } catch (JSONException ignore) {
+            }
+
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        }
+        return attachment;
+    }
+
+    /***
+     * Update credential of the authenticated user *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields) {
+
+        HashMap<String, String> requestParams = new HashMap<>();
+        if (display_name != null)
+            try {
+                requestParams.put("name", URLEncoder.encode(display_name, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                requestParams.put("name", display_name);
+            }
+        if (note != null)
+            try {
+                requestParams.put("description", URLEncoder.encode(note, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                requestParams.put("description", note);
+            }
+        if (privacy != null)
+            requestParams.put("locked", privacy == accountPrivacy.LOCKED ? "true" : "false");
+        try {
+            if (requestParams.size() > 0)
+                new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
+            if (avatar != null && avatarName != null)
+                new HttpsConnection(context, this.instance).patch(getAbsoluteUrl("/accounts/update_profile_image"), 60, null, avatar, avatarName, null, null, prefKeyOauthTokenT);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
+    /***
+     * Verifiy credential of the authenticated user *synchronously*
+     * @return Account
+     */
+    public Account verifyCredentials() {
+        account = new Account();
+        InstanceNodeInfo nodeinfo = new API(context).displayNodeInfo(instance);
+        String social = null;
+        if (nodeinfo != null) {
+            social = nodeinfo.getName();
+        }
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/account/verify_credentials.json"), 60, null, prefKeyOauthTokenT);
+            account = parseAccountResponse(context, new JSONObject(response));
+            if (social != null) {
+                account.setSocial(social.toUpperCase());
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    /**
+     * Returns an account
+     *
+     * @param accountId String account fetched
+     * @return Account entity
+     */
+    public Account getAccount(String accountId) {
+
+        account = new Account();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_id", accountId);
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
+            account = parseAccountResponse(context, new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    /**
+     * Retrieves group *synchronously*
+     *
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getGroups(String max_id) {
+        return getGroups(max_id, null);
+    }
+
+    /**
+     * Retrieves group *synchronously*
+     *
+     * @param max_id   String id max
+     * @param since_id String since the id
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getGroups(String max_id, String since_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        accounts = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/statusnet/groups/list.json"), 60, params, prefKeyOauthTokenT);
+            accounts = parseGroups(context, new JSONArray(response));
+            if (accounts.size() > 0) {
+                apiResponse.setSince_id(accounts.get(0).getId());
+                apiResponse.setMax_id(accounts.get(accounts.size() - 1).getId());
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
+    }
 
     /**
      * Retrieves group timeline  *synchronously*
@@ -397,7 +763,6 @@ public class GNUAPI {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Returns a relationship between the authenticated account and an account
@@ -459,7 +824,6 @@ public class GNUAPI {
         }
         return relationship;
     }
-
 
     /**
      * Returns a relationship between the authenticated account and an account
@@ -602,7 +966,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves accounts that reblogged the status *synchronously*
      *
@@ -640,7 +1003,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves accounts that favourited the status *synchronously*
      *
@@ -677,7 +1039,6 @@ public class GNUAPI {
         apiResponse.setAccounts(accounts);
         return apiResponse;
     }
-
 
     /**
      * Retrieves one status *synchronously*
@@ -747,7 +1108,6 @@ public class GNUAPI {
         }
         return statusContext;
     }
-
 
     /**
      * Retrieves direct timeline for the account *synchronously*
@@ -870,7 +1230,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves home timeline for the account *synchronously*
      *
@@ -880,7 +1239,6 @@ public class GNUAPI {
     public APIResponse getHomeTimeline(String max_id) {
         return getHomeTimeline(max_id, null, null, tootPerPage);
     }
-
 
     /**
      * Retrieves home timeline for the account since an Id value *synchronously*
@@ -899,7 +1257,6 @@ public class GNUAPI {
     public APIResponse getHomeTimelineMinId(String min_id) {
         return getHomeTimeline(null, null, min_id, tootPerPage);
     }
-
 
     /**
      * Retrieves home timeline for the account *synchronously*
@@ -947,7 +1304,6 @@ public class GNUAPI {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Retrieves public timeline for the account *synchronously*
@@ -1042,7 +1398,6 @@ public class GNUAPI {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none) {
         return getArtTimeline(local, tag, max_id, null, any, all, none);
@@ -1199,7 +1554,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves muted users by the authenticated account *synchronously*
      *
@@ -1219,7 +1573,6 @@ public class GNUAPI {
     public APIResponse getBlocks(String max_id) {
         return getAccounts("/blocks/list.json", null, max_id, null, accountPerPage);
     }
-
 
     /**
      * Retrieves following for the account specified by targetedId  *synchronously*
@@ -1292,7 +1645,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves follow requests for the authenticated account *synchronously*
      *
@@ -1343,7 +1695,6 @@ public class GNUAPI {
         apiResponse.setAccounts(accounts);
         return apiResponse;
     }
-
 
     /**
      * Retrieves favourited status for the authenticated account *synchronously*
@@ -1397,7 +1748,6 @@ public class GNUAPI {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Makes the post action for a status
@@ -1614,7 +1964,6 @@ public class GNUAPI {
         return actionCode;
     }
 
-
     /**
      * Posts a status
      *
@@ -1689,7 +2038,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
      *
@@ -1720,7 +2068,6 @@ public class GNUAPI {
     public APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, boolean display) {
         return getNotifications(type, max_id, null, notificationPerPage, display);
     }
-
 
     /**
      * Retrieves notifications for the authenticated account *synchronously*
@@ -1812,7 +2159,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Changes media description
      *
@@ -1845,7 +2191,6 @@ public class GNUAPI {
         }
         return attachment;
     }
-
 
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
@@ -1884,7 +2229,6 @@ public class GNUAPI {
         }
         return apiResponse;
     }
-
 
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
@@ -1964,7 +2308,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      * Not limited to following
@@ -2019,7 +2362,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
     /**
      * Parse json response for several conversations
      *
@@ -2064,202 +2406,6 @@ public class GNUAPI {
         return conversation;
     }
 
-
-    /**
-     * Parse json response for several status
-     *
-     * @param jsonArray JSONArray
-     * @return List<Status>
-     */
-    public static List<Status> parseStatuses(Context context, JSONArray jsonArray) {
-
-        List<Status> statuses = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length()) {
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Status status = parseStatuses(context, resobj);
-                i++;
-                statuses.add(status);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return statuses;
-    }
-
-    /**
-     * Parse json response for unique status
-     *
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private static Status parseStatuses(Context context, JSONObject resobj) {
-        Status status = new Status();
-        try {
-            status.setId(resobj.get("id").toString());
-            try {
-                status.setUri(resobj.get("uri").toString());
-            } catch (Exception ignored) {
-                status.setUri(resobj.get("id").toString());
-            }
-            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            if (resobj.has("in_reply_to_status_id"))
-                status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
-            if (resobj.has("in_reply_to_user_id"))
-                status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
-            status.setSensitive(false);
-            status.setSpoiler_text(null);
-            if (!resobj.has("sender"))
-                status.setVisibility("public");
-            else
-                status.setVisibility("direct");
-            if (resobj.has("geo"))
-                status.setLanguage(resobj.isNull("geo") ? null : resobj.getString("geo"));
-            if (resobj.has("external_url"))
-                status.setUrl(resobj.get("external_url").toString());
-            //Retrieves attachments
-            try {
-                JSONArray arrayAttachement = resobj.getJSONArray("attachments");
-                ArrayList<Attachment> attachments = new ArrayList<>(parseAttachmentResponse(arrayAttachement));
-                status.setMedia_attachments(attachments);
-            } catch (Exception ignored) {
-                status.setMedia_attachments(new ArrayList<>());
-            }
-
-            status.setCard(null);
-            try {
-                status.setConversationId(resobj.get("statusnet_conversation_id").toString());
-            } catch (Exception ignored) {
-                if (resobj.has("friendica_parent_uri"))
-                    status.setConversationId(resobj.get("friendica_parent_uri").toString());
-                else
-                    status.setConversationId(resobj.get("id").toString());
-            }
-            //Retrieves mentions
-            List<Mention> mentions = new ArrayList<>();
-            if (resobj.has("attentions")) {
-                JSONArray arrayMention = resobj.getJSONArray("attentions");
-                if (arrayMention != null) {
-                    for (int j = 0; j < arrayMention.length(); j++) {
-                        JSONObject menObj = arrayMention.getJSONObject(j);
-                        Mention mention = new Mention();
-                        mention.setId(menObj.get("id").toString());
-                        mention.setUrl(menObj.get("profileurl").toString());
-                        mention.setAcct(menObj.get("screen_name").toString());
-                        mention.setUsername(menObj.get("fullname").toString());
-                        mentions.add(mention);
-                    }
-                }
-                status.setMentions(mentions);
-            } else {
-                status.setMentions(new ArrayList<>());
-            }
-
-            //Retrieves tags
-            status.setTags(null);
-            //Retrieves emjis
-            status.setEmojis(new ArrayList<>());
-            //Retrieve Application
-            Application application = new Application();
-            try {
-                if (resobj.getJSONObject("source") != null) {
-                    application.setName(resobj.getJSONObject("source").toString());
-                    application.setWebsite(resobj.getJSONObject("source_link").toString());
-                }
-            } catch (Exception e) {
-                application = new Application();
-            }
-            status.setApplication(application);
-            if (resobj.has("user"))
-                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
-            else if (resobj.has("sender"))
-                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("sender")));
-            if (resobj.has("statusnet_html"))
-                status.setContent(resobj.get("statusnet_html").toString());
-            else if (resobj.has("text"))
-                status.setContent(resobj.get("text").toString());
-            if (resobj.has("fave_num"))
-                status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
-            else
-                status.setFavourites_count(0);
-            if (resobj.has("repeat_num"))
-                status.setReblogs_count(Integer.valueOf(resobj.get("repeat_num").toString()));
-            else
-                status.setReblogs_count(0);
-            status.setReplies_count(0);
-            try {
-                status.setReblogged(Boolean.valueOf(resobj.get("repeated").toString()));
-            } catch (Exception e) {
-                status.setReblogged(false);
-            }
-            try {
-                status.setFavourited(Boolean.valueOf(resobj.get("favorited").toString()));
-            } catch (Exception e) {
-                status.setFavourited(false);
-            }
-            if (resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")) {
-                status.setFavourited(false);
-                JSONArray jsonArray = resobj.getJSONObject("friendica_activities").getJSONArray("like");
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject like = jsonArray.getJSONObject(i);
-                    if (like.getString("id").equals(userId)) {
-                        status.setFavourited(true);
-                        break;
-                    }
-                }
-
-            }
-            status.setMuted(false);
-            status.setPinned(false);
-            try {
-                status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
-            } catch (Exception ignored) {
-                status.setReblog(null);
-            }
-            if (status.getContent().contains(status.getUri()))
-                status.setNotice(true);
-        } catch (JSONException ignored) {
-            ignored.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }
-        status.setViewType(context);
-        return status;
-    }
-
-
-    /**
-     * Parse json response for unique schedule
-     *
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private static Status parseSchedule(Context context, JSONObject resobj) {
-        Status status = new Status();
-        try {
-            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
-            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
-            status.setSpoiler_text(resobj.get("spoiler_text").toString());
-            try {
-                status.setVisibility(resobj.get("visibility").toString());
-            } catch (Exception e) {
-                status.setVisibility("public");
-            }
-            status.setContent(resobj.get("text").toString());
-        } catch (JSONException ignored) {
-        }
-        return status;
-    }
-
-
     /**
      * Parse json response for list of accounts
      *
@@ -2282,57 +2428,6 @@ public class GNUAPI {
         }
         return accounts;
     }
-
-    /**
-     * Parse json response an unique account
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    public static Account parseAccountResponse(Context context, JSONObject resobj) {
-
-        Account account = new Account();
-        try {
-            account.setId(resobj.get("id").toString());
-            if (resobj.has("ostatus_uri"))
-                account.setUuid(resobj.get("ostatus_uri").toString());
-            else
-                account.setUuid(resobj.get("id").toString());
-            account.setUsername(resobj.get("screen_name").toString());
-            account.setAcct(resobj.get("screen_name").toString());
-            account.setDisplay_name(resobj.get("name").toString());
-            account.setLocked(Boolean.parseBoolean(resobj.get("protected").toString()));
-            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
-            account.setFollowing_count(Integer.valueOf(resobj.get("friends_count").toString()));
-            account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
-            account.setNote(resobj.get("description").toString());
-            account.setBot(false);
-            account.setMoved_to_account(null);
-            account.setUrl(resobj.get("url").toString());
-            account.setAvatar(resobj.get("profile_image_url_https").toString());
-            account.setAvatar_static(resobj.get("profile_image_url_https").toString());
-            if (!resobj.isNull("background_image")) {
-                account.setHeader(resobj.get("background_image").toString());
-                account.setHeader_static(resobj.get("background_image").toString());
-            } else {
-                account.setHeader("null");
-                account.setHeader_static("null");
-            }
-
-            if (resobj.has("cid"))
-                account.setSocial("FRIENDICA");
-            else
-                account.setSocial("GNU");
-            account.setEmojis(new ArrayList<>());
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return account;
-    }
-
 
     /**
      * Parse json response an unique relationship
@@ -2368,7 +2463,6 @@ public class GNUAPI {
         }
         return relationship;
     }
-
 
     /**
      * Parse json response for list of relationship
@@ -2409,138 +2503,6 @@ public class GNUAPI {
             setDefaultError(e);
         }
         return context;
-    }
-
-
-    /**
-     * Parse json response for list of relationship
-     *
-     * @param jsonArray JSONArray
-     * @return List<Relationship>
-     */
-    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray) {
-
-        List<Attachment> attachments = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length()) {
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Attachment attachment = parseAttachmentResponse(resobj);
-                attachments.add(attachment);
-                i++;
-            }
-        } catch (JSONException ignored) {
-        }
-        return attachments;
-    }
-
-    /**
-     * Parse json response an unique attachment
-     *
-     * @param resobj JSONObject
-     * @return Relationship
-     */
-    static Attachment parseAttachmentResponse(JSONObject resobj) {
-
-        Attachment attachment = new Attachment();
-        try {
-            if (resobj.has("id"))
-                attachment.setId(resobj.get("id").toString());
-            if (resobj.has("url")) {
-                attachment.setUrl(resobj.getString("url"));
-                attachment.setPreview_url(resobj.getString("url"));
-                attachment.setRemote_url(resobj.getString("url"));
-            }
-
-            if (attachment.getUrl().endsWith("png") || attachment.getUrl().endsWith("jpg") || attachment.getUrl().endsWith("jpeg")) {
-                attachment.setType("image");
-            } else if (attachment.getUrl().endsWith("gif") || attachment.getUrl().endsWith("apng")) {
-                attachment.setType("gifv");
-            } else if (attachment.getUrl().endsWith("mp4")) {
-                attachment.setType("video");
-            } else {
-                attachment.setType("web");
-            }
-
-            try {
-                attachment.setDescription(resobj.get("description").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setRemote_url(resobj.get("url").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setPreview_url(resobj.get("thumb_url").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setMeta(resobj.get("meta").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setText_url(resobj.get("text_url").toString());
-            } catch (JSONException ignore) {
-            }
-
-        } catch (JSONException ignored) {
-        }
-        return attachment;
-    }
-
-    /**
-     * Parse json response an unique attachment
-     *
-     * @param resobj JSONObject
-     * @return Relationship
-     */
-    public static Attachment parseUploadedAttachmentResponse(JSONObject resobj) {
-
-        Attachment attachment = new Attachment();
-        try {
-            if (resobj.has("media_id"))
-                attachment.setId(resobj.get("media_id").toString());
-            if (resobj.has("image") && resobj.getJSONObject("image").has("image_type"))
-                attachment.setType("Image");
-            else if (resobj.has("image") && resobj.getJSONObject("gif").has("image_type"))
-                attachment.setType("GifV");
-            else
-                attachment.setType("video");
-
-            try {
-                attachment.setRemote_url(resobj.get("url").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setPreview_url(resobj.get("thumb_url").toString());
-            } catch (JSONException ignore) {
-            }
-
-            if (resobj.has("image") && resobj.getJSONObject("image").has("friendica_preview_url")) {
-                attachment.setUrl(resobj.getJSONObject("image").getString("friendica_preview_url"));
-                attachment.setPreview_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
-                attachment.setRemote_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
-            }
-            if (resobj.has("media_url"))
-                attachment.setUrl(resobj.get("media_url").toString());
-            try {
-                attachment.setDescription(resobj.get("description").toString());
-            } catch (JSONException ignore) {
-            }
-
-            try {
-                attachment.setMeta(resobj.get("meta").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setText_url(resobj.get("text_url").toString());
-            } catch (JSONException ignore) {
-            }
-
-        } catch (JSONException ignored) {
-            ignored.printStackTrace();
-        }
-        return attachment;
     }
 
     /**
@@ -2593,7 +2555,6 @@ public class GNUAPI {
         return notifications;
     }
 
-
     /**
      * Set the error message
      *
@@ -2629,11 +2590,9 @@ public class GNUAPI {
         apiResponse.setError(APIError);
     }
 
-
     public Error getError() {
         return APIError;
     }
-
 
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.context, this.instance) + "/api" + action;
@@ -2641,6 +2600,11 @@ public class GNUAPI {
 
     private String getAbsoluteRemoteUrl(String instance, String action) {
         return Helper.instanceWithProtocol(this.context, instance) + "/api" + action;
+    }
+
+    public enum accountPrivacy {
+        PUBLIC,
+        LOCKED
     }
 
 }

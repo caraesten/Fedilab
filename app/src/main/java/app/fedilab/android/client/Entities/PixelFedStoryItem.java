@@ -25,6 +25,17 @@ import java.util.Date;
 
 public class PixelFedStoryItem implements Parcelable {
 
+    public static final Parcelable.Creator<PixelFedStoryItem> CREATOR = new Parcelable.Creator<PixelFedStoryItem>() {
+        @Override
+        public PixelFedStoryItem createFromParcel(Parcel source) {
+            return new PixelFedStoryItem(source);
+        }
+
+        @Override
+        public PixelFedStoryItem[] newArray(int size) {
+            return new PixelFedStoryItem[size];
+        }
+    };
     private String id;
     private String type;
     private int length;
@@ -36,8 +47,23 @@ public class PixelFedStoryItem implements Parcelable {
     private Date expires_at;
     private boolean seen;
 
+    public PixelFedStoryItem() {
+    }
 
-
+    protected PixelFedStoryItem(Parcel in) {
+        this.id = in.readString();
+        this.type = in.readString();
+        this.length = in.readInt();
+        this.src = in.readString();
+        this.preview = in.readString();
+        this.link = in.readString();
+        this.linkText = in.readString();
+        long tmpTime = in.readLong();
+        this.time = tmpTime == -1 ? null : new Date(tmpTime);
+        long tmpExpires_at = in.readLong();
+        this.expires_at = tmpExpires_at == -1 ? null : new Date(tmpExpires_at);
+        this.seen = in.readByte() != 0;
+    }
 
     public String getId() {
         return id;
@@ -137,34 +163,4 @@ public class PixelFedStoryItem implements Parcelable {
         dest.writeLong(this.expires_at != null ? this.expires_at.getTime() : -1);
         dest.writeByte(this.seen ? (byte) 1 : (byte) 0);
     }
-
-    public PixelFedStoryItem() {
-    }
-
-    protected PixelFedStoryItem(Parcel in) {
-        this.id = in.readString();
-        this.type = in.readString();
-        this.length = in.readInt();
-        this.src = in.readString();
-        this.preview = in.readString();
-        this.link = in.readString();
-        this.linkText = in.readString();
-        long tmpTime = in.readLong();
-        this.time = tmpTime == -1 ? null : new Date(tmpTime);
-        long tmpExpires_at = in.readLong();
-        this.expires_at = tmpExpires_at == -1 ? null : new Date(tmpExpires_at);
-        this.seen = in.readByte() != 0;
-    }
-
-    public static final Parcelable.Creator<PixelFedStoryItem> CREATOR = new Parcelable.Creator<PixelFedStoryItem>() {
-        @Override
-        public PixelFedStoryItem createFromParcel(Parcel source) {
-            return new PixelFedStoryItem(source);
-        }
-
-        @Override
-        public PixelFedStoryItem[] newArray(int size) {
-            return new PixelFedStoryItem[size];
-        }
-    };
 }

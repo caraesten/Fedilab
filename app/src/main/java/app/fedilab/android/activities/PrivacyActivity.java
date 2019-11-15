@@ -15,15 +15,9 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +26,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import app.fedilab.android.helper.Helper;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import app.fedilab.android.R;
+import app.fedilab.android.helper.Helper;
 
 
 /**

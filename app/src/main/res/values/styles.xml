@@ -1,13 +1,13 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <attr name="cardviewColor" type="color"/>
-    <attr name="iconColor" type="color"/>
-    <attr name="iconColorMenu" type="color"/>
-    <attr name="textHeader" type="color"/>
-    <attr name="customFeature" type="color"/>
-    <attr name="cardviewHeaderBoostColor" type="color"/>
-    <attr name="textColor" type="color"/>
-    <attr name="linkColor" type="color"/>
+    <attr name="cardviewColor" type="color" />
+    <attr name="iconColor" type="color" />
+    <attr name="iconColorMenu" type="color" />
+    <attr name="textHeader" type="color" />
+    <attr name="customFeature" type="color" />
+    <attr name="cardviewHeaderBoostColor" type="color" />
+    <attr name="textColor" type="color" />
+    <attr name="linkColor" type="color" />
 
     <!-- Light theme -->
     <style name="AppTheme_Fedilab" parent="Theme.Cyanea.Light">
@@ -86,7 +86,6 @@
     </style>
 
 
-
     <style name="DialogButton" parent="Cyanea.ColoredButton">
         <item name="android:layout_marginStart">5dp</item>
         <item name="android:layout_marginEnd">5dp</item>
@@ -106,6 +105,7 @@
         <item name="buttonBarButtonStyle">@style/DialogButton</item>
         <item name="linkColor">@color/dark_link_toot</item>
     </style>
+
     <style name="DialogBlack" parent="Cyanea.AlertDialog.Theme.Dark">
         <item name="iconColor">@color/black_icon_theme</item>
         <item name="android:textColor">@color/dark_text</item>
@@ -143,12 +143,6 @@
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/black_link_toot</item>
     </style>
-
-
-
-
-
-
 
 
     <!-- Light theme -->

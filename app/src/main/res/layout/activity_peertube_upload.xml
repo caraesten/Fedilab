@@ -16,10 +16,10 @@
 -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="app.fedilab.android.activities.PeertubeUploadActivity">
 
     <LinearLayout
@@ -29,96 +29,95 @@
         android:orientation="vertical">
 
         <Button
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/set_upload_file"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:enabled="false"
-            android:textSize="16sp"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="@string/file_to_upload" />
+            android:gravity="center"
+            android:text="@string/file_to_upload"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:gravity="center"
             android:id="@+id/set_upload_file_name"
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:visibility="gone" />
 
         <!-- Videos channels -->
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
-                android:gravity="center"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/channel" />
+                android:gravity="center"
+                android:text="@string/channel"
+                android:textSize="16sp" />
 
             <com.jaredrummler.materialspinner.MaterialSpinner
-                android:textSize="16sp"
                 android:id="@+id/set_upload_channel"
-                app:ms_background_color="?colorPrimaryDark"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:ms_background_color="?colorPrimaryDark" />
         </LinearLayout>
 
 
         <!-- Videos Privacy -->
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
-                android:gravity="center"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_privacy" />
+                android:gravity="center"
+                android:text="@string/action_privacy"
+                android:textSize="16sp" />
 
             <com.jaredrummler.materialspinner.MaterialSpinner
-                android:textSize="16sp"
-                app:ms_background_color="?colorPrimaryDark"
                 android:id="@+id/set_upload_privacy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:ms_background_color="?colorPrimaryDark" />
         </LinearLayout>
 
 
-
         <EditText
-            android:layout_marginTop="20dp"
             android:id="@+id/video_title"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:layout_marginTop="20dp"
+            android:hint="@string/title_video_peertube"
             android:inputType="text"
-            android:hint="@string/title_video_peertube" />
+            android:maxLines="1" />
 
         <!-- Videos upload submit -->
         <Button
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/set_upload_submit"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
             android:enabled="false"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="@string/upload_video" />
+            android:gravity="center"
+            android:text="@string/upload_video"
+            android:textSize="18sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

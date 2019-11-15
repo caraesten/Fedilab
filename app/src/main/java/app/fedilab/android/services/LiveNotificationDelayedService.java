@@ -77,13 +77,12 @@ public class LiveNotificationDelayedService extends Service {
 
 
     public static String CHANNEL_ID = "live_notifications";
-    protected Account account;
-    private NotificationChannel channel;
     public static int totalAccount = 0;
     public static int eventsCount = 0;
     public static HashMap<String, String> since_ids = new HashMap<>();
     public static HashMap<String, Thread> threads = new HashMap<>();
-
+    protected Account account;
+    private NotificationChannel channel;
     private boolean fetch;
 
 
@@ -110,7 +109,7 @@ public class LiveNotificationDelayedService extends Service {
             }
         }
 
-        if( totalAccount > 0) {
+        if (totalAccount > 0) {
             Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(
                     getApplicationContext(),
@@ -126,7 +125,7 @@ public class LiveNotificationDelayedService extends Service {
                     .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
             startForeground(1, notification);
-        }else{
+        } else {
             stopSelf();
         }
         startStream();
@@ -140,13 +139,11 @@ public class LiveNotificationDelayedService extends Service {
             stopForeground(true);
             stopSelf();
         }
-        if( totalAccount > 0) {
+        if (totalAccount > 0) {
             return START_STICKY;
         }
         return START_NOT_STICKY;
     }
-
-
 
 
     private void startStream() {
@@ -161,13 +158,13 @@ public class LiveNotificationDelayedService extends Service {
                 for (final Account accountStream : accountStreams) {
                     String key = accountStream.getUsername() + "@" + accountStream.getInstance();
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
-                    if( !allowStream){
+                    if (!allowStream) {
                         continue;
                     }
-                    if(!sleeps.containsKey(key)) {
+                    if (!sleeps.containsKey(key)) {
                         sleeps.put(key, 30000);
                     }
-                    if( threads.containsKey(key) && threads.get(key) != null) {
+                    if (threads.containsKey(key) && threads.get(key) != null) {
                         thread = threads.get(key);
                         if (thread != null && !thread.isInterrupted()) {
                             thread.interrupt();
@@ -180,7 +177,7 @@ public class LiveNotificationDelayedService extends Service {
                             while (fetch) {
                                 taks(accountStream);
                                 fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
-                                if( sleeps.containsKey(key) && sleeps.get(key) != null){
+                                if (sleeps.containsKey(key) && sleeps.get(key) != null) {
                                     try {
                                         Thread.sleep(sleeps.get(key));
                                     } catch (InterruptedException e) {
@@ -211,22 +208,23 @@ public class LiveNotificationDelayedService extends Service {
         API api;
         api = new API(getApplicationContext(), account.getInstance(), account.getToken());
         String last_notifid = null;
-        if( since_ids.containsKey(key) ){
+        if (since_ids.containsKey(key)) {
             last_notifid = since_ids.get(key);
         }
         apiResponse = null;
         try {
             apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
-        if( apiResponse != null && apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0){
+        if (apiResponse != null && apiResponse.getNotifications() != null && apiResponse.getNotifications().size() > 0) {
             since_ids.put(key, apiResponse.getNotifications().get(0).getId());
             for (Notification notification : apiResponse.getNotifications()) {
-                if( last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {
+                if (last_notifid != null && notification.getId().compareTo(last_notifid) > 0) {
                     onRetrieveStreaming(account, notification);
                     sleeps.put(key, 30000);
-                }else {
-                    if( apiResponse.getNotifications().size() == 1) { //TODO: use min id with Pixelfed when available for removing this fix.
+                } else {
+                    if (apiResponse.getNotifications().size() == 1) { //TODO: use min id with Pixelfed when available for removing this fix.
                         if (sleeps.containsKey(key) && sleeps.get(key) != null) {
                             int newWaitTime = sleeps.get(key) + 30000;
                             if (newWaitTime > 900000) {
@@ -240,19 +238,18 @@ public class LiveNotificationDelayedService extends Service {
                     break;
                 }
             }
-        }else{
-            if( sleeps.containsKey(key) && sleeps.get(key) != null){
+        } else {
+            if (sleeps.containsKey(key) && sleeps.get(key) != null) {
                 int newWaitTime = sleeps.get(key) + 30000;
-                if( newWaitTime > 900000){
+                if (newWaitTime > 900000) {
                     newWaitTime = 900000;
                 }
                 sleeps.put(key, newWaitTime);
-            }else{
+            } else {
                 sleeps.put(key, 60000);
             }
         }
     }
-
 
 
     private void onRetrieveStreaming(Account account, Notification notification) {
@@ -287,7 +284,7 @@ public class LiveNotificationDelayedService extends Service {
             if (!allowStream) {
                 canNotify = false;
             }
-            if ((userId == null || !userId.equals(account.getId()) || !activityRunning)  && canNotify && notify) {
+            if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && canNotify && notify) {
                 boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                 boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                 boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);

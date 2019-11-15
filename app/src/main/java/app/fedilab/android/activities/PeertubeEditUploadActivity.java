@@ -15,19 +15,12 @@ package app.fedilab.android.activities;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +33,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.HashMap;
@@ -48,20 +45,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.PostPeertubeAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeSingleAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.PostPeertubeAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeSingleAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
+import es.dmoral.toasty.Toasty;
 import mabbas007.tagsedittext.TagsEditText;
 
 import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
@@ -70,6 +67,11 @@ import static app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTas
 public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface {
 
 
+    HashMap<Integer, String> categoryToSend;
+    HashMap<Integer, String> licenseToSend;
+    HashMap<Integer, String> privacyToSend;
+    HashMap<String, String> languageToSend;
+    HashMap<String, String> channelToSend;
     private Button set_upload_submit, set_upload_delete;
     private MaterialSpinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
     private EditText p_video_title, p_video_description;
@@ -78,11 +80,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     private LinkedHashMap<String, String> channels;
     private String videoId;
     private Account channel;
-    HashMap<Integer, String> categoryToSend;
-    HashMap<Integer, String> licenseToSend;
-    HashMap<Integer, String> privacyToSend;
-    HashMap<String, String> languageToSend;
-    HashMap<String, String> channelToSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,8 +145,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_enable_comments = findViewById(R.id.set_upload_enable_comments);
 
 
-
-
         set_upload_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,10 +191,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         int i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 categoriesA[i] = (String) pair.getValue();
             else
-                categoriesA[i] = translations.get((String) pair.getValue());
+                categoriesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -214,10 +209,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 licensesA[i] = (String) pair.getValue();
             else
-                licensesA[i] = translations.get((String) pair.getValue());
+                licensesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -232,10 +227,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 languagesA[i] = (String) pair.getValue();
             else
-                languagesA[i] = translations.get((String) pair.getValue());
+                languagesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -250,10 +245,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }

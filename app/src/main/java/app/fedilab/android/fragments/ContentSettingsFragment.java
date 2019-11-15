@@ -61,7 +61,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.google.common.collect.ImmutableSet;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -102,7 +104,6 @@ import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
 import mabbas007.tagsedittext.TagsEditText;
 
-
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.iconLauncher.ATOM;
@@ -122,10 +123,144 @@ import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELIN
 public class ContentSettingsFragment extends Fragment implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
 
 
+    private static final int ACTIVITY_CHOOSE_FILE = 411;
+    private static final int ACTIVITY_CHOOSE_SOUND = 412;
     private type type;
     private Context context;
     private AsyncTask asyncTask;
-    private int countTrans,  countLanguage, notificationCount, ledCount, videoSpinnerCount, liveNotificationCount;
+    private int countTrans, countLanguage, notificationCount, ledCount, videoSpinnerCount, liveNotificationCount;
+    private List<Account> translators = new ArrayList<>();
+    private AccountSearchDevAdapter translatorManager;
+    private TextView set_folder;
+    private EditText your_api_key;
+    private int style;
+
+    public static ContentSettingsFragment newInstance(int resId) {
+        ContentSettingsFragment contentFragment = new ContentSettingsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Integer.class.getName(), resId);
+        contentFragment.setArguments(bundle);
+        return contentFragment;
+    }
+
+    //From: https://gist.github.com/asifmujteba/d89ba9074bc941de1eaa#file-asfurihelper
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static String getPath(final Context context, final Uri uri) {
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
+     */
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
 
     @Override
     public void onRetrieveRemoteAccount(Results results) {
@@ -161,33 +296,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 break;
             }
         }
-    }
-
-    public enum type {
-        CLOSE,
-        TIMELINES,
-        ADMIN,
-        NOTIFICATIONS,
-        INTERFACE,
-        COMPOSE,
-        LANGUAGE,
-        MENU,
-        COLORS
-    }
-    private List<Account> translators = new ArrayList<>();
-    private AccountSearchDevAdapter translatorManager;
-    private static final int ACTIVITY_CHOOSE_FILE = 411;
-    private TextView set_folder;
-    private EditText your_api_key;
-    private static final int ACTIVITY_CHOOSE_SOUND = 412;
-    private int style;
-
-    public static ContentSettingsFragment newInstance(int resId) {
-        ContentSettingsFragment contentFragment = new ContentSettingsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(Integer.class.getName(), resId);
-        contentFragment.setArguments(bundle);
-        return contentFragment;
     }
 
     @Override
@@ -237,7 +345,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         }
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -285,9 +392,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             settings_interface.setVisibility(View.VISIBLE);
         } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
-        } else if( type == MENU){
+        } else if (type == MENU) {
             settings_hide_menu.setVisibility(View.VISIBLE);
-        }else if( type == LANGUAGE){
+        } else if (type == LANGUAGE) {
             settings_translation.setVisibility(View.VISIBLE);
         }
 
@@ -398,7 +505,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         Spinner set_attachment_group = rootView.findViewById(R.id.set_attachment_group);
         String[] attachment_labels = {context.getString(R.string.set_attachment_always), context.getString(R.string.set_attachment_wifi), context.getString(R.string.set_attachment_ask)};
         ArrayAdapter<String> adapterAttachment = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_dropdown_item,attachment_labels );
+                android.R.layout.simple_spinner_dropdown_item, attachment_labels);
         set_attachment_group.setAdapter(adapterAttachment);
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         switch (attachmentAction) {
@@ -440,8 +547,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
-
-
         int videoMode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
 
 
@@ -456,11 +561,11 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         if (videoMode == Helper.VIDEO_MODE_DIRECT)
             positionVideoMode = 1;
         videoSpinnerCount = 0;
-        video_mode_spinner.setSelection(positionVideoMode );
+        video_mode_spinner.setSelection(positionVideoMode);
         video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( videoSpinnerCount > 0 ) {
+                if (videoSpinnerCount > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         /*case 0:
@@ -476,7 +581,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.apply();
                             break;
                     }
-                }else{
+                } else {
                     videoSpinnerCount++;
                 }
             }
@@ -800,9 +905,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             @Override
             public void afterTextChanged(Editable s) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                if( s.toString().trim().length() > 0) {
+                if (s.toString().trim().length() > 0) {
                     editor.putString(Helper.SET_INVIDIOUS_HOST, s.toString().toLowerCase().trim());
-                }else{
+                } else {
                     editor.putString(Helper.SET_INVIDIOUS_HOST, null);
                 }
                 editor.apply();
@@ -852,9 +957,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             @Override
             public void afterTextChanged(Editable s) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                if( s.toString().trim().length() > 0) {
+                if (s.toString().trim().length() > 0) {
                     editor.putString(Helper.SET_NITTER_HOST, s.toString().toLowerCase().trim());
-                }else{
+                } else {
                     editor.putString(Helper.SET_NITTER_HOST, null);
                 }
                 editor.apply();
@@ -1034,7 +1139,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         Spinner set_mode = rootView.findViewById(R.id.set_mode);
         String[] mode_labels = {context.getString(R.string.set_normal), context.getString(R.string.set_compact), context.getString(R.string.set_console)};
         ArrayAdapter<String> adapterMode = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_dropdown_item,mode_labels );
+                android.R.layout.simple_spinner_dropdown_item, mode_labels);
         set_mode.setAdapter(adapterMode);
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         boolean console_mode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
@@ -1077,7 +1182,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             }
         });
-
 
 
         boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
@@ -1219,21 +1323,19 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
-
-
         //Live notification mode
         final Spinner set_live_type = rootView.findViewById(R.id.set_live_type);
         String[] labels = {context.getString(R.string.live_notif), context.getString(R.string.live_delayed), context.getString(R.string.no_live_notif)};
         ArrayAdapter<String> adapterLive = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_dropdown_item,labels );
+                android.R.layout.simple_spinner_dropdown_item, labels);
 
-        LinearLayout live_notif_per_account  = rootView.findViewById(R.id.live_notif_per_account);
+        LinearLayout live_notif_per_account = rootView.findViewById(R.id.live_notif_per_account);
         set_live_type.setAdapter(adapterLive);
-        if( Helper.liveNotifType(context) == Helper.NOTIF_NONE){
+        if (Helper.liveNotifType(context) == Helper.NOTIF_NONE) {
             live_notif_per_account.setVisibility(View.GONE);
         }
         TextView set_live_type_indication = rootView.findViewById(R.id.set_live_type_indication);
-        switch (Helper.liveNotifType(context)){
+        switch (Helper.liveNotifType(context)) {
             case Helper.NOTIF_LIVE:
                 set_live_type_indication.setText(R.string.live_notif_indication);
                 break;
@@ -1249,7 +1351,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         set_live_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( liveNotificationCount > 0 ) {
+                if (liveNotificationCount > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case Helper.NOTIF_LIVE:
@@ -1290,7 +1392,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             set_live_type_indication.setText(R.string.no_live_indication);
                             break;
                     }
-                }else{
+                } else {
                     liveNotificationCount++;
                 }
             }
@@ -1300,7 +1402,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             }
         });
-
 
 
         boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
@@ -1445,7 +1546,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         SeekBar toot_per_page = rootView.findViewById(R.id.set_toot_per_page);
         final TextView set_toot_per_page_count = rootView.findViewById(R.id.set_toot_per_page_count);
-        ;
         toot_per_page.setMax(20);
         int tootperpage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         toot_per_page.setProgress(tootperpage - Helper.TOOTS_PER_PAGE);
@@ -1713,7 +1813,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( countTrans > 0) {
+                if (countTrans > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case 0:
@@ -1743,7 +1843,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.putExtra(Helper.INTENT_ACTION, Helper.BACK_TO_SETTINGS);
                     startActivity(intent);
-                }else{
+                } else {
                     countTrans++;
                 }
             }
@@ -1781,7 +1881,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.apply();
             }
         });
-
 
 
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -1947,8 +2046,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0" + String.valueOf(hourOfDay) : String.valueOf(hourOfDay);
-                        String minutes = (String.valueOf(minute).length() == 1) ? "0" + String.valueOf(minute) : String.valueOf(minute);
+                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0" + hourOfDay : String.valueOf(hourOfDay);
+                        String minutes = (String.valueOf(minute).length() == 1) ? "0" + minute : String.valueOf(minute);
                         String newDate = hours + ":" + minutes;
                         if (Helper.compareDate(context, newDate, false)) {
                             editor.putString(Helper.SET_TIME_FROM, newDate);
@@ -1973,8 +2072,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0" + String.valueOf(hourOfDay) : String.valueOf(hourOfDay);
-                        String minutes = (String.valueOf(minute).length() == 1) ? "0" + String.valueOf(minute) : String.valueOf(minute);
+                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0" + hourOfDay : String.valueOf(hourOfDay);
+                        String minutes = (String.valueOf(minute).length() == 1) ? "0" + minute : String.valueOf(minute);
                         String newDate = hours + ":" + minutes;
                         if (Helper.compareDate(context, newDate, true)) {
                             editor.putString(Helper.SET_TIME_TO, newDate);
@@ -2012,7 +2111,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         action_notification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( notificationCount > 0) {
+                if (notificationCount > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
                     switch (position) {
@@ -2025,7 +2124,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             editor.apply();
                             break;
                     }
-                }else{
+                } else {
                     notificationCount++;
                 }
             }
@@ -2137,11 +2236,11 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             led_colour_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if( ledCount > 0 ) {
+                    if (ledCount > 0) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putInt(Helper.SET_LED_COLOUR, position);
                         editor.apply();
-                    }else{
+                    } else {
                         ledCount++;
                     }
 
@@ -2217,11 +2316,6 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
-
-
-
-
-
         Button about_translation = rootView.findViewById(R.id.about_translation);
 
 
@@ -2239,7 +2333,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         translatorManager = new AccountSearchDevAdapter(translators);
         lv_translator_manager.setAdapter(translatorManager);
 
-        if( type == LANGUAGE) {
+        if (type == LANGUAGE) {
             asyncTask = new RetrieveRemoteDataAsyncTask(context, "ButterflyOfFire", "mstdn.fr", ContentSettingsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
@@ -2257,7 +2351,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( countLanguage > 0 ) {
+                if (countLanguage > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case 0:
@@ -2353,7 +2447,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     Intent mainIntent = Intent.makeRestartActivityTask(componentName);
                     startActivity(mainIntent);
                     Runtime.getRuntime().exit(0);
-                }else{
+                } else {
                     countLanguage++;
                 }
             }
@@ -2382,7 +2476,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             icon_selector.findViewById(R.id.icon_bubbles).setOnClickListener(v1 -> {
                 hideAllIcons(context);
-                setIcon(context,"Bubbles");
+                setIcon(context, "Bubbles");
                 SharedPreferences.Editor editor2 = sharedpreferences.edit();
                 editor2 = sharedpreferences.edit();
                 editor2.putString(Helper.LOGO_LAUNCHER, "bubbles");
@@ -2393,7 +2487,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             icon_selector.findViewById(R.id.icon_fediverse).setOnClickListener(v1 -> {
                 hideAllIcons(context);
-                setIcon(context,"Fediverse");
+                setIcon(context, "Fediverse");
                 SharedPreferences.Editor editor2 = sharedpreferences.edit();
                 editor2 = sharedpreferences.edit();
                 editor2.putString(Helper.LOGO_LAUNCHER, "fediverse");
@@ -2404,7 +2498,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             icon_selector.findViewById(R.id.icon_hero).setOnClickListener(v1 -> {
                 hideAllIcons(context);
-                setIcon(context,"Hero");
+                setIcon(context, "Hero");
                 SharedPreferences.Editor editor2 = sharedpreferences.edit();
                 editor2 = sharedpreferences.edit();
                 editor2.putString(Helper.LOGO_LAUNCHER, "hero");
@@ -2415,7 +2509,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             icon_selector.findViewById(R.id.icon_atom).setOnClickListener(v1 -> {
                 hideAllIcons(context);
-                setIcon(context,"Atom");
+                setIcon(context, "Atom");
                 SharedPreferences.Editor editor2 = sharedpreferences.edit();
                 editor2.putString(Helper.LOGO_LAUNCHER, "atom");
                 editor2.apply();
@@ -2425,7 +2519,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             icon_selector.findViewById(R.id.icon_braincrash).setOnClickListener(v1 -> {
                 hideAllIcons(context);
-                setIcon(context,"BrainCrash");
+                setIcon(context, "BrainCrash");
                 SharedPreferences.Editor editor2 = sharedpreferences.edit();
                 editor2.putString(Helper.LOGO_LAUNCHER, "braincrash");
                 editor2.apply();
@@ -2435,7 +2529,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
             icon_selector.findViewById(R.id.icon_mastalab).setOnClickListener(v1 -> {
                 hideAllIcons(context);
-                setIcon(context,"Mastalab");
+                setIcon(context, "Mastalab");
                 SharedPreferences.Editor editor2 = sharedpreferences.edit();
                 editor2.putString(Helper.LOGO_LAUNCHER, "mastalab");
                 editor2.apply();
@@ -2450,34 +2544,34 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
     private void hideAllIcons(Context context) {
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Bubbles"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity.Bubbles"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Fediverse"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity.Fediverse"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Hero"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity.Hero"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Atom"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity.Atom"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.BrainCrash"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity.BrainCrash"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity.Mastalab"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity.Mastalab"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
 
     private void setIcon(Context context, String iconName) {
         context.getPackageManager().setComponentEnabledSetting(
-                new ComponentName(context.getPackageName(),"app.fedilab.android.activities.MainActivity." + iconName),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
+                new ComponentName(context.getPackageName(), "app.fedilab.android.activities.MainActivity." + iconName),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 
     @Override
@@ -2488,130 +2582,21 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
     public void onDestroy() {
         super.onDestroy();
-        if( type == LANGUAGE) {
+        if (type == LANGUAGE) {
             if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
                 asyncTask.cancel(true);
         }
     }
 
-    //From: https://gist.github.com/asifmujteba/d89ba9074bc941de1eaa#file-asfurihelper
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static String getPath(final Context context, final Uri uri) {
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
-                }
-            }
-            // DownloadsProvider
-            else if (isDownloadsDocument(uri)) {
-
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                return getDataColumn(context, contentUri, null, null);
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                Uri contentUri = null;
-                if ("image".equals(type)) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{
-                        split[1]
-                };
-                return getDataColumn(context, contentUri, selection, selectionArgs);
-            }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
-            // Return the remote address
-            if (isGooglePhotosUri(uri))
-                return uri.getLastPathSegment();
-
-            return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
-    }
-
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
-
-        Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {
-                column
-        };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(index);
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close();
-        }
-        return null;
-    }
-
-
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
-    public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
-    public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
-    public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is Google Photos.
-     */
-    public static boolean isGooglePhotosUri(Uri uri) {
-        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    public enum type {
+        CLOSE,
+        TIMELINES,
+        ADMIN,
+        NOTIFICATIONS,
+        INTERFACE,
+        COMPOSE,
+        LANGUAGE,
+        MENU,
+        COLORS
     }
 }

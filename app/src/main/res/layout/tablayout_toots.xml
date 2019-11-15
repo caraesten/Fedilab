@@ -22,12 +22,12 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:background="?backgroundColor"
-        app:tabSelectedTextColor="?colorAccent"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?backgroundColor"
         app:tabGravity="fill"
         app:tabMaxWidth="0dp"
-        android:layout_height="wrap_content" />
+        app:tabSelectedTextColor="?colorAccent" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

@@ -14,16 +14,10 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,20 +29,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.SearchListAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveSearchAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchStatusInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -141,12 +138,12 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
         loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
             if (apiResponse.getError().getError() != null) {
-                if(apiResponse.getError().getError().length() < 100) {
+                if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
                 }
-            }else
+            } else
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
@@ -171,10 +168,10 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
         loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }

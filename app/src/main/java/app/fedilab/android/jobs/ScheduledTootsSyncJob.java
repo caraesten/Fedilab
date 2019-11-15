@@ -48,6 +48,23 @@ public class ScheduledTootsSyncJob extends Job {
         Helper.installProvider();
     }
 
+    public static int schedule(Context context, long id, long timestampScheduling) {
+
+        long startMs = (timestampScheduling - new Date().getTime());
+        long endMs = startMs + TimeUnit.MINUTES.toMillis(5);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
+        int jobId = new JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
+                .setExecutionWindow(startMs, endMs)
+                .setUpdateCurrent(false)
+                .setRequiredNetworkType(JobRequest.NetworkType.METERED)
+                .setRequirementsEnforced(false)
+                .build()
+                .schedule();
+        new StatusStoredDAO(context, db).scheduleStatus(id, jobId, new Date(timestampScheduling));
+        return jobId;
+    }
+
     @NonNull
     @Override
     protected Result onRunJob(@NonNull Params params) {
@@ -75,24 +92,6 @@ public class ScheduledTootsSyncJob extends Job {
             }
         }
         return Result.SUCCESS;
-    }
-
-
-    public static int schedule(Context context, long id, long timestampScheduling) {
-
-        long startMs = (timestampScheduling - new Date().getTime());
-        long endMs = startMs + TimeUnit.MINUTES.toMillis(5);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
-        int jobId = new JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
-                .setExecutionWindow(startMs, endMs)
-                .setUpdateCurrent(false)
-                .setRequiredNetworkType(JobRequest.NetworkType.METERED)
-                .setRequirementsEnforced(false)
-                .build()
-                .schedule();
-        new StatusStoredDAO(context, db).scheduleStatus(id, jobId, new Date(timestampScheduling));
-        return jobId;
     }
 
 

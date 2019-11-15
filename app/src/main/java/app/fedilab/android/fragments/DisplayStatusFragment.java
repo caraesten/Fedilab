@@ -25,15 +25,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.PreferenceManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +33,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveMissingFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeSearchAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Conversation;
@@ -60,25 +67,16 @@ import app.fedilab.android.drawers.PeertubeAdapter;
 import app.fedilab.android.drawers.PixelfedListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnListActionInterface;
+import app.fedilab.android.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
+import app.fedilab.android.interfaces.OnRetrieveMissingFeedsInterface;
 import app.fedilab.android.services.StreamingFederatedTimelineService;
 import app.fedilab.android.services.StreamingLocalTimelineService;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveMissingFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeSearchAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnListActionInterface;
-import app.fedilab.android.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
-import app.fedilab.android.interfaces.OnRetrieveMissingFeedsInterface;
 
 
 /**
@@ -88,6 +86,7 @@ import app.fedilab.android.interfaces.OnRetrieveMissingFeedsInterface;
 public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface, OnRetrieveFeedsAfterBookmarkInterface, OnListActionInterface {
 
 
+    LinearLayoutManager mLayoutManager;
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -107,7 +106,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private RecyclerView lv_status;
     private boolean showMediaOnly, showPinned, showReply;
     private Intent streamingFederatedIntent, streamingLocalIntent;
-    LinearLayoutManager mLayoutManager;
     private boolean firstTootsLoaded;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
@@ -325,7 +323,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             nextElementLoader.setVisibility(View.GONE);
                         }
                     }
-                    if ((type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0) {
+                    if ((type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0) {
                         Date bookmarkL = statuses.get(firstVisibleItem).getCreated_at();
                         updatedBookMark = statuses.get(firstVisibleItem).getId();
                         updatedBookMarkDate = statuses.get(firstVisibleItem).getCreated_at();
@@ -342,7 +340,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME)
+                    if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
                         MainActivity.countNewStatus = 0;
                     isSwipped = true;
                     if (type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
@@ -401,7 +399,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.clearAnimation();
         }
         //Store bookmark on pause
-        if (context instanceof BaseMainActivity && (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME)) {
+        if (context instanceof BaseMainActivity && (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             if (updatedBookMark != null)
                 editor.putString(Helper.BOOKMARK_ID + userId + instance, updatedBookMark);
@@ -413,9 +411,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putString(Helper.LAST_READ_TOOT_DATE + userId + instance, Helper.dateToString(lastReadTootDate));
             editor.apply();
         }
-        if( getActivity() != null) {
+        if (getActivity() != null) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if( imm != null && getView() != null) {
+            if (imm != null && getView() != null) {
                 imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
             }
         }
@@ -479,10 +477,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else {
-                if(apiResponse.getError().getError().length() < 100) {
+                if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
                 }
             }
             swipeRefreshLayout.setRefreshing(false);
@@ -574,7 +572,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             //First toot are loaded as soon as the bookmark has been retrieved
             //Only for the Home timeline
-            if ((type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) && !firstTootsLoaded) {
+            if ((type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) && !firstTootsLoaded) {
                 boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                 if (remember_position_home)
                     asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
@@ -626,7 +624,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             tempTootResult.add(status);
             if (tempTootResult.size() > 0)
                 status = tempTootResult.get(0);
-            if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
 
                 //Makes sure the status is not already displayed
                 if (!statuses.contains(status)) {
@@ -663,7 +661,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (lv_status != null) {
             try {
                 lv_status.setAdapter(null);
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
         super.onDestroyView();
     }
@@ -673,7 +672,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onResume();
         swipeRefreshLayout.setEnabled(true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
             if (getUserVisibleHint()) {
                 if (statuses != null && statuses.size() > 0 && asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
                     retrieveMissingToots(statuses.get(0).getId());
@@ -777,7 +776,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         int liveNotifications = Helper.liveNotifType(context);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME) {
             if (visible) {
                 if (statuses != null && statuses.size() > 0) {
                     retrieveMissingToots(statuses.get(0).getId());
@@ -946,7 +945,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             else if (artListAdapter != null && instanceType.equals("ART"))
                 artListAdapter.notifyItemRangeInserted(0, inserted);
             try {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME|| type == RetrieveFeedsAsyncTask.Type.PF_HOME)
+                if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
                     ((MainActivity) context).updateHomeCounter();
                 else {
                     if (type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
@@ -971,12 +970,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
             if (apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            else
-                if(apiResponse.getError().getError().length() < 100) {
-                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
-                }
+            else if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             swipeRefreshLayout.setRefreshing(false);
             flag_loading = false;
             return;
@@ -1031,9 +1029,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             StatusListAdapter.fetch_all_more = false;
         }
         this.statuses.addAll(position, tmpStatuses);
-        if( statusListAdapter != null)
+        if (statusListAdapter != null)
             statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-        if( pixelfedListAdapter != null)
+        if (pixelfedListAdapter != null)
             pixelfedListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
         boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);
         if (position > 0 && display_content_after_fetch_more)
@@ -1108,15 +1106,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if( context == null){
+        if (context == null) {
             return;
         }
         if (apiResponse.getError() != null) {
             if (!apiResponse.getError().getError().startsWith("404 -"))
-                if(apiResponse.getError().getError().length() < 100) {
+                if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
                 }
             swipeRefreshLayout.setRefreshing(false);
             isSwipped = false;

@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -43,8 +42,6 @@ import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.NotificationCacheDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-
-import static app.fedilab.android.helper.Helper.sleeps;
 
 
 /**

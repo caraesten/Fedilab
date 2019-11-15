@@ -21,16 +21,16 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 
 
 /**

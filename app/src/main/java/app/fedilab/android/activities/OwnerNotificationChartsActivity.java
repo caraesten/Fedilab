@@ -36,7 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -76,8 +75,6 @@ import app.fedilab.android.sqlite.NotificationCacheDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 
-import static app.fedilab.android.sqlite.StatusCacheDAO.NOTIFICATION_CACHE;
-
 
 /**
  * Created by Thomas on 26/08/2019.
@@ -95,6 +92,31 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
     private RelativeLayout loader;
     private ImageButton validate;
     private String status_id;
+    private DatePickerDialog.OnDateSetListener iniDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    dateIni = new Date(c.getTimeInMillis());
+                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private DatePickerDialog.OnDateSetListener endDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
+
+                    dateEnd = new Date(c.getTimeInMillis());
+                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -451,59 +473,6 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         chart.invalidate();
     }
 
-    public class CustomMarkerView extends MarkerView {
-        private TextView tvContent;
-
-        public CustomMarkerView(Context context, int layoutResource) {
-            super(context, layoutResource);
-            tvContent = findViewById(R.id.tvContent);
-            tvContent.setTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
-        }
-
-        @Override
-        public void refreshContent(Entry e, Highlight highlight) {
-            Date date = new Date(((long) e.getX()));
-            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " + (int) e.getY()));
-            super.refreshContent(e, highlight);
-        }
-
-        private MPPointF mOffset;
-
-        @Override
-        public MPPointF getOffset() {
-            if (mOffset == null) {
-                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
-            }
-            return mOffset;
-        }
-    }
-
-    private DatePickerDialog.OnDateSetListener iniDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
-                    dateIni = new Date(c.getTimeInMillis());
-                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-    private DatePickerDialog.OnDateSetListener endDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
-
-                    dateEnd = new Date(c.getTimeInMillis());
-                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -534,6 +503,31 @@ public class OwnerNotificationChartsActivity extends BaseActivity implements OnR
         super.onDestroy();
     }
 
+    public class CustomMarkerView extends MarkerView {
+        private TextView tvContent;
+        private MPPointF mOffset;
+
+        public CustomMarkerView(Context context, int layoutResource) {
+            super(context, layoutResource);
+            tvContent = findViewById(R.id.tvContent);
+            tvContent.setTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+        }
+
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            Date date = new Date(((long) e.getX()));
+            tvContent.setText(Helper.shortDateToString(date) + " - " + (int) e.getY());
+            super.refreshContent(e, highlight);
+        }
+
+        @Override
+        public MPPointF getOffset() {
+            if (mOffset == null) {
+                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
+            }
+            return mOffset;
+        }
+    }
 
     public class MyXAxisValueFormatter extends ValueFormatter {
         private DateFormat mDataFormat;

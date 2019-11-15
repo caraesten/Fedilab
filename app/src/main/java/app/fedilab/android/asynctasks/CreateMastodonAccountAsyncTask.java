@@ -51,9 +51,9 @@ public class CreateMastodonAccountAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( type == RetrieveInstanceRegAsyncTask.instanceType.MASTODON) {
+        if (type == RetrieveInstanceRegAsyncTask.instanceType.MASTODON) {
             apiResponse = new API(contextReference.get(), instance, null).createAccount(accountCreation);
-        }else{
+        } else {
             apiResponse = new PeertubeAPI(contextReference.get(), instance, null).createAccount(accountCreation);
         }
         return null;

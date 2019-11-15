@@ -36,8 +36,8 @@ import app.fedilab.android.helper.Helper;
 
 public class BoostScheduleDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public BoostScheduleDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

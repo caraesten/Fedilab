@@ -15,9 +15,9 @@
     see <http://www.gnu.org/licenses>.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/tools"
     android:fillViewport="true"
     app:ignore="NamespaceTypo">
 
@@ -32,22 +32,22 @@
         android:paddingBottom="@dimen/toot_padding">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/warning_message"
-            android:text="@string/reply_might_be_useless"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/red_border"
-            android:textColor="@color/red_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/red_border"
+            android:gravity="center"
+            android:text="@string/reply_might_be_useless"
+            android:textColor="@color/red_1"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/toot_cw_content"
-            android:layout_below="@+id/warning_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/warning_message"
             android:layout_marginTop="20dp"
             android:animateLayoutChanges="true"
             android:hint="@string/toot_cw_placeholder"
@@ -55,13 +55,13 @@
 
         <ScrollView
             android:id="@+id/composer_container"
-            android:layout_below="@+id/toot_cw_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar_tooting"
+            android:layout_below="@+id/toot_cw_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
             android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:fillViewport="true">
@@ -79,46 +79,46 @@
 
         <HorizontalScrollView
             android:id="@+id/toolbar_scrollview"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e6e6e6"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:visibility="gone">
 
             <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
         </HorizontalScrollView>
 
         <ScrollView
             android:id="@+id/wysiwyg_container"
-            android:visibility="gone"
-            android:layout_below="@+id/toolbar_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar_tooting"
+            android:layout_below="@+id/toolbar_scrollview"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
             android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:visibility="gone">
 
             <com.github.irshulx.Editor
-                android:layout_width="match_parent"
                 android:id="@+id/editor"
-                app:render_type="Editor"
-                android:hint="@string/toot_placeholder"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="100dp" />
+                android:hint="@string/toot_placeholder"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="100dp"
+                app:render_type="Editor" />
         </ScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
             android:id="@+id/suggestions"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/bottom_bar_tooting"
@@ -166,33 +166,35 @@
                     android:gravity="center_vertical"
                     android:maxHeight="100dp"
                     android:orientation="horizontal"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
             </HorizontalScrollView>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:visibility="gone"
                 android:id="@+id/compression_loader"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginTop="3dp"
                 android:layout_marginEnd="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="3dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="3dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <ProgressBar
-                    android:layout_gravity="center"
                     android:layout_width="10dp"
-                    android:layout_height="10dp"/>
+                    android:layout_height="10dp"
+                    android:layout_gravity="center" />
+
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textColor="?colorAccent"
                     android:layout_marginStart="5dp"
-                    android:textSize="12sp"
                     android:gravity="center_vertical"
                     android:text="@string/please_wait_compression"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="?colorAccent"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -211,7 +213,7 @@
                     android:contentDescription="@string/toot_select_image"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_insert_photo"
-                    android:tint="?attr/iconColor"/>
+                    android:tint="?attr/iconColor" />
 
                 <ImageButton
                     android:id="@+id/poll_action"
@@ -240,16 +242,15 @@
                     android:contentDescription="@string/toot_visibility_tilte"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_public"
-                    android:tint="?attr/iconColor"/>
+                    android:tint="?attr/iconColor" />
 
                 <Button
                     android:id="@+id/toot_cw"
+                    style="@style/Widget.AppCompat.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    android:text="@string/cw"
-                    />
+                    android:text="@string/cw" />
 
                 <ImageButton
                     android:id="@+id/toot_emoji"
@@ -265,7 +266,7 @@
                     android:minHeight="0dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_insert_emoticon"
-                    android:tint="?attr/iconColor"/>
+                    android:tint="?attr/iconColor" />
 
                 <TextView
                     android:id="@+id/toot_space_left"
