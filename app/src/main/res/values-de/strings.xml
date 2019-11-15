@@ -1164,4 +1164,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="export_theme">Export the theme</string>
     <string name="export_theme_title">Hier tippen, um das aktuelle Theme zu exportieren</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
 </resources>
