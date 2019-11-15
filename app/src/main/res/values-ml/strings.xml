@@ -165,13 +165,13 @@
     <string name="toot_delete_media">ഈ മാധ്യമം കളയട്ടെ?</string>
     <string name="toot_error_no_content">താങ്കളുടെ ടൂട്ട് ശൂന്യമാണ്!</string>
     <string name="toot_visibility_tilte">ടൂട്ടിന്റെ ദർശനീയത</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toots_visibility_tilte">ടൂട്ടിന്റെ മൗലികമായ ദർശനീയത: </string>
+    <string name="toot_sent">ടൂട്ട് അയക്കപ്പെട്ടിരിക്കുന്നു!</string>
+    <string name="toot_reply_content_title">തങ്ങൾ ഈ ടൂട്ടിനു മറുപടി എഴുതുകയാണ്:</string>
+    <string name="toot_sensitive">അസ്വസ്ഥമാക്കാമാകുന്ന ഉള്ളടക്കം?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
+        <item>പൊതു സമയ രേഖകളിലേക്ക് അയക്കുക</item>
+        <item>പൊതു സമയ രേഖകളിലേക്ക് അയക്കരുത്</item>
         <item>Post to followers only</item>
         <item>Post to mentioned users only</item>
     </string-array>
