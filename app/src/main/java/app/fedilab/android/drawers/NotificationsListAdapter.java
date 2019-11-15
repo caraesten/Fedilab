@@ -336,7 +336,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
         holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
         holder.status_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
-
+        int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
+        if (theme_text_header_1_line == -1) {
+            theme_text_header_1_line = ThemeHelper.getAttColor(context, R.attr.textColor);
+        }
+        holder.notification_type.setTextColor(theme_text_header_1_line);
 
         holder.spark_button_fav.pressOnTouch(false);
         holder.spark_button_reblog.pressOnTouch(false);

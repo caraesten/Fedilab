@@ -77,7 +77,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
                     android:gravity="end"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -128,7 +127,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_remove_red_eye"
-                        android:drawableLeft="@drawable/ic_remove_red_eye"
                         android:drawablePadding="5dp"
                         android:gravity="center"
                         android:maxLines="1"
@@ -189,7 +187,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="2dp"
-                            android:layout_marginLeft="2dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 

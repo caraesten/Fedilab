@@ -246,7 +246,7 @@
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/cached_status"
                 android:src="@drawable/ic_cached_black"
-                android:tint="?attr/iconColorMenu"
+                android:tint="?attr/textColor"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/status_account_displayname_owner"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -189,7 +189,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
-                        android:tint="?attr/iconColorMenu"
+                        android:tint="?attr/textColor"
                         android:visibility="gone" />
 
                     <TextView

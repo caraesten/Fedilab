@@ -1113,9 +1113,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reblog_count.setTextColor(iconColor);
 
 
-            holder.status_account_displayname.setTextColor(ThemeHelper.getAttColor(context, R.attr.textHeader));
-            holder.status_toot_date.setTextColor(ThemeHelper.getAttColor(context, R.attr.textHeader));
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.attr.textHeader);
+            int theme_text_header_2_line = prefs.getInt("theme_text_header_2_line", -1);
+            if (theme_text_header_2_line == -1) {
+                theme_text_header_2_line = ThemeHelper.getAttColor(context, R.attr.textHeader);
+            }
+
+            holder.status_account_displayname.setTextColor(theme_text_header_2_line);
+            holder.status_toot_date.setTextColor(theme_text_header_2_line);
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, theme_text_header_2_line);
+
+            int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
+            if (theme_text_header_1_line == -1) {
+                theme_text_header_1_line = ThemeHelper.getAttColor(context, R.attr.textColor);
+            }
+            holder.status_account_displayname_owner.setTextColor(theme_text_header_1_line);
+            Helper.changeDrawableColor(context, holder.cached_status, theme_text_header_1_line);
+
 
 
             if (holder.cached_status != null && holder.getItemViewType() == DISPLAYED_STATUS) {
@@ -1608,7 +1621,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     int matchStart = matcherAcct.start(1);
                     int matchEnd = matcherAcct.end();
                     if (wordtoSpan.length() >= matchEnd && matchStart < matchEnd) {
-                        wordtoSpan.setSpan(new ForegroundColorSpan(ThemeHelper.getAttColor(context, R.attr.textHeader)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        wordtoSpan.setSpan(new ForegroundColorSpan(theme_text_header_2_line), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
 
                 }
