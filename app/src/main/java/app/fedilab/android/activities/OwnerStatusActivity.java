@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,18 +23,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +44,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,6 +63,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveStatsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -70,15 +73,13 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveStatsInterface;
 import app.fedilab.android.services.BackupStatusInDataBaseService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 
 
 /**
@@ -89,6 +90,7 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveStatsInterface {
 
 
+    LinearLayoutManager mLayoutManager;
     private ImageView pp_actionBar;
     private StatusListAdapter statusListAdapter;
     private String max_id;
@@ -98,14 +100,47 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private boolean flag_loading;
-    LinearLayoutManager mLayoutManager;
     private int style;
     private Button settings_time_from, settings_time_to;
     private FilterToots filterToots;
     private Date dateIni, dateEnd;
     private View statsDialogView;
     private Statistics statistics;
+    private DatePickerDialog.OnDateSetListener iniDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
 
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    dateIni = new Date(c.getTimeInMillis());
+                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private DatePickerDialog.OnDateSetListener endDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
+
+                    dateEnd = new Date(c.getTimeInMillis());
+                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private BroadcastReceiver backupFinishedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            max_id = null;
+            firstLoad = true;
+            flag_loading = true;
+            swiped = true;
+            new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +151,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
@@ -135,12 +167,11 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OwnerStatusActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -156,9 +187,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             });
             TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            if (theme == Helper.THEME_LIGHT) {
-                Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerStatusActivity.this);
-            }
             toolbarTitle.setText(getString(R.string.owner_cached_toots));
         }
         statuses = new ArrayList<>();
@@ -195,27 +223,14 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), pp_actionBar);
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black_3));
-                break;
-        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -250,40 +265,10 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         getMenuInflater().inflate(R.menu.option_owner_cache, menu);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
-
-    private DatePickerDialog.OnDateSetListener iniDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
-                    dateIni = new Date(c.getTimeInMillis());
-                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-    private DatePickerDialog.OnDateSetListener endDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
-
-                    dateEnd = new Date(c.getTimeInMillis());
-                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -503,18 +488,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         firstLoad = false;
 
     }
-
-
-    private BroadcastReceiver backupFinishedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            max_id = null;
-            firstLoad = true;
-            flag_loading = true;
-            swiped = true;
-            new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-    };
 
     @Override
     public void onDestroy() {

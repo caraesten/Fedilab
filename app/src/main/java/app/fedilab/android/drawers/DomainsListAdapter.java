@@ -18,11 +18,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,16 +26,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.DeleteDomainsAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveDomainsInterface;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import es.dmoral.toasty.Toasty;
 
 
 /**

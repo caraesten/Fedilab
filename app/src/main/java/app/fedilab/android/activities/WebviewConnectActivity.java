@@ -19,14 +19,10 @@ package app.fedilab.android.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +37,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 
 /**
  * Created by Thomas on 24/04/2017.
@@ -67,13 +67,30 @@ public class WebviewConnectActivity extends BaseActivity {
     private String instance;
     private UpdateAccountInfoAsyncTask.SOCIAL social;
 
+    @SuppressWarnings("deprecation")
+    public static void clearCookies(Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else {
+            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -97,6 +114,7 @@ public class WebviewConnectActivity extends BaseActivity {
         clientSecret = sharedpreferences.getString(Helper.CLIENT_SECRET, null);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(WebviewConnectActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -111,10 +129,6 @@ public class WebviewConnectActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(R.string.add_account);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, WebviewConnectActivity.this);
-            }
         }
         webView = findViewById(R.id.webviewConnect);
         clearCookies(getApplicationContext());
@@ -153,7 +167,7 @@ public class WebviewConnectActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 super.shouldOverrideUrlLoading(view, url);
                 if (url.contains(Helper.REDIRECT_CONTENT_WEB)) {
-                    String val[] = url.split("code=");
+                    String[] val = url.split("code=");
                     if (val.length < 2) {
                         Toasty.error(getApplicationContext(), getString(R.string.toast_code_error), Toast.LENGTH_LONG).show();
                         Intent myIntent = new Intent(WebviewConnectActivity.this, LoginActivity.class);
@@ -202,7 +216,6 @@ public class WebviewConnectActivity extends BaseActivity {
         webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(getApplicationContext(), social, clientId, instance));
     }
 
-
     @Override
     public void onBackPressed() {
         if (webView != null && webView.canGoBack()) {
@@ -212,30 +225,12 @@ public class WebviewConnectActivity extends BaseActivity {
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (alert != null) {
             alert.dismiss();
             alert = null;
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public static void clearCookies(Context context) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            CookieManager.getInstance().removeAllCookies(null);
-            CookieManager.getInstance().flush();
-        } else {
-            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
-            cookieSyncMngr.startSync();
-            CookieManager cookieManager = CookieManager.getInstance();
-            cookieManager.removeAllCookie();
-            cookieManager.removeSessionCookie();
-            cookieSyncMngr.stopSync();
-            cookieSyncMngr.sync();
         }
     }
 }

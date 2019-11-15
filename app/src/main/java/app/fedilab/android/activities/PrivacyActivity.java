@@ -15,13 +15,9 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +26,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import app.fedilab.android.helper.Helper;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import app.fedilab.android.R;
+import app.fedilab.android.helper.Helper;
 
 
 /**
@@ -48,7 +47,7 @@ public class PrivacyActivity extends BaseActivity {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -64,6 +63,7 @@ public class PrivacyActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(PrivacyActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -78,10 +78,6 @@ public class PrivacyActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(R.string.action_privacy);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PrivacyActivity.this);
-            }
         }
         setContentView(R.layout.activity_privacy);
         setTitle(getString(R.string.action_privacy));

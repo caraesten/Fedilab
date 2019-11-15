@@ -21,14 +21,6 @@ import java.util.LinkedHashMap;
 public class PeertubeInformation {
 
 
-    private LinkedHashMap<Integer, String> categories;
-    private LinkedHashMap<String, String> languages;
-    private LinkedHashMap<Integer, String> licences;
-    private LinkedHashMap<Integer, String> privacies;
-    private LinkedHashMap<Integer, String> playlistPrivacies;
-    private LinkedHashMap<String, String> translations;
-
-
     public static final LinkedHashMap<String, String> langueMapped;
 
     static {
@@ -49,6 +41,12 @@ public class PeertubeInformation {
         langueMapped = aMap;
     }
 
+    private LinkedHashMap<Integer, String> categories;
+    private LinkedHashMap<String, String> languages;
+    private LinkedHashMap<Integer, String> licences;
+    private LinkedHashMap<Integer, String> privacies;
+    private LinkedHashMap<Integer, String> playlistPrivacies;
+    private LinkedHashMap<String, String> translations;
 
     public LinkedHashMap<String, String> getTranslations() {
         return translations;

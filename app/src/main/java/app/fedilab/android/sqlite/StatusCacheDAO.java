@@ -42,13 +42,12 @@ import app.fedilab.android.helper.Helper;
  */
 public class StatusCacheDAO {
 
-    private SQLiteDatabase db;
-    public Context context;
-
     //Type of cache
     public static int BOOKMARK_CACHE = 0;
     public static int ARCHIVE_CACHE = 1;
     public static int NOTIFICATION_CACHE = 2;
+    public Context context;
+    private SQLiteDatabase db;
 
     public StatusCacheDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
@@ -332,9 +331,9 @@ public class StatusCacheDAO {
         String order = Sqlite.COL_CREATED_AT + " DESC";
 
         if (filterToots.getOrder() != null) {
-            if( filterToots.getOrder() == FilterToots.typeOrder.ASC ){
+            if (filterToots.getOrder() == FilterToots.typeOrder.ASC) {
                 order = Sqlite.COL_CREATED_AT + " ASC";
-            }else if(filterToots.getOrder() == FilterToots.typeOrder.DESC) {
+            } else if (filterToots.getOrder() == FilterToots.typeOrder.DESC) {
                 order = Sqlite.COL_CREATED_AT + " DESC";
             }
         }

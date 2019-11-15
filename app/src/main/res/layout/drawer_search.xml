@@ -15,24 +15,24 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/search_container"
     android:divider="?android:dividerHorizontal"
-    android:showDividers="end"
+    android:orientation="vertical"
     android:paddingTop="5dp"
-    android:orientation="vertical">
+    android:showDividers="end">
 
     <TextView
         android:id="@+id/search_keyword"
-        android:textSize="18sp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </LinearLayout>

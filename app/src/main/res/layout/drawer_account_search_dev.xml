@@ -14,10 +14,10 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout android:id="@+id/acccount_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/acccount_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -31,39 +31,38 @@
         android:contentDescription="@string/profile_picture" />
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/account_dn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/account_un"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_gravity="center"
-        app:fabSize="mini"
-        android:contentDescription="@string/follow_account"
         android:id="@+id/account_follow"
-        android:textAllCaps="false"
-        android:src="@drawable/ic_user_plus"
-        android:gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/follow_account"
+        android:gravity="center"
+        android:src="@drawable/ic_user_plus"
+        android:textAllCaps="false"
+        app:fabSize="mini" />
 </LinearLayout>

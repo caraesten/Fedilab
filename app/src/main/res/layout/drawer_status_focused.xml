@@ -16,58 +16,53 @@
 -->
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_container"
     android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
     android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    >
+    android:layout_marginEnd="5dp"
+    android:layout_marginRight="5dp">
+
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_diag_top"
         android:layout_width="20dp"
         android:layout_height="11dp"
-        android:background="@drawable/diag_top"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_top"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:background="?colorAccent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/reply_indicator_dot"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
         app:layout_constraintTop_toBottomOf="@id/status_reply_indicator_diag_top" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/reply_indicator_dot"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginStart="0dp"
-        android:background="?colorAccent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_bottom"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:background="?colorAccent"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/status_reply_indicator_diag_bottom"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
         app:layout_constraintStart_toStartOf="@id/reply_indicator_dot"
@@ -75,25 +70,25 @@
 
 
     <View
-        android:visibility="gone"
         android:id="@+id/status_reply_indicator_diag_bottom"
         android:layout_width="20dp"
         android:layout_height="11dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/diag_bottom"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/reply_indicator_dot"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/main_linear_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -125,7 +120,6 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/bot_background_round_corner"
@@ -137,18 +131,15 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
                         android:layout_centerHorizontal="true"
                         android:contentDescription="@string/profile_picture"
                         android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/status_account_profile_boost_by"
-                        style="?attr/shapeBorder"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginTop="20dp"
                         android:contentDescription="@string/profile_picture"
                         android:visibility="gone" />
@@ -160,8 +151,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="?attr/colorAccent"
                     android:contentDescription="@string/profile_picture"
-                    android:src="@drawable/ic_fiber_new"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -175,7 +166,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -185,6 +175,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="2dp"
                     android:maxLines="1"
+                    android:textAlignment="viewStart"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -198,6 +189,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
+                        android:tint="?attr/iconColorMenu"
                         android:visibility="gone" />
 
                     <TextView
@@ -206,6 +198,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="2dp"
                         android:maxLines="1"
+                        android:textAlignment="viewStart"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -235,7 +228,6 @@
 
             <Button
                 android:id="@+id/status_spoiler_button"
-                style="?attr/borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_remove_red_eye"
@@ -263,7 +255,6 @@
 
             <Button
                 android:id="@+id/status_show_more_content"
-                style="?attr/borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more_toot_content"
@@ -277,28 +268,67 @@
                 android:textAllCaps="false"
                 android:visibility="gone" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/status_content_translated_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:visibility="gone">
+
+                <View
+                    android:id="@+id/translation_border_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/translation_border_top" />
+
+                <androidx.constraintlayout.widget.Placeholder
+                    android:id="@+id/translation_border_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    app:layout_constraintBottom_toBottomOf="@id/translation_label"
+                    app:layout_constraintEnd_toEndOf="@id/translation_label"
+                    app:layout_constraintTop_toTopOf="@id/translation_label" />
+
+                <TextView
+                    android:id="@+id/translation_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="?attr/backgroundColor"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/translation"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/status_content_translated"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
+                    app:layout_constraintBottom_toTopOf="@id/yandex_translate"
+                    app:layout_constraintTop_toBottomOf="@id/translation_label"
+                    app:layout_goneMarginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/yandex_translate"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:padding="2dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="2dp"
                     android:text="Powered by Yandex.Translate"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/status_content_translated"
                     tools:ignore="HardcodedText" />
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <LinearLayout
@@ -380,7 +410,8 @@
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/play_video"
-                        android:src="@drawable/video_preview" />
+                        android:src="@drawable/ic_play_arrow"
+                        android:tint="@color/white" />
 
                 </RelativeLayout>
 
@@ -434,6 +465,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -442,7 +474,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="1dp"
-                                android:layout_marginLeft="1dp"
                                 android:layout_weight="1">
 
                                 <ImageView
@@ -459,6 +490,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -491,6 +523,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -498,7 +531,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="1dp"
-                                android:layout_marginLeft="1dp"
                                 android:layout_weight="1">
 
                                 <ImageView
@@ -515,6 +547,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -525,11 +558,11 @@
                         android:layout_width="34dp"
                         android:layout_height="34dp"
                         android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:contentDescription="@string/hide_media"
                         android:padding="5dp"
-                        android:src="@drawable/ic_remove_red_eye_img" />
+                        android:src="@drawable/ic_remove_red_eye_img"
+                        android:tint="?attr/iconColor" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -559,6 +592,7 @@
                             android:layout_centerInParent="true"
                             android:contentDescription="@string/play_video"
                             android:src="@drawable/ic_play_arrow"
+                            android:tint="@color/white"
                             android:visibility="gone" />
 
                         <ImageView
@@ -566,11 +600,11 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_alignParentStart="true"
-                            android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/hide_media"
                             android:padding="5dp"
-                            android:src="@drawable/ic_remove_red_eye_img" />
+                            android:src="@drawable/ic_remove_red_eye_img"
+                            android:tint="?attr/iconColor" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -578,7 +612,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="2dp"
-                        android:layout_marginLeft="2dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -601,6 +634,7 @@
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/play_video"
                                 android:src="@drawable/ic_play_arrow"
+                                android:tint="@color/white"
                                 android:visibility="gone" />
                         </RelativeLayout>
 
@@ -631,6 +665,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -655,6 +690,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
+                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -678,7 +714,6 @@
                         android:background="@drawable/rounded_label_sensitive"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:textColor="#ffffffff"
                         android:textSize="20sp" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -718,7 +753,6 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/mastodonC4"
                 android:contentDescription="@string/app_features"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
@@ -742,7 +776,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:maxLines="1"
-                android:textColor="?attr/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 android:visibility="gone"
@@ -765,6 +799,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_reply"
+                android:tint="?attr/iconColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -833,6 +868,7 @@
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/delete"
                 android:src="@drawable/ic_clear_toot"
+                android:tint="?attr/iconColor"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/status_favorite_count"
@@ -840,11 +876,10 @@
 
             <ImageView
                 android:id="@+id/status_pin"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:contentDescription="@string/pin_add"
                 android:src="@drawable/ic_pin_drop"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -856,7 +891,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
                 android:contentDescription="@string/toot_visibility_tilte"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/status_more"
@@ -868,6 +902,7 @@
                 android:layout_height="25dp"
                 android:contentDescription="@string/display_toot_truncate"
                 android:src="@drawable/ic_more_horiz"
+                android:tint="?attr/iconColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

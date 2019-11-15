@@ -34,8 +34,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class SearchDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
     private String userId;
 
     public SearchDAO(Context context, SQLiteDatabase db) {

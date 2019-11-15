@@ -14,10 +14,10 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/drawer_layout"
@@ -27,24 +27,24 @@
 
         <ImageView
             android:id="@+id/main_logo"
-            android:layout_marginTop="20dp"
             android:layout_width="150dp"
-            android:layout_gravity="center_horizontal"
             android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:contentDescription="@string/app_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/activity_vertical_margin_login"
-            android:layout_marginStart="@dimen/activity_vertical_margin_login"
-            android:layout_marginRight="@dimen/activity_vertical_margin_login"
-            android:layout_marginEnd="@dimen/activity_vertical_margin_login"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/activity_vertical_margin_login"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_login"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/activity_vertical_margin_login"
+            android:layout_marginRight="@dimen/activity_vertical_margin_login"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/step_instance"
@@ -66,72 +66,82 @@
                         <AutoCompleteTextView
                             android:id="@+id/login_instance"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/instance_example"
                             android:imeOptions="actionNext"
                             android:inputType="textWebEmailAddress"
-                            android:maxLines="1"
-                            android:hint="@string/instance_example" />
+                            android:maxLines="1" />
 
                         <ImageView
-                            android:contentDescription="@string/more_information"
                             android:id="@+id/info_instance"
-                            android:src="@drawable/ic_info_login"
                             android:layout_width="30dp"
-                            android:layout_height="30dp" />
+                            android:layout_height="30dp"
+                            android:contentDescription="@string/more_information"
+                            android:src="@drawable/ic_info_login" />
                     </LinearLayout>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/connect_button"
-                    android:textAllCaps="false"
-                    android:drawableLeft="@drawable/ic_check_circle"
-                    android:drawableStart="@drawable/ic_check_circle"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:drawablePadding="10dp"
-                    android:paddingLeft="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingRight="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/connect_instance" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/ic_check_circle"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingStart="15dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/connect_instance"
+                    android:textAllCaps="false"
+                    android:textSize="20sp" />
 
 
                 <TextView
                     android:id="@+id/create_an_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:drawableStart="@drawable/mastodon_icon_item"
+                    android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:textSize="16sp"
                     android:text="@string/join_mastodon"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/create_an_account_peertube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
+                    android:drawableStart="@drawable/peertube_icon"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="@string/join_peertube"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/step_login_credential"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:textSize="16sp"
-                    android:textColor="?colorAccent"
                     android:id="@+id/instance_chosen"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:textColor="?colorAccent"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -141,11 +151,11 @@
                     <EditText
                         android:id="@+id/login_uid"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
+                        android:layout_weight="1"
+                        android:hint="@string/username"
                         android:inputType="textEmailAddress"
-                        android:hint="@string/username" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,42 +165,39 @@
 
                     <EditText
                         android:id="@+id/login_passwd"
-                        android:inputType="textPassword"
-                        android:hint="@string/password"
-                        android:maxLines="1"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content" />
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <TextView
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
                     android:id="@+id/login_issue"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/login_button"
-                    android:textAllCaps="false"
-                    android:drawableLeft="@drawable/mastodon_icon"
-                    android:drawableStart="@drawable/mastodon_icon"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:drawablePadding="10dp"
-                    android:paddingLeft="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingRight="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/login" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/mastodon_icon"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingStart="15dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/login"
+                    android:textAllCaps="false"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>

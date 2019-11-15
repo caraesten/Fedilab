@@ -17,10 +17,6 @@ package app.fedilab.android.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
-import app.fedilab.android.helper.Helper;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import app.fedilab.android.R;
+import app.fedilab.android.helper.Helper;
 
 
 /**

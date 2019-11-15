@@ -7,8 +7,8 @@
         android:color="@color/cardBorderLight" />
 
     <corners
-        android:bottomRightRadius="3dp"
         android:bottomLeftRadius="3dp"
+        android:bottomRightRadius="3dp"
         android:topLeftRadius="3dp"
         android:topRightRadius="3dp" />
 </shape>

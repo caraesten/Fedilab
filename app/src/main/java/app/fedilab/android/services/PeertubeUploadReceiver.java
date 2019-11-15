@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import net.gotev.uploadservice.ServerResponse;
@@ -30,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.helper.Helper;
 
 

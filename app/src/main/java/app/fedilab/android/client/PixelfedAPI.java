@@ -31,7 +31,6 @@ import app.fedilab.android.sqlite.Sqlite;
 public class PixelfedAPI {
 
 
-
     private Context context;
     private List<PixelFedStory> pixelFedStories;
     private List<PixelFedStoryItem> pixelFedStoryItems;
@@ -50,7 +49,7 @@ public class PixelfedAPI {
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && tootPerPage > 30 ){
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && tootPerPage > 30) {
             tootPerPage = 30;
         }
         this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -204,6 +203,7 @@ public class PixelfedAPI {
 
     /**
      * Parse a single item for stories
+     *
      * @param jsonObject JSONObject
      * @return PixelFedStoryItem
      */
@@ -221,8 +221,6 @@ public class PixelfedAPI {
         }
         return pixelFedStory;
     }
-
-
 
     /**
      * Parse json response for several items for stories
@@ -248,9 +246,9 @@ public class PixelfedAPI {
         return pixelFedStoryItems;
     }
 
-
     /**
      * Parse a single item for stories
+     *
      * @param jsonObject JSONObject
      * @return PixelFedStoryItem
      */
@@ -272,6 +270,51 @@ public class PixelfedAPI {
         return pixelFedStoryItem;
     }
 
+    /**
+     * Retrieves Pixelfed Own Stories *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getMyStories() {
+
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/me"), 10, null, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            pixelFedStory = parseStory(new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        if (apiResponse == null)
+            apiResponse = new APIResponse();
+        apiResponse.setPixelFedStory(pixelFedStory);
+        return apiResponse;
+    }
+
+    /**
+     * Delete a Pixelfed Story *synchronously*
+     *
+     * @return APIResponse
+     */
+    public int deleteStory(String id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", id);
+        HttpsConnection httpsConnection;
+        try {
+            httpsConnection = new HttpsConnection(context, this.instance);
+            httpsConnection.delete(getAbsoluteUrl("/delete"), 10, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
 
     /**
      * Set the error message
@@ -299,7 +342,7 @@ public class PixelfedAPI {
 
     private void setDefaultError(Exception e) {
         APIError = new Error();
-        if( apiResponse == null){
+        if (apiResponse == null) {
             apiResponse = new APIResponse();
         }
         if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
@@ -315,7 +358,6 @@ public class PixelfedAPI {
     public Error getError() {
         return APIError;
     }
-
 
 
     private String getAbsoluteUrl(String action) {

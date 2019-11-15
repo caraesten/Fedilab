@@ -19,10 +19,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,11 +27,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -43,14 +45,10 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.TrunkAccount;
 import app.fedilab.android.drawers.WhoToFollowAccountsAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.WhoToFollowAsyncTask;
 import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveWhoToFollowInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -93,8 +91,6 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         no_action = findViewById(R.id.no_action);
         Toolbar toolbar = findViewById(R.id.toolbar);
         progess_action = findViewById(R.id.progess_action);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(WhoToFollowActivity.this, R.color.black));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

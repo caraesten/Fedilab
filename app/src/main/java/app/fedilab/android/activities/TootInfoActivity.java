@@ -17,26 +17,25 @@ package app.fedilab.android.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
-
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Toast;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 
 
 /**
@@ -50,26 +49,16 @@ public class TootInfoActivity extends BaseActivity {
     private String toot_id;
     private TabLayout tabLayout;
     private ViewPager mPager;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
-                break;
-            default:
-                setTheme(R.style.AppThemeDark);
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Dialog);
+        } else {
+            setTheme(R.style.DialogDark);
         }
         setContentView(R.layout.activity_toot_info);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -87,8 +76,8 @@ public class TootInfoActivity extends BaseActivity {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             finish();
         }
-        userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(TootInfoActivity.this, R.color.cyanea_primary));
         mPager = findViewById(R.id.viewpager);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " (" + toot_reblogs_count + ")"));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite) + " (" + toot_favorites_count + ")"));

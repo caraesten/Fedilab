@@ -25,6 +25,17 @@ import android.os.Parcelable;
 
 public class Emojis implements Parcelable {
 
+    public static final Creator<Emojis> CREATOR = new Creator<Emojis>() {
+        @Override
+        public Emojis createFromParcel(Parcel source) {
+            return new Emojis(source);
+        }
+
+        @Override
+        public Emojis[] newArray(int size) {
+            return new Emojis[size];
+        }
+    };
     private String shortcode;
     private String static_url;
     private String url;
@@ -33,6 +44,13 @@ public class Emojis implements Parcelable {
     private boolean drawableFound;
 
     public Emojis() {
+    }
+
+    protected Emojis(Parcel in) {
+        this.shortcode = in.readString();
+        this.static_url = in.readString();
+        this.url = in.readString();
+        this.visible_in_picker = in.readByte() != 0;
     }
 
     public String getShortcode() {
@@ -79,25 +97,6 @@ public class Emojis implements Parcelable {
         dest.writeString(this.url);
         dest.writeByte(this.visible_in_picker ? (byte) 1 : (byte) 0);
     }
-
-    protected Emojis(Parcel in) {
-        this.shortcode = in.readString();
-        this.static_url = in.readString();
-        this.url = in.readString();
-        this.visible_in_picker = in.readByte() != 0;
-    }
-
-    public static final Creator<Emojis> CREATOR = new Creator<Emojis>() {
-        @Override
-        public Emojis createFromParcel(Parcel source) {
-            return new Emojis(source);
-        }
-
-        @Override
-        public Emojis[] newArray(int size) {
-            return new Emojis[size];
-        }
-    };
 
     public Drawable getDrawable() {
         return drawable;

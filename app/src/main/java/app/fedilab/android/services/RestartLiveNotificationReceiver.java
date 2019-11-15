@@ -18,7 +18,6 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import app.fedilab.android.helper.Helper;
 
@@ -34,13 +33,13 @@ public class RestartLiveNotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int type = Helper.liveNotifType(context);
-        if ( type == Helper.NOTIF_DELAYED) {
+        if (type == Helper.NOTIF_DELAYED) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationDelayedService.class);
             try {
                 context.startService(streamingServiceIntent);
             } catch (Exception ignored) {
             }
-        }else if (type == Helper.NOTIF_LIVE) {
+        } else if (type == Helper.NOTIF_LIVE) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
             try {
                 context.startService(streamingServiceIntent);

@@ -26,22 +26,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -60,9 +44,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,12 +67,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -89,7 +91,6 @@ import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.UserNote;
 import app.fedilab.android.client.HttpsConnection;
-import app.fedilab.android.drawers.AccountsInAListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
@@ -97,32 +98,21 @@ import app.fedilab.android.fragments.TabLayoutTootsFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.InstancesDAO;
-import app.fedilab.android.sqlite.NotesDAO;
-import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.sqlite.TempMuteDAO;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
+import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.InstancesDAO;
+import app.fedilab.android.sqlite.NotesDAO;
+import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.TempMuteDAO;
+import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.timelines;
-import static app.fedilab.android.helper.Helper.THEME_BLACK;
-import static app.fedilab.android.helper.Helper.THEME_DARK;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 import static app.fedilab.android.helper.Helper.getLiveInstance;
 
 
@@ -162,15 +152,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private ScheduledExecutorService scheduledExecutorService;
     private AsyncTask<Void, Void, Void> accountAsync;
     private AsyncTask<Void, Void, Void> retrieveRelationship;
-
-
-    public enum action {
-        FOLLOW,
-        UNFOLLOW,
-        UNBLOCK,
-        NOTHING
-    }
-
     private action doAction;
     private API.StatusAction doActionAccount;
 
@@ -182,9 +163,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
@@ -204,21 +182,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_pp = findViewById(R.id.account_pp);
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
-        TextView account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
         addToList = null;
-        switch (theme) {
-            case THEME_LIGHT:
-                account_pp.setBackgroundResource(R.drawable.account_pp_border_light);
-                break;
-            case THEME_DARK:
-                account_pp.setBackgroundResource(R.drawable.account_pp_border_dark);
-                break;
-            case THEME_BLACK:
-                account_pp.setBackgroundResource(R.drawable.account_pp_border_black);
-                break;
-        }
-
+        account_pp.setBackgroundResource(R.drawable.account_pp_border);
         if (b != null) {
             account = b.getParcelable("account");
             if (account == null) {
@@ -248,7 +214,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
         tabLayout = findViewById(R.id.account_tabLayout);
-
+        tabLayout.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.cyanea_primary));
         account_note = findViewById(R.id.account_note);
 
 
@@ -260,20 +226,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
 
-        View fake_actionbar = findViewById(R.id.fake_actionbar);
-        final ImageButton account_menu = findViewById(R.id.account_menu);
-        ImageButton action_more = findViewById(R.id.action_more);
-        ImageButton reload_tabs = findViewById(R.id.reload_tabs);
-        ImageButton action_back = findViewById(R.id.action_back);
-        if (theme == Helper.THEME_LIGHT) {
-            fake_actionbar.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.light_grey));
-            changeDrawableColor(getApplicationContext(), action_more, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), account_menu, R.color.dark_icon);
-            changeDrawableColor(getApplicationContext(), action_back, R.color.dark_icon);
-        }
-        if (theme == THEME_BLACK) {
-            fake_actionbar.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.light_black));
-        }
+        final ImageView account_menu = findViewById(R.id.account_menu);
+        ImageView action_more = findViewById(R.id.action_more);
+        ImageView reload_tabs = findViewById(R.id.reload_tabs);
+        ImageView action_back = findViewById(R.id.action_back);
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,17 +283,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
     }
 
-
     private void ManageAccount() {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         accountUrl = account.getUrl();
-        if (theme == Helper.THEME_LIGHT) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline, R.color.black);
-        } else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline, R.color.mastodonC3);
-        }
-
         int style;
         if (theme == Helper.THEME_LIGHT)
             style = R.style.Dialog;
@@ -416,15 +365,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final TextView warning_message = findViewById(R.id.warning_message);
         final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        if (theme == Helper.THEME_DARK)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.dark_link_toot)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_BLACK)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.black_link_toot)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_LIGHT)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.cyanea_accent_reference)), 0, content.length(),
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         warning_message.setText(content);
         warning_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -463,10 +405,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if (account.getMoved_to_account() != null) {
             TextView account_moved = findViewById(R.id.account_moved);
             account_moved.setVisibility(View.VISIBLE);
-            if (theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK)
-                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel, R.color.dark_icon);
-            else
-                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel, R.color.black);
             Drawable imgTravel = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_card_travel);
             assert imgTravel != null;
             imgTravel.setBounds(0, 0, (int) (20 * scale + 0.5f), (int) (20 * scale + 0.5f));
@@ -662,23 +600,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             break;
                     }
                     if (field != null && labelView != null && valueView != null) {
-                        switch (theme) {
-                            case Helper.THEME_LIGHT:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
-                                break;
-                            case Helper.THEME_DARK:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
-                                break;
-                            case Helper.THEME_BLACK:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
-                                break;
-                            default:
-                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
-                        }
                         field.setVisibility(View.VISIBLE);
                         if (verified) {
                             verifiedView.setBackgroundResource(R.drawable.verified);
@@ -734,9 +655,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             .inflate(R.menu.option_filter_toots_account, popup.getMenu());
                     Menu menu = popup.getMenu();
 
-                    if (!Helper.canPin) {
-                        popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
-                    }
+                    popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
                     final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
                     final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
                     final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
@@ -897,10 +816,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
 
         UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
-        if( userNote != null ){
+        if (userNote != null) {
 
             account_personal_note.setVisibility(View.VISIBLE);
-            account_personal_note.setOnClickListener(view->{
+            account_personal_note.setOnClickListener(view -> {
                 AlertDialog.Builder builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
                 builderInner.setTitle(R.string.note_for_account);
                 EditText input = new EditText(ShowAccountActivity.this);
@@ -922,15 +841,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
-                        if( userNote == null) {
+                        if (userNote == null) {
                             userNote = new UserNote();
                             userNote.setAcct(account.getAcct());
                         }
                         userNote.setNote(input.getText().toString());
                         new NotesDAO(getApplicationContext(), db).insertInstance(userNote);
-                        if( input.getText().toString().trim().length() > 0 ){
+                        if (input.getText().toString().trim().length() > 0) {
                             account_personal_note.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             account_personal_note.setVisibility(View.GONE);
                         }
                         dialog.dismiss();
@@ -969,7 +888,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }).start();
     }
 
-
     @Override
     public void onRetrieveFeedsAccount(List<Status> statuses) {
         if (statuses != null) {
@@ -995,15 +913,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
     }
 
-
     @Override
     public void onRetrieveRelationship(Relationship relationship, Error error) {
 
         if (error != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -1038,7 +955,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_follow.setVisibility(View.VISIBLE);
             doAction = action.UNFOLLOW;
         } else if (relationship.isFollowing()) {
-            account_follow.setImageResource(R.drawable.ic_user_times);
+            account_follow.setImageResource(R.drawable.ic_user_minus);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.red_1)));
             }
@@ -1048,90 +965,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = action.FOLLOW;
             account_follow.setVisibility(View.VISIBLE);
-            ;
         } else {
             account_follow.setVisibility(View.GONE);
             doAction = action.NOTHING;
-        }
-    }
-
-    /**
-     * Pager adapter for the 4 fragments
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-
-        ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            switch (position) {
-                case 0:
-                    if (!peertubeAccount) {
-                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-                            TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                            bundle.putString("targetedid", account.getId());
-                            tabLayoutTootsFragment.setArguments(bundle);
-                            return tabLayoutTootsFragment;
-                        }else{
-                            DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                            bundle = new Bundle();
-                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                            bundle.putString("instanceType", "PIXELFED");
-                            bundle.putString("targetedid", account.getId());
-                            displayStatusFragment.setArguments(bundle);
-                            return displayStatusFragment;
-                        }
-                    } else {
-                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                        bundle = new Bundle();
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                        bundle.putString("targetedid", account.getAcct());
-                        bundle.putString("instanceType", "PEERTUBE");
-                        bundle.putBoolean("showReply", false);
-                        bundle.putBoolean("ischannel", ischannel);
-                        displayStatusFragment.setArguments(bundle);
-                        return displayStatusFragment;
-                    }
-                case 1:
-                    if (peertubeAccount) {
-                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
-                        bundle.putString("targetedid", account.getId());
-                        bundle.putString("instance", Helper.getLiveInstance(ShowAccountActivity.this));
-                        bundle.putString("name", account.getAcct());
-                        displayAccountsFragment.setArguments(bundle);
-                        return displayAccountsFragment;
-                    } else {
-                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
-                        bundle.putString("targetedid", account.getId());
-                        displayAccountsFragment.setArguments(bundle);
-                        return displayAccountsFragment;
-                    }
-
-                case 2:
-                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
-                    bundle.putString("targetedid", account.getId());
-                    displayAccountsFragment.setArguments(bundle);
-                    return displayAccountsFragment;
-
-            }
-            return null;
-        }
-
-
-        @Override
-        public int getCount() {
-            if (ischannel)
-                return 1;
-            else if (peertubeAccount)
-                return 2;
-            else
-                return 3;
         }
     }
 
@@ -1188,7 +1024,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     labelView.setText(label);
                 }
                 if (field != null && labelView != null && valueView != null) {
-                    boolean verified = fieldsVerified.get((String) pair.getKey().toString());
+                    boolean verified = fieldsVerified.get(pair.getKey().toString());
                     if (verified) {
                         valueView.setBackgroundResource(R.drawable.verified);
                         value.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, value.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -1521,7 +1357,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
                         input.setLayoutParams(lp);
                         input.setSingleLine(false);
-                        if( userNote != null) {
+                        if (userNote != null) {
                             input.setText(userNote.getNote());
                         }
                         input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
@@ -1536,15 +1372,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UserNote userNote = new NotesDAO(getApplicationContext(), db).getUserNote(account.getAcct());
-                                if( userNote == null) {
+                                if (userNote == null) {
                                     userNote = new UserNote();
                                     userNote.setAcct(account.getAcct());
                                 }
                                 userNote.setNote(input.getText().toString());
                                 new NotesDAO(getApplicationContext(), db).insertInstance(userNote);
-                                if( input.getText().toString().trim().length() > 0 ){
+                                if (input.getText().toString().trim().length() > 0) {
                                     account_personal_note.setVisibility(View.VISIBLE);
-                                }else{
+                                } else {
                                     account_personal_note.setVisibility(View.GONE);
                                 }
                                 dialog.dismiss();
@@ -1592,12 +1428,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         popup.show();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
 
     @Override
     public void onStop() {
@@ -1617,10 +1451,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         if (error != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -1642,19 +1476,17 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         retrieveRelationship = new RetrieveRelationshipAsyncTask(getApplicationContext(), target, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
 
         if (error != null || account == null || account.getAcct() == null) {
             if (error == null)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            else
-                if(error.getError().length() < 100) {
-                    Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
-                }
+            else if (error.getError().length() < 100) {
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         this.account = account;
@@ -1673,13 +1505,100 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
     }
 
-
     public boolean showReplies() {
         return show_replies;
     }
 
     public boolean showBoosts() {
         return show_boosts;
+    }
+
+
+    public enum action {
+        FOLLOW,
+        UNFOLLOW,
+        UNBLOCK,
+        NOTHING
+    }
+
+    /**
+     * Pager adapter for the 4 fragments
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            switch (position) {
+                case 0:
+                    if (!peertubeAccount) {
+                        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                            TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
+                            bundle.putString("targetedid", account.getId());
+                            tabLayoutTootsFragment.setArguments(bundle);
+                            return tabLayoutTootsFragment;
+                        } else {
+                            DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                            bundle = new Bundle();
+                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                            bundle.putString("instanceType", "PIXELFED");
+                            bundle.putString("targetedid", account.getId());
+                            displayStatusFragment.setArguments(bundle);
+                            return displayStatusFragment;
+                        }
+                    } else {
+                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                        bundle.putString("targetedid", account.getAcct());
+                        bundle.putString("instanceType", "PEERTUBE");
+                        bundle.putBoolean("showReply", false);
+                        bundle.putBoolean("ischannel", ischannel);
+                        displayStatusFragment.setArguments(bundle);
+                        return displayStatusFragment;
+                    }
+                case 1:
+                    if (peertubeAccount) {
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
+                        bundle.putString("targetedid", account.getId());
+                        bundle.putString("instance", Helper.getLiveInstance(ShowAccountActivity.this));
+                        bundle.putString("name", account.getAcct());
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    } else {
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
+                        bundle.putString("targetedid", account.getId());
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    }
+
+                case 2:
+                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
+                    bundle.putString("targetedid", account.getId());
+                    displayAccountsFragment.setArguments(bundle);
+                    return displayAccountsFragment;
+
+            }
+            return null;
+        }
+
+
+        @Override
+        public int getCount() {
+            if (ischannel)
+                return 1;
+            else if (peertubeAccount)
+                return 2;
+            else
+                return 3;
+        }
     }
 
 }

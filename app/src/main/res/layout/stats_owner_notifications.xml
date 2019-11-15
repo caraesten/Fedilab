@@ -15,10 +15,10 @@
     see <http://www.gnu.org/licenses>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingLeft="@dimen/fab_margin"
-    android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/fab_margin"
+    android:paddingRight="@dimen/fab_margin">
 
     <ScrollView
         android:id="@+id/stats_container"
@@ -26,13 +26,13 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingStart="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingEnd="@dimen/activity_vertical_margin"
-            android:paddingRight="@dimen/activity_vertical_margin"
-            android:layout_height="wrap_content">
+            android:paddingRight="@dimen/activity_vertical_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,27 +40,27 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:text="@string/display_charts"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/display_charts"
+                    android:textSize="16sp" />
 
                 <ImageButton
                     android:id="@+id/charts"
-                    android:layout_marginStart="15dp"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:src="@drawable/ic_insert_chart"
-                    android:scaleType="centerCrop"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:contentDescription="@string/validate" />
+                    android:layout_marginStart="15dp"
+                    android:contentDescription="@string/validate"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_insert_chart" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <View
@@ -92,17 +92,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/first_notification_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/first_notification_date" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/first_toot_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,17 +111,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/last_notification_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/last_notification_date" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/last_toot_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -130,23 +130,23 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/frequency"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/frequency" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/frequency"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
             <!-- NOTIFICATIONS -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <View
@@ -178,17 +178,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/total_notifications"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/total_notifications" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/total_notifications"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -197,17 +197,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/number_boosts"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/number_boosts" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/number_boosts"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -216,17 +216,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/number_favourites"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/number_favourites" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/number_favourites"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -235,17 +235,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/number_mentions"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/number_mentions" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/number_mentions"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -254,17 +254,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/number_follows"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/number_follows" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
                     android:id="@+id/number_follows"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout
@@ -273,27 +273,27 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:text="@string/number_polls"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/number_polls" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:id="@+id/number_polls"
-                    android:textAlignment="textEnd"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <!-- Main Loader -->
     <RelativeLayout
         android:id="@+id/loader"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"

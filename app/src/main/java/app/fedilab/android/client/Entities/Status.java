@@ -26,11 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -45,6 +40,11 @@ import android.text.style.URLSpan;
 import android.util.Patterns;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -56,7 +56,6 @@ import com.github.penfeizhou.animation.apng.APNGDrawable;
 import com.github.penfeizhou.animation.apng.decode.APNGParser;
 import com.github.penfeizhou.animation.gif.GifDrawable;
 import com.github.penfeizhou.animation.gif.decode.GifParser;
-
 
 import java.io.File;
 import java.net.URI;
@@ -81,18 +80,15 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomQuoteSpan;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
 
 import static android.content.Context.MODE_PRIVATE;
-import static app.fedilab.android.drawers.StatusListAdapter.HIDDEN_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.COMPACT_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.CONSOLE_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.DISPLAYED_STATUS;
-import static app.fedilab.android.drawers.StatusListAdapter.FOCUSED_STATUS;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
-import static app.fedilab.android.helper.Helper.THEME_DARK;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 /**
@@ -102,6 +98,17 @@ import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 public class Status implements Parcelable {
 
+    public static final Creator<Status> CREATOR = new Creator<Status>() {
+        @Override
+        public Status createFromParcel(Parcel source) {
+            return new Status(source);
+        }
+
+        @Override
+        public Status[] newArray(int size) {
+            return new Status[size];
+        }
+    };
     private String id;
     private String uri;
     private String url;
@@ -132,6 +139,7 @@ public class Status implements Parcelable {
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
+    private boolean isPollEmojiFound = false;
     private boolean isImageFound = false;
     private boolean isEmojiTranslateFound = false;
     private boolean isClickable = false;
@@ -151,10 +159,6 @@ public class Status implements Parcelable {
     private String quickReplyPrivacy;
     private boolean showBottomLine = false;
     private boolean showTopLine = false;
-
-    public Status() {
-    }
-
     private List<String> conversationProfilePicture;
     private String webviewURL = null;
 
@@ -178,76 +182,7 @@ public class Status implements Parcelable {
     private boolean commentsFetched = false;
     private List<Status> comments = new ArrayList<>();
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.uri);
-        dest.writeString(this.url);
-        dest.writeParcelable(this.account, flags);
-        dest.writeString(this.in_reply_to_id);
-        dest.writeString(this.in_reply_to_account_id);
-        dest.writeParcelable(this.reblog, flags);
-        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
-        dest.writeInt(this.reblogs_count);
-        dest.writeInt(this.favourites_count);
-        dest.writeInt(this.replies_count);
-        dest.writeByte(this.reblogged ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.favourited ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.muted ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.pinned ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.bookmarked ? (byte) 1 : (byte) 0);
-        dest.writeString(this.visibility);
-        dest.writeByte(this.attachmentShown ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.spoilerShown ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.media_attachments);
-        dest.writeParcelable(this.art_attachment, flags);
-        dest.writeTypedList(this.mentions);
-        dest.writeTypedList(this.emojis);
-        dest.writeTypedList(this.tags);
-        dest.writeParcelable(this.application, flags);
-        dest.writeParcelable(this.card, flags);
-        dest.writeString(this.language);
-        dest.writeByte(this.isTranslated ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isTranslationShown ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isVisible ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.fetchMore ? (byte) 1 : (byte) 0);
-        dest.writeString(this.content);
-        dest.writeString(this.contentCW);
-        dest.writeString(this.contentTranslated);
-        TextUtils.writeToParcel(this.contentSpan, dest, flags);
-        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
-        TextUtils.writeToParcel(this.contentSpanCW, dest, flags);
-        TextUtils.writeToParcel(this.contentSpanTranslated, dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeInt(this.itemViewType);
-        dest.writeString(this.conversationId);
-        dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.numberLines);
-        dest.writeStringList(this.conversationProfilePicture);
-        dest.writeString(this.webviewURL);
-        dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
-        dest.writeString(this.scheduled_at);
-        dest.writeString(this.contentType);
-        dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.poll, flags);
-        dest.writeInt(this.media_height);
-        dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.warningFetched);
-        dest.writeStringList(this.imageURL);
-        dest.writeInt(this.viewType);
-        dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
-        dest.writeString(this.quickReplyContent);
-        dest.writeString(this.quickReplyPrivacy);
-        dest.writeByte(this.showBottomLine ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.showTopLine ? (byte) 1 : (byte) 0);
-
+    public Status() {
     }
 
     protected Status(Parcel in) {
@@ -322,311 +257,6 @@ public class Status implements Parcelable {
         this.showTopLine = in.readByte() != 0;
     }
 
-    public static final Creator<Status> CREATOR = new Creator<Status>() {
-        @Override
-        public Status createFromParcel(Parcel source) {
-            return new Status(source);
-        }
-
-        @Override
-        public Status[] newArray(int size) {
-            return new Status[size];
-        }
-    };
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getIn_reply_to_id() {
-        return in_reply_to_id;
-    }
-
-    public void setIn_reply_to_id(String in_reply_to_id) {
-        this.in_reply_to_id = in_reply_to_id;
-    }
-
-    public String getIn_reply_to_account_id() {
-        return in_reply_to_account_id;
-    }
-
-    public void setIn_reply_to_account_id(String in_reply_to_account_id) {
-        this.in_reply_to_account_id = in_reply_to_account_id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        //Remove UTM by default
-        this.content = Helper.remove_tracking_param(content);
-    }
-
-    public boolean isShortReply() {
-        return shortReply;
-    }
-
-    public void setShortReply(boolean shortReply) {
-        this.shortReply = shortReply;
-    }
-
-    public Status getReblog() {
-        return reblog;
-    }
-
-    public void setReblog(Status reblog) {
-        this.reblog = reblog;
-    }
-
-    public int getReblogs_count() {
-        return reblogs_count;
-    }
-
-    public void setReblogs_count(int reblogs_count) {
-        this.reblogs_count = reblogs_count;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public int getFavourites_count() {
-        return favourites_count;
-    }
-
-    public void setFavourites_count(int favourites_count) {
-        this.favourites_count = favourites_count;
-    }
-
-    public SpannableString getDisplayNameSpan() {
-        return this.displayNameSpan;
-    }
-
-    public void setDisplayNameSpan(SpannableString displayNameSpan) {
-        this.displayNameSpan = displayNameSpan;
-    }
-
-    public boolean isReblogged() {
-        return reblogged;
-    }
-
-    public void setReblogged(boolean reblogged) {
-        this.reblogged = reblogged;
-    }
-
-    public boolean isFavourited() {
-        return favourited;
-    }
-
-    public void setFavourited(boolean favourited) {
-        this.favourited = favourited;
-    }
-
-    public void setPinned(boolean pinned) {
-        this.pinned = pinned;
-    }
-
-    public boolean isPinned() {
-        return pinned;
-    }
-
-    public boolean isSensitive() {
-        return sensitive;
-    }
-
-    public void setSensitive(boolean sensitive) {
-        this.sensitive = sensitive;
-    }
-
-    public String getSpoiler_text() {
-        return contentCW;
-    }
-
-    public void setSpoiler_text(String spoiler_text) {
-        this.contentCW = spoiler_text;
-    }
-
-
-    public ArrayList<Attachment> getMedia_attachments() {
-        return media_attachments;
-    }
-
-    public void setMedia_attachments(ArrayList<Attachment> media_attachments) {
-        this.media_attachments = media_attachments;
-    }
-
-    public List<Mention> getMentions() {
-        return mentions;
-    }
-
-    public void setMentions(List<Mention> mentions) {
-        this.mentions = mentions;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public String getTagsString() {
-        //iterate through tags and create comma delimited string of tag names
-        String tag_names = "";
-        for (Tag t : tags) {
-            if (tag_names.equals("")) {
-                tag_names = t.getName();
-            } else {
-                tag_names = tag_names + ", " + t.getName();
-            }
-        }
-        return tag_names;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Application getApplication() {
-        return application;
-    }
-
-    public void setApplication(Application application) {
-        this.application = application;
-    }
-
-
-    public String getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(String visibility) {
-        this.visibility = visibility;
-    }
-
-    public boolean isAttachmentShown() {
-        return attachmentShown;
-    }
-
-    public void setAttachmentShown(boolean attachmentShown) {
-        this.attachmentShown = attachmentShown;
-    }
-
-
-    public boolean isSpoilerShown() {
-        return spoilerShown;
-    }
-
-    public void setSpoilerShown(boolean spoilerShown) {
-        this.spoilerShown = spoilerShown;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public boolean isTranslated() {
-        return isTranslated;
-    }
-
-    public void setTranslated(boolean translated) {
-        isTranslated = translated;
-    }
-
-    public boolean isTranslationShown() {
-        return isTranslationShown;
-    }
-
-    public void setTranslationShown(boolean translationShown) {
-        isTranslationShown = translationShown;
-    }
-
-    public String getContentTranslated() {
-        return contentTranslated;
-    }
-
-    public void setContentTranslated(String content_translated) {
-        this.contentTranslated = content_translated;
-    }
-
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
-
-    public List<Emojis> getEmojis() {
-        return emojis;
-    }
-
-    public void setEmojis(List<Emojis> emojis) {
-        this.emojis = emojis;
-    }
-
-
-    public boolean isEmojiFound() {
-        return isEmojiFound;
-    }
-
-    public boolean isImageFound() {
-        return isImageFound;
-    }
-
-
-    public void setEmojiFound(boolean emojiFound) {
-        isEmojiFound = emojiFound;
-    }
-
-    public void setImageFound(boolean imageFound) {
-        isImageFound = imageFound;
-    }
-
-
     public static void transform(Context context, Status status) {
 
         if (((Activity) context).isFinishing() || status == null)
@@ -645,12 +275,12 @@ public class Status implements Parcelable {
             while (matcher.find()) {
                 final String youtubeId = matcher.group(3);
                 String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
-                if( matcher.group(2) != null && matcher.group(2).equals("youtu.be")){
-                    content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v="+youtubeId+"&local=true"));
-                    content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
-                }else{
-                    content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
-                    content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/" + youtubeId+"&local=true"));
+                if (matcher.group(2) != null && matcher.group(2).equals("youtu.be")) {
+                    content = content.replaceAll("https://" + Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://" + invidiousHost + "/watch?v=" + youtubeId + "&local=true"));
+                    content = content.replaceAll(">" + Pattern.quote(matcher.group()), Matcher.quoteReplacement(">" + invidiousHost + "/watch?v=" + youtubeId + "&local=true"));
+                } else {
+                    content = content.replaceAll("https://" + Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://" + invidiousHost + "/" + youtubeId + "&local=true"));
+                    content = content.replaceAll(">" + Pattern.quote(matcher.group()), Matcher.quoteReplacement(">" + invidiousHost + "/" + youtubeId + "&local=true"));
                 }
 
 
@@ -663,8 +293,8 @@ public class Status implements Parcelable {
             while (matcher.find()) {
                 final String nitter_directory = matcher.group(2);
                 String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
-                content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+nitterHost + nitter_directory));
-                content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+nitterHost + nitter_directory));
+                content = content.replaceAll("https://" + Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://" + nitterHost + nitter_directory));
+                content = content.replaceAll(">" + Pattern.quote(matcher.group()), Matcher.quoteReplacement(">" + nitterHost + nitter_directory));
             }
         }
 
@@ -765,7 +395,6 @@ public class Status implements Parcelable {
             status.setDisplayNameSpan(displayNameSpan);
     }
 
-
     private static SpannableString treatment(final Context context, SpannableString spannableString, Status status) {
 
         URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
@@ -860,6 +489,14 @@ public class Status implements Parcelable {
             spannableStringT.removeSpan(span);
         }
 
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if (l_c == -1) {
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
+        }
+        final int link_color = l_c;
+
         matcher = Helper.twitterPattern.matcher(spannableStringT);
         while (matcher.find()) {
             int matchStart = matcher.start(2);
@@ -875,7 +512,7 @@ public class Status implements Parcelable {
                             String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
                             String url = "https://" + nitterHost + "/" + twittername.substring(1).replace("@twitter.com", "");
                             Helper.openBrowser(context, url);
-                        }else{
+                        } else {
                             intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twittername.substring(1).replace("@twitter.com", "")));
                             context.startActivity(intent);
                         }
@@ -887,12 +524,7 @@ public class Status implements Parcelable {
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -939,12 +571,7 @@ public class Status implements Parcelable {
                                                      public void updateDrawState(@NonNull TextPaint ds) {
                                                          super.updateDrawState(ds);
                                                          ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                         ds.setColor(link_color);
                                                      }
                                                  },
                                 startPosition, endPosition,
@@ -1021,12 +648,7 @@ public class Status implements Parcelable {
                                                      public void updateDrawState(@NonNull TextPaint ds) {
                                                          super.updateDrawState(ds);
                                                          ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                         ds.setColor(link_color);
                                                      }
                                                  },
                                 startPosition, endPosition,
@@ -1058,12 +680,7 @@ public class Status implements Parcelable {
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -1092,12 +709,7 @@ public class Status implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -1107,6 +719,14 @@ public class Status implements Parcelable {
     }
 
     public static void transformTranslation(Context context, Status status) {
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if (l_c == -1) {
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
+        }
+        final int link_color = l_c;
 
         if (((Activity) context).isFinishing() || status == null)
             return;
@@ -1127,8 +747,8 @@ public class Status implements Parcelable {
         }
         SpannableString contentSpanTranslated = status.getContentSpanTranslated();
         Matcher matcherALink = Patterns.WEB_URL.matcher(contentSpanTranslated.toString());
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+
         while (matcherALink.find()) {
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
@@ -1147,12 +767,7 @@ public class Status implements Parcelable {
                                                   public void updateDrawState(@NonNull TextPaint ds) {
                                                       super.updateDrawState(ds);
                                                       ds.setUnderlineText(false);
-                                                      if (theme == THEME_DARK)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                      else if (theme == THEME_BLACK)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                      else if (theme == THEME_LIGHT)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                      ds.setColor(link_color);
                                                   }
                                               },
                         matchStart, matchEnd,
@@ -1163,7 +778,6 @@ public class Status implements Parcelable {
         SpannableString displayNameSpan = new SpannableString(displayName);
         status.setDisplayNameSpan(displayNameSpan);
     }
-
 
     public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Status status) {
 
@@ -1342,6 +956,104 @@ public class Status implements Parcelable {
         }
     }
 
+    public static void makeEmojiPoll(final Context context, final OnRetrieveEmojiInterface listener, Status status) {
+        if (((Activity) context).isFinishing())
+            return;
+        if (status.getReblog() != null && status.getReblog().getEmojis() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        if (status.getReblog() == null && status.getEmojis() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+        Poll poll = status.getReblog() == null ? status.getPoll() : status.getReblog().getPoll();
+        if (poll == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        int inc = 0;
+        for (PollOptions pollOption : poll.getOptionsList()) {
+            inc++;
+            SpannableString titleSpan = new SpannableString(pollOption.getTitle());
+            if (emojis != null && emojis.size() > 0) {
+                final int[] i = {0};
+                for (final Emojis emoji : emojis) {
+                    int finalInc = inc;
+                    Glide.with(context)
+                            .asFile()
+                            .load(emoji.getUrl())
+                            .listener(new RequestListener<File>() {
+                                @Override
+                                public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    i[0]++;
+                                    if (i[0] == (emojis.size())) {
+                                        listener.onRetrieveEmoji(status, false);
+                                    }
+                                    return false;
+                                }
+                            })
+                            .into(new SimpleTarget<File>() {
+                                @Override
+                                public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                    Drawable resource;
+                                    if (GifParser.isGif(resourceFile.getAbsolutePath())) {
+                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
+                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    } else {
+                                        resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                                    }
+                                    if (resource == null) {
+                                        return;
+                                    }
+                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                    if (titleSpan.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = titleSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if (endPosition <= titleSpan.toString().length() && endPosition >= startPosition) {
+                                                ImageSpan imageSpan;
+                                                if (!disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+
+                                                } else {
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
+                                                titleSpan.setSpan(
+                                                        imageSpan, startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                pollOption.setTitleSpan(titleSpan);
+                                            }
+                                        }
+                                    }
+                                    i[0]++;
+
+                                    if (i[0] == (emojis.size()) && finalInc == poll.getOptionsList().size()) {
+                                        status.setPollEmojiFound(true);
+                                        listener.onRetrieveEmoji(status, false);
+                                    }
+                                }
+                            });
+
+                }
+            }
+        }
+    }
 
     public static void makeImage(final Context context, final OnRetrieveImageInterface listener, Status status) {
 
@@ -1410,7 +1122,6 @@ public class Status implements Parcelable {
 
         }
     }
-
 
     public static void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener, Status status) {
 
@@ -1482,7 +1193,6 @@ public class Status implements Parcelable {
         }
     }
 
-
     private static void replaceQuoteSpans(Context context, Spannable spannable) {
         QuoteSpan[] quoteSpans = spannable.getSpans(0, spannable.length(), QuoteSpan.class);
         for (QuoteSpan quoteSpan : quoteSpans) {
@@ -1508,6 +1218,363 @@ public class Status implements Parcelable {
         }
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.uri);
+        dest.writeString(this.url);
+        dest.writeParcelable(this.account, flags);
+        dest.writeString(this.in_reply_to_id);
+        dest.writeString(this.in_reply_to_account_id);
+        dest.writeParcelable(this.reblog, flags);
+        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeInt(this.reblogs_count);
+        dest.writeInt(this.favourites_count);
+        dest.writeInt(this.replies_count);
+        dest.writeByte(this.reblogged ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.favourited ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.muted ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.pinned ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.bookmarked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.visibility);
+        dest.writeByte(this.attachmentShown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.spoilerShown ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.media_attachments);
+        dest.writeParcelable(this.art_attachment, flags);
+        dest.writeTypedList(this.mentions);
+        dest.writeTypedList(this.emojis);
+        dest.writeTypedList(this.tags);
+        dest.writeParcelable(this.application, flags);
+        dest.writeParcelable(this.card, flags);
+        dest.writeString(this.language);
+        dest.writeByte(this.isTranslated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isTranslationShown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isVisible ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.fetchMore ? (byte) 1 : (byte) 0);
+        dest.writeString(this.content);
+        dest.writeString(this.contentCW);
+        dest.writeString(this.contentTranslated);
+        TextUtils.writeToParcel(this.contentSpan, dest, flags);
+        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
+        TextUtils.writeToParcel(this.contentSpanCW, dest, flags);
+        TextUtils.writeToParcel(this.contentSpanTranslated, dest, flags);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeInt(this.itemViewType);
+        dest.writeString(this.conversationId);
+        dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.numberLines);
+        dest.writeStringList(this.conversationProfilePicture);
+        dest.writeString(this.webviewURL);
+        dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
+        dest.writeString(this.scheduled_at);
+        dest.writeString(this.contentType);
+        dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.poll, flags);
+        dest.writeInt(this.media_height);
+        dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.warningFetched);
+        dest.writeStringList(this.imageURL);
+        dest.writeInt(this.viewType);
+        dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
+        dest.writeString(this.quickReplyContent);
+        dest.writeString(this.quickReplyPrivacy);
+        dest.writeByte(this.showBottomLine ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.showTopLine ? (byte) 1 : (byte) 0);
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public String getIn_reply_to_id() {
+        return in_reply_to_id;
+    }
+
+    public void setIn_reply_to_id(String in_reply_to_id) {
+        this.in_reply_to_id = in_reply_to_id;
+    }
+
+    public String getIn_reply_to_account_id() {
+        return in_reply_to_account_id;
+    }
+
+    public void setIn_reply_to_account_id(String in_reply_to_account_id) {
+        this.in_reply_to_account_id = in_reply_to_account_id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        //Remove UTM by default
+        this.content = Helper.remove_tracking_param(content);
+    }
+
+    public boolean isShortReply() {
+        return shortReply;
+    }
+
+    public void setShortReply(boolean shortReply) {
+        this.shortReply = shortReply;
+    }
+
+    public Status getReblog() {
+        return reblog;
+    }
+
+    public void setReblog(Status reblog) {
+        this.reblog = reblog;
+    }
+
+    public int getReblogs_count() {
+        return reblogs_count;
+    }
+
+    public void setReblogs_count(int reblogs_count) {
+        this.reblogs_count = reblogs_count;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public int getFavourites_count() {
+        return favourites_count;
+    }
+
+    public void setFavourites_count(int favourites_count) {
+        this.favourites_count = favourites_count;
+    }
+
+    public SpannableString getDisplayNameSpan() {
+        return this.displayNameSpan;
+    }
+
+    public void setDisplayNameSpan(SpannableString displayNameSpan) {
+        this.displayNameSpan = displayNameSpan;
+    }
+
+    public boolean isReblogged() {
+        return reblogged;
+    }
+
+    public void setReblogged(boolean reblogged) {
+        this.reblogged = reblogged;
+    }
+
+    public boolean isFavourited() {
+        return favourited;
+    }
+
+    public void setFavourited(boolean favourited) {
+        this.favourited = favourited;
+    }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    public boolean isSensitive() {
+        return sensitive;
+    }
+
+    public void setSensitive(boolean sensitive) {
+        this.sensitive = sensitive;
+    }
+
+    public String getSpoiler_text() {
+        return contentCW;
+    }
+
+    public void setSpoiler_text(String spoiler_text) {
+        this.contentCW = spoiler_text;
+    }
+
+    public ArrayList<Attachment> getMedia_attachments() {
+        return media_attachments;
+    }
+
+    public void setMedia_attachments(ArrayList<Attachment> media_attachments) {
+        this.media_attachments = media_attachments;
+    }
+
+    public List<Mention> getMentions() {
+        return mentions;
+    }
+
+    public void setMentions(List<Mention> mentions) {
+        this.mentions = mentions;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public String getTagsString() {
+        //iterate through tags and create comma delimited string of tag names
+        String tag_names = "";
+        for (Tag t : tags) {
+            if (tag_names.equals("")) {
+                tag_names = t.getName();
+            } else {
+                tag_names = tag_names + ", " + t.getName();
+            }
+        }
+        return tag_names;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public boolean isAttachmentShown() {
+        return attachmentShown;
+    }
+
+    public void setAttachmentShown(boolean attachmentShown) {
+        this.attachmentShown = attachmentShown;
+    }
+
+    public boolean isSpoilerShown() {
+        return spoilerShown;
+    }
+
+    public void setSpoilerShown(boolean spoilerShown) {
+        this.spoilerShown = spoilerShown;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public boolean isTranslated() {
+        return isTranslated;
+    }
+
+    public void setTranslated(boolean translated) {
+        isTranslated = translated;
+    }
+
+    public boolean isTranslationShown() {
+        return isTranslationShown;
+    }
+
+    public void setTranslationShown(boolean translationShown) {
+        isTranslationShown = translationShown;
+    }
+
+    public String getContentTranslated() {
+        return contentTranslated;
+    }
+
+    public void setContentTranslated(String content_translated) {
+        this.contentTranslated = content_translated;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    public List<Emojis> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<Emojis> emojis) {
+        this.emojis = emojis;
+    }
+
+    public boolean isEmojiFound() {
+        return isEmojiFound;
+    }
+
+    public void setEmojiFound(boolean emojiFound) {
+        isEmojiFound = emojiFound;
+    }
+
+    public boolean isImageFound() {
+        return isImageFound;
+    }
+
+    public void setImageFound(boolean imageFound) {
+        isImageFound = imageFound;
+    }
 
     public SpannableString getContentSpan() {
         return contentSpan;
@@ -1533,12 +1600,12 @@ public class Status implements Parcelable {
         this.contentSpanTranslated = contentSpanTranslated;
     }
 
-    public void setClickable(boolean clickable) {
-        isClickable = clickable;
-    }
-
     public boolean isClickable() {
         return isClickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        isClickable = clickable;
     }
 
     public boolean isEmojiTranslateFound() {
@@ -1580,6 +1647,9 @@ public class Status implements Parcelable {
     }
 
     public boolean isBookmarked() {
+        if (this.getReblog() != null && this.getReblog().isBookmarked()) {
+            bookmarked = true;
+        }
         return bookmarked;
     }
 
@@ -1850,5 +1920,13 @@ public class Status implements Parcelable {
 
     public void setShowTopLine(boolean showTopLine) {
         this.showTopLine = showTopLine;
+    }
+
+    public boolean isPollEmojiFound() {
+        return isPollEmojiFound;
+    }
+
+    public void setPollEmojiFound(boolean pollEmojiFound) {
+        isPollEmojiFound = pollEmojiFound;
     }
 }

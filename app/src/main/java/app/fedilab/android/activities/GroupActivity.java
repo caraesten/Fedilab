@@ -24,9 +24,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
@@ -91,8 +88,6 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         setContentView(R.layout.activity_group);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(GroupActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
@@ -108,7 +103,13 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         //lv_status.addItemDecoration(new DividerItemDecoration(GroupActivity.this, DividerItemDecoration.VERTICAL));
@@ -162,20 +163,16 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

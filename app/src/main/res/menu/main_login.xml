@@ -15,16 +15,16 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_custom_tabs"
+        android:checkable="true"
         android:title="@string/custom_tabs"
-        app:actionViewClass="android.widget.CheckBox"
-        android:checkable="true" />
+        app:actionViewClass="android.widget.CheckBox" />
     <item
         android:id="@+id/action_import_data"
         android:title="@string/import_data"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_provider"
+        android:checkable="true"
         android:title="@string/set_security_provider"
-        app:actionViewClass="android.widget.CheckBox"
-        android:checkable="true" />
+        app:actionViewClass="android.widget.CheckBox" />
 </menu>

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
-    tools:context="app.fedilab.android.activities.ManageAccountsInListActivity"
-    android:layout_margin="@dimen/fab_margin"
     android:id="@+id/main_account_container"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="app.fedilab.android.activities.ManageAccountsInListActivity">
 
     <TextView
         android:id="@+id/list_title"
-        android:textSize="20sp"
-        android:textColor="@color/titleb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/titleb"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/search_account"
-        android:drawableRight="@drawable/ic_search"
-        android:drawableEnd="@drawable/ic_search"
-        android:maxLines="1"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:layout_marginTop="10dp"
+        android:drawableEnd="@drawable/ic_search"
+        android:drawableRight="@drawable/ic_search"
+        android:inputType="text"
+        android:maxLines="1" />
 
     <RelativeLayout
         android:id="@+id/loader"
@@ -44,14 +44,14 @@
         android:id="@+id/lv_accounts_current"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:divider="@null" />
+        android:divider="@null"
+        android:scrollbars="none" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/lv_accounts_search"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:divider="@null"
         android:scrollbars="none"
-        android:divider="@null" />
+        android:visibility="gone" />
 </LinearLayout>

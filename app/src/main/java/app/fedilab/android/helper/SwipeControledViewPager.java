@@ -16,10 +16,9 @@ package app.fedilab.android.helper;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.util.AttributeSet;
 
 import androidx.viewpager.widget.ViewPager;
-
-import android.util.AttributeSet;
 
 
 public class SwipeControledViewPager extends ViewPager {

@@ -41,8 +41,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class NotificationCacheDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
 
     public NotificationCacheDAO(Context context, SQLiteDatabase db) {

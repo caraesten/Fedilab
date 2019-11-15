@@ -34,7 +34,9 @@ public class StopLiveNotificationReceiver extends BroadcastReceiver {
         streamingServiceIntent.putExtra("stop", true);
         try {
             context.startService(streamingServiceIntent);
-        } catch (Exception ignored) { ignored.printStackTrace();}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 
 }

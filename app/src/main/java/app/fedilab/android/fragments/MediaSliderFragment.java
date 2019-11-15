@@ -30,16 +30,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -55,12 +56,16 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javax.net.ssl.HttpsURLConnection;
+
 import app.fedilab.android.R;
 import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.client.Entities.Attachment;
@@ -83,17 +88,14 @@ import static cafe.adriel.androidaudiorecorder.Util.getDarkerColor;
 public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompletionListener {
 
 
-
+    private static final Handler HANDLER = new Handler();
     private Context context;
     private int mediaPosition;
-
-
     private SimpleExoPlayer player;
     private MediaPlayer playeraudio;
     private Timer timer;
     private int playerSecondsElapsed;
     private String url;
-
     private RelativeLayout loader;
     private PhotoView imageView;
     private TextView message_ready;
@@ -103,7 +105,6 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
     private TextView timerView;
     private ImageButton playView;
     private GLAudioVisualizationView visualizerView;
-    private static final Handler HANDLER = new Handler();
 
     public MediaSliderFragment() {
     }
@@ -164,12 +165,12 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1);
 
-                if( !canSwipe){
-                    if( ! ((SlideMediaActivity)context).getFullScreen()) {
+                if (!canSwipe) {
+                    if (!((SlideMediaActivity) context).getFullScreen()) {
                         ((SlideMediaActivity) context).setFullscreen(true);
                     }
                     ((SlideMediaActivity) context).enableSliding(false);
-                }else{
+                } else {
                     ((SlideMediaActivity) context).enableSliding(true);
                 }
             }
@@ -262,29 +263,29 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                 break;
             case "web":
                 loader.setVisibility(View.GONE);
-                webview_video = Helper.initializeWebview((Activity)context, R.id.webview_video);
+                webview_video = Helper.initializeWebview((Activity) context, R.id.webview_video);
                 webview_video.setVisibility(View.VISIBLE);
                 FrameLayout webview_container = rootView.findViewById(R.id.main_media_frame);
                 final ViewGroup videoLayout = rootView.findViewById(R.id.videoLayout);
 
-                MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient((Activity)context, webview_video, webview_container, videoLayout);
+                MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient((Activity) context, webview_video, webview_container, videoLayout);
                 mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
                     @Override
                     public void toggledFullscreen(boolean fullscreen) {
 
                         if (fullscreen) {
                             videoLayout.setVisibility(View.VISIBLE);
-                            WindowManager.LayoutParams attrs = ((Activity)context).getWindow().getAttributes();
+                            WindowManager.LayoutParams attrs = ((Activity) context).getWindow().getAttributes();
                             attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
                             attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-                            ((Activity)context).getWindow().setAttributes(attrs);
-                            ((Activity)context).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                            ((Activity) context).getWindow().setAttributes(attrs);
+                            ((Activity) context).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
                         } else {
-                            WindowManager.LayoutParams attrs = ((Activity)context).getWindow().getAttributes();
+                            WindowManager.LayoutParams attrs = ((Activity) context).getWindow().getAttributes();
                             attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
                             attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-                            ((Activity)context).getWindow().setAttributes(attrs);
-                            ((Activity)context).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                            ((Activity) context).getWindow().setAttributes(attrs);
+                            ((Activity) context).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                             videoLayout.setVisibility(View.GONE);
                         }
                     }
@@ -294,7 +295,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                 webview_video.getSettings().setDomStorageEnabled(true);
                 webview_video.getSettings().setAppCacheEnabled(true);
                 webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
-                webview_video.setWebViewClient(new MastalabWebViewClient((Activity)context));
+                webview_video.setWebViewClient(new MastalabWebViewClient((Activity) context));
                 webview_video.loadUrl(attachment.getUrl());
                 break;
             case "audio":
@@ -393,7 +394,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
     }
 
     private void updateTimer() {
-        ((Activity)context).runOnUiThread(new Runnable() {
+        ((Activity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 playerSecondsElapsed++;
@@ -433,14 +434,10 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
     }
 
 
-
-
-
     @Override
     public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
-
 
 
     @Override
@@ -497,7 +494,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
         }
     }
 
-    public boolean canSwipe(){
+    public boolean canSwipe() {
         return canSwipe;
     }
 

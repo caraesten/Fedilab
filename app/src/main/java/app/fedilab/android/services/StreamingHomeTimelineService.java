@@ -55,9 +55,13 @@ import app.fedilab.android.sqlite.Sqlite;
 
 public class StreamingHomeTimelineService extends IntentService {
 
+    private static HttpsURLConnection httpsURLConnection;
+
     static {
         Helper.installProvider();
     }
+
+    protected Account account;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -68,14 +72,10 @@ public class StreamingHomeTimelineService extends IntentService {
     public StreamingHomeTimelineService(String name) {
         super(name);
     }
-
     @SuppressWarnings("unused")
     public StreamingHomeTimelineService() {
         super("StreamingHomeTimelineService");
     }
-
-    private static HttpsURLConnection httpsURLConnection;
-    protected Account account;
 
     public void onCreate() {
         super.onCreate();

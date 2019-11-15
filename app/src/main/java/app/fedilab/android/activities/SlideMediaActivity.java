@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 
-
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -38,12 +37,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -51,7 +47,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
@@ -65,7 +60,6 @@ import java.util.ArrayList;
 import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.fragments.MediaSliderFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
@@ -78,17 +72,40 @@ import app.fedilab.android.interfaces.OnDownloadInterface;
 
 public class SlideMediaActivity extends BaseActivity implements OnDownloadInterface {
 
+    int flags;
     private ArrayList<Attachment> attachments;
     private int mediaPosition;
     private ViewPager mPager;
     private long downloadID;
     private boolean fullscreen;
     private SlidrInterface slidrInterface;
-    int flags;
     private TextView media_description;
     private Handler handler;
     private boolean swipeEnabled;
     private int minTouch, maxTouch;
+    private float startX;
+    private float startY;
+    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (downloadID == id) {
+                DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                assert manager != null;
+                Uri uri = manager.getUriForDownloadedFile(downloadID);
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_with));
+                ContentResolver cR = context.getContentResolver();
+                shareIntent.setType(cR.getType(uri));
+                try {
+                    startActivity(shareIntent);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    };
+    private MediaSliderFragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +116,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
             case Helper.THEME_LIGHT:
                 setTheme(R.style.TransparentLight);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.TransparentDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.TransparentBlack);
                 break;
@@ -109,14 +123,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 setTheme(R.style.TransparentDark);
         }
         setContentView(R.layout.activity_media_pager);
-        CoordinatorLayout swipeBackLayout = findViewById(R.id.swipeBackLayout);
-        if (theme == Helper.THEME_LIGHT) {
-            swipeBackLayout.setBackgroundResource(R.color.white);
-        } else if (theme == Helper.THEME_BLACK) {
-            swipeBackLayout.setBackgroundResource(R.color.black);
-        } else if (theme == Helper.THEME_DARK) {
-            swipeBackLayout.setBackgroundResource(R.color.mastodonC1);
-        }
+
         fullscreen = false;
         media_description = findViewById(R.id.media_description);
         flags = getWindow().getDecorView().getSystemUiVisibility();
@@ -124,6 +131,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         swipeEnabled = true;
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            //actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SlideMediaActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.media_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -163,7 +171,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                     int position = mPager.getCurrentItem();
                     Attachment attachment = attachments.get(position);
                     if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
-                        new HttpsConnection(getApplicationContext(), Helper.getLiveInstance(getApplicationContext())).download(attachment.getUrl(), SlideMediaActivity.this);
+                        downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
                     } else {
                         if (Build.VERSION.SDK_INT >= 23) {
                             if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -178,10 +186,6 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 }
             });
             toolbar_title.setText("");
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, SlideMediaActivity.this);
-            }
         }
 
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
@@ -194,12 +198,12 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        mPager.setCurrentItem(mediaPosition-1);
+        mPager.setCurrentItem(mediaPosition - 1);
 
-        registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-        String description = attachments.get(mediaPosition-1).getDescription();
+        registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        String description = attachments.get(mediaPosition - 1).getDescription();
         handler = new Handler();
-        if( description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0 ){
+        if (description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0) {
             media_description.setText(description);
             media_description.setVisibility(View.VISIBLE);
 
@@ -210,46 +214,49 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 }
             }, 3000);
 
-        }else{
+        } else {
             media_description.setVisibility(View.GONE);
         }
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {}
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             public void onPageSelected(int position) {
                 String description = attachments.get(position).getDescription();
-                if( handler != null) {
+                if (handler != null) {
                     handler.removeCallbacksAndMessages(null);
                 }
                 handler = new Handler();
-                if( description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0){
-                   media_description.setText(description);
-                   media_description.setVisibility(View.VISIBLE);
+                if (description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0) {
+                    media_description.setText(description);
+                    media_description.setVisibility(View.VISIBLE);
 
-                   handler.postDelayed(new Runnable() {
-                       @Override
-                       public void run() {
-                           media_description.setVisibility(View.GONE);
-                       }
-                   }, 3000);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            media_description.setVisibility(View.GONE);
+                        }
+                    }, 3000);
 
-                }else{
-                   media_description.setVisibility(View.GONE);
+                } else {
+                    media_description.setVisibility(View.GONE);
                 }
             }
         });
 
         SlidrConfig config = new SlidrConfig.Builder()
-                                .sensitivity(1f)
-                                .scrimColor(Color.BLACK)
-                                .scrimStartAlpha(0.8f)
-                                .scrimEndAlpha(0f)
-                                .position(SlidrPosition.VERTICAL)
-                                .velocityThreshold(2400)
-                                .distanceThreshold(0.25f)
-                                .edgeSize(0.18f)
-                                .build();
+                .sensitivity(1f)
+                .scrimColor(Color.BLACK)
+                .scrimStartAlpha(0.8f)
+                .scrimEndAlpha(0f)
+                .position(SlidrPosition.VERTICAL)
+                .velocityThreshold(2400)
+                .distanceThreshold(0.25f)
+                .edgeSize(0.18f)
+                .build();
 
 
         slidrInterface = Slidr.attach(SlideMediaActivity.this, config);
@@ -258,13 +265,11 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         Point size = new Point();
         display.getSize(size);
         int screenHeight = size.y;
-        minTouch = (int)(screenHeight * 0.1);
-        maxTouch = (int)(screenHeight * 0.9);
+        minTouch = (int) (screenHeight * 0.1);
+        maxTouch = (int) (screenHeight * 0.9);
 
     }
 
-    private float startX;
-    private float startY;
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
 
@@ -278,13 +283,13 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 float endY = event.getY();
                 if (endY > minTouch && endY < maxTouch && isAClick(startX, endX, startY, endY)) {
                     setFullscreen(!fullscreen);
-                    if( !fullscreen){
+                    if (!fullscreen) {
                         String description = attachments.get(mPager.getCurrentItem()).getDescription();
-                        if( handler != null) {
+                        if (handler != null) {
                             handler.removeCallbacksAndMessages(null);
                         }
                         handler = new Handler();
-                        if( description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0){
+                        if (description != null && description.trim().length() > 0 && description.trim().compareTo("null") != 0) {
                             media_description.setText(description);
                             media_description.setVisibility(View.VISIBLE);
 
@@ -295,7 +300,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                                 }
                             }, 3000);
 
-                        }else{
+                        } else {
                             media_description.setVisibility(View.GONE);
                         }
                     }
@@ -313,12 +318,10 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
     public void togglePlaying(View v) {
 
-        if( mCurrentFragment != null){
+        if (mCurrentFragment != null) {
             mCurrentFragment.togglePlaying(v);
         }
     }
-
-
 
     private boolean isAClick(float startX, float endX, float startY, float endY) {
         float differenceX = Math.abs(startX - endX);
@@ -326,36 +329,12 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         int CLICK_ACTION_THRESHOLD = 200;
         return !(differenceX > CLICK_ACTION_THRESHOLD/* =5 */ || differenceY > CLICK_ACTION_THRESHOLD);
     }
-    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            if (downloadID == id) {
-                DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                assert manager != null;
-                Uri uri = manager.getUriForDownloadedFile(downloadID);
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_with));
-                ContentResolver cR = context.getContentResolver();
-                shareIntent.setType(cR.getType(uri));
-                try {
-                    startActivity(shareIntent);
-                }catch (Exception ignored){}
-            }
-        }
-    };
-
-
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(onDownloadComplete);
     }
-
-    private MediaSliderFragment mCurrentFragment;
-
 
     public MediaSliderFragment getCurrentFragment() {
         return mCurrentFragment;
@@ -369,6 +348,62 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     @Override
     public void onUpdateProgress(int progress) {
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
+
+    public void enableSliding(boolean enable) {
+        if (enable && !swipeEnabled) {
+            slidrInterface.unlock();
+            swipeEnabled = true;
+        } else if (!enable && swipeEnabled) {
+            slidrInterface.lock();
+            swipeEnabled = false;
+        }
+    }
+
+    public boolean getFullScreen() {
+        return this.fullscreen;
+    }
+
+    public void setFullscreen(boolean fullscreen) {
+        this.fullscreen = fullscreen;
+        if (!fullscreen) {
+            showSystemUI();
+
+        } else {
+            hideSystemUI();
+        }
+    }
+
+    private void hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    // Shows the system bars by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
     /**
@@ -403,64 +438,5 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
         public int getCount() {
             return attachments.size();
         }
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-    }
-
-
-    public void enableSliding(boolean enable){
-        if (enable && !swipeEnabled) {
-            slidrInterface.unlock();
-            swipeEnabled = true;
-        }else if( !enable && swipeEnabled) {
-            slidrInterface.lock();
-            swipeEnabled = false;
-        }
-    }
-
-    public boolean getFullScreen(){
-        return this.fullscreen;
-    }
-
-    public void setFullscreen(boolean fullscreen)
-    {
-        this.fullscreen = fullscreen;
-        if (!fullscreen) {
-            showSystemUI();
-
-        } else {
-            hideSystemUI();
-        }
-    }
-
-
-    private void hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        // Set the content to appear under the system bars so that the
-                        // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-    // Shows the system bars by removing all the flags
-// except for the ones that make the content appear under the system bars.
-    private void showSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 }

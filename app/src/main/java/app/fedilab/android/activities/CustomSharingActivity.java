@@ -15,17 +15,13 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,22 +35,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.CustomSharingAsyncTask;
 import app.fedilab.android.client.CustomSharingResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnCustomSharingInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.CustomSharingAsyncTask;
-import app.fedilab.android.interfaces.OnCustomSharingInterface;
 
 
 /**
@@ -83,7 +82,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -99,6 +98,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(CustomSharingActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
@@ -115,10 +115,6 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                         finish();
                     }
                 });
-            }
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, CustomSharingActivity.this);
             }
         } else {
             setTitle(R.string.settings_title_custom_sharing);

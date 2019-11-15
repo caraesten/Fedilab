@@ -15,7 +15,6 @@ package app.fedilab.android.client;
  * see <http://www.gnu.org/licenses>. */
 
 
-
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Account;

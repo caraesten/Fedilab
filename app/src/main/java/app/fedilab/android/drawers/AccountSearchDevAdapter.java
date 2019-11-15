@@ -20,11 +20,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,19 +29,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.ShowAccountActivity;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.ShowAccountActivity;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**

@@ -20,9 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.view.Window;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,25 +43,15 @@ import app.fedilab.android.sqlite.Sqlite;
 public class LiveNotificationSettingsAccountsActivity extends BaseActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(LiveNotificationSettingsAccountsActivity.this, R.color.mastodonC3__));
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(LiveNotificationSettingsAccountsActivity.this, R.color.black_3));
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(LiveNotificationSettingsAccountsActivity.this, R.color.mastodonC1));
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Dialog);
+        } else {
+            setTheme(R.style.DialogDark);
         }
         setContentView(R.layout.activity_livenotifications_all_accounts);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

@@ -16,10 +16,6 @@ package app.fedilab.android.drawers;
 
 
 import android.app.Activity;
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +26,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.TootActivity;
+import app.fedilab.android.client.Entities.Account;
 
 
 /**

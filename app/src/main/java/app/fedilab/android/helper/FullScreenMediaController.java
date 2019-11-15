@@ -24,9 +24,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.MediaController;
 
-import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.PeertubeActivity;
+import app.fedilab.android.client.Entities.Peertube;
 
 
 /**
@@ -40,11 +40,6 @@ public class FullScreenMediaController extends MediaController {
     private Context context;
     private Peertube peertube;
     private String resolutionVal;
-
-    public enum fullscreen {
-        OFF,
-        ON
-    }
 
     public FullScreenMediaController(Context context) {
         super(context);
@@ -132,5 +127,10 @@ public class FullScreenMediaController extends MediaController {
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen));
         }
+    }
+
+    public enum fullscreen {
+        OFF,
+        ON
     }
 }

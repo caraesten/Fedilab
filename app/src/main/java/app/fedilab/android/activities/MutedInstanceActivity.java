@@ -15,13 +15,13 @@
 package app.fedilab.android.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,7 +40,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -48,15 +47,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -86,6 +79,7 @@ import es.dmoral.toasty.Toasty;
 
 public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDomainsInterface, OnPostActionInterface {
 
+    private final int PICK_IMPORT_INSTANCE = 5326;
     private boolean flag_loading;
     private AsyncTask<Void, Void, Void> asyncTask;
     private DomainsListAdapter domainsListAdapter;
@@ -96,7 +90,6 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private RecyclerView lv_domains;
-    private final int PICK_IMPORT_INSTANCE = 5326;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +99,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -121,6 +114,7 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(MutedInstanceActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar_muted_instance, new LinearLayout(getApplicationContext()), false);
@@ -216,10 +210,6 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
                 popup.show();
             });
             toolbar_title.setText(R.string.blocked_domains);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, MutedInstanceActivity.this);
-            }
         }
         setContentView(R.layout.activity_muted_instances);
 
@@ -230,6 +220,13 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
         swiped = false;
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         lv_domains = findViewById(R.id.lv_domains);
         lv_domains.addItemDecoration(new DividerItemDecoration(MutedInstanceActivity.this, DividerItemDecoration.VERTICAL));
         mainLoader = findViewById(R.id.loader);
@@ -387,10 +384,10 @@ public class MutedInstanceActivity extends BaseActivity implements OnRetrieveDom
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if (error != null) {
-            if(error.getError().length() < 100) {
+            if (error.getError().length() < 100) {
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(getApplicationContext(), getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(getApplicationContext(), getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }

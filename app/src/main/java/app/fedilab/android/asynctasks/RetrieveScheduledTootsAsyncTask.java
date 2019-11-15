@@ -29,12 +29,12 @@ import java.util.Set;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.fragments.DisplayScheduledTootsFragment;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveScheduledTootsInterface;
 import app.fedilab.android.jobs.ScheduledBoostsSyncJob;
 import app.fedilab.android.jobs.ScheduledTootsSyncJob;
 import app.fedilab.android.sqlite.BoostScheduleDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusStoredDAO;
-import app.fedilab.android.interfaces.OnRetrieveScheduledTootsInterface;
 
 
 /**

@@ -17,14 +17,9 @@ package app.fedilab.android.drawers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,15 +38,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.ShowAccountActivity;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.ShowAccountActivity;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.interfaces.OnPostActionInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -118,12 +116,6 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
                 new PostActionAsyncTask(context, API.StatusAction.REJECT, account.getId(), AccountsFollowRequestAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT) {
-            holder.btn_reject.setTextColor(ContextCompat.getColor(context, R.color.white));
-            holder.btn_authorize.setTextColor(ContextCompat.getColor(context, R.color.white));
-        }
     }
 
     @Override

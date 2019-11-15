@@ -33,8 +33,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class CustomEmojiDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
 
     public CustomEmojiDAO(Context context, SQLiteDatabase db) {

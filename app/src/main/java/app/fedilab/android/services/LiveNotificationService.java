@@ -14,7 +14,6 @@ package app.fedilab.android.services;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,7 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
@@ -69,7 +67,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
@@ -77,9 +76,6 @@ import app.fedilab.android.client.TLSSocketFactory;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 import static app.fedilab.android.helper.Helper.getMainLogo;
@@ -93,20 +89,20 @@ import static app.fedilab.android.helper.Helper.getNotificationIcon;
 
 public class LiveNotificationService extends Service implements NetworkStateReceiver.NetworkStateReceiverListener {
 
+    public static String CHANNEL_ID = "live_notifications";
+    public static int totalAccount = 0;
+    public static int eventsCount = 0;
+    private static HashMap<String, Thread> threads = new HashMap<>();
+    private static HashMap<String, String> lastNotification = new HashMap<>();
+    private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
+
     static {
         Helper.installProvider();
     }
 
-    public static String CHANNEL_ID = "live_notifications";
     protected Account account;
-    private static HashMap<String, Thread> threads = new HashMap<>();
-    private static HashMap<String, String> lastNotification = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
-    private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
     private NotificationChannel channel;
-    public static int totalAccount = 0;
-    public static int eventsCount = 0;
-    public static int liveNotifBadge = 0;
 
     public void onCreate() {
         super.onCreate();
@@ -136,7 +132,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 }
             }
         }
-        if( totalAccount > 0) {
+        if (totalAccount > 0) {
             Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(
                     getApplicationContext(),
@@ -150,7 +146,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
             startForeground(1, notification);
-        }else{
+        } else {
             stopSelf();
         }
     }
@@ -180,10 +176,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             stopForeground(true);
             stopSelf();
         }
-       if( totalAccount > 0) {
-           return START_STICKY;
-       }
-       return START_NOT_STICKY;
+        if (totalAccount > 0) {
+            return START_STICKY;
+        }
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -199,7 +195,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     public IBinder onBind(Intent intent) {
         return null;
     }
-
 
 
     private void taks(Account account) {
@@ -426,8 +421,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             final String finalMessage = message;
                             Handler mainHandler = new Handler(Looper.getMainLooper());
                             Helper.NotifType finalNotifType = notifType;
-                            liveNotifBadge++;
-                            ShortcutBadger.applyCount(getApplicationContext(), liveNotifBadge);
                             Runnable myRunnable = new Runnable() {
                                 @Override
                                 public void run() {

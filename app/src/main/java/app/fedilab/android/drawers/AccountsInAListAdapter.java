@@ -18,11 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,20 +26,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.ManageAccountsInListActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -59,11 +58,6 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
     private type actionType;
     private String listId;
     private List<Account> allAccount = new ArrayList<>();
-
-    public enum type {
-        CURRENT,
-        SEARCH
-    }
 
     public AccountsInAListAdapter(type actionType, String listId, List<Account> accounts) {
         this.accounts = accounts;
@@ -167,7 +161,6 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         return false;
     }
 
-
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         if (actionType == ManageListsAsyncTask.action.DELETE_USERS && statusCode != 200) {
@@ -185,6 +178,10 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         return accounts.size();
     }
 
+    public enum type {
+        CURRENT,
+        SEARCH
+    }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         ImageView account_pp;

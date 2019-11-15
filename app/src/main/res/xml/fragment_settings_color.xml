@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ListPreference
+        android:entries="@array/settings_theme"
+        android:key="pref_theme_picker"
+        android:summary="@string/pref_theme_summary"
+        android:title="@string/pref_theme_title"
+        app:iconSpaceReserved="false" />
+
+
+    <androidx.preference.SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="use_custom_theme"
+        android:summary="@string/pref_custom_theme_summary"
+        android:title="@string/pref_custom_theme"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_link_color"
+        android:summary="@string/link_color"
+        android:title="@string/link_color_title"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_boost_header_color"
+        android:summary="@string/boost_header_color"
+        android:title="@string/boost_header_color_title"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_statuses_color"
+        android:summary="@string/background_status"
+        android:title="@string/background_status_title"
+        app:iconSpaceReserved="false" />
+
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_icons_color"
+        android:summary="@string/icons_color"
+        android:title="@string/icons_color_title"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_text_color"
+        android:summary="@string/text_color"
+        android:title="@string/text_color_title"
+        app:iconSpaceReserved="false" />
+
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_primary"
+        android:summary="@string/pref_primary_color_summary"
+        android:title="@string/pref_primary_color_title"
+        app:cpv_dialogTitle="@string/pref_primary_color_title"
+        app:iconSpaceReserved="false" />
+
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_accent"
+        android:summary="@string/pref_accent_color_summary"
+        android:title="@string/pref_accent_color_title"
+        app:cpv_dialogTitle="@string/pref_accent_color_title"
+        app:iconSpaceReserved="false" />
+
+
+    <androidx.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/should_tint_nav_bar"
+        android:key="pref_color_navigation_bar"
+        android:summary="@string/pref_colored_navigation_bar_summary"
+        android:title="@string/pref_colored_navigation_bar_title"
+        app:iconSpaceReserved="false" />
+
+    <androidx.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/should_tint_status_bar"
+        android:key="pref_color_status_bar"
+        android:summary="@string/pref_colored_status_bar_summary"
+        android:title="@string/pref_colored_status_bar_title"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="pref_color_background"
+        android:summary="@string/pref_background_color_summary"
+        android:title="@string/pref_background_color_title"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        android:key="reset_pref"
+        android:summary="@string/clik_reset"
+        android:title="@string/reset_color"
+        app:iconSpaceReserved="false" />
+
+
+    <Preference
+        android:key="pref_import"
+        android:summary="@string/import_theme_title"
+        android:title="@string/import_theme"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        android:key="pref_export"
+        android:summary="@string/export_theme_title"
+        android:title="@string/export_theme"
+        app:iconSpaceReserved="false" />
+</PreferenceScreen>

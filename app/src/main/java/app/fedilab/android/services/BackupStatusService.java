@@ -25,22 +25,22 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-
-import androidx.annotation.Nullable;
-
 import android.os.SystemClock;
 import android.text.Html;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import app.fedilab.android.activities.BaseMainActivity;
+import app.fedilab.android.R;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -50,7 +50,6 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 
 /**
@@ -132,7 +131,7 @@ public class BackupStatusService extends IntentService {
             String fileName = account.getAcct() + "@" + account.getInstance() + Helper.dateFileToString(getApplicationContext(), new Date()) + ".csv";
             String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
             fullPath = filePath + "/" + fileName;
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(fullPath)), "UTF-8"));
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(fullPath)), StandardCharsets.UTF_8));
             StringBuilder builder = new StringBuilder();
             builder.append("id").append(',');
             builder.append("uri").append(',');
@@ -169,9 +168,9 @@ public class BackupStatusService extends IntentService {
                     content = Html.fromHtml(status.getContent()).toString();
                 builder.append("\"").append(content.replace("\"", "'").replace("\n", " ")).append("\"").append(',');
                 builder.append("\"").append(Helper.shortDateTime(getApplicationContext(), status.getCreated_at())).append("\"").append(',');
-                builder.append("\"").append(String.valueOf(status.getReblogs_count())).append("\"").append(',');
-                builder.append("\"").append(String.valueOf(status.getFavourites_count())).append("\"").append(',');
-                builder.append("\"").append(String.valueOf(status.isSensitive())).append("\"").append(',');
+                builder.append("\"").append(status.getReblogs_count()).append("\"").append(',');
+                builder.append("\"").append(status.getFavourites_count()).append("\"").append(',');
+                builder.append("\"").append(status.isSensitive()).append("\"").append(',');
                 builder.append("\"").append(status.getSpoiler_text() != null ? status.getSpoiler_text() : "").append("\"").append(',');
                 builder.append("\"").append(status.getVisibility()).append("\"").append(',');
                 if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {

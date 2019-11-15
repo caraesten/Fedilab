@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2019 Thomas Schneider
 
     This file is a part of Fedilab
@@ -23,29 +22,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/iv_auto_image_slider"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true" />
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/delete_media"
-        android:layout_margin="20dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_delete_media_pixelfed"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/toot_delete_media"
-        />
+
+        <ImageView
+            android:id="@+id/iv_auto_image_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/delete_media"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            android:contentDescription="@string/toot_delete_media"
+            android:src="@drawable/ic_delete_media_pixelfed"
+            android:visibility="gone" />
     </RelativeLayout>
 
 
-
     <ImageView
-        android:id="@+id/iv_gif_container"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="bottom|start"
@@ -54,7 +52,6 @@
 
 
     <FrameLayout
-        android:id="@+id/fl_shadow_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">

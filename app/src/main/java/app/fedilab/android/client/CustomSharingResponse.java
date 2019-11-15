@@ -30,12 +30,12 @@ public class CustomSharingResponse {
         return error;
     }
 
-    public String getResponse() {
-        return response;
-    }
-
     public void setError(Error error) {
         this.error = error;
+    }
+
+    public String getResponse() {
+        return response;
     }
 
     public void setResponse(String response) {

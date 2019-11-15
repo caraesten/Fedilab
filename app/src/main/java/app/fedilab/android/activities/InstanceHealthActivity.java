@@ -18,47 +18,32 @@ package app.fedilab.android.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.InstanceSocial;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.R;
 
 
 /**
@@ -71,7 +56,6 @@ public class InstanceHealthActivity extends BaseActivity {
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;
     private String instance;
-    private RelativeLayout container;
     private LinearLayout instance_container;
     private ImageView back_ground_image;
     private RelativeLayout loader;
@@ -79,25 +63,12 @@ public class InstanceHealthActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC3__));
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC1));
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.black_3));
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(InstanceHealthActivity.this, R.color.mastodonC1));
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Dialog);
+        } else {
+            setTheme(R.style.DialogDark);
         }
         setContentView(R.layout.activity_instance_social);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -114,7 +85,6 @@ public class InstanceHealthActivity extends BaseActivity {
         checked_at = findViewById(R.id.checked_at);
         up = findViewById(R.id.up);
         uptime = findViewById(R.id.uptime);
-        container = findViewById(R.id.container);
         instance_container = findViewById(R.id.instance_container);
         loader = findViewById(R.id.loader);
         back_ground_image = findViewById(R.id.back_ground_image);
@@ -176,10 +146,10 @@ public class InstanceHealthActivity extends BaseActivity {
                             name.setText(instanceSocial.getName());
                             if (instanceSocial.isUp()) {
                                 up.setText("Is up!");
-                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green_1));
                             } else {
                                 up.setText("Is down!");
-                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_1));
                             }
                             uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime() * 100)));
                             if (instanceSocial.getChecked_at() != null)

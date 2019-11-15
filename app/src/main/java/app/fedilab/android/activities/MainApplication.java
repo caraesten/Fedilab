@@ -22,10 +22,12 @@ import android.os.StrictMode;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
-import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
+import com.jaredrummler.cyanea.Cyanea;
+import com.jaredrummler.cyanea.prefs.CyaneaTheme;
 
 import net.gotev.uploadservice.UploadService;
 
@@ -40,14 +42,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import app.fedilab.android.BuildConfig;
+import app.fedilab.android.R;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.jobs.ApplicationJob;
 import app.fedilab.android.jobs.BackupNotificationsSyncJob;
 import app.fedilab.android.jobs.BackupStatusesSyncJob;
 import app.fedilab.android.jobs.NotificationsSyncJob;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.BuildConfig;
-import app.fedilab.android.R;
 
 import static app.fedilab.android.helper.Helper.initNetCipher;
 
@@ -64,6 +66,10 @@ public class MainApplication extends MultiDexApplication {
 
     private static MainApplication app;
 
+    public static MainApplication getApp() {
+        return app;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -73,9 +79,42 @@ public class MainApplication extends MultiDexApplication {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
-        if( Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
-             NotificationsSyncJob.schedule(false);
+        if (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_NONE) {
+            NotificationsSyncJob.schedule(false);
         }
+
+        Cyanea.init(this, super.getResources());
+        List<CyaneaTheme> list = CyaneaTheme.Companion.from(getAssets(), "themes/cyanea_themes.json");
+
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if (theme == Helper.THEME_LIGHT) {
+            list.get(0).apply(Cyanea.getInstance());
+        } else if (theme == Helper.THEME_BLACK) {
+            list.get(2).apply(Cyanea.getInstance());
+        } else {
+            list.get(1).apply(Cyanea.getInstance());
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int accent = prefs.getInt("theme_accent", -1);
+        int primary = prefs.getInt("theme_primary", -1);
+        int pref_color_background = prefs.getInt("pref_color_background", -1);
+        boolean pref_color_navigation_bar = prefs.getBoolean("pref_color_navigation_bar", true);
+        boolean pref_color_status_bar = prefs.getBoolean("pref_color_status_bar", true);
+        Cyanea.Editor editor = Cyanea.getInstance().edit();
+        if (primary != -1) {
+            editor.primary(primary);
+        }
+        if (accent != -1) {
+            editor.accent(accent);
+        }
+        if (pref_color_background != -1) {
+            editor
+                    .background(pref_color_background)
+                    .backgroundLight(pref_color_background)
+                    .backgroundDark(pref_color_background).apply();
+        }
+        editor.shouldTintStatusBar(pref_color_status_bar).apply();
+        editor.shouldTintNavBar(pref_color_navigation_bar).apply();
 
         ApplicationJob.cancelAllJob(BackupStatusesSyncJob.BACKUP_SYNC);
         BackupStatusesSyncJob.schedule(false);
@@ -85,7 +124,6 @@ public class MainApplication extends MultiDexApplication {
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
 
@@ -132,14 +170,9 @@ public class MainApplication extends MultiDexApplication {
         Toasty.Config.getInstance().apply();
     }
 
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(MainApplication.this);
-    }
-
-    public static MainApplication getApp() {
-        return app;
     }
 }

@@ -19,9 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Proxy;
 import android.os.Build;
-import android.os.Parcelable;
 import android.util.ArrayMap;
-import android.webkit.WebView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

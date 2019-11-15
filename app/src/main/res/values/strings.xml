@@ -17,8 +17,6 @@
     <string name="cancel">Cancel</string>
     <string name="download">Download</string>
     <string name="download_file">Download %1$s</string>
-    <string name="download_over">Download complete</string>
-    <string name="save_file">Save %1$s</string>
     <string name="save_over">Media saved</string>
     <string name="download_from" formatted="false">File: %1$s</string>
     <string name="password">Password</string>
@@ -26,10 +24,8 @@
     <string name="accounts">Accounts</string>
     <string name="toots">Toots</string>
     <string name="tags">Tags</string>
-    <string name="token">Token</string>
     <string name="save">Save</string>
     <string name="restore">Restore</string>
-    <string name="two_factor_authentification">Two-step authentication?</string>
     <string name="no_result">No results!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
@@ -40,10 +36,7 @@
     <string name="change">Change</string>
     <string name="choose_picture">Select a picture…</string>
     <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
     <string name="camera">Camera</string>
-    <string name="speech_prompt">Please, say something</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Delete all</string>
     <string name="translate_toot">Translate this toot.</string>
     <string name="schedule">Schedule</string>
@@ -60,7 +53,6 @@
     <string name="replies">Replies</string>
     <string name="username">User name</string>
     <string name="drafts">Drafts</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
     <string name="favourite">Favourites</string>
     <string name="follow">New followers</string>
     <string name="mention">Mentions</string>
@@ -70,7 +62,6 @@
     <string name="action_open_in_web">Open in browser</string>
     <string name="translate">Translate</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
-    <string name="queets" translatable="false">Queets</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -80,18 +71,12 @@
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
-    <string name="remote_follow_menu">Remote follow</string>
     <string name="notifications">Notifications</string>
     <string name="follow_request">Follow requests</string>
-    <string name="optimization">Optimization</string>
     <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
     <string name="delete_account_title">Delete an account</string>
     <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
     <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Tap on the path to change it</string>
     <string name="failed">Failed!</string>
     <string name="scheduled_toots">Scheduled toots</string>
@@ -101,10 +86,6 @@
     <string name="live_notif">Live notifications</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
     <string name="reblog_by">Boosted by %1$s</string>
 
 
@@ -143,10 +124,6 @@
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
 
-    <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
-    </plurals>
     <string name="bookmarks">Bookmarks</string>
     <string name="bookmark_add">Add to bookmarks</string>
     <string name="bookmark_remove">Remove bookmark</string>
@@ -170,7 +147,6 @@
     <string name="toot_title_reply">Reply to a toot</string>
     <string name="queet_title">Write a queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
     <string name="toot_select_image">Select a media</string>
     <string name="toot_select_image_error">An error occurred while selecting the media!</string>
     <string name="toot_delete_media">Delete this media?</string>
@@ -201,7 +177,6 @@
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
     <string name="about_developer">Developer:</string>
-    <string name="about_developer_action" translatable="false">\@fedilab</string>
     <string name="about_license">License: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Source code: </string>
@@ -211,7 +186,6 @@
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action" translatable="false">instances.social</string>
     <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 
@@ -244,14 +218,9 @@
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
         <item quantity="other">and %d other notifications</item>
-    </plurals>
-    <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
@@ -288,7 +257,6 @@
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
@@ -297,12 +265,8 @@
     <string name="toast_toot_saved">Draft saved!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-    <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
     <string name="set_toots_page">Number of toots per load</string>
-    <string name="set_accounts_page">Number of accounts per load</string>
-    <string name="set_notifications_page">Number of notifications per load</string>
     <string name="set_attachment_always">Always</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Ask</string>
@@ -311,13 +275,9 @@
     <string name="load_attachment_spoiler">Show more…</string>
     <string name="load_attachment_spoiler_less">Show less…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -329,7 +289,6 @@
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
@@ -354,14 +313,7 @@
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
 
-
-    <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
-    </string-array>
 
     <string-array name="settings_translation">
         <item>Yandex</item>
@@ -377,16 +329,6 @@
         <item>Black</item>
     </string-array>
 
-    <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
-    </string-array>
-
     <string name="set_led_colour">Set LED colour:</string>
 
     <string-array name="led_colours">
@@ -399,13 +341,10 @@
         <item>White</item>
     </string-array>
 
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>s
-    <string name="action_block">Block</string>
+    s
     <string name="action_unblock">Unblock</string>
     <string name="action_mute">Mute</string>
-    <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
@@ -421,8 +360,6 @@
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
     <string name="cache_title">Clear cache</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
@@ -433,7 +370,6 @@
     <string name="title_header_custom_sharing">Title</string>
     <string name="title_hint_custom_sharing">Title&#8230;</string>
     <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
     <string name="keywords_header_custom_sharing">Keywords</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
 
@@ -451,7 +387,6 @@
     <string name="show_pinned">Show pinned</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_notifications">Backup notifications for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
 
@@ -501,8 +436,6 @@
         - <b>PhotoView</b>: To manage images\n
     </string>
 
-    <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>
-
     <string name="privacy_API_yandex_title">Translation of toots</string>
     <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
@@ -526,19 +459,14 @@
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
     <string name="action_lists_create">Add list</string>
     <string name="action_lists_delete">Delete list</string>
     <string name="action_lists_update">Edit list</string>
     <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
     <string name="action_lists_add_user">The account was added to the list!</string>
     <string name="action_lists_empty">You don\'t have any lists yet!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
-
-    <string name="show_boost_count">Show boosts/favourites count</string>
 
     <string name="issue_login_title">Authentication does not work?</string>
     <string name="issue_login_message">
@@ -559,40 +487,31 @@
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
     <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Login</string>
     <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Translate in</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="mastohost_name" translatable="false">masto.host</string>
     <string name="about_partnership" translatable="false"><b>Masto.host</b> is our Mastodon hosting partner.\n\nWith this partnership they provide me free hosting for <a href="https://ins.mastalab.app">Mastalab\'s instance</a> and in exchange I promote them in here.\n\nTo be clear, there is no money involved or tracking of users. I needed an instance for testing, we talked and agreed on this.\n\n<a href="https://masto.host">Go check them out</a> if you want to run your own Mastodon instance.</string>
     <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
 
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
     <string name="show_boost">Show boosts from %s</string>
     <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
     <string name="toast_endorse">The account is now featured on profile</string>
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
@@ -613,7 +532,6 @@
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
     <string name="action_filter_delete">Delete filter?</string>
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Create filter</string>
@@ -628,16 +546,14 @@
     <string name="account_added_list_trunk">Accounts were added to the list</string>
     <string name="adding_account_list_trunk">Adding accounts to the list</string>
     <string name="action_list_add">You have not created a list yet. Tap on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Tap on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
 
 
-    <string-array translatable="false" name="proxy_type_choice">
+    <string-array name="proxy_type_choice" translatable="false">
         <item>HTTP</item>
         <item>SOCKS</item>
     </string-array>
@@ -666,7 +582,6 @@
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Comment</string>
     <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
     <string name="duration_video">Duration: %s</string>
@@ -678,10 +593,6 @@
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
     <string name="channel">Channel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
     <string name="videos">Videos</string>
     <string name="channels">Channels</string>
     <string name="set_display_emoji">Use Emoji One</string>
@@ -689,12 +600,7 @@
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">Change the language</string>
     <string name="default_language">Default language</string>
     <string name="truncate_long_toots">Truncate long toots</string>
@@ -706,7 +612,6 @@
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
     <string name="schedule_boost">Schedule boost</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
@@ -749,14 +654,7 @@
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
-    <string name="showcase_uid">
-        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">
-        Last step is to enter your password and tap on Login.
-    </string>
     <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
 
 
     <!-- languages not translated -->
@@ -793,16 +691,13 @@
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed instance</string>
     <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <string name="any_tags">Any of these</string>
     <string name="all_tags">All of these</string>
     <string name="none_tags">None of these</string>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
     <string name="some_tags">Add some words to filter (space-separated)</string>
     <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
     <string name="misskey_instance">Misskey instance</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <string name="subscriptions">Subscriptions</string>
@@ -819,7 +714,6 @@
     <string name="file_to_upload">Select the file to upload</string>
     <string name="my_videos">My videos</string>
     <string name="title">Title</string>
-    <string name="categories">Categories</string>
     <string name="license">License</string>
     <string name="category">Category</string>
     <string name="language">Language</string>
@@ -834,14 +728,10 @@
     <string name="video_uploaded_action">Tap here to edit the video data.</string>
     <string name="delete_video">Delete video</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
-    <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
     <string name="choose_schedule">Choose a schedule mode</string>
     <string name="device_schedule">From device</string>
     <string name="server_schedule">From server</string>
@@ -849,12 +739,8 @@
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Modify</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
     <string name="settings_category_label_timelines">Timelines</string>
-    <string name="settings_category_label_notification">Notification service</string>
     <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
-    <string name="settings_category_label_composing">Composing</string>
     <string name="contact">Contacts</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
@@ -870,7 +756,6 @@
     <string name="import_data">Import Data</string>
     <string name="toot_select_import">Select the file to import</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">Add a public comment</string>
     <string name="send_comment">Send comment</string>
     <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
@@ -912,18 +797,14 @@
     <string name="poll_finish_at">end at %s</string>
     <string name="refresh_poll">Refresh poll</string>
     <string name="vote">Vote</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
     <string name="notif_poll_self">A poll you tooted has ended</string>
     <string name="settings_category_notif_customize">Customize</string>
     <string name="settings_category_notif_categories">Categories</string>
-    <string name="settings_category_notif_news">News</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
     <string name="settings_category_notif_advanced">Advanced</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
-    <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Hide the tab</string>
     <string name="move_timeline">Move timeline</string>
     <string name="hide_timeline">Hide timeline</string>
     <string name="reorder_timelines">Reorder timelines</string>
@@ -933,10 +814,8 @@
     <string name="undo">Undo</string>
     <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
     <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_list_deletion">Use the lists entry for deleting this list!</string>
     <string name="warning_main_timeline">Main timelines can only be hidden!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Add a timeline</string>
     <string name="set_sensitive_content">Always mark media as sensitive</string>
     <string name="gnu_instance">GNU instance</string>
     <string name="cached_status">Cached status</string>
@@ -951,14 +830,11 @@
     <string name="history">History</string>
     <string name="playlists">Playlists</string>
     <string name="display_name">Display name</string>
-    <string name="privacy">Privacy</string>
-    <string name="create">Create</string>
     <string name="action_playlist_add">You don\'t have any playlists. Tap on the \"+\" icon to add a new playlist</string>
     <string name="error_display_name">You must provide a display name!</string>
     <string name="error_channel_mandatory">The channel is required when the playlist is public.</string>
     <string name="action_playlist_create">Create a playlist</string>
     <string name="action_playlist_empty_content">There is nothing in this playlist yet.</string>
-    <string name="edit_media">Edit media</string>
     <string name="redo">redo</string>
     <string name="gallery">Gallery</string>
     <string name="label_emoji">Emoji</string>
@@ -966,7 +842,6 @@
     <string name="label_eraser">Eraser</string>
     <string name="label_text">Text</string>
     <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
     <string name="label_brush">Brush</string>
     <string name="confirm_exit_editing">Are you sure you want to exit without saving the image?</string>
     <string name="discard">Discard</string>
@@ -974,7 +849,6 @@
     <string name="image_saved">Image Saved Successfully!</string>
     <string name="save_image_failed">Failed to save Image</string>
     <string name="opacity">Opacity</string>
-    <string name="label_crop">Crop</string>
     <string name="set_photo_editor">Enable photo editor</string>
     <string name="add_poll_item">Add a poll item</string>
     <string name="remove_poll_item">Remove last poll item</string>
@@ -986,10 +860,8 @@
     <string name="timed_mute">Timed mute</string>
     <string name="mention_account">Mention the account</string>
     <string name="refresh_cache">Refresh cache</string>
-    <string name="see_boost_and_fav">See who boosted and added to favorites</string>
     <string name="mention_status">Mention the status</string>
     <string name="action_news">News</string>
-    <string name="set_display_news_from_fedilab">Display news from Fedilab\'s account</string>
     <string name="category_general">General</string>
     <string name="category_regional">Regional</string>
     <string name="category_art">Art</string>
@@ -1004,6 +876,7 @@
     <string name="toast_error_instance_reg">Something went wrong when checking available instances!</string>
     <string name="join_mastodon">Join Mastodon</string>
     <string name="pickup_instance_category">Choose an instance by picking up a category, then tap on a check button.</string>
+    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
     <string name="users">%1$s users</string>
     <string name="password_confirm">Confirm password</string>
     <string name="agreement_check">I agree to %1$s and %2$s</string>
@@ -1033,7 +906,6 @@
     <string name="reconnect_account">Reconnect the account</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
     <string name="unresolved">Unresolved</string>
-    <string name="resolved">Resolved</string>
     <string name="remote">Remote</string>
     <string name="active">Active</string>
     <string name="pending">Pending</string>
@@ -1049,7 +921,6 @@
     <string name="disable">Disable</string>
     <string name="silence">Silence</string>
     <string name="email_user">Notify the user per e-mail</string>
-    <string name="perform_action">Perform action</string>
     <string name="custom_warning">Custom warning</string>
     <string name="user">User</string>
     <string name="moderator">Moderator</string>
@@ -1081,7 +952,6 @@
     <string name="toast_empty_content">Empty content!</string>
     <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <string name="audio">The application needs to access audio recording</string>
-    <string name="toot_message_record_error">An error occurred when recording the voice message!</string>
     <string name="voice_message">Voice message</string>
     <string name="set_quick_reply">Enable quick reply</string>
     <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
@@ -1089,9 +959,7 @@
     <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
     <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
     <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
-    <string name="set_display_news_from_fedilab_indication">Display an item in the main menu for a quick access to the timeline targeting #Fedilab tag</string>
     <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
-    <string name="set_keep_background_process_indication">When the app is in background, it will keep a connection to the streaming API. Disable it if you care about your battery.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
@@ -1103,9 +971,6 @@
     <string name="featured_hashtags_indication">These tags will allow to filter statuses from profiles. You will have to use the context menu for seeing them.</string>
     <string name="set_capitalize_indication">Automatically insert a line break after the mention to capitalize the first letter</string>
     <string name="settings_title_custom_sharing_indication">Allow content creators to share statuses to their RSS feeds</string>
-    <string name="timelines">Timelines</string>
-    <string name="u_interface">Interface</string>
-    <string name="battery">Battery</string>
     <string name="compose">Compose</string>
     <string name="upload_image_maximum_retry_times">Maximum retry times when uploading media</string>
     <string name="new_folder">Create a new Folder here</string>
@@ -1116,9 +981,7 @@
     <string name="default_directory">Default Directory</string>
     <string name="folder">Folder</string>
     <string name="create_folder">Create folder</string>
-    <string name="custom_tabs_indication">Use your favourite browser inside the application. By disabling, links will be opened externally</string>
     <string name="set_display_confirm">Display a toast message after an action has been completed (boost, fav, etc.)?</string>
-    <string name="export_muted_instance">Export muted instances</string>
     <string name="muted_instance_exported">Muted instances have been exported!</string>
     <string name="add_instances">Add an instance</string>
     <string name="export_instances">Export instances</string>
@@ -1157,7 +1020,7 @@
     <string name="set_disable_animated_emoji">Disable custom animated emojis</string>
     <string name="owner_charts">Charts</string>
     <string name="display_charts">Display charts</string>
-    <string name="collecting_data_wait">The application collects your local data, please wait...</string>
+    <string name="collecting_data_wait">The application collects your local data, please wait…</string>
     <string name="set_backup">Backup</string>
     <string name="set_auto_backup">Auto backup statuses</string>
     <string name="set_auto_backup_indication">This option is per account. It will launch a service that will automatically store your statuses locally in the database. That allows to get statistics and charts</string>
@@ -1220,7 +1083,6 @@
 
     <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
     <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
-    <string name="set_live_type_title">Enable delayed notifications</string>
     <string name="set_live_type_indication">Notifications will be delayed every 30 seconds. That will allow to drain less battery.</string>
     <string name="live_delayed">Live notifications delayed</string>
     <string name="no_live_notif">No live notifications</string>
@@ -1244,6 +1106,44 @@
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
     <string name="title_video_peertube">Title for the video</string>
-    <string name="stories">Stories</string>
-    <string name="no_stories">No stories to display!</string>
+    <string name="join_peertube">Join Peertube</string>
+    <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
+    <string name="link_color_title">Links</string>
+    <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
+    <string name="boost_header_color_title">Reblogs header</string>
+    <string name="boost_header_color">Change the color of the header for reblogs</string>
+    <string name="background_status_title">Posts</string>
+    <string name="background_status">Background color of posts in timelines</string>
+    <string name="reset_color">Reset colors</string>
+    <string name="clik_reset">Tap here to reset all your custom colors</string>
+    <string name="reset">Reset</string>
+    <string name="icons_color_title">Icons</string>
+    <string name="icons_color">Color of bottom icons in timelines</string>
+    <string name="pin_tag">Pin this tag</string>
+    <string name="logo_of_the_instance">Logo of the instance</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="make_an_action">Make an action</string>
+    <string name="translation">Translation</string>
+    <string name="image_preview">Image preview</string>
+    <string name="text_color_title">Text color</string>
+    <string name="text_color">Change the text color in pots</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="restart_message">You need to restart the application to apply changes</string>
+    <string name="restart">Restart</string>
+    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="theming">Theming</string>
+    <string name="store_before">Store before</string>
+    <string name="data_export_theme">The theme was exported</string>
+    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
+    <string name="pref_colored_status_bar_title">Status bar color</string>
+    <string name="restore_default_theme">Restore a default theme</string>
+    <string name="import_theme">Import a theme</string>
+    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
+    <string name="export_theme">Export the theme</string>
+    <string name="export_theme_title">Tap here to export the current theme</string>
+    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
 </resources>

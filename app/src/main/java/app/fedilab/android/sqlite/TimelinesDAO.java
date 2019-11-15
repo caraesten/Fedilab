@@ -29,8 +29,8 @@ import app.fedilab.android.helper.Helper;
 public class TimelinesDAO {
 
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public TimelinesDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

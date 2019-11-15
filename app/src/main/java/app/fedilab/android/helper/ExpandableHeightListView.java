@@ -31,6 +31,10 @@ public class ExpandableHeightListView extends ListView {
         return expanded;
     }
 
+    public void setExpanded(@SuppressWarnings("SameParameterValue") boolean expanded) {
+        this.expanded = expanded;
+    }
+
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // HACK! TAKE THAT ANDROID!
@@ -46,9 +50,5 @@ public class ExpandableHeightListView extends ListView {
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-    }
-
-    public void setExpanded(@SuppressWarnings("SameParameterValue") boolean expanded) {
-        this.expanded = expanded;
     }
 }

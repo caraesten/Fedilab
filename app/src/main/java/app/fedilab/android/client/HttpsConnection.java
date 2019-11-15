@@ -17,14 +17,10 @@ package app.fedilab.android.client;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
 
-import androidx.fragment.app.FragmentTransaction;
-
-import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -49,6 +45,7 @@ import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -68,7 +65,6 @@ import app.fedilab.android.R;
 import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.client.Entities.Error;
-
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
@@ -155,7 +151,7 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
             URL url = new URL(urlConnection + "?" + postData);
             if (proxy != null)
@@ -217,7 +213,7 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
             URL url = new URL(urlConnection + "?" + postData);
             if (proxy != null)
@@ -370,9 +366,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
@@ -436,9 +432,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
@@ -494,7 +490,7 @@ public class HttpsConnection {
         if (urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
             byte[] postDataBytes = new byte[0];
-            postDataBytes = jsonObject.toString().getBytes("UTF-8");
+            postDataBytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
@@ -546,7 +542,7 @@ public class HttpsConnection {
             return response;
         } else {
             URL url = new URL(urlConnection);
-            byte[] postDataBytes = jsonObject.toString().getBytes("UTF-8");
+            byte[] postDataBytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
@@ -599,7 +595,7 @@ public class HttpsConnection {
 
     public String postMisskey(String urlConnection, int timeout, JSONObject paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         URL url = new URL(urlConnection);
-        byte[] postDataBytes = paramaters.toString().getBytes("UTF-8");
+        byte[] postDataBytes = paramaters.toString().getBytes(StandardCharsets.UTF_8);
 
         if (proxy != null)
             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
@@ -687,8 +683,8 @@ public class HttpsConnection {
                                 }
                             } else {
                                 // extracts file name from URL
-                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
-                                        downloadUrl.length());
+                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1
+                                );
                             }
                             fileName = FileNameCleaner.cleanFileName(fileName);
                             // opens input stream from the HTTP connection
@@ -775,8 +771,8 @@ public class HttpsConnection {
                                 }
                             } else {
                                 // extracts file name from URL
-                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
-                                        downloadUrl.length());
+                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1
+                                );
                             }
                             fileName = FileNameCleaner.cleanFileName(fileName);
                             // opens input stream from the HTTP connection
@@ -896,11 +892,6 @@ public class HttpsConnection {
         }
     }
 
-    enum imageType {
-        AVATAR,
-        BANNER
-    }
-
     private void uploadMedia(String urlConnection, InputStream avatar, InputStream header, String filename) {
         UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
         uploadConfig.getCompleted().autoClear = true;
@@ -962,7 +953,6 @@ public class HttpsConnection {
         }
     }
 
-
     @SuppressWarnings("SameParameterValue")
     public String patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, String avatarName, InputStream header, String headerName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if (urlConnection.startsWith("https://")) {
@@ -981,9 +971,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = (postData.toString()).getBytes("UTF-8");
+            byte[] postDataBytes = (postData.toString()).getBytes(StandardCharsets.UTF_8);
 
 
             if (proxy != null)
@@ -1063,9 +1053,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = (postData.toString()).getBytes("UTF-8");
+            byte[] postDataBytes = (postData.toString()).getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpsURLConnection) url.openConnection(proxy);
@@ -1129,7 +1119,6 @@ public class HttpsConnection {
 
     }
 
-
     public String put(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if (urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
@@ -1147,9 +1136,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
@@ -1215,9 +1204,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
@@ -1270,7 +1259,6 @@ public class HttpsConnection {
 
     }
 
-
     public int delete(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if (urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
@@ -1288,9 +1276,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
@@ -1351,9 +1339,9 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
@@ -1410,7 +1398,6 @@ public class HttpsConnection {
         return max_id;
     }
 
-
     private void getSinceMaxId() {
         if (Helper.getLiveInstanceWithProtocol(context) == null)
             return;
@@ -1464,7 +1451,6 @@ public class HttpsConnection {
         return s.hasNext() ? s.next() : "";
     }
 
-
     int getActionCode() {
         if (Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             try {
@@ -1479,6 +1465,12 @@ public class HttpsConnection {
                 return -1;
             }
         }
+    }
+
+
+    enum imageType {
+        AVATAR,
+        BANNER
     }
 
     public class HttpsConnectionException extends Exception {

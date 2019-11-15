@@ -17,6 +17,7 @@
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="20dp"
             android:paddingLeft="@dimen/drawer_padding"
             android:paddingRight="@dimen/drawer_padding"
             android:scrollbars="none"
@@ -230,9 +231,9 @@
 
                     <EditText
                         android:id="@+id/set_invidious_host"
-                        android:ellipsize="end"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:hint="@string/set_invidious_host"
                         android:inputType="textWebEditText" />
 
@@ -276,9 +277,9 @@
 
                     <EditText
                         android:id="@+id/set_nitter_host"
-                        android:ellipsize="end"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:hint="@string/set_nitter_host"
                         android:inputType="textWebEditText" />
 
@@ -794,14 +795,17 @@
                                 android:textColor="@color/mastodonC2"
                                 android:textSize="12sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                             <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/set_allow_live_notifications"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+
                             <ImageButton
                                 android:id="@+id/set_allow_live_notifications_others"
                                 style="@style/Base.Widget.AppCompat.Button.Colored"
@@ -812,7 +816,6 @@
                                 android:padding="5dp"
                                 android:src="@drawable/ic_account_circle_acct" />
                         </LinearLayout>
-
 
 
                     </LinearLayout>
@@ -1219,7 +1222,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            style="?attr/shapeBorder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -1233,7 +1235,6 @@
 
                             <Button
                                 android:id="@+id/settings_time_from"
-                                style="?attr/borderlessColored"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:focusableInTouchMode="false" />
@@ -1245,7 +1246,6 @@
 
                             <Button
                                 android:id="@+id/settings_time_to"
-                                style="?attr/borderlessColored"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:focusableInTouchMode="false" />
@@ -1429,6 +1429,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -1736,6 +1737,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -1879,7 +1881,6 @@
 
                     <!-- Translation engine -->
                     <LinearLayout
-                        android:id="@+id/translation_layout_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -1908,8 +1909,7 @@
                                 android:id="@+id/set_trans_forced"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp" />
+                                android:layout_marginStart="10dp" />
                         </LinearLayout>
 
                         <EditText
@@ -1920,7 +1920,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/file_chooser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1943,10 +1942,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:maxLines="2"
-                                android:textColor="?attr/colorAccent"
+                                android:textColor="?colorAccent"
                                 android:textStyle="italic" />
                         </LinearLayout>
 
@@ -2081,26 +2079,6 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- THEME -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/set_theme"
-                            android:textSize="16sp" />
-
-                        <Spinner
-                            android:id="@+id/set_night_mode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
 
                     <!-- NSFW Timeout -->
                     <TextView
@@ -2136,9 +2114,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginTop="@dimen/settings_option_margin"
                         android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
@@ -2500,7 +2478,6 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
                             android:contentDescription="@string/toot_visibility_tilte"
                             android:padding="5dp"
                             android:src="@drawable/ic_public" />

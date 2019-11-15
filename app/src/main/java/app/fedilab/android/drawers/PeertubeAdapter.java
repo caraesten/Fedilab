@@ -19,10 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,17 +26,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Peertube;
-import app.fedilab.android.helper.CrossActions;
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.PeertubeActivity;
@@ -48,6 +42,11 @@ import app.fedilab.android.activities.PeertubeEditUploadActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Peertube;
+import app.fedilab.android.helper.CrossActions;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
 
 

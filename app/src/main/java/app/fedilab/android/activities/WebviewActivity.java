@@ -29,26 +29,25 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.helper.CountDrawable;
@@ -60,7 +59,6 @@ import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 
 /**
@@ -70,11 +68,11 @@ import app.fedilab.android.R;
 
 public class WebviewActivity extends BaseActivity {
 
+    public static List<String> trackingDomains;
     private String url;
     private String peertubeLinkToFetch;
     private boolean peertubeLink;
     private CustomWebview webView;
-    public static List<String> trackingDomains;
     private Menu defaultMenu;
     private MastalabWebViewClient mastalabWebViewClient;
 
@@ -85,7 +83,7 @@ public class WebviewActivity extends BaseActivity {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);

@@ -23,12 +23,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.Html;
-import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.net.URI;
@@ -36,13 +35,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.API;
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Mention;
-import app.fedilab.android.client.Entities.Results;
-import app.fedilab.android.client.Entities.Status;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
@@ -50,6 +42,12 @@ import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.client.API;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Mention;
+import app.fedilab.android.client.Entities.Results;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.PixelfedListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
@@ -57,6 +55,7 @@ import app.fedilab.android.interfaces.OnPostActionInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Will handle cross actions between accounts boost/favourites/pin and replies
@@ -281,8 +280,8 @@ public class CrossActions {
 
     public static void followPeertubeChannel(final Context context, Account remoteAccount, OnPostActionInterface onPostActionInterface) {
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -320,8 +319,8 @@ public class CrossActions {
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -405,8 +404,8 @@ public class CrossActions {
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -447,8 +446,8 @@ public class CrossActions {
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
 
         new AsyncTask<Void, Void, Void>() {
-            private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
             @Override
             protected void onPreExecute() {
@@ -480,20 +479,27 @@ public class CrossActions {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void doCrossBookmark(final Context context, final Status status, StatusListAdapter statusListAdapter) {
+    public static void doCrossBookmark(final Context context, Status status, StatusListAdapter statusListAdapter, boolean limitedToOwner) {
         List<Account> accounts = connectedAccounts(context, status, false);
-
-        if (accounts.size() == 1) {
+        API.StatusAction doAction;
+        //Only bookmark the initial status
+        if (status.getReblog() != null) {
+            status = status.getReblog();
+        }
+        if (accounts.size() == 1 || limitedToOwner) {
             status.setBookmarked(!status.isBookmarked());
             try {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 if (status.isBookmarked()) {
+                    doAction = API.StatusAction.BOOKMARK;
                     new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
                     Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                 } else {
+                    doAction = API.StatusAction.UNBOOKMARK;
                     new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
                     Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                 }
+                new PostActionAsyncTask(context, doAction, status.getId(), null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 statusListAdapter.notifyStatusChanged(status);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -515,13 +521,14 @@ public class CrossActions {
                     dialog.dismiss();
                 }
             });
+            Status finalStatus = status;
             builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, int which) {
                     final Account account = accountArray[which];
                     new AsyncTask<Void, Void, Void>() {
-                        private WeakReference<Context> contextReference = new WeakReference<>(context);
                         Results response;
+                        private WeakReference<Context> contextReference = new WeakReference<>(context);
 
                         @Override
                         protected void onPreExecute() {
@@ -531,7 +538,7 @@ public class CrossActions {
                         @Override
                         protected Void doInBackground(Void... voids) {
                             API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                            APIResponse apiResponse = api.search(status.getUrl());
+                            APIResponse apiResponse = api.search(finalStatus.getUrl());
                             response = apiResponse.getResults();
                             return null;
                         }
@@ -546,13 +553,17 @@ public class CrossActions {
                             if (statuses != null && statuses.size() > 0) {
                                 final SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                 app.fedilab.android.client.Entities.Status statusBookmarked = new StatusCacheDAO(contextReference.get(), db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0).getId(), account.getId(), account.getInstance());
+                                API.StatusAction doAction;
                                 if (statusBookmarked == null) {
+                                    doAction = API.StatusAction.BOOKMARK;
                                     new StatusCacheDAO(contextReference.get(), db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
                                     Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                                 } else {
+                                    doAction = API.StatusAction.UNBOOKMARK;
                                     new StatusCacheDAO(contextReference.get(), db).remove(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
                                     Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                 }
+                                new PostActionAsyncTask(context, account, finalStatus, doAction, null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 statusListAdapter.notifyStatusChanged(statuses.get(0));
                             }
                         }

@@ -16,9 +16,6 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +23,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,56 +40,6 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
 
     private List<String> tags, tempTags, suggestions;
     private LayoutInflater layoutInflater;
-
-    public TagsSearchAdapter(Context context, List<String> tags) {
-        super(context, android.R.layout.simple_list_item_1, tags);
-        this.tags = tags;
-        this.tempTags = new ArrayList<>(tags);
-        this.suggestions = new ArrayList<>(tags);
-        layoutInflater = LayoutInflater.from(context);
-    }
-
-    @Override
-    public int getCount() {
-        return tags.size();
-    }
-
-    @Override
-    public String getItem(int position) {
-        return tags.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @NonNull
-    @Override
-    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
-
-        final String tag = tags.get(position);
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_tag_search, parent, false);
-            holder = new ViewHolder();
-            holder.tag_name = convertView.findViewById(R.id.tag_name);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        holder.tag_name.setText(String.format("#%s", tag));
-
-        return convertView;
-    }
-
-    @NonNull
-    @Override
-    public Filter getFilter() {
-        return searchFilter;
-    }
-
     private Filter searchFilter = new Filter() {
         @Override
         public CharSequence convertResultToString(Object resultValue) {
@@ -126,6 +75,53 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
         }
     };
 
+    public TagsSearchAdapter(Context context, List<String> tags) {
+        super(context, android.R.layout.simple_list_item_1, tags);
+        this.tags = tags;
+        this.tempTags = new ArrayList<>(tags);
+        this.suggestions = new ArrayList<>(tags);
+        layoutInflater = LayoutInflater.from(context);
+    }
+
+    @Override
+    public int getCount() {
+        return tags.size();
+    }
+
+    @Override
+    public String getItem(int position) {
+        return tags.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @NonNull
+    @Override
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
+
+        final String tag = tags.get(position);
+        final ViewHolder holder;
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.drawer_tag_search, parent, false);
+            holder = new ViewHolder();
+            holder.tag_name = convertView.findViewById(R.id.tag_name);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.tag_name.setText(String.format("#%s", tag));
+
+        return convertView;
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return searchFilter;
+    }
 
     private class ViewHolder {
         TextView tag_name;

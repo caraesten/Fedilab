@@ -17,27 +17,19 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeContainer"
-    android:paddingLeft="@dimen/drawer_padding"
-    android:paddingRight="@dimen/drawer_padding"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/drawer_padding"
+    android:paddingRight="@dimen/drawer_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="@dimen/fab_margin"
         android:orientation="vertical"
+        android:padding="@dimen/fab_margin"
         tools:ignore="UselessParent">
 
-        <!-- Profile SETTINGS -->
-        <TextView
-            android:text="@string/settings_title_profile"
-            style="?attr/shapeBorder"
-            android:paddingBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content" />
         <!-- Screen name -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,49 +37,47 @@
             android:orientation="horizontal">
             <!-- Profile picture -->
             <ImageView
-                android:layout_gravity="center"
                 android:id="@+id/set_profile_picture"
                 android:layout_width="100dp"
-                android:scaleType="fitXY"
                 android:layout_height="100dp"
-                android:contentDescription="@string/profile_picture" />
+                android:layout_gravity="center"
+                android:contentDescription="@string/profile_picture"
+                android:scaleType="fitXY" />
 
             <LinearLayout
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <EditText
-                    android:layout_marginTop="10dp"
                     android:id="@+id/set_profile_name"
                     android:layout_width="match_parent"
-                    android:maxLines="1"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:layout_marginTop="10dp"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
 
                 <Button
-                    android:layout_marginTop="5dp"
                     android:id="@+id/set_change_profile_picture"
-                    android:textSize="12sp"
-                    android:textAllCaps="false"
-                    android:text="@string/choose_picture"
-                    style="?attr/borderlessColored"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/choose_picture"
+                    android:textAllCaps="false"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
         <!-- Description -->
         <EditText
-            android:layout_marginTop="10dp"
+            android:id="@+id/set_profile_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/set_profile_description"
-            android:minLines="4"
+            android:layout_marginTop="10dp"
+            android:hint="@string/set_profile_description"
             android:lines="4"
             android:maxLines="5"
-            android:hint="@string/set_profile_description" />
+            android:minLines="4" />
         <!-- Header picture -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,44 +85,43 @@
             android:orientation="vertical">
 
             <ImageView
-                android:scaleType="fitXY"
                 android:id="@+id/set_header_picture"
-                android:minHeight="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/profile_banner" />
+                android:contentDescription="@string/profile_banner"
+                android:minHeight="100dp"
+                android:scaleType="fitXY" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/set_header_picture_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textStyle="italic"
-                android:textSize="16sp"
                 android:text="@string/set_header_picture_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
         </LinearLayout>
 
 
         <Button
-            android:layout_marginTop="5dp"
             android:id="@+id/set_change_header_picture"
-            android:layout_gravity="center"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:text="@string/choose_picture"
-            style="?attr/borderlessColored"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/choose_picture"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:id="@+id/custom_fields_container"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,16 +131,16 @@
                 <EditText
                     android:id="@+id/cf_key_1"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:inputType="text" />
 
                 <EditText
                     android:id="@+id/cf_val_1"
-                    android:inputType="text"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content" />
+                    android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
@@ -162,16 +151,16 @@
                 <EditText
                     android:id="@+id/cf_key_2"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:inputType="text" />
 
                 <EditText
                     android:id="@+id/cf_val_2"
-                    android:inputType="text"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content" />
+                    android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
@@ -182,16 +171,16 @@
                 <EditText
                     android:id="@+id/cf_key_3"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:inputType="text" />
 
                 <EditText
                     android:id="@+id/cf_val_3"
-                    android:inputType="text"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content" />
+                    android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
@@ -202,45 +191,45 @@
                 <EditText
                     android:id="@+id/cf_key_4"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:inputType="text" />
 
                 <EditText
                     android:id="@+id/cf_val_4"
-                    android:inputType="text"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content" />
+                    android:inputType="text" />
             </LinearLayout>
 
         </LinearLayout>
         <!-- Lock the account -->
         <CheckBox
-            android:layout_marginTop="10dp"
             android:id="@+id/set_lock_account"
             android:layout_width="wrap_content"
-            android:text="@string/set_lock_account"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/set_lock_account" />
 
         <!-- Sensitive content -->
         <CheckBox
-            android:layout_marginTop="10dp"
             android:id="@+id/set_sensitive_content"
             android:layout_width="wrap_content"
-            android:text="@string/set_sensitive_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/set_sensitive_content" />
 
         <Button
-            android:layout_marginTop="5dp"
             android:id="@+id/set_profile_save"
-            android:layout_gravity="center"
-            android:gravity="center"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:maxWidth="150dp"
-            android:text="@string/set_save_changes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:maxWidth="150dp"
+            android:text="@string/set_save_changes" />
     </LinearLayout>
 </ScrollView>
 

@@ -17,10 +17,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/fab_margin"
-    android:layout_marginEnd="@dimen/fab_margin"
-    android:layout_marginLeft="@dimen/fab_margin"
     android:layout_marginStart="@dimen/fab_margin"
+    android:layout_marginLeft="@dimen/fab_margin"
+    android:layout_marginEnd="@dimen/fab_margin"
+    android:layout_marginRight="@dimen/fab_margin"
     android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,34 +29,34 @@
         android:orientation="vertical">
         <!-- About masto.host -->
         <ImageView
-            android:layout_marginTop="10dp"
             android:id="@+id/mastohost_logo"
-            android:layout_gravity="center"
             android:layout_width="200dp"
             android:layout_height="110dp"
-            android:src="@drawable/mastohost"
-            android:contentDescription="@string/mastohost_logo" />
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/mastohost_logo"
+            android:src="@drawable/mastohost" />
 
         <!-- About partnership -->
         <TextView
+            android:id="@+id/about_partnership"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:textSize="16sp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:id="@+id/about_partnership"
             android:text="@string/about_partnership"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:id="@+id/lv_mastohost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:layout_marginTop="20dp"
+            android:divider="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:scrollbars="none" />
 
 
     </LinearLayout>

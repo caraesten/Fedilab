@@ -15,7 +15,6 @@
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -23,9 +22,9 @@
     android:foreground="?selectableItemBackground">
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -39,18 +38,18 @@
         <TextView
             android:id="@+id/text"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/hide"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/hide_timeline"
             android:scaleType="center"
             android:src="@drawable/ic_make_tab_unvisible"
-            android:contentDescription="@string/hide_timeline"
             tools:ignore="RtlHardcoded" />
 
         <ImageView
@@ -58,9 +57,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/move_timeline"
             android:scaleType="center"
             android:src="@drawable/ic_drag_handle"
-            android:contentDescription="@string/move_timeline"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 

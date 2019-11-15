@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountCreation;
+import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 
 
@@ -38,17 +39,23 @@ public class CreateMastodonAccountAsyncTask extends AsyncTask<Void, Void, Void> 
     private AccountCreation accountCreation;
     private WeakReference<Context> contextReference;
     private String instance;
+    private RetrieveInstanceRegAsyncTask.instanceType type;
 
-    public CreateMastodonAccountAsyncTask(Context context, AccountCreation accountCreation, String instance, OnPostStatusActionInterface onPostStatusActionInterface) {
+    public CreateMastodonAccountAsyncTask(Context context, RetrieveInstanceRegAsyncTask.instanceType type, AccountCreation accountCreation, String instance, OnPostStatusActionInterface onPostStatusActionInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostStatusActionInterface;
         this.accountCreation = accountCreation;
         this.instance = instance;
+        this.type = type;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(contextReference.get(), instance, null).createAccount(accountCreation);
+        if (type == RetrieveInstanceRegAsyncTask.instanceType.MASTODON) {
+            apiResponse = new API(contextReference.get(), instance, null).createAccount(accountCreation);
+        } else {
+            apiResponse = new PeertubeAPI(contextReference.get(), instance, null).createAccount(accountCreation);
+        }
         return null;
     }
 

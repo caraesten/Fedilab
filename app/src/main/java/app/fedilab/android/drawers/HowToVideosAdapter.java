@@ -17,12 +17,8 @@ package app.fedilab.android.drawers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,21 +27,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.HowToVideo;
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.WebviewActivity;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.HowToVideo;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -55,7 +51,6 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 public class HowToVideosAdapter extends BaseAdapter implements OnListActionInterface {
 
     private List<HowToVideo> howToVideos;
-    private LayoutInflater layoutInflater;
     private Context context;
 
     public HowToVideosAdapter(List<HowToVideo> howToVideos) {
@@ -82,7 +77,7 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         context = parent.getContext();
-        layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         final HowToVideo howToVideo = howToVideos.get(position);
         final ViewHolder holder;
         if (convertView == null) {
@@ -96,19 +91,7 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
-        if (theme == Helper.THEME_LIGHT) {
-            holder.how_to_container.setBackgroundResource(R.color.mastodonC3__);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.black);
-        } else if (theme == Helper.THEME_DARK) {
-            holder.how_to_container.setBackgroundResource(R.color.mastodonC1_);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
-        } else if (theme == Helper.THEME_BLACK) {
-            holder.how_to_container.setBackgroundResource(R.color.black_2);
-            Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.color.dark_text);
-        }
+        Helper.changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right, R.attr.iconColorMenu);
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.how_to_description.setText(howToVideo.getDescription());
         holder.how_to_title.setText(howToVideo.getName());

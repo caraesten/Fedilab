@@ -32,28 +32,18 @@ import app.fedilab.android.interfaces.OnFilterActionInterface;
 
 public class ManageFiltersAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public enum action {
-        GET_FILTER,
-        GET_ALL_FILTER,
-        CREATE_FILTER,
-        DELETE_FILTER,
-        UPDATE_FILTER,
-    }
-
     private OnFilterActionInterface listener;
     private APIResponse apiResponse;
     private int statusCode;
     private action apiAction;
     private WeakReference<Context> contextReference;
     private Filters filter;
-
     public ManageFiltersAsyncTask(Context context, action apiAction, Filters filter, OnFilterActionInterface onFilterActionInterface) {
         contextReference = new WeakReference<>(context);
         this.listener = onFilterActionInterface;
         this.filter = filter;
         this.apiAction = apiAction;
     }
-
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -74,6 +64,14 @@ public class ManageFiltersAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onActionDone(this.apiAction, apiResponse, statusCode);
+    }
+
+    public enum action {
+        GET_FILTER,
+        GET_ALL_FILTER,
+        CREATE_FILTER,
+        DELETE_FILTER,
+        UPDATE_FILTER,
     }
 
 }

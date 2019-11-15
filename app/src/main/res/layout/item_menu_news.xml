@@ -15,12 +15,11 @@
     see <http://www.gnu.org/licenses>.
 -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tab_counter_news"
-    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_counter"
     android:paddingLeft="2dp"
     android:paddingRight="2dp"
-    android:textSize="12sp"
     android:textColor="@color/mastodonC1"
-    android:background="@drawable/shape_counter"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:textSize="12sp"
+    android:visibility="gone" />

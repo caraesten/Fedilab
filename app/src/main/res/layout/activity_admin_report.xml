@@ -27,8 +27,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -62,11 +61,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/assign_status_buttons_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="assign,status"
-                android:id="@+id/assign_status_buttons_barrier" />
+                app:constraint_referenced_ids="assign,status" />
 
             <TextView
                 android:id="@+id/permissions_label"
@@ -248,17 +247,17 @@
                 app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
 
             <androidx.constraintlayout.widget.Group
+                android:id="@+id/allow_reject_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="reject,allow"
-                android:id="@+id/allow_reject_group" />
+                app:constraint_referenced_ids="reject,allow" />
 
             <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/allow_reject_buttons_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="reject,allow"
-                android:id="@+id/allow_reject_buttons_barrier" />
+                app:constraint_referenced_ids="reject,allow" />
 
             <Button
                 android:id="@+id/warn"

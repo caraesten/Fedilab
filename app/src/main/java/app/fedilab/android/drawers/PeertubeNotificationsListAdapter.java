@@ -19,11 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,17 +27,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.PeertubeActivity;
+import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.PeertubeAccountNotification;
 import app.fedilab.android.client.Entities.PeertubeNotification;
 import app.fedilab.android.client.Entities.PeertubeVideoNotification;
-import app.fedilab.android.helper.Helper;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.PeertubeActivity;
-import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.fragments.DisplayPeertubeNotificationsFragment;
+import app.fedilab.android.helper.Helper;
 
 
 /**
@@ -221,16 +220,16 @@ public class PeertubeNotificationsListAdapter extends RecyclerView.Adapter {
         TextView peertube_notif_message, peertube_notif_date;
         RelativeLayout main_container_trans;
 
-        public View getView() {
-            return itemView;
-        }
-
         public ViewHolder(View itemView) {
             super(itemView);
             peertube_notif_pp = itemView.findViewById(R.id.peertube_notif_pp);
             peertube_notif_message = itemView.findViewById(R.id.peertube_notif_message);
             peertube_notif_date = itemView.findViewById(R.id.peertube_notif_date);
             main_container_trans = itemView.findViewById(R.id.container_trans);
+        }
+
+        public View getView() {
+            return itemView;
         }
     }
 

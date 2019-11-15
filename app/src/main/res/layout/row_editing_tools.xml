@@ -14,11 +14,11 @@
         android:layout_height="@dimen/editor_size"
         android:layout_margin="4dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/label_brush"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:src="@drawable/ic_brush_edit"
-        android:contentDescription="@string/label_brush" />
+        tools:src="@drawable/ic_brush_edit" />
 
     <TextView
         android:id="@+id/txtTool"

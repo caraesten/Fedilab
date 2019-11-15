@@ -15,7 +15,6 @@
 package app.fedilab.android.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,19 +22,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.textfield.TextInputLayout;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -59,15 +49,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
-import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -75,6 +69,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
@@ -84,10 +80,6 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -97,14 +89,16 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 public class LoginActivity extends BaseActivity {
 
+    public static boolean admin;
     private static String client_id;
     private static String client_secret;
     private static boolean client_id_for_webview = false;
     private static String instance;
+    private final int PICK_IMPORT = 5557;
+    boolean isLoadingInstance = false;
     private AutoCompleteTextView login_instance;
     private EditText login_uid;
     private EditText login_passwd;
-    boolean isLoadingInstance = false;
     private String oldSearch;
     private Button connectionButton, connect_button;
     private String actionToken;
@@ -116,8 +110,18 @@ public class LoginActivity extends BaseActivity {
     private LinearLayout step_login_credential, step_instance;
     private TextView instance_chosen;
     private ImageView info_instance;
-    private final int PICK_IMPORT = 5557;
-    public static boolean admin;
+
+    public static String redirectUserToAuthorizeAndLogin(Context context, UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
+        String queryString = Helper.CLIENT_ID + "=" + clientId;
+        queryString += "&" + Helper.REDIRECT_URI + "=" + Uri.encode(Helper.REDIRECT_CONTENT_WEB);
+        queryString += "&" + Helper.RESPONSE_TYPE + "=code";
+        if (admin) {
+            queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES_ADMIN;
+        } else {
+            queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES;
+        }
+        return Helper.instanceWithProtocol(context, instance) + Helper.EP_AUTHORIZE + "?" + queryString;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,25 +132,15 @@ public class LoginActivity extends BaseActivity {
         if (b != null) {
             autofilledInstance = b.getString("instance", null);
             social = b.getString("social", null);
-            if (social != null) {
-                switch (social) {
-                    case "MASTODON":
-                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-                        break;
-                    case "PEERTUBE":
-                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-                        break;
-                    case "GNU":
-                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-                        break;
-                }
+            if (instanceNodeInfo != null) {
+                socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
             }
             admin = b.getBoolean("admin", false);
         }
 
         if (getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")) {
             String url = getIntent().getData().toString();
-            String val[] = url.split("code=");
+            String[] val = url.split("code=");
             String code = val[1];
             final String action = "/oauth/token";
             final HashMap<String, String> parameters = new HashMap<>();
@@ -187,7 +181,7 @@ public class LoginActivity extends BaseActivity {
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             switch (theme) {
                 case Helper.THEME_LIGHT:
-                    setTheme(R.style.AppTheme);
+                    setTheme(R.style.AppTheme_Fedilab);
                     break;
                 case Helper.THEME_DARK:
                     setTheme(R.style.AppThemeDark);
@@ -202,6 +196,7 @@ public class LoginActivity extends BaseActivity {
             setContentView(R.layout.activity_login);
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
+                actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_primary)));
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 assert inflater != null;
                 View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
@@ -216,32 +211,29 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
                 toolbar_title.setText(R.string.add_account);
-                if (theme == Helper.THEME_LIGHT) {
-                    Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                    Helper.colorizeToolbar(toolbar, R.color.black, LoginActivity.this);
-                }
-            }
-            if (theme == Helper.THEME_DARK) {
-                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC2);
-            } else {
-                changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC3);
             }
 
+
             TextView create_an_account_message = findViewById(R.id.create_an_account);
+            TextView create_an_account_peertube = findViewById(R.id.create_an_account_peertube);
             SpannableString content_create = new SpannableString(getString(R.string.join_mastodon));
             content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
-            if (theme == Helper.THEME_DARK)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.dark_link_toot)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            else if (theme == Helper.THEME_BLACK)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.black_link_toot)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            else if (theme == Helper.THEME_LIGHT)
-                content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4)), 0, content_create.length(),
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_accent_reference)), 0, content_create.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             create_an_account_message.setText(content_create);
             create_an_account_message.setOnClickListener(v -> {
                 Intent mainActivity = new Intent(LoginActivity.this, MastodonRegisterActivity.class);
+                startActivity(mainActivity);
+            });
+
+
+            content_create = new SpannableString(getString(R.string.join_peertube));
+            content_create.setSpan(new UnderlineSpan(), 0, content_create.length(), 0);
+            content_create.setSpan(new ForegroundColorSpan(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_accent_reference)), 0, content_create.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            create_an_account_peertube.setText(content_create);
+            create_an_account_peertube.setOnClickListener(v -> {
+                Intent mainActivity = new Intent(LoginActivity.this, PeertubeRegisterActivity.class);
                 startActivity(mainActivity);
             });
 
@@ -281,36 +273,25 @@ public class LoginActivity extends BaseActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            instanceNodeInfo = new API(LoginActivity.this).getNodeInfo(instance);
+                            instanceNodeInfo = new API(LoginActivity.this).displayNodeInfo(instance);
 
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connect_button.setEnabled(true);
                                     if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
-                                        switch (instanceNodeInfo.getName()) {
-                                            case "MASTODON":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-                                                break;
-                                            case "PIXELFED":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
-                                                break;
-                                            case "PEERTUBE":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-                                                break;
-                                            case "GNU":
-                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-                                                break;
-                                        }
-                                        if (instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
+                                        socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
+
+                                        if (instanceNodeInfo.getName().equals("PLEROMA") || instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
                                             client_id_for_webview = true;
                                             retrievesClientId();
                                         } else {
+                                            client_id_for_webview = false;
                                             if (instanceNodeInfo.getName().equals("PEERTUBE")) {
                                                 step_login_credential.setVisibility(View.VISIBLE);
                                                 step_instance.setVisibility(View.GONE);
                                                 instance_chosen.setText(instance);
                                                 retrievesClientId();
-                                            } else if (instanceNodeInfo.getName().equals("GNU")) {
+                                            } else if (instanceNodeInfo.getName().equals("GNU") || instanceNodeInfo.getName().equals("FRIENDICA")) {
                                                 step_login_credential.setVisibility(View.VISIBLE);
                                                 step_instance.setVisibility(View.GONE);
                                                 instance_chosen.setText(instance);
@@ -397,8 +378,6 @@ public class LoginActivity extends BaseActivity {
                                             }
                                         });
 
-                                    } catch (HttpsConnection.HttpsConnectionException e) {
-                                        isLoadingInstance = false;
                                     } catch (Exception e) {
                                         isLoadingInstance = false;
                                     }
@@ -550,18 +529,18 @@ public class LoginActivity extends BaseActivity {
 
                                 String message;
                                 if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0) {
-                                    if(e.getLocalizedMessage().length() < 100) {
+                                    if (e.getLocalizedMessage().length() < 100) {
                                         message = e.getLocalizedMessage();
-                                    }else{
-                                        message = getString(R.string.long_api_error,"\ud83d\ude05");
+                                    } else {
+                                        message = getString(R.string.long_api_error, "\ud83d\ude05");
                                     }
-                                }else if (e.getMessage() != null && e.getMessage().trim().length() > 0) {
-                                    if(e.getLocalizedMessage().length() < 100) {
+                                } else if (e.getMessage() != null && e.getMessage().trim().length() > 0) {
+                                    if (e.getLocalizedMessage().length() < 100) {
                                         message = e.getMessage();
-                                    }else{
-                                        message = getString(R.string.long_api_error,"\ud83d\ude05");
+                                    } else {
+                                        message = getString(R.string.long_api_error, "\ud83d\ude05");
                                     }
-                                }else
+                                } else
                                     message = getString(R.string.client_error);
                                 Toasty.error(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
@@ -718,7 +697,6 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-
     private void manageClient(String client_id, String client_secret, String id) {
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -737,8 +715,6 @@ public class LoginActivity extends BaseActivity {
                 startActivity(i);
             } else {
                 String url = redirectUserToAuthorizeAndLogin(getApplicationContext(), socialNetwork, client_id, instance);
-
-
                 Helper.openBrowser(LoginActivity.this, url);
             }
         }
@@ -788,14 +764,12 @@ public class LoginActivity extends BaseActivity {
             editor.apply();
             return false;
         } else if (id == R.id.action_import_data) {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(LoginActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                    return true;
-                }
+            if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(LoginActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                return true;
             }
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -815,7 +789,6 @@ public class LoginActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
@@ -831,20 +804,6 @@ public class LoginActivity extends BaseActivity {
             Toasty.error(getApplicationContext(), getString(R.string.toot_select_file_error), Toast.LENGTH_LONG).show();
         }
     }
-
-
-    public static String redirectUserToAuthorizeAndLogin(Context context, UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
-        String queryString = Helper.CLIENT_ID + "=" + clientId;
-        queryString += "&" + Helper.REDIRECT_URI + "=" + Uri.encode(Helper.REDIRECT_CONTENT_WEB);
-        queryString += "&" + Helper.RESPONSE_TYPE + "=code";
-        if (admin) {
-            queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES_ADMIN;
-        } else {
-            queryString += "&" + Helper.SCOPE + "=" + Helper.OAUTH_SCOPES;
-        }
-        return Helper.instanceWithProtocol(context, instance) + Helper.EP_AUTHORIZE + "?" + queryString;
-    }
-
 
     private void showcaseInstance(final boolean loop) {
         BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)

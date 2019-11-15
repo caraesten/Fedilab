@@ -24,17 +24,6 @@ import android.os.Parcelable;
 
 public class Tag implements Parcelable {
 
-    private String name;
-    private String url;
-
-    public Tag() {
-    }
-
-    protected Tag(Parcel in) {
-        name = in.readString();
-        url = in.readString();
-    }
-
     public static final Creator<Tag> CREATOR = new Creator<Tag>() {
         @Override
         public Tag createFromParcel(Parcel in) {
@@ -46,6 +35,16 @@ public class Tag implements Parcelable {
             return new Tag[size];
         }
     };
+    private String name;
+    private String url;
+
+    public Tag() {
+    }
+
+    protected Tag(Parcel in) {
+        name = in.readString();
+        url = in.readString();
+    }
 
     public String getName() {
         return name;

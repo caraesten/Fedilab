@@ -5,20 +5,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.franmontiel.localechanger.LocaleChanger;
+import com.google.android.material.snackbar.Snackbar;
+import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.one.EmojiOneProvider;
 
@@ -33,18 +30,18 @@ import es.dmoral.toasty.Toasty;
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends CyaneaAppCompatActivity {
 
 
     public static final int READ_WRITE_STORAGE = 52;
     public static Timer timer;
-    private ProgressDialog mProgressDialog;
 
     static {
         Helper.installProvider();
         EmojiManager.install(new EmojiOneProvider());
     }
 
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

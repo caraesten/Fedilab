@@ -18,61 +18,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
-    android:contentInsetLeft="0dp"
-    android:contentInsetStart="0dp"
-    app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp"
-    android:contentInsetRight="0dp"
-    android:contentInsetEnd="0dp"
-    app:contentInsetRight="0dp"
-    app:contentInsetEnd="0dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    app:popupTheme="?attr/popupOverlay"
+    android:background="?colorPrimary"
+    android:contentInsetStart="0dp"
+    android:contentInsetLeft="0dp"
+    android:contentInsetEnd="0dp"
+    android:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp"
     tools:ignore="UnusedAttribute">
 
     <ImageView
         android:id="@+id/toolbar_close"
-        android:src="@drawable/ic_close"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:contentDescription="@string/close" />
+        android:contentDescription="@string/close"
+        android:gravity="center_vertical"
+        android:src="@drawable/ic_close"
+        android:tint="?attr/menuIconColor" />
 
 
     <TextView
+        android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:id="@+id/toolbar_title" />
+        android:layout_gravity="center_vertical"
+        android:textSize="14sp" />
 
 
     <ImageView
         android:id="@+id/media_save"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_save_white"
-        android:scaleType="fitXY"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="end"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
         android:layout_marginEnd="10dp"
+        android:contentDescription="@string/download"
         android:gravity="center_vertical"
-        android:contentDescription="@string/download" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_save_white"
+        android:tint="?attr/menuIconColor" />
+
     <ImageView
         android:id="@+id/media_share"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_share_media"
-        android:scaleType="fitXY"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="end"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
         android:layout_marginEnd="10dp"
+        android:contentDescription="@string/share"
         android:gravity="center_vertical"
-        android:contentDescription="@string/share" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_share_media"
+        android:tint="?attr/menuIconColor" />
 
 </androidx.appcompat.widget.Toolbar>

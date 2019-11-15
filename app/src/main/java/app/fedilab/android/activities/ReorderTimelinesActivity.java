@@ -20,17 +20,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.ItemTouchHelper;
-
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -50,6 +43,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +59,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.RemoteInstance;
@@ -68,15 +71,12 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.itemtouchhelper.OnStartDragListener;
 import app.fedilab.android.helper.itemtouchhelper.OnUndoListener;
 import app.fedilab.android.helper.itemtouchhelper.SimpleItemTouchHelperCallback;
+import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnListActionInterface;
 
 
 /**
@@ -96,21 +96,16 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
-    private int theme;
-    private String instance;
     private boolean refresh_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -134,6 +129,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(ReorderTimelinesActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar_add, new LinearLayout(getApplicationContext()), false);
@@ -337,10 +333,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                 }
             });
             toolbar_title.setText(R.string.action_reorder_timeline);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, ReorderTimelinesActivity.this);
-            }
         }
         setContentView(R.layout.activity_reorder_tabs);
 
@@ -372,8 +364,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
     @Override
     public void onUndo(ManageTimelines manageTimelines, int position) {
-        if (theme == Helper.THEME_LIGHT)
-            undo_container.setBackgroundColor(getResources().getColor(R.color.mastodonC3));
         undo_container.setVisibility(View.VISIBLE);
         switch (manageTimelines.getType()) {
             case TAG:

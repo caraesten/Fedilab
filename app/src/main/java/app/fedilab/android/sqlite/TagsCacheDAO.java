@@ -29,8 +29,8 @@ import java.util.List;
  */
 public class TagsCacheDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public TagsCacheDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

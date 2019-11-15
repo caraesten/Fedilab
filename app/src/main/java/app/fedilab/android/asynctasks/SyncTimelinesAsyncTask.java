@@ -25,19 +25,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnSyncTimelineInterface;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.interfaces.OnSyncTimelineInterface;
 
 
 /**
@@ -252,7 +251,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         }
 
-        if(  this.syncLists ) {
+        if (this.syncLists) {
             APIResponse apiResponse;
             if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 List<app.fedilab.android.client.Entities.List> listsAPI;
@@ -338,7 +337,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     String instance = Helper.getLiveInstance(contextReference.get());
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_DATE_LIST_FETCH+userId+instance, Helper.dateToString(new Date()));
+                    editor.putString(Helper.LAST_DATE_LIST_FETCH + userId + instance, Helper.dateToString(new Date()));
                     editor.apply();
                 } catch (Exception ignored) {
                 }

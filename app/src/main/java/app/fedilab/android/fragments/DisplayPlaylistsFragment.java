@@ -14,7 +14,6 @@ package app.fedilab.android.fragments;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,15 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +34,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -138,10 +134,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         int i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -170,8 +166,6 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     set_upload_channel = dialogView.findViewById(R.id.set_upload_channel);
                     set_upload_privacy = dialogView.findViewById(R.id.set_upload_privacy);
 
-                    Helper.changeMaterialSpinnerColor(context, set_upload_privacy);
-                    Helper.changeMaterialSpinnerColor(context, set_upload_channel);
 
                     new RetrievePeertubeChannelsAsyncTask(context, DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -319,10 +313,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if (apiResponse.getError() != null) {
-            if(apiResponse.getError().getError().length() < 100) {
+            if (apiResponse.getError().getError().length() < 100) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-            }else{
-                Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -346,10 +340,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                 playlistAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);
             } else {
-                if(apiResponse.getError().getError().length() < 100) {
+                if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
                 }
             }
         } else if (actionType == ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST) {
@@ -373,10 +367,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if (apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0) {
             if (apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                if(apiResponse.getError().getError().length() < 100) {
+                if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                }else{
-                    Toasty.error(context, getString(R.string.long_api_error,"\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
                 }
             else
                 Toasty.error(context, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -419,10 +413,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }

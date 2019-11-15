@@ -34,8 +34,6 @@ public class PeertubeNotification {
     public PeertubeNotification() {
     }
 
-    ;
-
     public String getId() {
         return id;
     }

@@ -15,31 +15,30 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/main_container"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/account_search_title"
-        android:visibility="gone"
-        android:textSize="18sp"
-        android:background="?attr/colorAccent"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
+        android:background="?colorAccent"
         android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:text="@string/accounts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/account_search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -50,19 +49,19 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/account_pp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/profile_picture" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
+            android:id="@+id/account_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/account_container"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -72,47 +71,47 @@
 
                 <TextView
                     android:id="@+id/account_dn"
-                    android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/account_un"
-                    android:maxLines="1"
                     android:layout_width="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:maxLines="1"
                 android:id="@+id/account_ac"
-                android:textSize="16sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:text="@string/toots"
-                        android:maxLines="1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@string/toots" />
 
                     <TextView
                         android:id="@+id/account_sc"
@@ -122,15 +121,15 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:maxLines="1"
-                        android:text="@string/following"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@string/following" />
 
                     <TextView
                         android:id="@+id/account_fgc"
@@ -140,15 +139,15 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:maxLines="1"
-                        android:text="@string/followers"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@string/followers" />
 
                     <TextView
                         android:id="@+id/account_frc"

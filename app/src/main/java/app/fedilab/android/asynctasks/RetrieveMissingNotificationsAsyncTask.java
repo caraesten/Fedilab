@@ -20,12 +20,12 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
-import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
 
 
@@ -56,7 +56,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         APIResponse apiResponse = api.getNotificationsSince(type, since_id, 40, false);
-        if( apiResponse == null){
+        if (apiResponse == null) {
             error = new Error();
             error.setError("");
             return null;

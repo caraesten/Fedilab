@@ -21,9 +21,9 @@
 
     <TextView
         android:id="@+id/tag_name"
-        android:layout_margin="5dp"
-        android:padding="10dp"
-        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:padding="10dp" />
 </LinearLayout>

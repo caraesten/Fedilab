@@ -18,7 +18,6 @@ package app.fedilab.android.client.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,17 @@ import java.util.List;
 
 public class PixelFedStory implements Parcelable {
 
+    public static final Parcelable.Creator<PixelFedStory> CREATOR = new Parcelable.Creator<PixelFedStory>() {
+        @Override
+        public PixelFedStory createFromParcel(Parcel source) {
+            return new PixelFedStory(source);
+        }
+
+        @Override
+        public PixelFedStory[] newArray(int size) {
+            return new PixelFedStory[size];
+        }
+    };
     private String id;
     private String photo;
     private String name;
@@ -35,6 +45,20 @@ public class PixelFedStory implements Parcelable {
     private Date lastUpdated;
     private boolean seen;
     private List<PixelFedStoryItem> pixelFedStoryItems;
+
+    public PixelFedStory() {
+    }
+
+    protected PixelFedStory(Parcel in) {
+        this.id = in.readString();
+        this.photo = in.readString();
+        this.name = in.readString();
+        this.link = in.readString();
+        long tmpLastUpdated = in.readLong();
+        this.lastUpdated = tmpLastUpdated == -1 ? null : new Date(tmpLastUpdated);
+        this.seen = in.readByte() != 0;
+        this.pixelFedStoryItems = in.createTypedArrayList(PixelFedStoryItem.CREATOR);
+    }
 
     public String getId() {
         return id;
@@ -92,7 +116,6 @@ public class PixelFedStory implements Parcelable {
         this.pixelFedStoryItems = pixelFedStoryItems;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -108,30 +131,4 @@ public class PixelFedStory implements Parcelable {
         dest.writeByte(this.seen ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.pixelFedStoryItems);
     }
-
-    public PixelFedStory() {
-    }
-
-    protected PixelFedStory(Parcel in) {
-        this.id = in.readString();
-        this.photo = in.readString();
-        this.name = in.readString();
-        this.link = in.readString();
-        long tmpLastUpdated = in.readLong();
-        this.lastUpdated = tmpLastUpdated == -1 ? null : new Date(tmpLastUpdated);
-        this.seen = in.readByte() != 0;
-        this.pixelFedStoryItems = in.createTypedArrayList(PixelFedStoryItem.CREATOR);
-    }
-
-    public static final Parcelable.Creator<PixelFedStory> CREATOR = new Parcelable.Creator<PixelFedStory>() {
-        @Override
-        public PixelFedStory createFromParcel(Parcel source) {
-            return new PixelFedStory(source);
-        }
-
-        @Override
-        public PixelFedStory[] newArray(int size) {
-            return new PixelFedStory[size];
-        }
-    };
 }
