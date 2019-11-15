@@ -16,8 +16,6 @@
     <string name="cancel">Annuler</string>
     <string name="download">Télécharger</string>
     <string name="download_file">Télécharger %1$s</string>
-    <string name="download_over">Téléchargement terminé</string>
-    <string name="save_file">Sauvegarder %1$s</string>
     <string name="save_over">Enregistrement terminé</string>
     <string name="download_from" formatted="false">Fichier : %1$s</string>
     <string name="password">Mot de passe</string>
@@ -25,10 +23,8 @@
     <string name="accounts">Comptes</string>
     <string name="toots">Pouets</string>
     <string name="tags">Étiquettes</string>
-    <string name="token">Jeton</string>
     <string name="save">Sauvegarder</string>
     <string name="restore">Restaurer</string>
-    <string name="two_factor_authentification">Authentification en deux étapes ?</string>
     <string name="no_result">Aucun résultat !</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance : mastodon.social</string>
@@ -39,10 +35,7 @@
     <string name="change">Changer</string>
     <string name="choose_picture">Sélectionnez une photo…</string>
     <string name="clear">Nettoyer</string>
-    <string name="microphone">Microphone</string>
     <string name="camera">Appareil photo</string>
-    <string name="speech_prompt">Veuillez dire quelque chose</string>
-    <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
     <string name="delete_all">Tout effacer</string>
     <string name="translate_toot">Traduire ce pouet.</string>
     <string name="schedule">Programmer</string>
@@ -59,7 +52,6 @@
     <string name="replies">Réponses</string>
     <string name="username">Nom d’utilisateur</string>
     <string name="drafts">Brouillons</string>
-    <string name="new_data">De nouvelles données sont disponibles ! Souhaitez-vous les afficher ?</string>
     <string name="favourite">Favoris</string>
     <string name="follow">Nouveaux⋅elles abonné⋅e⋅s</string>
     <string name="mention">Mentions</string>
@@ -78,18 +70,12 @@
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Utilisateurs en sourdine</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
-    <string name="remote_follow_menu">Suivre à distance</string>
     <string name="notifications">Notifications</string>
     <string name="follow_request">Demandes d’abonnements</string>
-    <string name="optimization">Optimisation</string>
     <string name="settings">Paramètres</string>
-    <string name="profile">Profil</string>
-    <string name="make_a_choice">Que souhaitez-vous faire ?</string>
     <string name="delete_account_title">Supprimer un compte</string>
     <string name="delete_account_message" formatted="false">Supprimer le compte %1$s de l’application ?</string>
     <string name="send_email">Envoyer un Email</string>
-    <string name="choose_file">Veuillez sélectionner un fichier</string>
-    <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
     <string name="click_to_change">Cliquer sur le chemin pour le changer</string>
     <string name="failed">Erreur !</string>
     <string name="scheduled_toots">Pouets programmés</string>
@@ -99,10 +85,6 @@
     <string name="live_notif">Notifications en direct</string>
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
-    <string name="fav_added">Pouet ajouté aux favoris !</string>
-    <string name="fav_removed">Pouet supprimé des favoris !</string>
-    <string name="reblog_added">Le pouet a été partagé !</string>
-    <string name="reblog_removed">Pouet supprimé du partage !</string>
     <string name="reblog_by">Partagé par %1$s</string>
     <string name="favourite_add">Ajouter ce pouet aux favoris ?</string>
     <string name="favourite_remove">Supprimer ce pouet des favoris ?</string>
@@ -134,10 +116,6 @@
         <item>Supprimer ce pouet ?</item>
         <item>Supprimer &amp; réécrire ce pouet ?</item>
     </string-array>
-    <plurals name="preview_replies">
-        <item quantity="one">%d réponse</item>
-        <item quantity="other">%d réponses</item>
-    </plurals>
     <string name="bookmarks">Signets</string>
     <string name="bookmark_add">Ajouter aux signets</string>
     <string name="bookmark_remove">Supprimer le signet</string>
@@ -159,7 +137,6 @@
     <string name="toot_title_reply">Répondre à un pouet</string>
     <string name="queet_title">Rédiger un queet</string>
     <string name="queet_title_reply">Répondre à un queet</string>
-    <string name="toot_no_space">Vous avez atteint les 500 caractères autorisés !</string>
     <string name="toot_select_image">Sélectionnez un média</string>
     <string name="toot_select_image_error">Une erreur s’est produite lors de la sélection du média !</string>
     <string name="toot_delete_media">Supprimer le média ?</string>
@@ -193,7 +170,6 @@
     <string name="about_yandex">Traduction des pouets :</string>
     <string name="about_thekinrar">Recherche d’instances :</string>
     <string name="thanks_text_logo">Concepteur de l’icône :</string>
-    <string name="thanks_text_banner">Concepteur de la bannière :</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
     <!-- Accounts -->
@@ -223,14 +199,9 @@
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous suit</string>
-    <string name="notif_pouet">Nouveau pouet de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">et %d autre notification</item>
         <item quantity="other">et %d autres notifications</item>
-    </plurals>
-    <plurals name="other_notif_hometimeline">
-        <item quantity="one">et %d autre pouet à découvrir</item>
-        <item quantity="other">et %d autres pouets à découvrir</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d aime</item>
@@ -267,7 +238,6 @@
     <string name="toast_error_instance">Le nom de l’instance ne semble pas être valide !</string>
     <string name="toast_error_loading_account">Une erreur s’est produite pendant le chargement du compte !</string>
     <string name="toast_error_search">Une erreur s’est produite lors de la recherche !</string>
-    <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
     <string name="toast_saved">Le média a été enregistré !</string>
@@ -276,12 +246,8 @@
     <string name="toast_toot_saved">Brouillon enregistré !</string>
     <string name="toast_error_char_limit">Êtes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
     <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
-    <string name="toast_empty_search">Il faut renseigner une instance et un nom d’utilisateur !</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
-    <string name="set_accounts_page">Nombre de comptes par chargement</string>
-    <string name="set_notifications_page">Nombre de notifications par chargement</string>
     <string name="set_attachment_always">Toujours</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Demander</string>
@@ -290,13 +256,9 @@
     <string name="load_attachment_spoiler">Afficher le contenu ?</string>
     <string name="load_attachment_spoiler_less">Afficher moins…</string>
     <string name="load_sensitive_attachment">Charger les images sensibles</string>
-    <string name="set_display_reply">Afficher le message précédent lors d’une réponse</string>
-    <string name="set_display_local">Afficher le fil local</string>
-    <string name="set_display_global">Afficher le fil public</string>
     <string name="set_disable_gif">Désactiver l’animation des avatars</string>
     <string name="set_folder_title">Destination : </string>
     <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
-    <string name="set_bubble_counter">Afficher les compteurs</string>
     <string name="set_auto_add_media_url">Ajouter l’URL des médias dans les pouets</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
     <string name="set_notif_follow_share">Notifier lorsque quelqu’un partage mes pouets</string>
@@ -308,7 +270,6 @@
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notify">Notifier ?</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
-    <string name="set_night_mode">Mode nuit</string>
     <string name="set_nsfw_timeout">Délai d’affichage NSFW (en secondes, 0 signifie aucun délai)</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="settings_title_custom_sharing">Partage personnalisé</string>
@@ -332,12 +293,6 @@
     <string name="use_javascript">Activer Javascript</string>
     <string name="expand_cw">Afficher automatiquement le contenu masqué</string>
     <string name="use_cookies">Autoriser les cookies tiers</string>
-    <string name="settings_ui_layout">Disposition des fils : </string>
-    <string-array name="settings_menu_tabs">
-        <item>Onglets</item>
-        <item>Menu</item>
-        <item>Onglets et menu</item>
-    </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
@@ -349,15 +304,6 @@
         <item>Clair</item>
         <item>Noir</item>
     </string-array>
-    <string-array name="settings_resize_picture">
-        <item>Non</item>
-        <item>512 Ko</item>
-        <item>1 Mo</item>
-        <item>2 Mo</item>
-        <item>4 Mo</item>
-        <item>6 Mo</item>
-        <item>8 Mo</item>
-    </string-array>
     <string name="set_led_colour">Couleur de la LED :</string>
     <string-array name="led_colours">
         <item>Bleu</item>
@@ -368,13 +314,9 @@
         <item>Jaune</item>
         <item>Blanc</item>
     </string-array>
-    <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d’accueil</string>
     <string name="action_follow">Suivre</string>
-    <string name="action_unfollow">Se désabonner</string>
-    <string name="action_block">Bloquer</string>
     <string name="action_unblock">Débloquer</string>
     <string name="action_mute">Masquer</string>
-    <string name="action_no_action">Aucune action</string>
     <string name="action_unmute">Afficher</string>
     <string name="request_sent">Demande envoyée</string>
     <string name="followed_by">Vous suit</string>
@@ -387,8 +329,6 @@
     <string name="settings_popup_message">        Veuillez confirmer les notifications que vous souhaitez recevoir.
         Vous pourrez les activer ou les désactiver plus tard dans les paramètres (onglet Notifications).
     </string>
-    <string name="settings_popup_timeline">Pour les pouets non lus sur la page d’accueil</string>
-    <string name="settings_popup_notification">Pour les notifications non lues ?</string>
     <!-- CACHE -->
     <string name="cache_title">Nettoyage du cache</string>
     <string name="cache_message">Il y a %1$s de données en cache.\n\nSouhaitez-vous les supprimer ?</string>
@@ -398,7 +338,6 @@
     <string name="title_header_custom_sharing">Titre</string>
     <string name="title_hint_custom_sharing">Titre&#8230;</string>
     <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
     <string name="keywords_header_custom_sharing">Mots clés</string>
     <string name="keywords_hint_custom_sharing">Mots clés&#8230;</string>
     <!-- ACTIVITY CACHE -->
@@ -415,7 +354,6 @@
     <string name="show_pinned">Pouets épinglés</string>
     <string name="filter_no_result">Aucun résultat avec ce filtre !</string>
     <string name="data_backup_toots">Sauvegarde des pouets pour %1$s</string>
-    <string name="data_backup_notifications">Sauvegarde des notifications pour %1$s</string>
     <string name="data_backup_success">%1$s nouveaux pouets ont été importés</string>
     <string name="data_backup_notification_success">%1$s nouvelles notifications ont été importées</string>
     <string-array name="filter_order">
@@ -470,18 +408,14 @@
     <string name="action_lists_confirm_delete">Êtes-vous sûr de vouloir supprimer définitivement cette liste ?</string>
     <string name="action_lists_empty_content">Il n’y a rien dans cette liste pour l’instant.</string>
     <string name="action_lists_add_to">Ajouter à la liste</string>
-    <string name="action_lists_remove_from">Supprimer de la liste</string>
     <string name="action_lists_create">Ajouter une liste</string>
     <string name="action_lists_delete">Supprimer la liste</string>
     <string name="action_lists_update">Modifier la liste</string>
     <string name="action_lists_title_placeholder">Titre de la nouvelle liste</string>
-    <string name="action_lists_search_users">Rechercher parmi les gens que vous suivez</string>
-    <string name="action_lists_owner">Vos listes</string>
     <string name="action_lists_add_user">Le compte a été ajouté à la liste !</string>
     <string name="action_lists_empty">Vous n’avez pas encore de listes !</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s a été déplacé vers %2$s</string>
-    <string name="show_boost_count">Afficher le nombre de partages/favoris</string>
     <string name="issue_login_title">Problème de connexion ?</string>
     <string name="issue_login_message"><b>Voici quelques vérifications qui pourraient aider :</b> \n\n 
 - Vérifier qu’il n’y a pas d’erreur dans le nom de l’instance\n\n 
@@ -497,25 +431,19 @@
     <string name="data_export_success">%1$s pouets sur %2$s ont été exportés.</string>
     <string name="data_export_error">Une erreur est survenue lors de l’exportation des pouets pour %1$s</string>
     <string name="data_export_error_simple">Quelque chose a mal tourné lors de l’exportation de données !</string>
-    <string name="data_import_success_simple">Les données ont été importées !</string>
     <string name="data_import_error_simple">Quelque chose a mal tourné lors de l’importation de données !</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
     <string name="proxy_enable">Activer le proxy ?</string>
     <string name="poxy_host">Serveur</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Identifiant</string>
     <string name="poxy_password">Mot de passe</string>
-    <string name="set_theme">Thème :</string>
-    <string name="set_compact_mode">Mode compact</string>
     <string name="set_share_details">Ajouter les détails du pouet en le partageant</string>
     <string name="support_the_app_on_liberapay">Soutenir l’app sur Liberapay</string>
     <string name="alert_regex">Il y a une erreur dans l’expression régulière !</string>
-    <string name="no_account_yet">Vous n’avez pas encore de compte ?</string>
     <string name="toast_instance_unavailable">Aucun fil n’a été trouvé sur cette instance !</string>
     <string name="delete_instance">Désirez-vous effacer cette instance ?</string>
-    <string name="warning_delete_instance">Vous êtes sur le point de supprimer %s des instances suivies.</string>
     <string name="which_language">Traduire en</string>
     <string name="follow_instance">Suivre l’instance</string>
     <string name="toast_instance_already_added">Vous suivez déjà cette instance !</string>
@@ -524,10 +452,8 @@
     <string name="neutral_menu_information">Information</string>
     <string name="hide_boost">Masquer les boosts de %s</string>
     <string name="endorse">Recommander</string>
-    <string name="hide_everything">Tout masquer venant de %s</string>
     <string name="show_boost">Afficher les boosts de %s</string>
     <string name="unendorse">Ne pas recommander</string>
-    <string name="show_everything">Tout afficher venant de %s</string>
     <string name="toast_endorse">Ce compte est maintenant recommandé sur votre profil</string>
     <string name="toast_unendorse">Ce compte n’est plus recommandé sur votre profil</string>
     <string name="toast_show_boost">Les boosts sont maintenant masqués !</string>
@@ -548,7 +474,6 @@
     <string name="filter_context">Contextes du filtre</string>
     <string name="filter_context_explanations">Un ou plusieurs contextes où le filtre devrait s’appliquer</string>
     <string name="filter_expire">Expire après</string>
-    <string name="add_new_filter">Ajouter un nouveau filtre</string>
     <string name="action_filter_delete">Supprimer le filtre ?</string>
     <string name="action_update_filter">Mettre à jour le filtre</string>
     <string name="action_filter_create">Créer un filtre</string>
@@ -563,13 +488,11 @@
     <string name="account_added_list_trunk">Les comptes ont été ajoutés à la liste</string>
     <string name="adding_account_list_trunk">Ajout des comptes dans la liste</string>
     <string name="action_list_add">Vous n\'avez pas encore créé de liste. Cliquez sur le bouton \"+\" pour en ajouter une.</string>
-    <string name="action_remote_instance_add">Vous ne suivez aucune instance. Cliquez sur le bouton \"+\" pour en ajouter une.</string>
     <string name="about_trunk">Comptes suggérés</string>
     <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Abonnement impossible au(x) compte(s)</string>
     <string name="retrieve_remote_account">Recherche du compte distant</string>
     <string name="expand_image">Étendre automatiquement les médias cachés</string>
-    <string name="set_display_follow_instance">Afficher le bouton de suivi d’instances</string>
     <string name="channel_notif_follow">Nouvel abonnement</string>
     <string name="channel_notif_boost">Nouveau partage</string>
     <string name="channel_notif_fav">Nouveau Favori</string>
@@ -594,7 +517,6 @@
     <string name="retrieve_remote_status">Récupération du statut distant</string>
     <string name="comment">Commenter</string>
     <string name="peertube_instance">Instance PeerTube</string>
-    <string name="set_display_direct">Afficher le fil des messages privés</string>
     <string name="no_comments">Soyez le·a premier·ère à laisser un commentaire sur cette vidéo en utilisant le bouton supérieur droit !</string>
     <string name="number_view_video">%s vues</string>
     <string name="duration_video">Durée : %s</string>
@@ -606,10 +528,6 @@
     <string name="bookmark_remove_peertube">La vidéo a été retirée de vos favoris !</string>
     <string name="bookmark_peertube_empty">Il n’y a aucune vidéo Peertube dans vos favoris !</string>
     <string name="channel">Chaîne</string>
-    <string name="no_peertube_channels">Aucune chaîne PeerTube</string>
-    <string name="no_peertube_instances">Aucune instance PeerTube</string>
-    <string name="no_mastodon_instances">Aucune instance Mastodon</string>
-    <string name="no_lists">Aucune liste</string>
     <string name="videos">Vidéos</string>
     <string name="channels">Chaînes</string>
     <string name="set_display_emoji">Utiliser les EmojiOne</string>
@@ -617,12 +535,7 @@
     <string name="set_display_card">Afficher les aperçus dans tous les pouets</string>
     <string name="thanks_text_ux">Nouveau·lle UX/UI Designer·use</string>
     <string name="set_display_video_preview">Afficher les aperçus des vidéos</string>
-    <string name="thanks_text_support">Support de Gitlab</string>
-    <string name="action_bug_report">Signaler un bogue</string>
-    <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
-    <string name="bug_report_mail">Envoyer un rapport de bogue</string>
     <string name="account_id_clipbloard">L’ID du compte été copié vers le presse-papiers !</string>
-    <string name="settings_title_battery">Optimisation de la batterie</string>
     <string name="set_change_locale">Changer de langue</string>
     <string name="default_language">Langue par défaut</string>
     <string name="truncate_long_toots">Tronquer les longs pouets</string>
@@ -634,7 +547,6 @@
     <string name="tags_stored">L’étiquette a été restaurée !</string>
     <string name="tags_renamed">L’étiquette a été modifiée !</string>
     <string name="tags_deleted">L’étiquette a été supprimée !</string>
-    <string name="set_display_art">Afficher le fil artistique</string>
     <string name="schedule_boost">Programmer un boost</string>
     <string name="boost_scheduled">Le boost est programmé !</string>
     <string name="no_scheduled_boosts">Aucun boost programmé à afficher !</string>
@@ -672,12 +584,7 @@
     <string name="showcase_instance">Renseignez le nom de domaine de votre instance dans ce champs.\nPar exemple, si vous avez créé un compte sur https://mastodon.social\nécrivez simplement <b>mastodon.social</b>(sans le https://)\n
 Commencez à saisir les premières lettres et des domaines vous seront suggérés. \n\n
 Le bouton de connexion s’activera une fois qu’un domaine valide sera renseigné et que l’instance est active !    </string>
-    <string name="showcase_uid">        Dans ce champs, saisissez l’adresse de courrier relative à votre compte Mastodon et/ou Pleroma.
-    </string>
-    <string name="showcase_pwd">        Dernière étape consiste à saisir votre mot de passe puis cliquer sur « Connexion ».
-    </string>
     <string name="more_information">Plus d’informations</string>
-    <string name="showcase_2FA">Si vous utilisez 2FA (authentification à deux facteurs), vous devez utiliser ce lien. \nVous pouvez également l’utiliser si vous ne souhaitez pas saisir vos identifiants ici.</string>
     <!-- languages not translated -->
     <string name="languages">Langues</string>
     <string name="show_media_only">Médias seulement</string>
@@ -689,16 +596,13 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="bot">Robot</string>
     <string name="pixelfed_instance">Instance PixelFed</string>
     <string name="mastodon_instance">Instance Mastodon</string>
-    <string name="no_pixelfed_instance">Aucune instance PixelFed</string>
     <string name="any_tags">N’importe lequel</string>
     <string name="all_tags">Tous</string>
     <string name="none_tags">Aucun</string>
     <string name="some_words_any">N’importe lequel de ces mots (séparés par des espaces)</string>
     <string name="some_words_all">Tous ces mots (séparés par des espaces)</string>
-    <string name="some_words_none">Aucun de ces mots (séparés par des espaces)</string>
     <string name="some_tags">Ajouter quelques mots à filtrer (séparés par un espace)</string>
     <string name="change_tag_column">Renommer la colonne</string>
-    <string name="no_misskey_instance">Aucune instance Misskey</string>
     <string name="misskey_instance">Instance Misskey</string>
     <string name="toast_no_apps">Aucune application prenant en charge ce lien n’est installée sur votre appareil.</string>
     <string name="subscriptions">Abonnements</string>
@@ -715,7 +619,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="file_to_upload">Sélectionnez un fichier à transférer</string>
     <string name="my_videos">Mes vidéos</string>
     <string name="title">Titre</string>
-    <string name="categories">Catégories</string>
     <string name="license">Licence</string>
     <string name="category">Catégorie</string>
     <string name="language">Langue</string>
@@ -730,14 +633,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="video_uploaded_action">Cliquez ici pour éditer les données de la vidéo.</string>
     <string name="delete_video">Supprimer la vidéo</string>
     <string name="delete_video_confirmation">Êtes-vous sûr de vouloir supprimer cette vidéo ?</string>
-    <string name="no_video_uploaded">Aucune vidéo n’a encore été transférée !</string>
     <string name="display_nsfw_videos">Afficher les vidéos sensibles</string>
-    <string name="default_channel_of">Chaîne par défaut de %s</string>
     <string name="no_video_to_display">Aucune vidéo n’est disponible !</string>
-    <string name="add_image_to_favorite">Ajouter le média aux favoris</string>
     <string name="leave_a_comment">Laisser un commentaire</string>
     <string name="share">Partager</string>
-    <string name="my_pictures">Mes images</string>
     <string name="choose_schedule">Choisissez un mode pour la planification</string>
     <string name="device_schedule">Depuis l’appareil</string>
     <string name="server_schedule">Depuis le serveur</string>
@@ -745,12 +644,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="toots_client">Pouets (Appareil)</string>
     <string name="modify">Modifier</string>
     <string name="set_display_content_after_fetch_more">Afficher les nouveaux pouets au-dessus du bouton « Afficher le contenu ? »</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
     <string name="settings_category_label_timelines">Les fils</string>
-    <string name="settings_category_label_notification">Service des notifications</string>
     <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Contenu masqué</string>
-    <string name="settings_category_label_composing">Rédaction</string>
     <string name="contact">Contacts</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> a commenté votre vidéo <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> suit votre chaîne <b>%2$s</b>]]></string>
@@ -765,7 +660,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="import_data">Importer les données</string>
     <string name="toot_select_import">Sélectionner le fichier à importer</string>
     <string name="toot_select_file_error">Une erreur s’est produite lors de la sélection du fichier de sauvegarde !</string>
-    <string name="data_import_start">S’il vous plaît, ne tuez pas l’application pendant le traitement. Il ne sera pas très long.</string>
     <string name="add_public_comment">Ajouter un commentaire public</string>
     <string name="send_comment">Envoyer un commentaire</string>
     <string name="toast_toot_saved_error">Il n’y a pas de connexion Internet. Votre message a été stocké dans les brouillons.</string>
@@ -806,18 +700,14 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="poll_finish_at">fin à %s</string>
     <string name="refresh_poll">Actualiser le sondage</string>
     <string name="vote">Voter</string>
-    <string name="poll_not_private">Un sondage ne peut pas être attaché à un message direct !</string>
     <string name="notif_poll">Un sondage auquel vous avez participé est maintenant terminé</string>
     <string name="notif_poll_self">Un sondage que vous avez publié est maintenant terminé</string>
     <string name="settings_category_notif_customize">Personnaliser</string>
     <string name="settings_category_notif_categories">Catégories</string>
-    <string name="settings_category_notif_news">Actualités</string>
     <string name="settings_category_notif_time_slot">Créneau horaire</string>
     <string name="settings_category_notif_advanced">Avancé</string>
     <string name="set_display_new_badge">Afficher le badge \'new\' sur les pouets non lus</string>
-    <string name="set_display_peertube">Afficher le fil PeerTube</string>
     <string name="peertube_menu">PeerTube</string>
-    <string name="hide_tab">Cacher l’onglet</string>
     <string name="move_timeline">Déplacer le fil</string>
     <string name="hide_timeline">Cacher le fil</string>
     <string name="reorder_timelines">Réorganiser les fils</string>
@@ -827,10 +717,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="undo">Annuler</string>
     <string name="visible_tabs_needed">Vous devez garder deux onglets visibles !</string>
     <string name="action_reorder_timeline">Réorganiser les fils</string>
-    <string name="warning_list_deletion">Utilisez l\'entrée des listes pour supprimer cette liste !</string>
     <string name="warning_main_timeline">Les fils principaux ne peuvent qu’être masqués !</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Ajouter un fil</string>
     <string name="set_sensitive_content">Toujours marquer le média comme sensible</string>
     <string name="gnu_instance">Instance GNU</string>
     <string name="cached_status">Statut en cache</string>
@@ -845,14 +733,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="history">Historique</string>
     <string name="playlists">Listes de lecture</string>
     <string name="display_name">Nom d\'affichage</string>
-    <string name="privacy">Confidentialité</string>
-    <string name="create">Créer</string>
     <string name="action_playlist_add">Vous n\'avez aucune liste de lecture. Cliquez sur l\'icône « + » pour en ajouter une</string>
     <string name="error_display_name">Vous devez fournir un nom d\'affichage !</string>
     <string name="error_channel_mandatory">Un canal est requis lorsque la liste de lecture est publique.</string>
     <string name="action_playlist_create">Créer une liste de lecture</string>
     <string name="action_playlist_empty_content">Cette liste de lecture est vide.</string>
-    <string name="edit_media">Modifier le média</string>
     <string name="redo">rétablir</string>
     <string name="gallery">Galerie</string>
     <string name="label_emoji">Émoji</string>
@@ -860,7 +745,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="label_eraser">Gomme</string>
     <string name="label_text">Texte</string>
     <string name="label_filter">Filtre</string>
-    <string name="label_adjust">Ajuster</string>
     <string name="label_brush">Pinceau</string>
     <string name="confirm_exit_editing">Êtes-vous sûr de vouloir quitter sans enregistrer l\'image ?</string>
     <string name="discard">Abandonner</string>
@@ -868,7 +752,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="image_saved">Image enregistrée avec succès !</string>
     <string name="save_image_failed">Échec de l\'enregistrement de l\'image</string>
     <string name="opacity">Transparence</string>
-    <string name="label_crop">Rogner</string>
     <string name="set_photo_editor">Activer l\'éditeur d\'images</string>
     <string name="add_poll_item">Ajouter un élément de sondage</string>
     <string name="remove_poll_item">Supprimer le dernier élément de sondage</string>
@@ -880,10 +763,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="timed_mute">Temporairement muet</string>
     <string name="mention_account">Mentionner le compte</string>
     <string name="refresh_cache">Rafraîchir le cache</string>
-    <string name="see_boost_and_fav">Voir qui a boosté et ajouté aux favoris</string>
     <string name="mention_status">Mentionner le statut</string>
     <string name="action_news">Actualité</string>
-    <string name="set_display_news_from_fedilab">Afficher les nouvelles du compte de Fedilab</string>
     <string name="category_general">Général</string>
     <string name="category_regional">Régional</string>
     <string name="category_art">Art</string>
@@ -927,7 +808,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="reconnect_account">Reconnecter le compte</string>
     <string name="reconnect_account_message">L\'application n\'a pas accès aux fonctionnalités d\'administration. Vous devrez peut-être reconnecter le compte pour obtenir les autorisations nécessaires.</string>
     <string name="unresolved">Non résolu</string>
-    <string name="resolved">Résolu</string>
     <string name="remote">Distant</string>
     <string name="active">Actif</string>
     <string name="pending">En attente</string>
@@ -943,7 +823,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="disable">Désactiver</string>
     <string name="silence">Mettre en sourdine</string>
     <string name="email_user">Notifier l\'utilisateur·rice par e-mail</string>
-    <string name="perform_action">Effectuer l\'action</string>
     <string name="custom_warning">Avertissement personnalisé</string>
     <string name="user">Utilsateur·rice</string>
     <string name="moderator">Modérateur·rice</string>
@@ -975,7 +854,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="toast_empty_content">Contenu vide !</string>
     <string name="set_display_fedilab_features_button">Afficher le bouton des fonctionnalités de Fedilab</string>
     <string name="audio">L\'application a besoin d\'accéder à l\'enregistrement audio</string>
-    <string name="toot_message_record_error">Une erreur est survenue lors de l\'enregistrement du message vocal !</string>
     <string name="voice_message">Message vocal</string>
     <string name="set_quick_reply">Activer la réponse rapide</string>
     <string name="reply_might_be_useless">Le compte auquel vous répondez ne peut voir votre message !</string>
@@ -983,9 +861,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_blur_sensitive_indication">Si désactivé, les médias sensibles seront cachés avec un bouton</string>
     <string name="set_long_press_media_indication">Enregistre les médias en plein format lors d\'un appui long sur les prévisualisations</string>
     <string name="set_display_timeline_in_list_indication">Ajoute un bouton dans le coin supérieur droit pour lister tous les tags/instances/listes</string>
-    <string name="set_display_news_from_fedilab_indication">Affiche un élément dans le menu principal pour un accès rapide au fil avec le tag #Fedilab</string>
     <string name="live_notif_indication">Garde une connexion ouverte à l\'API de streaming pour les notifications en direct.</string>
-    <string name="set_keep_background_process_indication">Lorsque l’application est en arrière-plan, elle gardera une connexion à l’API de streaming. Désactivez-la si vous vous souciez de votre batterie.</string>
     <string name="set_enable_time_slot_indication">Durant cette période de temps, l’application enverra des notifications. Vous pouvez inverser (i. e. : silencer) ce laps de temps à l’aide du sélecteur.</string>
     <string name="set_display_fedilab_features_button_indication">Affiche un bouton Fedilab. C\'est un raccourci pour accéder aux fonctionnalités de l\'application.</string>
     <string name="set_quick_reply_indication">Permet de répondre directement dans les fils, en bas des statuts</string>
@@ -997,9 +873,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="featured_hashtags_indication">Ces tags permettent de filtrer les statuts dans les profils. Vous devrez utiliser le menu contextuel pour les voir.</string>
     <string name="set_capitalize_indication">Insère automatiquement une nouvelle ligne après la mention afin de mettre la première lettre en majuscule</string>
     <string name="settings_title_custom_sharing_indication">Permet aux créateurs de contenu de partager leurs statuts sur leurs flux RSS</string>
-    <string name="timelines">Fils</string>
-    <string name="u_interface">Interface</string>
-    <string name="battery">Batterie</string>
     <string name="compose">Rédaction</string>
     <string name="upload_image_maximum_retry_times">Nombre maximum de tentatives lors du téléversement de médias</string>
     <string name="new_folder">Créer un nouveau dossier ici</string>
@@ -1010,9 +883,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="default_directory">Dossier par défaut</string>
     <string name="folder">Dossier</string>
     <string name="create_folder">Créer un dossier</string>
-    <string name="custom_tabs_indication">Utilisez votre navigateur préféré intégré dans l\'application. En le désactivant, les liens seront ouverts via un navigateur externe</string>
     <string name="set_display_confirm">Afficher un message après qu’une action soit terminée (partage, favori, etc.) ?</string>
-    <string name="export_muted_instance">Exporter les instances mises en sourdine</string>
     <string name="muted_instance_exported">Les instances mises en sourdine ont été exportées !</string>
     <string name="add_instances">Ajouter une instance</string>
     <string name="export_instances">Exporter des instances</string>
@@ -1108,7 +979,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_nitter_host">Entrez votre nom de domaine personnalisé ou laissez vide pour utiliser nitter.net</string>
     <string name="set_hide_status_bar">Masquer la barre de notification de Fedilab</string>
     <string name="set_hide_status_bar_indication">Pour cacher le reste de la notification dans la barre de statut, cliquez sur le bouton en forme d\'œil, puis décochez: \"Afficher dans la barre de statut\"</string>
-    <string name="set_live_type_title">Activer les notifications différées</string>
     <string name="set_live_type_indication">Les notifications seront mises à jour toutes les 30 secondes. Cela permet de réduire la consommation de la batterie.</string>
     <string name="live_delayed">Notifications en direct différées</string>
     <string name="no_live_notif">Aucune notification en direct</string>
@@ -1134,10 +1004,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="title_video_peertube">Titre de la vidéo</string>
     <string name="join_peertube">Rejoignez Peertube</string>
     <string name="agreement_check_peertube">J\'ai au moins 16 ans et je suis d\'accord avec les %1$s de cette instance</string>
-    <string name="colors">Couleurs</string>
     <string name="link_color_title">Liens</string>
     <string name="link_color">Changer la couleur des liens (URL, mentions, tags, etc.) dans les messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Couleur du fond des post des fils</string>
@@ -1146,15 +1017,12 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="reset">Réinitialiser</string>
     <string name="icons_color_title">Icônes</string>
     <string name="icons_color">Couleur des icônes du bas dans les fils</string>
-    <string name="background_color_title">Arrière-plan</string>
-    <string name="background_color">Changer la couleur d\'arrière-plan des fils</string>
     <string name="pin_tag">Épingler ce tag</string>
     <string name="logo_of_the_instance">Logo de l\'instance</string>
     <string name="edit_profile">Éditer le profil</string>
     <string name="make_an_action">Faire une action</string>
     <string name="translation">Traduction</string>
     <string name="image_preview">Aperçu de l\'image</string>
-    <string name="change_theme">Changer le thème</string>
     <string name="text_color_title">Couleur du texte</string>
     <string name="text_color">Changer la couleur du texte dans les publications/messages</string>
     <string name="apply_changes">Appliquer les modifications</string>
