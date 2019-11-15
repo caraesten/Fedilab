@@ -16,8 +16,6 @@
     <string name="cancel">Avbryt</string>
     <string name="download">Ladda ned</string>
     <string name="download_file">Laddat ner %1$s</string>
-    <string name="download_over">Nedladdning klar</string>
-    <string name="save_file">Spara %1$s</string>
     <string name="save_over">Media sparad</string>
     <string name="download_from" formatted="false">Fil: %1$s</string>
     <string name="password">Lösenord</string>
@@ -25,10 +23,8 @@
     <string name="accounts">Konton</string>
     <string name="toots">Toots</string>
     <string name="tags">Taggar</string>
-    <string name="token">Token</string>
     <string name="save">Spara</string>
     <string name="restore">Återställ</string>
-    <string name="two_factor_authentification">Tvåfaktorsautentisering?</string>
     <string name="no_result">Inga resultat!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: mastodon.social</string>
@@ -39,10 +35,7 @@
     <string name="change">Ändra</string>
     <string name="choose_picture">Välj en bild…</string>
     <string name="clear">Rensa</string>
-    <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
-    <string name="speech_prompt">Var god säg något</string>
-    <string name="speech_not_supported">Tyvärr stöder inte din enhet röstinmatning!</string>
     <string name="delete_all">Ta bort allt</string>
     <string name="translate_toot">Översätt denna toot.</string>
     <string name="schedule">Schemalägg</string>
@@ -59,7 +52,6 @@
     <string name="replies">Svar</string>
     <string name="username">Användarnamn</string>
     <string name="drafts">Utkast</string>
-    <string name="new_data">Det finns nya data! Vill du visa dem?</string>
     <string name="favourite">Favoriter</string>
     <string name="follow">Nya följare</string>
     <string name="mention">Omnämningar</string>
@@ -78,18 +70,12 @@
     <string name="communication_menu_title">Kommunikation</string>
     <string name="muted_menu">Tystade användare</string>
     <string name="blocked_menu">Blockerade användare</string>
-    <string name="remote_follow_menu">Fjärrfölj</string>
     <string name="notifications">Notifieringar</string>
     <string name="follow_request">Följförfrågningar</string>
-    <string name="optimization">Optimering</string>
     <string name="settings">Inställningar</string>
-    <string name="profile">Profil</string>
-    <string name="make_a_choice">Vad vill du göra?</string>
     <string name="delete_account_title">Ta bort ett konto</string>
     <string name="delete_account_message" formatted="false">Radera kontot %1$s från programmet?</string>
     <string name="send_email">Skicka e-post</string>
-    <string name="choose_file">Välj en fil</string>
-    <string name="choose_file_error">Ingen filhanterare hittad!</string>
     <string name="click_to_change">Klicka på sökvägen för att ändra den</string>
     <string name="failed">Misslyckades!</string>
     <string name="scheduled_toots">Schemalagda toots</string>
@@ -99,10 +85,6 @@
     <string name="live_notif">Livenotiser</string>
     <!-- Status -->
     <string name="no_status">Ingen toot att visa</string>
-    <string name="fav_added">Tooten lades till i favoriter</string>
-    <string name="fav_removed">Tooten togs bort från favoriter!</string>
-    <string name="reblog_added">Tooten knuffades!</string>
-    <string name="reblog_removed">Tooten knuffas inte längre!</string>
     <string name="reblog_by">Knuffad av %1$s</string>
     <string name="favourite_add">Lägg till detta toot till dina favoriter?</string>
     <string name="favourite_remove">Ta bort detta toot från dina favoriter?</string>
@@ -134,10 +116,6 @@
         <item>Ta bort denna toot?</item>
         <item>Ta bort &amp; skriv om denna toot?</item>
     </string-array>
-    <plurals name="preview_replies">
-        <item quantity="one">%d svar</item>
-        <item quantity="other">%d svar</item>
-    </plurals>
     <string name="bookmarks">Bokmärken</string>
     <string name="bookmark_add">Lägger till bokmärke</string>
     <string name="bookmark_remove">Ta bort bokmärke</string>
@@ -159,7 +137,6 @@
     <string name="toot_title_reply">Svara på en toot</string>
     <string name="queet_title">Skriv en queet</string>
     <string name="queet_title_reply">Svara på en queet</string>
-    <string name="toot_no_space">Du har nått de tillåtna 500 tecken!</string>
     <string name="toot_select_image">Välj en media</string>
     <string name="toot_select_image_error">Ett fel uppstod när du valde media!</string>
     <string name="toot_delete_media">Ta bort denna media?</string>
@@ -193,7 +170,6 @@
     <string name="about_yandex">Översättning av toots:</string>
     <string name="about_thekinrar">Sök instanser:</string>
     <string name="thanks_text_logo">Ikondesigner:</string>
-    <string name="thanks_text_banner">Banner-design av:</string>
     <!-- Conversation -->
     <string name="conversation">Konversation</string>
     <!-- Accounts -->
@@ -223,14 +199,9 @@
     <string name="notif_reblog">ökat din status</string>
     <string name="notif_favourite">favourited din status</string>
     <string name="notif_follow">följt dig</string>
-    <string name="notif_pouet">Nya toot från %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">och en till notifikation</item>
         <item quantity="other">och %d till notifikationer</item>
-    </plurals>
-    <plurals name="other_notif_hometimeline">
-        <item quantity="one">lägg till en till toot att utforska</item>
-        <item quantity="other">lägg till %d till toot att utforska</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d gillar</item>
@@ -267,7 +238,6 @@
     <string name="toast_error_instance">Domäninstansen verkar inte vara giltig!</string>
     <string name="toast_error_loading_account">Ett fel uppstod vid växling mellan konton!</string>
     <string name="toast_error_search">Ett fel uppstod under sökningen!</string>
-    <string name="toast_error_login">Kan inte logga in!</string>
     <string name="toast_update_credential_ok">Profildata har sparats!</string>
     <string name="nothing_to_do">Inga åtgärder kan vidtas</string>
     <string name="toast_saved">Inlägget har sparats!</string>
@@ -276,12 +246,8 @@
     <string name="toast_toot_saved">Utkast sparat!</string>
     <string name="toast_error_char_limit">Är du säker på att denna instans tillåter detta dessa antal tecken? Vanligtvis, är detta värde ungefär 500 tecken.</string>
     <string name="toast_visibility_changed">Synligheten för toots har ändrats för konto %1$s</string>
-    <string name="toast_empty_search">Instans och skärmnamn får inte vara tomt!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimering av laddning</string>
     <string name="set_toots_page">Antal toots per laddning</string>
-    <string name="set_accounts_page">Antal konton per laddning</string>
-    <string name="set_notifications_page">Antal notifieringar per laddning</string>
     <string name="set_attachment_always">Alltid</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Fråga</string>
@@ -290,13 +256,9 @@
     <string name="load_attachment_spoiler">Visa mer…</string>
     <string name="load_attachment_spoiler_less">Visa mindre…</string>
     <string name="load_sensitive_attachment">Känsligt innehåll</string>
-    <string name="set_display_reply">Visa föregående meddelande i svaren</string>
-    <string name="set_display_local">Visa lokala tidslinje</string>
-    <string name="set_display_global">Visa federerade tidslinje</string>
     <string name="set_disable_gif">Inaktivera GIF avatarer</string>
     <string name="set_folder_title">Sökväg: </string>
     <string name="set_auto_store_toot">Spara utkast automatiskt</string>
-    <string name="set_bubble_counter">Visa räknare</string>
     <string name="set_auto_add_media_url">Lägga till URL för media i toots</string>
     <string name="set_notif_follow">Meddela när någon följer dig</string>
     <string name="set_notif_follow_share">Meddela när någon ökar din status</string>
@@ -308,7 +270,6 @@
     <string name="set_wifi_only">Notifiera endast över WIFI</string>
     <string name="set_notify">Notifiera?</string>
     <string name="set_notif_silent">Tysta aviseringar</string>
-    <string name="set_night_mode">Nattläge</string>
     <string name="set_nsfw_timeout">NSFW visningspaus (i sekunder, 0 betyder av)</string>
     <string name="settings_title_profile">Ändra profil</string>
     <string name="settings_title_custom_sharing">Anpassad delning</string>
@@ -332,12 +293,6 @@
     <string name="use_javascript">Aktivera Javascript</string>
     <string name="expand_cw">Utöka meddelanden automatiskt</string>
     <string name="use_cookies">Tillåt tredjepartskakor</string>
-    <string name="settings_ui_layout">Layout för tidslinjer: </string>
-    <string-array name="settings_menu_tabs">
-        <item>Flikar</item>
-        <item>Meny</item>
-        <item>Flikar och meny</item>
-    </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
@@ -349,15 +304,6 @@
         <item>Ljust</item>
         <item>Svart</item>
     </string-array>
-    <string-array name="settings_resize_picture">
-        <item>Nej</item>
-        <item>512 KB</item>
-        <item>1 MB</item>
-        <item>2 MB</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
-    </string-array>
     <string name="set_led_colour">Färg på LED:</string>
     <string-array name="led_colours">
         <item>Blå</item>
@@ -368,13 +314,9 @@
         <item>Gul</item>
         <item>Vit</item>
     </string-array>
-    <string name="set_notification_news">Meddela om nya toots på hemtidslinjen</string>
     <string name="action_follow">Följ</string>
-    <string name="action_unfollow">Sluta följa</string>
-    <string name="action_block">Blockera</string>
     <string name="action_unblock">Avblockera</string>
     <string name="action_mute">Tysta</string>
-    <string name="action_no_action">Ingen åtgärd</string>
     <string name="action_unmute">Avtysta</string>
     <string name="request_sent">Begäran skickad</string>
     <string name="followed_by">Följer dig</string>
@@ -387,8 +329,6 @@
     <string name="settings_popup_message">        Bekräfta push-meddelanden som du vill ta emot.
         Du kan aktivera eller inaktivera dessa meddelanden senare i inställningar (fliken aviseringar).
     </string>
-    <string name="settings_popup_timeline">För olästa toots i hemtidslinjen?</string>
-    <string name="settings_popup_notification">För olästa meddelanden?</string>
     <!-- CACHE -->
     <string name="cache_title">Rensa cache</string>
     <string name="cache_message">Det finns %1$s av data i cacheminnet.\n\nVill du rensa det?</string>
@@ -398,7 +338,6 @@
     <string name="title_header_custom_sharing">Titel</string>
     <string name="title_hint_custom_sharing">Titel&#8230;</string>
     <string name="description_header_custom_sharing">Beskrivning</string>
-    <string name="description_hint_custom_sharing">Beskrivning&#8230;</string>
     <string name="keywords_header_custom_sharing">Nyckelord</string>
     <string name="keywords_hint_custom_sharing">Nyckelord&#8230;</string>
     <!-- ACTIVITY CACHE -->
@@ -415,7 +354,6 @@
     <string name="show_pinned">Visa fastnålade</string>
     <string name="filter_no_result">Inga matchande resultat hittades!</string>
     <string name="data_backup_toots">Säkerhetskopiering toots för %1$s</string>
-    <string name="data_backup_notifications">Backupnotifikation för %1$s</string>
     <string name="data_backup_success">%1$s nya toots har importerats</string>
     <string name="data_backup_notification_success">%1$s nya notifieringar har importerats</string>
     <string-array name="filter_order">
@@ -471,18 +409,14 @@
     <string name="action_lists_confirm_delete">Är du säker du vill ta bort listan permanent?</string>
     <string name="action_lists_empty_content">Det finns inget i den här listan ännu. När medlemmar av denna lista skickar nya toots, visas de här.</string>
     <string name="action_lists_add_to">Lägg till i lista</string>
-    <string name="action_lists_remove_from">Ta bort från listan</string>
     <string name="action_lists_create">Lägg till lista</string>
     <string name="action_lists_delete">Ta bort lista</string>
     <string name="action_lists_update">Redigera lista</string>
     <string name="action_lists_title_placeholder">Ny titel för lista</string>
-    <string name="action_lists_search_users">Sök bland användare som du följer</string>
-    <string name="action_lists_owner">Din lista</string>
     <string name="action_lists_add_user">Kontot har lagts till i listan!</string>
     <string name="action_lists_empty">Du har inga listor ännu!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s har flyttats till %2$s</string>
-    <string name="show_boost_count">Visa knuffar/favoriter antal</string>
     <string name="issue_login_title">Autentisering fungerar inte?</string>
     <string name="issue_login_message">        <b>Här är några kontroller som kan hjälpa:</b>\n\n
         - Kontrollera att det inte finns stavfel i instans namn\n\n
@@ -499,25 +433,19 @@
     <string name="data_export_success">%1$s toots av %2$s har blivit exporterade.</string>
     <string name="data_export_error">Något gick fel vid exporteringen %1$s</string>
     <string name="data_export_error_simple">Något gick fel vid exporteringen!</string>
-    <string name="data_import_success_simple">Data har blivit importerat!</string>
     <string name="data_import_error_simple">Något gick fel vid importeringen!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Typ</string>
     <string name="proxy_enable">Aktivera proxy?</string>
     <string name="poxy_host">Värd</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Logga in</string>
     <string name="poxy_password">Lösenord</string>
-    <string name="set_theme">Tema:</string>
-    <string name="set_compact_mode">Kompakt läge</string>
     <string name="set_share_details">Lägg till detaljer om toot vid delning</string>
     <string name="support_the_app_on_liberapay">Stöd appen på Liberapay</string>
     <string name="alert_regex">Det finns ett fel i det reguljära uttrycket!</string>
-    <string name="no_account_yet">Inget konto ännu?</string>
     <string name="toast_instance_unavailable">Ingen tidslinje hittades på denna instans!</string>
     <string name="delete_instance">Ta bort denna instans?</string>
-    <string name="warning_delete_instance">Du håller på att ta bort %s från dina instanser.</string>
     <string name="which_language">Översätt till</string>
     <string name="follow_instance">Följ instans</string>
     <string name="toast_instance_already_added">Du följer redan denna instans!</string>
@@ -526,10 +454,8 @@
     <string name="neutral_menu_information">Information</string>
     <string name="hide_boost">Dölj boosts för %s</string>
     <string name="endorse">Visa på profil</string>
-    <string name="hide_everything">Dölj allt för %s</string>
     <string name="show_boost">Visa boosts från %s</string>
     <string name="unendorse">Visa inte på profil</string>
-    <string name="show_everything">Visa allt från %s</string>
     <string name="toast_endorse">Konto kommer nu visas på profilen</string>
     <string name="toast_unendorse">Konton visas inte längre på profilen</string>
     <string name="toast_show_boost">Boosta visas nu!</string>
@@ -550,7 +476,6 @@
     <string name="filter_context">Filtrera sammanhang</string>
     <string name="filter_context_explanations">En eller flera sammanhang där filtret ska gälla</string>
     <string name="filter_expire">Upphör efter</string>
-    <string name="add_new_filter">Lägg till Filter</string>
     <string name="action_filter_delete">Ta bort filter?</string>
     <string name="action_update_filter">Uppdatera filter</string>
     <string name="action_filter_create">Skapa filter</string>
@@ -565,13 +490,11 @@
     <string name="account_added_list_trunk">Konton har lagts till i listan</string>
     <string name="adding_account_list_trunk">Lägg till konton till listan</string>
     <string name="action_list_add">Du har inte skapat någon lista än. Klicka på \"+\" för att skapa en.</string>
-    <string name="action_remote_instance_add">Du följer inte någon fjärrinstanser. Klicka på knappen ”+” att lägga till en ny.</string>
     <string name="about_trunk">Vem ska du följa</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Konto(n) kan inte följas</string>
     <string name="retrieve_remote_account">Hämtar fjärrkontot</string>
     <string name="expand_image">Utöka automatiskt dold media</string>
-    <string name="set_display_follow_instance">Visa knappen följ instansen</string>
     <string name="channel_notif_follow">Nya följare</string>
     <string name="channel_notif_boost">Ny boost</string>
     <string name="channel_notif_fav">Ny favorit</string>
@@ -596,7 +519,6 @@
     <string name="retrieve_remote_status">Hämtar extern status</string>
     <string name="comment">Kommentar</string>
     <string name="peertube_instance">Peertube instans</string>
-    <string name="set_display_direct">Visa tidslinje med privata meddelanden</string>
     <string name="no_comments">Bli den första att lämna en kommentar på denna video genom knappen längst upp till höger!</string>
     <string name="number_view_video">%s visningar</string>
     <string name="duration_video">Varaktighet: %s</string>
@@ -608,10 +530,6 @@
     <string name="bookmark_remove_peertube">Filmen har tagits bort från bokmärken!</string>
     <string name="bookmark_peertube_empty">Det finns inga Peertube-filmer i dina favoriter!</string>
     <string name="channel">Kanal</string>
-    <string name="no_peertube_channels">Ingen Peertube-kanal</string>
-    <string name="no_peertube_instances">Ingen Peertube-instans</string>
-    <string name="no_mastodon_instances">Ingen Mastodoninstans</string>
-    <string name="no_lists">Inga listor</string>
     <string name="videos">Videor</string>
     <string name="channels">Kanal</string>
     <string name="set_display_emoji">Använd emoji One</string>
@@ -619,12 +537,7 @@
     <string name="set_display_card">Visa förhandsvisning i alla toots</string>
     <string name="thanks_text_ux">Ny UX/UI designer</string>
     <string name="set_display_video_preview">Förhandsvisa filmer</string>
-    <string name="thanks_text_support">Gitlab support</string>
-    <string name="action_bug_report">Felrapport</string>
-    <string name="no_mail_client">Det finns ingen e-postklient installerad.</string>
-    <string name="bug_report_mail">Skicka felrapport</string>
     <string name="account_id_clipbloard">Kontoid har kopierats!</string>
-    <string name="settings_title_battery">Optimering av batteri</string>
     <string name="set_change_locale">Ändra språk</string>
     <string name="default_language">Standardspråk</string>
     <string name="truncate_long_toots">Avkorta långa toots</string>
@@ -636,7 +549,6 @@
     <string name="tags_stored">Taggen har sparats!</string>
     <string name="tags_renamed">Tagen har ändrats!</string>
     <string name="tags_deleted">Taggen har tagits bort!</string>
-    <string name="set_display_art">Visa konsttidslinje</string>
     <string name="schedule_boost">Schemalägg boost</string>
     <string name="boost_scheduled">Boosten har schemalagts!</string>
     <string name="no_scheduled_boosts">Inga schemalagda boosts att visa!</string>
@@ -675,12 +587,7 @@
         Börja skriv de första bokstäverna, sen kommer förslag att visas.\n\n
         ⚠ Inloggningsknappen fungerar bara om instansnamnet är giltig och instansen körs!
     </string>
-    <string name="showcase_uid">        I det här fältet ange den e-post som är kopplad till kontot på Mastodon.
-    </string>
-    <string name="showcase_pwd">        Sista steget är att ange ditt lösenord och klicka sen på Login.
-    </string>
     <string name="more_information">Mer information</string>
-    <string name="showcase_2FA">Om du använder 2FA (två-faktorn autentisering), så måste du använda denna länk.\nDu kan också använda den om du inte vill ange dina autentiseringsuppgifter här.</string>
     <!-- languages not translated -->
     <string name="languages">Språk</string>
     <string name="show_media_only">Endast media</string>
@@ -692,16 +599,13 @@
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed instans</string>
     <string name="mastodon_instance">Mastodon instans</string>
-    <string name="no_pixelfed_instance">Ingen Pixelfed instans</string>
     <string name="any_tags">Något av dessa</string>
     <string name="all_tags">Alla dessa</string>
     <string name="none_tags">Ingen av dem</string>
     <string name="some_words_any">Någon av dessa ord (mellanrumsseparerade)</string>
     <string name="some_words_all">Alla dessa ord (mellanrumsseparerade)</string>
-    <string name="some_words_none">Inga av dessa ord (mellanrumsseparerade)</string>
     <string name="some_tags">Lägg till några ord att filtrera (separera med mellanslag)</string>
     <string name="change_tag_column">Ändra kolumnnamn</string>
-    <string name="no_misskey_instance">Inga Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
     <string name="toast_no_apps">Ingen app finns installerad som kan hantera denna länk.</string>
     <string name="subscriptions">Prenumerationer</string>
@@ -718,7 +622,6 @@
     <string name="file_to_upload">Välj en fil som ska laddas upp</string>
     <string name="my_videos">Mina videoklipp</string>
     <string name="title">Titel</string>
-    <string name="categories">Kategorier</string>
     <string name="license">Licens</string>
     <string name="category">Kategori</string>
     <string name="language">Språk</string>
@@ -733,14 +636,10 @@
     <string name="video_uploaded_action">Klicka här för att editera videodata.</string>
     <string name="delete_video">Ta bort film</string>
     <string name="delete_video_confirmation">Är du säker på att ta bort denna film?</string>
-    <string name="no_video_uploaded">Inga filmer uppladdade än!</string>
     <string name="display_nsfw_videos">Visa NSFW-filmer</string>
-    <string name="default_channel_of">Standard %s-kanal</string>
     <string name="no_video_to_display">Inga filmer att visa!</string>
-    <string name="add_image_to_favorite">Lägg till media till favoriter</string>
     <string name="leave_a_comment">Lämna ett meddelande</string>
     <string name="share">Dela</string>
-    <string name="my_pictures">Mina bilder</string>
     <string name="choose_schedule">Välj ett schema-läge</string>
     <string name="device_schedule">Från enhet</string>
     <string name="server_schedule">Från server</string>
@@ -748,12 +647,8 @@
     <string name="toots_client">Toots (enhet)</string>
     <string name="modify">Ändra</string>
     <string name="set_display_content_after_fetch_more">Visa nya toots ovanför knappen ”Hämta mer”</string>
-    <string name="settings_category_label_confirmations">Bekräftelser</string>
     <string name="settings_category_label_timelines">Tidslinjer</string>
-    <string name="settings_category_label_notification">Notifieringstjänst</string>
     <string name="settings_category_label_interface">Gränssnitt</string>
-    <string name="settings_category_label_hiddencontent">Dolt innehåll</string>
-    <string name="settings_category_label_composing">Komponering</string>
     <string name="contact">Kontakter</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> kommenterade din video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> följer din kanal <b>%2$s</b>]]></string>
@@ -768,7 +663,6 @@
     <string name="import_data">Importera data</string>
     <string name="toot_select_import">Välj en fil att importera</string>
     <string name="toot_select_file_error">Ett fel uppstod när säkerhetskopia valdes!</string>
-    <string name="data_import_start">Vänligen, döda inte appen medan den bearbetar.</string>
     <string name="add_public_comment">Lägg till en publik kommentar</string>
     <string name="send_comment">Skicka kommentar</string>
     <string name="toast_toot_saved_error">Det finns ingen Internetanslutning. Ditt meddelande har sparats i utkast.</string>
@@ -809,18 +703,14 @@
     <string name="poll_finish_at">sluta på %s</string>
     <string name="refresh_poll">Uppdatera enkät</string>
     <string name="vote">Rösta</string>
-    <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
     <string name="notif_poll">En enkät som du röstat i har avslutats</string>
     <string name="notif_poll_self">En enkät som du röstat i har avslutats</string>
     <string name="settings_category_notif_customize">Anpassa</string>
     <string name="settings_category_notif_categories">Kategorier</string>
-    <string name="settings_category_notif_news">Nyheter</string>
     <string name="settings_category_notif_time_slot">Tids lucka</string>
     <string name="settings_category_notif_advanced">Avancerad</string>
     <string name="set_display_new_badge">Visa \"nytt\" märke på olästa tootar</string>
-    <string name="set_display_peertube">Visa Peertube tidslinje</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Dölj fliken</string>
     <string name="move_timeline">Flytta tidslinje</string>
     <string name="hide_timeline">Dölj tidslinje</string>
     <string name="reorder_timelines">Ändra ordning på tidslinjer</string>
@@ -830,10 +720,8 @@
     <string name="undo">Ångra</string>
     <string name="visible_tabs_needed">Du måste behålla minst två synliga tabbar!</string>
     <string name="action_reorder_timeline">Ändra ordning på tidslinjer</string>
-    <string name="warning_list_deletion">Använd posten listor för att ta bort denna lista!</string>
     <string name="warning_main_timeline">Huvudtidslinjen kan bara döljas!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Lägg till en tidslinje</string>
     <string name="set_sensitive_content">Markera alltid media som känsligt</string>
     <string name="gnu_instance">GNU-instans</string>
     <string name="cached_status">Cachadstatus</string>
@@ -848,14 +736,11 @@
     <string name="history">Historik</string>
     <string name="playlists">Spellistor</string>
     <string name="display_name">Visningsnamn</string>
-    <string name="privacy">Sekretess</string>
-    <string name="create">Skapa</string>
     <string name="action_playlist_add">Du har inte några spellistor. Klicka på \"+\"-ikonen för att lägga till en ny spellista</string>
     <string name="error_display_name">Du måste ange ett visningsnamn!</string>
     <string name="error_channel_mandatory">Kanalen krävs när spellistan är offentliga.</string>
     <string name="action_playlist_create">Skapa spellista</string>
     <string name="action_playlist_empty_content">Det finns ingenting i denna spellista ännu.</string>
-    <string name="edit_media">Editera media</string>
     <string name="redo">gör om</string>
     <string name="gallery">Galleri</string>
     <string name="label_emoji">Emoji</string>
@@ -863,7 +748,6 @@
     <string name="label_eraser">Suddigummi</string>
     <string name="label_text">Text</string>
     <string name="label_filter">Filter</string>
-    <string name="label_adjust">Justera</string>
     <string name="label_brush">Pensel</string>
     <string name="confirm_exit_editing">Är du säker på att du vill avsluta utan att spara bilden?</string>
     <string name="discard">Kasta</string>
@@ -871,7 +755,6 @@
     <string name="image_saved">Bilden har sparats!</string>
     <string name="save_image_failed">Kunde inte spara bilden</string>
     <string name="opacity">Genomskinlighet</string>
-    <string name="label_crop">Beskär</string>
     <string name="set_photo_editor">Aktivera bildeditor</string>
     <string name="add_poll_item">Lägg till ett val</string>
     <string name="remove_poll_item">Ta bort det sista valet</string>
@@ -883,10 +766,8 @@
     <string name="timed_mute">Tidsinställd tystning</string>
     <string name="mention_account">Nämn kontot</string>
     <string name="refresh_cache">Uppdatera cache</string>
-    <string name="see_boost_and_fav">Se vem som boostat och lagt till i favoriter</string>
     <string name="mention_status">Omnämn status</string>
     <string name="action_news">Nyheter</string>
-    <string name="set_display_news_from_fedilab">Visa nyheter från Fedilabkontot</string>
     <string name="category_general">Allmänt</string>
     <string name="category_regional">Regional</string>
     <string name="category_art">Konst</string>
@@ -930,7 +811,6 @@
     <string name="reconnect_account">Återanslut kontot</string>
     <string name="reconnect_account_message">Programmet misslyckades med att ansluta administrationsfunktionen. Du måste kanske återansluta för att få rätt rättigheter.</string>
     <string name="unresolved">Olösta</string>
-    <string name="resolved">Lösta</string>
     <string name="remote">Distans</string>
     <string name="active">Aktiv</string>
     <string name="pending">Väntande</string>
@@ -946,7 +826,6 @@
     <string name="disable">Inaktivera</string>
     <string name="silence">Tyst</string>
     <string name="email_user">Meddela användaren per e-post</string>
-    <string name="perform_action">Utför åtgärd</string>
     <string name="custom_warning">Anpassad varning</string>
     <string name="user">Användare</string>
     <string name="moderator">Moderator</string>
@@ -978,7 +857,6 @@
     <string name="toast_empty_content">Tomt innehåll!</string>
     <string name="set_display_fedilab_features_button">Visa Fedilab funktioner-knapp</string>
     <string name="audio">Programmet behöver tillgång till ljud-inspelning</string>
-    <string name="toot_message_record_error">Ett fel inträffade vid inspelning av röstmeddelande!</string>
     <string name="voice_message">Röstmeddelande</string>
     <string name="set_quick_reply">Aktivera snabbsvar</string>
     <string name="reply_might_be_useless">Det konto du svarar till kanske inte ser ditt meddelande!</string>
@@ -986,9 +864,7 @@
     <string name="set_blur_sensitive_indication">Om inaktiverad så kommer känsligt material att döljas med en knapp</string>
     <string name="set_long_press_media_indication">Spara media i full upplösning genom att långtrycka på förhandsgranskningen</string>
     <string name="set_display_timeline_in_list_indication">Lägg till en ellips-knapp längst upp till höger för att lista alla taggar/instanser/listor</string>
-    <string name="set_display_news_from_fedilab_indication">Visa en post i huvudmenyn för en snabb tillgång till tidslinjen riktat mot #Fedilab taggar</string>
     <string name="live_notif_indication">Hålla en öppen anslutning till streaming API för live-meddelanden.</string>
-    <string name="set_keep_background_process_indication">När appen är i bakgrunden kommer den att hålla en anslutning till streaming-API. Inaktivera detta om du bryr dig om din batteriförbrukning.</string>
     <string name="set_enable_time_slot_indication">Under tiden perioden kommer programmet att skicka meddelanden. Du kan ändra (dvs: tysta) denna period med höger spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Visa en Fedilab-knapp nedan profilbilden. Det är en genväg för att få tillgång till in-app-funktioner.</string>
     <string name="set_quick_reply_indication">Tillåt att svara direkt i tidslinjen nedanför statusen</string>
@@ -1000,9 +876,6 @@
     <string name="featured_hashtags_indication">Dessa taggar gör det möjligt att filtrera status från profiler. Du måste använda innehållsmenyn för att se dom.</string>
     <string name="set_capitalize_indication">Lägg automatiskt till en radbrytning efter omnämnande för att sätta stor bokstav på första ordet</string>
     <string name="settings_title_custom_sharing_indication">Tillåt innehållsskapare att dela statusar till deras RSS-flöden</string>
-    <string name="timelines">Tidslinjer</string>
-    <string name="u_interface">Gränssnitt</string>
-    <string name="battery">Batteri</string>
     <string name="compose">Skapa</string>
     <string name="upload_image_maximum_retry_times">Maximalt antal försök vi uppladdning av media</string>
     <string name="new_folder">Skapa en ny mapp här</string>
@@ -1013,9 +886,7 @@
     <string name="default_directory">Standardmapp</string>
     <string name="folder">Mapp</string>
     <string name="create_folder">Skapa mapp</string>
-    <string name="custom_tabs_indication">Använd din favorit browser i applikationen. Genom att inaktivera så kommer länkar att öppnas externt</string>
     <string name="set_display_confirm">Visa toast-meddelande när en åtgärd har slutförts (boost, fav, etc.)?</string>
-    <string name="export_muted_instance">Exportera tystade instanser</string>
     <string name="muted_instance_exported">Tystade instanser har exporterats!</string>
     <string name="add_instances">Lägg till en instans</string>
     <string name="export_instances">Exportera instanser</string>
@@ -1111,7 +982,6 @@
     <string name="set_nitter_host">Ange din egen host eller lämna tomt för att använda nitter.net</string>
     <string name="set_hide_status_bar">Dölj Fedilab meddelandefält</string>
     <string name="set_hide_status_bar_indication">För att dölja kvarvarande notifieringar i statusbaren, klicka på ögonikons knappen och kryssa ur: \"Visa i statusbar\"</string>
-    <string name="set_live_type_title">Tillåt senare lagda meddelanden</string>
     <string name="set_live_type_indication">Notifieringar kommer fördröjas var 30:e sekund. Detta kommer att dra mindre ström.</string>
     <string name="live_delayed">Live notifieringar fördröjda</string>
     <string name="no_live_notif">Inge live-notifieringar</string>
@@ -1137,10 +1007,11 @@
     <string name="title_video_peertube">Titel på videon</string>
     <string name="join_peertube">Gå med i Peertube</string>
     <string name="agreement_check_peertube">Jag är minst 16 år gammal och godkänner %1$s för denna instans</string>
-    <string name="colors">Färger</string>
     <string name="link_color_title">Länkar</string>
     <string name="link_color">Ändra färg på länkar (Url:er, omnämnande, taggar, etc.) i meddelanden</string>
     <string name="boost_header_color_title">Ompublicera-rubrik</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Ändra färgen för rubriken för ompublicera</string>
     <string name="background_status_title">Inlägg</string>
     <string name="background_status">Bakgrundsfärg för poster i tidslinjen</string>
@@ -1149,15 +1020,12 @@
     <string name="reset">Återställ</string>
     <string name="icons_color_title">Ikoner</string>
     <string name="icons_color">Färg på bottenikoner i tidslinjer</string>
-    <string name="background_color_title">Bakgrund</string>
-    <string name="background_color">Ändra bakgrundsfärgen på tidslinjen</string>
     <string name="pin_tag">Pinna denna tagg</string>
     <string name="logo_of_the_instance">Logo för instansen</string>
     <string name="edit_profile">Ändra profil</string>
     <string name="make_an_action">Gör en handling</string>
     <string name="translation">Översättning</string>
     <string name="image_preview">Förhandsvisning</string>
-    <string name="change_theme">Ändra tema</string>
     <string name="text_color_title">Textfärg</string>
     <string name="text_color">Ändrar färgen på meddelanden</string>
     <string name="apply_changes">Tillämpa ändringar</string>
