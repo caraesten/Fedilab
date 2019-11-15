@@ -1171,4 +1171,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="export_theme">匯出佈景主題</string>
     <string name="export_theme_title">點擊這裡以匯出目前的佈景主題</string>
     <string name="theme_file_error">選取佈景主題檔案時遇到錯誤</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
 </resources>
