@@ -93,6 +93,7 @@ import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveMetaDataAsyncTask;
 import app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveStoriesAsyncTask;
 import app.fedilab.android.asynctasks.SyncTimelinesAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoByIDAsyncTask;
@@ -117,6 +118,7 @@ import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPeertubeNotificationsFragment;
 import app.fedilab.android.fragments.DisplayPlaylistsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
+import app.fedilab.android.fragments.DisplayStoriesFragment;
 import app.fedilab.android.fragments.SettingsPeertubeFragment;
 import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.fragments.TabLayoutScheduleFragment;
@@ -516,12 +518,14 @@ public abstract class BaseMainActivity extends BaseActivity
             TabLayout.Tab pfTabHome = tabLayout.newTab();
             TabLayout.Tab pfTabLocal = tabLayout.newTab();
             TabLayout.Tab pfTabNotification = tabLayout.newTab();
+            TabLayout.Tab pfStories = tabLayout.newTab();
             //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
 
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
             pfTabNotification.setCustomView(R.layout.tab_badge);
+            pfStories.setCustomView(R.layout.tab_badge);
             //pfTabDiscover.setCustomView(R.layout.tab_badge);
 
 
@@ -544,16 +548,21 @@ public abstract class BaseMainActivity extends BaseActivity
             ImageView iconDiscover = pfTabDiscover.getCustomView().findViewById(R.id.tab_icon);
             iconDiscover.setImageResource(R.drawable.ic_people);*/
 
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconStories = pfStories.getCustomView().findViewById(R.id.tab_icon);
+            iconStories.setImageResource(R.drawable.ic_story);
+
 
             iconHome.setContentDescription(getString(R.string.home_menu));
             // iconDiscover.setContentDescription(getString(R.string.overview));
             iconLocal.setContentDescription(getString(R.string.local));
             iconNotif.setContentDescription(getString(R.string.notifications));
-
+            iconStories.setContentDescription(getString(R.string.stories));
 
             tabLayout.addTab(pfTabHome);
             tabLayout.addTab(pfTabLocal);
             tabLayout.addTab(pfTabNotification);
+            tabLayout.addTab(pfStories);
             //    tabLayout.addTab(pfTabDiscover);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -2433,6 +2442,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 } else if (position == 2) {
                     DisplayNotificationsFragment fragment = new DisplayNotificationsFragment();
                     bundle.putSerializable("type", DisplayNotificationsFragment.Type.ALL);
+                    fragment.setArguments(bundle);
+                    return fragment;
+                }else if (position == 3) {
+                    DisplayStoriesFragment fragment = new DisplayStoriesFragment();
+                    bundle.putSerializable("type", RetrieveStoriesAsyncTask.type.FRIENDS);
                     fragment.setArguments(bundle);
                     return fragment;
                 }
