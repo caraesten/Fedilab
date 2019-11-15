@@ -3112,7 +3112,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                                         builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
                                     else
-                                        //noinspection deprecation
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
                                     break;
                                 case R.id.action_schedule_boost:

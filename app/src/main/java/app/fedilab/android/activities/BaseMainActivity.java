@@ -28,7 +28,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -98,7 +97,6 @@ import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
-import app.fedilab.android.fragments.DisplayBookmarksFragment;
 import app.fedilab.android.fragments.DisplayBookmarksPixelfedFragment;
 import app.fedilab.android.fragments.DisplayDraftsFragment;
 import app.fedilab.android.fragments.DisplayFavoritesPeertubeFragment;
@@ -117,7 +115,6 @@ import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
-import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.services.LiveNotificationService;
@@ -1732,7 +1729,7 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), MutedInstanceActivity.class);
             startActivity(intent);
             return false;
-        }else if ( id == R.id.nav_bookmarks && ( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
+        }else if ( id == R.id.nav_bookmarks){
             Intent intent = new Intent(getApplicationContext(), BookmarkActivity.class);
             startActivity(intent);
             return false;
@@ -1759,7 +1756,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle.setVisibility(View.VISIBLE);
         delete_instance.setVisibility(View.GONE);
         appBar.setExpanded(true);
-        if (id != R.id.nav_drafts && id != R.id.nav_pixelfed_drafts && id != R.id.nav_bookmarks && id != R.id.nav_peertube) {
+        if (id != R.id.nav_drafts && id != R.id.nav_pixelfed_drafts && id != R.id.nav_peertube) {
             delete_all.hide();
         } else {
             delete_all.show();
@@ -1866,12 +1863,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
-            toot.hide();
-        } else if (id == R.id.nav_bookmarks ) {
-                DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
-                fragmentTag = "BOOKMARKS";
-                fragmentManager.beginTransaction()
-                        .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
             toot.hide();
         } else if (id == R.id.nav_pixelfed_bookmarks) {
             DisplayBookmarksPixelfedFragment displayBookmarksPixelfedFragment = new DisplayBookmarksPixelfedFragment();

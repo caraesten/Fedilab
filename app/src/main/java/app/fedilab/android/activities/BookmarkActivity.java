@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +50,7 @@ import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.SyncBookmarksAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -82,20 +84,17 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
             case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
+                setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
             default:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppThemeDark_NoActionBar);
         }
-
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_bookmark);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(BookmarkActivity.this, R.color.cyanea_primary)));
@@ -119,7 +118,7 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
         } else {
             setTitle(R.string.bookmarks);
         }
-        setContentView(R.layout.activity_bookmark);
+
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
@@ -157,6 +156,10 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
     @Override
     public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         getMenuInflater().inflate(R.menu.bookmarks, menu);
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            menu.findItem(R.id.action_export_bookmarks).setVisible(false);
+            menu.findItem(R.id.action_import_bookmarks).setVisible(false);
+        }
         return true;
     }
 

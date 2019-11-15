@@ -385,7 +385,8 @@
             android:name="app.fedilab.android.activities.BookmarkActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"/>
         <activity
             android:name="app.fedilab.android.activities.SettingsActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
