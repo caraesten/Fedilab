@@ -1124,7 +1124,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="title_video_peertube">Titel für das Video</string>
     <string name="join_peertube">Peertube beitreten</string>
     <string name="agreement_check_peertube">Ich bin mindestens 16 Jahre alt und stimme den %1$s dieser Instanz zu</string>
-    <string name="colors">Farben</string>
     <string name="link_color_title">Links</string>
     <string name="link_color">Ändern Sie die Farbe der Links (URLs, Erwähnungen, Tags, etc.) in Nachrichten</string>
     <string name="boost_header_color_title">Reblogs header</string>
@@ -1136,15 +1135,12 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="reset">Reset</string>
     <string name="icons_color_title">Symbole</string>
     <string name="icons_color">Farbe der unteren Symbole in Zeitleisten</string>
-    <string name="background_color_title">Hintergrund</string>
-    <string name="background_color">Ändern Sie die Hintergrundfarbe für Zeitleisten</string>
     <string name="pin_tag">Diesen Tag anheften</string>
     <string name="logo_of_the_instance">Logo der Instanz</string>
     <string name="edit_profile">Profil bearbeiten</string>
     <string name="make_an_action">Aktion ausführen</string>
     <string name="translation">Übersetzung</string>
     <string name="image_preview">Bildvorschau</string>
-    <string name="change_theme">Change the theme</string>
     <string name="text_color_title">Textfarbe</string>
     <string name="text_color">Ändern Sie die Textfarbe in posts</string>
     <string name="apply_changes">Änderungen übernehmen</string>

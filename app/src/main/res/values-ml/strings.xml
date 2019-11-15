@@ -1137,7 +1137,6 @@
     <string name="title_video_peertube">Title for the video</string>
     <string name="join_peertube">Join Peertube</string>
     <string name="agreement_check_peertube">I am at least 16 years old and agree to the %1$s of this instance</string>
-    <string name="colors">Colors</string>
     <string name="link_color_title">Links</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
@@ -1149,15 +1148,13 @@
     <string name="reset">Reset</string>
     <string name="icons_color_title">Icons</string>
     <string name="icons_color">Color of bottom icons in timelines</string>
-    <string name="background_color_title">Background</string>
-    <string name="background_color">Change the background color for timelines</string>
+
     <string name="pin_tag">Pin this tag</string>
     <string name="logo_of_the_instance">Logo of the instance</string>
     <string name="edit_profile">Edit profile</string>
     <string name="make_an_action">Make an action</string>
     <string name="translation">Translation</string>
     <string name="image_preview">Image preview</string>
-    <string name="change_theme">Change the theme</string>
     <string name="text_color_title">Text color</string>
     <string name="text_color">Change the text color in pots</string>
     <string name="apply_changes">Apply changes</string>

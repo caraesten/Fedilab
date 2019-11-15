@@ -1138,7 +1138,6 @@
     <string name="title_video_peertube">Título para o vídeo</string>
     <string name="join_peertube">Unirse a Peertube</string>
     <string name="agreement_check_peertube">Teño 16 anos ao menos e acepto os %1$s de esta instancia</string>
-    <string name="colors">Cores</string>
     <string name="link_color_title">Ligazóns</string>
     <string name="link_color">Cambiar cor das ligazóns (URLs, mencións, etiquetas, etc.) nas mensaxes</string>
     <string name="boost_header_color_title">Cabeceira das repeticións</string>
@@ -1150,15 +1149,12 @@
     <string name="reset">Restablecer</string>
     <string name="icons_color_title">Iconas</string>
     <string name="icons_color">Cor das iconas inferiores nas liñas temporais</string>
-    <string name="background_color_title">Fondo</string>
-    <string name="background_color">Cambiar a cor de fondo nas liñas temporais</string>
     <string name="pin_tag">Fixar esta etiqueta</string>
     <string name="logo_of_the_instance">Logo da instancia</string>
     <string name="edit_profile">Editar perfil</string>
     <string name="make_an_action">Tomar decisión</string>
     <string name="translation">Tradución</string>
     <string name="image_preview">Vista previa da imaxe</string>
-    <string name="change_theme">Cambiar decorado</string>
     <string name="text_color_title">Cor do texto</string>
     <string name="text_color">Cambiar cor do texto nas mensaxes</string>
     <string name="apply_changes">Aplicar cambios</string>
