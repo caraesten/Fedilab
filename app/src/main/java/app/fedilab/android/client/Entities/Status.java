@@ -1668,6 +1668,9 @@ public class Status implements Parcelable {
     }
 
     public boolean isBookmarked() {
+        if( this.getReblog() != null && this.getReblog().isBookmarked()){
+            bookmarked = true;
+        }
         return bookmarked;
     }
 

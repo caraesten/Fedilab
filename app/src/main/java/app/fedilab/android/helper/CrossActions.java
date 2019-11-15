@@ -480,10 +480,14 @@ public class CrossActions {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void doCrossBookmark(final Context context, final Status status, StatusListAdapter statusListAdapter) {
+    public static void doCrossBookmark(final Context context, Status status, StatusListAdapter statusListAdapter, boolean limitedToOwner) {
         List<Account> accounts = connectedAccounts(context, status, false);
         API.StatusAction doAction;
-        if (accounts.size() == 1) {
+        //Only bookmark the initial status
+        if( status.getReblog() != null){
+            status = status.getReblog();
+        }
+        if (accounts.size() == 1 || limitedToOwner) {
             status.setBookmarked(!status.isBookmarked());
             try {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -496,7 +500,7 @@ public class CrossActions {
                     new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
                     Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                 }
-                new PostActionAsyncTask(context, accounts.get(0), status, doAction, null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostActionAsyncTask(context, doAction, status.getId(), null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 statusListAdapter.notifyStatusChanged(status);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -518,6 +522,7 @@ public class CrossActions {
                     dialog.dismiss();
                 }
             });
+            Status finalStatus = status;
             builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, int which) {
@@ -534,7 +539,7 @@ public class CrossActions {
                         @Override
                         protected Void doInBackground(Void... voids) {
                             API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                            APIResponse apiResponse = api.search(status.getUrl());
+                            APIResponse apiResponse = api.search(finalStatus.getUrl());
                             response = apiResponse.getResults();
                             return null;
                         }
@@ -559,7 +564,7 @@ public class CrossActions {
                                     new StatusCacheDAO(contextReference.get(), db).remove(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
                                     Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                 }
-                                new PostActionAsyncTask(context, account, status, doAction, null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new PostActionAsyncTask(context, account, finalStatus, doAction, null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 statusListAdapter.notifyStatusChanged(statuses.get(0));
                             }
                         }

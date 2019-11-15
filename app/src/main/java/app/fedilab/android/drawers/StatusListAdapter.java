@@ -1459,12 +1459,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
                 holder.custom_feature_bookmark.setOnClickListener(view -> {
-                    bookmark(status);
+                    CrossActions.doCrossBookmark(context, status, statusListAdapter, true);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                 });
                 holder.custom_feature_bookmark.setOnLongClickListener(view -> {
-                    CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                    CrossActions.doCrossBookmark(context, status, statusListAdapter, false);
                     status.setCustomFeaturesDisplayed(false);
                     notifyStatusChanged(status);
                     return false;
@@ -3095,7 +3095,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         itemBookmark.getActionView().setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View v) {
-                                CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                                CrossActions.doCrossBookmark(context, status, statusListAdapter, true);
                                 return true;
                             }
                         });
@@ -4187,45 +4187,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         status.setQuickReplyContent(null);
     }
 
-
-    private void bookmark(Status status) {
-
-        if (type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
-            status.setBookmarked(!status.isBookmarked());
-            try {
-                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                API.StatusAction doAction;
-                if (status.isBookmarked()) {
-                    new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                    doAction = API.StatusAction.BOOKMARK;
-                    Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
-                } else {
-                    new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                    doAction = API.StatusAction.UNBOOKMARK;
-                    Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
-                }
-                new PostActionAsyncTask(context, doAction, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                notifyStatusChanged(status);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-            }
-        } else {
-            int position = 0;
-            for (Status statustmp : statuses) {
-                if (statustmp.getId().equals(status.getId())) {
-                    statuses.remove(status);
-                    statusListAdapter.notifyItemRemoved(position);
-                    final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
-                    new PostActionAsyncTask(context, API.StatusAction.UNBOOKMARK, statustmp.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
-                    break;
-                }
-                position++;
-            }
-        }
-    }
 
 
     @Override

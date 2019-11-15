@@ -5017,6 +5017,11 @@ public class API {
             } catch (Exception e) {
                 status.setFavourited(false);
             }
+            if( resobj.has("bookmarked") && !resobj.isNull("bookmarked")){
+                status.setBookmarked(true);
+            }else{
+                status.setBookmarked(false);
+            }
             try {
                 if (resobj.getJSONObject("renoteId") != null && !resobj.getJSONObject("renoteId").toString().equals("null"))
                     status.setReblog(parseStatuses(context, resobj.getJSONObject("renote")));
