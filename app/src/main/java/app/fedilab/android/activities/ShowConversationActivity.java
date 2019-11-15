@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -121,7 +125,10 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             };
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
         }
-
+        Toolbar actionBar = findViewById(R.id.toolbar);
+        if (actionBar != null) {
+            actionBar.setBackground(new ColorDrawable(ContextCompat.getColor(ShowConversationActivity.this, R.color.cyanea_primary)));
+        }
         TextView title = findViewById(R.id.toolbar_title);
         ImageView pp_actionBar = findViewById(R.id.pp_actionBar);
         ImageView action_refresh = findViewById(R.id.action_refresh);
