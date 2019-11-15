@@ -1171,4 +1171,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="export_theme">Exportar el tema</string>
     <string name="export_theme_title">Pulsa aquí para exportar el tema actual</string>
     <string name="theme_file_error">Se produjo un error al seleccionar el archivo de tema</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
 </resources>
