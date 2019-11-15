@@ -56,7 +56,7 @@ public class SyncBookmarksAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( type == sync.EXPORT){
+        if( type == sync.IMPORT){
             String max_id = null;
             do {
                 APIResponse apiResponse = new API(contextReference.get()).getBookmarks(max_id);

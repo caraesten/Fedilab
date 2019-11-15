@@ -226,7 +226,6 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
             statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusListAdapter.notifyDataSetChanged();
-            textviewNoAction.setVisibility(View.VISIBLE);
         }
     }
 }
