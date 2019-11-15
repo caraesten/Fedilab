@@ -40,6 +40,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
@@ -138,13 +140,14 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogConfirm, int which) {
-                                    new StatusCacheDAO(context, db).removeAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+
                                     statuses = new ArrayList<>();
                                     statuses.clear();
                                     statusListAdapter = new StatusListAdapter(RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
                                     lv_status.setAdapter(statusListAdapter);
                                     statusListAdapter.notifyDataSetChanged();
                                     textviewNoAction.setVisibility(View.VISIBLE);
+                                    new PostActionAsyncTask(context, API.StatusAction.UNBOOKMARK).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     dialogConfirm.dismiss();
                                 }
                             })

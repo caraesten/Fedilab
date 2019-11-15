@@ -2066,7 +2066,6 @@ public abstract class BaseMainActivity extends BaseActivity
         if (position < 0)
             position = 0;
         if (toolbarTitle != null)
-            toolbarTitle.setVisibility(View.GONE);
         viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
 

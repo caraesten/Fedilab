@@ -15,7 +15,9 @@
 package app.fedilab.android.asynctasks;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -24,12 +26,15 @@ import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnPostActionInterface;
+import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.sqlite.StatusCacheDAO;
 
 
 /**
@@ -117,6 +122,13 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedComment = targetedComment;
     }
 
+    public PostActionAsyncTask(Context context, API.StatusAction unbookmark) {
+        this.contextReference = new WeakReference<>(context);
+        this.listener = null;
+        this.apiAction = unbookmark;
+        this.targetedId = null;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
 
@@ -174,10 +186,23 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                     api.scheduledAction("PUT", storedStatus.getStatus(), null, storedStatus.getScheduledServerdId());
                 } else if (apiAction == API.StatusAction.DELETESCHEDULED) {
                     api.scheduledAction("DELETE", null, null, storedStatus.getScheduledServerdId());
-                } else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
+                } else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS){
                     statusCode = api.muteNotifications(targetedId, muteNotifications);
-                else
+                } else if (apiAction == API.StatusAction.UNBOOKMARK && targetedId == null){
+                    SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    List<app.fedilab.android.client.Entities.Status> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+                    for (app.fedilab.android.client.Entities.Status status: bookmarks){
+                        statusCode = api.postAction(apiAction, status.getId());
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            SystemClock.sleep(200);
+                        }
+                    }
+                    new StatusCacheDAO(contextReference.get(), db).removeAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+                }else{
                     statusCode = api.postAction(apiAction, targetedId);
+                }
             }
             error = api.getError();
         } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
