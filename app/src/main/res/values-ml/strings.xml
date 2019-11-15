@@ -160,11 +160,11 @@
     <string name="queet_title">ക്വീറ്റ് എഴുതൂ</string>
     <string name="queet_title_reply">ക്വീറ്റിന് മറുപടി എഴുതൂ</string>
     <string name="toot_no_space">താങ്കൾ അനുവദനീയമായ 500 അക്ഷരങ്ങളുടെ പരിധി എത്തിയിരിക്കുന്നു!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
+    <string name="toot_select_image">ഒരു മാധ്യമം തിരഞ്ഞെടുക്കൂ</string>
+    <string name="toot_select_image_error">മാധ്യമം തിരഞ്ഞെടുത്തതിൽ പിഴവ് പറ്റിയിരിക്കുന്നു!</string>
+    <string name="toot_delete_media">ഈ മാധ്യമം കളയട്ടെ?</string>
+    <string name="toot_error_no_content">താങ്കളുടെ ടൂട്ട് ശൂന്യമാണ്!</string>
+    <string name="toot_visibility_tilte">ടൂട്ടിന്റെ ദർശനീയത</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
