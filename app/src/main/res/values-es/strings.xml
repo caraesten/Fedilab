@@ -16,8 +16,6 @@
     <string name="cancel">Cancelar</string>
     <string name="download">Descargar</string>
     <string name="download_file">Descargando %1$s</string>
-    <string name="download_over">Descarga completada</string>
-    <string name="save_file">Guardado %1$s</string>
     <string name="save_over">Archivos multimedia guardados</string>
     <string name="download_from" formatted="false">Archivo: %1$s</string>
     <string name="password">Contraseña</string>
@@ -25,10 +23,8 @@
     <string name="accounts">Cuentas</string>
     <string name="toots">Toots</string>
     <string name="tags">Etiquetas</string>
-    <string name="token">Ficha</string>
     <string name="save">Guardar</string>
     <string name="restore">Restaurar</string>
-    <string name="two_factor_authentification">¿Autenticación de dos pasos?</string>
     <string name="no_result">¡No hay resultados!</string>
     <string name="instance">Instancia</string>
     <string name="instance_example">Instancia: mastodon.social</string>
@@ -39,10 +35,7 @@
     <string name="change">Cambiar</string>
     <string name="choose_picture">Seleccionar una imagen…</string>
     <string name="clear">Borrar</string>
-    <string name="microphone">Micrófono</string>
     <string name="camera">Cámara</string>
-    <string name="speech_prompt">Por favor, di algo</string>
-    <string name="speech_not_supported">¡Lo sentimos! ¡Tu dispositivo no es compatible con la entrada de voz!</string>
     <string name="delete_all">Eliminar todo</string>
     <string name="translate_toot">Traducir este toot.</string>
     <string name="schedule">Programa</string>
@@ -59,7 +52,6 @@
     <string name="replies">Respuestas</string>
     <string name="username">Nombre de usuario</string>
     <string name="drafts">Borradores</string>
-    <string name="new_data">¡Nuevos datos están disponibles! ¿Quieres mostrarlos?</string>
     <string name="favourite">Favoritos</string>
     <string name="follow">Nuevos seguidores</string>
     <string name="mention">Menciones</string>
@@ -78,18 +70,12 @@
     <string name="communication_menu_title">Comunicación</string>
     <string name="muted_menu">Usuarios silenciados</string>
     <string name="blocked_menu">Usuarios bloqueados</string>
-    <string name="remote_follow_menu">Seguimiento remoto</string>
     <string name="notifications">Notificaciones</string>
     <string name="follow_request">Solicitud de seguir</string>
-    <string name="optimization">Optimización</string>
     <string name="settings">Configuración</string>
-    <string name="profile">Perfil</string>
-    <string name="make_a_choice">¿Qué quieres hacer?</string>
     <string name="delete_account_title">Eliminar una cuenta</string>
     <string name="delete_account_message" formatted="false">¿Borrar la cuenta %1$s de la aplicación?</string>
     <string name="send_email">Envíar un correo</string>
-    <string name="choose_file">Por favor, seleccione un archivo</string>
-    <string name="choose_file_error">¡Ningún explorador de archivos encontrado!</string>
     <string name="click_to_change">Haz clic en la dirección para cambiarla</string>
     <string name="failed">¡Falló!</string>
     <string name="scheduled_toots">Toots programados</string>
@@ -99,10 +85,6 @@
     <string name="live_notif">Notificaciones</string>
     <!-- Status -->
     <string name="no_status">Ningún toot para mostrar</string>
-    <string name="fav_added">El toot fue agregado a favoritos</string>
-    <string name="fav_removed">¡El toot fue removido de favoritos!</string>
-    <string name="reblog_added">¡El toot fue retooteado!</string>
-    <string name="reblog_removed">¡El toot ya no está retooteado!</string>
     <string name="reblog_by">Retooteado por %1$s</string>
     <string name="favourite_add">¿Agregar este toot a favoritos?</string>
     <string name="favourite_remove">¿Remover este toot de tus favoritos?</string>
@@ -134,10 +116,6 @@
         <item>¿Remover este toot?</item>
         <item>Borrar &amp; redactar este Toot?</item>
     </string-array>
-    <plurals name="preview_replies">
-        <item quantity="one">%d respuesta</item>
-        <item quantity="other">%d respuesta</item>
-    </plurals>
     <string name="bookmarks">Marcapáginas</string>
     <string name="bookmark_add">Añadir a marcapáginas</string>
     <string name="bookmark_remove">Remover marcapágina</string>
@@ -159,7 +137,6 @@
     <string name="toot_title_reply">Responder a un toot</string>
     <string name="queet_title">Escribir un queet</string>
     <string name="queet_title_reply">Responder a un queet</string>
-    <string name="toot_no_space">¡Has alcanzado los 500 caracteres permitidos!</string>
     <string name="toot_select_image">Selecciona un medio</string>
     <string name="toot_select_image_error">¡Un error ocurrió mientras seleccionaba un contenido multimedia!</string>
     <string name="toot_delete_media">¿Eliminar este contenido multimedia?</string>
@@ -193,7 +170,6 @@
     <string name="about_yandex">Traducción de los toots:</string>
     <string name="about_thekinrar">Búsqueda de instancias:</string>
     <string name="thanks_text_logo">Diseñador de ícono:</string>
-    <string name="thanks_text_banner">Diseñador de banner:</string>
     <!-- Conversation -->
     <string name="conversation">Conversación</string>
     <!-- Accounts -->
@@ -223,14 +199,9 @@
     <string name="notif_reblog">retooteó tu estado</string>
     <string name="notif_favourite">marcó como favorito tu estado</string>
     <string name="notif_follow">te siguió</string>
-    <string name="notif_pouet">Nuevo toot de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">y otra notificación</item>
         <item quantity="other">y otra notificación</item>
-    </plurals>
-    <plurals name="other_notif_hometimeline">
-        <item quantity="one">y otro toot para descubrir</item>
-        <item quantity="other">y %d otros toot para descubrir</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d me gusta</item>
@@ -267,7 +238,6 @@
     <string name="toast_error_instance">¡El dominio de la instancia no parece estar validado!</string>
     <string name="toast_error_loading_account">¡Un error ocurrió mientras cambiaba entre cuentas!</string>
     <string name="toast_error_search">¡Un error ocurrió mientras buscaba!</string>
-    <string name="toast_error_login">¡No puede iniciar sesión!</string>
     <string name="toast_update_credential_ok">¡Los datos del perfil han sido guardados!</string>
     <string name="nothing_to_do">Ninguna acción puede ser tomada</string>
     <string name="toast_saved">¡El contenido multimedia ha sido guardado!</string>
@@ -276,12 +246,8 @@
     <string name="toast_toot_saved">¡Borrador guardado!</string>
     <string name="toast_error_char_limit">¿Estás seguro que esta instancia permite este número de caracteres? Usualmente, este valor es cercano a 500 caracteres.</string>
     <string name="toast_visibility_changed">La visibilidad de los toots ha sido cambiado para la cuenta %1$s</string>
-    <string name="toast_empty_search">¡Nombre de la instancia y nombre de pantalla no puede estar en blanco!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimización de la carga</string>
     <string name="set_toots_page">Número de toots por carga</string>
-    <string name="set_accounts_page">Número de cuentas por carga</string>
-    <string name="set_notifications_page">Número de notificaciones por carga</string>
     <string name="set_attachment_always">Siempre</string>
     <string name="set_attachment_wifi">WI-FI</string>
     <string name="set_attachment_ask">Preguntar</string>
@@ -290,13 +256,9 @@
     <string name="load_attachment_spoiler">Mostrar más…</string>
     <string name="load_attachment_spoiler_less">Mostrar menos…</string>
     <string name="load_sensitive_attachment">Contenido sensible</string>
-    <string name="set_display_reply">Mostrar mensajes previos en las respuestas</string>
-    <string name="set_display_local">Mostrar timeline local</string>
-    <string name="set_display_global">Mostrar timline federado</string>
     <string name="set_disable_gif">Desactivar avatares GIF</string>
     <string name="set_folder_title">Ruta: </string>
     <string name="set_auto_store_toot">Guardar borradores automáticamente</string>
-    <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Agregar URL del contenido multimedia en toots</string>
     <string name="set_notif_follow">Notificar cuando alguien te siga</string>
     <string name="set_notif_follow_share">Notificar cuando alguien retootee tu estado</string>
@@ -308,7 +270,6 @@
     <string name="set_wifi_only">Notificaciones en WI-FI solamente</string>
     <string name="set_notify">¿Notificar?</string>
     <string name="set_notif_silent">Notificaciones silenciosas</string>
-    <string name="set_night_mode">Modo nocturno</string>
     <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartición personalizada</string>
@@ -332,12 +293,6 @@
     <string name="use_javascript">Permitir Javascripts</string>
     <string name="expand_cw">Expandir cw automáticamente</string>
     <string name="use_cookies">Permitir cookies de terceros</string>
-    <string name="settings_ui_layout">Diseño para líneas de tiempo: </string>
-    <string-array name="settings_menu_tabs">
-        <item>Pestañas</item>
-        <item>Menú</item>
-        <item>Pestañas y menú</item>
-    </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
@@ -349,15 +304,6 @@
         <item>Claro</item>
         <item>Negro</item>
     </string-array>
-    <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 KB</item>
-        <item>1 MB</item>
-        <item>2 MB</item>
-        <item>4 Mb</item>
-        <item>6 Mb</item>
-        <item>8 Mb</item>
-    </string-array>
     <string name="set_led_colour">Establecer color LED:</string>
     <string-array name="led_colours">
         <item>Azul</item>
@@ -368,13 +314,9 @@
         <item>Amarillo</item>
         <item>Blanco</item>
     </string-array>
-    <string name="set_notification_news">Notificar para nuevos toots en la cronología de inicio</string>
     <string name="action_follow">Seguir</string>
-    <string name="action_unfollow">Dejar de Seguir</string>
-    <string name="action_block">Bloquear</string>
     <string name="action_unblock">Desbloquear</string>
     <string name="action_mute">Silenciar</string>
-    <string name="action_no_action">Ninguna acción</string>
     <string name="action_unmute">Dejar de silenciar</string>
     <string name="request_sent">Solicitud enviada</string>
     <string name="followed_by">Te sigue</string>
@@ -386,8 +328,6 @@
     <string name="settings_popup_title">Notificaciones Push</string>
     <string name="settings_popup_message">Por favor, confirma notificaciones push que quieres recibir. 
 Tú puede activar o desactivar esas notificaciones después en configuración (pestaña de notificaciones).    </string>
-    <string name="settings_popup_timeline">¿Para toots no leídos en el timeline del inicio?</string>
-    <string name="settings_popup_notification">¿Para notificaciones sin leer?</string>
     <!-- CACHE -->
     <string name="cache_title">Borrar caché</string>
     <string name="cache_message">Hay %1$s de data en caché.\n\n ¿Quieres eliminarlos?</string>
@@ -397,7 +337,6 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
     <string name="title_header_custom_sharing">Título</string>
     <string name="title_hint_custom_sharing">Título&#8230;</string>
     <string name="description_header_custom_sharing">Descripción</string>
-    <string name="description_hint_custom_sharing">Descripción&#8230;</string>
     <string name="keywords_header_custom_sharing">Palabras Claves</string>
     <string name="keywords_hint_custom_sharing">Palabras clave&#8230;</string>
     <!-- ACTIVITY CACHE -->
@@ -414,7 +353,6 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
     <string name="show_pinned">Mostrar fijados</string>
     <string name="filter_no_result">¡Ningún resultado encontrado!</string>
     <string name="data_backup_toots">Respaldar toots de %1$s</string>
-    <string name="data_backup_notifications">Copia de seguridad de notificaciones para %1$s</string>
     <string name="data_backup_success">%1$s toots nuevos han sido importados</string>
     <string name="data_backup_notification_success">%1$s nuevas notificaciones han sido importadas</string>
     <string-array name="filter_order">
@@ -467,18 +405,14 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="action_lists_confirm_delete">¿Seguro que deseas eliminar esta lista de forma permanente?</string>
     <string name="action_lists_empty_content">No hay ninguna lista aún. Cuando los miembros de esta lista publiquen nuevos estados, apareceran aquí.</string>
     <string name="action_lists_add_to">Agregar a la lista</string>
-    <string name="action_lists_remove_from">Eliminar de la lista</string>
     <string name="action_lists_create">Añadir lista</string>
     <string name="action_lists_delete">Borrar lista</string>
     <string name="action_lists_update">Editar lista</string>
     <string name="action_lists_title_placeholder">Nuevo título de lista</string>
-    <string name="action_lists_search_users">Buscar entre la gente que sigues</string>
-    <string name="action_lists_owner">Tus listas</string>
     <string name="action_lists_add_user">¡La cuenta fue añadida a la lista!</string>
     <string name="action_lists_empty">¡Aún no tienes ninguna lista!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s se ha movido a %2$s</string>
-    <string name="show_boost_count">Mostrar contador de retoots/favoritos</string>
     <string name="issue_login_title">¿No funciona la autenticación?</string>
     <string name="issue_login_message"><b>Aquí hay una lista de vistos que pueden ayudar </b>\n\n
 -Revisa que no hay ningún error de escritura en la instancia del nombre \n\n
@@ -494,25 +428,19 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="data_export_success">%1$s toots de %2$s han sido exportados.</string>
     <string name="data_export_error">Hubo algún error al exportar los datos de %1$s</string>
     <string name="data_export_error_simple">! Algo salió mal al exportar datos!</string>
-    <string name="data_import_success_simple">! Los datos han sido importados!</string>
     <string name="data_import_error_simple">! Algo salió mal al importar datos!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Tipo</string>
     <string name="proxy_enable">¿Habilitar proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Puerto</string>
     <string name="poxy_login">Usuario</string>
     <string name="poxy_password">Contraseña</string>
-    <string name="set_theme">Tema:</string>
-    <string name="set_compact_mode">Modo compacto</string>
     <string name="set_share_details">Agregar datos del toot al compartir</string>
     <string name="support_the_app_on_liberapay">Apoya la aplicación en Liberapay</string>
     <string name="alert_regex">Hay un error en la expresión regular!</string>
-    <string name="no_account_yet">¿Sin cuenta todavía?</string>
     <string name="toast_instance_unavailable">¡No líneas de tiempo se encontraron en esta instancia!</string>
     <string name="delete_instance">¿Borrar esta instancia?</string>
-    <string name="warning_delete_instance">Vas a borrar %s de tus instancias seguidas.</string>
     <string name="which_language">Traducir en</string>
     <string name="follow_instance">Seguir instancia</string>
     <string name="toast_instance_already_added">¡Tu ya sigues esta instancia!</string>
@@ -521,10 +449,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="neutral_menu_information">Información</string>
     <string name="hide_boost">Ocultar boosts de %s</string>
     <string name="endorse">Destacar en perfil</string>
-    <string name="hide_everything">Ocultar todo de %s</string>
     <string name="show_boost">Mostrar boosts de %s</string>
     <string name="unendorse">No muestre en perfil</string>
-    <string name="show_everything">Mostrar todo de %s</string>
     <string name="toast_endorse">La cuenta ha sido promocionada en el perfil</string>
     <string name="toast_unendorse">La cuenta ya no aparece en el perfil</string>
     <string name="toast_show_boost">¡Ya aparecen los boosts!</string>
@@ -545,7 +471,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="filter_context">Filtrar contenido</string>
     <string name="filter_context_explanations">Uno o varios contextos donde el filtro debería aplicar</string>
     <string name="filter_expire">Expirar después de</string>
-    <string name="add_new_filter">Añadir nuevo filtro</string>
     <string name="action_filter_delete">¿Eliminar filtro?</string>
     <string name="action_update_filter">Actualizar filtro</string>
     <string name="action_filter_create">Crear filtro</string>
@@ -560,13 +485,11 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="account_added_list_trunk">Las cuentas fueron añadidas a la lista</string>
     <string name="adding_account_list_trunk">Añadiendo cuentas a la lista</string>
     <string name="action_list_add">Todavía no has creado una lista. Haz clic en el botón \"+\" para añadir una nueva.</string>
-    <string name="action_remote_instance_add">No estás siguiendo ninguna instancia remota. Haz clic en el botón \"+\" para añadir una nueva.</string>
     <string name="about_trunk">A quiénes seguir</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">La(s) cuenta(s) no puede(n) ser seguida(s)</string>
     <string name="retrieve_remote_account">Compilando cuenta remota</string>
     <string name="expand_image">Expandir automáticamente contenido multimedia oculto</string>
-    <string name="set_display_follow_instance">Mostrar el botón para seguir instancias</string>
     <string name="channel_notif_follow">Nuevo seguidor</string>
     <string name="channel_notif_boost">Nuevo Boost</string>
     <string name="channel_notif_fav">Nuevo Favorito</string>
@@ -591,7 +514,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="retrieve_remote_status">Obteniendo estatus remoto</string>
     <string name="comment">Comentar</string>
     <string name="peertube_instance">Instancia de Peertube</string>
-    <string name="set_display_direct">Mostrar línea de tiempo de mensajes privados</string>
     <string name="no_comments">¡Sé el primero en dejar un comentario en este video con el botón superior derecho!</string>
     <string name="number_view_video">%s visitas</string>
     <string name="duration_video">Duración: %s</string>
@@ -603,10 +525,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="bookmark_remove_peertube">¡Estado ha sido eliminado de tus favoritos!</string>
     <string name="bookmark_peertube_empty">¡No hay videos de Peertube en tus favoritos!</string>
     <string name="channel">Canal</string>
-    <string name="no_peertube_channels">No hay canales de Peertube</string>
-    <string name="no_peertube_instances">No hay instancias de Peertube</string>
-    <string name="no_mastodon_instances">No hay instancias de Mastodon</string>
-    <string name="no_lists">Sin listas</string>
     <string name="videos">Vídeos</string>
     <string name="channels">Canales</string>
     <string name="set_display_emoji">Usar Emoji One</string>
@@ -614,12 +532,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_display_card">Mostrar vistas previas de todos los toots</string>
     <string name="thanks_text_ux">Nuevo diseñador UX/UI</string>
     <string name="set_display_video_preview">Mostrar previsualización de videos</string>
-    <string name="thanks_text_support">Soporte de Gitlab</string>
-    <string name="action_bug_report">Informe de error</string>
-    <string name="no_mail_client">No hay clientes de correo electrónico instalados.</string>
-    <string name="bug_report_mail">Mandar un reporte del error</string>
     <string name="account_id_clipbloard">! La identificación de la cuenta ha sido copiada en el portapapeles!</string>
-    <string name="settings_title_battery">Optimización de la batería</string>
     <string name="set_change_locale">Cambiar idioma</string>
     <string name="default_language">Idioma predeterminado</string>
     <string name="truncate_long_toots">Truncar toots largos</string>
@@ -631,7 +544,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="tags_stored">Se ha guardado la etiqueta.</string>
     <string name="tags_renamed">¡La etiqueta ha sido cambiada!</string>
     <string name="tags_deleted">¡Se ha borrado la etiqueta!</string>
-    <string name="set_display_art">Mostrar la línea de tiempo de arte</string>
     <string name="schedule_boost">Aumento de horario</string>
     <string name="boost_scheduled">¡El impulso está programado!</string>
     <string name="no_scheduled_boosts">¡Ningún impulso programado para mostrar!</string>
@@ -669,12 +581,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="showcase_instance">En este campo, debe escribir el nombre de host de su instancia. \ Npor ejemplo, si creó su cuenta en https: //mastodon.social \ nSólo escriba <b> mastodon.social </b> (sin https: //) \norte
          Puede comenzar a escribir las primeras letras y se sugerirán los nombres. \ N \ n
          ⚠ El botón Iniciar sesión solo funcionará si el nombre de la instancia es válido y la instancia está activa!    </string>
-    <string name="showcase_uid">        En este campo, escriba el correo electrónico que está conectado a tu cuenta de Mastodon.
-    </string>
-    <string name="showcase_pwd">        Último paso es introducir su contraseña y haga clic en Inicio de sesión.
-    </string>
     <string name="more_information">Más información</string>
-    <string name="showcase_2FA">Si utilizas 2FA (autenticación de dos factores), es necesario utilizar este enlace. \nTu también puedes utilizarlo si no deseas ingresar tus credenciales aquí.</string>
     <!-- languages not translated -->
     <string name="languages">Idiomas</string>
     <string name="show_media_only">Solo media</string>
@@ -686,16 +593,13 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Instancia Pixelfed</string>
     <string name="mastodon_instance">Instancia de Mastodon</string>
-    <string name="no_pixelfed_instance">No hay instancia de Pixelfed</string>
     <string name="any_tags">Cualquiera de estos</string>
     <string name="all_tags">Todos estos</string>
     <string name="none_tags">Ninguno de estos</string>
     <string name="some_words_any">Cualquiera de estas palabras (separados por espacios)</string>
     <string name="some_words_all">Todas estas palabras (separados por espacios)</string>
-    <string name="some_words_none">Ninguna de estas palabras (separados por espacios)</string>
     <string name="some_tags">Agregar algunas palabras para filtrar (separados por espacios)</string>
     <string name="change_tag_column">Cambiar nombre de columna</string>
-    <string name="no_misskey_instance">No hay instancias Misskey</string>
     <string name="misskey_instance">Instancia Misskey</string>
     <string name="toast_no_apps">Ninguna aplicación que soporte este enlace está instalada en su dispositivo.</string>
     <string name="subscriptions">Suscripciones</string>
@@ -712,7 +616,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="file_to_upload">Seleciona un archivo para subir</string>
     <string name="my_videos">Mis videos</string>
     <string name="title">Título</string>
-    <string name="categories">Categorías</string>
     <string name="license">Licencia</string>
     <string name="category">Categoría</string>
     <string name="language">Idioma</string>
@@ -727,14 +630,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="video_uploaded_action">Haga clic aquí para editar los datos del vídeo.</string>
     <string name="delete_video">Eliminar vídeo</string>
     <string name="delete_video_confirmation">¿Está seguro de eliminar este video?</string>
-    <string name="no_video_uploaded">! Todavía no se ha subido ningún vídeo!</string>
     <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
-    <string name="default_channel_of">Canal por defecto %s</string>
     <string name="no_video_to_display">¡No hay videos para ver!</string>
-    <string name="add_image_to_favorite">Añadir media a favoritos</string>
     <string name="leave_a_comment">Dejar un comentario</string>
     <string name="share">Compartir</string>
-    <string name="my_pictures">Mis imágenes</string>
     <string name="choose_schedule">Elija un modo de programación</string>
     <string name="device_schedule">Desde dispositivo</string>
     <string name="server_schedule">Desde servidor</string>
@@ -742,12 +641,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toots_client">Toots (Dispositivo)</string>
     <string name="modify">Modificar</string>
     <string name="set_display_content_after_fetch_more">Mostrar nuevos toots sobre el botón \"Obtener más\"</string>
-    <string name="settings_category_label_confirmations">Confirmaciones</string>
     <string name="settings_category_label_timelines">Líneas de tiempo</string>
-    <string name="settings_category_label_notification">Servicio de notificaciones</string>
     <string name="settings_category_label_interface">Interfaz</string>
-    <string name="settings_category_label_hiddencontent">Contenido oculto</string>
-    <string name="settings_category_label_composing">Composición</string>
     <string name="contact">Contactos</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> comentó tu vídeo <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> está siguiendo tu canal <b>%2$s</b>]]></string>
@@ -762,7 +657,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="import_data">Importar Datos</string>
     <string name="toot_select_import">Selecciona el archivo para importar</string>
     <string name="toot_select_file_error">! Se produjo un error al seleccionar el archivo de copia de seguridad!</string>
-    <string name="data_import_start">Por favor, no mates la aplicación mientras se procesa. Eso no puede ser muy largo.</string>
     <string name="add_public_comment">Agrega un comentario público</string>
     <string name="send_comment">Enviar comentario</string>
     <string name="toast_toot_saved_error">No hay conexión a internet. Su mensaje ha sido almacenado en borradores.</string>
@@ -803,18 +697,14 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="poll_finish_at">final en %s</string>
     <string name="refresh_poll">Actualizar encuesta</string>
     <string name="vote">Votar</string>
-    <string name="poll_not_private">¡Una encuesta no puede ser adjunta a un mensaje directo!</string>
     <string name="notif_poll">Una encuesta en la que has votado ha terminado</string>
     <string name="notif_poll_self">Una encuesta que usted tooteo ha terminado</string>
     <string name="settings_category_notif_customize">Personalizar</string>
     <string name="settings_category_notif_categories">Categorías</string>
-    <string name="settings_category_notif_news">Noticias</string>
     <string name="settings_category_notif_time_slot">Intervalo de tiempo</string>
     <string name="settings_category_notif_advanced">Avanzado</string>
     <string name="set_display_new_badge">Mostrar insignia \'nuevo\' en los toots no leídos</string>
-    <string name="set_display_peertube">Mostrar línea de tiempo de Peertube</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="hide_tab">Ocultar la pestaña</string>
     <string name="move_timeline">Mover la línea de tiempo</string>
     <string name="hide_timeline">Ocultar la línea de tiempo</string>
     <string name="reorder_timelines">Reordenar las líneas de tiempo</string>
@@ -824,10 +714,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="undo">Deshacer</string>
     <string name="visible_tabs_needed">¡Necesitas mantener dos pestañas visibles!</string>
     <string name="action_reorder_timeline">Reordenar las líneas de tiempo</string>
-    <string name="warning_list_deletion">¡Usa la entrada de listas para eliminar esta lista!</string>
     <string name="warning_main_timeline">¡Las líneas de tiempo principales sólo pueden ser ocultadas!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="add_timeline">Agregar una línea de tiempo</string>
     <string name="set_sensitive_content">Marcar siempre los medios como sensibles</string>
     <string name="gnu_instance">Instancia GNU</string>
     <string name="cached_status">Estatus en caché</string>
@@ -842,14 +730,11 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="history">Historia</string>
     <string name="playlists">Listas de reproducción</string>
     <string name="display_name">Nombra para mostrar</string>
-    <string name="privacy">Privacidad</string>
-    <string name="create">Crear</string>
     <string name="action_playlist_add">Usted no tiene ninguna lista de reproducción. Haga clic en el icono \"+\" para agregar una nueva lista de reproducción</string>
     <string name="error_display_name">¡Debes proporcionar un nombre a mostrar!</string>
     <string name="error_channel_mandatory">El canal es necesario cuando la lista de reproducción es pública.</string>
     <string name="action_playlist_create">Crear una lista de reproducción</string>
     <string name="action_playlist_empty_content">No hay nada en esta lista de reproducción todavía.</string>
-    <string name="edit_media">Editar multimedia</string>
     <string name="redo">rehacer</string>
     <string name="gallery">Galería</string>
     <string name="label_emoji">Emoji</string>
@@ -857,7 +742,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="label_eraser">Borrador</string>
     <string name="label_text">Texto</string>
     <string name="label_filter">Filtrar</string>
-    <string name="label_adjust">Ajustar</string>
     <string name="label_brush">Pincel</string>
     <string name="confirm_exit_editing">¿Estás seguro de que deseas salir sin guardar la imagen?</string>
     <string name="discard">Descartar</string>
@@ -865,7 +749,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="image_saved">¡Imagen guardada con éxito!</string>
     <string name="save_image_failed">Error al guardar la Imagen</string>
     <string name="opacity">Opacidad</string>
-    <string name="label_crop">Cortar</string>
     <string name="set_photo_editor">Habilitar el editor de fotos</string>
     <string name="add_poll_item">Añadir un elemento a la encuesta</string>
     <string name="remove_poll_item">Eliminar último elemento de la encuesta</string>
@@ -877,10 +760,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="timed_mute">Silenciador temporizado</string>
     <string name="mention_account">Mencionar la cuenta</string>
     <string name="refresh_cache">Actualizar el caché</string>
-    <string name="see_boost_and_fav">Ver quién ha impulsado y añadido a favoritos</string>
     <string name="mention_status">Mencionar el estatus</string>
     <string name="action_news">Noticias</string>
-    <string name="set_display_news_from_fedilab">Mostrar noticias de la cuenta de Fedilab</string>
     <string name="category_general">General</string>
     <string name="category_regional">Regional</string>
     <string name="category_art">Arte</string>
@@ -924,7 +805,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="reconnect_account">Reconectar la cuenta</string>
     <string name="reconnect_account_message">La aplicación no ha podido acceder a las funciones de administrador. Puede que necesite volver a conectar la cuenta para tener el alcance correcto.</string>
     <string name="unresolved">No resuelto</string>
-    <string name="resolved">Resuelto</string>
     <string name="remote">Remoto</string>
     <string name="active">Activo</string>
     <string name="pending">Pendiente</string>
@@ -940,7 +820,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="disable">Desactivar</string>
     <string name="silence">Silenciar</string>
     <string name="email_user">Notificar al usuario por correo electrónico</string>
-    <string name="perform_action">Ejecutar acción</string>
     <string name="custom_warning">Advertencia personalizada</string>
     <string name="user">Usuario</string>
     <string name="moderator">Moderador</string>
@@ -972,7 +851,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toast_empty_content">¡Contenido vacío!</string>
     <string name="set_display_fedilab_features_button">Mostrar botón de características de Fedilab</string>
     <string name="audio">La aplicación necesita acceder a la grabación de audio</string>
-    <string name="toot_message_record_error">¡Se ha producido un error al grabar el mensaje de voz!</string>
     <string name="voice_message">Mensaje de voz</string>
     <string name="set_quick_reply">Activar respuesta rápida</string>
     <string name="reply_might_be_useless">¡La cuenta a la que estás respondiendo podría no ver tu mensaje!</string>
@@ -980,9 +858,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_blur_sensitive_indication">Si está desactivado, el contenido multimedia sensible será ocultado con un botón</string>
     <string name="set_long_press_media_indication">Almacenar contenido multimedia a tamaño completo con una pulsación larga en la previsualización</string>
     <string name="set_display_timeline_in_list_indication">Agregar un botón de elipse en la parte superior derecha para listar todas las etiquetas/instancias/listas</string>
-    <string name="set_display_news_from_fedilab_indication">Mostrar un elemento en el menú principal para un acceso rápido a la línea de tiempo con la etiqueta #Fedilab</string>
     <string name="live_notif_indication">Mantenga una conexión abierta a la API de streaming para notificaciones en vivo.</string>
-    <string name="set_keep_background_process_indication">Cuando la aplicación esté en segundo plano, mantendrá una conexión con la API de streaming. Deshabilítalo si te importa tu batería.</string>
     <string name="set_enable_time_slot_indication">Durante el intervalo de tiempo, la aplicación enviará notificaciones. Puede revertir (es decir: silenciar) este intervalo de tiempo con el botón derecho.</string>
     <string name="set_display_fedilab_features_button_indication">Mostrar un botón de Fedilab debajo de la imagen de perfil. Es un acceso directo para acceder a las características de la aplicación.</string>
     <string name="set_quick_reply_indication">Permite responder directamente en las líneas de tiempo debajo de los estados</string>
@@ -994,9 +870,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="featured_hashtags_indication">Estas etiquetas permitirán filtrar los estados de los perfiles. Tendrá que usar el menú contextual para verlos.</string>
     <string name="set_capitalize_indication">Insertar automáticamente un salto de línea después de la mención para poner en mayúscula la primera letra</string>
     <string name="settings_title_custom_sharing_indication">Permitir a los creadores de contenido compartir los estados en sus fuentes RSS</string>
-    <string name="timelines">Líneas de tiempo</string>
-    <string name="u_interface">Interfaz</string>
-    <string name="battery">Batería</string>
     <string name="compose">Redactar</string>
     <string name="upload_image_maximum_retry_times">Tiempo máximo de reintentos al subir contenido multimedia</string>
     <string name="new_folder">Crear una nueva Carpeta aquí</string>
@@ -1007,9 +880,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="default_directory">Directorio por defecto</string>
     <string name="folder">Carpeta</string>
     <string name="create_folder">Crear carpeta</string>
-    <string name="custom_tabs_indication">Usa tu navegador favorito dentro de la aplicación. Al desactivarlo, los enlaces se abrirán externamente</string>
     <string name="set_display_confirm">¿Mostrar mensaje de felicitación tras completar una acción (impulsar, favorito, etc.)?</string>
-    <string name="export_muted_instance">Exportar instancias silenciadas</string>
     <string name="muted_instance_exported">¡Se han exportado las instancias silenciadas!</string>
     <string name="add_instances">Añadir una instancia</string>
     <string name="export_instances">Exportar instancias</string>
@@ -1105,7 +976,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_nitter_host">Introduce tu host personalizado o deja en blanco para usar nitter.net</string>
     <string name="set_hide_status_bar">Ocultar la barra de notificaciones de Fedilab</string>
     <string name="set_hide_status_bar_indication">Para ocultar el resto de la notificación en la barra de estado, presione en el botón con el ícono de un ojo y luego desactivar \"Mostrar en la barra de estado\"</string>
-    <string name="set_live_type_title">Activa el retraso de notificaciones</string>
     <string name="set_live_type_indication">Las notificaciones se retrasarán cada 30 segundos. Esto permitirá gastar menos batería.</string>
     <string name="live_delayed">Notificaciones en vivo retrasadas</string>
     <string name="no_live_notif">Sin notificaciones en vivo</string>
@@ -1131,10 +1001,11 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="title_video_peertube">Título del vídeo</string>
     <string name="join_peertube">Unirse a Peertube</string>
     <string name="agreement_check_peertube">Tengo al menos 16 años y estoy de acuerdo con los %1$s de esta instancia</string>
-    <string name="colors">Colores</string>
     <string name="link_color_title">Enlaces</string>
     <string name="link_color">Cambiar el color de los enlaces (Url, menciones, etiquetas, etc.) en los mensajes</string>
     <string name="boost_header_color_title">Cabecera de impulsos</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Cambiar el color de la cabecera de los impulsos</string>
     <string name="background_status_title">Publicaciones</string>
     <string name="background_status">Color de fondo de las publicaciones en las líneas de tiempo</string>
@@ -1143,15 +1014,12 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="reset">Restablecer</string>
     <string name="icons_color_title">Iconos</string>
     <string name="icons_color">Color de los iconos inferiores en las líneas de tiempo</string>
-    <string name="background_color_title">Fondo</string>
-    <string name="background_color">Cambiar el color de fondo de las líneas de tiempo</string>
     <string name="pin_tag">Fijar esta etiqueta</string>
     <string name="logo_of_the_instance">Logo de la instancia</string>
     <string name="edit_profile">Editar perfil</string>
     <string name="make_an_action">Realizar una acción</string>
     <string name="translation">Traducción</string>
     <string name="image_preview">Vista previa de imagen</string>
-    <string name="change_theme">Cambiar el tema</string>
     <string name="text_color_title">Color del texto</string>
     <string name="text_color">Cambiar el color del texto en las publicaciones</string>
     <string name="apply_changes">Aplicar cambios</string>
