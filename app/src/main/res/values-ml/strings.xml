@@ -172,12 +172,12 @@
     <string-array name="toot_visibility">
         <item>പൊതു സമയ രേഖകളിലേക്ക് അയക്കുക</item>
         <item>പൊതു സമയ രേഖകളിലേക്ക് അയക്കരുത്</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>പിന്തുടരുന്നവർക്ക് മാത്രം അയക്കുക</item>
+        <item>പരാമർശിക്കപ്പെട്ട ഉപയോക്താക്കൾക്ക് മാത്രം അയക്കുക</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
+    <string name="no_draft">ഡ്രാഫ്റ്റുകൾ ഇല്ല!</string>
+    <string name="choose_toot">ഒരു ടൂട്ട് തിരഞ്ഞെടുക്കുക</string>
+    <string name="choose_accounts">ഒരു അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക</string>
     <string name="select_accounts">ചില അക്കൗണ്ടുകൾ തിരഞ്ഞെടുക്കൂ</string>
     <string name="remove_draft">ഡ്രാഫ്റ്റ് നീക്കം ചെയ്യട്ടെ?</string>
     <string name="show_reply">ഒറിജിനൽ ടൂട്ട് കാണാൻ ഈ ബട്ടണിൽ ഞെക്കൂ</string>
@@ -288,14 +288,14 @@
     <string name="set_attachment_action">Load the media</string>
     <string name="load_attachment">Load the pictures</string>
     <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
+    <string name="load_attachment_spoiler_less">കുറച്ചു കാണിക്കുക…</string>
+    <string name="load_sensitive_attachment">അസ്വസ്ഥമാക്കാമാകുന്ന ഉള്ളടക്കം</string>
+    <string name="set_display_reply">പ്രതികരണങ്ങളിൽ മുൻപത്തെ സന്ദേശം കാണിക്കുക</string>
+    <string name="set_display_local">പ്രാദേശിക സമയരേഖ പ്രദർശിപ്പിക്കുക</string>
+    <string name="set_display_global">ഫെഡറേറ്റഡ് സമയരേഖ പ്രദർശിപ്പിക്കുക</string>
+    <string name="set_disable_gif">ജിഫ് അവതാരങ്ങൾ പ്രവർത്തനരഹിതമാക്കുക</string>
+    <string name="set_folder_title">വഴി: </string>
+    <string name="set_auto_store_toot">ഡ്രാഫ്റ്റുകൾ സ്വയമേ സൂക്ഷിക്കുക</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
