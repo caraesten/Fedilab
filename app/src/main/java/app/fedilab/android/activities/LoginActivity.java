@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -107,7 +108,7 @@ public class LoginActivity extends BaseActivity {
     private UpdateAccountInfoAsyncTask.SOCIAL socialNetwork;
     private String basicAuth;
     private InstanceNodeInfo instanceNodeInfo;
-    private LinearLayout step_login_credential, step_instance;
+    private ConstraintLayout step_login_credential, step_instance;
     private TextView instance_chosen;
     private ImageView info_instance;
 
