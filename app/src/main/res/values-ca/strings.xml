@@ -1038,8 +1038,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
     <string name="export_bookmarks">Exporta els marcadors de la instància</string>
     <string name="import_bookmarks">Importa els marcadors de la instància</string>
-    <string name="user_count">User count</string>
-    <string name="status_count">Status count</string>
-    <string name="instance_count">Instance count</string>
+    <string name="user_count">Compte d\'usuari</string>
+    <string name="status_count">Nombre de missatges</string>
+    <string name="instance_count">Nombre d\'instàncies</string>
     <string name="blocked">Blocked</string>
 </resources>
