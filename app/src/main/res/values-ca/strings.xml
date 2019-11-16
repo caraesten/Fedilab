@@ -33,12 +33,12 @@
     <string name="clipboard">El contingut del toot s\'ha copiat al porta-retalls</string>
     <string name="clipboard_url">L\'adreça web del toot s\'ha copiat al porta-retalls</string>
     <string name="change">Canvia</string>
-    <string name="choose_picture">Seleccioneu una imatge…</string>
+    <string name="choose_picture">Selecciona una imatge…</string>
     <string name="clear">Neteja</string>
     <string name="camera">Càmera</string>
     <string name="delete_all">Suprimeix-ho tot</string>
-    <string name="translate_toot">Tradueix aquest toot.</string>
-    <string name="schedule">Temporalitza</string>
+    <string name="translate_toot">Tradueix aquest bram.</string>
+    <string name="schedule">Temporitza</string>
     <string name="text_size">Mides de text i icones</string>
     <string name="text_size_change">Canvia la mida del text actual:</string>
     <string name="icon_size_change">Canvia la mida de la icona actual:</string>
@@ -63,7 +63,7 @@
     <string name="please_wait">Si us plau, espereu uns segons abans de fer aquesta acció.</string>
     <!--- Menu -->
     <string name="home_menu">Inici</string>
-    <string name="local_menu">Cronologia local</string>
+    <string name="local_menu">Pissarra local</string>
     <string name="global_menu">Pissarra federada</string>
     <string name="neutral_menu_title">Opcions</string>
     <string name="favorites_menu">Preferits</string>
@@ -78,20 +78,20 @@
     <string name="send_email">Envia un correu electrònic</string>
     <string name="click_to_change">Feu clic en a la ruta per canviar-la</string>
     <string name="failed">Ha fallat!</string>
-    <string name="scheduled_toots">Toots temporalitzats</string>
+    <string name="scheduled_toots">Brams temporitzats</string>
     <string name="disclaimer_full">Aquesta informació d\'usuari pot estar incompleta.</string>
-    <string name="insert_emoji">Insereix un emoji</string>
+    <string name="insert_emoji">Inserir emoji</string>
     <string name="no_emoji">L\'app no ha recollit emojis personalitzats de moment.</string>
     <string name="live_notif">Notificacions en directe</string>
     <!-- Status -->
-    <string name="no_status">Cap toot per mostrar</string>
+    <string name="no_status">Cap bram per mostrar</string>
     <string name="reblog_by">Difós per %1$s</string>
-    <string name="favourite_add">Afegir aquest toot als favorits?</string>
-    <string name="favourite_remove">Esborrar aquest toot dels favorits?</string>
-    <string name="reblog_add">Vols difondre aquest toot?</string>
-    <string name="reblog_remove">Desdifondre el toot?</string>
-    <string name="pin_add">Vols fixar aquest toot?</string>
-    <string name="pin_remove">Desfixar aquest toot?</string>
+    <string name="favourite_add">Afegir aquest bram als preferits?</string>
+    <string name="favourite_remove">Esborrar aquest bram dels preferits?</string>
+    <string name="reblog_add">Vols difondre aquest bram?</string>
+    <string name="reblog_remove">Desdifondre el bram?</string>
+    <string name="pin_add">Vols fixar aquest bram?</string>
+    <string name="pin_remove">Desfixar aquest bram?</string>
     <string name="more_action_1">Silencia</string>
     <string name="more_action_2">Bloca</string>
     <string name="more_action_3">Denuncia</string>
@@ -99,12 +99,12 @@
     <string name="more_action_5">Copia</string>
     <string name="more_action_6">Comparteix</string>
     <string name="more_action_7">Menciona</string>
-    <string name="more_action_8">Silencia temporalment</string>
+    <string name="more_action_8">Silenciar temporalment</string>
     <string name="more_action_9">Suprimir &amp; tornar a redactar</string>
     <string-array name="more_action_confirm">
         <item>Vols silenciar aquest compte?</item>
         <item>Vols blocar aquest compte?</item>
-        <item>Vols denunciar aquest toot?</item>
+        <item>Vols denunciar aquest bram?</item>
         <item>Vols blocar el domini?</item>
         <item>Desilenciar aquest compte?</item>
     </string-array>
@@ -113,8 +113,8 @@
         <item>Silenciar</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Vols suprimir aquest toot?</item>
-        <item>Suprimir &amp; tornar a redactar aquest toot?</item>
+        <item>Vols suprimir aquest bram?</item>
+        <item>Suprimir &amp; tornar a redactar aquest bram?</item>
     </string-array>
     <string name="bookmarks">Marcadors</string>
     <string name="bookmark_add">Afegeix als marcadors</string>
@@ -130,22 +130,22 @@
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Alerta</string>
     <string name="toot_placeholder">Què et passa pel cap?</string>
-    <string name="toot_it">TOOT!</string>
+    <string name="toot_it">BRAMULA!</string>
     <string name="queet_it">Quita!</string>
     <string name="cw">ac</string>
-    <string name="toot_title">Escriu un toot</string>
+    <string name="toot_title">Escriu un bram</string>
     <string name="toot_title_reply">Respon a un toot</string>
     <string name="queet_title">Escriu un quit</string>
     <string name="queet_title_reply">Respon a un quit</string>
     <string name="toot_select_image">Escull un recurs multimèdia</string>
-    <string name="toot_select_image_error">S\'ha produït un error en seleccionar el recurs multimèdia!</string>
+    <string name="toot_select_image_error">S\'ha produït un error en seleccionar el mèdia!</string>
     <string name="toot_delete_media">Vols suprimir aquest mèdia?</string>
-    <string name="toot_error_no_content">El toot és buit!</string>
-    <string name="toot_visibility_tilte">Visibilitat del toot</string>
-    <string name="toots_visibility_tilte">Visibilitat predeterminada dels toots: </string>
-    <string name="toot_sent">S\'ha enviat el toot!</string>
-    <string name="toot_reply_content_title">Estàs responent a aquest toot:</string>
-    <string name="toot_sensitive">Això és contingut sensible?</string>
+    <string name="toot_error_no_content">El bram és buit!</string>
+    <string name="toot_visibility_tilte">Visibilitat del bram</string>
+    <string name="toots_visibility_tilte">Visibilitat predeterminada dels brams: </string>
+    <string name="toot_sent">S\'ha enviat el bram!</string>
+    <string name="toot_reply_content_title">Estàs responent a aquest bram:</string>
+    <string name="toot_sensitive">És contingut sensible?</string>
     <string-array name="toot_visibility">
         <item>Penja\'l a les pissarres públiques</item>
         <item>No el pengis en pissarres públiques</item>
@@ -153,11 +153,11 @@
         <item>Penja\'l només per a usuaris amb mencions</item>
     </string-array>
     <string name="no_draft">No hi ha esborranys!</string>
-    <string name="choose_toot">Escull un toot</string>
+    <string name="choose_toot">Escull un bram</string>
     <string name="choose_accounts">Escull un compte</string>
     <string name="select_accounts">Seleccionar comptes</string>
     <string name="remove_draft">Vols suprimir l\'esborrany?</string>
-    <string name="show_reply">Fes clic al botó per mostrar el toot original</string>
+    <string name="show_reply">Fes clic al botó per mostrar el bram original</string>
     <string name="upload_form_description">Descriu-ho per a disminuïts visuals</string>
     <!-- Instance -->
     <string name="instance_no_description">No hi ha descripció disponible!</string>
@@ -167,26 +167,26 @@
     <string name="about_license">Llicència: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Codi font: </string>
-    <string name="about_yandex">Traducció dels toots:</string>
+    <string name="about_yandex">Traducció dels brams:</string>
     <string name="about_thekinrar">Cerca instàncies:</string>
     <string name="thanks_text_logo">Disseny d\'icones:</string>
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
     <string name="no_accounts">No hi ha comptes per mostrar</string>
-    <string name="no_follow_request">No hi ha cap petició de seguiment</string>
-    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="no_follow_request">No hi ha peticions de seguiment</string>
+    <string name="status_cnt">Brams \n %1$s</string>
     <string name="following_cnt">A qui segueixo \n %1$s</string>
     <string name="followers_cnt">Seguidors \n %1$s</string>
-    <string name="pins_cnt">Fixat \n %d</string>
+    <string name="pins_cnt">Fixats \n %d</string>
     <string name="authorize">Autoritza</string>
     <string name="reject">Rebutja</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No hi ha toots programats per mostrar!</string>
-    <string name="no_scheduled_toots_indications">Escriu un tot i seleccionar <b>Temporització</b> al menú de dalt.</string>
-    <string name="remove_scheduled">Suprimir tot programat?</string>
+    <string name="no_scheduled_toots">No hi ha brams programats per mostrar!</string>
+    <string name="no_scheduled_toots_indications">Escriu un bram i selecciona <b>Temporització</b> al menú de dalt.</string>
+    <string name="remove_scheduled">Suprimir bram programat?</string>
     <string name="media_count">Mèdia: %d</string>
-    <string name="toot_scheduled">S\'ha guardat la temporització d\'un toot!</string>
+    <string name="toot_scheduled">S\'ha temporitzat el bram!</string>
     <string name="toot_scheduled_date">La data programada ha de ser posterior al moment actual!</string>
     <string name="warning_battery">L\'estalvi de bateria està activat! Això pot no rutllar com està previst.</string>
     <!-- timed mute -->
@@ -194,27 +194,27 @@
     <string name="timed_mute_date">%1$s s\'ha silenciat fins a %2$s.\n Pots desilenciar el compte des de la seva pàgina de perfil.</string>
     <string name="timed_mute_profile">%1$s està silenciat fins a %2$s.\n Feu clic aquí per desactivar el silenciament.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No hi ha cap notificació per mostrar</string>
-    <string name="notif_mention">et menciona</string>
-    <string name="notif_reblog">ha difós el teu estatus</string>
-    <string name="notif_favourite">ha marcat com a preferit el teu estatus</string>
+    <string name="no_notifications">No hi ha notificacions per mostrar</string>
+    <string name="notif_mention">t\'ha mencionat</string>
+    <string name="notif_reblog">ha difós el teu missatge</string>
+    <string name="notif_favourite">ha marcat com a preferit el teu missatge</string>
     <string name="notif_follow">t\'ha començat a seguir</string>
     <plurals name="other_notifications">
         <item quantity="one">i un altra notificació</item>
-        <item quantity="other">i %d altres notificacions</item>
+        <item quantity="other">i %d notificacions més</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d agradament</item>
-        <item quantity="other">%d agradament</item>
+        <item quantity="one">%d agradaments</item>
+        <item quantity="other">%d agradaments</item>
     </plurals>
-    <string name="delete_notification_ask">Vols suprimir la notificació?</string>
-    <string name="delete_notification_ask_all">Vols suprimir totes les notificacions?</string>
+    <string name="delete_notification_ask">Suprimir una notificació?</string>
+    <string name="delete_notification_ask_all">Suprimir totes les notificacions?</string>
     <string name="delete_notification">La notificació s\'ha suprimit!</string>
     <string name="delete_notification_all">S\'han suprimit totes les notificacions!</string>
     <!-- HEADER -->
     <string name="following">Seguits</string>
     <string name="followers">Seguidors</string>
-    <string name="pinned_toots">Fixat</string>
+    <string name="pinned_toots">Fixats</string>
     <!-- TOAST -->
     <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
     <string name="connect_error">No s\'ha pogut fer connexió al domini de la instància!</string>
@@ -225,14 +225,14 @@
     <string name="toast_unmute">El compte ja no està silenciat!</string>
     <string name="toast_follow">Seguiment del compte confirmat!</string>
     <string name="toast_unfollow">Ja no estàs seguint el compte!</string>
-    <string name="toast_reblog">El toot ha estat difós!</string>
-    <string name="toast_unreblog">El toot ja no està difós!</string>
-    <string name="toast_favourite">S\'ha afegit el toot als teus preferits!</string>
-    <string name="toast_unfavourite">S\'ha eliminat el toot dels teus preferits!</string>
-    <string name="toast_report">S\'ha denunciat el toot!</string>
-    <string name="toast_unstatus">S\'ha suprimit el toot!</string>
-    <string name="toast_pin">S\'ha fixat el toot!</string>
-    <string name="toast_unpin">S\'ha desfixat el toot!</string>
+    <string name="toast_reblog">El bram s\'ha difós!</string>
+    <string name="toast_unreblog">El bram ja no està difós!</string>
+    <string name="toast_favourite">S\'ha afegit el bram als teus preferits!</string>
+    <string name="toast_unfavourite">S\'ha eliminat el bram dels teus preferits!</string>
+    <string name="toast_report">S\'ha denunciat el bram!</string>
+    <string name="toast_unstatus">S\'ha suprimit el bram!</string>
+    <string name="toast_pin">S\'ha fixat el bram!</string>
+    <string name="toast_unpin">S\'ha desfixat el bram!</string>
     <string name="toast_error">Ep! S\'ha produït un error!</string>
     <string name="toast_code_error">Hi ha un error! La instància no ha generat cap codi d\'autorització!</string>
     <string name="toast_error_instance">El domini de la instància no sembla vàlid!</string>
@@ -245,9 +245,9 @@
     <string name="toast_error_translations_disabled">Tens l\'opció de traducció deshabilitada</string>
     <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
     <string name="toast_error_char_limit">Estàs segur que aquesta instància permet tants caràcters? El valor usual s\'aproxima a 500 caràcters.</string>
-    <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels toots d\'aquest compte %1$s</string>
+    <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels brams d\'aquest compte %1$s</string>
     <!-- Settings -->
-    <string name="set_toots_page">Nombre de toots per càrrega</string>
+    <string name="set_toots_page">Nombre de brams per càrrega</string>
     <string name="set_attachment_always">Sempre</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">Demana</string>
@@ -259,15 +259,15 @@
     <string name="set_disable_gif">Desactiva els avatars GIF</string>
     <string name="set_folder_title">Camí: </string>
     <string name="set_auto_store_toot">Desa els esborrany automàticament</string>
-    <string name="set_auto_add_media_url">Afegeix als toots els URL dels mèdia</string>
+    <string name="set_auto_add_media_url">Afegeix als brams els URL dels mèdia</string>
     <string name="set_notif_follow">Avisa quan algú et comenci a seguir</string>
-    <string name="set_notif_follow_share">Avisa quan algú difongui el teu estatus</string>
-    <string name="set_notif_follow_add">Avisa quan algú marqui el teu estatus com a preferit</string>
+    <string name="set_notif_follow_share">Avisa quan algú difongui el teu missatge</string>
+    <string name="set_notif_follow_add">Avisa quan algú marqui el teu missatge com a preferit</string>
     <string name="set_notif_follow_mention">Avisa quan algú et mencioni</string>
     <string name="set_notif_follow_poll">Avisar quan una enquesta finalitzi</string>
     <string name="set_share_validation">Demana confirmació abans de difondre</string>
     <string name="set_share_validation_fav">Demana confirmació abans d\'afegir a preferits</string>
-    <string name="set_wifi_only">Enviar avisos només per WIFI</string>
+    <string name="set_wifi_only">Enviar avisos només amb WIFI</string>
     <string name="set_notify">Avisar?</string>
     <string name="set_notif_silent">Notificacions silencioses</string>
     <string name="set_nsfw_timeout">Límit per mostrar material ofensiu (en segons, 0 és desactivat)</string>
@@ -277,9 +277,9 @@
     <string name="set_profile_description">Biografia...</string>
     <string name="set_lock_account">Fes el compte privat</string>
     <string name="set_save_changes">Desa els canvis</string>
-    <string name="set_header_picture_overlay">Escull una foto per l\'encapçalament</string>
+    <string name="set_header_picture_overlay">Escull una foto de capçalera</string>
     <string name="set_fit_preview">Ajusta la previsualització d\'imatges</string>
-    <string name="set_automatically_split_toot">Per sobre de 500 caràcters, separa automàticament els toots de resposta</string>
+    <string name="set_automatically_split_toot">A partir de quants caràcters es divideixen automàticament els brams de resposta:</string>
     <string name="note_no_space">Has assolit el màxim permès de 160 caràcters!</string>
     <string name="username_no_space">Has assolit el màxim permès de 30 caràcters!</string>
     <string name="settings_time_from">Entre</string>
@@ -287,8 +287,8 @@
     <string name="settings_time_greater">Ha d\'haver passat més de %1$s</string>
     <string name="settings_time_lower">Ha d\'haver passat menys de %1$s</string>
     <string name="settings_hour_init">Hora d\'inici</string>
-    <string name="settings_hour_end">Hora d\'acabament</string>
-    <string name="embedded_browser">Utilitzar el navegador predefinit</string>
+    <string name="settings_hour_end">Hora final</string>
+    <string name="embedded_browser">Utilitzar el navegador incorporat</string>
     <string name="custom_tabs">Pestanyes personalitzades</string>
     <string name="use_javascript">Habilita el Javascript</string>
     <string name="expand_cw">Expandir automàticament el ca</string>
@@ -314,7 +314,7 @@
         <item>Groc</item>
         <item>Blanc</item>
     </string-array>
-    <string name="action_follow">Segueix</string>
+    <string name="action_follow">Seguir</string>
     <string name="action_unblock">Deixa de blocar</string>
     <string name="action_mute">Silencia</string>
     <string name="action_unmute">Deixa de silenciar</string>
@@ -341,8 +341,8 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="keywords_hint_custom_sharing">Paraules clau&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronitza</string>
-    <string name="action_filter">Filtre</string>
-    <string name="owner_cached_toots">Els teus toots</string>
+    <string name="action_filter">Filtra</string>
+    <string name="owner_cached_toots">Els teus brams</string>
     <string name="owner_cached_notifications">Les teves notificacions</string>
     <string name="v_public">Públic</string>
     <string name="v_unlisted">No llistats</string>
@@ -351,10 +351,10 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="v_keywords">Algunes paraules clau…</string>
     <string name="show_media">Mostra els mèdia</string>
     <string name="show_pinned">Mostra els fixats</string>
-    <string name="filter_no_result">No s`han trobat textos coincidents!</string>
-    <string name="data_backup_toots">Còpia de seguretat dels toots per %1$s</string>
-    <string name="data_backup_success">S\'han importat %1$s toots nous</string>
-    <string name="data_backup_notification_success">%1$s notificacions noves s\'han importat</string>
+    <string name="filter_no_result">No s\'han trobat resultats!</string>
+    <string name="data_backup_toots">Còpia de seguretat dels brams per %1$s</string>
+    <string name="data_backup_success">S\'han importat %1$s brams nous</string>
+    <string name="data_backup_notification_success">%1$s s\'han importat noves notificacions</string>
     <string-array name="filter_order">
         <item>Dates en ordre descendent</item>
         <item>Dates en ordre ascendent</item>
@@ -364,7 +364,7 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
         <item>Només</item>
         <item>Tots dos</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No s\'han trobat toots a la base de dades. Sisplau, feu ús del botó de sincronitzar del menú per recobrar-los.</string>
+    <string name="owner_cached_toots_empty">No s\'han trobat brams a la base de dades. Sisplau, pitgeu el botó de sincronitzar al menú per recobrar-los.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Dades gravades</string>
     <string name="privacy_data">Només es guarda al dispositiu la informació bàsica dels comptes.
@@ -376,11 +376,11 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
          - <b>INTERNET</b>: Usat per a requeriments a una instància.\n
          - <b>ESCRIURE_MAGATZEM_EXTERN</b>: Usat per emmagatzemar mèdia o moure l\'app a una tarja SD.\n
          - <b>LLEGIR_MAGATZEM_EXTERN</b>: Usat per afegir mèdia als toots.\n
-         - <b>BOOT_COMPLET</b>: Usat per iniciar el servei de notificació.\n
-         - <b>DESPERTA_BLOCATGE</b>: Usat durant el servei de notificació.    </string>
+         - <b>BOOT_COMPLET</b>: Usat per iniciar el servei de notificacions.\n
+         - <b>DESPERTA_BLOCATGE</b>: Usat durant el servei de notificacions.    </string>
     <string name="privacy_API_authorizations_title">Permisos d\'API:</string>
     <string name="privacy_API_authorizations">        - <b>Lectura</b>: Lectura de dades.\n
-        - <b>Escriptura</b>: Defineix els estatus i carrega mèdia per a estatus.\n
+        - <b>Escriptura</b>: Redacta missatges  i carrega mèdia per a missatges.\n
         - <b>Seguiments</b>: segueix, desegueix, bloca, desbloca.\n\n
         <b>&#9888; Aquestes accions es realitzen només a petició de l\'usuari.</b>
     </string>
@@ -391,8 +391,8 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
         - <b>Tasques-Android</b>: Per gestionar serveis\n
         - <b>FotoVista</b>: Per gestionar imatges\n
     </string>
-    <string name="privacy_API_yandex_title">Traducció dels toots</string>
-    <string name="privacy_API_yandex_authorizations">        L\'aplicació permet la traducció de toots a través de la configuració regional del dispositiu i l\'API Yandex.\n
+    <string name="privacy_API_yandex_title">Traducció dels brams</string>
+    <string name="privacy_API_yandex_authorizations">        L\'aplicació permet la traducció de bramss a través de la configuració regional del dispositiu i l\'API Yandex.\n
         Yandex té la seva pròpia política de privacitat, disponible aquí: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text_dev">        Agraïments:
@@ -400,12 +400,12 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="filter_regex">Filtratge mitjançant expressions regulars</string>
     <string name="search">Cerca</string>
     <string name="delete">Suprimeix</string>
-    <string name="fetch_more_toots">Arreplega més toots…</string>
+    <string name="fetch_more_toots">Arreplega més brams…</string>
     <!-- About lists -->
     <string name="action_lists">Llistes</string>
     <string name="action_lists_confirm_delete">Segur que vols suprimir permanentment la llista?</string>
-    <string name="action_lists_empty_content">No hi ha encara res a la llista. Quan els membres de la llista pengin nous estatus, apareixeran aquí.</string>
-    <string name="action_lists_add_to">Afegeix a una llista</string>
+    <string name="action_lists_empty_content">No hi ha encara res a la llista. Quan els membres de la llista pengin nous missatges, apareixeran aquí.</string>
+    <string name="action_lists_add_to">Afegeix a la llista</string>
     <string name="action_lists_create">Afegeix una llista</string>
     <string name="action_lists_delete">Suprimeix la llista</string>
     <string name="action_lists_update">Edita la llista</string>
@@ -1039,7 +1039,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
     <string name="export_bookmarks">Exporta els marcadors de la instància</string>
     <string name="import_bookmarks">Importa els marcadors de la instància</string>
-    <string name="user_count">Compte d\'usuari</string>
+    <string name="user_count">Nombre d\'usuaris</string>
     <string name="status_count">Nombre de missatges</string>
     <string name="instance_count">Nombre d\'instàncies</string>
     <string name="blocked">Blocked</string>
