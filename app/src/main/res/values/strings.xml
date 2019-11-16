@@ -650,9 +650,8 @@
 
 
     <string name="showcase_instance">
-        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b>\n
+        You can start writing first letters and names will be suggested.
     </string>
     <string name="more_information">More information</string>
 
