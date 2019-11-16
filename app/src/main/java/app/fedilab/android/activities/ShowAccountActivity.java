@@ -861,6 +861,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         TextView account_date = findViewById(R.id.account_date);
         account_date.setText(Helper.shortDateToString(account.getCreated_at()));
+        account_date.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
