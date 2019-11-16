@@ -583,9 +583,7 @@
         <item>1 day</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">In this field, you need to write your instance domain.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b>\nYou can start writing first letters and names will be suggested.
     </string>
     <string name="more_information">More information</string>
     <!-- languages not translated -->
