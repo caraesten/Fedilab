@@ -1040,8 +1040,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="theme_file_error">Se produjo un error al seleccionar el archivo de tema</string>
     <string name="export_bookmarks">Exportar marcadores a la instancia</string>
     <string name="import_bookmarks">Importar marcadores de la instancia</string>
-    <string name="user_count">User count</string>
-    <string name="status_count">Status count</string>
-    <string name="instance_count">Instance count</string>
-    <string name="blocked">Blocked</string>
+    <string name="user_count">Número de usuarios</string>
+    <string name="status_count">Número de estados</string>
+    <string name="instance_count">Número de instancias</string>
+    <string name="blocked">Bloqueado</string>
 </resources>
