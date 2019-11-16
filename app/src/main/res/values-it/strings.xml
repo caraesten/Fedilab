@@ -1045,6 +1045,6 @@
     <string name="export_theme">Esporta il tema</string>
     <string name="export_theme_title">Premi qui per esportare il tema corrente</string>
     <string name="theme_file_error">Si è verificato un errore durante la selezione del file di tema</string>
-    <string name="export_bookmarks">Export bookmarks to the instance</string>
-    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="export_bookmarks">Esporta segnalibri nell\'istanza</string>
+    <string name="import_bookmarks">Importa segnalibri dall\'istanza</string>
 </resources>
