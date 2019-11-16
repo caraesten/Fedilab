@@ -140,11 +140,13 @@ public class InstanceProfileActivity extends BaseActivity {
 
 
                             SpannableString descriptionSpan;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                                descriptionSpan = new SpannableString(Html.fromHtml(instanceNodeInfo.getNodeDescription(), FROM_HTML_MODE_LEGACY));
-                            else
-                                descriptionSpan = new SpannableString(Html.fromHtml(instanceNodeInfo.getNodeDescription()));
-                            description.setText(descriptionSpan, TextView.BufferType.SPANNABLE);
+                            if( instanceNodeInfo.getNodeDescription() != null) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                    descriptionSpan = new SpannableString(Html.fromHtml(instanceNodeInfo.getNodeDescription(), FROM_HTML_MODE_LEGACY));
+                                else
+                                    descriptionSpan = new SpannableString(Html.fromHtml(instanceNodeInfo.getNodeDescription()));
+                                description.setText(descriptionSpan, TextView.BufferType.SPANNABLE);
+                            }
                             userCount.setText(Helper.withSuffix((instanceNodeInfo.getNumberOfUsers())));
                             statusCount.setText(Helper.withSuffix((instanceNodeInfo.getNumberOfPosts())));
                             instanceCount.setText(Helper.withSuffix((instanceNodeInfo.getNumberOfInstance())));

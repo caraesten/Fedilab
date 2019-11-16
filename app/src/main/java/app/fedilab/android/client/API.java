@@ -1942,6 +1942,18 @@ public class API {
                         if( metadata.has("staffAccounts")){
                             instanceNodeInfo.setStaffAccountStr(metadata.getString("staffAccounts"));
                         }
+                        if( metadata.has("nodeName")){
+                            instanceNodeInfo.setNodeName(metadata.getString("nodeName"));
+                        }
+                    }
+                    if( resobj.has("usage")){
+                        JSONObject usage = resobj.getJSONObject("usage");
+                        if( usage.has("users") &&  usage.getJSONObject("users").has("total")){
+                            instanceNodeInfo.setNumberOfUsers(usage.getJSONObject("users").getInt("total"));
+                        }
+                        if( usage.has("localPosts") ){
+                            instanceNodeInfo.setNumberOfPosts(usage.getInt("localPosts"));
+                        }
                     }
                     if( instanceNodeInfo.getStaffAccountStr() != null && instanceNodeInfo.getStaffAccount() == null){
                         APIResponse search = searchAccounts(instanceNodeInfo.getStaffAccountStr(), 1);
