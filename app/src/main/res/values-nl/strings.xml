@@ -1049,4 +1049,5 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="user_count">User count</string>
     <string name="status_count">Status count</string>
     <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
 </resources>
