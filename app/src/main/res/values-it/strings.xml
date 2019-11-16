@@ -1047,4 +1047,7 @@
     <string name="theme_file_error">Si è verificato un errore durante la selezione del file di tema</string>
     <string name="export_bookmarks">Esporta segnalibri nell\'istanza</string>
     <string name="import_bookmarks">Importa segnalibri dall\'istanza</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
 </resources>
