@@ -172,12 +172,32 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 }
             });
         } else {
-            holder.main_container.setOnClickListener(new View.OnClickListener() {
+            holder.bottom_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PeertubeEditUploadActivity.class);
                     Bundle b = new Bundle();
                     b.putString("video_id", peertube.getUuid());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+            holder.peertube_video_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PeertubeActivity.class);
+                    Bundle b = new Bundle();
+                    if ((instance == null || instance.trim().length() == 0) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                        instance = Helper.getLiveInstance(context);
+                    String finalUrl = "https://" + instance + peertube.getEmbedPath();
+                    Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                    Matcher matcherLink = link.matcher(finalUrl);
+                    if (matcherLink.find()) {
+                        String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                        b.putString("peertubeLinkToFetch", url);
+                        b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
+                        b.putString("video_id", matcherLink.group(2));
+                    }
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -203,7 +223,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout main_container;
+        LinearLayout main_container, bottom_container;
         ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
         TextView peertube_title, peertube_date, header_title;
@@ -219,6 +239,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             peertube_duration = itemView.findViewById(R.id.peertube_duration);
             main_container = itemView.findViewById(R.id.main_container);
             header_title = itemView.findViewById(R.id.header_title);
+            bottom_container = itemView.findViewById(R.id.bottom_container);
         }
     }
 
