@@ -1044,4 +1044,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="theme_file_error">Une erreur s\'est produite lors de la sélection du fichier de thème</string>
     <string name="export_bookmarks">Exporter les signets vers l\'instance</string>
     <string name="import_bookmarks">Importer les signets de l\'instance</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
 </resources>
