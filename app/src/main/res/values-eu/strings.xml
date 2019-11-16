@@ -1045,4 +1045,8 @@
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
     <string name="export_bookmarks">Export bookmarks to the instance</string>
     <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
 </resources>
