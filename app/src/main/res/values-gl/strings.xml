@@ -1047,4 +1047,8 @@
     <string name="theme_file_error">Algo fallou ao escoller o ficheiro do decorado</string>
     <string name="export_bookmarks">Exportar marcadores a instancia</string>
     <string name="import_bookmarks">Importar marcadores desde a instancia</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
 </resources>

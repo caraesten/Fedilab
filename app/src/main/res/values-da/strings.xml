@@ -1009,8 +1009,8 @@
     <string name="link_color_title">Links</string>
     <string name="link_color">Skift farven på links (URL\'er, omtaler, tags mv.) i beskeder</string>
     <string name="boost_header_color_title">Overskrift på genblogninger</string>
-    <string name="displayname_title">Change the color of display name at the top of messages</string>
-    <string name="username_title">Change the color of the user name at the top of messages</string>
+    <string name="displayname_title">Skift navnevisningsfarven øverst i beskeder</string>
+    <string name="username_title">Skift brugernavnsfarven øverst i beskeder</string>
     <string name="boost_header_color">Skift farven på overskriften på genblogninger</string>
     <string name="background_status_title">Indlæg</string>
     <string name="background_status">Baggrundsfarve på indlæg på tidslinjer</string>
@@ -1044,6 +1044,10 @@
     <string name="export_theme">Eksportér dette tema</string>
     <string name="export_theme_title">Tryk hér for at eksportere det aktuelle tema</string>
     <string name="theme_file_error">En fejl opstod under valg af temafilen</string>
-    <string name="export_bookmarks">Export bookmarks to the instance</string>
-    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="export_bookmarks">Eksportér bogmærker til denne instans</string>
+    <string name="import_bookmarks">Importér bogmærker fra denne instans</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
 </resources>
