@@ -26,10 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -59,9 +59,9 @@ public class InstanceProfileActivity extends BaseActivity {
     private TextView name, description, userCount, statusCount, instanceCount, software, version;
     private String instance;
     private RecyclerView lv_accounts;
-    private LinearLayout instance_container;
+    private ConstraintLayout instance_container;
     private ImageView back_ground_image;
-    private RelativeLayout loader;
+    private ProgressBar loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
