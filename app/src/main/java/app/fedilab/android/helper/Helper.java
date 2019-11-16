@@ -1710,6 +1710,16 @@ public class Helper {
                 if (!mainMenuItem.isNav_scheduled()) {
                     menu.findItem(R.id.nav_scheduled).setVisible(false);
                 }
+                if (!mainMenuItem.isNav_scheduled()) {
+                    menu.findItem(R.id.nav_scheduled).setVisible(false);
+                }
+                final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(activity));
+                boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
+                if (!display_admin_menu) {
+                    menu.findItem(R.id.nav_administration).setVisible(false);
+                }
             }
         }
         if (!BuildConfig.DONATIONS) {
