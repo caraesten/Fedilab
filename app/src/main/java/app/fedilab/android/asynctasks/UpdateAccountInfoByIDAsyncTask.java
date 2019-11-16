@@ -86,7 +86,9 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                 if (response != null && response.getEmojis() != null && response.getEmojis().size() > 0) {
                     new CustomEmojiDAO(contextReference.get(), db).removeAll();
                     for (Emojis emojis : response.getEmojis()) {
-                        new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+                        if( emojis.isVisible_in_picker()) {
+                            new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+                        }
                     }
                 }
             } catch (Exception ignored) {

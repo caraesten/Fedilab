@@ -1895,6 +1895,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
                 return true;
             case R.id.action_emoji:
+                if( emojis != null){
+                    emojis.clear();
+                    emojis = null;
+                }
                 emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis(account.getInstance());
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
                 int paddingPixel = 15;

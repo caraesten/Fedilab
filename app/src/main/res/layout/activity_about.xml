@@ -145,31 +145,6 @@
             android:visibility="gone" />
 
 
-        <!-- About logo designer -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="@string/thanks_text_logo"
-            android:textColor="?colorAccent"
-            android:textSize="16sp" />
-
-        <app.fedilab.android.helper.ExpandableHeightListView
-            android:id="@+id/lv_designers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:scrollbars="none" />
-
-        <TextView
-            android:id="@+id/txt_designers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:visibility="gone" />
         <!-- About contributors -->
 
         <TextView
@@ -189,6 +164,13 @@
             android:layout_height="wrap_content"
             android:divider="@null"
             android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/txt_thankyou3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_thankyou1"

@@ -1,0 +1,12 @@
+Added
+- Customize themes
+- Get information of instances from profiles
+- Bookmarks can be imported/exported to the instance
+
+Changed
+- UI improvements
+
+Fixed
+- Crashes with conversations on Android 4
+- Custom emoji picker
+- Boosts can't be boosted due to their visibility
