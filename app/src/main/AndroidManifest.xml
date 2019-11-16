@@ -471,6 +471,10 @@
             android:excludeFromRecents="true"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
         <activity
+            android:name="app.fedilab.android.activities.InstanceProfileActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
+        <activity
             android:name="app.fedilab.android.activities.ProxyActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />

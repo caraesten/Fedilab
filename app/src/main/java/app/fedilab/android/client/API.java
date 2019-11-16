@@ -1283,8 +1283,7 @@ public class API {
                     e.printStackTrace();
                 }
             }
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
+        } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
         return account;
@@ -1820,11 +1819,7 @@ public class API {
                     apiResponse.setAccountAdmins(accountAdmins);
                     break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1897,6 +1892,103 @@ public class API {
         return instanceNodeInfo;
     }
 
+
+
+
+    public InstanceNodeInfo instanceInfo(String domain) {
+
+        String response;
+        InstanceNodeInfo instanceNodeInfo = null;
+        try {
+            response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
+            ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
+            try {
+                instanceNodeInfo = new InstanceNodeInfo();
+                int i = 0;
+                while (i < jsonArray.length()) {
+
+                    JSONObject resobj = jsonArray.getJSONObject(i);
+                    NodeInfo nodeInfo = new NodeInfo();
+                    nodeInfo.setHref(resobj.getString("href"));
+                    nodeInfo.setRel(resobj.getString("rel"));
+                    i++;
+                    nodeInfos.add(nodeInfo);
+                }
+                if (nodeInfos.size() > 0) {
+                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size() - 1);
+                    response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
+                    JSONObject resobj = new JSONObject(response);
+                    JSONObject jsonObject = resobj.getJSONObject("software");
+                    String name;
+                    name = jsonObject.getString("name").toUpperCase();
+                    instanceNodeInfo.setName(name);
+                    instanceNodeInfo.setVersion(jsonObject.getString("version"));
+                    instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
+                    if (name.trim().toUpperCase().compareTo("MASTODON") == 0 || name.trim().toUpperCase().compareTo("PLEROMA") == 0 || name.trim().toUpperCase().compareTo("PIXELFED") == 0){
+                        APIResponse apiResponse = getInstance(domain);
+                        Instance instanceNode = apiResponse.getInstance();
+                        instanceNodeInfo.setNodeDescription(instanceNode.getDescription());
+                        instanceNodeInfo.setNumberOfUsers(instanceNode.getUserCount());
+                        instanceNodeInfo.setNumberOfPosts(instanceNode.getStatusCount());
+                        instanceNodeInfo.setNumberOfInstance(instanceNode.getDomainCount());
+                        instanceNodeInfo.setStaffAccount(instanceNode.getContactAccount());
+                        instanceNodeInfo.setNodeName(instanceNode.getTitle());
+                        instanceNodeInfo.setThumbnail(instanceNode.getThumbnail());
+                        instanceNodeInfo.setVersion(instanceNode.getVersion());
+                    }
+                    if( resobj.has("metadata")){
+                        JSONObject metadata = resobj.getJSONObject("metadata");
+                        if( metadata.has("staffAccounts")){
+                            instanceNodeInfo.setStaffAccountStr(metadata.getString("staffAccounts"));
+                        }
+                    }
+                    if( instanceNodeInfo.getStaffAccountStr() != null && instanceNodeInfo.getStaffAccount() == null){
+                        APIResponse search = searchAccounts(instanceNodeInfo.getStaffAccountStr(), 1);
+                        if( search != null && search.getAccounts() != null && search.getAccounts().size() > 0 ){
+                            instanceNodeInfo.setStaffAccount(search.getAccounts().get(0));
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                setDefaultError(e);
+            }
+        } catch (IOException | JSONException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e){
+            APIResponse apiResponse = getInstance(domain);
+            instanceNodeInfo = new InstanceNodeInfo();
+            instanceNodeInfo.setName("MASTODON");
+            Instance instanceNode = apiResponse.getInstance();
+            instanceNodeInfo.setNodeDescription(instanceNode.getDescription());
+            instanceNodeInfo.setNumberOfUsers(instanceNode.getUserCount());
+            instanceNodeInfo.setNumberOfPosts(instanceNode.getStatusCount());
+            instanceNodeInfo.setNumberOfInstance(instanceNode.getDomainCount());
+            instanceNodeInfo.setStaffAccount(instanceNode.getContactAccount());
+            instanceNodeInfo.setNodeName(instanceNode.getTitle());
+            instanceNodeInfo.setThumbnail(instanceNode.getThumbnail());
+            instanceNodeInfo.setVersion(instanceNode.getVersion());
+        }
+        return instanceNodeInfo;
+    }
+
+    /***
+     * Get info on the current Instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getInstance(String instance) {
+        try {
+            String response = new HttpsConnection(context, this.instance).get("https://"+instance+"/api/v1/instance", 30, null, prefKeyOauthTokenT);
+            Instance instanceEntity = parseInstance(new JSONObject(response));
+            apiResponse.setInstance(instanceEntity);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
     /***
      * Get info on the current Instance *synchronously*
      * @return APIResponse
@@ -1908,13 +2000,7 @@ public class API {
             apiResponse.setInstance(instanceEntity);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -1932,13 +2018,7 @@ public class API {
             apiResponse.setInstanceRegs(instanceRegs);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -5568,6 +5648,24 @@ public class API {
                 poll_limits.put("max_option_chars", polllimits.getInt("max_option_chars"));
                 poll_limits.put("max_expiration", polllimits.getInt("max_expiration"));
                 instance.setPoll_limits(poll_limits);
+            }
+            if( resobj.has("thumbnail")){
+                instance.setThumbnail(resobj.getString("thumbnail"));
+            }
+            if( resobj.has("stats")){
+                JSONObject stats = resobj.getJSONObject("stats");
+                if( stats.has("user_count")) {
+                    instance.setUserCount(stats.getInt("user_count"));
+                }
+                if( stats.has("status_count")) {
+                    instance.setStatusCount(stats.getInt("status_count"));
+                }
+                if( stats.has("domain_count")) {
+                    instance.setDomainCount(stats.getInt("domain_count"));
+                }
+            }
+            if( resobj.has("contact_account")){
+                instance.setContactAccount(parseAccountResponse(context, resobj.getJSONObject("contact_account")));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -870,7 +870,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     instance = account.getAcct().split("@")[1];
                 }
                 InstanceNodeInfo instanceNodeInfo = new API(ShowAccountActivity.this).displayNodeInfo(instance);
-
+                String finalInstance = instance;
                 runOnUiThread(new Runnable() {
                     public void run() {
                         if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
@@ -879,6 +879,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             instance_info.setVisibility(View.VISIBLE);
                             TextView seperator = findViewById(R.id.seperator);
                             seperator.setVisibility(View.VISIBLE);
+
+                            instance_info.setOnClickListener(v -> {
+                                Intent intent = new Intent(getApplicationContext(), InstanceProfileActivity.class);
+                                Bundle b = new Bundle();
+                                b.putString("instance", finalInstance);
+                                intent.putExtras(b);
+                                startActivity(intent);
+
+                            });
                         }
                     }
                 });
