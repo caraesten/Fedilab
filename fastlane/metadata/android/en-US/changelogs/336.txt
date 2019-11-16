@@ -1,5 +1,6 @@
 Added
 - Customize themes
+- Import/export themes (can be shared)
 - Get information of instances from profiles
 - Bookmarks can be imported/exported to the instance
 - Follow button disabled when blocked by an account
