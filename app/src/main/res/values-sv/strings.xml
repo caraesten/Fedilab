@@ -1047,4 +1047,7 @@
     <string name="theme_file_error">Ett fel uppstod när tema valdes</string>
     <string name="export_bookmarks">Exportera bokmärken till instans</string>
     <string name="import_bookmarks">Importera bokmärken från instans</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
 </resources>
