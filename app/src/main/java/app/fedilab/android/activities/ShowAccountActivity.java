@@ -948,15 +948,34 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private void manageButtonVisibility() {
         if (relationship == null)
             return;
-        account_follow.setEnabled(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
+            int[][] states = new int[][] {
+                    new int[] { android.R.attr.state_enabled}, // enabled
+                    new int[] {-android.R.attr.state_enabled}, // disabled
+                    new int[] {-android.R.attr.state_checked}, // unchecked
+                    new int[] { android.R.attr.state_pressed}  // pressed
+            };
+
+            int[] colors = new int[] {
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4),
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4___),
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4),
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)
+            };
+            account_follow.setBackgroundTintList(new ColorStateList(states, colors));
         }
+        account_follow.setEnabled(true);
         if (relationship.isBlocking()) {
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
-        } else if (relationship.isRequested()) {
+        } else if (relationship.isBlocked_by()) {
+            account_follow.setImageResource(R.drawable.ic_user_plus);
+            account_follow.setVisibility(View.VISIBLE);
+            account_follow.setEnabled(false);
+            doAction = action.NOTHING;
+        }else if (relationship.isRequested()) {
             account_follow_request.setVisibility(View.VISIBLE);
             account_follow.setImageResource(R.drawable.ic_hourglass_full);
             account_follow.setVisibility(View.VISIBLE);
