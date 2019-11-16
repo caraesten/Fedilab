@@ -877,8 +877,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             TextView instance_info = findViewById(R.id.instance_info);
                             instance_info.setText(instanceNodeInfo.getName());
                             instance_info.setVisibility(View.VISIBLE);
-                            TextView seperator = findViewById(R.id.seperator);
-                            seperator.setVisibility(View.VISIBLE);
 
                             instance_info.setOnClickListener(v -> {
                                 Intent intent = new Intent(getApplicationContext(), InstanceProfileActivity.class);
