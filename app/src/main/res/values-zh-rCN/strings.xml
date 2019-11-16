@@ -1044,4 +1044,7 @@
     <string name="theme_file_error">选择主题文件时出错</string>
     <string name="export_bookmarks">导出书签到实例</string>
     <string name="import_bookmarks">从实例导入书签</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
 </resources>
