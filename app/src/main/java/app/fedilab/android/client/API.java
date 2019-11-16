@@ -1832,6 +1832,12 @@ public class API {
 
         String response;
         InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
+        if( domain.startsWith("http://")){
+            domain = domain.replace("http://","");
+        }
+        if( domain.startsWith("https://")){
+            domain = domain.replace("https://","");
+        }
         try {
             response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
