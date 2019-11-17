@@ -1006,7 +1006,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="background_status">Hintergrundfarbe der posts in den timelines</string>
     <string name="reset_color">Farben zurücksetzen</string>
     <string name="clik_reset">Tippen Sie hier, um alle Ihre benutzerdefinierten Farben zurückzusetzen</string>
-    <string name="reset">Reset</string>
+    <string name="reset">Zurücksetzen</string>
     <string name="icons_color_title">Symbole</string>
     <string name="icons_color">Farbe der unteren Symbole in Zeitleisten</string>
     <string name="pin_tag">Diesen Tag anheften</string>
@@ -1019,7 +1019,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="text_color">Ändern Sie die Textfarbe in posts</string>
     <string name="apply_changes">Änderungen übernehmen</string>
     <string name="restart_message">Sie müssen die Anwendung neu starten, um die Änderungen zu übernehmen</string>
-    <string name="restart">Restart</string>
+    <string name="restart">Neustarten</string>
     <string name="pref_custom_theme">Verwenden Sie ein benutzerdefiniertes Design</string>
     <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
     <string name="theming">Theming</string>
@@ -1039,5 +1039,5 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="user_count">User count</string>
     <string name="status_count">Status count</string>
     <string name="instance_count">Instance count</string>
-    <string name="blocked">Blocked</string>
+    <string name="blocked">Blockiert</string>
 </resources>
