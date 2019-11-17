@@ -206,10 +206,10 @@
         <item quantity="other">dodaj %d innych powiadomień</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="few">%d likes</item>
-        <item quantity="many">%d likes</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d polubienie</item>
+        <item quantity="few">%d polubienia</item>
+        <item quantity="many">%d polubień</item>
+        <item quantity="other">%d polubień</item>
     </plurals>
     <string name="delete_notification_ask">Czy na pewno chcesz usunąć to powiadomienie?</string>
     <string name="delete_notification_ask_all">Wyczyścić wszytstkie powiadomienia?</string>
@@ -221,7 +221,7 @@
     <string name="pinned_toots">Przypięte</string>
     <!-- TOAST -->
     <string name="client_error">Nie można pobrać identyfikatora klienta!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Nie można połączyć się z domeną instancji!</string>
     <string name="no_internet">Brak połączenia z Internetem!</string>
     <string name="toast_block">Konto zostało zablokowane!</string>
     <string name="toast_unblock">Konto nie jest już zablokowane!</string>
@@ -246,7 +246,7 @@
     <string name="nothing_to_do">Żadna akcja nie może zostać podjęta</string>
     <string name="toast_saved">Zapisano zawartość multimedialną!</string>
     <string name="toast_error_translate">Tłumaczenie nieudane!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Tłumaczenia są wyłączone w ustawieniach</string>
     <string name="toast_toot_saved">Zapisano szkic!</string>
     <string name="toast_error_char_limit">Czy na pewno ta instancja zezwala na więcej, niż domyślne 500 znaków?</string>
     <string name="toast_visibility_changed">Widoczność wpisu została zmieniona na %1$s</string>
