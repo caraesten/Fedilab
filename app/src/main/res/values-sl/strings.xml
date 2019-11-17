@@ -275,6 +275,7 @@
     <string name="set_notify">Obveščanje?</string>
     <string name="set_notif_silent">Tiha obvestila</string>
     <string name="set_nsfw_timeout">Časovna omejitev prikaza NSFW (v sekundah, 0 za izklop)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Urejanje profila</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
