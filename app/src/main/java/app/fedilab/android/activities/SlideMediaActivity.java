@@ -127,6 +127,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
         fullscreen = false;
         media_description = findViewById(R.id.media_description);
+        final int med_desc_timeout = sharedpreferences.getInt(Helper.SET_MED_DESC_TIMEOUT, 3) * 1000;
         flags = getWindow().getDecorView().getSystemUiVisibility();
 
         swipeEnabled = true;
@@ -214,7 +215,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 public void run() {
                     media_description.setVisibility(View.GONE);
                 }
-            }, 3000);
+            }, med_desc_timeout);
 
         } else {
             media_description.setVisibility(View.GONE);
@@ -241,7 +242,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                         public void run() {
                             media_description.setVisibility(View.GONE);
                         }
-                    }, 3000);
+                    }, med_desc_timeout);
 
                 } else {
                     media_description.setVisibility(View.GONE);
@@ -275,6 +276,9 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
 
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        final int med_desc_timeout = sharedpreferences.getInt(Helper.SET_MED_DESC_TIMEOUT, 3) * 1000;
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
@@ -300,7 +304,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                                 public void run() {
                                     media_description.setVisibility(View.GONE);
                                 }
-                            }, 3000);
+                            }, med_desc_timeout);
 
                         } else {
                             media_description.setVisibility(View.GONE);
