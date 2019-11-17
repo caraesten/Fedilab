@@ -271,6 +271,7 @@
     <string name="set_notify">Jakinarazi?</string>
     <string name="set_notif_silent">Jakinarazpen isilak</string>
     <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Editatu profila</string>
     <string name="settings_title_custom_sharing">Partekatze pertsonalizatua</string>
     <string name="settings_custom_sharing_url">Zure partekatze pertsonalizaturako URL-a&#8230;</string>
