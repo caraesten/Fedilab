@@ -269,6 +269,7 @@
     <string name="set_notify">开启通知？</string>
     <string name="set_notif_silent">静音通知</string>
     <string name="set_nsfw_timeout">NSFW 查看超时（秒，0 表示关闭）</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">编辑个人资料</string>
     <string name="settings_title_custom_sharing">自定义分享</string>
     <string name="settings_custom_sharing_url">您的自定义分享链接&#8230;</string>
