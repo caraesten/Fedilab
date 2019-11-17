@@ -1605,6 +1605,38 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
+        // Media Description Timeout
+        SeekBar medDescTimeoutSeekBar = rootView.findViewById(R.id.set_med_desc_timeout);
+        final TextView set_med_desc_timeout_value = rootView.findViewById(R.id.set_med_desc_timeout_value);
+
+        medDescTimeoutSeekBar.setMax(30);
+
+        int medDescTimeout = sharedpreferences.getInt(Helper.SET_MED_DESC_TIMEOUT, 3);
+
+        medDescTimeoutSeekBar.setProgress(medDescTimeout);
+        set_med_desc_timeout_value.setText(String.valueOf(medDescTimeout));
+
+        medDescTimeoutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                set_med_desc_timeout_value.setText(String.valueOf(progress));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_MED_DESC_TIMEOUT, progress);
+                editor.apply();
+            }
+        });
+
+
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
