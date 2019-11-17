@@ -1043,10 +1043,10 @@
     <string name="import_theme">Inportatu gai bat</string>
     <string name="import_theme_title">Sakatu hemen aurretik esportatutako gai bat inportatzeko</string>
     <string name="export_theme">Esportatu gaia</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
-    <string name="export_bookmarks">Export bookmarks to the instance</string>
-    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="export_theme_title">Sakatu hemen oraingo gaia esportatzeko</string>
+    <string name="theme_file_error">Errore bat gertatu da gaiaren fitxategia hautatzean</string>
+    <string name="export_bookmarks">Esportatu gogokoak instantziara</string>
+    <string name="import_bookmarks">Inportatu gogokoak instantziatik</string>
     <string name="user_count">Erabiltzaile kopurua</string>
     <string name="status_count">Mezu kopurua</string>
     <string name="instance_count">Instantzia kopurua</string>
