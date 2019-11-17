@@ -271,6 +271,7 @@
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Notificacións silenciosas</string>
     <string name="set_nsfw_timeout">Caducidade da vista NSFW (en segundos, 0 é apagado)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartición personalizada</string>
     <string name="settings_custom_sharing_url">O URL da súa compartición&#8230;</string>
