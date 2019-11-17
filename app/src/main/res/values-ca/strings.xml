@@ -21,17 +21,17 @@
     <string name="password">Contrasenya</string>
     <string name="email">Adreça electrònica</string>
     <string name="accounts">Comptes</string>
-    <string name="toots">Toots</string>
+    <string name="toots">Brams</string>
     <string name="tags">Etiquetes</string>
     <string name="save">Desa</string>
     <string name="restore">Restaura</string>
     <string name="no_result">No hi ha cap resultat!</string>
     <string name="instance">Instància</string>
-    <string name="instance_example">Intància: mastodon.social</string>
+    <string name="instance_example">Instància: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Ara funciona amb el compte %1$s</string>
     <string name="add_account">Afegeix un compte</string>
-    <string name="clipboard">El contingut del toot s\'ha copiat al porta-retalls</string>
-    <string name="clipboard_url">L\'adreça web del toot s\'ha copiat al porta-retalls</string>
+    <string name="clipboard">El contingut del bram s\'ha copiat al porta-retalls</string>
+    <string name="clipboard_url">L\'adreça web del bram s\'ha copiat al porta-retalls</string>
     <string name="change">Canvia</string>
     <string name="choose_picture">Selecciona una imatge…</string>
     <string name="clear">Neteja</string>
@@ -50,10 +50,10 @@
     <string name="share_with">Comparteix amb</string>
     <string name="shared_via">Compartit via Fedilab</string>
     <string name="replies">Respostes</string>
-    <string name="username">Nom d\'usuari</string>
+    <string name="username">Nom d\'usuària</string>
     <string name="drafts">Esborranys</string>
     <string name="favourite">Preferits</string>
-    <string name="follow">Seguidors nous</string>
+    <string name="follow">Noves seguidores</string>
     <string name="mention">Mencions</string>
     <string name="reblog">Difusions</string>
     <string name="show_boosts">Mostrar difusions</string>
@@ -68,8 +68,8 @@
     <string name="neutral_menu_title">Opcions</string>
     <string name="favorites_menu">Preferits</string>
     <string name="communication_menu_title">Comunicació</string>
-    <string name="muted_menu">Usuaris silenciats</string>
-    <string name="blocked_menu">Usuaris blocats</string>
+    <string name="muted_menu">Usuàries silenciades</string>
+    <string name="blocked_menu">Usuàries blocades</string>
     <string name="notifications">Notificacions</string>
     <string name="follow_request">Peticions de seguiment</string>
     <string name="settings">Configuració</string>
@@ -79,7 +79,7 @@
     <string name="click_to_change">Feu clic en a la ruta per canviar-la</string>
     <string name="failed">Ha fallat!</string>
     <string name="scheduled_toots">Brams temporitzats</string>
-    <string name="disclaimer_full">Aquesta informació d\'usuari pot estar incompleta.</string>
+    <string name="disclaimer_full">Aquesta informació d\'usuària pot estar incompleta.</string>
     <string name="insert_emoji">Inserir emoji</string>
     <string name="no_emoji">L\'app no ha recollit emojis personalitzats de moment.</string>
     <string name="live_notif">Notificacions en directe</string>
@@ -177,7 +177,7 @@
     <string name="no_follow_request">No hi ha peticions de seguiment</string>
     <string name="status_cnt">Brams \n %1$s</string>
     <string name="following_cnt">A qui segueixo \n %1$s</string>
-    <string name="followers_cnt">Seguidors \n %1$s</string>
+    <string name="followers_cnt">Seguidores \n %1$s</string>
     <string name="pins_cnt">Fixats \n %d</string>
     <string name="authorize">Autoritza</string>
     <string name="reject">Rebutja</string>
@@ -192,7 +192,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">El silenciament ha de durar més d\'un minut.</string>
     <string name="timed_mute_date">%1$s s\'ha silenciat fins a %2$s.\n Pots desilenciar el compte des de la seva pàgina de perfil.</string>
-    <string name="timed_mute_profile">%1$s està silenciat fins a %2$s.\n Feu clic aquí per desactivar el silenciament.</string>
+    <string name="timed_mute_profile">%1$s està silenciada fins a %2$s.\n Feu clic aquí per desactivar el silenciament.</string>
     <!-- Notifications -->
     <string name="no_notifications">No hi ha notificacions per mostrar</string>
     <string name="notif_mention">t\'ha mencionat</string>
@@ -212,8 +212,8 @@
     <string name="delete_notification">La notificació s\'ha suprimit!</string>
     <string name="delete_notification_all">S\'han suprimit totes les notificacions!</string>
     <!-- HEADER -->
-    <string name="following">Seguits</string>
-    <string name="followers">Seguidors</string>
+    <string name="following">Seguides</string>
+    <string name="followers">Seguidores</string>
     <string name="pinned_toots">Fixats</string>
     <!-- TOAST -->
     <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
@@ -271,6 +271,7 @@
     <string name="set_notify">Avisar?</string>
     <string name="set_notif_silent">Notificacions silencioses</string>
     <string name="set_nsfw_timeout">Límit per mostrar material ofensiu (en segons, 0 és desactivat)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edita el perfil</string>
     <string name="settings_title_custom_sharing">Personalitza el compartir</string>
     <string name="settings_custom_sharing_url">Personalització del que comparteixo a URL&#8230;</string>
@@ -291,8 +292,8 @@
     <string name="embedded_browser">Utilitzar el navegador incorporat</string>
     <string name="custom_tabs">Pestanyes personalitzades</string>
     <string name="use_javascript">Habilita el Javascript</string>
-    <string name="expand_cw">Expandir automàticament el ca</string>
-    <string name="use_cookies">Permetre galetes de tercers</string>
+    <string name="expand_cw">Expandir automàticament el ac</string>
+    <string name="use_cookies">Permetre galetes de terceres</string>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
@@ -370,7 +371,7 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="privacy_data">Només es guarda al dispositiu la informació bàsica dels comptes.
 Aquestes dades són estrictament confidencials i només les pot usar l\'aplicació.
 Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
-&#9888; Els noms d\'usuari i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    </string>
+&#9888; Els noms d\'usuària i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
     <string name="privacy_authorizations">- <b>ESTAT_ACCES_XARXA</b>: Usat per detectar si el dispositiu està connectat a una xarxa WIFI.\n
          - <b>INTERNET</b>: Usat per a requeriments a una instància.\n
@@ -442,7 +443,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="follow_instance">Segueix la instància</string>
     <string name="toast_instance_already_added">Ja estàs seguint aquesta instància!</string>
     <string name="toast_instance_followed">Confirmat, ja segueixes la instància!</string>
-    <string name="action_partnership">Socis</string>
+    <string name="action_partnership">Sòcies</string>
     <string name="neutral_menu_information">Informació</string>
     <string name="hide_boost">Amaga les difusions de %s</string>
     <string name="endorse">Incloure al perfil</string>
@@ -462,7 +463,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="context_conversation">Converses</string>
     <string name="filter_keyword_explanations">Es detectaran independentment de les majúscules dins el text o avís de contingut d\'un bram</string>
     <string name="context_drop">Descarta enlloc d\'amagar</string>
-    <string name="context_drop_explanations">Els toots filtrats desapareixeran del tot, encara que després s\'elimini el filtre</string>
+    <string name="context_drop_explanations">Els brams filtrats desapareixeran del tot, encara que després s\'elimini el filtre</string>
     <string name="context_whole_word_explanations">Quan les frases o les paraules clau siguin alfanumèriques, només s\'aplicaran a les coincidències de mots sencers</string>
     <string name="context_whole_word">Mot sencer</string>
     <string name="filter_context">Contexts de filtre</string>
@@ -551,7 +552,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="app_logo">Logo de l\'aplicació</string>
     <string name="profile_picture">Foto de perfil</string>
     <string name="profile_banner">Bànner de perfil</string>
-    <string name="contact_instance_admin">Contacta l\'administrador de la instància</string>
+    <string name="contact_instance_admin">Contacta l\'administradora de la instància</string>
     <string name="add_new">Afegir nou</string>
     <string name="mastohost_logo">Logo del MastoServidor</string>
     <string name="emoji_picker">Tria d\'emojis</string>
@@ -565,7 +566,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="card_view_image">Imatge de la targeta</string>
     <string name="hide_media">Amaga els mèdia</string>
     <string name="favicon">Icona de preferits</string>
-    <string name="media_description">Afegir descripció del mèdia (per a disminuïts visuals)</string>
+    <string name="media_description">Afegir descripció del mèdia (per a disminuïdes visuals)</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuts</item>
@@ -591,9 +592,9 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Instància Pixelfed</string>
     <string name="mastodon_instance">Instància de Mastodont</string>
-    <string name="any_tags">Qualsevol d\'aquests</string>
-    <string name="all_tags">Tots aquests</string>
-    <string name="none_tags">Cap d\'aquests</string>
+    <string name="any_tags">Qualsevol d\'aquestes</string>
+    <string name="all_tags">Totes aquestes</string>
+    <string name="none_tags">Cap d\'aquestes</string>
     <string name="some_words_any">Qualsevol d\'aquestes paraules (separades-per-espais)</string>
     <string name="some_words_all">Totes aquestes paraules (separades-per-espais)</string>
     <string name="some_tags">Afegir paraules al filtre (separades per espais)</string>
@@ -601,7 +602,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="misskey_instance">Instància Misskey</string>
     <string name="toast_no_apps">No tens instal·lada cap app que gestioni aquest tipus d\'enllaç.</string>
     <string name="subscriptions">Subscripcions</string>
-    <string name="overview">Resum</string>
+    <string name="overview">Visió general</string>
     <string name="trending">Tendències</string>
     <string name="recently_added">Afegits recentment</string>
     <string name="local">Local</string>
@@ -671,7 +672,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="set_compact">Compactar</string>
     <string name="set_console">Consola</string>
     <string name="set_mode">Tria mode de presentació</string>
-    <string name="set_security_provider">Proveïdor de pedaços de seguretat</string>
+    <string name="set_security_provider">Proveïdora de pedaços de seguretat</string>
     <string name="update_tracking_domains">Actualitzar el rastreig de dominis</string>
     <string name="tracking_db_updated">S\'ha actualitzat la base de dades de rastreig!</string>
     <string name="calls_blocked">trucades http blocades per l\'aplicació</string>
@@ -781,15 +782,15 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="server_rules">normes del servidor</string>
     <string name="tos">condicions del servei</string>
     <string name="sign_up">Inscriu-te</string>
-    <string name="validation_needed">Aquesta instància va per invitació. Caldrà que un administrador aprovi el teu compte manualment abans de poder-lo usar.</string>
+    <string name="validation_needed">Aquesta instància va per invitació. Caldrà que una administradora aprovi el teu compte manualment abans de poder-lo usar.</string>
     <string name="all_field_filled">Cal que ompliu tots els camps!</string>
     <string name="password_error">Les contrasenyes no coincideixen!</string>
     <string name="email_error">El correu electrònic no sembla ser vàlid!</string>
-    <string name="username_indicator">El teu nom d\'usuari serà únic a %1$s</string>
+    <string name="username_indicator">El teu nom d\'usuària serà únic a %1$s</string>
     <string name="email_indicator">Se t\'enviarà un correu de confirmació</string>
     <string name="password_indicator">Cal un mínim de 8 caràcters</string>
     <string name="password_too_short">La contrasenya hauria de tenir almenys 8 caràcters</string>
-    <string name="username_error">El nom d\'usuari només pot contenir lletres, números i guions baixos</string>
+    <string name="username_error">El nom d\'usuària només pot contenir lletres, números i guions baixos</string>
     <string name="account_created">Compte creat!</string>
     <string name="account_created_message">Ja s\'ha creat el teu compte ja s\'ha!\n\n
 Pensa de validar el correu electrònic dins les properes 48 hores.\n\n
@@ -799,7 +800,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="reports">Informes</string>
     <string name="no_reports">No hi ha informes per mostrar!</string>
     <string name="reconnect_account">Reconnectar el compte</string>
-    <string name="reconnect_account_message">L\'aplicació no ha pogut accedir a les característiques d\'administrador. Pot ser que calgui reconnectar amb el compte per tenir totes les funcions.</string>
+    <string name="reconnect_account_message">L\'aplicació no ha pogut accedir a les característiques d\'administradora. Pot ser que calgui reconnectar amb el compte per tenir totes les funcions.</string>
     <string name="unresolved">No s\'ha resolt</string>
     <string name="remote">Remot</string>
     <string name="active">Actiu</string>
@@ -815,15 +816,15 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="warn">Advertir</string>
     <string name="disable">Deshabilita</string>
     <string name="silence">Silenciar</string>
-    <string name="email_user">Notificar usuari per correu-e</string>
+    <string name="email_user">Notificar usuària per correu-e</string>
     <string name="custom_warning">Advertiment personalitzat</string>
-    <string name="user">Usuari</string>
-    <string name="moderator">Moderador</string>
-    <string name="administrator">Administrador</string>
+    <string name="user">Usuària</string>
+    <string name="moderator">Moderadora</string>
+    <string name="administrator">Administradora</string>
     <string name="confirmed">Confirmat</string>
     <string name="unconfirmed">No confirmat</string>
     <string name="list_reported_statuses">Missatges denunciats</string>
-    <string name="account">Compte d\'usuari</string>
+    <string name="account">Compte d\'usuària</string>
     <string name="unsilence">Desactivar silenciador</string>
     <string name="undisable">Desfer desactivar</string>
     <string name="suspend">Suspendre</string>
@@ -835,13 +836,13 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="account_disabled">El compte està desactivat!</string>
     <string name="account_undisabled">El compte ja no està desactivat!</string>
     <string name="account_warned">El compte té un advertiment!</string>
-    <string name="set_display_admin_menu">Mostrar el menú d\'administrador</string>
-    <string name="set_display_admin_toot">Mostra la característica d\'administrador en els estats</string>
+    <string name="set_display_admin_menu">Mostrar el menú d\'administradora</string>
+    <string name="set_display_admin_toot">Mostra la característica d\'administradora en els missatges</string>
     <string name="allow">Permet</string>
     <string name="account_approved">El compte està aprovat!</string>
     <string name="account_rejected">El compte ha estat rebutjat!</string>
     <string name="assign_to_me">Assigna-m\'ho a mi</string>
-    <string name="unassign">Desasigna</string>
+    <string name="unassign">Desassigna</string>
     <string name="mark_resolved">Marca com a resolt</string>
     <string name="mark_unresolved">Marca com a no resolt</string>
     <string name="toast_empty_content">Buida el contingut!</string>
@@ -853,7 +854,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="set_remember_position_indication">Quan està desactivada, l\'app carrega sempre els últims missatges</string>
     <string name="set_blur_sensitive_indication">Quan està desactivat, els mèdia senzills resten amagats amb un botó</string>
     <string name="set_long_press_media_indication">Guarda els mèdia a mida completa pitjant les previsualitzacions durant un segon</string>
-    <string name="set_display_timeline_in_list_indication">Afegeix un botó el·liptic a dalt a la dreta per llistar totes les etiquetes/instàncies/llistes</string>
+    <string name="set_display_timeline_in_list_indication">Afegeix un botó el·líptic a dalt a la dreta per llistar totes les etiquetes/instàncies/llistes</string>
     <string name="live_notif_indication">Mantenir connexió oberta a l\'API de streaming per a rebre notificacions m directe.</string>
     <string name="set_enable_time_slot_indication">Dins el període definit, l\'app enviarà notificacions. Pots revertir (p. e. silenciar) aquest període amb el spinner adequat.</string>
     <string name="set_display_fedilab_features_button_indication">Mostrar un botó de Fedilab sota la imatge de perfil. És una drecera per accedir a funcions de l\'app.</string>
@@ -962,30 +963,30 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="set_allow_live_notifications_indication">Es desactivaran les notificacions en directe només d\'aquest compte.</string>
     <string name="set_clear_cache_exit">Esborra la memòria cau en sortir</string>
     <string name="set_clear_cache_exit_indication">La memòria cau (mèdia, missatges registrats, dades del navegador incorporat) s\'esborraran automàticament en sortir de l\'aplicació.</string>
-    <string name="unfollow_confirm">Do you want to unfollow this account?</string>
-    <string name="set_unfollow_validation">Show confirmation dialog before unfollowing</string>
+    <string name="unfollow_confirm">Vols deixar de seguir aquest compte?</string>
+    <string name="set_unfollow_validation">Mostra diàleg de confirmació abans de deixar de seguir</string>
     <string name="set_invidious">Substituir Youtube amb Invidio.us</string>
     <string name="set_invidious_indication">Invidious és una alternativa a YouTube en funcions de frontal</string>
-    <string name="set_invidious_host">Escriu aquí el teu hoste particular o deixa-ho buit i s\'usarà invidio.us</string>
+    <string name="set_invidious_host">Escriu aquí el teu servidor particular o deixa-ho buit i s\'usarà invidio.us</string>
     <string name="set_nitter">Substitueix Twitter amb Nitter</string>
     <string name="set_nitter_indication">Nitter és una alternativa de codi obert que fa de frontal per Twitter i protegeix la privacitat.</string>
     <string name="set_nitter_host">Introdueix aquí el teu servidor personalitzat o deixa-ho en blanc i s\'usarà nitter.net</string>
-    <string name="set_hide_status_bar">Hide Fedilab notification bar</string>
-    <string name="set_hide_status_bar_indication">For hiding the remaining notification in the status bar, tap on the eye icon button then uncheck: \"Display in status bar\"</string>
+    <string name="set_hide_status_bar">Amaga la barra de notificacions de Fedilab</string>
+    <string name="set_hide_status_bar_indication">Per amagar la notificació que queda a la barra d\'estat, toca la icona de l\'ull i després desactiva: \"Mostra a la barra d\'estat\"</string>
     <string name="set_live_type_indication">S\'ajornaran les notificacions cada 30 segons. Això permet gastar menys la pila.</string>
     <string name="live_delayed">Notificacions ajornades</string>
     <string name="no_live_notif">Notificacions en directe desactivades</string>
     <string name="no_live_indication">Les notificacions es recolliran cada 15 minuts.</string>
     <string name="action_add_notes">Afegeix-hi notes</string>
     <string name="note_for_account">Notes per al compte</string>
-    <string name="set_resize_picture_indication">Permet la compressió de fotos grans en més petites amb una pèrduda mínima o negligible de qualitat d\'imatge.</string>
+    <string name="set_resize_picture_indication">Permet la compressió de fotos grans en més petites amb una pèrdua mínima o negligible de qualitat d\'imatge.</string>
     <string name="set_resize_video_indication">Permet de comprimir els vídeos tot mantenint-ne la qualitat.</string>
-    <string name="please_wait_compression">The app is compressing the media, it can be quite long…</string>
-    <string name="change_app_icon_experimental">Canvia la icona de l\'app</string>
-    <string name="click_to_change_the_app_icon">Clica per canviar la icona de l\'app</string>
+    <string name="please_wait_compression">L\'app està comprimint els mèdia, no trigarà gaire…</string>
+    <string name="change_app_icon_experimental">Canviar la icona de l\'aplicació</string>
+    <string name="click_to_change_the_app_icon">Toca per canviar la icona de l\'aplicació</string>
     <string name="post">Publica</string>
-    <string name="post_visibility_tilte">Visibilitat del bram</string>
-    <string name="add_photo_pixelfed">Clica aquí per afegir fotos</string>
+    <string name="post_visibility_tilte">Visibilitat de la publicació</string>
+    <string name="add_photo_pixelfed">Toca aquí per afegir fotos</string>
     <string name="add_photo_indication_pixelfed">Formats acceptats: jpeg, png, gif  \n\nMida Màxima: 15 MB  \n\nCada àlbum pot incloure fins a 4 fotos o vídeos</string>
     <string name="upload_media">Pujar mèdia</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
