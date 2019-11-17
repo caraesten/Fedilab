@@ -271,6 +271,7 @@
     <string name="set_notify">Varsle?</string>
     <string name="set_notif_silent">Dempede varslinger</string>
     <string name="set_nsfw_timeout">NSFW visningspause i sekunder (0 betyr ingen visningspause)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Rediger profil</string>
     <string name="settings_title_custom_sharing">Tilpasset deling</string>
     <string name="settings_custom_sharing_url">Din URL for tilpasset deling&#8230;</string>
