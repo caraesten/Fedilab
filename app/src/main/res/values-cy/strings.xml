@@ -279,6 +279,7 @@
     <string name="set_notify">Hsybysu?</string>
     <string name="set_notif_silent">Hysbysiadau distaw</string>
     <string name="set_nsfw_timeout">Terfyn amser golwg deunydd anaddas i\'r gweithle (eiliadau, ystyr 0 yw ei fod wedi ei ddiffodd)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Golygu proffil</string>
     <string name="settings_title_custom_sharing">Rhannu dethol</string>
     <string name="settings_custom_sharing_url">Eich URL&#8230; rhannu dethol</string>
