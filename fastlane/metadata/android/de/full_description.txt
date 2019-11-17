@@ -7,12 +7,12 @@ Es unterstützt:
 Die App verfügt über erweiterte Funktionen (insbesondere für Pleroma und Mastodon):
 
 - Unterstützung von Mehrfachkonten
-- Schedule messages from the device
-- Schedule boosts
-- Bookmark messages
-- Follow and interact with remote instances
-- Timed mute accounts
-- Cross-account actions with a long press
-- Translation feature
+- Zeitgesteuerte Nachrichten vom Smartphone senden
+- Zeitgesteuerte Boosts
+- Lesezeichen für Nachrichten
+- Folgen und Interagieren mit Remote-Instanzen
+- Zeitgesteuerte Stummschaltung von Konten
+- Kontoübergreifende Aktionen mit langem Tastendruck
+- Übersetzungsfunktion
 - Art timelines
 - Video timelines
