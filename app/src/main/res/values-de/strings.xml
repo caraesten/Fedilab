@@ -271,7 +271,7 @@
     <string name="set_notify">Benachrichtigen?</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
     <string name="set_nsfw_timeout">NSFW Anzeigedauer (in Sekunden, 0 ≙ deaktiviert)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Timeout der Medienbeschreibung (Sekunden, 0 bedeutet aus)</string>
     <string name="settings_title_profile">Ändere Profil</string>
     <string name="settings_title_custom_sharing">Benutzerdefiniertes Teilen</string>
     <string name="settings_custom_sharing_url">Ihre benutzerdefinierte Freigabeadresse &#8230;</string>
@@ -775,7 +775,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="toast_error_instance_reg">Bei der Überprüfung der verfügbaren Instanzen ist ein Problem aufgetreten!</string>
     <string name="join_mastodon">Mastodon beitreten</string>
     <string name="pickup_instance_category">Instanz durch Anklicken einer Kategorie auswählen und dann auf eine Schaltfläche klicken.</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">Wähle eine Instanz aus, indem du auf eine Check-Schaltfläche tippst.</string>
     <string name="users">%1$s Nutzer</string>
     <string name="password_confirm">Passwort bestätigen</string>
     <string name="agreement_check">Ich akzeptiere %1$s und %2$s</string>
@@ -998,7 +998,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="agreement_check_peertube">Ich bin mindestens 16 Jahre alt und stimme den %1$s dieser Instanz zu</string>
     <string name="link_color_title">Links</string>
     <string name="link_color">Ändern Sie die Farbe der Links (URLs, Erwähnungen, Tags, etc.) in Nachrichten</string>
-    <string name="boost_header_color_title">Reblogs header</string>
+    <string name="boost_header_color_title">Reblogs Titel</string>
     <string name="displayname_title">Ändern der Farbe des Anzeigenamens oben in den Nachrichten</string>
     <string name="username_title">Ändern der Farbe des Benutzernamens am Anfang von Nachrichten</string>
     <string name="boost_header_color">Ändern der Farbe der Kopfzeile für Reblogs</string>
