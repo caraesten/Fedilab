@@ -269,6 +269,7 @@
     <string name="set_notify">일림?</string>
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_nsfw_timeout">NSFW 보는 시간(초, 0 = 비활성화)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">프로필 수정</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
