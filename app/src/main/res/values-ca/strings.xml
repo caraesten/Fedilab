@@ -271,7 +271,7 @@
     <string name="set_notify">Avisar?</string>
     <string name="set_notif_silent">Notificacions silencioses</string>
     <string name="set_nsfw_timeout">Límit per mostrar material ofensiu (en segons, 0 és desactivat)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Temps d\'espera de la descripció dels mèdia (en segons, 0 vol dir desactivat)</string>
     <string name="settings_title_profile">Edita el perfil</string>
     <string name="settings_title_custom_sharing">Personalitza el compartir</string>
     <string name="settings_custom_sharing_url">Personalització del que comparteixo a URL&#8230;</string>
@@ -989,7 +989,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="add_photo_pixelfed">Toca aquí per afegir fotos</string>
     <string name="add_photo_indication_pixelfed">Formats acceptats: jpeg, png, gif  \n\nMida Màxima: 15 MB  \n\nCada àlbum pot incloure fins a 4 fotos o vídeos</string>
     <string name="upload_media">Pujar mèdia</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
+    <string name="pixelfed_compose_placeholder">Afegeix llegenda opcional</string>
     <string name="long_api_error">L\'aplicació ha rebut un missatge d\'error molt llarg des de l\'API %1$s</string>
     <string name="message_preview">Previsualització de missatge</string>
     <string name="report_mention">Afegeix mencions en cada missatge</string>
@@ -1002,7 +1002,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="link_color">Canviar el color dels enllaços (Url, mencions, etiquetes, etc.) en els missatges</string>
     <string name="boost_header_color_title">Capçalera de difusions</string>
     <string name="displayname_title">Canviar el color del nom que es mostra al capdamunt dels missatges</string>
-    <string name="username_title">Canviar el color del nom d\'usuari al capdamunt dels missatges</string>
+    <string name="username_title">Canviar el color del nom d\'usuària al capdamunt dels missatges</string>
     <string name="boost_header_color">Canviar el color de la capçalera en les difusions</string>
     <string name="background_status_title">Publicacions</string>
     <string name="background_status">Color de fons de les publicacions en les pissarres</string>
@@ -1017,11 +1017,11 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="make_an_action">Endega un acció</string>
     <string name="translation">Traducció</string>
     <string name="image_preview">Previsualització d\'imatge</string>
-    <string name="text_color_title">Text color</string>
-    <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
+    <string name="text_color_title">Color del text</string>
+    <string name="text_color">Canvia el color del text en les publicacions</string>
+    <string name="apply_changes">Aplicar els canvis</string>
+    <string name="restart_message">Cal que reiniciïs l\'aplicació per activar els canvis</string>
+    <string name="restart">Reinicia</string>
     <string name="pref_custom_theme">Usa un tema personalitzat</string>
     <string name="pref_custom_theme_summary">Autoritza a canviar colors del tema seleccionat</string>
     <string name="theming">Gestió de temes</string>
@@ -1031,15 +1031,15 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="pref_colored_status_bar_summary">Assigna el color primari a la barra d\'estat</string>
     <string name="pref_colored_status_bar_title">Color de la barra d\'estat</string>
     <string name="restore_default_theme">Recobra el tema de fàbrica</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="import_theme">Importar un tema</string>
+    <string name="import_theme_title">Toca aquí per importar un tema prèviament exportat</string>
+    <string name="export_theme">Exporta el tema</string>
+    <string name="export_theme_title">Toca aquí per exportar el tema actual</string>
+    <string name="theme_file_error">Hi ha hagut un error en la selecció del document del tema</string>
     <string name="export_bookmarks">Exporta els marcadors de la instància</string>
     <string name="import_bookmarks">Importa els marcadors de la instància</string>
     <string name="user_count">Nombre d\'usuaris</string>
     <string name="status_count">Nombre de missatges</string>
     <string name="instance_count">Nombre d\'instàncies</string>
-    <string name="blocked">Blocked</string>
+    <string name="blocked">Blocat</string>
 </resources>
