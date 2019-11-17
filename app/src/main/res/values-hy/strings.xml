@@ -271,6 +271,7 @@
     <string name="set_notify">Ծանուցե՞լ</string>
     <string name="set_notif_silent">Լուռ ծանուցումներ</string>
     <string name="set_nsfw_timeout">NSFW ցուցադրման տևողությունը(վրկյ-ով, 0-ն անջատելն է)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Խմբագրել Էջը</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
