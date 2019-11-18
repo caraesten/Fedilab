@@ -204,21 +204,21 @@
         <item quantity="other">and %d other notifications</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d ഇഷ്ടം</item>
+        <item quantity="other">%d ഇഷ്ടം</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">ഒരു അറിയിപ്പ് നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="delete_notification_ask_all">എല്ലാ അറിയിപ്പുകളും നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="delete_notification">അറിയിപ്പ് നീക്കം ചെയ്തിരിക്കുന്നു!</string>
+    <string name="delete_notification_all">എല്ലാ അറിയിപ്പുകളും നീക്കം ചെയ്തിരിക്കുന്നു!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">പിന്തുടരുന്നു</string>
+    <string name="followers">അനുയായികൾ</string>
+    <string name="pinned_toots">പിൻ കുത്തി വച്ചിരിക്കുന്നു</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="client_error">ഉപയോക്താവിന്റെ ഐ ഡി എടുക്കാൻ സാധ്യമല്ല!</string>
+    <string name="connect_error">ഈ പതിപ്പിന്റെ ഡൊമെയിനിലേക്ക് ബന്ധപ്പെടുവാൻ സാധിക്കുന്നില്ല!</string>
+    <string name="no_internet">ഇന്റർനെറ്റ് കണക്ഷൻ ഇല്ല!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
