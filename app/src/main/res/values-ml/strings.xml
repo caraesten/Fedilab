@@ -238,9 +238,9 @@
     <string name="toast_error_instance">ഈ പതിപ്പിന്റെ മണ്ഡലം സാധുവല്ല!</string>
     <string name="toast_error_loading_account">അക്കൗണ്ടുകൾ മാറ്റുമ്പോൾ ഒരു പിഴവ് സംഭവിച്ചു!</string>
     <string name="toast_error_search">തിരയുമ്പോൾ ഒരു പിഴവ് സംഭവിച്ചു!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
+    <string name="toast_update_credential_ok">ഈ പ്രൊഫൈലിലെ വിവരങ്ങൾ സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു!</string>
+    <string name="nothing_to_do">ഒരു നടപടിയും എടുക്കാൻ സാധ്യമല്ല</string>
+    <string name="toast_saved">മാധ്യമം സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Draft saved!</string>
