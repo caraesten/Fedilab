@@ -950,6 +950,14 @@
         <item quantity="many">%d أصوات</item>
         <item quantity="other">%d صوتا</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="zero">%d voters</item>
+        <item quantity="one">%d voter</item>
+        <item quantity="two">%d voters</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>خيار واحد</item>
         <item>خيارات متعددة</item>
