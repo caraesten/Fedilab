@@ -246,6 +246,10 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         FragmentActivity context = getActivity();
         assert context != null;
+        if( preferenceScreen == null){
+            Toasty.error(getActivity(), getString(R.string.toast_error), Toasty.LENGTH_SHORT).show();
+            return;
+        }
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
         ListPreference pref_theme_picker = (ListPreference) findPreference("pref_theme_picker");
         Preference theme_link_color = findPreference("theme_link_color");
