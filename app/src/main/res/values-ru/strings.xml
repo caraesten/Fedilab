@@ -945,6 +945,12 @@
         <item quantity="many">%d голосов</item>
         <item quantity="other">%d голосов</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Единичный выбор</item>
         <item>Множественный выбор</item>
