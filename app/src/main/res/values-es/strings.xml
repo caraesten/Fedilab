@@ -933,6 +933,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voto</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Selección única</item>
         <item>Opciones múltiples</item>
