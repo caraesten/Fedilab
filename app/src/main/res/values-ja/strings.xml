@@ -929,6 +929,9 @@
     <plurals name="number_of_vote">
         <item quantity="other">%d票</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>単一の選択</item>
         <item>複数の選択</item>
