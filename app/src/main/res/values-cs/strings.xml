@@ -943,6 +943,12 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         <item quantity="many">%d hlasu</item>
         <item quantity="other">%d hlasů</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Jediná volba</item>
         <item>Více voleb</item>
