@@ -939,6 +939,10 @@
         <item quantity="one">%d röst</item>
         <item quantity="other">%d röster</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Enkel val</item>
         <item>Flervalsalternativ</item>
