@@ -931,6 +931,10 @@
         <item quantity="one">%d मत</item>
         <item quantity="other">%d मत</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>एक विकल्प</item>
         <item>अनेक विकल्प</item>
