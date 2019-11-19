@@ -278,7 +278,6 @@ public class LoginActivity extends BaseActivity {
                                     connect_button.setEnabled(true);
                                     if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
                                         socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
-
                                         if (instanceNodeInfo.getName().equals("PLEROMA") || instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
                                             client_id_for_webview = true;
                                             retrievesClientId();
@@ -398,13 +397,14 @@ public class LoginActivity extends BaseActivity {
                 }
             });
 
-            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 connectionButton.setEnabled(false);
             login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         connectionButton.setEnabled(false);
+                    }
                     TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
                     if (!hasFocus) {
                         retrievesClientId();
@@ -476,7 +476,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void retrievesClientId() {
-        if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             String instanceFromField = login_instance.getText().toString().trim();
             if (instanceFromField.startsWith("http://")){
                 instanceFromField =instanceFromField.replace("http://", "");
@@ -581,7 +581,7 @@ public class LoginActivity extends BaseActivity {
 
                 final HashMap<String, String> parameters = new HashMap<>();
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     parameters.put(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
                     parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
                 }
@@ -603,7 +603,7 @@ public class LoginActivity extends BaseActivity {
                 } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", "user");
                     oauthUrl = "/api/v1/users/token";
-                } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU || socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     String instanceFromField = login_instance.getText().toString().trim();
                     String host;
                     try {
@@ -628,15 +628,15 @@ public class LoginActivity extends BaseActivity {
                     public void run() {
                         try {
                             String response;
-                            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                                 response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(getApplicationContext(), instance) + finalOauthUrl, 30, parameters, null);
-                            else {
+                            } else {
                                 response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(getApplicationContext(), instance) + finalOauthUrl, 30, null, basicAuth);
                             }
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;
-                                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                                         try {
                                             resobj = new JSONObject(response);
                                             String token = resobj.get("access_token").toString();
