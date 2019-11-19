@@ -935,6 +935,12 @@
         <item quantity="many">%d votes</item>
         <item quantity="other">%d votes</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
