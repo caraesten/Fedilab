@@ -227,9 +227,9 @@
     <string name="toast_unfollow">ഈ അക്കൗണ്ട് ഇനിമുതൽ പിന്തുടരപ്പെടുന്നില്ല!</string>
     <string name="toast_reblog">ഈ ടൂട്ടിനെ ബൂസ്റ്റ് ചെയ്തിരിക്കുന്നു!</string>
     <string name="toast_unreblog">ഈ ടൂട്ട് ബൂസ്റ്റിൽ നിന്ന് മാറ്റിയിരിക്കുന്നു!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
+    <string name="toast_favourite">ഈ ടൂട്ടിനെ പ്രിയപ്പെട്ടവയിലേക്ക് ചേർത്തിരിക്കുന്നു!</string>
+    <string name="toast_unfavourite">ഈ ടൂട്ടിനെ പ്രിയപ്പെട്ടവയിൽ നിന്ന് മാറ്റിയിരിക്കുന്നു!</string>
+    <string name="toast_report">ഈ ടൂട്ടിനെ റിപ്പോർട് ചെയ്തിരിക്കുന്നു!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
     <string name="toast_pin">The toot was pinned!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
