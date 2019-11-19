@@ -14,5 +14,5 @@ Die App verfügt über erweiterte Funktionen (insbesondere für Pleroma und Mast
 - Zeitgesteuerte Stummschaltung von Konten
 - Kontoübergreifende Aktionen mit langem Tastendruck
 - Übersetzungsfunktion
-- Art timelines
-- Video timelines
+- Bilder-Zeitleiste
+- Video-Zeitleiste
