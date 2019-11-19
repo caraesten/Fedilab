@@ -937,6 +937,10 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Egyetlen választás</item>
         <item>Több választás</item>
