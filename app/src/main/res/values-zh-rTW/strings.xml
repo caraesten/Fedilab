@@ -936,6 +936,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>單種選擇</item>
         <item>多種選擇</item>
