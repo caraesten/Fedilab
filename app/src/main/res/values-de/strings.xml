@@ -927,6 +927,10 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Einfachauswahl</item>
         <item>Mehrfachauswahl</item>
