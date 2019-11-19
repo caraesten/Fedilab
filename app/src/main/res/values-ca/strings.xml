@@ -929,6 +929,10 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
         <item quantity="one">%d vot</item>
         <item quantity="other">%d vots</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Elecció única</item>
         <item>Elecció múltiple</item>
