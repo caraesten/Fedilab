@@ -936,6 +936,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Choix unique</item>
         <item>Choix multiple</item>
