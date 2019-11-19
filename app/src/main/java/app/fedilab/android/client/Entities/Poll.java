@@ -40,6 +40,7 @@ public class Poll implements Parcelable {
     private boolean expired;
     private boolean multiple;
     private int votes_count;
+    private int voters_count;
     private boolean voted;
     private List<PollOptions> optionsList;
 
@@ -137,5 +138,13 @@ public class Poll implements Parcelable {
         dest.writeInt(this.votes_count);
         dest.writeByte(this.voted ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.optionsList);
+    }
+
+    public int getVoters_count() {
+        return voters_count;
+    }
+
+    public void setVoters_count(int voters_count) {
+        this.voters_count = voters_count;
     }
 }

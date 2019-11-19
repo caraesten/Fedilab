@@ -894,7 +894,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote, poll.getVotes_count(), poll.getVotes_count()));
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_voters, poll.getVoters_count(), poll.getVoters_count()));
                     holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
                 } else {
                     holder.poll_container.setVisibility(View.GONE);

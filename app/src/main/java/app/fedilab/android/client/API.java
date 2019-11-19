@@ -518,6 +518,11 @@ public class API {
             poll.setExpired(resobj.getBoolean("expired"));
             poll.setMultiple(resobj.getBoolean("multiple"));
             poll.setVotes_count(resobj.getInt("votes_count"));
+            if( resobj.has("voters_count")){
+                poll.setVoters_count(resobj.getInt("voters_count"));
+            }else{
+                poll.setVoters_count(resobj.getInt("votes_count"));
+            }
             poll.setVoted(resobj.getBoolean("voted"));
             JSONArray options = resobj.getJSONArray("options");
             List<PollOptions> pollOptions = new ArrayList<>();
