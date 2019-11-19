@@ -937,6 +937,9 @@
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>单选</item>
         <item>多选</item>
