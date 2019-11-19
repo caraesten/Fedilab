@@ -929,6 +929,10 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Ett valg</item>
         <item>Flere valg</item>
