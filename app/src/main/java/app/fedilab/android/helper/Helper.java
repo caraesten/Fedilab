@@ -3542,8 +3542,6 @@ public class Helper {
                 }
                 byte[] data = bao.toByteArray();
                 bs = new ByteArrayInputStream(data);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
