@@ -939,6 +939,10 @@
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Opción única</item>
         <item>Selección múltiple</item>
