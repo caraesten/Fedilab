@@ -113,6 +113,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         }
         setContentView(R.layout.activity_playlists);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(ContextCompat.getColor(PlaylistsActivity.this, R.color.cyanea_primary));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

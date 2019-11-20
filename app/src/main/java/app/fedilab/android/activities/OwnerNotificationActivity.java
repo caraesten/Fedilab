@@ -171,6 +171,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
             assert inflater != null;
             View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
             view.setBackground(new ColorDrawable(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.cyanea_primary)));
+            toolbar.setBackgroundColor(ContextCompat.getColor(OwnerNotificationActivity.this, R.color.cyanea_primary));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 

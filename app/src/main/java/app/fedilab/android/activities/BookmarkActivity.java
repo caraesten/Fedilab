@@ -98,6 +98,7 @@ public class BookmarkActivity extends BaseActivity implements OnRetrieveFeedsInt
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
+            toolbar.setBackgroundColor(ContextCompat.getColor(BookmarkActivity.this, R.color.cyanea_primary));
             view.setBackground(new ColorDrawable(ContextCompat.getColor(BookmarkActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

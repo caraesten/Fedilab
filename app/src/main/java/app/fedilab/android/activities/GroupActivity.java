@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -110,7 +111,7 @@ public class GroupActivity extends BaseActivity implements OnRetrieveFeedsInterf
         swipeRefreshLayout.setColorSchemeColors(
                 c1, c2, c1
         );
-
+        toolbar.setBackgroundColor(ContextCompat.getColor(GroupActivity.this, R.color.cyanea_primary));
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         //lv_status.addItemDecoration(new DividerItemDecoration(GroupActivity.this, DividerItemDecoration.VERTICAL));
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);

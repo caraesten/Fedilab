@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,6 +91,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         setContentView(R.layout.activity_who_to_follow);
         no_action = findViewById(R.id.no_action);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(ContextCompat.getColor(WhoToFollowActivity.this, R.color.cyanea_primary));
         progess_action = findViewById(R.id.progess_action);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
