@@ -9,6 +9,7 @@
     <attr name="textColor" type="color" />
     <attr name="linkColor" type="color" />
 
+
     <!-- Light theme -->
     <style name="AppTheme_Fedilab" parent="Theme.Cyanea.Light">
         <item name="cardviewColor">@color/white</item>
@@ -20,6 +21,8 @@
         <item name="textColor">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="linkColor">@color/light_link_toot</item>
+        <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Light</item>
+
     </style>
 
 
@@ -33,6 +36,7 @@
         <item name="textColor">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="linkColor">@color/light_link_toot</item>
+        <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Light</item>
     </style>
     <!-- BLACK theme -->
     <style name="AppThemeBlack" parent="Theme.Cyanea.Dark">
@@ -45,6 +49,7 @@
         <item name="textColor">@color/dark_text</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/black_link_toot</item>
+        <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Dark</item>
     </style>
 
     <style name="AppThemeBlack_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
@@ -57,6 +62,7 @@
         <item name="textColor">@color/dark_text</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/black_link_toot</item>
+        <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Dark</item>
     </style>
 
 
@@ -71,6 +77,8 @@
         <item name="textColor">@color/dark_text</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/dark_link_toot</item>
+        <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Dark</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
     <style name="AppThemeDark_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
@@ -83,6 +91,8 @@
         <item name="textColor">@color/dark_text</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/dark_link_toot</item>
+        <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Dark</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
 
@@ -97,6 +107,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="buttonBarButtonStyle">@style/DialogButton</item>
         <item name="linkColor">@color/light_link_toot</item>
+        <item name="android:windowBackground">@color/cyanea_primary_reference</item>
     </style>
 
     <style name="DialogDark" parent="Cyanea.AlertDialog.Theme.Dark">
@@ -104,6 +115,7 @@
         <item name="android:textColor">@color/dark_text</item>
         <item name="buttonBarButtonStyle">@style/DialogButton</item>
         <item name="linkColor">@color/dark_link_toot</item>
+        <item name="android:windowBackground">@color/cyanea_primary_reference</item>
     </style>
 
     <style name="DialogBlack" parent="Cyanea.AlertDialog.Theme.Dark">
@@ -111,6 +123,7 @@
         <item name="android:textColor">@color/dark_text</item>
         <item name="buttonBarButtonStyle">@style/DialogButton</item>
         <item name="linkColor">@color/black_link_toot</item>
+        <item name="android:windowBackground">@color/cyanea_primary_reference</item>
     </style>
 
     <style name="TransparentLight" parent="Theme.Cyanea.Light">black_icon_theme
@@ -132,6 +145,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/dark_link_toot</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
     <style name="TransparentBlack" parent="Theme.Cyanea.Dark">
@@ -144,6 +158,12 @@
         <item name="linkColor">@color/black_link_toot</item>
     </style>
 
+    <style name="Fedilab.PopupMenu.Light" parent="Cyanea.PopupMenu.Light">
+        <item name="android:colorBackground">@color/cyanea_primary_reference</item>
+    </style>
+    <style name="Fedilab.PopupMenu.Dark" parent="Cyanea.PopupMenu.Dark">
+        <item name="android:colorBackground">@color/cyanea_primary_reference</item>
+    </style>
 
     <!-- Light theme -->
     <style name="AppAdminTheme" parent="Theme.Cyanea.Dark">
