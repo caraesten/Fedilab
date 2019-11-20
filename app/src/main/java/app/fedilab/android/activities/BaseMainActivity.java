@@ -42,12 +42,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +73,6 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -1190,9 +1191,9 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
             //Live notification mode
-            final MaterialSpinner set_live_type = dialogView.findViewById(R.id.set_live_type);
+            final Spinner set_live_type = dialogView.findViewById(R.id.set_live_type);
             String[] labels = {getString(R.string.live_notif), getString(R.string.live_delayed), getString(R.string.no_live_notif)};
-            ArrayAdapter<String> adapterLive = new ArrayAdapter<>(getApplicationContext(),
+            ArrayAdapter<String> adapterLive = new ArrayAdapter<>(BaseMainActivity.this,
                     android.R.layout.simple_spinner_dropdown_item, labels);
             set_live_type.setAdapter(adapterLive);
             TextView set_live_type_indication = dialogView.findViewById(R.id.set_live_type_indication);
@@ -1207,10 +1208,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     set_live_type_indication.setText(R.string.no_live_indication);
                     break;
             }
-            set_live_type.setSelectedIndex(Helper.liveNotifType(getApplicationContext()));
-            set_live_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            set_live_type.setSelection(Helper.liveNotifType(getApplicationContext()));
+            set_live_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case Helper.NOTIF_LIVE:
@@ -1245,9 +1246,12 @@ public abstract class BaseMainActivity extends BaseActivity
                             break;
                     }
                 }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
             });
-
-
             dialogBuilderOptin.setTitle(R.string.settings_popup_title);
             dialogBuilderOptin.setCancelable(false);
             dialogBuilderOptin.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {

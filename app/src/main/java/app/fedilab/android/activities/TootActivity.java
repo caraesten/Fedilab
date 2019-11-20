@@ -3665,10 +3665,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         });
 
         ArrayAdapter<CharSequence> pollduration = ArrayAdapter.createFromResource(TootActivity.this,
-                R.array.poll_duration, android.R.layout.simple_spinner_item);
+                R.array.poll_duration, android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<CharSequence> pollchoice = ArrayAdapter.createFromResource(TootActivity.this,
-                R.array.poll_choice_type, android.R.layout.simple_spinner_item);
+                R.array.poll_choice_type, android.R.layout.simple_spinner_dropdown_item);
         poll_choice.setAdapter(pollchoice);
         poll_duration.setAdapter(pollduration);
         poll_duration.setSelection(4);

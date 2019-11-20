@@ -71,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import app.fedilab.android.R;
@@ -504,7 +505,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         Spinner set_attachment_group = rootView.findViewById(R.id.set_attachment_group);
         String[] attachment_labels = {context.getString(R.string.set_attachment_always), context.getString(R.string.set_attachment_wifi), context.getString(R.string.set_attachment_ask)};
-        ArrayAdapter<String> adapterAttachment = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterAttachment = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, attachment_labels);
         set_attachment_group.setAdapter(adapterAttachment);
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
@@ -552,8 +553,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         //Video mode
         final Spinner video_mode_spinner = rootView.findViewById(R.id.set_video_mode);
-        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_video_mode, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                R.array.settings_video_mode, android.R.layout.simple_spinner_dropdown_item);
         video_mode_spinner.setAdapter(video_mode_spinnerAdapter);
         if (videoMode == Helper.VIDEO_MODE_TORRENT)
             videoMode = Helper.VIDEO_MODE_DIRECT;
@@ -1138,7 +1139,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         Spinner set_mode = rootView.findViewById(R.id.set_mode);
         String[] mode_labels = {context.getString(R.string.set_normal), context.getString(R.string.set_compact), context.getString(R.string.set_console)};
-        ArrayAdapter<String> adapterMode = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterMode = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, mode_labels);
         set_mode.setAdapter(adapterMode);
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
@@ -1326,7 +1327,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         //Live notification mode
         final Spinner set_live_type = rootView.findViewById(R.id.set_live_type);
         String[] labels = {context.getString(R.string.live_notif), context.getString(R.string.live_delayed), context.getString(R.string.no_live_notif)};
-        ArrayAdapter<String> adapterLive = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterLive = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, labels);
 
         LinearLayout live_notif_per_account = rootView.findViewById(R.id.live_notif_per_account);
@@ -1816,8 +1817,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         //Translators
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
-        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_translation, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                R.array.settings_translation, android.R.layout.simple_spinner_dropdown_item);
         translation_layout_spinner.setAdapter(adapterTrans);
 
         int positionSpinnerTrans;
@@ -2124,8 +2125,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         final Spinner action_notification = rootView.findViewById(R.id.action_notification);
-        ArrayAdapter<CharSequence> adapterAction = ArrayAdapter.createFromResource(getContext(),
-                R.array.action_notification, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterAction = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                R.array.action_notification, android.R.layout.simple_spinner_dropdown_item);
         action_notification.setAdapter(adapterAction);
         int positionNotificationAntion;
         switch (sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE)) {
@@ -2259,7 +2260,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             ledLabel.setEnabled(true);
             led_colour_spinner.setEnabled(true);
 
-            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(getContext(), R.array.led_colours, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()), R.array.led_colours, android.R.layout.simple_spinner_dropdown_item);
             led_colour_spinner.setAdapter(adapterLEDColour);
             int positionSpinnerLEDColour = (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR));
             led_colour_spinner.setSelection(positionSpinnerLEDColour);
@@ -2372,7 +2373,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
         Locale currentLocale = Helper.restoreLocaleFromString(currentLanguage);
         final Spinner set_change_locale = rootView.findViewById(R.id.set_change_locale);
-        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, Helper.getLocales(context));
 
         set_change_locale.setAdapter(adapterLocale);

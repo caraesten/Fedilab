@@ -90,7 +90,7 @@ public class ProxyActivity extends BaseActivity {
         count2 = 0;
         final Spinner proxy_type = findViewById(R.id.type);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(ProxyActivity.this,
-                R.array.proxy_type_choice, android.R.layout.simple_spinner_item);
+                R.array.proxy_type_choice, android.R.layout.simple_spinner_dropdown_item);
         proxy_type.setAdapter(adapterTrans);
 
 

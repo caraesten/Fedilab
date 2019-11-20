@@ -64,12 +64,11 @@
                 android:text="@string/channel"
                 android:textSize="16sp" />
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
+            <Spinner
                 android:id="@+id/set_upload_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:ms_background_color="?colorPrimaryDark" />
+                android:textSize="16sp" />
         </LinearLayout>
 
 
@@ -89,12 +88,12 @@
                 android:text="@string/action_privacy"
                 android:textSize="16sp" />
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
+            <Spinner
                 android:id="@+id/set_upload_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                app:ms_background_color="?colorPrimaryDark" />
+                />
         </LinearLayout>
 
 
