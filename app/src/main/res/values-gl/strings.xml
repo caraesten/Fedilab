@@ -271,7 +271,7 @@
     <string name="set_notify">Notificar?</string>
     <string name="set_notif_silent">Notificacións silenciosas</string>
     <string name="set_nsfw_timeout">Caducidade da vista NSFW (en segundos, 0 é apagado)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Caducidade Descrición Medios (segundos, 0 igual a off)</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartición personalizada</string>
     <string name="settings_custom_sharing_url">O URL da súa compartición&#8230;</string>
@@ -940,8 +940,8 @@
         <item quantity="other">%d votos</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d voter</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">%d votante</item>
+        <item quantity="other">%d votantes</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Opción única</item>
@@ -1015,8 +1015,8 @@
     <string name="link_color_title">Ligazóns</string>
     <string name="link_color">Cambiar cor das ligazóns (URLs, mencións, etiquetas, etc.) nas mensaxes</string>
     <string name="boost_header_color_title">Cabeceira das repeticións</string>
-    <string name="displayname_title">Change the color of display name at the top of messages</string>
-    <string name="username_title">Change the color of the user name at the top of messages</string>
+    <string name="displayname_title">Cambiar cor do nome mostrado enriba das mensaxes</string>
+    <string name="username_title">Cambiar a cor do nome de usuaria enriba das mensaxes</string>
     <string name="boost_header_color">Cambiar a cor da cabeceira das mensaxes repetidas</string>
     <string name="background_status_title">Publicacións</string>
     <string name="background_status">Cor de fondo das publicacións en liñas temporais</string>
@@ -1052,8 +1052,8 @@
     <string name="theme_file_error">Algo fallou ao escoller o ficheiro do decorado</string>
     <string name="export_bookmarks">Exportar marcadores a instancia</string>
     <string name="import_bookmarks">Importar marcadores desde a instancia</string>
-    <string name="user_count">User count</string>
-    <string name="status_count">Status count</string>
-    <string name="instance_count">Instance count</string>
-    <string name="blocked">Blocked</string>
+    <string name="user_count">Número de usuarias</string>
+    <string name="status_count">Número de estados</string>
+    <string name="instance_count">Contas da instancia</string>
+    <string name="blocked">Bloqueado</string>
 </resources>
