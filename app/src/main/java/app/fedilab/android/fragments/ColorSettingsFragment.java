@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -267,7 +268,9 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         Preference pref_import = findPreference("pref_import");
         Preference pref_export = findPreference("pref_export");
         Preference reset_pref = findPreference("reset_pref");
-        if (!sharedpreferences.getBoolean("use_custom_theme", false)) {
+        Log.v(Helper.TAG,"preferenceScreen! " + preferenceScreen);
+        Log.v(Helper.TAG,"theme_link_color! " + theme_link_color);
+        if (!sharedpreferences.getBoolean("use_custom_theme", false) ) {
             preferenceScreen.removePreference(theme_link_color);
             preferenceScreen.removePreference(theme_boost_header_color);
             preferenceScreen.removePreference(theme_text_header_1_line);
@@ -380,7 +383,7 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         editor.remove("theme_accent");
         editor.remove("theme_text_color");
         editor.remove("theme_primary");
-        editor.remove("use_custom_theme");
+        //editor.remove("use_custom_theme");
         editor.commit();
     }
 

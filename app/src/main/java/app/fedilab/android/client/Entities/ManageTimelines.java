@@ -270,7 +270,6 @@ public class ManageTimelines {
     public TabLayout createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines) {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         tabLayout.removeAllTabs();
         int position = 0;
         for (ManageTimelines tl : manageTimelines) {
@@ -281,6 +280,14 @@ public class ManageTimelines {
                 if (tb.getCustomView() != null)
                     icon = tb.getCustomView().findViewById(R.id.tab_icon);
             }
+
+            Helper.changeDrawableColor(context,R.drawable.ic_home, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(context,R.drawable.ic_notifications, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(context,R.drawable.ic_direct_messages, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(context,R.drawable.ic_people, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(context,R.drawable.ic_public, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(context,R.drawable.ic_color_lens, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(context,R.drawable.ic_video_peertube, R.attr.iconColorMenu);
             if (icon != null) {
                 switch (tl.getType()) {
                     case HOME:

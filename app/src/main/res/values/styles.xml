@@ -22,7 +22,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="linkColor">@color/light_link_toot</item>
         <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Light</item>
-
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
 
@@ -37,6 +37,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="linkColor">@color/light_link_toot</item>
         <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Light</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
     <!-- BLACK theme -->
     <style name="AppThemeBlack" parent="Theme.Cyanea.Dark">
@@ -50,6 +51,7 @@
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/black_link_toot</item>
         <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Dark</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
     <style name="AppThemeBlack_NoActionBar" parent="Theme.Cyanea.Dark.NoActionBar">
@@ -63,6 +65,7 @@
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/black_link_toot</item>
         <item name="android:popupMenuStyle">@style/Fedilab.PopupMenu.Dark</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
 
@@ -135,6 +138,7 @@
         <item name="textColor">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="linkColor">@color/light_link_toot</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
     <style name="TransparentDark" parent="Theme.Cyanea.Dark">
@@ -156,17 +160,20 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="linkColor">@color/black_link_toot</item>
+        <item name="android:itemBackground">@drawable/menu_selector</item>
     </style>
 
     <style name="Fedilab.PopupMenu.Light" parent="Cyanea.PopupMenu.Light">
         <item name="android:colorBackground">@color/cyanea_primary_reference</item>
+        <item name="android:popupBackground">@color/cyanea_primary_reference</item>
     </style>
     <style name="Fedilab.PopupMenu.Dark" parent="Cyanea.PopupMenu.Dark">
         <item name="android:colorBackground">@color/cyanea_primary_reference</item>
+        <item name="android:popupBackground">@color/cyanea_primary_reference</item>
     </style>
 
     <!-- Light theme -->
-    <style name="AppAdminTheme" parent="Theme.Cyanea.Dark">
+    <style name="AppAdminTheme" parent="AppThemeDark">
 
     </style>
 

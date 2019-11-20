@@ -24,6 +24,7 @@
     android:contentInsetStart="0dp"
     android:contentInsetLeft="0dp"
     android:contentInsetEnd="0dp"
+    android:background="?colorPrimary"
     android:contentInsetRight="0dp"
     app:contentInsetEnd="0dp"
     app:contentInsetLeft="0dp"

@@ -181,9 +181,6 @@ public class LoginActivity extends BaseActivity {
                 case Helper.THEME_LIGHT:
                     setTheme(R.style.AppTheme_Fedilab);
                     break;
-                case Helper.THEME_DARK:
-                    setTheme(R.style.AppThemeDark);
-                    break;
                 case Helper.THEME_BLACK:
                     setTheme(R.style.AppThemeBlack);
                     break;
@@ -196,7 +193,7 @@ public class LoginActivity extends BaseActivity {
             if (actionBar != null) {
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 assert inflater != null;
-                View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+                View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(LoginActivity.this), false);
                 view.setBackground(new ColorDrawable(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_primary)));
                 actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -746,7 +743,7 @@ public class LoginActivity extends BaseActivity {
         menu.findItem(R.id.action_custom_tabs).setChecked(!embedded_browser);
         boolean security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
         menu.findItem(R.id.action_provider).setChecked(security_provider);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override

@@ -729,7 +729,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
         autocomplete = false;
-
+        setContentView(R.layout.activity_toot);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -792,7 +792,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-        setContentView(R.layout.activity_toot);
+
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;

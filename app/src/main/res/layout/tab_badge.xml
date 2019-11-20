@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tab_icon"
         android:layout_alignEnd="@+id/tab_icon"
-        android:layout_alignRight="@+id/tab_icon"
         android:background="@drawable/shape_counter"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"

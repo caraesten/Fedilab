@@ -429,6 +429,15 @@ public abstract class BaseMainActivity extends BaseActivity
             pTabLocal.setCustomView(R.layout.tab_badge);
 
 
+
+
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_subscriptions, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_overview, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_trending_up, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_recently_added, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_home, R.attr.iconColorMenu);
+
+
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconSub = pTabsub.getCustomView().findViewById(R.id.tab_icon);
 
@@ -519,6 +528,10 @@ public abstract class BaseMainActivity extends BaseActivity
             TabLayout.Tab pfTabNotification = tabLayout.newTab();
             //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
+
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_notifications, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_people, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_home, R.attr.iconColorMenu);
 
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
