@@ -35,12 +35,13 @@
             android:text="@string/pickup_instance_category"
             android:textSize="16sp" />
 
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:id="@+id/reg_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            app:ms_background_color="?colorPrimaryDark" />
+            android:layout_gravity="end"
+           />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reg_category_view"
