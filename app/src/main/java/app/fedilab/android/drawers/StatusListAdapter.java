@@ -361,7 +361,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return;
 
         final List<Account> accounts = apiResponse.getAccounts();
-        if (accounts != null && accounts.size() > 0) {
+        if (accounts != null && accounts.size() > 0 && toot_content != null) {
             int currentCursorPosition = toot_content.getSelectionStart();
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
             toot_content.setThreshold(1);
@@ -415,9 +415,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
-        int currentCursorPosition = toot_content.getSelectionStart();
 
-        if (emojis != null && emojis.size() > 0) {
+        if (emojis != null && emojis.size() > 0 && toot_content != null) {
+            int currentCursorPosition = toot_content.getSelectionStart();
             EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, emojis);
             toot_content.setThreshold(1);
             toot_content.setAdapter(emojisSearchAdapter);
