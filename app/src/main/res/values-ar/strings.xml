@@ -278,6 +278,7 @@
     <string name="set_notify">هل تود الإشعار؟</string>
     <string name="set_notif_silent">كتم الاشعارات</string>
     <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">تعديل الملف الشخصي</string>
     <string name="settings_title_custom_sharing">المشاركة المخصصة</string>
     <string name="settings_custom_sharing_url">رابط المشاركة المعدل&#8230;</string>
@@ -947,6 +948,14 @@
         <item quantity="few">%d أصوات</item>
         <item quantity="many">%d أصوات</item>
         <item quantity="other">%d صوتا</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="zero">%d voters</item>
+        <item quantity="one">%d voter</item>
+        <item quantity="two">%d voters</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>خيار واحد</item>

@@ -274,6 +274,7 @@
     <string name="set_notify">Уведомлять?</string>
     <string name="set_notif_silent">Тихие уведомления</string>
     <string name="set_nsfw_timeout">Время просмотра NSFW (в секундах, 0 означает выключено)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Изменить профиль</string>
     <string name="settings_title_custom_sharing">Пользовательский обмен</string>
     <string name="settings_custom_sharing_url">Ваш пользовательский URL для обмена&#8230;</string>
@@ -942,6 +943,12 @@
         <item quantity="few">%d голоса</item>
         <item quantity="many">%d голосов</item>
         <item quantity="other">%d голосов</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Единичный выбор</item>

@@ -269,7 +269,8 @@
     <string name="set_wifi_only">Notifica solo in WIFI</string>
     <string name="set_notify">Notifica?</string>
     <string name="set_notif_silent">Notifiche silenziose</string>
-    <string name="set_nsfw_timeout">Timeout visualizzazione NSFW (secondi, 0 significa spento)</string>
+    <string name="set_nsfw_timeout">Timeout visualizzazione NSFW (secondi, 0 significa disattivato)</string>
+    <string name="set_med_desc_timeout">Timeout descrizione media (secondi, 0 significa disattivato)</string>
     <string name="settings_title_profile">Modifica profilo</string>
     <string name="settings_title_custom_sharing">Condivisione personalizzata</string>
     <string name="settings_custom_sharing_url">L\'URL della tua condivisione personalizzata&#8230;</string>
@@ -937,6 +938,10 @@
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Scelta singola</item>
         <item>Scelta multipla</item>
@@ -1046,8 +1051,8 @@
     <string name="theme_file_error">Si è verificato un errore durante la selezione del file di tema</string>
     <string name="export_bookmarks">Esporta segnalibri nell\'istanza</string>
     <string name="import_bookmarks">Importa segnalibri dall\'istanza</string>
-    <string name="user_count">User count</string>
-    <string name="status_count">Status count</string>
-    <string name="instance_count">Instance count</string>
-    <string name="blocked">Blocked</string>
+    <string name="user_count">Numero di utenti</string>
+    <string name="status_count">Numero di stati</string>
+    <string name="instance_count">Numero di istanze</string>
+    <string name="blocked">Bloccati</string>
 </resources>

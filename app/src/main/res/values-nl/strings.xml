@@ -270,6 +270,7 @@
     <string name="set_notify">Meldingen?</string>
     <string name="set_notif_silent">Stille meldingen</string>
     <string name="set_nsfw_timeout">Hoe lang gevoelige inhoud blijven tonen (in seconden, 0 is onbeperkt)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Profiel bewerken</string>
     <string name="settings_title_custom_sharing">Handmatig delen</string>
     <string name="settings_custom_sharing_url">Jouw handmatige deel-URL&#8230;</string>
@@ -935,6 +936,10 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <plurals name="number_of_vote">
         <item quantity="one">%d stem</item>
         <item quantity="other">%d stemmen</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Enkele keus</item>

@@ -204,43 +204,43 @@
         <item quantity="other">and %d other notifications</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d ഇഷ്ടം</item>
+        <item quantity="other">%d ഇഷ്ടം</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">ഒരു അറിയിപ്പ് നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="delete_notification_ask_all">എല്ലാ അറിയിപ്പുകളും നീക്കം ചെയ്യട്ടെ?</string>
+    <string name="delete_notification">അറിയിപ്പ് നീക്കം ചെയ്തിരിക്കുന്നു!</string>
+    <string name="delete_notification_all">എല്ലാ അറിയിപ്പുകളും നീക്കം ചെയ്തിരിക്കുന്നു!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">പിന്തുടരുന്നു</string>
+    <string name="followers">അനുയായികൾ</string>
+    <string name="pinned_toots">പിൻ കുത്തി വച്ചിരിക്കുന്നു</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
-    <string name="no_internet">No Internet connection!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
+    <string name="client_error">ഉപയോക്താവിന്റെ ഐ ഡി എടുക്കാൻ സാധ്യമല്ല!</string>
+    <string name="connect_error">ഈ പതിപ്പിന്റെ ഡൊമെയിനിലേക്ക് ബന്ധപ്പെടുവാൻ സാധിക്കുന്നില്ല!</string>
+    <string name="no_internet">ഇന്റർനെറ്റ് കണക്ഷൻ ഇല്ല!</string>
+    <string name="toast_block">ഈ അക്കൗണ്ട് തടഞ്ഞിരുന്നു!</string>
+    <string name="toast_unblock">ഈ അക്കൗണ്ട് ഇനിമുതൽ തടയപ്പെടുന്നതല്ല!</string>
+    <string name="toast_mute">ഈ അക്കൗണ്ട് നിശ്ശബ്ദമാക്കിയിരുന്നു!</string>
+    <string name="toast_unmute">ഈ അക്കൗണ്ട് ഇനിമുതൽ നിശ്ശബ്ദമാക്കപ്പെടുന്നതല്ല!</string>
+    <string name="toast_follow">ഈ അക്കൗണ്ട് പിന്തുടരപ്പെട്ടിരുന്നു!</string>
+    <string name="toast_unfollow">ഈ അക്കൗണ്ട് ഇനിമുതൽ പിന്തുടരപ്പെടുന്നില്ല!</string>
+    <string name="toast_reblog">ഈ ടൂട്ടിനെ ബൂസ്റ്റ് ചെയ്തിരിക്കുന്നു!</string>
+    <string name="toast_unreblog">ഈ ടൂട്ട് ബൂസ്റ്റിൽ നിന്ന് മാറ്റിയിരിക്കുന്നു!</string>
+    <string name="toast_favourite">ഈ ടൂട്ടിനെ പ്രിയപ്പെട്ടവയിലേക്ക് ചേർത്തിരിക്കുന്നു!</string>
+    <string name="toast_unfavourite">ഈ ടൂട്ടിനെ പ്രിയപ്പെട്ടവയിൽ നിന്ന് മാറ്റിയിരിക്കുന്നു!</string>
+    <string name="toast_report">ഈ ടൂട്ടിനെ റിപ്പോർട് ചെയ്തിരിക്കുന്നു!</string>
+    <string name="toast_unstatus">ഈ ടൂട്ട് നീക്കം ചെയ്യപ്പെട്ടിരിക്കുന്നു!</string>
+    <string name="toast_pin">ഈ ടൂട്ട് പിൻ ചെയ്തിരിക്കുന്നു!</string>
+    <string name="toast_unpin">ഈ ടൂട്ട് പിൻ നീക്കം ചെയ്തിരിക്കുന്നു!</string>
+    <string name="toast_error">അയ്യോ! ഒരു പിഴവ് സംഭവിച്ചു!</string>
+    <string name="toast_code_error">ഒരു പിഴവ് സംഭവിച്ചു! ഈ പതിപ്പ് അടയാളവാക്യം തിരികെ തന്നില്ല!</string>
+    <string name="toast_error_instance">ഈ പതിപ്പിന്റെ മണ്ഡലം സാധുവല്ല!</string>
+    <string name="toast_error_loading_account">അക്കൗണ്ടുകൾ മാറ്റുമ്പോൾ ഒരു പിഴവ് സംഭവിച്ചു!</string>
+    <string name="toast_error_search">തിരയുമ്പോൾ ഒരു പിഴവ് സംഭവിച്ചു!</string>
+    <string name="toast_update_credential_ok">ഈ പ്രൊഫൈലിലെ വിവരങ്ങൾ സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു!</string>
+    <string name="nothing_to_do">ഒരു നടപടിയും എടുക്കാൻ സാധ്യമല്ല</string>
+    <string name="toast_saved">മാധ്യമം സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Draft saved!</string>
@@ -271,6 +271,7 @@
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -935,6 +936,10 @@
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>

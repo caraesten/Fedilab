@@ -274,6 +274,7 @@
     <string name="set_notify">Oznámení?</string>
     <string name="set_notif_silent">Tichá oznámení</string>
     <string name="set_nsfw_timeout">NSFW prodleva (vteřiny, 0 znamená vypnuto)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Upravit profil</string>
     <string name="settings_title_custom_sharing">Vlastní sdílení</string>
     <string name="settings_custom_sharing_url">Vaše vlastní sdílecí URL&#8230;</string>
@@ -940,6 +941,12 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         <item quantity="few">%d hlasy</item>
         <item quantity="many">%d hlasu</item>
         <item quantity="other">%d hlasů</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Jediná volba</item>

@@ -271,6 +271,7 @@
     <string name="set_notify">Benachrichtigen?</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
     <string name="set_nsfw_timeout">NSFW Anzeigedauer (in Sekunden, 0 ≙ deaktiviert)</string>
+    <string name="set_med_desc_timeout">Timeout der Medienbeschreibung (Sekunden, 0 bedeutet aus)</string>
     <string name="settings_title_profile">Ändere Profil</string>
     <string name="settings_title_custom_sharing">Benutzerdefiniertes Teilen</string>
     <string name="settings_custom_sharing_url">Ihre benutzerdefinierte Freigabeadresse &#8230;</string>
@@ -774,7 +775,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="toast_error_instance_reg">Bei der Überprüfung der verfügbaren Instanzen ist ein Problem aufgetreten!</string>
     <string name="join_mastodon">Mastodon beitreten</string>
     <string name="pickup_instance_category">Instanz durch Anklicken einer Kategorie auswählen und dann auf eine Schaltfläche klicken.</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">Wähle eine Instanz aus, indem du auf eine Check-Schaltfläche tippst.</string>
     <string name="users">%1$s Nutzer</string>
     <string name="password_confirm">Passwort bestätigen</string>
     <string name="agreement_check">Ich akzeptiere %1$s und %2$s</string>
@@ -926,6 +927,10 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d Stimme</item>
+        <item quantity="other">%d Stimmen</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Einfachauswahl</item>
         <item>Mehrfachauswahl</item>
@@ -997,15 +1002,15 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="agreement_check_peertube">Ich bin mindestens 16 Jahre alt und stimme den %1$s dieser Instanz zu</string>
     <string name="link_color_title">Links</string>
     <string name="link_color">Ändern Sie die Farbe der Links (URLs, Erwähnungen, Tags, etc.) in Nachrichten</string>
-    <string name="boost_header_color_title">Reblogs header</string>
-    <string name="displayname_title">Change the color of display name at the top of messages</string>
-    <string name="username_title">Change the color of the user name at the top of messages</string>
-    <string name="boost_header_color">Change the color of the header for reblogs</string>
+    <string name="boost_header_color_title">Reblogs Titel</string>
+    <string name="displayname_title">Ändern der Farbe des Anzeigenamens oben in den Nachrichten</string>
+    <string name="username_title">Ändern der Farbe des Benutzernamens am Anfang von Nachrichten</string>
+    <string name="boost_header_color">Ändern der Farbe der Kopfzeile für Reblogs</string>
     <string name="background_status_title">Beiträge</string>
     <string name="background_status">Hintergrundfarbe der posts in den timelines</string>
     <string name="reset_color">Farben zurücksetzen</string>
     <string name="clik_reset">Tippen Sie hier, um alle Ihre benutzerdefinierten Farben zurückzusetzen</string>
-    <string name="reset">Reset</string>
+    <string name="reset">Zurücksetzen</string>
     <string name="icons_color_title">Symbole</string>
     <string name="icons_color">Farbe der unteren Symbole in Zeitleisten</string>
     <string name="pin_tag">Diesen Tag anheften</string>
@@ -1018,25 +1023,25 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="text_color">Ändern Sie die Textfarbe in posts</string>
     <string name="apply_changes">Änderungen übernehmen</string>
     <string name="restart_message">Sie müssen die Anwendung neu starten, um die Änderungen zu übernehmen</string>
-    <string name="restart">Restart</string>
+    <string name="restart">Neustarten</string>
     <string name="pref_custom_theme">Verwenden Sie ein benutzerdefiniertes Design</string>
-    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
+    <string name="pref_custom_theme_summary">Erlaubt es, die Farben des ausgewählten Themas oben zu überschreiben</string>
     <string name="theming">Theming</string>
-    <string name="store_before">Store before</string>
+    <string name="store_before">Vorher speichern</string>
     <string name="data_export_theme">Das Theme wurde exportiert</string>
-    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
+    <string name="data_export_theme_success">Das Design wurde erfolgreich als CSV exportiert</string>
     <string name="pref_colored_status_bar_summary">Die primäre Farbe auf die Statusleiste anwenden</string>
     <string name="pref_colored_status_bar_title">Statusleistenfarbe</string>
     <string name="restore_default_theme">Standard-Theme wiederherstellen</string>
     <string name="import_theme">Theme importieren</string>
     <string name="import_theme_title">Hier tippen, um ein Theme aus einem vorherigen Export zu importieren</string>
-    <string name="export_theme">Export the theme</string>
+    <string name="export_theme">Exportieren des Designs</string>
     <string name="export_theme_title">Hier tippen, um das aktuelle Theme zu exportieren</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
-    <string name="export_bookmarks">Export bookmarks to the instance</string>
-    <string name="import_bookmarks">Import bookmarks from the instance</string>
-    <string name="user_count">User count</string>
-    <string name="status_count">Status count</string>
-    <string name="instance_count">Instance count</string>
-    <string name="blocked">Blocked</string>
+    <string name="theme_file_error">Bei der Auswahl der Designdatei ist ein Fehler aufgetreten</string>
+    <string name="export_bookmarks">Lesezeichen zur Instanz exportieren</string>
+    <string name="import_bookmarks">Lesezeichen von der Instanz importieren</string>
+    <string name="user_count">Benutzeranzahl</string>
+    <string name="status_count">Statusanzahl</string>
+    <string name="instance_count">Instanzanzahl</string>
+    <string name="blocked">Blockiert</string>
 </resources>

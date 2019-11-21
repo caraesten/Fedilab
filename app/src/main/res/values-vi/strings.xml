@@ -269,6 +269,7 @@ và %d thông báo khác</item>
     <string name="set_notify">Thông báo?</string>
     <string name="set_notif_silent">Thông báo im lặng</string>
     <string name="set_nsfw_timeout">Thời gian chờ của NSFW (giây, 0 có nghĩa là tắt)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Chỉnh sửa tiểu sử</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -930,6 +931,9 @@ và %d thông báo khác</item>
     <string name="registration_closed">Your instance does not allow to register a new account!</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d voters</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>

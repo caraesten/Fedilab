@@ -268,6 +268,7 @@
     <string name="set_notify">通知？</string>
     <string name="set_notif_silent">靜音通知</string>
     <string name="set_nsfw_timeout">NSFW 檢視逾時（秒，0 代表關閉）</string>
+    <string name="set_med_desc_timeout">媒體描述逾時（秒，0 代表關閉）</string>
     <string name="settings_title_profile">編輯個人資料</string>
     <string name="settings_title_custom_sharing">自訂分享</string>
     <string name="settings_custom_sharing_url">您的自訂分享 URL&#8230;</string>
@@ -933,6 +934,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="registration_closed">您的站臺不允許註冊新帳號！</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d 個投票者</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>單種選擇</item>

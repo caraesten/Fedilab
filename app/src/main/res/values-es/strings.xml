@@ -270,6 +270,7 @@
     <string name="set_notify">¿Notificar?</string>
     <string name="set_notif_silent">Notificaciones silenciosas</string>
     <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
+    <string name="set_med_desc_timeout">Tiempo de espera de descripción multimedia (en segundos, 0 para desactivar)</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartición personalizada</string>
     <string name="settings_custom_sharing_url">Tu URL de compartición personalizada&#8230;</string>
@@ -930,6 +931,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voto</item>
+    </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d votante</item>
+        <item quantity="other">%d votantes</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Selección única</item>
