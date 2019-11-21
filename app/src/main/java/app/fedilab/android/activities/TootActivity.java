@@ -1005,7 +1005,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             restored = b.getLong("restored", -1);
         }
-        if (tootReply != null) {
+        if (tootReply != null && tootReply.getAccount() != null) {
             if (tootReply.getAccount() != null && tootReply.getAccount().getMoved_to_account() != null) {
                 warning_message.setVisibility(View.VISIBLE);
             }
@@ -4173,8 +4173,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         @Override
         protected void onPostExecute(Void result) {
-            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
-            activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
+            if( activityWeakReference.get().findViewById(R.id.compression_loader) != null) {
+                activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
+            }
+            if( activityWeakReference.get().findViewById(R.id.picture_scrollview) != null){
+                activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
+            }
             if (!error) {
                 if (commpressedFilePath != null) {
                     uriFile = Uri.fromFile(new File(commpressedFilePath));
@@ -4185,15 +4189,19 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
                 toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
                 toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
-
-                toot_picture_container.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                toot_it.setEnabled(false);
+                if( toot_picture_container != null){
+                    toot_picture_container.setVisibility(View.VISIBLE);
+                }
+                if( toot_picture != null){
+                    toot_picture.setEnabled(false);
+                }
+                if( toot_it != null){
+                    toot_it.setEnabled(false);
+                }
                 if (filename == null) {
                     filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 }
                 filesMap.put(filename, uriFile);
-
                 upload(activityWeakReference.get(), account, social, uriFile, filename, uploadReceiver);
             }
         }
