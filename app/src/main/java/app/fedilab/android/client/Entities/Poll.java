@@ -55,6 +55,7 @@ public class Poll implements Parcelable {
         this.expired = in.readByte() != 0;
         this.multiple = in.readByte() != 0;
         this.votes_count = in.readInt();
+        this.voters_count = in.readInt();
         this.voted = in.readByte() != 0;
         this.optionsList = in.createTypedArrayList(PollOptions.CREATOR);
     }
@@ -136,6 +137,7 @@ public class Poll implements Parcelable {
         dest.writeByte(this.expired ? (byte) 1 : (byte) 0);
         dest.writeByte(this.multiple ? (byte) 1 : (byte) 0);
         dest.writeInt(this.votes_count);
+        dest.writeInt(this.voters_count);
         dest.writeByte(this.voted ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.optionsList);
     }

@@ -792,7 +792,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 greaterValue = pollOption.getVotes_count();
                         }
                         for (PollOptions pollOption : poll.getOptionsList()) {
-                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVotes_count());
+                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVoters_count());
                             if (pollOption.getVotes_count() == greaterValue) {
                                 BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
                                 bar.setDescriptionSpan(pollOption.getTitleSpan());

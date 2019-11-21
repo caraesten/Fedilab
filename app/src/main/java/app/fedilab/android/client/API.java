@@ -510,7 +510,7 @@ public class API {
      * @param resobj
      * @return
      */
-    public static Poll parsePoll(Context context, JSONObject resobj) {
+    private static Poll parsePoll(Context context, JSONObject resobj) {
         Poll poll = new Poll();
         try {
             poll.setId(resobj.getString("id"));
@@ -534,9 +534,7 @@ public class API {
                 pollOptions.add(pollOption);
             }
             poll.setOptionsList(pollOptions);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
         return poll;
@@ -707,6 +705,11 @@ public class API {
                 poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
                 poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
                 poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
+                if( resobj.getJSONObject("poll").has("voters_count")){
+                    poll.setVoters_count(resobj.getJSONObject("poll").getInt("voters_count"));
+                }else{
+                    poll.setVoters_count(resobj.getJSONObject("poll").getInt("votes_count"));
+                }
                 poll.setVoted(resobj.getJSONObject("poll").getBoolean("voted"));
                 JSONArray options = resobj.getJSONObject("poll").getJSONArray("options");
                 List<PollOptions> pollOptions = new ArrayList<>();
@@ -4323,13 +4326,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return null;
@@ -4359,17 +4356,11 @@ public class API {
                 new TimelineCacheDAO(context, db).update(status.getId(), response, account.getId(), account.getInstance());
             }
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
-            return parsePoll(context, new JSONObject(response));
+            return poll;
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return null;
