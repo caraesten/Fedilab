@@ -1002,6 +1002,33 @@ public class Helper {
     }
 
     /***
+     * Returns a String depending of the date
+     * @param context Context
+     * @param dateEndPoll Date
+     * @return String
+     */
+    public static String dateDiffPoll(Context context, Date dateEndPoll) {
+        Date now = new Date();
+        long diff = dateEndPoll.getTime() - now.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+
+        if (days > 0)
+            return context.getResources().getQuantityString(R.plurals.date_day_polls, (int) days, (int) days);
+        else if (hours > 0)
+            return context.getResources().getQuantityString(R.plurals.date_hours_polls, (int) hours, (int) hours);
+        else if (minutes > 0)
+            return context.getResources().getQuantityString(R.plurals.date_minutes_polls, (int) minutes, (int) minutes);
+        else {
+            if (seconds < 0)
+                seconds = 0;
+            return context.getResources().getQuantityString(R.plurals.date_seconds_polls, (int) seconds, (int) seconds);
+        }
+    }
+
+    /***
      * Toast message depending of the status code and the initial action
      * @param context Context
      * @param statusCode int the status code

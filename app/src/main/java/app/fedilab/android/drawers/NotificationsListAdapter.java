@@ -628,7 +628,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
                     holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_voters, status.getPoll().getVoters_count(), status.getPoll().getVoters_count()));
-                    holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                    if( poll.isExpired()){
+                        holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                    }else{
+                        holder.remaining_time.setText(context.getString(R.string.poll_finish_in, Helper.dateDiffPoll(context, poll.getExpires_at())));
+                    }
                 } else {
                     holder.poll_container.setVisibility(View.GONE);
                 }
