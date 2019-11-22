@@ -940,8 +940,8 @@
         <item quantity="other">%d boto</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d voter</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">bozkatzaile %d</item>
+        <item quantity="other">%d bozkatzaile</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Aukera bakarra</item>
