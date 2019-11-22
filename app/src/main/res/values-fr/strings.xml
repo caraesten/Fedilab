@@ -287,7 +287,7 @@
     <string name="set_notify">Notifier ?</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
     <string name="set_nsfw_timeout">Délai d’affichage NSFW (en secondes, 0 signifie aucun délai)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Délai de l\'affichage de la description des médias (en secondes, 0 signifie désactivé)</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="settings_title_custom_sharing">Partage personnalisé</string>
     <string name="settings_custom_sharing_url">Votre URL de partage personnalisé&#8230;</string>
@@ -953,8 +953,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
         <item quantity="other">%d voix</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d voter</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">%d votant</item>
+        <item quantity="other">%d votants</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Choix unique</item>
@@ -1069,5 +1069,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="status_count">Nombre de statuts</string>
     <string name="instance_count">Instance count</string>
     <string name="blocked">Bloqué</string>
-    <string name="poll_finish_in">End in %s</string>
+    <string name="poll_finish_in">Fin dans %s</string>
 </resources>
