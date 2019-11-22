@@ -127,6 +127,22 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Warnung</string>
     <string name="toot_placeholder">Was beschäftigt dich?</string>
@@ -1044,4 +1060,5 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="status_count">Statusanzahl</string>
     <string name="instance_count">Instanzanzahl</string>
     <string name="blocked">Blockiert</string>
+    <string name="poll_finish_in">End in %s</string>
 </resources>
