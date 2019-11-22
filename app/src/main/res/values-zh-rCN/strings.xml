@@ -127,6 +127,18 @@
     <string name="date_minutes">%d 分</string>
     <string name="date_hours">%d 小时</string>
     <string name="date_day">%d 天</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
     <string name="toot_placeholder">你在想什么？</string>
@@ -1052,4 +1064,5 @@
     <string name="status_count">状态数</string>
     <string name="instance_count">实例数</string>
     <string name="blocked">已阻止</string>
+    <string name="poll_finish_in">End in %s</string>
 </resources>
