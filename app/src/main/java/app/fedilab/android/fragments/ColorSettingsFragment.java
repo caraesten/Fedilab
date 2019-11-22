@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -268,8 +267,6 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         Preference pref_import = findPreference("pref_import");
         Preference pref_export = findPreference("pref_export");
         Preference reset_pref = findPreference("reset_pref");
-        Log.v(Helper.TAG,"preferenceScreen! " + preferenceScreen);
-        Log.v(Helper.TAG,"theme_link_color! " + theme_link_color);
         if (!sharedpreferences.getBoolean("use_custom_theme", false) ) {
             preferenceScreen.removePreference(theme_link_color);
             preferenceScreen.removePreference(theme_boost_header_color);

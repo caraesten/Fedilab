@@ -139,7 +139,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
 
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
+    public void onRetrieveRemoteAccount(Results results, boolean devAccount) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         if (results == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();

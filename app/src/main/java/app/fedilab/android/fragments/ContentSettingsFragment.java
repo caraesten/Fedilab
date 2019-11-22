@@ -264,7 +264,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
     }
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
+    public void onRetrieveRemoteAccount(Results results, boolean devAccount) {
         if (results == null) {
             return;
         }

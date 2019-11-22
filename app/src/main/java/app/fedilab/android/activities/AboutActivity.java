@@ -242,20 +242,20 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "toot.fedilab.app", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "framapiaf.org", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "oot.fedilab.app", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            SpannableString name = new SpannableString("@fedilab@framapiaf.org");
+            SpannableString name = new SpannableString("@fedilab@toot.fedilab.app");
             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
             txt_developers.setText(name);
             txt_developers.setVisibility(View.VISIBLE);
             txt_developers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Helper.openBrowser(AboutActivity.this, "https://framapiaf.org/@fedilab");
+                    Helper.openBrowser(AboutActivity.this, "https://toot.fedilab.app/@fedilab");
                 }
             });
             name = new SpannableString("@mmarif@mastodon.social");
@@ -314,7 +314,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
 
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
+    public void onRetrieveRemoteAccount(Results results, boolean developerAccount) {
         if (results == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;

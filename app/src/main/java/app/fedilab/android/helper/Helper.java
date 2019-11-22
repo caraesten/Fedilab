@@ -337,6 +337,7 @@ public class Helper {
     public static final String SET_TIME_TO = "set_time_to";
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push_new";
+    public static final String SET_POPUP_RELEASE_NOTES = "set_popup_push_release_notes";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
     public static final String SET_MED_DESC_TIMEOUT = "set_med_desc_timeout";
     public static final String SET_MEDIA_URLS = "set_media_urls";
