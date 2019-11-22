@@ -128,20 +128,20 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d j</string>
     <plurals name="date_seconds_polls">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="one">%d seconde</item>
+        <item quantity="other">%d secondes</item>
     </plurals>
     <plurals name="date_minutes_polls">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d heure</item>
+        <item quantity="other">%d heures</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Avertissement</string>
