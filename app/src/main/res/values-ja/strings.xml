@@ -127,6 +127,18 @@
     <string name="date_minutes">%d 分</string>
     <string name="date_hours">%d 時間</string>
     <string name="date_day">%d 日</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
     <string name="toot_placeholder">今なにしてる？</string>
@@ -1009,7 +1021,7 @@
     <string name="background_status_title">投稿</string>
     <string name="background_status">タイムライン上の投稿の背景色</string>
     <string name="reset_color">色をリセット</string>
-    <string name="clik_reset">ここをタップして色のカスタマイズを初期化する</string>
+    <string name="clik_reset">ここをタップしてすべての色のカスタマイズをリセットします</string>
     <string name="reset">リセット</string>
     <string name="icons_color_title">アイコン</string>
     <string name="icons_color">投稿下部にあるアイコンの色</string>
@@ -1036,7 +1048,7 @@
     <string name="import_theme">テーマのインポート</string>
     <string name="import_theme_title">ここをタップして前回エクスポートしたテーマをインポート</string>
     <string name="export_theme">テーマのエクスポート</string>
-    <string name="export_theme_title">ここをタップして現在のテーマをエクスポート</string>
+    <string name="export_theme_title">ここをタップして現在のテーマをエクスポートします</string>
     <string name="theme_file_error">テーマファイルの選択中にエラーが発生しました</string>
     <string name="export_bookmarks">そのインスタンスにブックマークをエクスポート</string>
     <string name="import_bookmarks">このインスタンスからブックマークをインポート</string>
@@ -1044,4 +1056,5 @@
     <string name="status_count">Status count</string>
     <string name="instance_count">Instance count</string>
     <string name="blocked">ブロック済み</string>
+    <string name="poll_finish_in">End in %s</string>
 </resources>
