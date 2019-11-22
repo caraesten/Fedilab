@@ -1072,4 +1072,6 @@
     <string name="instance_count">Instantzia kopurua</string>
     <string name="blocked">Blokeatuta</string>
     <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
 </resources>
