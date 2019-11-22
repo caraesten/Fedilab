@@ -1001,7 +1001,7 @@
     <string name="join_peertube">Peertubeに参加</string>
     <string name="agreement_check_peertube">私は16歳以上で、インスタンスの %1$s に同意します。</string>
     <string name="link_color_title">リンク</string>
-    <string name="link_color">メッセージ内のリンク(URL、メンション、タグなど)の色を変更する</string>
+    <string name="link_color">メッセージ内のリンク(URL、メンション、タグなど)の色を変更します</string>
     <string name="boost_header_color_title">ブーストヘッダー</string>
     <string name="displayname_title">メッセージ一番上の表示名の色を変更します</string>
     <string name="username_title">メッセージ一番上のユーザー名の色を変更します</string>
@@ -1012,7 +1012,7 @@
     <string name="clik_reset">ここをタップして色のカスタマイズを初期化する</string>
     <string name="reset">リセット</string>
     <string name="icons_color_title">アイコン</string>
-    <string name="icons_color">タイムラインの下部アイコンの色</string>
+    <string name="icons_color">投稿下部にあるアイコンの色</string>
     <string name="pin_tag">このタグをピン留め</string>
     <string name="logo_of_the_instance">インスタンスのロゴ</string>
     <string name="edit_profile">プロフィールを編集</string>
@@ -1020,12 +1020,12 @@
     <string name="translation">翻訳</string>
     <string name="image_preview">画像のプレビュー</string>
     <string name="text_color_title">テキストの色</string>
-    <string name="text_color">Change the text color in pots</string>
+    <string name="text_color">投稿内のテキストの色を変更します</string>
     <string name="apply_changes">変更を適用</string>
     <string name="restart_message">変更を反映するにはアプリケーションを再起動する必要があります。</string>
     <string name="restart">再起動</string>
     <string name="pref_custom_theme">カスタムテーマの使用</string>
-    <string name="pref_custom_theme_summary">上で選択したテーマの色の上書きを許可する</string>
+    <string name="pref_custom_theme_summary">上で選択したテーマの色の上書きを許可します</string>
     <string name="theming">テーマ設定</string>
     <string name="store_before">Store before</string>
     <string name="data_export_theme">テーマをエクスポートしました</string>
