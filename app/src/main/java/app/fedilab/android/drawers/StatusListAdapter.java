@@ -4032,38 +4032,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    if (statuses.get(i).isFocused()) {
-                        status.setFocused(true);
-                    }
-                    if (statuses.get(i).isFetchMore()) {
-                        status.setFetchMore(true);
-                    }
-                    if (statuses.get(i).isShortReply()) {
-                        status.setShortReply(true);
-                    }
-                    if (statuses.get(i).getQuickReplyContent() != null) {
-                        status.setQuickReplyContent(statuses.get(i).getQuickReplyContent());
-                    }
-                    if (statuses.get(i).getQuickReplyPrivacy() != null) {
-                        status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
-                    }
-                    if (statuses.get(i).isShowTopLine()) {
-                        status.setShowTopLine(true);
-                    }
-                    if (statuses.get(i).isShowBottomLine()) {
-                        status.setShowBottomLine(true);
-                    }
-                    statuses.set(i, status);
+                    statuses.get(i).setFavourites_count(status.getFavourites_count());
+                    statuses.get(i).setReblogs_count(status.getReblogs_count());
+                    statuses.get(i).setFavourited(status.isFavourited());
+                    statuses.get(i).setReblogged(status.isReblogged());
+                    statuses.get(i).setReplies_count(status.getReplies_count());
                     statusListAdapter.notifyItemChanged(i);
-                    /*if( mRecyclerView != null) {
-                        int finalI = i;
-                        mRecyclerView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                statusListAdapter.notifyItemChanged(finalI);
-                            }
-                        });
-                    }*/
                 } catch (Exception ignored) {
                 }
                 break;
@@ -4078,38 +4052,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    if (statuses.get(i).isFocused()) {
-                        status.setFocused(true);
-                    }
-                    if (statuses.get(i).isFetchMore()) {
-                        status.setFetchMore(true);
-                    }
-                    if (statuses.get(i).isShortReply()) {
-                        status.setShortReply(true);
-                    }
-                    if (statuses.get(i).getQuickReplyContent() != null) {
-                        status.setQuickReplyContent(statuses.get(i).getQuickReplyContent());
-                    }
-                    if (statuses.get(i).getQuickReplyPrivacy() != null) {
-                        status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
-                    }
-                    if (statuses.get(i).isShowTopLine()) {
-                        status.setShowTopLine(true);
-                    }
-                    if (statuses.get(i).isShowBottomLine()) {
-                        status.setShowBottomLine(true);
-                    }
-                    statuses.set(i, status);
+                    statuses.get(i).setFavourites_count(status.getFavourites_count());
+                    statuses.get(i).setReblogs_count(status.getReblogs_count());
+                    statuses.get(i).setFavourited(status.isFavourited());
+                    statuses.get(i).setReblogged(status.isReblogged());
+                    statuses.get(i).setReplies_count(status.getReplies_count());
                     statusListAdapter.notifyItemChanged(i);
-                    /*if( mRecyclerView != null) {
-                        int finalI = i;
-                        mRecyclerView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                statusListAdapter.notifyItemChanged(finalI);
-                            }
-                        });
-                    }*/
                 } catch (Exception ignored) {
                 }
                 break;
