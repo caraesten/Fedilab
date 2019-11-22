@@ -127,6 +127,22 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d o</string>
     <string name="date_day">%d g</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Attenzione</string>
     <string name="toot_placeholder">Cosa ti passa per la mente?</string>
@@ -1056,4 +1072,5 @@
     <string name="status_count">Numero di stati</string>
     <string name="instance_count">Numero di istanze</string>
     <string name="blocked">Bloccati</string>
+    <string name="poll_finish_in">End in %s</string>
 </resources>
