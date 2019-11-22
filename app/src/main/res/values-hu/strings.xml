@@ -127,6 +127,22 @@
     <string name="date_minutes">%d p</string>
     <string name="date_hours">%d ó</string>
     <string name="date_day">%d n</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Figyelmeztetés</string>
     <string name="toot_placeholder">Mi jár a fejedben?</string>
@@ -1054,4 +1070,5 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="status_count">Status count</string>
     <string name="instance_count">Instance count</string>
     <string name="blocked">Blocked</string>
+    <string name="poll_finish_in">End in %s</string>
 </resources>
