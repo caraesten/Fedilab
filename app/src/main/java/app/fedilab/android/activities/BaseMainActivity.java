@@ -2098,6 +2098,10 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         if( dialogReleaseNoteView != null && developers != null && developers.size() > 0){
             if( !relationship.isFollowing()){
+                TextView dev_follow_title = dialogReleaseNoteView.findViewById(R.id.dev_follow_title);
+                if( dev_follow_title != null){
+                    dev_follow_title.setVisibility(View.VISIBLE);
+                }
                 ExpandableHeightListView lv_developers = dialogReleaseNoteView.findViewById(R.id.lv_developers);
                 lv_developers.setExpanded(true);
                 AccountSearchDevAdapter accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(developers);
