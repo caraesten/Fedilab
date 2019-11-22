@@ -352,7 +352,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             new TimelineCacheDAO(context, db).remove(refreshedStatus.getId());
             new PostActionAsyncTask(context, API.StatusAction.UNSTATUS, refreshedStatus.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        statusListAdapter.notifyStatusWithActionChanged(refreshedStatus);
+        statusListAdapter.notifyStatusChanged(refreshedStatus);
     }
 
     @Override
@@ -4045,25 +4045,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status) {
-        if (status == null)
-            return;
-        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
-            //noinspection ConstantConditions
-            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                try {
-                    statuses.get(i).setFavourites_count(status.getFavourites_count());
-                    statuses.get(i).setReblogs_count(status.getReblogs_count());
-                    statuses.get(i).setFavourited(status.isFavourited());
-                    statuses.get(i).setReblogged(status.isReblogged());
-                    statuses.get(i).setReplies_count(status.getReplies_count());
-                    statusListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) {
-                }
-                break;
-            }
-        }
-    }
 
     @Override
     public void onRetrieveImage(Status status, boolean fromTranslation) {

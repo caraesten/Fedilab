@@ -1411,18 +1411,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status) {
-        for (int i = 0; i < pixelfedListAdapter.getItemCount(); i++) {
-            //noinspection ConstantConditions
-            if (pixelfedListAdapter.getItemAt(i) != null && pixelfedListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                try {
-                    statuses.set(i, status);
-                    pixelfedListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) {
-                }
-            }
-        }
-    }
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {

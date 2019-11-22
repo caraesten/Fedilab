@@ -119,7 +119,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     assert b != null;
                     Status status = b.getParcelable("status");
                     if (status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(status);
+                        statusListAdapter.notifyStatusChanged(status);
                     }
                 }
             };

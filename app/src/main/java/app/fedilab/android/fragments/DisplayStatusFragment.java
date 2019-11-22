@@ -257,7 +257,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Status status = b.getParcelable("status");
                     String delete_statuses_from = b.getString("delete_statuses_for_id", null);
                     if (status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(status);
+                        statusListAdapter.notifyStatusChanged(status);
                     } else if (delete_statuses_from != null) {
                         List<Status> statusesToRemove = new ArrayList<>();
                         for (Status status_temp : statuses) {
