@@ -247,6 +247,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             style = R.style.Dialog;
         }
 
+        int theme_text_color = prefs.getInt("theme_text_color", -1);
+        if (holder.notification_status_content != null && theme_text_color != -1) {
+            holder.notification_status_content.setTextColor(theme_text_color);
+            holder.status_spoiler.setTextColor(theme_text_color);
+        }
 
         int reblogColor = prefs.getInt("theme_statuses_color", -1);
         if (holder.main_linear_container != null && reblogColor != -1) {
