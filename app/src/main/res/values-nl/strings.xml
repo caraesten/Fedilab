@@ -1072,4 +1072,6 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="instance_count">Instance count</string>
     <string name="blocked">Blocked</string>
     <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
 </resources>
