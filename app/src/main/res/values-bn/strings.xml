@@ -169,19 +169,19 @@
         <item>শুধুমাত্র উল্লিখিত ব্যবহারকারীদের জন্য পোস্ট করুন</item>
     </string-array>
     <string name="no_draft">কোন খসড়া নেই!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Tap on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="choose_toot">একটি টুট চয়ন করুন</string>
+    <string name="choose_accounts">একটি অ্যাকাউন্ট চয়ন করুন</string>
+    <string name="select_accounts">কিছু অ্যাকাউন্টগুলি নির্বাচন করুন</string>
+    <string name="remove_draft">খসড়া সরান?</string>
+    <string name="show_reply">আসল টুটটি প্রদর্শন করতে বোতামে আলতো চাপুন</string>
+    <string name="upload_form_description">দৃষ্টি প্রতিবন্ধীদের জন্য বর্ণনা করুন</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">কোন বর্ণনা নাই!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
-    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_vesrion">রিলিজ %1$s</string>
+    <string name="about_developer">বিকাশকারী:</string>
+    <string name="about_license">লাইসেন্স: </string>
+    <string name="about_license_action">জিএনইউ জিপিএল ভার্সন ৩</string>
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
@@ -245,8 +245,8 @@
     <string name="toast_unreblog">The toot is no longer boosted!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_report">টুটটির প্রতিবেদন করা হয়েছে!</string>
+    <string name="toast_unstatus">টুটটি মুছে ফেলা হয়েছে!</string>
     <string name="toast_pin">The toot was pinned!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
