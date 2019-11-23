@@ -114,40 +114,40 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>এই টুট টি মুছে ফেলবেন?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>এই টুট টি মুছে &amp; পুনঃসংশ্লিষ্ট করবেন?</item>
     </string-array>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="bookmarks">বুকমার্কগুলি</string>
+    <string name="bookmark_add">বুকমার্ক তালিকা এ যোগ করুন</string>
+    <string name="bookmark_remove">বুকমার্ক মুছে ফেলুন</string>
+    <string name="bookmarks_empty">প্রদর্শনের জন্য কোনও বুকমার্ক নেই</string>
+    <string name="status_bookmarked">বুকমার্কগুলিতে স্ট্যাটাস যুক্ত হয়েছে!</string>
+    <string name="status_unbookmarked">বুকমার্কগুলি থেকে স্থিতি সরানো হয়েছিল!</string>
     <!-- Date -->
-    <string name="date_seconds">%d s</string>
-    <string name="date_minutes">%d m</string>
-    <string name="date_hours">%d h</string>
-    <string name="date_day">%d d</string>
+    <string name="date_seconds">%d সেকেন্ড</string>
+    <string name="date_minutes">%d মিনিট</string>
+    <string name="date_hours">%d ঘন্টা</string>
+    <string name="date_day">%d দিন</string>
     <plurals name="date_seconds_polls">
         <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d সেকেন্ড</item>
     </plurals>
     <plurals name="date_minutes_polls">
         <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="other">%d মিনিট</item>
     </plurals>
     <plurals name="date_hours_polls">
         <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="other">%d ঘণ্টা</item>
     </plurals>
     <plurals name="date_day_polls">
         <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="other">%d দিন</item>
     </plurals>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
-    <string name="toot_placeholder">What is on your mind?</string>
-    <string name="toot_it">TOOT!</string>
-    <string name="queet_it">QUEET!</string>
+    <string name="toot_cw_placeholder">সতর্কতা</string>
+    <string name="toot_placeholder">আপনার মনে কি আছে?</string>
+    <string name="toot_it">টুট!</string>
+    <string name="queet_it">ক্যুইট!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Write a toot</string>
     <string name="toot_title_reply">Reply to a toot</string>
