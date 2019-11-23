@@ -1052,7 +1052,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="pref_custom_theme">Utiliser un thème personnalisé</string>
     <string name="pref_custom_theme_summary">Permettre de modifier les couleurs du thème sélectionné ci-dessus</string>
     <string name="theming">Thème</string>
-    <string name="store_before">Store before</string>
+    <string name="store_before">Sauvegarder au préalable</string>
     <string name="data_export_theme">Le thème a été exporté</string>
     <string name="data_export_theme_success">Le thème a été exporté avec succès en CSV</string>
     <string name="pref_colored_status_bar_summary">Appliquer la couleur primaire à la barre d\'état</string>
@@ -1070,7 +1070,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="instance_count">Instance count</string>
     <string name="blocked">Bloqué</string>
     <string name="poll_finish_in">Fin dans %s</string>
-    <string name="release_note_title">What\'s new in %s</string>
+    <string name="release_note_title">Quoi de neuf dans %s</string>
     <string name="follow_account_update">Vous pouvez suivre mon compte pour les mises à jour</string>
-    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="no_instance_reccord">Cette instance n’est pas disponible sur https://instances.social</string>
 </resources>
