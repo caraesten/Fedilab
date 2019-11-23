@@ -335,7 +335,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
         if (account.isLocked()) {
-            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
+            Drawable img = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_locked_account);
             assert img != null;
             img.setBounds(0, 0, (int) (16 * scale + 0.5f), (int) (16 * scale + 0.5f));
             account_un.setCompoundDrawables(null, null, img, null);
@@ -343,9 +343,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_un.setCompoundDrawables(null, null, null, null);
         }
         //Peertube account watched by a Mastodon account
-        /*if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
-            account_type.setVisibility(View.VISIBLE);
-        }*/
         //Bot account
         if (account.isBot()) {
             account_bot.setVisibility(View.VISIBLE);

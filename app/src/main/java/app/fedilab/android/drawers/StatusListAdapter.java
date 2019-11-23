@@ -2072,11 +2072,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.spark_button_reblog.setVisibility(View.GONE);
                         }
                         break;
-                    case "public":
-                    case "unlisted":
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
-                        break;
                     default:
                         holder.status_reblog_count.setVisibility(View.VISIBLE);
                         holder.spark_button_reblog.setVisibility(View.VISIBLE);
