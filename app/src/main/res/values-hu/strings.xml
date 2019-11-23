@@ -1072,4 +1072,5 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="poll_finish_in">End in %s</string>
     <string name="release_note_title">What\'s new in %s</string>
     <string name="follow_account_update">You can follow my account for updates</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
 </resources>
