@@ -1299,7 +1299,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
             int lastReleaseNoteRead = sharedpreferences.getInt(Helper.SET_POPUP_RELEASE_NOTES, 0);
             int versionCode = BuildConfig.VERSION_CODE;
-            if( lastReleaseNoteRead != versionCode  ){ //Need to push release notes
+            if( lastReleaseNoteRead != versionCode ){ //Need to push release notes
                 if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ) {
                     new RetrieveRemoteDataAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
