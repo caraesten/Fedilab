@@ -1072,4 +1072,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="poll_finish_in">Fin dans %s</string>
     <string name="release_note_title">What\'s new in %s</string>
     <string name="follow_account_update">Vous pouvez suivre mon compte pour les mises à jour</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
 </resources>
