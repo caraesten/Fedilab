@@ -255,7 +255,7 @@ public class AccountDAO {
     public List<Account> getAllAccountCrossAction() {
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE' AND " + Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE' AND " + Sqlite.COL_SOCIAL + " != 'FRIENDICA' AND "  + Sqlite.COL_SOCIAL + " != 'GNU' AND " +Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListUser(c);
         } catch (Exception e) {
             return null;

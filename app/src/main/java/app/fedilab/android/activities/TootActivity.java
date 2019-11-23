@@ -340,6 +340,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (status != null) {
                     status.setQuickReplyContent(s.toString());
                 }

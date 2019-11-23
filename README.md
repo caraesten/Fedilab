@@ -40,9 +40,9 @@
 <img src="./images/device-2019-02-02-114910.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-Lead developer: [framapiaf.org/@fedilab](https://framapiaf.org/@fedilab)
+Lead developer: [toot.fedilab.app/@fedilab](https://toot.fedilab.app/@fedilab)
 <br>
-Developer: [mastodon.social/@kasun](https://mastodon.social/@kasun)
+Developer: [toot.fedilab.app/@kasun](https://toot.fedilab.app/@kasun)
 
 ## Backers
 

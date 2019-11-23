@@ -3355,7 +3355,7 @@ public class API {
         apiResponse = new APIResponse();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://framapiaf.org/api/v1/timelines/tag/fedilab", 10, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get("https://toot.fedilab.app/api/v1/timelines/tag/fedilab", 10, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             List<Status> tmp_status = parseStatuses(context, new JSONArray(response));

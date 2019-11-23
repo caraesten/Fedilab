@@ -2525,8 +2525,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         break;
                                 }
                             }
-                            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                                holder.quick_reply_text.addTextChangedListener(textWatcher);
+                            holder.quick_reply_text.addTextChangedListener(textWatcher);
+
 
                         } else {
                             status.setShortReply(false);
@@ -3836,19 +3836,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
+
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
-        String tootContent;
         if (toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0)
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(social, toot_content, toot_cw_content) < split_toot_size)) {
-            tootContent = toot_content.getText().toString().trim();
             createAndSendToot(status, content_type, userId, instance);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            tootContent = splitToot.get(0);
             stepSpliToot = 1;
             int style;
             if (theme == Helper.THEME_DARK) {

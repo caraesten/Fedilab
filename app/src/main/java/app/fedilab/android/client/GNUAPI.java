@@ -396,16 +396,24 @@ public class GNUAPI {
 
         Account account = new Account();
         try {
-            account.setId(resobj.get("id").toString());
-            if (resobj.has("ostatus_uri"))
+            if( resobj.has("id_str")){
+                account.setId(resobj.getString("id_str"));
+            }else{
+                account.setId(resobj.get("id").toString());
+            }
+            if (resobj.has("ostatus_uri")) {
                 account.setUuid(resobj.get("ostatus_uri").toString());
-            else
-                account.setUuid(resobj.get("id").toString());
-            account.setUsername(resobj.get("screen_name").toString());
-            account.setAcct(resobj.get("screen_name").toString());
-            account.setDisplay_name(resobj.get("name").toString());
+            }else {
+                if( resobj.has("id_str")){
+                    account.setUuid(resobj.getString("id_str"));
+                }else{
+                    account.setUuid(resobj.get("id").toString());
+                }
+            }
+            account.setUsername(resobj.getString("screen_name"));
+            account.setAcct(resobj.getString("screen_name"));
+            account.setDisplay_name(resobj.getString("name"));
             account.setLocked(Boolean.parseBoolean(resobj.get("protected").toString()));
-            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
             account.setFollowing_count(Integer.valueOf(resobj.get("friends_count").toString()));
             account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
@@ -428,8 +436,8 @@ public class GNUAPI {
             else
                 account.setSocial("GNU");
             account.setEmojis(new ArrayList<>());
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
+            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+        } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
         return account;
@@ -1386,13 +1394,7 @@ public class GNUAPI {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1632,13 +1634,7 @@ public class GNUAPI {
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -1954,11 +1950,7 @@ public class GNUAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
             e.printStackTrace();
         }
         return actionCode;
@@ -2025,13 +2017,7 @@ public class GNUAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -2121,15 +2107,16 @@ public class GNUAPI {
             apiResponse.setMax_id(httpsConnection.getMax_id());
             if (type == DisplayNotificationsFragment.Type.FOLLOW) {
                 List<Account> accounts = parseAccountResponse(new JSONArray(response));
-                if (accounts != null)
+                if (accounts != null) {
                     for (Account st : accounts) {
                         Notification notification = new Notification();
                         notification.setType(stringType);
                         notification.setId(st.getId());
                         notification.setStatus(null);
-                        notification.setAccount(account);
+                        notification.setAccount(st);
                         notifications.add(notification);
                     }
+                }
             } else {
                 List<Status> statuses = parseStatuses(context, new JSONArray(response));
                 if (statuses != null)
@@ -2146,13 +2133,7 @@ public class GNUAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setNotifications(notifications);
@@ -2257,13 +2238,7 @@ public class GNUAPI {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
