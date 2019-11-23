@@ -85,7 +85,7 @@
     <string name="live_notif">লাইভ বিজ্ঞপ্তিগুলি</string>
     <!-- Status -->
     <string name="no_status">প্রদর্শনের জন্য কোন টুট নেই</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_by">%1$s দ্বারা সমর্থন</string>
     <string name="favourite_add">এই টুটটি আপনার পছন্দসইয়ের সাথে যুক্ত করবেন?</string>
     <string name="favourite_remove">আপনার পছন্দসই থেকে এই টুট সরাবেন?</string>
     <string name="reblog_add">এই টুট টি সমর্থন করবেন?</string>
