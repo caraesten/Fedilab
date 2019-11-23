@@ -148,27 +148,27 @@
     <string name="toot_placeholder">আপনার মনে কি আছে?</string>
     <string name="toot_it">টুট!</string>
     <string name="queet_it">ক্যুইট!</string>
-    <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="cw">সঃবঃ</string>
+    <string name="toot_title">একটি টুট লিখুন</string>
+    <string name="toot_title_reply">একটি টুট এ উত্তর দিন</string>
+    <string name="queet_title">একটি ক্যুইট লিখুন</string>
+    <string name="queet_title_reply">একটি ক্যুইট এ উত্তর দিন</string>
+    <string name="toot_select_image">একটি মিডিয়া নির্বাচন করুন</string>
+    <string name="toot_select_image_error">মিডিয়া নির্বাচন করার সময় একটি ত্রুটি ঘটেছে!</string>
+    <string name="toot_delete_media">এই মিডিয়া মুছবেন?</string>
+    <string name="toot_error_no_content">আপনার টুট ফাঁকা!</string>
+    <string name="toot_visibility_tilte">টুটের দৃশ্যমানতা</string>
+    <string name="toots_visibility_tilte">ডিফল্টরূপে টুটগুলির দৃশ্যমানতা: </string>
+    <string name="toot_sent">টুট পাঠানো হয়েছে!</string>
+    <string name="toot_reply_content_title">আপনি এই টুটের উত্তর দিচ্ছেন:</string>
+    <string name="toot_sensitive">সংবেদনশীল কন্টেন্ট?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>জনসাধারণের টাইমলাইনে পোস্ট করুন</item>
+        <item>জনসাধারণের টাইমলাইনে পোস্ট করবেন না</item>
+        <item>শুধুমাত্র অনুসরণকারীদের পোস্ট করুন</item>
+        <item>শুধুমাত্র উল্লিখিত ব্যবহারকারীদের জন্য পোস্ট করুন</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
+    <string name="no_draft">কোন খসড়া নেই!</string>
     <string name="choose_toot">Choose a toot</string>
     <string name="choose_accounts">Choose an account</string>
     <string name="select_accounts">Select some accounts</string>
