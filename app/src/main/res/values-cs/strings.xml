@@ -126,6 +126,30 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="few">%d seconds</item>
+        <item quantity="many">%d seconds</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d hour</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d day</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Varování</string>
     <string name="toot_placeholder">Co se vám honí hlavou?</string>
@@ -1061,4 +1085,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="status_count">Status count</string>
     <string name="instance_count">Instance count</string>
     <string name="blocked">Blocked</string>
+    <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
 </resources>
