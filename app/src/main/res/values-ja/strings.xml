@@ -308,6 +308,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>いいえ</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">あなたのAPIキーを入力するか、Yandex向けに空欄にすることもできます</string>
     <string-array name="settings_theme">
