@@ -310,12 +310,6 @@
     <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
     <string name="expand_cw">Αυτόματη επέκταση της Προειδοποίησης Περιεχομένου</string>
     <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Καθόλου</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Το API κλειδί σου· μπορείς να το αφήσεις κενό για το Yandex</string>
     <string-array name="settings_theme">
         <item>Σκοτεινό</item>
