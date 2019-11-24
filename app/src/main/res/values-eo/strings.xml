@@ -310,12 +310,6 @@
     <string name="use_javascript">Ebligi Ĝavoskripton</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Permesi tria-partiaj kuketojn</string>
-    <string-array name="settings_translation">
-        <item>Jandekso</item>
-        <item>DeepL</item>
-        <item>Ne</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Malluma</item>
