@@ -58,6 +58,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -173,10 +174,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             } else if (uriString.startsWith("file://")) {
                 filename = myFile.getName();
             }
-            if (filename != null) {
-                set_upload_file_name.setVisibility(View.VISIBLE);
-                set_upload_file_name.setText(filename);
+            if( filename == null){
+                filename = new Date().toString();
             }
+            set_upload_file_name.setVisibility(View.VISIBLE);
+            set_upload_file_name.setText(filename);
 
         }
     }
