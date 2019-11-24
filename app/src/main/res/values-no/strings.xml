@@ -310,12 +310,6 @@
     <string name="use_javascript">Aktiver Javascript</string>
     <string name="expand_cw">Utvid cw automatisk</string>
     <string name="use_cookies">Tillat cookies fra tredjeparter</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Nei</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">API-nøkkel, du kan la denne stå tom dersom Yandex benyttes</string>
     <string-array name="settings_theme">
         <item>Mørkt</item>
