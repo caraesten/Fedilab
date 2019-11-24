@@ -310,12 +310,6 @@
     <string name="use_javascript">Activar javascript</string>
     <string name="expand_cw">Expandir automáticamente CW</string>
     <string name="use_cookies">Permitir testemuños de terceiros</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeppL</item>
-        <item>Non</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">A súa chave API, pode deixala en branco para Yandex</string>
     <string-array name="settings_theme">
         <item>Escuro</item>
