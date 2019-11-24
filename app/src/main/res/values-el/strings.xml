@@ -314,6 +314,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Καθόλου</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Το API κλειδί σου· μπορείς να το αφήσεις κενό για το Yandex</string>
     <string-array name="settings_theme">
