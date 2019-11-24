@@ -314,6 +314,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Nej</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Din API-nyckel, lämna blankt för Yandex</string>
     <string-array name="settings_theme">
