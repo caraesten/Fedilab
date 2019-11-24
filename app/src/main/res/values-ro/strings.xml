@@ -316,12 +316,6 @@
     <string name="use_javascript">Activează Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Permite cookies terțiare</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Nu</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Dark</item>
