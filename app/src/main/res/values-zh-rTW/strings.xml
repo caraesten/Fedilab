@@ -304,12 +304,6 @@
     <string name="use_javascript">啟用 Javascript</string>
     <string name="expand_cw">自動展開 cw</string>
     <string name="use_cookies">允許第三方 cookies</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>否</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">您的 API 金鑰，若為 Yandex 則可留空</string>
     <string-array name="settings_theme">
         <item>暗</item>
