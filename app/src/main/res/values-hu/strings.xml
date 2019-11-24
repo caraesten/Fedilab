@@ -310,12 +310,6 @@
     <string name="use_javascript">Javascript engedélyezése</string>
     <string name="expand_cw">cw automatikus kibontása</string>
     <string name="use_cookies">Harmadik féltől származó sütik engedélyezése</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Nem</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">A te API-kulcsod (Yandex esetén üresen hagyhatja)</string>
     <string-array name="settings_theme">
         <item>Sötét</item>
