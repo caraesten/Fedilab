@@ -310,12 +310,6 @@
     <string name="use_javascript">जावास्क्रिप्ट चालू करें</string>
     <string name="expand_cw">स्वतः cw खोलें</string>
     <string name="use_cookies">तीसरी पार्टी कुकीज़ को स्वीकारें</string>
-    <string-array name="settings_translation">
-        <item>यैंडैक्स</item>
-        <item>डीपएल</item>
-        <item>नहीं</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">आपकी एपीआई कुंजी, आप इसे यैंडेक्स के लिये खाली छोड़ सकते हैं</string>
     <string-array name="settings_theme">
         <item>साँवला</item>
