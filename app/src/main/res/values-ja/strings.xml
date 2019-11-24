@@ -304,12 +304,6 @@
     <string name="use_javascript">Javascript を有効にする</string>
     <string name="expand_cw">CWを自動的に展開する</string>
     <string name="use_cookies">サードパーティのCookieを許可する</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>いいえ</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">あなたのAPIキーを入力するか、Yandex向けに空欄にすることもできます</string>
     <string-array name="settings_theme">
         <item>ダーク</item>
