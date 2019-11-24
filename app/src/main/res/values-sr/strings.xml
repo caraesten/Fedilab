@@ -316,12 +316,6 @@
     <string name="use_javascript">Омогућите JavaScript</string>
     <string name="expand_cw">Аутоматски приказуј осетљиве садржаје</string>
     <string name="use_cookies">Дозволите независне колачиће</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Не</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Ваш API кључ, можете оставити празно за Yandex</string>
     <string-array name="settings_theme">
         <item>Тамна</item>
