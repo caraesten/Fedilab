@@ -713,7 +713,7 @@ public class PeertubeAPI {
     }
 
     /***
-     * Verifiy credential of the authenticated user *synchronously*
+     * Verifiy PeertubeInformation of the authenticated user *synchronously*
      * @return Account
      */
     public PeertubeInformation getPeertubeInformation() throws HttpsConnection.HttpsConnectionException {
@@ -791,13 +791,7 @@ public class PeertubeAPI {
                 peertubeInformation.setTranslations(_translations);
             }
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return peertubeInformation;
@@ -921,15 +915,7 @@ public class PeertubeAPI {
                 refresh_token = resobj.get("refresh_token").toString();
             newValues.put("access_token", token);
             newValues.put("refresh_token", refresh_token);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (HttpsConnection.HttpsConnectionException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException | HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
         }
         return newValues;

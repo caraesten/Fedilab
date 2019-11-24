@@ -639,7 +639,7 @@ public class LoginActivity extends BaseActivity {
                                             String token = resobj.get("access_token").toString();
                                             String refresh_token = null;
                                             if (resobj.has("refresh_token"))
-                                                refresh_token = resobj.get("refresh_token").toString();
+                                                refresh_token = resobj.getString("refresh_token");
                                             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
