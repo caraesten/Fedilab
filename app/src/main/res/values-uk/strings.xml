@@ -322,12 +322,6 @@
     <string name="use_javascript">Увімкнути JavaScript</string>
     <string name="expand_cw">Автоматично розкривати Cw</string>
     <string name="use_cookies">Приймати куки від сторонніх сайтів</string>
-    <string-array name="settings_translation">
-        <item>Яндекс</item>
-        <item>DeepL</item>
-        <item>Ні</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Ваш API ключ, можете залишити пустим для Яндекс</string>
     <string-array name="settings_theme">
         <item>Темна</item>
