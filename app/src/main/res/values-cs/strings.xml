@@ -322,12 +322,6 @@
     <string name="use_javascript">Povolit JavaScript</string>
     <string name="expand_cw">Automaticky ukázat cw</string>
     <string name="use_cookies">Povolit soubory cookie třetích stran</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Ne</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Váš API klíč, prázdné pro Yandex</string>
     <string-array name="settings_theme">
         <item>Tmavé</item>
