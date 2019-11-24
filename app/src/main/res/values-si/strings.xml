@@ -310,12 +310,6 @@
     <string name="use_javascript">Javascript සක්‍රිය කරන්න</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>නැහැ</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">ඔබේ API යතුර, Yandex සඳහා හිස්ව තැබීමට ඔබට හැකි ය</string>
     <string-array name="settings_theme">
         <item>අඳුරු</item>
