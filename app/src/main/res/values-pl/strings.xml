@@ -322,12 +322,6 @@
     <string name="use_javascript">Włącz Javascript</string>
     <string name="expand_cw">Zawsze rozwijaj ostrzeżenia o zawartości</string>
     <string name="use_cookies">Zezwalaj na pliki cookie firm trzecich</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Brak</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Klucz API, można zostawić puste dla Yandex</string>
     <string-array name="settings_theme">
         <item>Ciemny</item>
