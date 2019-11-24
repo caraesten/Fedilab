@@ -310,12 +310,6 @@
     <string name="use_javascript">Gaitu JavaScript</string>
     <string name="expand_cw">Hedatu automatikoki CW</string>
     <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>Ez</item>
-        <item>Ez</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Zure API gakoa, Yandex erabiltzeko hutsik laga dezakezu</string>
     <string-array name="settings_theme">
         <item>Iluna</item>
