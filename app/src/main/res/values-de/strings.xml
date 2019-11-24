@@ -310,12 +310,6 @@
     <string name="use_javascript">Javascript aktivieren</string>
     <string name="expand_cw">Inhaltswarnungen (CWs) automatisch einblenden</string>
     <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Nein</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Dein API-Schlüssel; für Yandex kannst du ihn leer lassen</string>
     <string-array name="settings_theme">
         <item>Dunkel</item>
