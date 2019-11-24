@@ -1074,4 +1074,5 @@
     <string name="poll_finish_in">End in %s</string>
     <string name="release_note_title">Nyheder i %s</string>
     <string name="follow_account_update">Du kan følge min konto for opdateringer</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
 </resources>
