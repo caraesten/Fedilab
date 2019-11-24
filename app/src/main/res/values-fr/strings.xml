@@ -310,12 +310,6 @@
     <string name="use_javascript">Activer Javascript</string>
     <string name="expand_cw">Afficher automatiquement le contenu masqué</string>
     <string name="use_cookies">Autoriser les cookies tiers</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Non</item>
-        <item>Non</item>
-    </string-array>
     <string name="your_api_key">Votre clé API, vous pouvez laisser vide pour Yandex</string>
     <string-array name="settings_theme">
         <item>Sombre</item>
