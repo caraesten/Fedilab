@@ -305,12 +305,6 @@ và %d thông báo khác</item>
     <string name="use_javascript">Bật Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Cho phép cookie của bên thứ ba</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>Không</item>
-        <item>Không</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Dark</item>
