@@ -310,12 +310,6 @@
     <string name="use_javascript">Abilita Javascript</string>
     <string name="expand_cw">Espandi automaticamente cw</string>
     <string name="use_cookies">Permetti cookie di terze-parti</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>No</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">La tua chiave API, puoi lasciarla vuota per Yandex</string>
     <string-array name="settings_theme">
         <item>Scuro</item>
