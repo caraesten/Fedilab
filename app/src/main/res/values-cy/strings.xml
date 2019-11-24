@@ -334,12 +334,6 @@
     <string name="use_javascript">Caniatau Javascript</string>
     <string name="expand_cw">Ehangu cw yn awtomataidd</string>
     <string name="use_cookies">Caniatau cwcis trydydd parti</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Na</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Eich allwedd API, mae modd ei adael yn wag i Yandex</string>
     <string-array name="settings_theme">
         <item>Tywyll</item>
