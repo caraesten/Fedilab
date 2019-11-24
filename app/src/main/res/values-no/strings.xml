@@ -313,6 +313,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Nei</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">API-nøkkel, du kan la denne stå tom dersom Yandex benyttes</string>
     <string-array name="settings_theme">

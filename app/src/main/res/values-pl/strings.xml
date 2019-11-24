@@ -325,6 +325,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Brak</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Klucz API, można zostawić puste dla Yandex</string>
     <string-array name="settings_theme">

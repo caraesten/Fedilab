@@ -313,6 +313,7 @@
         <item>Yandex</item>
         <item>Ez</item>
         <item>Ez</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Zure API gakoa, Yandex erabiltzeko hutsik laga dezakezu</string>
     <string-array name="settings_theme">

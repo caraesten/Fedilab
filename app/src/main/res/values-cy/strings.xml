@@ -337,6 +337,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Na</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Eich allwedd API, mae modd ei adael yn wag i Yandex</string>
     <string-array name="settings_theme">

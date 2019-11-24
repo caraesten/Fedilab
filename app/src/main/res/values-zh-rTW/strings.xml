@@ -307,6 +307,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>否</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">您的 API 金鑰，若為 Yandex 則可留空</string>
     <string-array name="settings_theme">

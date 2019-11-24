@@ -127,16 +127,16 @@
     <string name="date_hours">%d 時間</string>
     <string name="date_day">%d 日</string>
     <plurals name="date_seconds_polls">
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d秒</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="other">%d minutes</item>
+        <item quantity="other">%d分</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="other">%d hours</item>
+        <item quantity="other">%d時間</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="other">%d days</item>
+        <item quantity="other">%d日</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
@@ -307,6 +307,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>いいえ</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">あなたのAPIキーを入力するか、Yandex向けに空欄にすることもできます</string>
     <string-array name="settings_theme">
@@ -1045,7 +1046,7 @@
     <string name="pref_colored_status_bar_title">ステータスバーの色</string>
     <string name="restore_default_theme">デフォルトテーマを復元</string>
     <string name="import_theme">テーマのインポート</string>
-    <string name="import_theme_title">ここをタップして前回エクスポートしたテーマをインポート</string>
+    <string name="import_theme_title">ここをタップして以前エクスポートしたテーマをインポートします</string>
     <string name="export_theme">テーマのエクスポート</string>
     <string name="export_theme_title">ここをタップして現在のテーマをエクスポートします</string>
     <string name="theme_file_error">テーマファイルの選択中にエラーが発生しました</string>

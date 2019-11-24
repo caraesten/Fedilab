@@ -313,6 +313,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Nej</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Din API-nøgle, kan være tom for Yandex</string>
     <string-array name="settings_theme">
@@ -1074,5 +1075,5 @@
     <string name="poll_finish_in">End in %s</string>
     <string name="release_note_title">Nyheder i %s</string>
     <string name="follow_account_update">Du kan følge min konto for opdateringer</string>
-    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="no_instance_reccord">Denne instans er ikke tilgængelig på https://instances.social</string>
 </resources>

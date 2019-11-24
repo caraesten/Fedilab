@@ -313,6 +313,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>නැහැ</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">ඔබේ API යතුර, Yandex සඳහා හිස්ව තැබීමට ඔබට හැකි ය</string>
     <string-array name="settings_theme">

@@ -337,6 +337,7 @@
         <item>يانديكس</item>
         <item>DeepL</item>
         <item>لا</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">مفتاح API، يمكن تركه فارغا لاستخدام ياندكس</string>
     <string-array name="settings_theme">
