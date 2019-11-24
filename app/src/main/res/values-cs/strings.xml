@@ -326,6 +326,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Ne</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Váš API klíč, prázdné pro Yandex</string>
     <string-array name="settings_theme">
