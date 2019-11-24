@@ -326,6 +326,7 @@
         <item>Яндекс</item>
         <item>DeepL</item>
         <item>Ні</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">Ваш API ключ, можете залишити пустим для Яндекс</string>
     <string-array name="settings_theme">
