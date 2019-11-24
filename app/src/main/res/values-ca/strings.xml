@@ -310,12 +310,6 @@
     <string name="use_javascript">Habilita el Javascript</string>
     <string name="expand_cw">Expandir automàticament el ac</string>
     <string name="use_cookies">Permetre galetes de terceres</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>No</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Per a Yandex, pots deixar en blanc la clau de l\'API</string>
     <string-array name="settings_theme">
         <item>Fosc</item>
