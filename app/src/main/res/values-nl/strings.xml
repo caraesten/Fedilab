@@ -310,12 +310,6 @@
     <string name="use_javascript">Javascript toegestaan</string>
     <string name="expand_cw">Automatisch tekstwaarschuwingen (cw) uitklappen</string>
     <string name="use_cookies">Cookies van derden accepteren</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Nee</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Je hoeft geen API-sleutel voor Yandex te gebruiken</string>
     <string-array name="settings_theme">
         <item>Donker</item>
