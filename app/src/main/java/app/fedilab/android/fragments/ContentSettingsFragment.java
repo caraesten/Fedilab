@@ -68,6 +68,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -1819,10 +1820,15 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         //Translators
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
-        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
-                R.array.settings_translation, android.R.layout.simple_spinner_dropdown_item);
-        translation_layout_spinner.setAdapter(adapterTrans);
 
+
+        List<String> translatorsList = Arrays.asList(getResources().getStringArray(R.array.settings_translation));
+        ArrayList<String> trans = new ArrayList<>(translatorsList);
+        trans.add(getString(R.string.no));
+
+        ArrayAdapter<String> adapterTrans = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, trans);
+        translation_layout_spinner.setAdapter(adapterTrans);
         int positionSpinnerTrans;
         switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)) {
             case Helper.TRANS_YANDEX:

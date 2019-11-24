@@ -334,11 +334,10 @@
     <string name="use_cookies">Allow third-party cookies</string>
 
 
-    <string-array name="settings_translation">
+    <string-array name="settings_translation" translatable="false">
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Systran</item>
-        <item>No</item>
     </string-array>
 
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
