@@ -334,12 +334,6 @@
     <string name="use_javascript">تفعيل الجافاسكريبت</string>
     <string name="expand_cw">توسيع نافذة التحذير عن المحتوى تلقائيًا</string>
     <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
-    <string-array name="settings_translation">
-        <item>يانديكس</item>
-        <item>DeepL</item>
-        <item>لا</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">مفتاح API، يمكن تركه فارغا لاستخدام ياندكس</string>
     <string-array name="settings_theme">
         <item>مظلمة</item>
