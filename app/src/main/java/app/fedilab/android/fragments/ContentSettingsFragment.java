@@ -1859,38 +1859,30 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                         case 0:
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null));
+                            editor.commit();
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, ""));
 
                             break;
                         case 1:
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
+                            editor.commit();
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                             break;
                         case 2:
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_SYSTRAN);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, ""));
+                            editor.commit();
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, ""));
                             break;
                         case 3:
                             your_api_key.setVisibility(View.GONE);
                             set_trans_forced.isChecked();
                             editor.putBoolean(Helper.SET_TRANS_FORCED, false);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
-                            editor.apply();
+                            editor.commit();
                             break;
                     }
-                    if (getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(Helper.INTENT_ACTION, Helper.BACK_TO_SETTINGS);
-                    startActivity(intent);
                 } else {
                     countTrans++;
                 }
