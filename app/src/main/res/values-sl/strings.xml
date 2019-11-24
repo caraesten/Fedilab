@@ -322,12 +322,6 @@
     <string name="use_javascript">Omogoči JavaScript</string>
     <string name="expand_cw">Samodejno razširi cw</string>
     <string name="use_cookies">Dovoli tuje piškotke</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Ne</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Tvoj ključ API. Za Yandex je lahko prazen.</string>
     <string-array name="settings_theme">
         <item>Temna</item>
