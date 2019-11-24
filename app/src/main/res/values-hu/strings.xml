@@ -314,6 +314,7 @@
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Nem</item>
+        <item>No</item>
     </string-array>
     <string name="your_api_key">A te API-kulcsod (Yandex esetén üresen hagyhatja)</string>
     <string-array name="settings_theme">
