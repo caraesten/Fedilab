@@ -322,12 +322,6 @@
     <string name="use_javascript">Включить Javascript</string>
     <string name="expand_cw">Автоматически раскрывать 18+</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
-    <string-array name="settings_translation">
-        <item>Яндекс</item>
-        <item>DeepL</item>
-        <item>Нет</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Ваш ключ API (для Яндекса можно оставить пустым)</string>
     <string-array name="settings_theme">
         <item>Темная</item>
