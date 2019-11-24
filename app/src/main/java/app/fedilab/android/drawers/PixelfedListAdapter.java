@@ -1065,6 +1065,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             et = MyTransL.translatorEngine.YANDEX;
         } else if (trans == Helper.TRANS_DEEPL) {
             et = MyTransL.translatorEngine.DEEPL;
+        }else if (trans == Helper.TRANS_SYSTRAN) {
+            et = MyTransL.translatorEngine.SYSTRAN;
         }
         final MyTransL myTransL = MyTransL.getInstance(et);
         myTransL.setObfuscation(true);
@@ -1074,6 +1076,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         } else if (trans == Helper.TRANS_DEEPL) {
             api_key = sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, "");
             myTransL.setDeeplAPIKey(api_key);
+        } else if (trans == Helper.TRANS_SYSTRAN) {
+            api_key = sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, "");
+            myTransL.setSystranAPIKey(api_key);
         }
 
 

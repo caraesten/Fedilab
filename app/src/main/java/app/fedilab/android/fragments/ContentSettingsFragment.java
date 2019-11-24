@@ -716,6 +716,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     store = Helper.SET_YANDEX_API_KEY;
                 else if (translatore == Helper.TRANS_DEEPL)
                     store = Helper.SET_DEEPL_API_KEY;
+                else if (translatore == Helper.TRANS_SYSTRAN)
+                    store = Helper.SET_SYSTRAN_API_KEY;
                 if (store != null)
                     if (s != null && s.length() > 0)
                         editor.putString(store, s.toString().trim());
@@ -1833,8 +1835,13 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 your_api_key.setVisibility(View.VISIBLE);
                 your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                 break;
-            case Helper.TRANS_NONE:
+            case Helper.TRANS_SYSTRAN:
                 positionSpinnerTrans = 2;
+                your_api_key.setVisibility(View.VISIBLE);
+                your_api_key.setText(sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, ""));
+                break;
+            case Helper.TRANS_NONE:
+                positionSpinnerTrans = 3;
                 your_api_key.setVisibility(View.GONE);
                 break;
             default:
@@ -1853,17 +1860,25 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
                             editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
+                            if (sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null) != null)
+                                your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null));
+
                             break;
                         case 1:
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
                             editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null));
+                            if (sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
+                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                             break;
                         case 2:
+                            your_api_key.setVisibility(View.VISIBLE);
+                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_SYSTRAN);
+                            editor.apply();
+                            if (sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, null) != null)
+                                your_api_key.setText(sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, ""));
+                            break;
+                        case 3:
                             your_api_key.setVisibility(View.GONE);
                             set_trans_forced.isChecked();
                             editor.putBoolean(Helper.SET_TRANS_FORCED, false);

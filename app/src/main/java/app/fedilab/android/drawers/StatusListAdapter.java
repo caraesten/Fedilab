@@ -4073,13 +4073,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int trans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         MyTransL.translatorEngine et = MyTransL.translatorEngine.YANDEX;
-        String api_key = null;
+        String api_key;
 
 
         if (trans == Helper.TRANS_YANDEX) {
             et = MyTransL.translatorEngine.YANDEX;
         } else if (trans == Helper.TRANS_DEEPL) {
             et = MyTransL.translatorEngine.DEEPL;
+        } else if (trans == Helper.TRANS_SYSTRAN) {
+            et = MyTransL.translatorEngine.SYSTRAN;
         }
         final MyTransL myTransL = MyTransL.getInstance(et);
         myTransL.setObfuscation(true);
@@ -4089,6 +4091,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         } else if (trans == Helper.TRANS_DEEPL) {
             api_key = sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, "");
             myTransL.setDeeplAPIKey(api_key);
+        } else if (trans == Helper.TRANS_SYSTRAN) {
+            api_key = sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, "");
+            myTransL.setSystranAPIKey(api_key);
         }
 
 
@@ -4097,7 +4102,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
             else
-                //noinspection deprecation
                 statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent()).toString();
             //TODO: removes the replaceAll once fixed with the lib
             myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {

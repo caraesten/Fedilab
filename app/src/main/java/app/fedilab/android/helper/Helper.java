@@ -416,7 +416,8 @@ public class Helper {
 
     public static final int TRANS_YANDEX = 0;
     public static final int TRANS_DEEPL = 1;
-    public static final int TRANS_NONE = 2;
+    public static final int TRANS_NONE = 3;
+    public static final int TRANS_SYSTRAN = 2;
 
     public static final int ACTION_SILENT = 0;
     public static final int ACTION_ACTIVE = 1;
@@ -515,6 +516,7 @@ public class Helper {
     public static final String USER_AGENT = System.getProperty("http.agent");
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
+    public static final String SET_SYSTRAN_API_KEY = "set_systran_api_key";
     public static final String VIDEO_ID = "video_id_update";
     public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",

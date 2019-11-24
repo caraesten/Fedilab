@@ -337,6 +337,7 @@
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
+        <item>Systran</item>
         <item>No</item>
     </string-array>
 
