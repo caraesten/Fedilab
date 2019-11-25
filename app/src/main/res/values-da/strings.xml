@@ -1068,10 +1068,10 @@
     <string name="pref_colored_navigation_bar_title">Navigeringsbjælkefarve</string>
     <string name="pref_background_color_summary">Den underliggende farve for appens indhold.</string>
     <string name="pref_background_color_title">Baggrundsfarve</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
-    <string name="pref_accent_color_title">Accent color</string>
-    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
-    <string name="pref_primary_color_title">Primary color</string>
+    <string name="pref_accent_color_summary">Markeringsfarver vælger dele af UI\'en.</string>
+    <string name="pref_accent_color_title">Markeringsfarve</string>
+    <string name="pref_primary_color_summary">Vist hyppigst i hele din app.</string>
+    <string name="pref_primary_color_title">Primærfarve</string>
     <string name="export_bookmarks">Eksportér bogmærker til denne instans</string>
     <string name="import_bookmarks">Importér bogmærker fra denne instans</string>
     <string name="user_count">Brugerantal</string>
