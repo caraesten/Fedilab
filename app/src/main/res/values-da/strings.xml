@@ -1050,7 +1050,7 @@
     <string name="pref_custom_theme">Benyt et tilpasset tema</string>
     <string name="pref_custom_theme_summary">Tillader farvetilsidesættelse for det ovenfor valgte tema</string>
     <string name="theming">Tematisering</string>
-    <string name="store_before">Store before</string>
+    <string name="store_before">Gem inden</string>
     <string name="data_export_theme">Temaet er eksporteret</string>
     <string name="data_export_theme_success">Temaet er eksporteret til CSV</string>
     <string name="pref_colored_status_bar_summary">Anvend den primære farve på statusbjælken</string>
