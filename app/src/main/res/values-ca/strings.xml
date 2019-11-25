@@ -166,7 +166,7 @@
         <item>Penja\'l a les pissarres públiques</item>
         <item>No el pengis en pissarres públiques</item>
         <item>Penja\'l només per als seguidors</item>
-        <item>Penja\'l només per a usuaris amb mencions</item>
+        <item>Penja\'l només per a usuàries amb mencions</item>
     </string-array>
     <string name="no_draft">No hi ha esborranys!</string>
     <string name="choose_toot">Escull un bram</string>
@@ -394,7 +394,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="privacy_API_authorizations">        - <b>Lectura</b>: Lectura de dades.\n
         - <b>Escriptura</b>: Redacta missatges  i carrega mèdia per a missatges.\n
         - <b>Seguiments</b>: segueix, desegueix, bloca, desbloca.\n\n
-        <b>&#9888; Aquestes accions es realitzen només a petició de l\'usuari.</b>
+        <b>&#9888; Aquestes accions es realitzen només a petició de la usuària.</b>
     </string>
     <string name="privacy_API_title">Rastreig i llibreries</string>
     <string name="privacy_API">        L\' aplicació <b>no fa ús d\'eines de rastreig</b> (mesures d\'audiència, informes d\'errors, etc.) i no conté publicitat.\n\n
@@ -529,7 +529,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="add_remote_instance">Afegeix-hi una instància</string>
     <string name="comment_no_allowed_peertube">Aquest vídeo no acull comentaris!</string>
     <string name="pickup_resolution">Tria una resolució</string>
-    <string name="peertube_favorites">Favorits del Paertub</string>
+    <string name="peertube_favorites">Preferits del Paertub</string>
     <string name="bookmark_add_peertube">S\'ha afegit el vídeo als marcadors!</string>
     <string name="bookmark_remove_peertube">S\'ha eliminat el vídeo dels marcadors!</string>
     <string name="bookmark_peertube_empty">No tens vídeos de Paertub als preferits!</string>
@@ -787,7 +787,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="join_mastodon">Uneix-te a Mastodont</string>
     <string name="pickup_instance_category">Tria una instància mitjançant una categoria, i després clica un botó de comprovació.</string>
     <string name="pickup_instance_peertube">Per triar instància, activa el quadret corresponent.</string>
-    <string name="users">%1$s usuaris</string>
+    <string name="users">%1$s usuàries</string>
     <string name="password_confirm">Confirma contrasenya</string>
     <string name="agreement_check">Estic d\'acord amb %1$s i %2$s</string>
     <string name="server_rules">normes del servidor</string>
@@ -1051,9 +1051,20 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="export_theme">Exporta el tema</string>
     <string name="export_theme_title">Toca aquí per exportar el tema actual</string>
     <string name="theme_file_error">Hi ha hagut un error en la selecció del document del tema</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
     <string name="export_bookmarks">Exporta els marcadors de la instància</string>
     <string name="import_bookmarks">Importa els marcadors de la instància</string>
-    <string name="user_count">Nombre d\'usuaris</string>
+    <string name="user_count">Nombre d\'usuàries</string>
     <string name="status_count">Nombre de missatges</string>
     <string name="instance_count">Nombre d\'instàncies</string>
     <string name="blocked">Blocat</string>
