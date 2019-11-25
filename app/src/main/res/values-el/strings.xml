@@ -287,7 +287,7 @@
     <string name="set_notify">Ειδοποιήσεις;</string>
     <string name="set_notif_silent">Άηχες Ειδοποιήσεις</string>
     <string name="set_nsfw_timeout">Χρόνος λήξης της προβολής των Ακατάλληλων (σε δευτερόλεπτα· το 0 σημαίνει ανενεργό)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Χρόνος λήξης της Περιγραφής των Πολυμέσων (σε δευτερόλεπτα, το 0 σημαίνει ανενεργό)</string>
     <string name="settings_title_profile">Επεξεργασία του προσώπου</string>
     <string name="settings_title_custom_sharing">Προσαρμοσμένη κοινοποίηση</string>
     <string name="settings_custom_sharing_url">Η διεύθυνση URL&#8230; τς προσαρμοσμένης μοιρασιάς</string>
@@ -875,7 +875,7 @@
     <string name="set_remember_position_indication">Αν απενεργοποιηθεί, η εφαρμογή θα φορτώνει, πάντα, τις τελευταίες καταστάσεις</string>
     <string name="set_blur_sensitive_indication">Αν απενεργοποιηθεί, τα πολυμέσα με ευαίσθητο περιεχόμενο θα αποκρύπτονται με ένα πλήκτρο</string>
     <string name="set_long_press_media_indication">Αποθήκευση των πολυμέσων, στις πλήρης διαστάσεις τους, με πάτημα διαρκείας στην προ-επισκόπηση</string>
-    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
+    <string name="set_display_timeline_in_list_indication">Προσθήκη ενός πλήκτρου αποσιωπητικών, πάνω δεξιά, για την παράθεση όλων των ετικετών/υποστάσεων/κατάστιχων</string>
     <string name="live_notif_indication">Διατήρηση συνεχής της σύνδεσης στην API, που παρέχει τη ροή, για ζωντανές ειδοποιήσεις.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Προβολή ενός Φενδιλάμπιου πλήκτρου κάτω από την εικόνα του προσώπου. Είναι μια συντόμευση, η οποία επιτρέπει την πρόσβαση σε λειτουργίες της εφαρμογής.</string>
@@ -951,8 +951,8 @@
         <item quantity="other">%d ψήφοι</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d voter</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">%d ψηφοφόρος</item>
+        <item quantity="other">%d ψηφοφόροι</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Μονή επιλογή</item>
