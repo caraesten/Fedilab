@@ -1061,6 +1061,17 @@
     <string name="export_theme">Εξαγωγή του θέματος</string>
     <string name="export_theme_title">Πίεσε εδώ για να εξάγεις το τωρινό θέμα</string>
     <string name="theme_file_error">Παρουσιάστηκε κάποιο σφάλμα στην επιλογή του αρχείου με το θέμα</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
     <string name="export_bookmarks">Εξαγωγή των σελιδοδεικτών στην υπόσταση</string>
     <string name="import_bookmarks">Εισαγωγή των σελιδοδεικτών από την υπόσταση</string>
     <string name="user_count">User count</string>
