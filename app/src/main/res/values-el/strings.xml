@@ -128,20 +128,20 @@
     <string name="date_hours">%d ώρ.</string>
     <string name="date_day">%d ημ.</string>
     <plurals name="date_seconds_polls">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="one">%d δευτερόλεπτο</item>
+        <item quantity="other">%d δευτερόλεπτα</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">%d λεπτό</item>
+        <item quantity="other">%d λεπτά</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d ώρα</item>
+        <item quantity="other">%d ώρες</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%d ημέρα</item>
+        <item quantity="other">%d ημέρες</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Προειδοποίηση</string>
