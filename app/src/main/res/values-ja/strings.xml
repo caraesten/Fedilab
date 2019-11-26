@@ -303,12 +303,6 @@
     <string name="use_javascript">Javascript を有効にする</string>
     <string name="expand_cw">CWを自動的に展開する</string>
     <string name="use_cookies">サードパーティのCookieを許可する</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>いいえ</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">あなたのAPIキーを入力するか、Yandex向けに空欄にすることもできます</string>
     <string-array name="settings_theme">
         <item>ダーク</item>
@@ -1050,6 +1044,17 @@
     <string name="export_theme">テーマのエクスポート</string>
     <string name="export_theme_title">ここをタップして現在のテーマをエクスポートします</string>
     <string name="theme_file_error">テーマファイルの選択中にエラーが発生しました</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
     <string name="export_bookmarks">そのインスタンスにブックマークをエクスポート</string>
     <string name="import_bookmarks">このインスタンスからブックマークをインポート</string>
     <string name="user_count">User count</string>

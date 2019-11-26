@@ -309,12 +309,6 @@
     <string name="use_javascript">Activer Javascript</string>
     <string name="expand_cw">Afficher automatiquement le contenu masqué</string>
     <string name="use_cookies">Autoriser les cookies tiers</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Non</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Votre clé API, vous pouvez laisser vide pour Yandex</string>
     <string-array name="settings_theme">
         <item>Sombre</item>
@@ -1063,6 +1057,17 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="export_theme">Exporter le thème</string>
     <string name="export_theme_title">Appuyez ici pour exporter le thème actuel</string>
     <string name="theme_file_error">Une erreur s\'est produite lors de la sélection du fichier de thème</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
     <string name="export_bookmarks">Exporter les signets vers l\'instance</string>
     <string name="import_bookmarks">Importer les signets de l\'instance</string>
     <string name="user_count">Nombre d\'utilisateurs</string>

@@ -304,12 +304,6 @@ và %d thông báo khác</item>
     <string name="use_javascript">Bật Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Cho phép cookie của bên thứ ba</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>Không</item>
-        <item>Không</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Dark</item>
@@ -1055,6 +1049,17 @@ và %d thông báo khác</item>
     <string name="export_theme">Export the theme</string>
     <string name="export_theme_title">Tap here to export the current theme</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
     <string name="export_bookmarks">Export bookmarks to the instance</string>
     <string name="import_bookmarks">Import bookmarks from the instance</string>
     <string name="user_count">User count</string>

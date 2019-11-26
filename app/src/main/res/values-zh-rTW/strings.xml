@@ -127,16 +127,16 @@
     <string name="date_hours">%d 小時</string>
     <string name="date_day">%d 天</string>
     <plurals name="date_seconds_polls">
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d秒</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="other">%d minutes</item>
+        <item quantity="other">%d分</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="other">%d hours</item>
+        <item quantity="other">%d小時</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="other">%d days</item>
+        <item quantity="other">%d天</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
@@ -303,12 +303,6 @@
     <string name="use_javascript">啟用 Javascript</string>
     <string name="expand_cw">自動展開 cw</string>
     <string name="use_cookies">允許第三方 cookies</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>否</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">您的 API 金鑰，若為 Yandex 則可留空</string>
     <string-array name="settings_theme">
         <item>暗</item>
@@ -1057,14 +1051,25 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="export_theme">匯出佈景主題</string>
     <string name="export_theme_title">點擊這裡以匯出目前的佈景主題</string>
     <string name="theme_file_error">選取佈景主題檔案時遇到錯誤</string>
+    <string name="label_theme_picker">佈景主題挑選程式</string>
+    <string name="pref_theme_summary">選取預先安裝的佈景主題</string>
+    <string name="pref_theme_title">佈景主題</string>
+    <string name="pref_colored_navigation_bar_summary">將主要顏色套用到導覽列上</string>
+    <string name="pref_colored_navigation_bar_title">導航列顏色</string>
+    <string name="pref_background_color_summary">應用程式內容的基礎顏色。</string>
+    <string name="pref_background_color_title">背景色彩</string>
+    <string name="pref_accent_color_summary">選取部份使用者界面的強調色彩。</string>
+    <string name="pref_accent_color_title">強調色彩</string>
+    <string name="pref_primary_color_summary">最常顯示在您的應用程式中。</string>
+    <string name="pref_primary_color_title">主要色彩</string>
     <string name="export_bookmarks">匯出書籤到站臺</string>
     <string name="import_bookmarks">從站臺匯入書籤</string>
     <string name="user_count">使用者數量</string>
     <string name="status_count">狀態數量</string>
     <string name="instance_count">站臺數量</string>
     <string name="blocked">已阻擋</string>
-    <string name="poll_finish_in">End in %s</string>
-    <string name="release_note_title">What\'s new in %s</string>
-    <string name="follow_account_update">You can follow my account for updates</string>
-    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="poll_finish_in">結束於 %s</string>
+    <string name="release_note_title">%s 新鮮事</string>
+    <string name="follow_account_update">您可以追蹤我的帳號來取得更新</string>
+    <string name="no_instance_reccord">此站臺於 https://instances.social 上不可用</string>
 </resources>
