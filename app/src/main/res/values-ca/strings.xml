@@ -1058,7 +1058,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="pref_colored_navigation_bar_title">Color de la barra de navegació</string>
     <string name="pref_background_color_summary">Color subjacent del contingut de l\'aplicació.</string>
     <string name="pref_background_color_title">Color de fons</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_summary">Ressalta cromàticament parts de la IU.</string>
     <string name="pref_accent_color_title">Accent color</string>
     <string name="pref_primary_color_summary">Els mostrats amb més freqüència en la teva aplicació.</string>
     <string name="pref_primary_color_title">Color primari</string>
