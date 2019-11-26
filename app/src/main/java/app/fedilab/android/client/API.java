@@ -1202,9 +1202,21 @@ public class API {
             } else {
                 account.setCreated_at(new Date());
             }
-            account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
-            account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
-            account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
+            if( !resobj.isNull("followers_count")) {
+                account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
+            }else{
+                account.setFollowers_count(0);
+            }
+            if( !resobj.isNull("following_count")) {
+                account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
+            }else{
+                account.setFollowing_count(0);
+            }
+            if( !resobj.isNull("statuses_count")) {
+                account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
+            }else{
+                account.setStatuses_count(0);
+            }
             account.setNote(resobj.get("note").toString());
             try {
                 account.setBot(Boolean.parseBoolean(resobj.get("bot").toString()));
