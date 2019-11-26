@@ -1316,10 +1316,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
         Attachment attachment;
         //response = new JSONObject(serverResponse.getBodyAsString());
-        if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if( response == null ){
+            Toasty.error(TootActivity.this, getString(R.string.toast_error), Toasty.LENGTH_SHORT).show();
+            return;
+        }
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             attachment = API.parseAttachmentResponse(response);
-        else
+        } else {
             attachment = GNUAPI.parseUploadedAttachmentResponse(response);
+        }
 
         boolean alreadyAdded = false;
         int index = 0;

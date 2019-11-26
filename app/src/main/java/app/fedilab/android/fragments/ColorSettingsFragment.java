@@ -178,12 +178,16 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
                                 if (key.compareTo("base_theme") == 0) {
                                     SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor appEditor = sharedpreferences.edit();
-                                    appEditor.putInt(Helper.SET_THEME, Integer.parseInt(value));
+                                    if( value != null && value.matches("-?\\d+")) {
+                                        appEditor.putInt(Helper.SET_THEME, Integer.parseInt(value));
+                                    }
                                     appEditor.commit();
                                 } else if (key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0) {
-                                    editor.putBoolean(key, Boolean.valueOf(value));
+                                    editor.putBoolean(key, Boolean.parseBoolean(value));
                                 } else {
-                                    editor.putInt(key, Integer.valueOf(value));
+                                    if( value != null && value.matches("-?\\d+")) {
+                                        editor.putInt(key, Integer.parseInt(value));
+                                    }
                                 }
                             }
                         }

@@ -14,6 +14,7 @@ package app.fedilab.android.drawers;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -54,7 +55,6 @@ import es.dmoral.toasty.Toasty;
 public class AccountSearchDevAdapter extends BaseAdapter implements OnPostActionInterface {
 
     private List<Account> accounts;
-    private LayoutInflater layoutInflater;
     private Context context;
     private ViewHolder holder;
 
@@ -83,7 +83,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         context = parent.getContext();
-        layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         final Account account = accounts.get(position);
 
         if (convertView == null) {
@@ -132,9 +132,11 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         //Profile picture
 
         if (account.getAvatar().startsWith("http")) {
-            Glide.with(holder.account_pp.getContext())
-                    .load(account.getAvatar())
-                    .into(holder.account_pp);
+            if( !((Activity)context).isFinishing()) {
+                Glide.with(holder.account_pp.getContext())
+                        .load(account.getAvatar())
+                        .into(holder.account_pp);
+            }
         } else if (account.getSocial() != null && account.getSocial().contains("OPENCOLLECTIVE")) {
             Glide.with(holder.account_pp.getContext())
                     .load(R.drawable.missing)

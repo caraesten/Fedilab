@@ -827,7 +827,7 @@ public class PeertubeAPI {
                     SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                     //This account is currently logged in, the token is updated
-                    if (prefKeyOauthTokenT.equals(token)) {
+                    if (prefKeyOauthTokenT != null && prefKeyOauthTokenT.equals(token)) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
                         editor.apply();
