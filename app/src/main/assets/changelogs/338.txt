@@ -1,0 +1,6 @@
+Added
+- Systran for translations
+
+Fixed
+- Pleroma crashes due to null value returned for integer
+- Emoji complete
