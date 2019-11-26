@@ -1,6 +1,6 @@
 Added
-- Systran for translations
+- Systran for translations (need a free API key)
 
 Fixed
-- Pleroma crashes due to null value returned for integer
+- Pleroma crashes due to hidden following (null values).
 - Emoji complete
