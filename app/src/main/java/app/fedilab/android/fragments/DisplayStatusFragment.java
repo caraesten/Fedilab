@@ -831,16 +831,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     public void scrollToTop() {
-        if (lv_status != null && instanceType != null) {
-            if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")))
-                lv_status.setAdapter(statusListAdapter);
-            else if (pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
-                lv_status.setAdapter(pixelfedListAdapter);
-            else if (artListAdapter != null && instanceType.equals("ART"))
-                lv_status.setAdapter(artListAdapter);
-            else if (peertubeAdapater != null && instanceType.equals("PEERTUBE"))
-                lv_status.setAdapter(peertubeAdapater);
-        }
+        mLayoutManager.scrollToPositionWithOffset(0, 0);
     }
 
     /**

@@ -163,7 +163,7 @@ public class HttpsConnection {
             HttpUrl.Builder httpBuider = Objects.requireNonNull(HttpUrl.parse(urlConnection)).newBuilder();
             if (paramaters != null) {
                 for (Map.Entry<String, String> param : paramaters.entrySet()) {
-                    httpBuider.addQueryParameter(param.getKey(), param.getValue());
+                    httpBuider.addEncodedQueryParameter(param.getKey(), param.getValue());
                 }
             }
             if (token != null && !token.startsWith("Basic ")) {

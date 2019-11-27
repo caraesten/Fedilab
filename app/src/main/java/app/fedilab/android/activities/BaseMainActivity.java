@@ -2234,8 +2234,6 @@ public abstract class BaseMainActivity extends BaseActivity
                         displayStatusFragment.scrollToTop();
                     }
                 }
-                DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
             }
         });
 
