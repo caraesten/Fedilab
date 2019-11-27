@@ -2145,12 +2145,6 @@ public abstract class BaseMainActivity extends BaseActivity
         if (position >= manageTimelines.size()) {
             position = manageTimelines.size() - 1;
         }
-        if (position == -1)
-            position = (timelines.size() - 1);
-        if (position < 0)
-            position = 0;
-        if (toolbarTitle != null)
-            viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
 
         boolean iconOnly = true;
@@ -2430,6 +2424,8 @@ public abstract class BaseMainActivity extends BaseActivity
             this.mNumOfTabs = NumOfTabs;
         }
 
+
+
         @Override
         public Parcelable saveState() {
             return null;
@@ -2564,7 +2560,7 @@ public abstract class BaseMainActivity extends BaseActivity
             } else {
                 mPageReferenceMap = new HashMap<>();
             }
-            super.destroyItem(container, position, object);
+           // super.destroyItem(container, position, object);
         }
 
         @Override
