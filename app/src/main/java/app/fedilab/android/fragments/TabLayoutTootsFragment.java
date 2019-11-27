@@ -146,6 +146,11 @@ public class TabLayoutTootsFragment extends Fragment {
         }
 
         @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+
+        }
+
+        @Override
         public int getCount() {
             return mNumOfTabs;
         }

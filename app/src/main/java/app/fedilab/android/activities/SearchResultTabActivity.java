@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -233,7 +234,10 @@ public class SearchResultTabActivity extends BaseActivity {
             return null;
         }
 
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
+        }
         @Override
         public int getCount() {
             return 4;
