@@ -1083,4 +1083,5 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="display_full_link">Display full link</string>
     <string name="share_link">Share link</string>
     <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
 </resources>
