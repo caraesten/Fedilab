@@ -16,7 +16,10 @@ package app.fedilab.android.client.Entities;
 
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -38,10 +41,14 @@ import android.text.style.ImageSpan;
 import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -70,6 +77,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.GroupActivity;
 import app.fedilab.android.activities.HashTagActivity;
 import app.fedilab.android.activities.MainActivity;
@@ -77,14 +85,20 @@ import app.fedilab.android.activities.PeertubeActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomQuoteSpan;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.LongClickLinkMovementMethod;
+import app.fedilab.android.helper.LongClickableSpan;
 import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
+import app.fedilab.android.sqlite.StatusStoredDAO;
+import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
+import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 import static app.fedilab.android.drawers.StatusListAdapter.COMPACT_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.CONSOLE_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.DISPLAYED_STATUS;
@@ -601,58 +615,122 @@ public class Status implements Parcelable {
                         endPosition = startPosition + key.length();
                     }
                     if (endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
-                        spannableStringT.setSpan(new ClickableSpan() {
-                                                     @Override
-                                                     public void onClick(@NonNull View textView) {
-                                                         String finalUrl = url;
-                                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                                                         Matcher matcherLink = link.matcher(url);
-                                                         if (matcherLink.find() && !url.contains("medium.com")) {
-                                                             if (matcherLink.group(3) != null && matcherLink.group(3).length() > 0) { //It's a toot
-                                                                 CrossActions.doCrossConversation(context, finalUrl);
-                                                             } else {//It's an account
-                                                                 Account account = new Account();
-                                                                 String acct = matcherLink.group(2);
-                                                                 if (acct != null) {
-                                                                     if (acct.startsWith("@"))
-                                                                         acct = acct.substring(1);
-                                                                     account.setAcct(acct);
-                                                                     account.setInstance(matcherLink.group(1));
-                                                                     CrossActions.doCrossProfile(context, account);
-                                                                 }
 
-                                                             }
 
-                                                         } else {
-                                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                                                             matcherLink = link.matcher(url);
-                                                             if (matcherLink.find()) { //Peertubee video
-                                                                 Intent intent = new Intent(context, PeertubeActivity.class);
-                                                                 Bundle b = new Bundle();
-                                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                                                                 b.putString("peertubeLinkToFetch", url);
-                                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
-                                                                 b.putString("video_id", matcherLink.group(2));
-                                                                 intent.putExtras(b);
-                                                                 context.startActivity(intent);
-                                                             } else {
-                                                                 if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
-                                                                     finalUrl = "http://" + url;
-                                                                 Helper.openBrowser(context, finalUrl);
-                                                             }
 
+                        spannableStringT.setSpan(new LongClickableSpan() {
+                                             @Override
+                                             public void onClick(@NonNull View textView) {
+                                                 String finalUrl = url;
+                                                 Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                                 Matcher matcherLink = link.matcher(url);
+                                                 if (matcherLink.find() && !url.contains("medium.com")) {
+                                                     if (matcherLink.group(3) != null && matcherLink.group(3).length() > 0) { //It's a toot
+                                                         CrossActions.doCrossConversation(context, finalUrl);
+                                                     } else {//It's an account
+                                                         Account account = new Account();
+                                                         String acct = matcherLink.group(2);
+                                                         if (acct != null) {
+                                                             if (acct.startsWith("@"))
+                                                                 acct = acct.substring(1);
+                                                             account.setAcct(acct);
+                                                             account.setInstance(matcherLink.group(1));
+                                                             CrossActions.doCrossProfile(context, account);
                                                          }
+
                                                      }
 
-                                                     @Override
-                                                     public void updateDrawState(@NonNull TextPaint ds) {
-                                                         super.updateDrawState(ds);
-                                                         ds.setUnderlineText(false);
-                                                         ds.setColor(link_color);
+                                                 } else {
+                                                     link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                                                     matcherLink = link.matcher(url);
+                                                     if (matcherLink.find()) { //Peertubee video
+                                                         Intent intent = new Intent(context, PeertubeActivity.class);
+                                                         Bundle b = new Bundle();
+                                                         String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                                                         b.putString("peertubeLinkToFetch", url);
+                                                         b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
+                                                         b.putString("video_id", matcherLink.group(2));
+                                                         intent.putExtras(b);
+                                                         context.startActivity(intent);
+                                                     } else {
+                                                         if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
+                                                             finalUrl = "http://" + url;
+                                                         Helper.openBrowser(context, finalUrl);
                                                      }
-                                                 },
-                                startPosition, endPosition,
-                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                                                 }
+                                             }
+
+                                            @Override
+                                            public void onLongClick(@NonNull View textView) {
+                                                PopupMenu popup = new PopupMenu(context, textView);
+                                                popup.getMenuInflater()
+                                                        .inflate(R.menu.links_popup, popup.getMenu());
+                                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                    public boolean onMenuItemClick(MenuItem item) {
+                                                        switch (item.getItemId()) {
+                                                            case R.id.action_show_link:
+                                                                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                                                                int style;
+                                                                if (theme == Helper.THEME_DARK) {
+                                                                    style = R.style.DialogDark;
+                                                                } else if (theme == Helper.THEME_BLACK) {
+                                                                    style = R.style.DialogBlack;
+                                                                } else {
+                                                                    style = R.style.Dialog;
+                                                                }
+                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                                                                builder.setMessage(url);
+                                                                builder.setTitle(context.getString(R.string.display_full_link));
+                                                                builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                dialog.dismiss();
+                                                                            }
+                                                                        })
+                                                                        .show();
+                                                                break;
+                                                            case R.id.action_share_link:
+                                                                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                                                sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                                                                sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                                                                sendIntent.setType("text/plain");
+                                                                context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                                                break;
+                                                            case R.id.action_copy_link:
+                                                                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                                                                ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, url);
+                                                                if (clipboard != null) {
+                                                                    clipboard.setPrimaryClip(clip);
+                                                                    Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
+                                                                }
+                                                                break;
+                                                        }
+                                                        return true;
+                                                    }
+                                                });
+                                                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                                                    @Override
+                                                    public void onDismiss(PopupMenu menu) {
+                                                        BaseMainActivity.canShowActionMode = true;
+                                                    }
+                                                });
+                                                popup.show();
+                                                BaseMainActivity.canShowActionMode = false;
+                                            }
+
+
+                                             @Override
+                                             public void updateDrawState(@NonNull TextPaint ds) {
+                                                 super.updateDrawState(ds);
+                                                 ds.setUnderlineText(false);
+                                                 ds.setColor(link_color);
+                                             }
+                                         },
+                        startPosition, endPosition,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+
                     }
                 }
                 it.remove();

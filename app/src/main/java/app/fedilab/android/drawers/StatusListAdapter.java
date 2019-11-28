@@ -152,6 +152,7 @@ import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.LongClickLinkMovementMethod;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnPollInterface;
@@ -1530,7 +1531,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
 
-            holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
+            holder.status_content.setMovementMethod(LongClickLinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             if (truncate_toots_size > 0) {
                 holder.status_content.setMaxLines(truncate_toots_size);

@@ -831,7 +831,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     public void scrollToTop() {
-        mLayoutManager.scrollToPositionWithOffset(0, 0);
+        if( mLayoutManager != null ) {
+            mLayoutManager.scrollToPositionWithOffset(0, 0);
+        }
     }
 
     /**

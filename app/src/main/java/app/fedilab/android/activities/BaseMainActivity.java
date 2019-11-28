@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Patterns;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1701,6 +1702,19 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         }
+
+    }
+
+
+    public static boolean canShowActionMode = true;
+
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        if (!canShowActionMode) {
+            mode.finish();
+        }
+        super.onActionModeStarted(mode);
 
     }
 

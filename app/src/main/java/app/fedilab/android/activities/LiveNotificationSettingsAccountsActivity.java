@@ -63,6 +63,10 @@ public class LiveNotificationSettingsAccountsActivity extends BaseActivity {
         ArrayList<Account> accounts = new ArrayList<>();
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+        if( accountStreams == null || accountStreams.size() == 0 ){
+            finish();
+            return;
+        }
         for (Account account : accountStreams) {
             if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
                 accounts.add(account);
