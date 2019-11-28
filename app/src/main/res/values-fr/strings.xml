@@ -1082,5 +1082,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="display_full_link">Afficher le lien complet</string>
     <string name="share_link">Partager le lien</string>
     <string name="link_copy">L\'url a été copié dans le presse-papiers</string>
-    <string name="open_other_app">Open with another app</string>
+    <string name="open_other_app">Ouvrir avec une autre application</string>
 </resources>
