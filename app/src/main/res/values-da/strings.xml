@@ -1082,4 +1082,7 @@
     <string name="release_note_title">Nyheder i %s</string>
     <string name="follow_account_update">Du kan følge min konto for opdateringer</string>
     <string name="no_instance_reccord">Denne instans er ikke tilgængelig på https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
 </resources>
