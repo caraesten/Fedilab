@@ -698,6 +698,16 @@ public class Status implements Parcelable {
                                                                 sendIntent.setType("text/plain");
                                                                 context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                                                 break;
+
+                                                            case R.id.action_open_other_app:
+                                                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                                                intent.setData(Uri.parse(url));
+                                                                try {
+                                                                    context.startActivity(intent);
+                                                                } catch (Exception e) {
+                                                                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                                                                }
+                                                                break;
                                                             case R.id.action_copy_link:
                                                                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                                                                 ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, url);
@@ -717,6 +727,7 @@ public class Status implements Parcelable {
                                                     }
                                                 });
                                                 popup.show();
+                                                textView.clearFocus();
                                                 BaseActivity.canShowActionMode = false;
                                             }
 

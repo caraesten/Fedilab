@@ -10,6 +10,10 @@
         android:title="@string/share_link"
         />
     <item
+        android:id="@+id/action_open_other_app"
+        android:title="@string/open_other_app"
+        />
+    <item
         android:id="@+id/action_copy_link"
         android:title="@string/copy_link"
         />
