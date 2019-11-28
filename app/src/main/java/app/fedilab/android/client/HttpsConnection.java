@@ -152,6 +152,25 @@ public class HttpsConnection {
      */
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
+
+        Map<String, Object> params = new LinkedHashMap<>();
+        if (paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
+            }
+        }
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) postData.append('&');
+            postData.append(param.getKey());
+            postData.append('=');
+            postData.append(param.getValue());
+        }
+        URL url = new URL(urlConnection + "?" + postData);
+
         if (Build.VERSION.SDK_INT >= 21) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS);
             if (proxy != null) {
@@ -160,12 +179,7 @@ public class HttpsConnection {
             OkHttpClient client = builder.build();
             Request.Builder requestBuilder = new Request.Builder()
                     .url(urlConnection);
-            HttpUrl.Builder httpBuider = Objects.requireNonNull(HttpUrl.parse(urlConnection)).newBuilder();
-            if (paramaters != null) {
-                for (Map.Entry<String, String> param : paramaters.entrySet()) {
-                    httpBuider.addEncodedQueryParameter(param.getKey(), param.getValue());
-                }
-            }
+            HttpUrl.Builder httpBuider = Objects.requireNonNull(HttpUrl.parse(url.toString())).newBuilder();
             if (token != null && !token.startsWith("Basic ")) {
                 requestBuilder.addHeader("Authorization", "Bearer " + token);
             } else if (token != null && token.startsWith("Basic ")) {
@@ -187,23 +201,7 @@ public class HttpsConnection {
                 }
             }
         }else{
-            Map<String, Object> params = new LinkedHashMap<>();
-            if (paramaters != null) {
-                Iterator it = paramaters.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    params.put(pair.getKey().toString(), pair.getValue());
-                    it.remove();
-                }
-            }
-            StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String, Object> param : params.entrySet()) {
-                if (postData.length() != 0) postData.append('&');
-                postData.append(param.getKey());
-                postData.append('=');
-                postData.append(param.getValue());
-            }
-            URL url = new URL(urlConnection + "?" + postData);
+
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
