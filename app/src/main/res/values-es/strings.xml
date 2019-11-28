@@ -1076,4 +1076,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="release_note_title">Novedades en %s</string>
     <string name="follow_account_update">Puedes seguir mi cuenta para mantenerte al día con las actualizaciones</string>
     <string name="no_instance_reccord">Esta instancia no está disponible en https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
 </resources>
