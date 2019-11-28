@@ -77,6 +77,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseActivity;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.GroupActivity;
 import app.fedilab.android.activities.HashTagActivity;
@@ -712,11 +713,11 @@ public class Status implements Parcelable {
                                                 popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                                                     @Override
                                                     public void onDismiss(PopupMenu menu) {
-                                                        BaseMainActivity.canShowActionMode = true;
+                                                        BaseActivity.canShowActionMode = true;
                                                     }
                                                 });
                                                 popup.show();
-                                                BaseMainActivity.canShowActionMode = false;
+                                                BaseActivity.canShowActionMode = false;
                                             }
 
 

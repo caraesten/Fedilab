@@ -1706,17 +1706,10 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-    public static boolean canShowActionMode = true;
 
 
-    @Override
-    public void onActionModeStarted(ActionMode mode) {
-        if (!canShowActionMode) {
-            mode.finish();
-        }
-        super.onActionModeStarted(mode);
 
-    }
+
 
     @Override
     protected void onPause() {

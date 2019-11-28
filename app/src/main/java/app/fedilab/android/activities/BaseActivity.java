@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
 
     public static final int READ_WRITE_STORAGE = 52;
     public static Timer timer;
+    public static boolean canShowActionMode = true;
 
     static {
         Helper.installProvider();
@@ -62,6 +64,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
                     .penaltyDeath()
                     .build());
         }*/
+        canShowActionMode = true;
         super.onCreate(savedInstanceState);
 
     }
@@ -134,5 +137,15 @@ public class BaseActivity extends CyaneaAppCompatActivity {
         } else {
             Toasty.info(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        if (!canShowActionMode) {
+            mode.finish();
+        }
+        super.onActionModeStarted(mode);
+
     }
 }
