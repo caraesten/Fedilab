@@ -1074,4 +1074,7 @@
     <string name="release_note_title">%s 的新功能</string>
     <string name="follow_account_update">您可以关注我的帐户以获取更新</string>
     <string name="no_instance_reccord">此实例在 https://instance.social 上不可用</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
 </resources>
