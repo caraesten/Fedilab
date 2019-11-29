@@ -1083,9 +1083,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="share_link">Partager le lien</string>
     <string name="link_copy">L\'url a été copiée dans le presse-papiers</string>
     <string name="open_other_app">Ouvrir avec une autre application</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="check_redirect">Vérifier la redirection</string>
+    <string name="no_redirect">Cette URL ne redirige pas</string>
+    <string name="redirect_detected">%1$s\n\nredirige vers\n\n%2$s</string>
     <string name="set_user_agent">Modifier l\'agent d\'utilisateur</string>
     <string name="set_user_agent_hint">Définir un agent utilisateur personnalisé ou laisser vide</string>
     <string name="set_user_agent_indication">Permet de personnaliser l\'agent de l\'utilisateur utilisé pour les appels de l\'api ou avec le navigateur intégré.</string>
