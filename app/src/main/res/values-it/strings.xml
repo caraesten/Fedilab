@@ -1086,4 +1086,6 @@
     <string name="share_link">Condividi collegamento</string>
     <string name="link_copy">L\'URL è stato copiato negli appunti</string>
     <string name="open_other_app">Apri con un\'altra app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
 </resources>
