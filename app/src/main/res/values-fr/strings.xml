@@ -1085,4 +1085,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="open_other_app">Ouvrir avec une autre application</string>
     <string name="check_redirect">Check redirect</string>
     <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
 </resources>
