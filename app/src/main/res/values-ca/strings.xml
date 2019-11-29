@@ -1078,4 +1078,5 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="open_other_app">Open with another app</string>
     <string name="check_redirect">Check redirect</string>
     <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
 </resources>
