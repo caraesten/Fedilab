@@ -70,6 +70,7 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -195,6 +196,7 @@ public class HttpsConnection {
                 int code = httpresponse.code();
                 String error = httpresponse.message();
                 if (code >= 200 && code < 400) {
+                    getOKHttpHeader(httpresponse.headers().toMultimap());
                     return response;
                 } else {
                     throw new HttpsConnectionException(code, error);
@@ -272,6 +274,7 @@ public class HttpsConnection {
                 int code = httpresponse.code();
                 String error = httpresponse.message();
                 if (code >= 200 && code < 400) {
+                    getOKHttpHeader(httpresponse.headers().toMultimap());
                     return response;
                 } else {
                     throw new HttpsConnectionException(code, error);
@@ -1371,6 +1374,26 @@ public class HttpsConnection {
 
     public String getMax_id() {
         return max_id;
+    }
+
+    private void getOKHttpHeader(Map<String, List<String>> headers){
+        for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+            if (entry.toString().startsWith("Link") || entry.toString().startsWith("link")) {
+                Pattern patternMaxId = Pattern.compile("max_id=([0-9a-zA-Z]{1,}).*");
+                Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
+                if (matcherMaxId.find()) {
+                    max_id = matcherMaxId.group(1);
+                }
+                if (entry.toString().startsWith("Link")) {
+                    Pattern patternSinceId = Pattern.compile("since_id=([0-9a-zA-Z]{1,}).*");
+                    Matcher matcherSinceId = patternSinceId.matcher(entry.toString());
+                    if (matcherSinceId.find()) {
+                        since_id = matcherSinceId.group(1);
+                    }
+
+                }
+            }
+        }
     }
 
     private void getSinceMaxId() {
