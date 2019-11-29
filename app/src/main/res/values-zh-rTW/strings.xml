@@ -1079,4 +1079,5 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="open_other_app">使用其他應用程式開啟</string>
     <string name="check_redirect">Check redirect</string>
     <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
 </resources>
