@@ -734,7 +734,7 @@ public class Status implements Parcelable {
                                                                             public void run() {
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                                                                                 if( response != null ) {
-                                                                                    builder.setMessage(response);
+                                                                                    builder.setMessage(context.getString(R.string.redirect_detected,url,response));
                                                                                 }else{
                                                                                     builder.setMessage(R.string.no_redirect);
                                                                                 }
