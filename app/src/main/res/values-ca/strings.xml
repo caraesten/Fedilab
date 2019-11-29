@@ -674,7 +674,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="action_html">HTML</string>
     <string name="action_markdown">Assenyala</string>
     <string name="action_logout_account">Sortir de la sessió</string>
-    <string name="all">Tots</string>
+    <string name="all">Tot</string>
     <string name="about_opencollective">Fes un donatiu a l\'app</string>
     <string name="more_about_opencollective">Open Collective facilita a grups de crear ràpidament un col·lectiu, recollir diners i gestionar-los amb transparència.</string>
     <string name="copy_link">Copia l\'enllaç</string>
@@ -1076,4 +1076,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="share_link">Compartir enllaç</string>
     <string name="link_copy">S\'ha copiat l\'URL al porta-retalls</string>
     <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
 </resources>
