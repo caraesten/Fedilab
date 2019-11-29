@@ -1083,4 +1083,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="share_link">Partager le lien</string>
     <string name="link_copy">L\'url a été copiée dans le presse-papiers</string>
     <string name="open_other_app">Ouvrir avec une autre application</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
 </resources>
