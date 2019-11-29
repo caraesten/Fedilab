@@ -293,6 +293,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     }
                 }
             });
+            String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+            if( user_agent != null) {
+                webview_video.getSettings().setUserAgentString(user_agent);
+            }
             webview_video.getSettings().setAllowFileAccess(true);
             webview_video.setWebChromeClient(mastalabWebChromeClient);
             webview_video.getSettings().setDomStorageEnabled(true);

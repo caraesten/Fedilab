@@ -919,6 +919,32 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
+
+        TextView set_user_agent = rootView.findViewById(R.id.set_user_agent);
+        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+
+        if (user_agent != null) {
+            set_user_agent.setText(user_agent);
+        }
+        set_user_agent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                if (s.toString().trim().length() > 0) {
+                    editor.putString(Helper.SET_CUSTOM_USER_AGENT, s.toString().toLowerCase().trim());
+                } else {
+                    editor.putString(Helper.SET_CUSTOM_USER_AGENT, null);
+                }
+                editor.apply();
+            }
+        });
+
         TextView set_nitter_host = rootView.findViewById(R.id.set_nitter_host);
         boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
         final SwitchCompat set_nitter = rootView.findViewById(R.id.set_nitter);

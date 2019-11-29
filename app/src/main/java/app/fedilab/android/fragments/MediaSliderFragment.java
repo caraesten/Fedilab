@@ -294,6 +294,10 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                 webview_video.setWebChromeClient(mastalabWebChromeClient);
                 webview_video.getSettings().setDomStorageEnabled(true);
                 webview_video.getSettings().setAppCacheEnabled(true);
+                String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+                if( user_agent != null) {
+                    webview_video.getSettings().setUserAgentString(user_agent);
+                }
                 webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
                 webview_video.setWebViewClient(new MastalabWebViewClient((Activity) context));
                 webview_video.loadUrl(attachment.getUrl());

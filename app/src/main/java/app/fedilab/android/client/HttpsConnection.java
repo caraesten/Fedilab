@@ -94,6 +94,7 @@ public class HttpsConnection {
     private SharedPreferences sharedpreferences;
     private Proxy proxy;
     private String instance;
+    private String USER_AGENT;
 
     public HttpsConnection(Context context, String instance) {
         this.instance = instance;
@@ -102,6 +103,8 @@ public class HttpsConnection {
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
         int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
         proxy = null;
+
+        USER_AGENT = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, Helper.USER_AGENT);
         if (proxyEnabled) {
             try {
                 String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
@@ -211,7 +214,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
             httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -389,7 +392,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -456,7 +459,7 @@ public class HttpsConnection {
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST");
@@ -511,7 +514,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -564,7 +567,7 @@ public class HttpsConnection {
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST");
@@ -617,7 +620,7 @@ public class HttpsConnection {
             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
         else
             httpsURLConnection = (HttpsURLConnection) url.openConnection();
-        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -682,7 +685,7 @@ public class HttpsConnection {
                             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
                         else
                             httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                         int responseCode = httpsURLConnection.getResponseCode();
 
                         // always check HTTP response code first
@@ -770,7 +773,7 @@ public class HttpsConnection {
                             httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
                         else
                             httpURLConnection = (HttpURLConnection) url.openConnection();
-                        httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                        httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                         int responseCode = httpURLConnection.getResponseCode();
 
                         // always check HTTP response code first
@@ -866,7 +869,7 @@ public class HttpsConnection {
                 else
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-                httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                 int responseCode = httpsURLConnection.getResponseCode();
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -889,7 +892,7 @@ public class HttpsConnection {
                     httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
                 else
                     httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                 int responseCode = httpURLConnection.getResponseCode();
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -996,7 +999,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -1077,7 +1080,7 @@ public class HttpsConnection {
                 httpURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpsURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 httpURLConnection.setRequestMethod("PATCH");
@@ -1160,7 +1163,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
@@ -1228,7 +1231,7 @@ public class HttpsConnection {
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             if (token != null && !token.startsWith("Basic "))
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -1300,7 +1303,7 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -1363,7 +1366,7 @@ public class HttpsConnection {
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if (token != null && token.startsWith("Basic "))

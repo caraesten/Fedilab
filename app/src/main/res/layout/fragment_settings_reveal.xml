@@ -1818,6 +1818,8 @@
 
                     <!-- Featured tags -->
                     <LinearLayout
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -1846,6 +1848,38 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/featured_hashtags_indication"
+                            android:textColor="@color/mastodonC2" />
+                    </LinearLayout>
+
+
+                    <!-- user agent  -->
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@+id/set_user_agent"
+                            android:text="@string/set_user_agent"
+                            android:textSize="16sp" />
+
+                        <EditText
+                            android:id="@+id/set_user_agent"
+                            android:ellipsize="end"
+                            android:hint="@string/set_user_agent_hint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:lines="2"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_user_agent_indication"
                             android:textColor="@color/mastodonC2" />
                     </LinearLayout>
 

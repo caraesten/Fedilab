@@ -133,6 +133,10 @@ public class WebviewConnectActivity extends BaseActivity {
         webView = findViewById(R.id.webviewConnect);
         clearCookies(getApplicationContext());
         webView.getSettings().setJavaScriptEnabled(true);
+        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+        if( user_agent != null) {
+            webView.getSettings().setUserAgentString(user_agent);
+        }
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
         } else {

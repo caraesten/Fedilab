@@ -2316,6 +2316,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 .into(holder.webview_preview_card);
                         holder.status_cardview.setVisibility(View.GONE);
                         holder.status_cardview_video.setVisibility(View.VISIBLE);
+                        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+                        if( user_agent != null) {
+                            holder.status_cardview_webview.getSettings().setUserAgentString(user_agent);
+                        }
                         holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
                         String html = card.getHtml();
                         String src = card.getUrl();

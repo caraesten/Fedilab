@@ -476,6 +476,7 @@ public class Helper {
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
     public static final String SET_SECURITY_PROVIDER = "set_security_provider";
     public static final String SET_ALLOW_STREAM = "set_allow_stream";
+    public static final String SET_CUSTOM_USER_AGENT = "set_custom_user_agent";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -2460,15 +2461,10 @@ public class Helper {
         webView.getSettings().setAllowContentAccess(true);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setSupportMultipleWindows(false);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            //noinspection deprecation
-            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
-        }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+        if( user_agent != null) {
+            webView.getSettings().setUserAgentString(user_agent);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             boolean cookies = sharedpreferences.getBoolean(Helper.SET_COOKIES, false);
