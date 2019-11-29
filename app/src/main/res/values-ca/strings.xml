@@ -1075,7 +1075,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="display_full_link">Mostra l\'enllaç sencer</string>
     <string name="share_link">Compartir enllaç</string>
     <string name="link_copy">S\'ha copiat l\'URL al porta-retalls</string>
-    <string name="open_other_app">Open with another app</string>
+    <string name="open_other_app">Obre amb una altra aplicació</string>
     <string name="check_redirect">Comprova la redirecció</string>
     <string name="no_redirect">El redireccionament de la URL no funciona</string>
     <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
