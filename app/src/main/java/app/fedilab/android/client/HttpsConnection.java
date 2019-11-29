@@ -43,7 +43,6 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
-import java.net.ProtocolException;
 import java.net.Proxy;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -71,7 +70,6 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
-import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -271,7 +269,6 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
             httpsURLConnection.setInstanceFollowRedirects(false);
-            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0");
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             httpsURLConnection.setRequestMethod("HEAD");
             if( httpsURLConnection.getResponseCode() == 301) {
