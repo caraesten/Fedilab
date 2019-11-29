@@ -255,8 +255,11 @@ public class HttpsConnection {
     }
 
 
-
-
+    /**
+     * Will check if the current url is redirecting
+     * @param urlConnection String the url to check
+     * @return String null|string url redirection
+     */
     public String checkUrl(String urlConnection){
         URL url;
         String redirect = null;
@@ -268,13 +271,13 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
             httpsURLConnection.setInstanceFollowRedirects(false);
-            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0");
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-            httpsURLConnection.setRequestMethod("GET");
+            httpsURLConnection.setRequestMethod("HEAD");
             if( httpsURLConnection.getResponseCode() == 301) {
                 Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
                 for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                    if (entry.toString().startsWith("Location") || entry.toString().startsWith("Location")) {
+                    if (entry.toString().toLowerCase().startsWith("location")) {
                         Matcher matcher = urlPattern.matcher(entry.toString());
                         if (matcher.find()) {
                             redirect = matcher.group(1);
