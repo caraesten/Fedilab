@@ -43,6 +43,7 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.ProtocolException;
 import java.net.Proxy;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -75,6 +76,8 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static app.fedilab.android.helper.Helper.urlPattern;
 
 
 /**
@@ -251,6 +254,41 @@ public class HttpsConnection {
         }
     }
 
+
+
+
+    public String checkUrl(String urlConnection){
+        URL url;
+        String redirect = null;
+        try {
+            url = new URL(urlConnection);
+            if (proxy != null)
+                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+            else
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpsURLConnection.setInstanceFollowRedirects(false);
+            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
+            httpsURLConnection.setRequestMethod("GET");
+            if( httpsURLConnection.getResponseCode() == 301) {
+                Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
+                for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                    if (entry.toString().startsWith("Location") || entry.toString().startsWith("Location")) {
+                        Matcher matcher = urlPattern.matcher(entry.toString());
+                        if (matcher.find()) {
+                            redirect = matcher.group(1);
+                        }
+                    }
+                }
+            }
+            httpsURLConnection.getInputStream().close();
+            return redirect != null && redirect.compareTo(urlConnection)!=0?redirect:null;
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {

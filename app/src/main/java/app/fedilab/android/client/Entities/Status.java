@@ -27,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Html;
@@ -64,6 +65,8 @@ import com.github.penfeizhou.animation.apng.decode.APNGParser;
 import com.github.penfeizhou.animation.gif.GifDrawable;
 import com.github.penfeizhou.animation.gif.decode.GifParser;
 
+import net.gotev.uploadservice.http.HttpConnection;
+
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -86,6 +89,7 @@ import app.fedilab.android.activities.PeertubeActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomQuoteSpan;
@@ -667,19 +671,20 @@ public class Status implements Parcelable {
                                                 PopupMenu popup = new PopupMenu(context, textView);
                                                 popup.getMenuInflater()
                                                         .inflate(R.menu.links_popup, popup.getMenu());
+                                                int style;
+                                                if (theme == Helper.THEME_DARK) {
+                                                    style = R.style.DialogDark;
+                                                } else if (theme == Helper.THEME_BLACK) {
+                                                    style = R.style.DialogBlack;
+                                                } else {
+                                                    style = R.style.Dialog;
+                                                }
                                                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                                     public boolean onMenuItemClick(MenuItem item) {
                                                         switch (item.getItemId()) {
                                                             case R.id.action_show_link:
                                                                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                                                                int style;
-                                                                if (theme == Helper.THEME_DARK) {
-                                                                    style = R.style.DialogDark;
-                                                                } else if (theme == Helper.THEME_BLACK) {
-                                                                    style = R.style.DialogBlack;
-                                                                } else {
-                                                                    style = R.style.Dialog;
-                                                                }
+
                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                                                                 builder.setMessage(url);
                                                                 builder.setTitle(context.getString(R.string.display_full_link));
@@ -715,6 +720,38 @@ public class Status implements Parcelable {
                                                                     clipboard.setPrimaryClip(clip);
                                                                     Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
                                                                 }
+                                                                break;
+                                                            case R.id.action_unshorten:
+                                                                Thread thread = new Thread() {
+                                                                    @Override
+                                                                    public void run() {
+                                                                        String response = new HttpsConnection(context, null).checkUrl(url);
+
+                                                                        Handler mainHandler = new Handler(context.getMainLooper());
+
+                                                                        Runnable myRunnable = new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                                                                                if( response != null ) {
+                                                                                    builder.setMessage(response);
+                                                                                }else{
+                                                                                    builder.setMessage(R.string.no_redirect);
+                                                                                }
+                                                                                builder.setTitle(context.getString(R.string.check_redirect));
+                                                                                builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                        dialog.dismiss();
+                                                                                    }
+                                                                                }).show();
+                                                                            }
+                                                                        };
+                                                                        mainHandler.post(myRunnable);
+
+                                                                    }
+                                                                };
+                                                                thread.start();
                                                                 break;
                                                         }
                                                         return true;
