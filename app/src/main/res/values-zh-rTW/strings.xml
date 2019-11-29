@@ -1072,4 +1072,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="release_note_title">%s 新鮮事</string>
     <string name="follow_account_update">您可以追蹤我的帳號來取得更新</string>
     <string name="no_instance_reccord">此站臺於 https://instances.social 上不可用</string>
+    <string name="display_full_link">顯示完整連結</string>
+    <string name="share_link">分享連結</string>
+    <string name="link_copy">URL 已複製到剪貼簿</string>
+    <string name="open_other_app">使用其他應用程式開啟</string>
 </resources>
