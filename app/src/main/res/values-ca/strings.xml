@@ -1072,4 +1072,8 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="release_note_title">Novetats de %s</string>
     <string name="follow_account_update">Pots seguir el meu compte per mantenir-te informada</string>
     <string name="no_instance_reccord">La instància no figura a https://instances.social</string>
+    <string name="display_full_link">Mostra l\'enllaç sencer</string>
+    <string name="share_link">Compartir enllaç</string>
+    <string name="link_copy">S\'ha copiat l\'URL al porta-retalls</string>
+    <string name="open_other_app">Open with another app</string>
 </resources>
