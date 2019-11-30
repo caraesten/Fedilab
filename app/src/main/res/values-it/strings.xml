@@ -1086,12 +1086,12 @@
     <string name="share_link">Condividi collegamento</string>
     <string name="link_copy">L\'URL è stato copiato negli appunti</string>
     <string name="open_other_app">Apri con un\'altra app</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
-    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="check_redirect">Controlla reindirizzamento</string>
+    <string name="no_redirect">Questo URL non reindirizza</string>
+    <string name="redirect_detected">%1$s \n\nreindirizza verso\n\n %2$s</string>
+    <string name="set_user_agent">Cambia l\'agente dell\'utente</string>
+    <string name="set_user_agent_hint">Imposta un agente utente personalizzato o lascia vuoto</string>
+    <string name="set_user_agent_indication">Permetti la personalizzazione dell\'agente utente utilizzata per le chiamate dell\'API o con il browser integrato.</string>
+    <string name="set_utm_parameters">Rimuovi parametri UTM</string>
     <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
 </resources>
