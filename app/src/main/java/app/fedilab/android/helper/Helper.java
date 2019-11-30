@@ -238,6 +238,7 @@ import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.regex_home;
 import static app.fedilab.android.activities.BaseMainActivity.regex_local;
 import static app.fedilab.android.activities.BaseMainActivity.regex_public;
+import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.helper.Helper.NotifType.MENTION;
 import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
 import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
@@ -1674,6 +1675,9 @@ public class Helper {
                 MenuItem nav_list = menu.findItem(R.id.nav_list);
                 if (nav_list != null)
                     nav_list.setVisible(false);
+                MenuItem nav_trends = menu.findItem(R.id.nav_trends);
+                if (nav_trends != null)
+                    nav_trends.setVisible(false);
                 MenuItem nav_peertube = menu.findItem(R.id.nav_peertube);
                 if (nav_peertube != null)
                     nav_peertube.setVisible(false);
@@ -1742,6 +1746,9 @@ public class Helper {
                 }
                 if (!mainMenuItem.isNav_scheduled()) {
                     menu.findItem(R.id.nav_scheduled).setVisible(false);
+                }
+                if (!mainMenuItem.isNav_trends() || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    menu.findItem(R.id.nav_trends).setVisible(false);
                 }
                 if (!mainMenuItem.isNav_scheduled()) {
                     menu.findItem(R.id.nav_scheduled).setVisible(false);

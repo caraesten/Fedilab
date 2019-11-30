@@ -2348,6 +2348,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         }
 
         SwitchCompat nav_news = rootView.findViewById(R.id.nav_news);
+        SwitchCompat nav_trends = rootView.findViewById(R.id.nav_trends);
         SwitchCompat nav_list = rootView.findViewById(R.id.nav_list);
         SwitchCompat nav_scheduled = rootView.findViewById(R.id.nav_scheduled);
         SwitchCompat nav_archive = rootView.findViewById(R.id.nav_archive);
@@ -2366,6 +2367,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             mainMenu = new MainMenuItem();
         }
         nav_news.setChecked(mainMenu.isNav_news());
+        nav_trends.setChecked(mainMenu.isNav_trends());
         nav_list.setChecked(mainMenu.isNav_list());
         nav_scheduled.setChecked(mainMenu.isNav_scheduled());
         nav_archive.setChecked(mainMenu.isNav_archive());
@@ -2382,6 +2384,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         validate.setOnClickListener(view -> {
             MainMenuItem mainMenuItem = new MainMenuItem();
             mainMenuItem.setNav_news(nav_news.isChecked());
+            mainMenuItem.setNav_trends(nav_trends.isChecked());
             mainMenuItem.setNav_list(nav_list.isChecked());
             mainMenuItem.setNav_scheduled(nav_scheduled.isChecked());
             mainMenuItem.setNav_archive(nav_archive.isChecked());
