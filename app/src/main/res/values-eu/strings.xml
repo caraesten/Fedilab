@@ -1049,7 +1049,7 @@
     <string name="pref_custom_theme">Erabili gai pertsonalizatua</string>
     <string name="pref_custom_theme_summary">Baimendu goian hautatutako gaiaren koloreak gainidaztea</string>
     <string name="theming">Gaiak</string>
-    <string name="store_before">Gorde aurretik</string>
+    <string name="store_before">Lehenbizi gorde</string>
     <string name="data_export_theme">Gaia esportatu da</string>
     <string name="data_export_theme_success">Gaia ongi esportatu da CSV gisa</string>
     <string name="pref_colored_status_bar_summary">Aplikatu kolore nagusia egoera barrari</string>
@@ -1067,7 +1067,7 @@
     <string name="pref_colored_navigation_bar_title">Nabigazio barraren kolorea</string>
     <string name="pref_background_color_summary">Aplikazioaren edukien atzeko kolorea.</string>
     <string name="pref_background_color_title">Atzeko kolorea</string>
-    <string name="pref_accent_color_summary">Nabarmentzeak interfazearen atalak hautatzen ditu.</string>
+    <string name="pref_accent_color_summary">Interfazearen atal hautatuak nabarmentzen ditu.</string>
     <string name="pref_accent_color_title">Nabarmentze kolorea</string>
     <string name="pref_primary_color_summary">Zure aplikazioan gehien erabiliko dena.</string>
     <string name="pref_primary_color_title">Kolore nagusia</string>
@@ -1078,7 +1078,7 @@
     <string name="instance_count">Instantzia kopurua</string>
     <string name="blocked">Blokeatuta</string>
     <string name="poll_finish_in">Amaitzeko %s</string>
-    <string name="release_note_title">Zer da berria %s bertsioan</string>
+    <string name="release_note_title">Zer dago berri %s bertsioan</string>
     <string name="follow_account_update">Nire kontua jarraitu dezakezu eguneraketetarako</string>
     <string name="no_instance_reccord">Instantzia hau ez dago eskuragarri https://instances.social gunean</string>
     <string name="display_full_link">Erakutsi esteka osoa</string>
@@ -1092,5 +1092,5 @@
     <string name="set_user_agent_hint">Ezarri erabiltzaile-agente pertsonalizatu bat edo laga hutsik</string>
     <string name="set_user_agent_indication">API deietarako eta barne nabigatzailean erabilitako erabiltzaile-agentea pertsonalizatzeko aukera ematen du.</string>
     <string name="set_utm_parameters">Kendu UTM parametroak</string>
-    <string name="set_utm_parameters_indication">Aplikazioak automatikoki kenduko ditu URL baten UTM parametroak bisitatu aurretik.</string>
+    <string name="set_utm_parameters_indication">Aplikazioak automatikoki kenduko ditu URL baten UTM parametroak hau bisitatu aurretik.</string>
 </resources>
