@@ -1087,8 +1087,8 @@
     <string name="link_copy">URL\'en er blevet kopieret til udklipsholderen</string>
     <string name="open_other_app">Åbn med en anden app</string>
     <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="no_redirect">Denne URL omdirigerer ikke</string>
+    <string name="redirect_detected">%1$s\n\nomdirigerer til\n\n%2$s</string>
     <string name="set_user_agent">Change the user agent</string>
     <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
