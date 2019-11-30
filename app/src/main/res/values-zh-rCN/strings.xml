@@ -1086,4 +1086,7 @@
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
     <string name="set_utm_parameters">Remove UTM parameters</string>
     <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
 </resources>
