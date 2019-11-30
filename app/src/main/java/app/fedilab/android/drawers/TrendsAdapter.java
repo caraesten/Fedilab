@@ -138,9 +138,9 @@ public class TrendsAdapter extends BaseAdapter {
             it.remove();
         }
         LineDataSet dataTrending = new LineDataSet(trendsEntry,context.getString(R.string.trending));
-        dataTrending.setColor(ContextCompat.getColor(context, R.color.colorAccent));
-        dataTrending.setValueTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-        dataTrending.setFillColor(ContextCompat.getColor(context, R.color.colorAccent));
+        dataTrending.setColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+        dataTrending.setValueTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+        dataTrending.setFillColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
         dataTrending.setDrawValues(false);
         dataTrending.setDrawFilled(true);
         dataTrending.setDrawCircles(false);
