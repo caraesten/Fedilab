@@ -1094,7 +1094,7 @@
     <string name="set_user_agent_indication">Muliggør tilpasning af brugeragenten, der benyttes til API-kald eller med den indbyggede browser.</string>
     <string name="set_utm_parameters">Fjern UTM-parametre</string>
     <string name="set_utm_parameters_indication">Appen fjerner automatisk UTM-parametre fra URL\'er, inden du følger et link.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="action_trends">Tendenser</string>
+    <string name="trending_now">Hot lige nu</string>
+    <string name="talking_about">%d folk omtaler</string>
 </resources>
