@@ -1086,4 +1086,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_user_agent">Cambiar el agente de usuario</string>
     <string name="set_user_agent_hint">Establece un agente de usuario personalizado o deja en blanco</string>
     <string name="set_user_agent_indication">Permite personalizar el agente de usuario que se utiliza para las llamadas a la api o con el navegador integrado.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
 </resources>
