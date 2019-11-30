@@ -3830,7 +3830,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(social, toot_content, toot_cw_content) < split_toot_size)) {
-            createAndSendToot(status, content_type, userId, instance);
+            createAndSendToot(status, null, content_type, userId, instance);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -3883,7 +3883,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    createAndSendToot(status, content_type, userId, instance);
+                    createAndSendToot(status, splitToot.get(0), content_type, userId, instance);
                     dialog.dismiss();
                 }
             });
@@ -3893,7 +3893,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
-    private void createAndSendToot(Status status, String content_type, String userId, String instance) {
+    private void createAndSendToot(Status status, String content, String content_type, String userId, String instance) {
         Status toot = new Status();
         if (content_type != null)
             toot.setContentType(content_type);
@@ -3904,7 +3904,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(status.getQuickReplyPrivacy());
         toot.setIn_reply_to_id(in_reply_to_status);
-        toot.setContent(context, status.getQuickReplyContent());
+        if( content == null) {
+            content = status.getQuickReplyContent();
+        }
+        toot.setContent(context, content);
         new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         status.setQuickReplyPrivacy(null);
         status.setQuickReplyContent(null);
