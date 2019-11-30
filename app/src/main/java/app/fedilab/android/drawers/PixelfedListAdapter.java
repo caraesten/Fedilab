@@ -917,7 +917,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                                                 toot.setMedia_attachments(status.getMedia_attachments());
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 toot.setVisibility(status.getVisibility());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
@@ -932,7 +932,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setVisibility(status.getVisibility());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
                                                 } else if (status.getReblog() != null && status.getReblog().getPoll() != null) {
@@ -1170,7 +1170,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         toot.setVisibility(visibility);
         toot.setIn_reply_to_id(in_reply_to_status);
-        toot.setContent(tootContent);
+        toot.setContent(context, tootContent);
         new PostStatusAsyncTask(context, social, account, toot, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         status.setQuickReplyPrivacy(null);
         status.setQuickReplyContent(null);

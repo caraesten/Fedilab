@@ -2312,7 +2312,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot.setVisibility(visibility);
         if (tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
-        toot.setContent(tootContent);
+        toot.setContent(TootActivity.this, tootContent);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
             if (poll != null) {
                 toot.setPoll(poll);
@@ -2702,7 +2702,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot.setVisibility(visibility);
             if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
-            toot.setContent(tootContent);
+            toot.setContent(TootActivity.this, tootContent);
             new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
 
@@ -3867,7 +3867,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        toot.setContent(currentContent);
+        toot.setContent(TootActivity.this, currentContent);
 
         if (poll != null)
             toot.setPoll(poll);

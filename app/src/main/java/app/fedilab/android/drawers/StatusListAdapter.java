@@ -544,7 +544,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setVisibility(apiResponse.getStatuses().get(0).getVisibility());
             if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
-            toot.setContent(tootContent);
+            toot.setContent(context, tootContent);
             final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -2681,7 +2681,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     toot.setMedia_attachments(status.getMedia_attachments());
                                     if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                         toot.setSpoiler_text(status.getSpoiler_text().trim());
-                                    toot.setContent(status.getContent());
+                                    toot.setContent(context, status.getContent());
                                     toot.setVisibility(status.getVisibility());
                                     new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 } else {
@@ -2691,7 +2691,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                         toot.setSpoiler_text(status.getSpoiler_text().trim());
                                     toot.setVisibility(status.getVisibility());
-                                    toot.setContent(status.getContent());
+                                    toot.setContent(context, status.getContent());
                                     final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                     long id = new StatusStoredDAO(context, db).insertStatus(toot, null);
                                     Intent intentToot = new Intent(context, TootActivity.class);
@@ -3082,7 +3082,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 toot.setMedia_attachments(status.getMedia_attachments());
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 toot.setVisibility(status.getVisibility());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
@@ -3097,7 +3097,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setVisibility(status.getVisibility());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
                                                 } else if (status.getReblog() != null && status.getReblog().getPoll() != null) {
@@ -3917,7 +3917,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(status.getQuickReplyPrivacy());
         toot.setIn_reply_to_id(in_reply_to_status);
-        toot.setContent(status.getQuickReplyContent());
+        toot.setContent(context, status.getQuickReplyContent());
         new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         status.setQuickReplyPrivacy(null);
         status.setQuickReplyContent(null);
@@ -4151,7 +4151,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setVisibility(statusForQuickReply.getQuickReplyPrivacy());
         }
         if (statusForQuickReply.getQuickReplyContent() != null) {
-            toot.setContent(statusForQuickReply.getQuickReplyContent().trim());
+            toot.setContent(context, statusForQuickReply.getQuickReplyContent().trim());
         }
 
         toot.setIn_reply_to_id(tootReply.getId());

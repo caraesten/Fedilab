@@ -120,6 +120,7 @@ import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFA
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.LANGUAGE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.MENU;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.PRIVACY;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
 public class ContentSettingsFragment extends Fragment implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
@@ -380,6 +381,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
         LinearLayout settings_interface = rootView.findViewById(R.id.settings_interface);
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
+        LinearLayout settings_privacy = rootView.findViewById(R.id.settings_privacy);
         LinearLayout settings_hide_menu = rootView.findViewById(R.id.settings_hide_menu);
         LinearLayout settings_translation = rootView.findViewById(R.id.settings_translation);
 
@@ -394,6 +396,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             settings_interface.setVisibility(View.VISIBLE);
         } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
+        } else if (type == PRIVACY) {
+            settings_privacy.setVisibility(View.VISIBLE);
         } else if (type == MENU) {
             settings_hide_menu.setVisibility(View.VISIBLE);
         } else if (type == LANGUAGE) {
@@ -941,6 +945,20 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 } else {
                     editor.putString(Helper.SET_CUSTOM_USER_AGENT, null);
                 }
+                editor.apply();
+            }
+        });
+
+
+        final SwitchCompat set_utm_parameters = rootView.findViewById(R.id.set_utm_parameters);
+        boolean utm_parameters = sharedpreferences.getBoolean(Helper.SET_FILTER_UTM, true);
+        set_utm_parameters.setChecked(utm_parameters);
+
+        set_utm_parameters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_FILTER_UTM, set_utm_parameters.isChecked());
                 editor.apply();
             }
         });
@@ -2667,6 +2685,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         NOTIFICATIONS,
         INTERFACE,
         COMPOSE,
+        PRIVACY,
         LANGUAGE,
         MENU,
         COLORS

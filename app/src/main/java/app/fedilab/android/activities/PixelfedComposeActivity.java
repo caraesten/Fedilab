@@ -1277,7 +1277,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         toot.setSensitive(isSensitive);
         toot.setVisibility(visibility);
         toot.setMedia_attachments(attachments);
-        toot.setContent(tootContent);
+        toot.setContent(PixelfedComposeActivity.this, tootContent);
         if (timestamp == null)
             if (scheduledstatus == null)
                 new PostStatusAsyncTask(getApplicationContext(), social, account, toot, PixelfedComposeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1960,7 +1960,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         toot.setSensitive(isSensitive);
         toot.setMedia_attachments(attachments);
         toot.setVisibility(visibility);
-        toot.setContent(currentContent);
+        toot.setContent(PixelfedComposeActivity.this, currentContent);
 
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

@@ -442,6 +442,7 @@ public class Helper {
     public static final String SET_INVIDIOUS_HOST = "set_invidious_host";
     public static final String DEFAULT_INVIDIOUS_HOST = "invidio.us";
 
+    public static final String SET_FILTER_UTM = "set_filter_utm";
     public static final String SET_NITTER = "set_nitter";
     public static final String SET_NITTER_HOST = "set_nitter_host";
     public static final String DEFAULT_NITTER_HOST = "nitter.net";
@@ -4106,14 +4107,18 @@ public class Helper {
         }
     }
 
-    public static String remove_tracking_param(String original_content) {
+    public static String remove_tracking_param(Context context, String original_content) {
         if (original_content == null)
             return original_content;
         String cleaned_content = original_content;
-        for (String utm : UTM_PARAMS) {
-            cleaned_content = cleaned_content.replaceAll("&amp;" + utm + "=[0-9a-zA-Z._-]*", "");
-            cleaned_content = cleaned_content.replaceAll("&" + utm + "=[0-9a-zA-Z._-]*", "");
-            cleaned_content = cleaned_content.replaceAll("\\?" + utm + "=[0-9a-zA-Z._-]*", "?");
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean utm_parameters = sharedpreferences.getBoolean(Helper.SET_FILTER_UTM, true);
+        if( utm_parameters ) {
+            for (String utm : UTM_PARAMS) {
+                cleaned_content = cleaned_content.replaceAll("&amp;" + utm + "=[0-9a-zA-Z._-]*", "");
+                cleaned_content = cleaned_content.replaceAll("&" + utm + "=[0-9a-zA-Z._-]*", "");
+                cleaned_content = cleaned_content.replaceAll("\\?" + utm + "=[0-9a-zA-Z._-]*", "?");
+            }
         }
         return cleaned_content;
     }

@@ -413,7 +413,7 @@ public class PeertubeAPI {
                 status.setUrl(comment.get("url").toString());
                 status.setSensitive(false);
                 status.setSpoiler_text("");
-                status.setContent(comment.get("text").toString());
+                status.setContent(context, comment.get("text").toString());
                 status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
                 status.setAccount(parseAccountResponsePeertube(context, comment.getJSONObject("account")));
                 status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));

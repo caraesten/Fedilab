@@ -306,9 +306,9 @@ public class GNUAPI {
             else if (resobj.has("sender"))
                 status.setAccount(parseAccountResponse(context, resobj.getJSONObject("sender")));
             if (resobj.has("statusnet_html"))
-                status.setContent(resobj.get("statusnet_html").toString());
+                status.setContent(context, resobj.get("statusnet_html").toString());
             else if (resobj.has("text"))
-                status.setContent(resobj.get("text").toString());
+                status.setContent(context, resobj.get("text").toString());
             if (resobj.has("fave_num"))
                 status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
             else
@@ -379,7 +379,7 @@ public class GNUAPI {
             } catch (Exception e) {
                 status.setVisibility("public");
             }
-            status.setContent(resobj.get("text").toString());
+            status.setContent(context, resobj.get("text").toString());
         } catch (JSONException ignored) {
         }
         return status;

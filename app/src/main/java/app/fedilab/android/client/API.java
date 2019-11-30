@@ -377,7 +377,7 @@ public class API {
                 status.setUrl(comment.get("url").toString());
                 status.setSensitive(false);
                 status.setSpoiler_text("");
-                status.setContent(comment.get("text").toString());
+                status.setContent(context, comment.get("text").toString());
                 status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
                 status.setAccount(parseAccountResponsePeertube(context, instance, comment.getJSONObject("account")));
                 status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));
@@ -652,7 +652,7 @@ public class API {
             status.setApplication(application);
 
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
-            status.setContent(resobj.get("content").toString());
+            status.setContent(context, resobj.get("content").toString());
             if (!resobj.isNull("favourites_count")) {
                 status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
             } else {
@@ -750,7 +750,7 @@ public class API {
             } catch (Exception e) {
                 status.setVisibility("public");
             }
-            status.setContent(resobj.get("text").toString());
+            status.setContent(context, resobj.get("text").toString());
         } catch (JSONException ignored) {
         }
         return status;
@@ -850,7 +850,7 @@ public class API {
 
             status.setAccount(parseMisskeyAccountResponse(context, instance, resobj.getJSONObject("user")));
 
-            status.setContent(resobj.get("text").toString());
+            status.setContent(context, resobj.get("text").toString());
             try {
                 status.setReplies_count(Integer.valueOf(resobj.get("repliesCount").toString()));
             } catch (Exception e) {

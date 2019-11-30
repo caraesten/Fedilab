@@ -1469,9 +1469,9 @@ public class Status implements Parcelable {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(Context context, String content) {
         //Remove UTM by default
-        this.content = Helper.remove_tracking_param(content);
+        this.content = Helper.remove_tracking_param(context, content);
     }
 
     public boolean isShortReply() {
