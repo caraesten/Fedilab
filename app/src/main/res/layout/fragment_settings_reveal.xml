@@ -719,7 +719,7 @@
 
                             <ImageButton
                                 android:id="@+id/set_allow_live_notifications_others"
-                                style="@style/Base.Widget.AppCompat.Button.Colored"
+                                style="@style/colored_button"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="end"
@@ -764,7 +764,7 @@
 
                         <ImageButton
                             android:id="@+id/set_hide_status_bar"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:contentDescription="@string/bookmark_add"
@@ -809,7 +809,7 @@
 
                         <Button
                             android:id="@+id/set_notif_sound"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/settings_option_margin"
@@ -833,7 +833,7 @@
 
                                 <Button
                                     android:id="@+id/sound_mention"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -844,7 +844,7 @@
 
                                 <Button
                                     android:id="@+id/sound_follow"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -861,7 +861,7 @@
 
                                 <Button
                                     android:id="@+id/sound_boost"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -872,7 +872,7 @@
 
                                 <Button
                                     android:id="@+id/sound_fav"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -890,7 +890,7 @@
 
                                 <Button
                                     android:id="@+id/sound_poll"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -901,7 +901,7 @@
 
                                 <Button
                                     android:id="@+id/sound_media"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -918,7 +918,7 @@
 
                                 <Button
                                     android:id="@+id/sound_backup"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                                    style="@style/colored_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -1145,6 +1145,7 @@
                                 android:text="@string/settings_time_from" />
 
                             <Button
+                                style="@style/colored_button"
                                 android:id="@+id/settings_time_from"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -1156,6 +1157,7 @@
                                 android:text="@string/settings_time_to" />
 
                             <Button
+                                style="@style/colored_button"
                                 android:id="@+id/settings_time_to"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -1955,7 +1957,7 @@
 
                         <ImageButton
                             android:id="@+id/btn_select_icon"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
@@ -2301,7 +2303,7 @@
 
                         <ImageButton
                             android:id="@+id/set_toot_visibility"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
@@ -2630,7 +2632,7 @@
 
                     <Button
                         android:id="@+id/update_tracking_domains"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
+                        style="@style/colored_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -3102,7 +3104,7 @@
 
                     <Button
                         android:id="@+id/validate"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
+                        style="@style/colored_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -3187,7 +3189,7 @@
 
                         <Button
                             android:id="@+id/about_translation"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
