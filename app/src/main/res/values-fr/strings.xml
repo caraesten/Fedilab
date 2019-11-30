@@ -1021,10 +1021,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="agreement_check_peertube">J\'ai au moins 16 ans et je suis d\'accord avec les %1$s de cette instance</string>
     <string name="link_color_title">Liens</string>
     <string name="link_color">Changer la couleur des liens (URL, mentions, tags, etc.) dans les messages</string>
-    <string name="boost_header_color_title">Reblogs header</string>
+    <string name="boost_header_color_title">En-tête des partages</string>
     <string name="displayname_title">Changer la couleur du nom affiché en haut des messages</string>
     <string name="username_title">Changer la couleur du nom de l\'utilisateur en haut des messages</string>
-    <string name="boost_header_color">Change the color of the header for reblogs</string>
+    <string name="boost_header_color">Modifie la couleur de l’en-tête des partages</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Couleur du fond des post des fils</string>
     <string name="reset_color">Réinitialiser les couleurs</string>
@@ -1062,7 +1062,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="pref_theme_title">Thèmes</string>
     <string name="pref_colored_navigation_bar_summary">Appliquer la couleur principale à la barre de navigation</string>
     <string name="pref_colored_navigation_bar_title">Couleur de la barre de navigation</string>
-    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_summary">Couleur sous-jacente du contenu de l’application.</string>
     <string name="pref_background_color_title">Couleur du fond</string>
     <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
     <string name="pref_accent_color_title">Couleur d\'accentuation</string>
@@ -1072,7 +1072,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="import_bookmarks">Importer les signets de l\'instance</string>
     <string name="user_count">Nombre d\'utilisateurs</string>
     <string name="status_count">Nombre de statuts</string>
-    <string name="instance_count">Instance count</string>
+    <string name="instance_count">L’instance comprend</string>
     <string name="blocked">Bloqué</string>
     <string name="poll_finish_in">Fin dans %s</string>
     <string name="release_note_title">Quoi de neuf dans %s</string>
@@ -1082,10 +1082,15 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="share_link">Partager le lien</string>
     <string name="link_copy">L\'url a été copiée dans le presse-papiers</string>
     <string name="open_other_app">Ouvrir avec une autre application</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="check_redirect">Vérifier la redirection</string>
+    <string name="no_redirect">Cette URL ne redirige pas</string>
+    <string name="redirect_detected">%1$s\n\nredirige vers\n\n%2$s</string>
     <string name="set_user_agent">Modifier l\'agent d\'utilisateur</string>
     <string name="set_user_agent_hint">Définir un agent utilisateur personnalisé ou laisser vide</string>
     <string name="set_user_agent_indication">Permet de personnaliser l\'agent de l\'utilisateur utilisé pour les appels de l\'api ou avec le navigateur intégré.</string>
+    <string name="set_utm_parameters">Supprimer les paramètres UTM</string>
+    <string name="set_utm_parameters_indication">L’application supprimera automatiquement les paramètres UTM des URL avant de visiter un lien.</string>
+    <string name="action_trends">Tendances</string>
+    <string name="trending_now">Tendance en ce moment</string>
+    <string name="talking_about">%d personnes en parlent</string>
 </resources>

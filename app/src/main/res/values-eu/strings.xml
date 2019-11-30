@@ -127,20 +127,20 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d e</string>
     <plurals name="date_seconds_polls">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="one">Segundo %d</item>
+        <item quantity="other">%d segundo</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">Minutu %d</item>
+        <item quantity="other">%d minutu</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">Ordu %d</item>
+        <item quantity="other">%d ordu</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">Egun %d</item>
+        <item quantity="other">%d egun</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Abisua</string>
@@ -286,7 +286,7 @@
     <string name="set_notify">Jakinarazi?</string>
     <string name="set_notif_silent">Jakinarazpen isilak</string>
     <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
-    <string name="set_med_desc_timeout">Multimediaren deskripzioaren denbora-muga (segundoak, 0-k desgaituta esan nahi du)</string>
+    <string name="set_med_desc_timeout">Multimediaren deskripzioaren denbora-muga (segundoak, 0 desgaituta esan nahi du)</string>
     <string name="settings_title_profile">Editatu profila</string>
     <string name="settings_title_custom_sharing">Partekatze pertsonalizatua</string>
     <string name="settings_custom_sharing_url">Zure partekatze pertsonalizaturako URL-a&#8230;</string>
@@ -950,7 +950,7 @@
         <item quantity="other">%d boto</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">bozkatzaile %d</item>
+        <item quantity="one">Bozkatzaile %d</item>
         <item quantity="other">%d bozkatzaile</item>
     </plurals>
     <string-array name="poll_choice_type">
@@ -1024,14 +1024,14 @@
     <string name="link_color_title">Estekak</string>
     <string name="link_color">Aldatu mezuetako esteken koloreak (URL-ak, aipamenak, etiketak, eta abar)</string>
     <string name="boost_header_color_title">Bultzaden goiburua</string>
-    <string name="displayname_title">Aldatu mezuen gaineko pantaila-izenaren kolorea</string>
-    <string name="username_title">Aldatu mezuen gaineko erabiltzaile-izenaren kolorea</string>
+    <string name="displayname_title">Aldatu mezuen goialdeko pantaila-izenaren kolorea</string>
+    <string name="username_title">Aldatu mezuen goialdeko erabiltzaile-izenaren kolorea</string>
     <string name="boost_header_color">Aldatu bultzaden goiburuen kolorea</string>
-    <string name="background_status_title">Mezuak</string>
+    <string name="background_status_title">Bidalketak</string>
     <string name="background_status">Mezuen atzealdearen kolorea denbora-lerroetan</string>
     <string name="reset_color">Berrezarri koloreak</string>
-    <string name="clik_reset">Sakatu hemen zure kolore pertsonalizatuak berrezartzeko</string>
-    <string name="reset">Berrezarri</string>
+    <string name="clik_reset">Sakatu hemen zure kolore pertsonalizatu guztiak leheneratzeko</string>
+    <string name="reset">Leheneratu</string>
     <string name="icons_color_title">Ikonoak</string>
     <string name="icons_color">Denbora-lerroen azpialdeko botoien kolorea</string>
     <string name="pin_tag">Finkatu etiketa hau</string>
@@ -1048,7 +1048,7 @@
     <string name="pref_custom_theme">Erabili gai pertsonalizatua</string>
     <string name="pref_custom_theme_summary">Baimendu goian hautatutako gaiaren koloreak gainidaztea</string>
     <string name="theming">Gaiak</string>
-    <string name="store_before">Gorde aurretik</string>
+    <string name="store_before">Lehenbizi gorde</string>
     <string name="data_export_theme">Gaia esportatu da</string>
     <string name="data_export_theme_success">Gaia ongi esportatu da CSV gisa</string>
     <string name="pref_colored_status_bar_summary">Aplikatu kolore nagusia egoera barrari</string>
@@ -1059,35 +1059,40 @@
     <string name="export_theme">Esportatu gaia</string>
     <string name="export_theme_title">Sakatu hemen oraingo gaia esportatzeko</string>
     <string name="theme_file_error">Errore bat gertatu da gaiaren fitxategia hautatzean</string>
-    <string name="label_theme_picker">Theme Picker</string>
-    <string name="pref_theme_summary">Select a pre-installed theme</string>
-    <string name="pref_theme_title">Themes</string>
-    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
-    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
-    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
-    <string name="pref_background_color_title">Background color</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
-    <string name="pref_accent_color_title">Accent color</string>
-    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
-    <string name="pref_primary_color_title">Primary color</string>
+    <string name="label_theme_picker">Gai hautatzailea</string>
+    <string name="pref_theme_summary">Hautatu aurrez instalatutako gai bat</string>
+    <string name="pref_theme_title">Gaiak</string>
+    <string name="pref_colored_navigation_bar_summary">Aplikatu kolore nagusia nabigazio barrari</string>
+    <string name="pref_colored_navigation_bar_title">Nabigazio barraren kolorea</string>
+    <string name="pref_background_color_summary">Aplikazioaren edukien atzeko kolorea.</string>
+    <string name="pref_background_color_title">Atzeko kolorea</string>
+    <string name="pref_accent_color_summary">Interfazearen atal hautatuak nabarmentzen ditu.</string>
+    <string name="pref_accent_color_title">Nabarmentze kolorea</string>
+    <string name="pref_primary_color_summary">Zure aplikazioan gehien erabiliko dena.</string>
+    <string name="pref_primary_color_title">Kolore nagusia</string>
     <string name="export_bookmarks">Esportatu gogokoak instantziara</string>
     <string name="import_bookmarks">Inportatu gogokoak instantziatik</string>
     <string name="user_count">Erabiltzaile kopurua</string>
     <string name="status_count">Mezu kopurua</string>
     <string name="instance_count">Instantzia kopurua</string>
     <string name="blocked">Blokeatuta</string>
-    <string name="poll_finish_in">End in %s</string>
-    <string name="release_note_title">What\'s new in %s</string>
-    <string name="follow_account_update">You can follow my account for updates</string>
-    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
-    <string name="display_full_link">Display full link</string>
-    <string name="share_link">Share link</string>
-    <string name="link_copy">The URL has been copied to the clipboard</string>
-    <string name="open_other_app">Open with another app</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="poll_finish_in">Amaitzeko %s</string>
+    <string name="release_note_title">Zer dago berri %s bertsioan</string>
+    <string name="follow_account_update">Nire kontua jarraitu dezakezu eguneraketetarako</string>
+    <string name="no_instance_reccord">Instantzia hau ez dago eskuragarri https://instances.social gunean</string>
+    <string name="display_full_link">Erakutsi esteka osoa</string>
+    <string name="share_link">Partekatu esteka</string>
+    <string name="link_copy">URL-a arbelera kopiatu da</string>
+    <string name="open_other_app">Ireki beste aplikazio batekin</string>
+    <string name="check_redirect">Egiaztatu birbideratzea</string>
+    <string name="no_redirect">URL honek ez du birbideratzen</string>
+    <string name="redirect_detected">%1$s \n\n helbideak \n\n %2$s helbidera birbideratzen du</string>
+    <string name="set_user_agent">Aldatu erabiltzaile-agentea</string>
+    <string name="set_user_agent_hint">Ezarri erabiltzaile-agente pertsonalizatu bat edo laga hutsik</string>
+    <string name="set_user_agent_indication">API deietarako eta barne nabigatzailean erabilitako erabiltzaile-agentea pertsonalizatzeko aukera ematen du.</string>
+    <string name="set_utm_parameters">Kendu UTM parametroak</string>
+    <string name="set_utm_parameters_indication">Aplikazioak automatikoki kenduko ditu URL baten UTM parametroak hau bisitatu aurretik.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
 </resources>

@@ -1075,11 +1075,16 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="display_full_link">Mostra l\'enllaç sencer</string>
     <string name="share_link">Compartir enllaç</string>
     <string name="link_copy">S\'ha copiat l\'URL al porta-retalls</string>
-    <string name="open_other_app">Open with another app</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
+    <string name="open_other_app">Obre amb una altra aplicació</string>
+    <string name="check_redirect">Comprova la redirecció</string>
+    <string name="no_redirect">El redireccionament de la URL no funciona</string>
     <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
     <string name="set_user_agent">Change the user agent</string>
     <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Eliminar seguiments de màrketing (UTM)</string>
+    <string name="set_utm_parameters_indication">L\'aplicació eliminarà automàticament els seguiments de màrketing (UTM) dels URL abans de seguir un enllaç.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
 </resources>
