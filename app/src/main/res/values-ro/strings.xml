@@ -1098,4 +1098,6 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="set_user_agent">Change the user agent</string>
     <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
 </resources>
