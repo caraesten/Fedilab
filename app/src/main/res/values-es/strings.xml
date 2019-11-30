@@ -1087,7 +1087,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_user_agent_indication">Permite personalizar el agente de usuario que se utiliza para las llamadas a la api o con el navegador integrado.</string>
     <string name="set_utm_parameters">Eliminar parámetros UTM</string>
     <string name="set_utm_parameters_indication">La aplicación eliminará automáticamente los parámetros UTM de las URLs antes de visitar un enlace.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="action_trends">Tendencias</string>
+    <string name="trending_now">Tendencia ahora</string>
+    <string name="talking_about">%d personas hablando</string>
 </resources>
