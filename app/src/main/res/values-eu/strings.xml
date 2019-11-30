@@ -287,7 +287,7 @@
     <string name="set_notify">Jakinarazi?</string>
     <string name="set_notif_silent">Jakinarazpen isilak</string>
     <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
-    <string name="set_med_desc_timeout">Multimediaren deskripzioaren denbora-muga (segundoak, 0-k desgaituta esan nahi du)</string>
+    <string name="set_med_desc_timeout">Multimediaren deskripzioaren denbora-muga (segundoak, 0 desgaituta esan nahi du)</string>
     <string name="settings_title_profile">Editatu profila</string>
     <string name="settings_title_custom_sharing">Partekatze pertsonalizatua</string>
     <string name="settings_custom_sharing_url">Zure partekatze pertsonalizaturako URL-a&#8230;</string>
@@ -951,7 +951,7 @@
         <item quantity="other">%d boto</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">bozkatzaile %d</item>
+        <item quantity="one">Bozkatzaile %d</item>
         <item quantity="other">%d bozkatzaile</item>
     </plurals>
     <string-array name="poll_choice_type">
@@ -1025,14 +1025,14 @@
     <string name="link_color_title">Estekak</string>
     <string name="link_color">Aldatu mezuetako esteken koloreak (URL-ak, aipamenak, etiketak, eta abar)</string>
     <string name="boost_header_color_title">Bultzaden goiburua</string>
-    <string name="displayname_title">Aldatu mezuen gaineko pantaila-izenaren kolorea</string>
-    <string name="username_title">Aldatu mezuen gaineko erabiltzaile-izenaren kolorea</string>
+    <string name="displayname_title">Aldatu mezuen goialdeko pantaila-izenaren kolorea</string>
+    <string name="username_title">Aldatu mezuen goialdeko erabiltzaile-izenaren kolorea</string>
     <string name="boost_header_color">Aldatu bultzaden goiburuen kolorea</string>
-    <string name="background_status_title">Mezuak</string>
+    <string name="background_status_title">Bidalketak</string>
     <string name="background_status">Mezuen atzealdearen kolorea denbora-lerroetan</string>
     <string name="reset_color">Berrezarri koloreak</string>
-    <string name="clik_reset">Sakatu hemen zure kolore pertsonalizatuak berrezartzeko</string>
-    <string name="reset">Berrezarri</string>
+    <string name="clik_reset">Sakatu hemen zure kolore pertsonalizatu guztiak leheneratzeko</string>
+    <string name="reset">Leheneratu</string>
     <string name="icons_color_title">Ikonoak</string>
     <string name="icons_color">Denbora-lerroen azpialdeko botoien kolorea</string>
     <string name="pin_tag">Finkatu etiketa hau</string>
@@ -1092,5 +1092,5 @@
     <string name="set_user_agent_hint">Ezarri erabiltzaile-agente pertsonalizatu bat edo laga hutsik</string>
     <string name="set_user_agent_indication">API deietarako eta barne nabigatzailean erabilitako erabiltzaile-agentea pertsonalizatzeko aukera ematen du.</string>
     <string name="set_utm_parameters">Kendu UTM parametroak</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="set_utm_parameters_indication">Aplikazioak automatikoki kenduko ditu URL baten UTM parametroak bisitatu aurretik.</string>
 </resources>
