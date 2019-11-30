@@ -784,7 +784,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -799,7 +799,7 @@
                                 android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -941,7 +941,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -956,7 +956,7 @@
                                 android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -1086,7 +1086,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -1101,7 +1101,7 @@
                                 android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -1180,7 +1180,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -1195,7 +1195,7 @@
                                 android:textColor="?colorAccent"
                                 android:textSize="16sp" />
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_margin="10dp"
@@ -1419,7 +1419,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1434,7 +1434,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1519,7 +1519,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1534,7 +1534,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1583,7 +1583,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1598,7 +1598,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -2742,7 +2742,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -2757,7 +2757,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -2955,12 +2955,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?colorAccent" />
+                            android:background="?colorAccent"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -2970,12 +2970,12 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?colorAccent" />
+                            android:background="?colorAccent"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -3053,12 +3053,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?colorAccent" />
+                            android:background="?colorAccent"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -3068,7 +3068,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"

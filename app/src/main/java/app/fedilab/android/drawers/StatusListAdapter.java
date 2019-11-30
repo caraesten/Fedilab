@@ -689,11 +689,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_reply_indicator_top.setVisibility(View.VISIBLE);
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);
                     if (holder.status_reply_indicator_diag_top != null) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top_android4);
-                        } else {
-                            holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top);
-                        }
+                        holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top);
                         holder.status_reply_indicator_diag_top.setVisibility(View.VISIBLE);
                     }
                 }
@@ -701,12 +697,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);
                     holder.status_reply_indicator_bottom.setVisibility(View.VISIBLE);
                     if (holder.status_reply_indicator_diag_bottom != null) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom_android4);
-                        } else {
-                            holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
-                        }
-
+                        holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
                         holder.status_reply_indicator_diag_bottom.setVisibility(View.VISIBLE);
                     }
                 }
@@ -2047,11 +2038,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.isTranslationShown() && status.getContentSpanTranslated() != null) {
                 holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
                 holder.status_content_translated_container.setVisibility(View.VISIBLE);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    holder.translation_border_view.setBackgroundResource(R.drawable.translation_border_android4);
-                } else {
-                    holder.translation_border_view.setBackgroundResource(R.drawable.translation_border);
-                }
+                holder.translation_border_view.setBackgroundResource(R.drawable.translation_border);
 
             } else { //Toot is not translated
                 holder.status_content_translated_container.setVisibility(View.GONE);
