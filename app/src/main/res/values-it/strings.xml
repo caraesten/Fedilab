@@ -1093,5 +1093,5 @@
     <string name="set_user_agent_hint">Imposta un agente utente personalizzato o lascia vuoto</string>
     <string name="set_user_agent_indication">Permetti la personalizzazione dell\'agente utente utilizzata per le chiamate dell\'API o con il browser integrato.</string>
     <string name="set_utm_parameters">Rimuovi parametri UTM</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="set_utm_parameters_indication">L\'app rimuoverà automaticamente i parametri UTM dagli URL prima di aprire un collegamento.</string>
 </resources>
