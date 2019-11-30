@@ -1089,4 +1089,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_user_agent">Modifier l\'agent d\'utilisateur</string>
     <string name="set_user_agent_hint">Définir un agent utilisateur personnalisé ou laisser vide</string>
     <string name="set_user_agent_indication">Permet de personnaliser l\'agent de l\'utilisateur utilisé pour les appels de l\'api ou avec le navigateur intégré.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
 </resources>
