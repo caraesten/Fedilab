@@ -1093,5 +1093,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_utm_parameters_indication">L’application supprimera automatiquement les paramètres UTM des URL avant de visiter un lien.</string>
     <string name="action_trends">Tendances</string>
     <string name="trending_now">Tendance en ce moment</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="talking_about">%d personnes en parlent</string>
 </resources>
