@@ -15,14 +15,23 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/account_container"
+    android:id="@+id/trends_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:divider="?android:dividerHorizontal"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingStart="@dimen/fab_margin"
+    android:paddingEnd="@dimen/fab_margin"
+    android:showDividers="end">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
@@ -30,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tag_stats"
@@ -42,19 +51,13 @@
     <TextView
         android:id="@+id/count"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="50dp"
+        android:textSize="25sp"
         android:layout_height="wrap_content"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="2"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        />
     </LinearLayout>
-
 </LinearLayout>

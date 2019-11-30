@@ -18,16 +18,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -43,6 +47,7 @@ import app.fedilab.android.R;
 import app.fedilab.android.activities.HashTagActivity;
 import app.fedilab.android.client.Entities.Trends;
 import app.fedilab.android.client.Entities.TrendsHistory;
+import app.fedilab.android.helper.Helper;
 
 
 /**
@@ -82,12 +87,13 @@ public class TrendsAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        final String tag = (String) getItem(position);
+        final Trends trend = (Trends) getItem(position);
         final ViewHolderTag holder;
         View v = convertView;
         if (v == null) {
             v = layoutInflater.inflate(R.layout.drawer_tag_trends, parent, false);
             holder = new ViewHolderTag();
+            holder.trends_container = v.findViewById(R.id.trends_container);
             holder.tag_name = v.findViewById(R.id.tag_name);
             holder.tag_stats = v.findViewById(R.id.tag_stats);
             holder.count = v.findViewById(R.id.count);
@@ -96,7 +102,6 @@ public class TrendsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolderTag) v.getTag();
         }
-        Trends trend = trends.get(position);
         List<TrendsHistory> trendsHistory = trend.getTrendsHistory();
         int people = 0;
         int days = 0;
@@ -111,16 +116,15 @@ public class TrendsAdapter extends BaseAdapter {
         }
         people = people / days;
         uses = uses / days;
-        holder.count.setText(uses);
+        holder.count.setText(String.valueOf(uses));
         holder.tag_stats.setText(context.getString(R.string.talking_about, people));
-        holder.tag_name.setText(String.format("#%s", tag));
-        holder.tag_name.setPaintFlags(holder.tag_name.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        holder.tag_name.setOnClickListener(new View.OnClickListener() {
+        holder.tag_name.setText(String.format("#%s", trend.getName()));
+        holder.trends_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, HashTagActivity.class);
                 Bundle b = new Bundle();
-                b.putString("tag", tag.trim());
+                b.putString("tag", trend.getName().trim());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
@@ -132,32 +136,29 @@ public class TrendsAdapter extends BaseAdapter {
         Iterator it = tendency.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            trendsEntry.add(new Entry((long) pair.getKey(), (int) pair.getValue()));
+            trendsEntry.add(0, new Entry((long) pair.getKey(), (int) pair.getValue()));
             it.remove();
         }
-        LineDataSet dataSetBoosts = new LineDataSet(trendsEntry,context.getString(R.string.trending));
-        dataSetBoosts.setColor(ContextCompat.getColor(context, R.color.colorAccent));
-        dataSetBoosts.setValueTextSize(10f);
-        dataSetBoosts.setValueTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-        dataSetBoosts.setFillColor(ContextCompat.getColor(context, R.color.colorAccent));
-        dataSetBoosts.setDrawValues(false);
-        dataSetBoosts.setDrawFilled(true);
-        dataSetBoosts.setDrawCircles(false);
-        dataSetBoosts.setDrawCircleHole(false);
-        dataSetBoosts.setLineWidth(2f);
-        dataSetBoosts.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-
+        LineDataSet dataTrending = new LineDataSet(trendsEntry,context.getString(R.string.trending));
+        dataTrending.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        dataTrending.setValueTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+        dataTrending.setFillColor(ContextCompat.getColor(context, R.color.colorAccent));
+        dataTrending.setDrawValues(false);
+        dataTrending.setDrawFilled(true);
+        dataTrending.setDrawCircles(false);
+        dataTrending.setDrawCircleHole(false);
+        holder.chart.getAxis(YAxis.AxisDependency.LEFT).setEnabled(false);
+        holder.chart.getAxis(YAxis.AxisDependency.RIGHT).setEnabled(false);
+        holder.chart.getXAxis().setEnabled(false);
+        holder.chart.getLegend().setEnabled(false);
+        holder.chart.setTouchEnabled(false);
+        dataTrending.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        Description description = holder.chart.getDescription();
+        description.setEnabled(false);
         List<ILineDataSet> dataSets = new ArrayList<>();
 
 
-        dataSets.add(dataSetBoosts);
-        //X axis
-        XAxis xAxis = holder.chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelRotationAngle(45);
-        xAxis.setTextSize(14f);
-        xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(false);
+        dataSets.add(dataTrending);
 
         LineData data = new LineData(dataSets);
         holder.chart.setData(data);
@@ -168,6 +169,7 @@ public class TrendsAdapter extends BaseAdapter {
 
 
     private class ViewHolderTag {
+        LinearLayout trends_container;
         TextView tag_name;
         TextView tag_stats;
         TextView count;

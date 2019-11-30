@@ -115,7 +115,11 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                     finish();
                 }
             });
-            toolbar_title.setText(search);
+            if( !forTrends) {
+                toolbar_title.setText(search);
+            }else{
+                toolbar_title.setText(getString(R.string.trending_now));
+            }
         }
         if( !forTrends) {
             setTitle(search);
@@ -154,13 +158,13 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if (apiResponse.getResults() == null || (apiResponse.getResults().getAccounts().size() == 0 && apiResponse.getResults().getStatuses().size() == 0 && apiResponse.getResults().getHashtags().size() == 0)) {
-            RelativeLayout no_result = findViewById(R.id.no_result);
-            no_result.setVisibility(View.VISIBLE);
-            return;
-        }
         lv_search.setVisibility(View.VISIBLE);
         if (!forTrends) {
+            if (apiResponse.getResults() == null || (apiResponse.getResults().getAccounts().size() == 0 && apiResponse.getResults().getStatuses().size() == 0 && apiResponse.getResults().getHashtags().size() == 0)) {
+                RelativeLayout no_result = findViewById(R.id.no_result);
+                no_result.setVisibility(View.VISIBLE);
+                return;
+            }
             List<String> tags = apiResponse.getResults().getHashtags();
             List<Account> accounts = apiResponse.getResults().getAccounts();
             List<Status> statuses = apiResponse.getResults().getStatuses();
@@ -169,6 +173,11 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             lv_search.setAdapter(searchListAdapter);
             searchListAdapter.notifyDataSetChanged();
         } else {
+            if (apiResponse.getTrends() == null || apiResponse.getTrends().size() == 0 ) {
+                RelativeLayout no_result = findViewById(R.id.no_result);
+                no_result.setVisibility(View.VISIBLE);
+                return;
+            }
             List<Trends> trends = apiResponse.getTrends();
             TrendsAdapter trendsAdapter = new TrendsAdapter(SearchResultActivity.this, trends);
             lv_search.setAdapter(trendsAdapter);

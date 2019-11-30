@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -4727,11 +4728,11 @@ public class API {
      */
     public APIResponse getTrends() {
 
-        List<Trends> trends = new ArrayList<>();
+        List<Trends> trends;
         apiResponse = new APIResponse();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUr2l("/trends"), 10, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/trends"), 10, null, null);
             trends = parseTrends(new JSONArray(response));
             apiResponse.setTrends(trends);
         } catch (HttpsConnection.HttpsConnectionException e) {
