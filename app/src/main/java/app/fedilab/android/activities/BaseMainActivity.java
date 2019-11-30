@@ -1766,6 +1766,13 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
             startActivity(myIntent);
             return false;
+        }if (id == R.id.nav_trends) {
+            Intent myIntent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
+            Bundle b = new Bundle();
+            b.putString("search", "fedilab_trend");
+            myIntent.putExtras(b);
+            startActivity(myIntent);
+            return false;
         } else if (id == R.id.nav_archive_notifications) {
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerNotificationActivity.class);
             startActivity(myIntent);

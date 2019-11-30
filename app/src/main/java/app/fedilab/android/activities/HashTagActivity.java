@@ -79,9 +79,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
@@ -96,8 +93,9 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
-        if (b != null)
+        if (b != null) {
             tag = b.getString("tag", null);
+        }
         if (tag == null)
             finish();
         statuses = new ArrayList<>();

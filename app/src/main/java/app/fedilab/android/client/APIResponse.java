@@ -37,6 +37,7 @@ import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
+import app.fedilab.android.client.Entities.Trends;
 
 /**
  * Created by Thomas on 03/06/2017.
@@ -71,6 +72,7 @@ public class APIResponse {
     private List<Report> reports = null;
     private Context context = null;
     private PixelFedStory pixelFedStory = null;
+    private List<Trends> trends = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -286,5 +288,13 @@ public class APIResponse {
 
     public void setPixelFedStory(PixelFedStory pixelFedStory) {
         this.pixelFedStory = pixelFedStory;
+    }
+
+    public List<Trends> getTrends() {
+        return trends;
+    }
+
+    public void setTrends(List<Trends> trends) {
+        this.trends = trends;
     }
 }

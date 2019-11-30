@@ -41,7 +41,9 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Entities.Trends;
 import app.fedilab.android.drawers.SearchListAdapter;
+import app.fedilab.android.drawers.TrendsAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchStatusInterface;
@@ -59,6 +61,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     private String search;
     private ListView lv_search;
     private RelativeLayout loader;
+    private boolean forTrends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +72,13 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;
             default:
                 setTheme(R.style.AppThemeDark);
         }
-
+        forTrends = false;
         setContentView(R.layout.activity_search_result);
 
         loader = findViewById(R.id.loader);
@@ -93,6 +93,9 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         } else {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
+        }
+        if( search.compareTo("fedilab_trend") == 0 ) {
+            forTrends = true;
         }
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,7 +117,11 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             });
             toolbar_title.setText(search);
         }
-        setTitle(search);
+        if( !forTrends) {
+            setTitle(search);
+        }else{
+            setTitle(R.string.trending_now);
+        }
         loader.setVisibility(View.VISIBLE);
         lv_search.setVisibility(View.GONE);
 
@@ -153,14 +160,20 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             return;
         }
         lv_search.setVisibility(View.VISIBLE);
-        List<String> tags = apiResponse.getResults().getHashtags();
-        List<Account> accounts = apiResponse.getResults().getAccounts();
-        List<Status> statuses = apiResponse.getResults().getStatuses();
+        if (!forTrends) {
+            List<String> tags = apiResponse.getResults().getHashtags();
+            List<Account> accounts = apiResponse.getResults().getAccounts();
+            List<Status> statuses = apiResponse.getResults().getStatuses();
 
-        SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
-        lv_search.setAdapter(searchListAdapter);
-        searchListAdapter.notifyDataSetChanged();
-
+            SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
+            lv_search.setAdapter(searchListAdapter);
+            searchListAdapter.notifyDataSetChanged();
+        } else {
+            List<Trends> trends = apiResponse.getTrends();
+            TrendsAdapter trendsAdapter = new TrendsAdapter(SearchResultActivity.this, trends);
+            lv_search.setAdapter(trendsAdapter);
+            trendsAdapter.notifyDataSetChanged();
+        }
     }
 
 

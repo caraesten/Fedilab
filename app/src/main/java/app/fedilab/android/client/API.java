@@ -78,6 +78,8 @@ import app.fedilab.android.client.Entities.Schedule;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.Tag;
+import app.fedilab.android.client.Entities.Trends;
+import app.fedilab.android.client.Entities.TrendsHistory;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -4711,13 +4713,31 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        return apiResponse;
+    }
+
+
+    /**
+     * Retrieves trends for Mastodon *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getTrends() {
+
+        List<Trends> trends = new ArrayList<>();
+        apiResponse = new APIResponse();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUr2l("/trends"), 10, null, prefKeyOauthTokenT);
+            trends = parseTrends(new JSONArray(response));
+            apiResponse.setTrends(trends);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
@@ -5558,6 +5578,63 @@ public class API {
         }
         return peertubes;
     }
+
+
+    /**
+     * Parse json response for several trends
+     *
+     * @param jsonArray JSONArray
+     * @return List<Trends>
+     */
+    private List<Trends> parseTrends(JSONArray jsonArray) {
+
+        List<Trends> trends = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Trends trend = parseTrends(resobj);
+                i++;
+                trends.add(trend);
+            }
+
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return trends;
+    }
+
+    /**
+     * Parse json response for unique trend
+     *
+     * @param resobj JSONObject
+     * @return Trend
+     */
+    private Trends parseTrends(JSONObject resobj) {
+        Trends trend = new Trends();
+        try {
+           trend.setName(resobj.getString("name"));
+           trend.setUrl(resobj.getString("url"));
+           List<TrendsHistory> historyList = new ArrayList<>();
+           if( resobj.has("history")) {
+               JSONArray histories = resobj.getJSONArray("history");
+               for(int i = 0 ; i < histories.length() ; i++ ) {
+                   JSONObject hystory = histories.getJSONObject(i);
+                   TrendsHistory trendsHistory = new TrendsHistory();
+                   trendsHistory.setDays(hystory.getLong("day"));
+                   trendsHistory.setUses(hystory.getInt("uses"));
+                   trendsHistory.setAccounts(hystory.getInt("accounts"));
+                   historyList.add(trendsHistory);
+               }
+           }
+           trend.setTrendsHistory(historyList);
+        } catch (JSONException ignored) {
+        }
+        return trend;
+    }
+
+
 
     /**
      * Parse json response for several conversations
