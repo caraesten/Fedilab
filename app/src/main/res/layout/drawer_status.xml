@@ -543,7 +543,7 @@
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/videos"
                                 android:src="@drawable/ic_play_arrow"
-                                android:tint="@color/white" />
+                               />
 
                         </RelativeLayout>
 
@@ -598,7 +598,6 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
-                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -624,7 +623,6 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
-                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
                                 </LinearLayout>
@@ -658,7 +656,6 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
-                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -683,7 +680,6 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
-                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
                                 </LinearLayout>
@@ -771,7 +767,6 @@
                                         android:layout_centerInParent="true"
                                         android:contentDescription="@string/play_video"
                                         android:src="@drawable/ic_play_arrow"
-                                        android:tint="@color/white"
                                         android:visibility="gone" />
                                 </RelativeLayout>
 
@@ -803,7 +798,6 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
-                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
@@ -828,7 +822,6 @@
                                             android:layout_centerInParent="true"
                                             android:contentDescription="@string/play_video"
                                             android:src="@drawable/ic_play_arrow"
-                                            android:tint="@color/white"
                                             android:visibility="gone" />
                                     </RelativeLayout>
 
