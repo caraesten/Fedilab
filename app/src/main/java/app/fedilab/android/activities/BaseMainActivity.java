@@ -1141,10 +1141,12 @@ public abstract class BaseMainActivity extends BaseActivity
         MenuFloating.tags = new ArrayList<>();
         Helper.updateHeaderAccountInfo(activity, account, headerLayout);
         //Locked account can see follow request
-        if (account.isLocked()) {
-            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-        } else {
-            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA ) {
+            if (account.isLocked()) {
+                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            }
         }
 
         if (!BuildConfig.DONATIONS) {

@@ -1686,7 +1686,7 @@ public class Helper {
                     nav_filters.setVisible(false);
                 MenuItem nav_follow_request = menu.findItem(R.id.nav_follow_request);
                 if (nav_follow_request != null)
-                    nav_follow_request.setVisible(false);
+                    nav_follow_request.setVisible(true);
                 MenuItem nav_who_to_follow = menu.findItem(R.id.nav_who_to_follow);
                 if (nav_who_to_follow != null)
                     nav_who_to_follow.setVisible(false);
@@ -3138,12 +3138,14 @@ public class Helper {
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity, db).getUniqAccount(userID, instance);
         if (account != null) {
-            if (account.isLocked()) {
-                if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-            } else {
-                if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA && social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if (account.isLocked()) {
+                    if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                        navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+                } else {
+                    if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                        navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+                }
             }
 
             if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {

@@ -19,8 +19,10 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.interfaces.OnRetrieveAccountsInterface;
 
 
@@ -45,8 +47,11 @@ public class RetrieveFollowRequestSentAsyncTask extends AsyncTask<Void, Void, Vo
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        apiResponse = new API(this.contextReference.get()).getFollowRequest(max_id);
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            apiResponse = new API(this.contextReference.get()).getFollowRequest(max_id);
+        }else{
+            apiResponse = new GNUAPI(this.contextReference.get()).getFollowRequest(max_id);
+        }
         return null;
     }
 
