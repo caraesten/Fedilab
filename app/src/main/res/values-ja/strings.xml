@@ -1071,14 +1071,14 @@
     <string name="link_copy">URLをクリップボードにコピーしました</string>
     <string name="open_other_app">別のアプリで開く</string>
     <string name="check_redirect">リダイレクト先を確認する</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
-    <string name="set_utm_parameters">Remove UTM parameters</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="no_redirect">このURLはリダイレクトではありません</string>
+    <string name="redirect_detected">%1$s\n\nは\n\n%2$sにリダイレクトしています</string>
+    <string name="set_user_agent">ユーザエージェントを変更</string>
+    <string name="set_user_agent_hint">カスタムのユーザーエージェントを設定するか、空欄にしておいてください</string>
+    <string name="set_user_agent_indication">APIの呼び出しやアプリ内ブラウザで使用するユーザーエージェントをカスタマイズできます</string>
+    <string name="set_utm_parameters">UTMパラメータを削除</string>
+    <string name="set_utm_parameters_indication">リンクを開く前に自動的にURLからUTMパラメータを取り除きます。</string>
+    <string name="action_trends">トレンド</string>
+    <string name="trending_now">トレンド</string>
+    <string name="talking_about">%d人が話題にしています</string>
 </resources>
