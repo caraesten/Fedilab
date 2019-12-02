@@ -70,6 +70,7 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -95,6 +96,7 @@ public class HttpsConnection {
     private Proxy proxy;
     private String instance;
     private String USER_AGENT;
+    private int cacheSize = 30*1024*1024;
 
     public HttpsConnection(Context context, String instance) {
         this.instance = instance;
@@ -177,7 +179,7 @@ public class HttpsConnection {
         URL url = new URL(urlConnection + "?" + postData);
 
         if (Build.VERSION.SDK_INT >= 21) {
-            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).cache(new Cache(context.getCacheDir(), cacheSize));
             if (proxy != null) {
                 builder.proxy(proxy);
             }
@@ -297,7 +299,7 @@ public class HttpsConnection {
     public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
         if (Build.VERSION.SDK_INT >= 21) {
-            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).cache(new Cache(context.getCacheDir(), cacheSize));
             if (proxy != null) {
                 builder.proxy(proxy);
             }

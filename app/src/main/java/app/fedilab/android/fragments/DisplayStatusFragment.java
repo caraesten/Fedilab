@@ -1076,7 +1076,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if (context instanceof BaseMainActivity) {
                         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                         if (remember_position_home)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).execute();
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, true,DisplayStatusFragment.this).execute();
                         else
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).execute();
                     }
