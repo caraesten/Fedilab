@@ -1096,5 +1096,5 @@
     <string name="set_utm_parameters_indication">L\'app rimuoverà automaticamente i parametri UTM dagli URL prima di aprire un collegamento.</string>
     <string name="action_trends">Tendenze</string>
     <string name="trending_now">Di tendenza ora</string>
-    <string name="talking_about">%d persone che parlano</string>
+    <string name="talking_about">%d persone ne parlano</string>
 </resources>
