@@ -1077,15 +1077,15 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="share_link">分享連結</string>
     <string name="link_copy">URL 已複製到剪貼簿</string>
     <string name="open_other_app">使用其他應用程式開啟</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
-    <string name="set_utm_parameters">Remove UTM parameters</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="check_redirect">檢查重新導向</string>
+    <string name="no_redirect">此 URL 不會重新導向</string>
+    <string name="redirect_detected">%1$s \n\n重新導向到\n\n %2$s</string>
+    <string name="set_user_agent">變更使用者代理字串</string>
+    <string name="set_user_agent_hint">設定自訂的使用者代理字串或留空</string>
+    <string name="set_user_agent_indication">允許自訂用於 api 呼叫或內建瀏覽器的使用者字串</string>
+    <string name="set_utm_parameters">移除 UTM 參數</string>
+    <string name="set_utm_parameters_indication">應用程式將會在造訪連結前自動移除 UTM 參數</string>
+    <string name="action_trends">趨勢</string>
+    <string name="trending_now">目前趨勢</string>
+    <string name="talking_about">%d 個正在談論</string>
 </resources>
