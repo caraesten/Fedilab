@@ -1329,11 +1329,7 @@ public class Status implements Parcelable {
             spannable.removeSpan(quoteSpan);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            int colord;
-            if (theme == THEME_BLACK)
-                colord = ContextCompat.getColor(context, R.color.dark_blockquote);
-            else
-                colord = ContextCompat.getColor(context, R.color.mastodonC4);
+            int colord = ContextCompat.getColor(context, R.color.cyanea_accent_reference);
             spannable.setSpan(new CustomQuoteSpan(
                             ContextCompat.getColor(context, R.color.transparent),
                             colord,
