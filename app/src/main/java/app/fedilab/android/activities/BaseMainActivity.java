@@ -1333,7 +1333,9 @@ public abstract class BaseMainActivity extends BaseActivity
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
-                                dialogBuilderOptin.show();
+                                if (!BaseMainActivity.this.isFinishing()) {
+                                    dialogBuilderOptin.show();
+                                }
                             }
                         }, 1000);
                     } catch (Exception ignored) {}

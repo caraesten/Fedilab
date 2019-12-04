@@ -735,6 +735,29 @@ public class Status implements Parcelable {
                                                                                 AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                                                                                 if( response != null ) {
                                                                                     builder.setMessage(context.getString(R.string.redirect_detected,url,response));
+                                                                                    builder.setNegativeButton(R.string.copy_link, new DialogInterface.OnClickListener() {
+                                                                                        @Override
+                                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                                            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                                                                                            ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, response);
+                                                                                            if (clipboard != null) {
+                                                                                                clipboard.setPrimaryClip(clip);
+                                                                                                Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
+                                                                                            }
+                                                                                            dialog.dismiss();
+                                                                                        }
+                                                                                    });
+                                                                                    builder.setNeutralButton(R.string.share_link, new DialogInterface.OnClickListener() {
+                                                                                        @Override
+                                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                                                                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                                                                                            sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                                                                                            sendIntent.setType("text/plain");
+                                                                                            context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                                                                            dialog.dismiss();
+                                                                                        }
+                                                                                    });
                                                                                 }else{
                                                                                     builder.setMessage(R.string.no_redirect);
                                                                                 }
@@ -744,7 +767,9 @@ public class Status implements Parcelable {
                                                                                     public void onClick(DialogInterface dialog, int which) {
                                                                                         dialog.dismiss();
                                                                                     }
-                                                                                }).show();
+                                                                                })
+                                                                                .show();
+
                                                                             }
                                                                         };
                                                                         mainHandler.post(myRunnable);

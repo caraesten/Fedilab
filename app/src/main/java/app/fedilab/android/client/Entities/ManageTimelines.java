@@ -434,8 +434,9 @@ public class ManageTimelines {
                             public void onDismiss(PopupMenu menu) {
                                 if (mPageReferenceMap != null) {
                                     TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) mPageReferenceMap.get(tl.getPosition());
-                                    assert tabLayoutNotificationsFragment != null;
-                                    tabLayoutNotificationsFragment.refreshAll();
+                                    if (tabLayoutNotificationsFragment != null) {
+                                        tabLayoutNotificationsFragment.refreshAll();
+                                    }
                                 }
                             }
                         });

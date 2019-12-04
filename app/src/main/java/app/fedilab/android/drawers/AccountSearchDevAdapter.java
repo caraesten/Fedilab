@@ -132,13 +132,13 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         //Profile picture
 
         if (account.getAvatar().startsWith("http")) {
-            if( !((Activity)context).isFinishing()) {
+            if( !((Activity)context).isFinishing() && !((Activity)context).isDestroyed()) {
                 Glide.with(context)
                         .load(account.getAvatar())
                         .into(holder.account_pp);
             }
         } else if (account.getSocial() != null && account.getSocial().contains("OPENCOLLECTIVE")) {
-            if( !((Activity)context).isFinishing()) {
+            if( !((Activity)context).isFinishing() && !((Activity)context).isDestroyed()) {
                 Glide.with(context)
                         .load(R.drawable.missing)
                         .into(holder.account_pp);
