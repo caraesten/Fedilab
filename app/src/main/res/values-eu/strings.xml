@@ -1093,7 +1093,7 @@
     <string name="set_user_agent_indication">API deietarako eta barne nabigatzailean erabilitako erabiltzaile-agentea pertsonalizatzeko aukera ematen du.</string>
     <string name="set_utm_parameters">Kendu UTM parametroak</string>
     <string name="set_utm_parameters_indication">Aplikazioak automatikoki kenduko ditu URL baten UTM parametroak hau bisitatu aurretik.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="action_trends">Joerak</string>
+    <string name="trending_now">Joera orain</string>
+    <string name="talking_about">%d pertsona hitz egiten</string>
 </resources>
