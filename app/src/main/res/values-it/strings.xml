@@ -1093,7 +1093,7 @@
     <string name="set_user_agent_indication">Permetti la personalizzazione dell\'agente utente utilizzata per le chiamate dell\'API o con il browser integrato.</string>
     <string name="set_utm_parameters">Rimuovi parametri UTM</string>
     <string name="set_utm_parameters_indication">L\'app rimuoverà automaticamente i parametri UTM dagli URL prima di aprire un collegamento.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="action_trends">Tendenze</string>
+    <string name="trending_now">Di tendenza ora</string>
+    <string name="talking_about">%d persone ne parlano</string>
 </resources>

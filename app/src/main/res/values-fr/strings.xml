@@ -1064,7 +1064,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="pref_colored_navigation_bar_title">Couleur de la barre de navigation</string>
     <string name="pref_background_color_summary">Couleur sous-jacente du contenu de l’application.</string>
     <string name="pref_background_color_title">Couleur du fond</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_summary">Les Accents sélectionnent des parties de l\'interface utilisateur.</string>
     <string name="pref_accent_color_title">Couleur d\'accentuation</string>
     <string name="pref_primary_color_summary">Affiché le plus souvent dans l\'application.</string>
     <string name="pref_primary_color_title">Couleur primaire</string>

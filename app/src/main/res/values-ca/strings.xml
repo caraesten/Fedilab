@@ -1084,7 +1084,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
     <string name="set_utm_parameters">Eliminar seguiments de màrketing (UTM)</string>
     <string name="set_utm_parameters_indication">L\'aplicació eliminarà automàticament els seguiments de màrketing (UTM) dels URL abans de seguir un enllaç.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
+    <string name="action_trends">Tendències</string>
+    <string name="trending_now">Tendències ara</string>
+    <string name="talking_about">%d persones parlant</string>
 </resources>
