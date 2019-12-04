@@ -131,25 +131,25 @@
         <item quantity="one">%d second</item>
         <item quantity="few">%d seconds</item>
         <item quantity="many">%d seconds</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d sekundd</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="one">%d minute</item>
-        <item quantity="few">%d minutes</item>
-        <item quantity="many">%d minutes</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
-        <item quantity="few">%d hours</item>
-        <item quantity="many">%d hours</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d godzina</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+        <item quantity="other">%d godzin</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
-        <item quantity="few">%d days</item>
-        <item quantity="many">%d days</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%d dzień</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+        <item quantity="other">%d dni</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Ostrzeżenie</string>
@@ -292,7 +292,7 @@
     <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś podbije mój wpis</string>
     <string name="set_notif_follow_add">Powiadom mnie, gdy ktoś polubi mój wpis</string>
     <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś mnie wspomni</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Powiadom kiedy głosowanie zostanie zakończone</string>
     <string name="set_share_validation">Proś o potwierdzenie przed podbiciem</string>
     <string name="set_share_validation_fav">Proś o potwierdzenie przed dodaniem wpisu do ulubionych</string>
     <string name="set_wifi_only">Powiadamiaj tylko w sieci WiFi</string>
@@ -301,7 +301,7 @@
     <string name="set_nsfw_timeout">Czas do automatycznego ukrycia treści wrażliwej w sekundach. 0 oznacza dezaktywację.</string>
     <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edytuj profil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_title_custom_sharing">Niestandardowe udostępnianie</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Biografia…</string>
     <string name="set_lock_account">Zablokuj konto</string>
