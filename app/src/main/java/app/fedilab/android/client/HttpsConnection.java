@@ -286,7 +286,15 @@ public class HttpsConnection {
                 }
             }
             httpsURLConnection.getInputStream().close();
-            return redirect != null && redirect.compareTo(urlConnection)!=0?redirect:null;
+            if (redirect != null && redirect.compareTo(urlConnection)!=0){
+                URL redirectURL = new URL(redirect);
+                String host = redirectURL.getHost();
+                String protocol = redirectURL.getProtocol();
+                if( protocol == null || host == null){
+                    redirect = null;
+                }
+            }
+            return redirect;
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }

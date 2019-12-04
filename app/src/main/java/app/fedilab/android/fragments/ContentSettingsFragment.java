@@ -1771,7 +1771,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         boolean allow_live_notifications = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + userId + instance, true);
         TextView set_allow_live_notifications_title = rootView.findViewById(R.id.set_allow_live_notifications_title);
-        set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@" + account.getInstance()));
+        if (account != null) {
+            set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@" + account.getInstance()));
+        }
         final SwitchCompat set_allow_live_notifications = rootView.findViewById(R.id.set_allow_live_notifications);
         set_allow_live_notifications.setChecked(allow_live_notifications);
         set_allow_live_notifications.setOnClickListener(new View.OnClickListener() {

@@ -243,7 +243,7 @@ public class SettingsActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 8;
+            return 9;
         }
     }
 }
