@@ -708,7 +708,7 @@ public class API {
                 poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
                 poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
                 poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
-                if( resobj.getJSONObject("poll").has("voters_count")){
+                if( resobj.getJSONObject("poll").has("voters_count") && !resobj.getJSONObject("poll").isNull("voters_count")){
                     poll.setVoters_count(resobj.getJSONObject("poll").getInt("voters_count"));
                 }else{
                     poll.setVoters_count(resobj.getJSONObject("poll").getInt("votes_count"));
@@ -728,6 +728,7 @@ public class API {
             }
 
         } catch (JSONException ignored) {
+            ignored.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
