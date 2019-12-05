@@ -2,5 +2,6 @@ Added
 - Unshortened URLs can be copied or shared
 
 Fixed
+- Issue with polls not displayed
 - Pleroma wysiwyg
 - Some crashes
