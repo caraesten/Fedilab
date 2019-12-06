@@ -1,5 +1,6 @@
 Added
 - Unshortened URLs can be copied or shared
+- Trends in tags search
 
 Fixed
 - Issue with polls not displayed
