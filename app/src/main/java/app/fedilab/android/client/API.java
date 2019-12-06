@@ -1889,10 +1889,33 @@ public class API {
                     instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
                 }
             } catch (JSONException e) {
-                setDefaultError(e);
+
             }
         } catch (IOException | JSONException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
+            try {
+                response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
+                JSONObject jsonObject = new JSONObject(response);
+                instanceNodeInfo.setName("MASTODON");
+                instanceNodeInfo.setVersion(jsonObject.getString("version"));
+                instanceNodeInfo.setOpenRegistrations(true);
+            } catch (IOException e1) {
+                instanceNodeInfo.setConnectionError(true);
+                e1.printStackTrace();
+            } catch (NoSuchAlgorithmException | JSONException | KeyManagementException e1) {
+                e1.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e1) {
+                if (e1.getStatusCode() == 404) {
+                    instanceNodeInfo.setName("GNU");
+                    instanceNodeInfo.setVersion("unknown");
+                    instanceNodeInfo.setOpenRegistrations(true);
+                    e1.printStackTrace();
+                } else {
+                    instanceNodeInfo.setName("MASTODON");
+                    instanceNodeInfo.setVersion("3.0");
+                    instanceNodeInfo.setOpenRegistrations(false);
+                }
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             try {
                 response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
