@@ -5484,6 +5484,7 @@ public class API {
         try {
             results.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
             results.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
+            results.setTrends(parseTrends(resobj.getJSONArray("hashtags")));
             results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
         } catch (JSONException e) {
             setDefaultError(e);

@@ -15,12 +15,15 @@ package app.fedilab.android.client.Entities;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 30/11/2019.
  * Manage Tag trends history
  */
 
-public class TrendsHistory {
+public class TrendsHistory implements Parcelable {
 
     private long days;
     private int uses;
@@ -49,4 +52,37 @@ public class TrendsHistory {
     public void setAccounts(int accounts) {
         this.accounts = accounts;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.days);
+        dest.writeInt(this.uses);
+        dest.writeInt(this.accounts);
+    }
+
+    public TrendsHistory() {
+    }
+
+    protected TrendsHistory(Parcel in) {
+        this.days = in.readLong();
+        this.uses = in.readInt();
+        this.accounts = in.readInt();
+    }
+
+    public static final Parcelable.Creator<TrendsHistory> CREATOR = new Parcelable.Creator<TrendsHistory>() {
+        @Override
+        public TrendsHistory createFromParcel(Parcel source) {
+            return new TrendsHistory(source);
+        }
+
+        @Override
+        public TrendsHistory[] newArray(int size) {
+            return new TrendsHistory[size];
+        }
+    };
 }

@@ -17,6 +17,9 @@ package app.fedilab.android.client.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Thomas on 23/04/2017.
  * Manage Tags
@@ -24,26 +27,18 @@ import android.os.Parcelable;
 
 public class Tag implements Parcelable {
 
-    public static final Creator<Tag> CREATOR = new Creator<Tag>() {
-        @Override
-        public Tag createFromParcel(Parcel in) {
-            return new Tag(in);
-        }
-
-        @Override
-        public Tag[] newArray(int size) {
-            return new Tag[size];
-        }
-    };
     private String name;
     private String url;
-
+    private List<TrendsHistory> trendsHistory;
     public Tag() {
     }
 
-    protected Tag(Parcel in) {
-        name = in.readString();
-        url = in.readString();
+    public List<TrendsHistory> getTrendsHistory() {
+        return trendsHistory;
+    }
+
+    public void setTrendsHistory(List<TrendsHistory> trendsHistory) {
+        this.trendsHistory = trendsHistory;
     }
 
     public String getName() {
@@ -69,7 +64,27 @@ public class Tag implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(url);
+        dest.writeString(this.name);
+        dest.writeString(this.url);
+        dest.writeList(this.trendsHistory);
     }
+
+    protected Tag(Parcel in) {
+        this.name = in.readString();
+        this.url = in.readString();
+        this.trendsHistory = new ArrayList<TrendsHistory>();
+        in.readList(this.trendsHistory, TrendsHistory.class.getClassLoader());
+    }
+
+    public static final Creator<Tag> CREATOR = new Creator<Tag>() {
+        @Override
+        public Tag createFromParcel(Parcel source) {
+            return new Tag(source);
+        }
+
+        @Override
+        public Tag[] newArray(int size) {
+            return new Tag[size];
+        }
+    };
 }
