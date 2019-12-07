@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
 import android.text.InputType;
 import android.text.Spannable;
@@ -110,6 +111,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -3524,12 +3526,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
                 boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
                 if (long_press_media) {
+                    String finalUrl = url;
                     imageView.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-                            String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
-                            Helper.download(context, myDir + "/" + fileName, attachment.getUrl());
+                            Helper.manageMove(context, finalUrl, false);
                             return true;
                         }
                     });

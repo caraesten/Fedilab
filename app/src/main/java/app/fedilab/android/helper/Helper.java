@@ -58,6 +58,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -161,6 +162,7 @@ import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URISyntaxException;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
@@ -182,6 +184,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -4232,10 +4235,98 @@ public class Helper {
             //Request was successfully enqueued for download.
         }, error -> {
         });
-
-
     }
 
+
+    /**
+     * Download from Glid cache
+     * @param context
+     * @param url
+     */
+    public static void manageMove(Context context, String url, boolean share){
+        Glide.with(context)
+                .asFile()
+                .load(url)
+                .into(new SimpleTarget<File>() {
+                    @Override
+                    public void onResourceReady(@NotNull File file, Transition<? super File> transition) {
+                        Helper.notifyDownload(context, url, file, share);
+                    }
+                });
+    }
+
+    /**
+     * Notify after moving a file from Glide cache
+     * @param context
+     * @param url
+     * @param sourceFile
+     */
+    private static void notifyDownload(Context context, String url, File sourceFile, boolean share){
+
+        final String fileName = URLUtil.guessFileName(url, null, null);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final String targeted_folder = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        FileChannel in = null;
+        FileChannel out = null;
+        try
+        {
+            File backupFile = new File(targeted_folder+"/"+fileName);
+            backupFile.createNewFile();
+            fis = new FileInputStream(sourceFile);
+            fos = new FileOutputStream(backupFile);
+            in = fis.getChannel();
+            out = fos.getChannel();
+            long size = in.size();
+            in.transferTo(0, size, out);
+            String mime = Helper.getMimeType(url);
+            final Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri uri = Uri.fromFile(backupFile);
+            intent.setDataAndType(uri, mime);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+            if (!share) {
+                Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
+                        R.mipmap.ic_launcher_bubbles), NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                Toasty.success(context, context.getString(R.string.save_over), Toasty.LENGTH_LONG).show();
+            } else {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.setType(mime);
+                try {
+                    context.startActivity(shareIntent);
+                } catch (Exception ignored) {
+                    ignored.printStackTrace();
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (fis != null)
+                    fis.close();
+            } catch (Throwable ignore) {}
+            try {
+                if (fos != null)
+                    fos.close();
+            } catch (Throwable ignore) {}
+            try {
+                if (in != null && in.isOpen())
+                    in.close();
+            } catch (Throwable ignore) {}
+
+            try {
+                if (out != null && out.isOpen())
+                    out.close();
+            } catch (Throwable ignore) {}
+        }
+    }
 
     public static Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
