@@ -88,7 +88,12 @@ public class LiveNotificationDelayedService extends Service {
 
     public void onCreate() {
         super.onCreate();
-
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if( !notify ){
+            stopSelf();
+            return;
+        }
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
@@ -102,7 +107,6 @@ public class LiveNotificationDelayedService extends Service {
         if( accountStreams != null) {
             for (Account account : accountStreams) {
                 if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
-                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
                     if (allowStream) {
                         totalAccount++;
@@ -136,10 +140,16 @@ public class LiveNotificationDelayedService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (intent == null || intent.getBooleanExtra("stop", false)) {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if (!notify || intent == null || intent.getBooleanExtra("stop", false)) {
             totalAccount = 0;
-            stopForeground(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                stopForeground(true);
+                NotificationManager notificationManager =  (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                assert notificationManager != null;
+                notificationManager.deleteNotificationChannel(CHANNEL_ID);
+            }
             stopSelf();
         }
         if (totalAccount > 0) {

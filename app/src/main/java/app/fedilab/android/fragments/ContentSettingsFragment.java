@@ -1351,11 +1351,12 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         final SwitchCompat switchCompatNotify = rootView.findViewById(R.id.set_notify);
         switchCompatNotify.setChecked(notify);
-        final LinearLayout notification_settings = rootView.findViewById(R.id.notification_settings);
-        if (notify)
-            notification_settings.setVisibility(View.VISIBLE);
-        else
-            notification_settings.setVisibility(View.GONE);
+        final LinearLayout notification_container = rootView.findViewById(R.id.notification_container);
+        if (notify) {
+            notification_container.setVisibility(View.VISIBLE);
+        } else {
+            notification_container.setVisibility(View.GONE);
+        }
         switchCompatNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1364,9 +1365,15 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.putBoolean(Helper.SET_NOTIFY, isChecked);
                 editor.apply();
                 if (isChecked) {
-                    notification_settings.setVisibility(View.VISIBLE);
+                    notification_container.setVisibility(View.VISIBLE);
+                    notification_container.setVisibility(View.VISIBLE);
+                    Helper.startStreaming(context);
+                }else {
+                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                    context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                    ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                    notification_container.setVisibility(View.GONE);
                 }
-                Helper.startStreaming(context);
             }
         });
 

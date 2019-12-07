@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
+
 /**
  * Created by Thomas on 18/10/2019.
  * BroadcastReceiver for restarting delayed notification service
@@ -34,8 +35,7 @@ public class StopDelayedNotificationReceiver extends BroadcastReceiver {
         streamingServiceIntent.putExtra("stop", true);
         try {
             context.startService(streamingServiceIntent);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
 }

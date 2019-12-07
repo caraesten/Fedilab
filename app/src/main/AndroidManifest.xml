@@ -89,7 +89,13 @@
                 <action android:name="StopLiveNotificationReceiver" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:name="app.fedilab.android.services.StopDelayedNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="StopDelayedNotificationReceiver" />
+            </intent-filter>
+        </receiver>
         <service
             android:name="app.fedilab.android.services.StreamingHomeTimelineService"
             android:exported="false" />

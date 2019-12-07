@@ -646,9 +646,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
 
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-            Helper.startStreaming(BaseMainActivity.this);
-        }
+        Helper.startStreaming(BaseMainActivity.this);
 
         if (hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
