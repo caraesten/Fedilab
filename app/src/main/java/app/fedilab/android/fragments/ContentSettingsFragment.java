@@ -1408,43 +1408,34 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (liveNotificationCount > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                    context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                    ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
                     switch (position) {
                         case Helper.NOTIF_LIVE:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.VISIBLE);
-                            editor.apply();
-                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-                            ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                            editor.commit();
+                            set_live_type_indication.setText(R.string.live_notif_indication);
+                            Helper.startStreaming(context);
                             break;
                         case Helper.NOTIF_DELAYED:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
                             live_notif_per_account.setVisibility(View.VISIBLE);
-                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                            editor.apply();
-                            ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                            set_live_type_indication.setText(R.string.set_live_type_indication);
+                            editor.commit();
+                            Helper.startStreaming(context);
                             break;
                         case Helper.NOTIF_NONE:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
-                            live_notif_per_account.setVisibility(View.GONE);
-                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-                            NotificationsSyncJob.schedule(false);
-                            editor.apply();
-                            break;
-                    }
-                    Helper.startStreaming(context);
-                    switch (Helper.liveNotifType(context)) {
-                        case Helper.NOTIF_LIVE:
-                            set_live_type_indication.setText(R.string.live_notif_indication);
-                            break;
-                        case Helper.NOTIF_DELAYED:
-                            set_live_type_indication.setText(R.string.set_live_type_indication);
-                            break;
-                        case Helper.NOTIF_NONE:
+                            editor.commit();
                             set_live_type_indication.setText(R.string.no_live_indication);
+                            live_notif_per_account.setVisibility(View.GONE);
+                            NotificationsSyncJob.schedule(false);
                             break;
                     }
                 } else {

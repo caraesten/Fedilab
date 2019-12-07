@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 
 
-
 /**
  * Created by Thomas on 18/10/2019.
  * BroadcastReceiver for restarting delayed notification service

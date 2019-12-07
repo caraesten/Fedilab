@@ -4696,9 +4696,7 @@ public class Helper {
                 } else {
                     context.startService(streamingIntent);
                 }
-            } catch (Exception ignored) {
-                ignored.printStackTrace();
-            }
+            } catch (Exception ignored) {}
         }
     }
 

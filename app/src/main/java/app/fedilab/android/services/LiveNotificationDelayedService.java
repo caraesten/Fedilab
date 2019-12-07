@@ -150,6 +150,9 @@ public class LiveNotificationDelayedService extends Service {
                 assert notificationManager != null;
                 notificationManager.deleteNotificationChannel(CHANNEL_ID);
             }
+            if (intent != null) {
+                intent.replaceExtras(new Bundle());
+            }
             stopSelf();
         }
         if (totalAccount > 0) {

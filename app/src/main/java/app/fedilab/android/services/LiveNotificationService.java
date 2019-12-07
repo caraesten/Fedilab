@@ -185,6 +185,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 assert notificationManager != null;
                 notificationManager.deleteNotificationChannel(CHANNEL_ID);
             }
+            if (intent != null) {
+                intent.replaceExtras(new Bundle());
+            }
             stopSelf();
         }
         if (totalAccount > 0) {
