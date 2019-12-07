@@ -64,6 +64,7 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.fragments.MediaSliderFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -102,6 +103,8 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                     startActivity(shareIntent);
                 } catch (Exception ignored) {
                 }
+            }else{
+                Toasty.success(context, context.getString(R.string.save_over), Toasty.LENGTH_LONG).show();
             }
         }
     };
