@@ -1343,6 +1343,35 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if (instanceType != null && instanceType.compareTo("NITTER") == 0) {
                 holder.status_action_container.setVisibility(View.GONE);
+                if( holder.status_action_container_twitter != null){
+                    holder.status_action_container_twitter.setVisibility(View.VISIBLE);
+                    holder.status_action_container_twitter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                            String  url = status.getUrl();
+                            String extra_text;
+
+                            extra_text = (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
+                            if (extra_text.split("@").length == 1)
+                                extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                            else
+                                extra_text = "@" + extra_text;
+                            extra_text += " " + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
+                            final String contentToot;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                            else
+                                //noinspection deprecation
+                                contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent()).toString();
+                            extra_text += contentToot;
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
+                            sendIntent.setType("text/plain");
+                            context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        }
+                    });
+                }
             }
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
@@ -4264,6 +4293,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ConstraintLayout main_container;
         TextView yandex_translate;
         ConstraintLayout status_action_container;
+        ConstraintLayout status_action_container_twitter;
         Button fetch_more;
         ImageView new_element;
         LinearLayout status_spoiler_mention_container;
@@ -4369,6 +4399,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
+            status_action_container_twitter = itemView.findViewById(R.id.status_action_container_twitter);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
             status_cardview = itemView.findViewById(R.id.status_cardview);

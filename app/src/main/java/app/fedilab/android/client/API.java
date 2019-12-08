@@ -811,7 +811,7 @@ public class API {
                         eventType = xpp.next();
                         if(eventType == XmlPullParser.TEXT) {
                             if( account != null ){
-                                account.setAcct(xpp.getText().replace("@",""));
+                                account.setAcct(xpp.getText().replace("@","")+"@" + nitterHost);
                                 account.setDisplay_name(xpp.getText().replace("@",""));
                                 account.setUsername(xpp.getText().replace("@",""));
                                 account.setId("https://" + nitterHost + "/" + xpp.getText());

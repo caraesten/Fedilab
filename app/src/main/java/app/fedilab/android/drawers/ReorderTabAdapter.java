@@ -129,6 +129,9 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                     case "GNU":
                         holder.iconView.setImageResource(R.drawable.ic_gnu_social);
                         break;
+                    case "NITTER":
+                        holder.iconView.setImageResource(R.drawable.nitter);
+                        break;
                 }
                 holder.textView.setText(tl.getRemoteInstance().getHost());
                 break;
