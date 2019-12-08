@@ -474,18 +474,20 @@ public class Status implements Parcelable {
                 account.setInstance(instance);
                 account.setUrl(url);
                 String accountId = null;
-                for (Mention mention : mentions) {
-                    String[] accountMentionAcct = mention.getAcct().split("@");
-                    //Different isntance
-                    if (accountMentionAcct.length > 1) {
-                        if (mention.getAcct().equals(account.getAcct() + "@" + account.getInstance())) {
-                            accountId = mention.getId();
-                            break;
-                        }
-                    } else {
-                        if (mention.getAcct().equals(account.getAcct())) {
-                            accountId = mention.getId();
-                            break;
+                if( mentions != null) {
+                    for (Mention mention : mentions) {
+                        String[] accountMentionAcct = mention.getAcct().split("@");
+                        //Different isntance
+                        if (accountMentionAcct.length > 1) {
+                            if (mention.getAcct().equals(account.getAcct() + "@" + account.getInstance())) {
+                                accountId = mention.getId();
+                                break;
+                            }
+                        } else {
+                            if (mention.getAcct().equals(account.getAcct())) {
+                                accountId = mention.getId();
+                                break;
+                            }
                         }
                     }
                 }

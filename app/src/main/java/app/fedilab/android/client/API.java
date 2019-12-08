@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.JsonArray;
@@ -28,15 +29,21 @@ import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,6 +52,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -758,6 +767,159 @@ public class API {
         } catch (JSONException ignored) {
         }
         return status;
+    }
+
+
+    /**
+     * Parse xml response for Nitter
+     *
+     * @param xml String
+     * @return List<Status>
+     */
+
+    private List<Status> parseNitter(String xml) {
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            XmlPullParser xpp = factory.newPullParser();
+
+            xpp.setInput( new StringReader( xml ) );
+            int eventType = xpp.getEventType();
+            Account account = null;
+            Status status = null;
+            HashMap<String, String> mappedProfile = new HashMap<>();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+
+                if(eventType == XmlPullParser.START_TAG) {
+                    if( xpp.getName().compareTo("item") == 0 ){
+                        status = new Status();
+                        status.setReplies_count(0);
+                        status.setFavourites_count(0);
+                        status.setReblogs_count(0);
+                        status.setFavourited(false);
+                        status.setReblogged(false);
+                        status.setEmojiFound(true);
+                        status.setPollEmojiFound(true);
+                        status.setEmojiTranslateFound(true);
+                        status.setMedia_attachments(new ArrayList<>());
+                        account = new Account();
+                    }else if( xpp.getName().compareTo("creator") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT) {
+                            if( account != null ){
+                                account.setAcct(xpp.getText().replace("@","")+"@" + nitterHost);
+                                account.setDisplay_name(xpp.getText().replace("@",""));
+                                account.setUsername(xpp.getText().replace("@",""));
+                                account.setId("https://" + nitterHost + "/" + xpp.getText());
+                                account.setUuid("https://" + nitterHost + "/" + xpp.getText());
+                                account.setUrl("https://" + nitterHost + "/" + xpp.getText());
+                                if( !mappedProfile.containsKey(xpp.getText()) ){
+                                    HttpsConnection httpsConnection = new HttpsConnection(context, nitterHost);
+                                    try {
+                                        String response = httpsConnection.get("https://" + nitterHost + "/" + xpp.getText() + "/rss", 10, null, null);
+                                        XmlPullParserFactory factory2 = XmlPullParserFactory.newInstance();
+                                        factory2.setNamespaceAware(true);
+                                        XmlPullParser xpp2 = factory2.newPullParser();
+
+                                        xpp2.setInput( new StringReader( response ) );
+                                        int eventType2 = xpp2.getEventType();
+                                        while (eventType2 != XmlPullParser.END_DOCUMENT) {
+                                            if (eventType2 == XmlPullParser.START_TAG) {
+                                                if (xpp2.getName().compareTo("url") == 0) {
+                                                    eventType2 = xpp2.next();
+                                                    if(eventType2 == XmlPullParser.TEXT ) {
+                                                        mappedProfile.put(xpp.getText(), xpp2.getText());
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                            eventType2 = xpp2.next();
+                                        }
+                                    } catch (NoSuchAlgorithmException | KeyManagementException | HttpsConnection.HttpsConnectionException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                account.setAvatar(mappedProfile.get(xpp.getText()));
+                            }
+                        }
+                    } else if( xpp.getName().compareTo("pubDate") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                try {
+                                    DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+                                    Date date = formatter.parse(xpp.getText());
+                                    status.setCreated_at(date);
+                                } catch (ParseException e) {
+                                    status.setCreated_at(new Date());
+                                }
+                            }
+                        }
+                    }else if( xpp.getName().compareTo("description") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                String description = xpp.getText();
+                                Pattern imgPattern = Pattern.compile("<img [^>]*src=\"([^\"]+)\"[^>]*>");
+                                Matcher matcher = imgPattern.matcher(description);
+                                List<String> imgs = new ArrayList<>();
+                                int i = 1;
+                                ArrayList<Attachment> attachments = new ArrayList<>();
+                                while (matcher.find()) {
+                                    description = description.replaceAll(Pattern.quote(matcher.group()), "");
+                                    imgs.add("[media_" + i + "]|" + matcher.group(1));
+                                    Attachment attachment = new Attachment();
+                                    attachment.setType("image");
+                                    attachment.setDescription("");
+                                    attachment.setUrl(matcher.group(1));
+                                    attachment.setPreview_url(matcher.group(1));
+                                    attachment.setId(matcher.group(1));
+                                    attachments.add(attachment);
+                                }
+                                status.setMedia_attachments(attachments);
+                                status.setContent(context, description);
+                            }
+                        }
+                    }else if( xpp.getName().compareTo("guid") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                status.setUri(xpp.getText());
+                                Pattern idPattern = Pattern.compile("([0-9])+");
+                                Matcher matcher = idPattern.matcher(xpp.getText());
+                                while (matcher.find()) {
+                                    status.setId(matcher.group(0));
+                                }
+                            }
+                        }
+                    }else if( xpp.getName().compareTo("link") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                status.setUrl(xpp.getText());
+                            }
+                        }
+                    }
+                } else if(eventType == XmlPullParser.END_TAG) {
+                    if( xpp.getName().compareTo("item") == 0 ){
+                        if (status != null) {
+                            status.setAccount(account);
+                            statuses.add(status);
+                        }
+                        account = null;
+                        status = null;
+                    }
+                }
+                eventType = xpp.next();
+            }
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
+        }
+        return statuses;
     }
 
     /**
@@ -3237,8 +3399,51 @@ public class API {
         return apiResponse;
     }
 
+
     /**
-     * Retrieves Peertube videos from an instance *synchronously*
+     * Retrieves Nitter timeline from accounts *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getNitter(String instance, String max_id) {
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+        String[] usernames = instance.split(" ");
+        if( usernames.length == 0 ){
+            Error error = new Error();
+            error.setError(context.getString(R.string.toast_error));
+            error.setStatusCode(404);
+            apiResponse.setError(error);
+            return apiResponse;
+        }
+        StringBuilder urlparams = new StringBuilder();
+        for(String param: usernames){
+            urlparams.append(param.trim()).append(",");
+        }
+
+        String url = "https://" + nitterHost + "/" + urlparams + "/rss";
+        if( max_id != null ){
+            url += "?max_position=" + max_id;
+        }
+        try {
+            statuses = new ArrayList<>();
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(url, 30, null, null);
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseNitter(response);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves Misskey timeline from an instance *synchronously*
      *
      * @return APIResponse
      */

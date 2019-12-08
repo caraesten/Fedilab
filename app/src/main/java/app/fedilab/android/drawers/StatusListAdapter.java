@@ -227,6 +227,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<ViewHolder> lstHolders;
     private List<Emojis> emojisPicker;
     private Status statusForQuickReply;
+    private String instanceType;
 
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
@@ -266,6 +267,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         currentToId = -1;
     }
 
+    public StatusListAdapter(String instanceType, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses) {
+        super();
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        statusListAdapter = this;
+        this.type = type;
+        this.targetedId = targetedId;
+        redraft = false;
+        lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
+        this.instanceType = instanceType;
+    }
 
     public StatusListAdapter(TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
         super();
@@ -276,6 +292,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
+        lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
+    }
+
+    public StatusListAdapter(String instanceType, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
+        super();
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        statusListAdapter = this;
+        this.type = RetrieveFeedsAsyncTask.Type.TAG;
+        this.targetedId = targetedId;
+        redraft = false;
+        this.tagTimeline = tagTimeline;
+        this.instanceType = instanceType;
         lstHolders = new ArrayList<>();
         toot_content = null;
         toot_cw_content = null;
@@ -616,15 +649,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             show_boosts = ((ShowAccountActivity) context).showBoosts();
             show_replies = ((ShowAccountActivity) context).showReplies();
         }
-        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type, context instanceof ShowAccountActivity, show_boosts, show_replies))
+        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type, context instanceof ShowAccountActivity, show_boosts, show_replies)) {
             return HIDDEN_STATUS;
+        }
         if (statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;
         else {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
                 return COMPACT_STATUS;
             } else {
-                return statuses.get(position).getViewType();
+                if( instanceType == null || instanceType.compareTo("NITTER") != 0 ) {
+                    return statuses.get(position).getViewType();
+                }else{
+                    return COMPACT_STATUS;
+                }
             }
         }
     }
@@ -653,6 +691,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         context = viewHolder.itemView.getContext();
+
         if (viewHolder.getItemViewType() != HIDDEN_STATUS) {
             final ViewHolder holder = (ViewHolder) viewHolder;
             synchronized (lock) {
@@ -662,9 +701,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.startUpdateTimer();
             final Status status = statuses.get(i);
+
+
             if (status == null)
                 return;
-
             //TODO:It sounds that sometimes this value is null - need deeper investigation
             if (status.getVisibility() == null) {
                 status.setVisibility("public");
@@ -1301,6 +1341,38 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.setImageFound(true);
                 Status.makeImage(context, this, status);
             }
+            if (instanceType != null && instanceType.compareTo("NITTER") == 0) {
+                holder.status_action_container.setVisibility(View.GONE);
+                if( holder.status_action_container_twitter != null){
+                    holder.status_action_container_twitter.setVisibility(View.VISIBLE);
+                    holder.status_action_container_twitter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                            String  url = status.getUrl();
+                            String extra_text;
+
+                            extra_text = (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
+                            if (extra_text.split("@").length == 1)
+                                extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                            else
+                                extra_text = "@" + extra_text;
+                            extra_text += " " + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
+                            final String contentToot;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                            else
+                                //noinspection deprecation
+                                contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent()).toString();
+                            extra_text += contentToot;
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
+                            sendIntent.setType("text/plain");
+                            context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        }
+                    });
+                }
+            }
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -1328,7 +1400,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
             //Click on a conversation
 
-            if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
+            if (( instanceType == null || instanceType.compareTo("NITTER") != 0) && (getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
 
                 holder.status_spoiler.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -3152,7 +3224,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
 
-            } else {
+            } else if( instanceType == null || instanceType.compareTo("NITTER") != 0){
                 holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -3224,6 +3296,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_toot_app.setVisibility(View.GONE);
             }
         }
+
 
     }
 
@@ -4220,6 +4293,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ConstraintLayout main_container;
         TextView yandex_translate;
         ConstraintLayout status_action_container;
+        ConstraintLayout status_action_container_twitter;
         Button fetch_more;
         ImageView new_element;
         LinearLayout status_spoiler_mention_container;
@@ -4325,6 +4399,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
+            status_action_container_twitter = itemView.findViewById(R.id.status_action_container_twitter);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
             status_cardview = itemView.findViewById(R.id.status_cardview);

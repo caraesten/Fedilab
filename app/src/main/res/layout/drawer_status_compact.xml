@@ -843,6 +843,24 @@
                     android:visibility="gone" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/status_action_container_twitter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <ImageView
+                        android:id="@+id/status_share"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_share_peertube"
+                        android:tint="?attr/iconColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/status_action_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

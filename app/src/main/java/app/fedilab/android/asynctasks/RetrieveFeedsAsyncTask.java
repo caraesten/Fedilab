@@ -249,7 +249,15 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                 status.setType(action);
                             }
                         }
-                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
+                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("NITTER")) {
+                        apiResponse = api.getNitter(this.instanceName, max_id);
+                        List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if (statusesTemp != null) {
+                            for (app.fedilab.android.client.Entities.Status status : statusesTemp) {
+                                status.setType(action);
+                            }
+                        }
+                    }else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
                         apiResponse = api.getPixelfedTimeline(instanceName, max_id);
                     } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("GNU")) {
                         apiResponse = api.getGNUTimeline(instanceName, max_id);
