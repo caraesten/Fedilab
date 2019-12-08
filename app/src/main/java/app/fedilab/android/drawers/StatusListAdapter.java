@@ -227,6 +227,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<ViewHolder> lstHolders;
     private List<Emojis> emojisPicker;
     private Status statusForQuickReply;
+    private String instanceType;
 
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
@@ -266,6 +267,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         currentToId = -1;
     }
 
+    public StatusListAdapter(String instanceType, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses) {
+        super();
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        statusListAdapter = this;
+        this.type = type;
+        this.targetedId = targetedId;
+        redraft = false;
+        lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
+        this.instanceType = instanceType;
+    }
 
     public StatusListAdapter(TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
         super();
@@ -276,6 +292,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
+        lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
+    }
+
+    public StatusListAdapter(String instanceType, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
+        super();
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        statusListAdapter = this;
+        this.type = RetrieveFeedsAsyncTask.Type.TAG;
+        this.targetedId = targetedId;
+        redraft = false;
+        this.tagTimeline = tagTimeline;
+        this.instanceType = instanceType;
         lstHolders = new ArrayList<>();
         toot_content = null;
         toot_cw_content = null;
@@ -616,15 +649,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             show_boosts = ((ShowAccountActivity) context).showBoosts();
             show_replies = ((ShowAccountActivity) context).showReplies();
         }
-        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type, context instanceof ShowAccountActivity, show_boosts, show_replies))
+        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type, context instanceof ShowAccountActivity, show_boosts, show_replies)) {
             return HIDDEN_STATUS;
+        }
         if (statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;
         else {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
                 return COMPACT_STATUS;
             } else {
-                return statuses.get(position).getViewType();
+                if( instanceType == null || instanceType.compareTo("NITTER") != 0 ) {
+                    return statuses.get(position).getViewType();
+                }else{
+                    return COMPACT_STATUS;
+                }
             }
         }
     }
@@ -653,6 +691,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         context = viewHolder.itemView.getContext();
+
         if (viewHolder.getItemViewType() != HIDDEN_STATUS) {
             final ViewHolder holder = (ViewHolder) viewHolder;
             synchronized (lock) {
@@ -662,9 +701,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.startUpdateTimer();
             final Status status = statuses.get(i);
+
+
             if (status == null)
                 return;
-
             //TODO:It sounds that sometimes this value is null - need deeper investigation
             if (status.getVisibility() == null) {
                 status.setVisibility("public");
@@ -1300,6 +1340,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (!status.isImageFound()) {
                 status.setImageFound(true);
                 Status.makeImage(context, this, status);
+            }
+            if (instanceType != null && instanceType.compareTo("NITTER") == 0) {
+                holder.status_action_container.setVisibility(View.GONE);
             }
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
@@ -3224,6 +3267,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_toot_app.setVisibility(View.GONE);
             }
         }
+
 
     }
 

@@ -206,7 +206,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
             lastReadTootDate = Helper.stringToDate(context, sharedpreferences.getString(Helper.LAST_READ_TOOT_DATE + userId + instance, null));
         }
-        if (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")) {
+        if (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU") || instanceType.equals("NITTER")) {
             if (type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
                 BaseMainActivity.displayPeertube = null;
                 List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
@@ -217,7 +217,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             } else {
                 BaseMainActivity.displayPeertube = null;
-                statusListAdapter = new StatusListAdapter(type, targetedId, isOnWifi, this.statuses);
+                statusListAdapter = new StatusListAdapter(instanceType, type, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
         } else if (instanceType.equals("PEERTUBE")) {
@@ -580,7 +580,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             //Let's deal with statuses
             if (statuses != null && statuses.size() > 0) {
-                if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
+                if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("NITTER") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 } else if (artListAdapter != null && instanceType.equals("ART")) {
@@ -863,6 +863,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             switch (instanceType) {
                 case "MASTODON":
                 case "MISSKEY":
+                case "NITTER":
                 case "GNU":
                     statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
                     break;
@@ -892,7 +893,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         Status status = it.next();
                         for (Status status1 : statuses) {
                             if (status.getConversationId() != null && status.getConversationId().equals(status1.getConversationId())) {
-                                if (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))
+                                if (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("NITTER")|| instanceType.equals("GNU"))
                                     statusListAdapter.notifyItemRemoved(position);
                                 else if (instanceType.equals("PIXELFED"))
                                     pixelfedListAdapter.notifyItemRemoved(position);
@@ -931,7 +932,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                 }
             }
-            if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")))
+
+            if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("NITTER") || instanceType.equals("GNU")))
                 statusListAdapter.notifyItemRangeInserted(0, inserted);
             else if (pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
                 pixelfedListAdapter.notifyItemRangeInserted(0, inserted);
@@ -1158,6 +1160,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             switch (instanceType) {
                 case "MASTODON":
                 case "MISSKEY":
+                case "NITTER":
                 case "GNU":
                     statusListAdapter.notifyItemRangeRemoved(0, lenght);
                     break;

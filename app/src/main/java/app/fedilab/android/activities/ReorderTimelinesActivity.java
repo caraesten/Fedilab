@@ -188,7 +188,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                         } else if (radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
-
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 dialog.dismiss();
@@ -264,78 +263,84 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
-                            Matcher matcher = host.matcher(s.toString().trim());
-                            if (s.toString().trim().length() == 0 || !matcher.find()) {
-                                alertDialog.getButton(
-                                        AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                            } else {
-                                // Something into edit text. Enable the button.
+                            if (radioGroup.getCheckedRadioButtonId() != R.id.twitter_accounts){
+                                Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
+                                Matcher matcher = host.matcher(s.toString().trim());
+                                if (s.toString().trim().length() == 0 || !matcher.find()) {
+                                    alertDialog.getButton(
+                                            AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                                } else {
+                                    // Something into edit text. Enable the button.
+                                    alertDialog.getButton(
+                                            AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                }
+                                if (s.length() > 2 && !isLoadingInstance) {
+                                    final String action = "/instances/search";
+                                    final HashMap<String, String> parameters = new HashMap<>();
+                                    parameters.put("q", s.toString().trim());
+                                    parameters.put("count", String.valueOf(1000));
+                                    parameters.put("name", String.valueOf(true));
+                                    isLoadingInstance = true;
+
+                                    if (oldSearch == null || !oldSearch.equals(s.toString().trim()))
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    final String response = new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            isLoadingInstance = false;
+                                                            String[] instances;
+                                                            try {
+                                                                JSONObject jsonObject = new JSONObject(response);
+                                                                JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                                                if (jsonArray != null) {
+                                                                    int length = 0;
+                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                        if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
+                                                                            length++;
+                                                                    }
+                                                                    instances = new String[length];
+                                                                    int j = 0;
+                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                        if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
+                                                                            instances[j] = jsonArray.getJSONObject(i).get("name").toString();
+                                                                            j++;
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    instances = new String[]{};
+                                                                }
+                                                                instance_list.setAdapter(null);
+                                                                ArrayAdapter<String> adapter =
+                                                                        new ArrayAdapter<>(ReorderTimelinesActivity.this, android.R.layout.simple_list_item_1, instances);
+                                                                instance_list.setAdapter(adapter);
+                                                                if (instance_list.hasFocus() && !ReorderTimelinesActivity.this.isFinishing())
+                                                                    instance_list.showDropDown();
+                                                                oldSearch = s.toString().trim();
+
+                                                            } catch (JSONException ignored) {
+                                                                isLoadingInstance = false;
+                                                            }
+                                                        }
+                                                    });
+
+                                                } catch (HttpsConnection.HttpsConnectionException e) {
+                                                    isLoadingInstance = false;
+                                                } catch (Exception e) {
+                                                    isLoadingInstance = false;
+                                                }
+                                            }
+                                        }).start();
+                                    else
+                                        isLoadingInstance = false;
+                                }
+                            }else {
                                 alertDialog.getButton(
                                         AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                             }
-                            if (s.length() > 2 && !isLoadingInstance) {
-                                final String action = "/instances/search";
-                                final HashMap<String, String> parameters = new HashMap<>();
-                                parameters.put("q", s.toString().trim());
-                                parameters.put("count", String.valueOf(1000));
-                                parameters.put("name", String.valueOf(true));
-                                isLoadingInstance = true;
 
-                                if (oldSearch == null || !oldSearch.equals(s.toString().trim()))
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                final String response = new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                                                runOnUiThread(new Runnable() {
-                                                    public void run() {
-                                                        isLoadingInstance = false;
-                                                        String[] instances;
-                                                        try {
-                                                            JSONObject jsonObject = new JSONObject(response);
-                                                            JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                                            if (jsonArray != null) {
-                                                                int length = 0;
-                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
-                                                                        length++;
-                                                                }
-                                                                instances = new String[length];
-                                                                int j = 0;
-                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
-                                                                        instances[j] = jsonArray.getJSONObject(i).get("name").toString();
-                                                                        j++;
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                instances = new String[]{};
-                                                            }
-                                                            instance_list.setAdapter(null);
-                                                            ArrayAdapter<String> adapter =
-                                                                    new ArrayAdapter<>(ReorderTimelinesActivity.this, android.R.layout.simple_list_item_1, instances);
-                                                            instance_list.setAdapter(adapter);
-                                                            if (instance_list.hasFocus() && !ReorderTimelinesActivity.this.isFinishing())
-                                                                instance_list.showDropDown();
-                                                            oldSearch = s.toString().trim();
-
-                                                        } catch (JSONException ignored) {
-                                                            isLoadingInstance = false;
-                                                        }
-                                                    }
-                                                });
-
-                                            } catch (HttpsConnection.HttpsConnectionException e) {
-                                                isLoadingInstance = false;
-                                            } catch (Exception e) {
-                                                isLoadingInstance = false;
-                                            }
-                                        }
-                                    }).start();
-                                else
-                                    isLoadingInstance = false;
-                            }
                         }
                     });
                 }
