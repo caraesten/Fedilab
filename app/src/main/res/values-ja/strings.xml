@@ -1081,4 +1081,6 @@
     <string name="action_trends">トレンド</string>
     <string name="trending_now">トレンド</string>
     <string name="talking_about">%d人が話題にしています</string>
+    <string name="twitter_accounts">Twitter accounts</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
 </resources>
