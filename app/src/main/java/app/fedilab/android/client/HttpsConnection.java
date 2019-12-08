@@ -170,13 +170,18 @@ public class HttpsConnection {
             }
         }
         StringBuilder postData = new StringBuilder();
-        for (Map.Entry<String, Object> param : params.entrySet()) {
-            if (postData.length() != 0) postData.append('&');
-            postData.append(param.getKey());
-            postData.append('=');
-            postData.append(param.getValue());
+        URL url;
+        if( params.size() > 0 ) {
+            for (Map.Entry<String, Object> param : params.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(param.getKey());
+                postData.append('=');
+                postData.append(param.getValue());
+            }
+            url = new URL(urlConnection + "?" + postData);
+        }else{
+            url = new URL(urlConnection);
         }
-        URL url = new URL(urlConnection + "?" + postData);
 
         if (Build.VERSION.SDK_INT >= 21) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).cache(new Cache(context.getCacheDir(), cacheSize));
@@ -331,6 +336,7 @@ public class HttpsConnection {
                     throw new HttpsConnectionException(code, error);
                 }
             }
+
         } else {
             URL url = new URL(urlConnection);
             if (proxy != null)
@@ -1443,6 +1449,12 @@ public class HttpsConnection {
                     }
 
                 }
+            }else  if (entry.toString().startsWith("Min-Id") || entry.toString().startsWith("min-id")) {
+                Pattern patternMaxId = Pattern.compile("min-id=\\[([0-9a-zA-Z]{1,}).*\\]");
+                Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
+                if (matcherMaxId.find()) {
+                    max_id = matcherMaxId.group(1);
+                }
             }
         }
     }
@@ -1454,6 +1466,7 @@ public class HttpsConnection {
             if (httpsURLConnection == null)
                 return;
             Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
+
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
                 if (entry.toString().startsWith("Link") || entry.toString().startsWith("link")) {
                     Pattern patternMaxId = Pattern.compile("max_id=([0-9a-zA-Z]{1,}).*");
@@ -1468,6 +1481,12 @@ public class HttpsConnection {
                             since_id = matcherSinceId.group(1);
                         }
 
+                    }
+                }else  if (entry.toString().startsWith("Min-Id") || entry.toString().startsWith("min-id")) {
+                    Pattern patternMaxId = Pattern.compile("min-id=\\[([0-9a-zA-Z]{1,}).*\\]");
+                    Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
+                    if (matcherMaxId.find()) {
+                        max_id = matcherMaxId.group(1);
                     }
                 }
             }

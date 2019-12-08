@@ -19,7 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -3417,14 +3417,20 @@ public class API {
             apiResponse.setError(error);
             return apiResponse;
         }
-        StringBuilder params = new StringBuilder();
+        StringBuilder urlparams = new StringBuilder();
         for(String param: usernames){
-            params.append(param.trim()).append(",");
+            urlparams.append(param.trim()).append(",");
+        }
+
+        String url = "https://" + nitterHost + "/" + urlparams + "/rss";
+        if( max_id != null ){
+            url += "?max_position=" + max_id;
         }
         try {
             statuses = new ArrayList<>();
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://" + nitterHost + "/" + params + "/rss", 30, null, null);
+            String response = httpsConnection.get(url, 30, null, null);
+            apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseNitter(response);
 
         } catch (HttpsConnection.HttpsConnectionException e) {
