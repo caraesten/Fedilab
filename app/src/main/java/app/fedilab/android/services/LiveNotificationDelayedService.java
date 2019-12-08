@@ -114,23 +114,22 @@ public class LiveNotificationDelayedService extends Service {
                 }
             }
         }
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                myIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
+        android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setShowWhen(false)
+                .setContentIntent(pendingIntent)
+                .setContentTitle(getString(R.string.top_notification))
+                .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+        startForeground(1, notification);
         if (totalAccount > 0) {
-            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    getApplicationContext(),
-                    0,
-                    myIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-
-            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setShowWhen(false)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-            startForeground(1, notification);
             startStream();
         } else {
             stopSelf();
