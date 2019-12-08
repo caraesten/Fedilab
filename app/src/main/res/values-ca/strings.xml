@@ -1087,6 +1087,6 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="action_trends">Tendències</string>
     <string name="trending_now">Tendències ara</string>
     <string name="talking_about">%d persones parlant</string>
-    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="twitter_accounts">Comptes de Twitter (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Usuaris de Twitter separats per espais</string>
 </resources>
