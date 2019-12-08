@@ -48,5 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gnu_instance" />
+        <RadioButton
+            android:id="@+id/twitter_accounts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/twitter_accounts" />
     </RadioGroup>
 </LinearLayout>

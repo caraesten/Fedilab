@@ -160,13 +160,19 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                     AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
                     //Manage download of attachments
                     RadioGroup radioGroup = dialogView.findViewById(R.id.set_attachment_group);
-
+                    radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                        if( checkedId == R.id.twitter_accounts){
+                            instance_list.setHint(R.string.list_of_twitter_accounts);
+                        }else {
+                            instance_list.setHint(R.string.instance);
+                        }
+                    });
                     instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
                     dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                            String instanceName = instance_list.getText().toString().trim();
+                            String instanceName = instance_list.getText().toString().trim().replace("@","");
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -196,6 +202,8 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "MISSKEY");
                                                 } else if (radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "GNU");
+                                                }else if (radioGroup.getCheckedRadioButtonId() == R.id.twitter_accounts) {
+                                                    new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "NITTER");
                                                 }
                                                 if (timelines != null && adapter != null) {
                                                     List<RemoteInstance> instance = new InstancesDAO(ReorderTimelinesActivity.this, db).getInstanceByName(instanceName);
