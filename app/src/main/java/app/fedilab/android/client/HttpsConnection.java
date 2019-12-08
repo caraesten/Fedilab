@@ -316,6 +316,9 @@ public class HttpsConnection {
             if (proxy != null) {
                 builder.proxy(proxy);
             }
+            if( !urlConnection.startsWith("http")){
+                urlConnection = "http://" + urlConnection;
+            }
             OkHttpClient client = builder.build();
             Request.Builder requestBuilder = new Request.Builder()
                     .url(urlConnection);

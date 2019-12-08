@@ -736,7 +736,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
-        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (instanceType == null || instanceType.compareTo("NITTER") != 0))
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).execute();
         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).execute();

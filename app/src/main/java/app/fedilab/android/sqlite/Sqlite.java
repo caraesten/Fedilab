@@ -48,7 +48,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 36;
+    public static final int DB_VERSION = 37;
     public static final String DB_NAME = "mastodon_etalab_db";
     //Table for custom emoji
     public static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
@@ -183,6 +183,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_NAV_MUTED = "NAV_MUTED";
     static final String COL_NAV_BLOCKED_DOMAINS = "NAV_BLOCKED_DOMAINS";
     static final String COL_NAV_HOWTO = "NAV_HOWTO";
+    static final String COL_NAV_TRENDS = "NAV_TRENDS";
     private static final String TABLE_USER_ACCOUNT_TEMP = "USER_ACCOUNT_TEMP";
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
             + COL_USER_ID + " TEXT, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
@@ -260,6 +261,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_NAV_BLOCKED + " INTEGER  DEFAULT 1, "
             + COL_NAV_MUTED + " INTEGER  DEFAULT 1, "
             + COL_NAV_BLOCKED_DOMAINS + " INTEGER  DEFAULT 1, "
+            + COL_NAV_TRENDS + " INTEGER  DEFAULT 1, "
             + COL_NAV_HOWTO + " INTEGER  DEFAULT 1)";
     private static final String CREATE_TABLE_USER_NOTES = "CREATE TABLE "
             + TABLE_USER_NOTES + "("
@@ -533,6 +535,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             case 35:
                 db.execSQL(CREATE_TABLE_USER_NOTES);
+            case 36:
+                db.execSQL("ALTER TABLE " + TABLE_MAIN_MENU_ITEMS + " ADD COLUMN " + COL_NAV_TRENDS + " INTEGER  DEFAULT 1");
             default:
                 break;
         }
