@@ -128,36 +128,36 @@
     <string name="date_hours">%d سا</string>
     <string name="date_day">%d يو</string>
     <plurals name="date_seconds_polls">
-        <item quantity="zero">%d seconds</item>
-        <item quantity="one">%d second</item>
-        <item quantity="two">%d seconds</item>
-        <item quantity="few">%d seconds</item>
-        <item quantity="many">%d seconds</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="zero">لا ثانية</item>
+        <item quantity="one">ثانية واحدة</item>
+        <item quantity="two">ثانيتَيْن</item>
+        <item quantity="few">%d ثوانٍ</item>
+        <item quantity="many">%d ثوانٍ</item>
+        <item quantity="other">%d ثوانٍ</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="zero">%d minutes</item>
-        <item quantity="one">%d minute</item>
-        <item quantity="two">%d minutes</item>
-        <item quantity="few">%d minutes</item>
-        <item quantity="many">%d minutes</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="zero">صفر دقيقة</item>
+        <item quantity="one">دقيقة واحدة</item>
+        <item quantity="two">دقيقتَيْن</item>
+        <item quantity="few">%d دقائق</item>
+        <item quantity="many">%d دقائق</item>
+        <item quantity="other">%d دقائق</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="zero">%d hours</item>
-        <item quantity="one">%d hour</item>
-        <item quantity="two">%d hours</item>
-        <item quantity="few">%d hours</item>
-        <item quantity="many">%d hours</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="zero">صفر ساعة</item>
+        <item quantity="one">ساعة واحدة</item>
+        <item quantity="two">ساعتان</item>
+        <item quantity="few">%d ساعات</item>
+        <item quantity="many">%d ساعات</item>
+        <item quantity="other">%d ساعات</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="zero">%d days</item>
-        <item quantity="one">%d day</item>
-        <item quantity="two">%d days</item>
-        <item quantity="few">%d days</item>
-        <item quantity="many">%d days</item>
-        <item quantity="other">%d days</item>
+        <item quantity="zero">لا يوم</item>
+        <item quantity="one">يوم واحد</item>
+        <item quantity="two">يومَيْن</item>
+        <item quantity="few">%d أيام</item>
+        <item quantity="many">%d أيام</item>
+        <item quantity="other">%d أيام</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">تحذير</string>
@@ -978,12 +978,12 @@
         <item quantity="other">%d صوتا</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="zero">%d voters</item>
-        <item quantity="one">%d voter</item>
-        <item quantity="two">%d voters</item>
-        <item quantity="few">%d voters</item>
-        <item quantity="many">%d voters</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="zero">لا مصوّت</item>
+        <item quantity="one">مصوّت واحد</item>
+        <item quantity="two">مصوّتَيْن</item>
+        <item quantity="few">%d مصوّت</item>
+        <item quantity="many">%d مصوّت</item>
+        <item quantity="other">%d مصوّت</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>خيار واحد</item>
@@ -1085,8 +1085,8 @@
     <string name="data_export_theme">تم تصدير القالب</string>
     <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
     <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
+    <string name="pref_colored_status_bar_title">لون شريط الحالة</string>
+    <string name="restore_default_theme">استرجاع القالب الإفتراضي</string>
     <string name="import_theme">استيراد قالب</string>
     <string name="import_theme_title">Tap here to import a theme from a previous export</string>
     <string name="export_theme">تصدير قالب</string>
