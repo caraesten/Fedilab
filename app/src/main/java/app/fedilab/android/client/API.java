@@ -802,16 +802,10 @@ public class API {
                         status.setReblogs_count(0);
                         status.setFavourited(false);
                         status.setReblogged(false);
-                        status.setReblog(null);
-                        status.setMedia_attachments(new ArrayList<>());
-                        status.setMentions(new ArrayList<>());
-                        status.setTags(new ArrayList<>());
-                        status.setEmojis(new ArrayList<>());
                         status.setEmojiFound(true);
-                        status.setImageFound(true);
                         status.setPollEmojiFound(true);
                         status.setEmojiTranslateFound(true);
-                        status.setItemViewType(1);
+                        status.setMedia_attachments(new ArrayList<>());
                         account = new Account();
                     }else if( xpp.getName().compareTo("creator") == 0 ){
                         eventType = xpp.next();
@@ -869,7 +863,25 @@ public class API {
                         eventType = xpp.next();
                         if(eventType == XmlPullParser.TEXT && status != null) {
                             if( xpp.getText() != null ) {
-                                status.setContent(context, xpp.getText());
+                                String description = xpp.getText();
+                                Pattern imgPattern = Pattern.compile("<img [^>]*src=\"([^\"]+)\"[^>]*>");
+                                Matcher matcher = imgPattern.matcher(description);
+                                List<String> imgs = new ArrayList<>();
+                                int i = 1;
+                                ArrayList<Attachment> attachments = new ArrayList<>();
+                                while (matcher.find()) {
+                                    description = description.replaceAll(Pattern.quote(matcher.group()), "");
+                                    imgs.add("[media_" + i + "]|" + matcher.group(1));
+                                    Attachment attachment = new Attachment();
+                                    attachment.setType("image");
+                                    attachment.setDescription("");
+                                    attachment.setUrl(matcher.group(1));
+                                    attachment.setPreview_url(matcher.group(1));
+                                    attachment.setId(matcher.group(1));
+                                    attachments.add(attachment);
+                                }
+                                status.setMedia_attachments(attachments);
+                                status.setContent(context, description);
                             }
                         }
                     }else if( xpp.getName().compareTo("guid") == 0 ){
@@ -3412,7 +3424,7 @@ public class API {
         try {
             statuses = new ArrayList<>();
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://" + nitterHost + "/" + params + "/rss", 10, null, null);
+            String response = httpsConnection.get("https://" + nitterHost + "/" + params + "/rss", 30, null, null);
             statuses = parseNitter(response);
 
         } catch (HttpsConnection.HttpsConnectionException e) {

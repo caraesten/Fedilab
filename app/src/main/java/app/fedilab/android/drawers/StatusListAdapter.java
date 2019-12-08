@@ -1371,7 +1371,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
             //Click on a conversation
 
-            if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
+            if (( instanceType == null || instanceType.compareTo("NITTER") != 0) && (getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
 
                 holder.status_spoiler.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -3195,7 +3195,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
 
-            } else {
+            } else if( instanceType == null || instanceType.compareTo("NITTER") != 0){
                 holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
