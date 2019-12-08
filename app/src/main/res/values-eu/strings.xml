@@ -1096,6 +1096,6 @@
     <string name="action_trends">Joerak</string>
     <string name="trending_now">Joera orain</string>
     <string name="talking_about">%d pertsona hitz egiten</string>
-    <string name="twitter_accounts">Twitter accounts</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
 </resources>
