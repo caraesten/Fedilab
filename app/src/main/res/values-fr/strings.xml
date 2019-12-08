@@ -1094,4 +1094,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_trends">Tendances</string>
     <string name="trending_now">Tendance en ce moment</string>
     <string name="talking_about">%d personnes en parlent</string>
+    <string name="twitter_accounts">Twitter accounts</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
 </resources>
