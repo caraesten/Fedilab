@@ -1097,6 +1097,6 @@
     <string name="action_trends">Tendenze</string>
     <string name="trending_now">Di tendenza ora</string>
     <string name="talking_about">%d persone ne parlano</string>
-    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="twitter_accounts">Account Twitter (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Nomi utente Twitter separati da spazio</string>
 </resources>
