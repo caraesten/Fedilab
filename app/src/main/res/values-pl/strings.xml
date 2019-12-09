@@ -724,12 +724,12 @@
     <string name="poll_finish_at">zakończ o %s</string>
     <string name="refresh_poll">Odśwież głosowanie</string>
     <string name="vote">Zagłosuj</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
+    <string name="notif_poll">Głosowanie, w którym brałeś(-aś) udział, zostało zakończone</string>
+    <string name="notif_poll_self">Głosowanie, które stworzyłeś(-aś), zostało zakończone</string>
+    <string name="settings_category_notif_customize">Dostosuj</string>
+    <string name="settings_category_notif_categories">Kategorie</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="settings_category_notif_advanced">Zaawansowane</string>
     <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="peertube_menu">Peertube</string>
     <string name="move_timeline">Move timeline</string>
