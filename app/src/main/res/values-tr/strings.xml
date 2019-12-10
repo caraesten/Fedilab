@@ -287,7 +287,7 @@
     <string name="set_notify">Bildir?</string>
     <string name="set_notif_silent">Sessiz bildirimler</string>
     <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapatmak için sıfır girin)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Medya Açıklaması zaman aşımı (saniye, 0 kapalı demektir)</string>
     <string name="settings_title_profile">Profil düzenle</string>
     <string name="settings_title_custom_sharing">Özel paylaşım</string>
     <string name="settings_custom_sharing_url">Özel paylaşım URL&#8230;</string>
@@ -713,7 +713,7 @@
     <string name="notif_poll_self">Tootladığınız bir anket sona erdi</string>
     <string name="settings_category_notif_customize">Özelleştir</string>
     <string name="settings_category_notif_categories">Kategoriler</string>
-    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_time_slot">Zaman dilimi</string>
     <string name="settings_category_notif_advanced">Gelişmiş</string>
     <string name="set_display_new_badge">Okunmamış tootlarda \'yeni\' rozetini göster</string>
     <string name="peertube_menu">Peertube</string>
@@ -731,13 +731,13 @@
     <string name="set_sensitive_content">Medyayı her zaman hassas olarak işaretle</string>
     <string name="gnu_instance">GNU örneği</string>
     <string name="cached_status">Önbelleğe alınmış durum</string>
-    <string name="set_forward_tags">Forward tags in replies</string>
-    <string name="set_long_press_media">Long press to store media</string>
-    <string name="set_blur_sensitive">Blur sensitive media</string>
+    <string name="set_forward_tags">Yanıtlardaki etiketleri ilet</string>
+    <string name="set_long_press_media">Medyayı saklamak için uzun bas</string>
+    <string name="set_blur_sensitive">Hassas medyayı bulanıklaştır</string>
     <string name="set_display_timeline_in_list">Display timelines in a list</string>
     <string name="display_timeline">Display timelines</string>
-    <string name="set_display_bot_icon">Mark bot accounts in toots</string>
-    <string name="add_tags">Manage tags</string>
+    <string name="set_display_bot_icon">Tootlardaki bot hesaplarını işaretle</string>
+    <string name="add_tags">Etiketleri yönet</string>
     <string name="set_remember_position">Remember the position in Home timeline</string>
     <string name="history">History</string>
     <string name="playlists">Playlists</string>
