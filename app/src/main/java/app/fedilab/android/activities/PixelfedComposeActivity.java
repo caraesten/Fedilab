@@ -512,7 +512,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         String content = toot_content.getText().toString();
         String contentCount = content;
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9.\\-]+[a-z0-9]+)", "$1@$3");
+            contentCount = contentCount.replaceAll("(?i)(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
             Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
             while (matcherALink.find()) {
                 final String url = matcherALink.group(1);
