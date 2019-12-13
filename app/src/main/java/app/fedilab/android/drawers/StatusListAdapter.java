@@ -1301,10 +1301,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.spark_button_reblog.setMinimumWidth((int) Helper.convertDpToPixel((20 * iconSizePercent / 100 * scale + 0.5f), context));
 
             Drawable imgConversation = null;
-            if (type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
-                    || (status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getReblog().getAccount().getId())))) {
-                imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
-                imgConversation.setBounds(0, 0, (int) (15 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if (type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
+                        || (status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getReblog().getAccount().getId())))) {
+                    imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
+                    imgConversation.setBounds(0, 0, (int) (15 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
+                }
+            }else {
+                if (type != RetrieveFeedsAsyncTask.Type.CONTEXT && status.getIn_reply_to_id() != null) {
+                    imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
+                    imgConversation.setBounds(0, 0, (int) (15 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
+                }
             }
             if (status.getReblog() != null) {
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head_toot);
