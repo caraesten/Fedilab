@@ -1090,6 +1090,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="action_trends">Tendencias</string>
     <string name="trending_now">Tendencia ahora</string>
     <string name="talking_about">%d personas hablando</string>
-    <string name="twitter_accounts">Twitter accounts</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="twitter_accounts">Cuentas de Twitter (vía Nitter)</string>
+    <string name="list_of_twitter_accounts">Nombres de usuario de Twitter separados por un espacio</string>
 </resources>

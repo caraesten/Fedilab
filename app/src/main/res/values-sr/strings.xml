@@ -1104,6 +1104,6 @@
     <string name="action_trends">Trends</string>
     <string name="trending_now">Trending now</string>
     <string name="talking_about">%d people talking</string>
-    <string name="twitter_accounts">Twitter accounts</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
 </resources>

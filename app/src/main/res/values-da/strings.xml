@@ -1096,6 +1096,6 @@
     <string name="action_trends">Tendenser</string>
     <string name="trending_now">Hot lige nu</string>
     <string name="talking_about">%d folk omtaler</string>
-    <string name="twitter_accounts">Twitter accounts</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="twitter_accounts">Twitter-konti (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter-brugernavne, adskilt af mellemrum</string>
 </resources>

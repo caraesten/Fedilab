@@ -1085,6 +1085,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="action_trends">Trends</string>
     <string name="trending_now">Gerade im Trend</string>
     <string name="talking_about">%d Leute sprechen</string>
-    <string name="twitter_accounts">Twitter accounts</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="twitter_accounts">Twitter-accounts (über Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter Benutzernamen durch ein Leerzeichen getrennt</string>
 </resources>
