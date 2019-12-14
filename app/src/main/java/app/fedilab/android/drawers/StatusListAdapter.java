@@ -1158,6 +1158,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_account_displayname.setTextColor(theme_text_header_2_line);
             holder.status_toot_date.setTextColor(theme_text_header_2_line);
+            holder.status_boosted_date.setTextColor(theme_text_header_2_line);
             Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, theme_text_header_2_line);
 
             int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
@@ -1672,6 +1673,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_account_displayname_owner.setText(status.getReblog().getAccount().getAcct().replace("@", ""));
                 holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
 
+                holder.status_boosted_date.setText(Helper.dateDiff(context, status.getCreated_at()));
             } else {
                 accountForUrl = status.getAccount();
                 holder.status_account_displayname.setVisibility(View.GONE);
@@ -1820,7 +1822,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     fullDate = fullDate_tmp.substring(0, 1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);
             } else {
-                holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                if (status.getReblog() != null)
+                    holder.status_toot_date.setText(Helper.dateDiff(context, status.getReblog().getCreated_at()));
+                else
+                    holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
                 Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
             }
 
@@ -4257,7 +4262,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_content_translated;
         ConstraintLayout status_content_translated_container;
         TextView status_account_username;
-        TextView status_account_displayname, status_account_displayname_owner;
+        TextView status_account_displayname, status_account_displayname_owner, status_boosted_date;
         ImageView status_account_profile;
         ImageView status_account_profile_boost_by;
         ConstraintLayout status_boosted_by_info;
@@ -4362,6 +4367,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
             status_account_username = itemView.findViewById(R.id.status_account_username);
             status_account_displayname = itemView.findViewById(R.id.status_account_displayname);
+            status_boosted_date = itemView.findViewById(R.id.status_boosted_date);
             status_account_displayname_owner = itemView.findViewById(R.id.status_account_displayname_owner);
             status_account_profile = itemView.findViewById(R.id.status_account_profile);
             status_account_profile_boost_by = itemView.findViewById(R.id.status_account_profile_boost_by);
