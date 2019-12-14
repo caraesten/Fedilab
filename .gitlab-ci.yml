@@ -15,13 +15,6 @@ stages:
   retry: 2
 
 
-copyReleaseNotes:
-  <<: *no-upload
-  script:
-    - ./gradlew copyAllReleaseNotes
-  except:
-    - tags
-
 assembleDebug:
   <<: *no-upload
   cache:
