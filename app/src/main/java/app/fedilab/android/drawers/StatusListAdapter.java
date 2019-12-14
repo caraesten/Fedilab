@@ -1158,7 +1158,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_account_displayname.setTextColor(theme_text_header_2_line);
             holder.status_toot_date.setTextColor(theme_text_header_2_line);
-            holder.status_boosted_date.setTextColor(theme_text_header_2_line);
+            if( holder.status_boosted_date != null ) {
+                holder.status_boosted_date.setTextColor(theme_text_header_2_line);
+            }
             Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, theme_text_header_2_line);
 
             int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
