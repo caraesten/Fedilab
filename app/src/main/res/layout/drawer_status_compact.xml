@@ -100,15 +100,16 @@
                     android:ellipsize="end"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/status_boosted_time"
+                    app:layout_constraintEnd_toStartOf="@id/status_boosted_date"
                     app:layout_constraintStart_toEndOf="@id/status_account_profile_boost_by"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/status_boosted_time"
+                    android:id="@+id/status_boosted_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
