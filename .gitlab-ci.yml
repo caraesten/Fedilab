@@ -14,13 +14,6 @@ stages:
   stage: build-and-test
   retry: 2
 
-copyReleaseNotes:
-  <<: *no-upload
-  script:
-    - ./gradlew gitPushReleaseNotes
-  except:
-    - tags
-
 assembleDebug:
   <<: *no-upload
   cache:
