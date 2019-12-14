@@ -3333,21 +3333,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_horizontal_document_container.setVisibility(View.VISIBLE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
-            if (attachments.size() == 1) {
-                if (!fullAttachement)
-                    holder.status_container2.setVisibility(View.GONE);
-                else {
-                    holder.status_prev1_h.setVisibility(View.VISIBLE);
-                    holder.status_prev2_h.setVisibility(View.GONE);
-                    holder.status_prev3_h.setVisibility(View.GONE);
-                    holder.status_prev4_h.setVisibility(View.GONE);
-                    holder.horizontal_second_image.setVisibility(View.GONE);
-                }
-                if (attachments.get(0).getUrl().trim().contains("missing.png"))
+            if (attachments.size() == 1 ) {
+                if ((status.getCard() == null || status.getCard().getImage() == null)) {
+                    if (!fullAttachement)
+                        holder.status_container2.setVisibility(View.GONE);
+                    else {
+                        holder.status_prev1_h.setVisibility(View.VISIBLE);
+                        holder.status_prev2_h.setVisibility(View.GONE);
+                        holder.status_prev3_h.setVisibility(View.GONE);
+                        holder.status_prev4_h.setVisibility(View.GONE);
+                        holder.horizontal_second_image.setVisibility(View.GONE);
+                    }
+                    if (attachments.get(0).getUrl().trim().contains("missing.png")) {
+                        if (fullAttachement)
+                            holder.status_horizontal_document_container.setVisibility(View.GONE);
+                        else
+                            holder.status_document_container.setVisibility(View.GONE);
+                    }
+                }else {
                     if (fullAttachement)
                         holder.status_horizontal_document_container.setVisibility(View.GONE);
                     else
                         holder.status_document_container.setVisibility(View.GONE);
+                }
             } else if (attachments.size() == 2) {
                 if (!fullAttachement) {
                     holder.status_container2.setVisibility(View.VISIBLE);
