@@ -1,0 +1,12 @@
+Added
+- Long press links to open a contextual menu (can unshorten URLs)
+- Set a custom user agent
+- Trending (can hidden in settings)
+
+Changed
+- Don't reload tabs each time and make the app faster
+
+Fixed
+- Pixelfed quick reply feature
+- Fix auto-split feature with quick replies
+- Some crashes

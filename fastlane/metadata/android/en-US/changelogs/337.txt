@@ -1,0 +1,10 @@
+Changed
+- Text color for notifications with custom themes
+- Polls: use the number of voters instead of votes
+- News timeline targets the new account
+
+Fixed
+- Friendica: Login/Quick replies/follow notifications
+- Fix crash when resetting custom colors
+- Crash on device reboot when no accounts
+- Some crashes

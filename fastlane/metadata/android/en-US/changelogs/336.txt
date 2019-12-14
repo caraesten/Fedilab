@@ -1,0 +1,16 @@
+Added
+- Customize themes
+- Import/export themes (can be shared)
+- Get information of instances from profiles
+- Bookmarks can be imported/exported to the instance
+- Follow button disabled when blocked by an account
+- Peertube: allow to edit or view own videos.
+
+Changed
+- UI improvements
+
+Fixed
+- Crashes with conversations on Android 4
+- Custom emoji picker
+- Boosts can't be boosted due to their visibility
+- Some other bug fixes.
