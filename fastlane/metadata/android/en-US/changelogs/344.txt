@@ -3,3 +3,4 @@ Added
 
 Fixed
 - Counter for mentions
+- Preview images displayed twice
