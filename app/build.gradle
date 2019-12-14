@@ -55,6 +55,14 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 }
+
+task copyAllReleaseNotes(type: Copy) {
+    print "$buildDir"
+    from "$buildDir/../src/main/assets/changelogs/"
+    include "*.txt"
+    into "$buildDir/../../fastlane/metadata/android/en-US/changelogs/"
+}
+
 ext.supportLibraryVersion = '29.0.2'
 ext.glideLibraryVersion = '4.9.0'
 ext.conscryptLibraryVersion = '2.2.1'
