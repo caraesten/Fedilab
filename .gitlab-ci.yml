@@ -14,6 +14,13 @@ stages:
   stage: build-and-test
   retry: 2
 
+copyReleaseNotes:
+  <<: *no-upload
+  script:
+    - ./gradlew copyAllReleaseNotes
+  except:
+    - tags
+
 assembleDebug:
   <<: *no-upload
   cache:
@@ -39,12 +46,6 @@ debugTests:
   except:
     - tags
 
-copyReleaseNotes:
-  <<: *no-upload
-  script:
-    - ./gradlew copyAllReleaseNotes
-  except:
-    - tags
 
 ## PROTECTED VARIABLES TO SET IN GITLAB:
 # - GITLAB_API_TOKEN: token you create on Gitlab
