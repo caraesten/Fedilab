@@ -21,6 +21,7 @@ RUN git clone --depth=1 https://gitlab.com/tom79/mastalab
 WORKDIR /tmp/mastalab
 RUN chmod +x gradlew
 RUN ANDROID_HOME=/opt/android-sdk-linux PATH=$PATH:/opt/android-sdk-linux/platform-tools/ ./gradlew tasks
+RUN ANDROID_HOME=/opt/android-sdk-linux PATH=$PATH:/opt/android-sdk-linux/platform-tools/ ./gradlew copyAllReleaseNotes
 RUN ANDROID_HOME=/opt/android-sdk-linux PATH=$PATH:/opt/android-sdk-linux/platform-tools/ ./gradlew assembleDebug
 RUN ANDROID_HOME=/opt/android-sdk-linux PATH=$PATH:/opt/android-sdk-linux/platform-tools/ ./gradlew --stacktrace -Pci --console=plain :app:testFdroidDebugUnitTest
 RUN ANDROID_HOME=/opt/android-sdk-linux PATH=$PATH:/opt/android-sdk-linux/platform-tools/ ./gradlew --stacktrace -Pci --console=plain :app:lintFdroidDebug -PbuildDir=lint
