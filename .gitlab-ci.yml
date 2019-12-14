@@ -17,7 +17,7 @@ stages:
 copyReleaseNotes:
   <<: *no-upload
   script:
-    - ./gradlew copyAllReleaseNotes
+    - cp ./app/src/main/assets/changelogs/* ./fastlane/metadata/android/en-US/changelogs/
   except:
     - tags
 
