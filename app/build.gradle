@@ -57,7 +57,6 @@ allprojects {
 }
 
 task copyAllReleaseNotes(type: Copy) {
-    print "$buildDir"
     from "$buildDir/../src/main/assets/changelogs/"
     include "*.txt"
     into "$buildDir/../../fastlane/metadata/android/en-US/changelogs/"

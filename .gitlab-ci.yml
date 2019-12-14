@@ -23,6 +23,7 @@ assembleDebug:
       - app/build/outputs/apk/playstore/debug/app-playstore-debug.apk
     policy: push
   script:
+    - ./gradlew copyAllReleaseNotes
     - ./gradlew assembleDebug
 
 lintDebug:
