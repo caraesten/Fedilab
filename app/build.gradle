@@ -56,10 +56,17 @@ allprojects {
     }
 }
 
+
 task copyAllReleaseNotes(type: Copy) {
     from "$buildDir/../src/main/assets/changelogs/"
     include "*.txt"
     into "$buildDir/../../fastlane/metadata/android/en-US/changelogs/"
+}
+
+task gitPushReleaseNotes(type: Exec, dependsOn: 'copyAllReleaseNotes') {
+    ['sh', '-c', "git add $buildDir/../../fastlane/metadata/android/en-US/changelogs/*"].execute().text.trim()
+    ['sh', '-c', "git commit -m 'copy release notes'"].execute().text.trim()
+    ['sh', '-c', "git push"].execute().text.trim()
 }
 
 ext.supportLibraryVersion = '29.0.2'
