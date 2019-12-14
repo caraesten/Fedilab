@@ -1,6 +1,0 @@
-Added
-- Follow Nitter feeds (ie: Twitter account timelines)
-
-Fixed
-- Crash issue when no live notifications
-- Trends can't be hidden

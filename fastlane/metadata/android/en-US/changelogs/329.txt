@@ -1,9 +1,0 @@
-Added
-- New layout for timelines
-- Peertube: add a title before uploading
-
-Fixed
-- Notifications not working on some devices
-- Notifications not clickable
-- Issue when sharing media
-- Fix crashes

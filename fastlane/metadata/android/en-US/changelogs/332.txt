@@ -1,5 +1,0 @@
-Added
-- Custom emoji in polls
-
-Fixed
-- Fix missing features for Pleroma accounts

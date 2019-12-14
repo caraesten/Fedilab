@@ -1,9 +1,0 @@
-/!\ This is a beta release
-
-Changed
-- Don't reload tabs each time and make the app faster
-
-Fixed
-- Some crashes
-
-Contact me on my mastodon account if you encounter bugs. Thanks!
