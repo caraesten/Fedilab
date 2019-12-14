@@ -39,6 +39,13 @@ debugTests:
   except:
     - tags
 
+copyReleaseNotes:
+  <<: *no-upload
+  script:
+    - ./gradlew copyAllReleaseNotes
+  except:
+    - tags
+
 ## PROTECTED VARIABLES TO SET IN GITLAB:
 # - GITLAB_API_TOKEN: token you create on Gitlab
 # - NC_REMOTE_DIR:    like https://YOUR_NEXTCLOUD/remote.php/dav/files/YOUR_USER/mastalab (no trailing slash)
