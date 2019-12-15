@@ -321,7 +321,8 @@ public class HttpsConnection {
     public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
         if (Build.VERSION.SDK_INT >= 21) {
-            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).cache(new Cache(context.getCacheDir(), cacheSize));
+            Cache cache = new Cache(context.getCacheDir(), cacheSize);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).cache(cache);
             if (proxy != null) {
                 builder.proxy(proxy);
             }
@@ -346,6 +347,14 @@ public class HttpsConnection {
                     return response;
                 } else {
                     throw new HttpsConnectionException(code, error);
+                }
+            }finally {
+                if (!cache.isClosed()) {
+                    try {
+                        cache.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
