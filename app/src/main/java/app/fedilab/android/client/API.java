@@ -5090,7 +5090,7 @@ public class API {
         List<Emojis> emojis = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/custom_emojis"), 10, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/custom_emojis"), 30, null, prefKeyOauthTokenT);
             emojis = parseEmojis(new JSONArray(response));
 
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -5099,11 +5099,11 @@ public class API {
             e.printStackTrace();
         }
         //Add custom emoji for Pleroma
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        /*if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             APIResponse apiResponsePleroma = getCustomPleromaEmoji();
             if (apiResponsePleroma != null && apiResponsePleroma.getEmojis() != null && apiResponsePleroma.getEmojis().size() > 0)
                 emojis.addAll(apiResponsePleroma.getEmojis());
-        }
+        }*/
         apiResponse.setEmojis(emojis);
         return apiResponse;
     }
@@ -5132,7 +5132,7 @@ public class API {
      *
      * @return APIResponse
      */
-    public APIResponse getCustomPleromaEmoji() {
+    private APIResponse getCustomPleromaEmoji() {
         List<Emojis> emojis = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -5141,13 +5141,7 @@ public class API {
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setEmojis(emojis);
