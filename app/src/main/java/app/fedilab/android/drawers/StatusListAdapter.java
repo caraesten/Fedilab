@@ -150,6 +150,7 @@ import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.TagTimeline;
+import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
@@ -3506,10 +3507,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     imageView.setImageBitmap(null);
                     if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
                         if (!blur) {
-                            Glide.with(imageView.getContext())
+                            GlideApp.with(imageView.getContext())
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    .override(640, 480)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
@@ -3529,10 +3531,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         }
                                     });
                         } else {
-                            Glide.with(imageView.getContext())
+                            GlideApp.with(imageView.getContext())
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    .override(640, 480)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50, 3), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
@@ -3555,16 +3558,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 } else {
                     if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
                         if (!blur) {
-                            Glide.with(imageView.getContext())
+                            GlideApp.with(imageView.getContext())
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    .override(640, 480)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
                         } else {
-                            Glide.with(imageView.getContext())
+                            GlideApp.with(imageView.getContext())
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    .override(640, 480)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50, 3), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
