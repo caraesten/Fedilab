@@ -1108,10 +1108,10 @@
     <string name="set_user_agent">Change the user agent</string>
     <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
-    <string name="set_utm_parameters">Remove UTM parameters</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
+    <string name="set_utm_parameters">Удалить UTM параметры</string>
+    <string name="set_utm_parameters_indication">Приложение будет автоматически удалять UTM параметры из URL-адреса, перед посещением ссылки.</string>
+    <string name="action_trends">Актуальное</string>
+    <string name="trending_now">Актуальное сейчас</string>
     <string name="talking_about">%d люди говорят</string>
     <string name="twitter_accounts">Аккаунты Twitter (с помощью Nitter)</string>
     <string name="list_of_twitter_accounts">Имена пользователей Twitter разделённые пробелом</string>
