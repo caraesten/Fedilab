@@ -1028,7 +1028,7 @@
     <string name="post">Опубликовать</string>
     <string name="post_visibility_tilte">Visibility of the post</string>
     <string name="add_photo_pixelfed">Нажмите здесь, чтобы добавить фотографии</string>
-    <string name="add_photo_indication_pixelfed">Accepted Formats: jpeg, png, gif  \n\nMax File Size: 15 MB  \n\nAlbums can contain up to 4 photos or videos</string>
+    <string name="add_photo_indication_pixelfed">Поддерживаемые форматы: jpeg, png, gif \n\nМаксимальный размер файла: 15 Мб \n\nАльбомы могут содержать 4 фотографии или видео</string>
     <string name="upload_media">Upload media</string>
     <string name="pixelfed_compose_placeholder">Add an optional caption</string>
     <string name="long_api_error">The app received a very long error message from the API %1$s</string>
