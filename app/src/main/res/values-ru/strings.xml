@@ -1029,10 +1029,10 @@
     <string name="post_visibility_tilte">Visibility of the post</string>
     <string name="add_photo_pixelfed">Нажмите здесь, чтобы добавить фотографии</string>
     <string name="add_photo_indication_pixelfed">Поддерживаемые форматы: jpeg, png, gif \n\nМаксимальный размер файла: 15 Мб \n\nАльбомы могут содержать 4 фотографии или видео</string>
-    <string name="upload_media">Upload media</string>
-    <string name="pixelfed_compose_placeholder">Add an optional caption</string>
-    <string name="long_api_error">The app received a very long error message from the API %1$s</string>
-    <string name="message_preview">Message preview</string>
+    <string name="upload_media">Загрузить медиа</string>
+    <string name="pixelfed_compose_placeholder">Добавить подпись (необязательно)</string>
+    <string name="long_api_error">Приложение получило очень длинное сообщение об ошибке от API %1$s</string>
+    <string name="message_preview">Предпросмотр сообщения</string>
     <string name="report_mention">Add mentions in each message</string>
     <string name="fetch_conversation">Fetching conversation</string>
     <string name="order_by">Order by</string>
