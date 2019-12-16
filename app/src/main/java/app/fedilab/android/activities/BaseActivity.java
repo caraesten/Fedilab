@@ -63,7 +63,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
                     .detectLeakedRegistrationObjects()
                     .detectActivityLeaks()
                     .penaltyLog()
-                    .penaltyDeath()
+                   // .penaltyDeath()
                     .build());
         }
         canShowActionMode = true;

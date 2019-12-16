@@ -456,10 +456,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                GlideApp.get(getApplicationContext()).clearDiskCache();
+                                Glide.get(getApplicationContext()).clearDiskCache();
                             }
                         }).start();
-                        GlideApp.get(getApplicationContext()).clearMemory();
+                        Glide.get(getApplicationContext()).clearMemory();
                         HashMap<String, String> newCustomFields = new HashMap<>();
 
                         String key1, key2, key3, key4, val1, val2, val3, val4;

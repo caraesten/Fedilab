@@ -72,7 +72,6 @@ import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.RetrieveFeedsParam;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
-import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.drawers.ArtListAdapter;
 import app.fedilab.android.drawers.PeertubeAdapter;
 import app.fedilab.android.drawers.PixelfedListAdapter;
@@ -160,7 +159,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         @Nullable
         @Override
         public RequestBuilder<?> getPreloadRequestBuilder(@NonNull String url) {
-            return GlideApp.with(context)
+            return Glide.with(context)
                     .load(url)
                     .override(640, 480);
         }

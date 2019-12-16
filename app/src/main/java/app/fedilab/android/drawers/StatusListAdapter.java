@@ -3507,7 +3507,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     imageView.setImageBitmap(null);
                     if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
                         if (!blur) {
-                            GlideApp.with(imageView.getContext())
+                            Glide.with(imageView.getContext())
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
@@ -3531,7 +3531,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         }
                                     });
                         } else {
-                            GlideApp.with(imageView.getContext())
+                            Glide.with(imageView.getContext())
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
@@ -3558,7 +3558,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 } else {
                     if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing()) {
                         if (!blur) {
-                            GlideApp.with(imageView.getContext())
+                            Glide.with(imageView.getContext())
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
                                     .override(640, 480)
@@ -3566,7 +3566,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
                         } else {
-                            GlideApp.with(imageView.getContext())
+                            Glide.with(imageView.getContext())
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
                                     .override(640, 480)

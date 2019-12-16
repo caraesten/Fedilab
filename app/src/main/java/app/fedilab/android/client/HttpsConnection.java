@@ -911,13 +911,10 @@ public class HttpsConnection {
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // opens input stream from the HTTP connection
-                    InputStream inputStream = httpsURLConnection.getInputStream();
-                    httpsURLConnection.getInputStream().close();
-                    return inputStream;
+                    return httpsURLConnection.getInputStream();
                 }
                 httpsURLConnection.getInputStream().close();
-            } catch (IOException | NoSuchAlgorithmException | KeyManagementException ignored) {
-            }
+            } catch (IOException | NoSuchAlgorithmException | KeyManagementException ignored) {}
             if (httpsURLConnection != null)
                 try {
                     httpsURLConnection.getInputStream().close();
