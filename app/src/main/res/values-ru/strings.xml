@@ -1105,9 +1105,9 @@
     <string name="check_redirect">Check redirect</string>
     <string name="no_redirect">This URL does not redirect</string>
     <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_user_agent">Изменить user agent</string>
+    <string name="set_user_agent_hint">Задать свой user agent или оставить пустым</string>
+    <string name="set_user_agent_indication">Позволяет изменить user agent используемый для api вызовов или во встроенном браузере.</string>
     <string name="set_utm_parameters">Удалить UTM параметры</string>
     <string name="set_utm_parameters_indication">Приложение будет автоматически удалять UTM параметры из URL-адреса, перед посещением ссылки.</string>
     <string name="action_trends">Актуальное</string>
