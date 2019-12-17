@@ -215,6 +215,7 @@
     <string name="notif_reblog">ενίσχυσε την κατάστασή σου</string>
     <string name="notif_favourite">έδειξε προτίμηση στην κατάστασή σου</string>
     <string name="notif_follow">άρχισε να σε παρακολουθεί</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">και ακόμη μία ειδοποίηση</item>
         <item quantity="other">και %d άλλες ειδοποιήσεις</item>
