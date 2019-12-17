@@ -219,6 +219,7 @@
     <string name="notif_reblog">a amplificat statusul tău</string>
     <string name="notif_favourite">a favorizat statusul tău</string>
     <string name="notif_follow">vă urmărește</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">și încă o notificare</item>
         <item quantity="few">și incă %d alte notificări</item>
