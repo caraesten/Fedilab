@@ -211,6 +211,7 @@
     <string name="notif_reblog">đẩy mạnh tình trạng của bạn</string>
     <string name="notif_favourite">ưu đãi tình trạng của bạn</string>
     <string name="notif_follow">đã theo bạn</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="other">và một thông báo khác
 và %d thông báo khác</item>
