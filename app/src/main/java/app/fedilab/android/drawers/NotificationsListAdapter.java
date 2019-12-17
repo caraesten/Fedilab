@@ -1306,6 +1306,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 if (!url.trim().contains("missing.png"))
                     Glide.with(imageView.getContext())
                             .load(url)
+                            .override(640, 480)
                             .into(imageView);
                 final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
