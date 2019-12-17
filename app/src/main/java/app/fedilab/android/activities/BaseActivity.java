@@ -50,7 +50,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (BuildConfig.DEBUG) {
+        /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
@@ -65,7 +65,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
                     .penaltyLog()
                    // .penaltyDeath()
                     .build());
-        }
+        }*/
         canShowActionMode = true;
         super.onCreate(savedInstanceState);
 
