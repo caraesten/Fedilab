@@ -223,6 +223,7 @@
     <string name="notif_reblog">boostnul/a váš toot</string>
     <string name="notif_favourite">si oblíbil/a váš toot</string>
     <string name="notif_follow">vás sleduje</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">and další upozornění</item>
         <item quantity="few">and %d další upozornění</item>
