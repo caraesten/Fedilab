@@ -158,22 +158,22 @@
                     android:paddingTop="8dp"
                     app:layout_scrollFlags="scroll|enterAlways">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="5dp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:id="@+id/names_container"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            tools:ignore="UselessParent">
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
                                 android:id="@+id/account_dn"
@@ -232,7 +232,21 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/identity_proofs_indicator"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="10dp"
+                            android:contentDescription="Identity proofs"
+                            android:padding="8dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_verified_user"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@id/names_container"
+                            app:layout_constraintStart_toEndOf="@id/names_container"
+                            app:layout_constraintTop_toTopOf="@id/names_container" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/account_note"
