@@ -136,6 +136,19 @@ public class LiveNotificationDelayedService extends Service {
 
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith("notif_delayed_")){
+                t.interrupt();
+                t = null;
+            };
+        }
+    }
+
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

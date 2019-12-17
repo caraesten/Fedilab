@@ -195,6 +195,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     @Override
     public void onDestroy() {
         super.onDestroy();
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith("notif_live_")){
+                t.interrupt();
+                t = null;
+            };
+        }
         if( networkStateReceiver != null) {
             networkStateReceiver.removeListener(this);
             unregisterReceiver(networkStateReceiver);
