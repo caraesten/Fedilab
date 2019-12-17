@@ -215,6 +215,7 @@
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous suit</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">et %d autre notification</item>
         <item quantity="other">et %d autres notifications</item>
