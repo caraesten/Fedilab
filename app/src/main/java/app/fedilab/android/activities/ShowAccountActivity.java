@@ -1551,7 +1551,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         List<IdentityProof> identityProofs = apiResponse.getIdentityProofs();
         if( identityProofs != null && identityProofs.size() > 0 ){
-          
+
         }
     }
 
