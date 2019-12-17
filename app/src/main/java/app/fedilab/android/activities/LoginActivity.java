@@ -351,6 +351,9 @@ public class LoginActivity extends BaseActivity {
                                 public void run() {
                                     try {
                                         final String response = new HttpsConnection(LoginActivity.this, instance).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                        if( response == null) {
+                                            return;
+                                        }
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 String[] instances;

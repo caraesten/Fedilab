@@ -3258,17 +3258,14 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://" + instance + "/api/v1/videos", 10, params, null);
-            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-            peertubes = parsePeertube(instance, jsonArray);
+            JSONObject jsonObject = new JSONObject(response);
+            if( jsonObject.has("data")) {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                peertubes = parsePeertube(instance, jsonArray);
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);

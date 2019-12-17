@@ -5,3 +5,4 @@ Added
 Fixed
 - Counter for mentions
 - Preview images displayed twice
+- Media not saved on Android 10+
