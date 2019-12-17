@@ -231,6 +231,7 @@
     <string name="notif_reblog">رقى تبويقك</string>
     <string name="notif_favourite">أُعجِب بتبويقك</string>
     <string name="notif_follow">يتابعك</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="zero">و اشعار آخَر</item>
         <item quantity="one">و إشعار آخر</item>
