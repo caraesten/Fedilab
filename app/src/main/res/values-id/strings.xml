@@ -211,6 +211,7 @@
     <string name="notif_reblog">tingkatkan status Kamu</string>
     <string name="notif_favourite">status kesukaan Kamu</string>
     <string name="notif_follow">mengikutimu</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="other">dan %d pemberitahuan lainnya</item>
     </plurals>
