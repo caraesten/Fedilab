@@ -215,6 +215,7 @@
     <string name="notif_reblog">ökat din status</string>
     <string name="notif_favourite">favourited din status</string>
     <string name="notif_follow">följt dig</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">och en till notifikation</item>
         <item quantity="other">och %d till notifikationer</item>
