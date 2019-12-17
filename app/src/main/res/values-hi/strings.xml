@@ -215,6 +215,7 @@
     <string name="notif_reblog">आपका लेख बूस्ट किया</string>
     <string name="notif_favourite">आपका लेख पसंद किया</string>
     <string name="notif_follow">आपका अनुसरण किया</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">एक और सूचना</item>
         <item quantity="other">%d अन्य सूचनाएं</item>
