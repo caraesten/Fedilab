@@ -1639,6 +1639,7 @@ public class API {
      */
     public static Notification parseNotificationResponse(Context context, JSONObject resobj) {
 
+
         Notification notification = new Notification();
         try {
             notification.setId(resobj.get("id").toString());
@@ -4811,8 +4812,10 @@ public class API {
             }
 
 
-            if (!notif_follow)
+            if (!notif_follow) {
                 parameters.append("exclude_types[]=").append("follow").append("&");
+                parameters.append("exclude_types[]=").append("follow_request").append("&");
+            }
             if (!notif_add)
                 parameters.append("exclude_types[]=").append("favourite").append("&");
             if (!notif_share)
@@ -4827,6 +4830,7 @@ public class API {
             }
         } else if (type == DisplayNotificationsFragment.Type.MENTION) {
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("poll").append("&");
@@ -4834,6 +4838,7 @@ public class API {
             params.put("exclude_types[]", parameters.toString());
         } else if (type == DisplayNotificationsFragment.Type.FAVORITE) {
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("poll").append("&");
@@ -4841,6 +4846,7 @@ public class API {
             params.put("exclude_types[]", parameters.toString());
         } else if (type == DisplayNotificationsFragment.Type.BOOST) {
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters.append("exclude_types[]=").append("poll").append("&");
@@ -4849,6 +4855,7 @@ public class API {
         } else if (type == DisplayNotificationsFragment.Type.POLL) {
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));

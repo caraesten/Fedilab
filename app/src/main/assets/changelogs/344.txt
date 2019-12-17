@@ -1,5 +1,6 @@
 Added
 - Original & boost dates added separately
+- Follow request notifications
 
 Fixed
 - Counter for mentions

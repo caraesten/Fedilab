@@ -3336,7 +3336,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
             if (attachments.size() == 1 ) {
-                if ((status.getCard() == null || status.getCard().getImage() == null)) {
+                if ((status.getCard() == null || status.getCard().getType().compareTo("video") != 0|| status.getCard().getImage() == null)) {
                     if (!fullAttachement)
                         holder.status_container2.setVisibility(View.GONE);
                     else {
