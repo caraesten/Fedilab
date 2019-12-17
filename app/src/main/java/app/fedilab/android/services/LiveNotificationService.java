@@ -62,9 +62,7 @@ import org.json.JSONObject;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import app.fedilab.android.R;
@@ -92,7 +90,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     public static String CHANNEL_ID = "live_notifications";
     public static int totalAccount = 0;
     public static int eventsCount = 0;
-    private static HashMap<String, Thread> threads = new HashMap<>();
     private static HashMap<String, String> lastNotification = new HashMap<>();
     private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
 
@@ -277,16 +274,28 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     private void startWork(Account accountStream) {
 
         String key = accountStream.getAcct() + "@" + accountStream.getInstance();
-        if (!threads.containsKey(key) || !Objects.requireNonNull(threads.get(key)).isAlive()) {
-            Thread thread = new Thread() {
+        Thread thread = Helper.getThreadByName("notif_live_"+key);
+        if( thread == null){
+            thread = new Thread() {
                 @Override
                 public void run() {
                     taks(accountStream);
                 }
             };
+            thread.setName("notif_live_"+key);
             thread.start();
-            threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
+        } else if(thread.getState() != Thread.State.RUNNABLE) {
+            thread.interrupt();
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    taks(accountStream);
+                }
+            };
+            thread.setName("notif_live_"+key);
+            thread.start();
         }
+
 
     }
 
@@ -502,14 +511,11 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void networkUnavailable() {
-        Iterator it = threads.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getValue() == null || !((Thread) pair.getValue()).isAlive()) {
-                if ((pair.getValue()) != null)
-                    ((Thread) pair.getValue()).interrupt();
-            }
-            it.remove();
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith("notif_live_")){
+                t.interrupt();
+                t = null;
+            };
         }
     }
 }

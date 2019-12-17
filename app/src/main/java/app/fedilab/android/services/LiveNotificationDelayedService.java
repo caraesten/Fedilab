@@ -80,7 +80,6 @@ public class LiveNotificationDelayedService extends Service {
     public static int totalAccount = 0;
     public static int eventsCount = 0;
     public static HashMap<String, String> since_ids = new HashMap<>();
-    public static HashMap<String, Thread> threads = new HashMap<>();
     protected Account account;
     private NotificationChannel channel;
     private boolean fetch;
@@ -169,7 +168,6 @@ public class LiveNotificationDelayedService extends Service {
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             fetch = true;
             if (accountStreams != null) {
-                Thread thread;
                 for (final Account accountStream : accountStreams) {
                     String key = accountStream.getUsername() + "@" + accountStream.getInstance();
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
@@ -179,36 +177,38 @@ public class LiveNotificationDelayedService extends Service {
                     if (!sleeps.containsKey(key)) {
                         sleeps.put(key, 30000);
                     }
-                    if (threads.containsKey(key) && threads.get(key) != null) {
-                        thread = threads.get(key);
-                        if (thread != null && !thread.isInterrupted()) {
-                            thread.interrupt();
-                            threads.put(key, null);
-                        }
+                    Thread thread = Helper.getThreadByName("notif_delayed_"+key);
+                    if( thread == null){
+                        startThread(accountStream, key);
+                    } else if(thread.getState() != Thread.State.RUNNABLE) {
+                        thread.interrupt();
+                        startThread(accountStream, key);
                     }
-                    thread = new Thread() {
-                        @Override
-                        public void run() {
-                            while (fetch) {
-                                taks(accountStream);
-                                fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
-                                if (sleeps.containsKey(key) && sleeps.get(key) != null) {
-                                    try {
-                                        Thread.sleep(sleeps.get(key));
-                                    } catch (InterruptedException e) {
-                                        SystemClock.sleep(sleeps.get(key));
-                                    }
-                                }
-                            }
-                        }
-                    };
-                    thread.start();
-                    threads.put(key, thread);
                 }
             }
         }
     }
 
+    private void startThread(Account accountStream, String key){
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (fetch) {
+                    taks(accountStream);
+                    fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
+                    if (sleeps.containsKey(key) && sleeps.get(key) != null) {
+                        try {
+                            Thread.sleep(sleeps.get(key));
+                        } catch (InterruptedException e) {
+                            SystemClock.sleep(sleeps.get(key));
+                        }
+                    }
+                }
+            }
+        };
+        thread.setName("notif_delayed_"+key);
+        thread.start();
+    }
 
     @Nullable
     @Override
