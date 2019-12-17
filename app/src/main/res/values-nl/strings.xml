@@ -215,6 +215,7 @@
     <string name="notif_reblog">boostte jouw toot</string>
     <string name="notif_favourite">markeerde jouw toot als favoriet</string>
     <string name="notif_follow">volgt jou nu</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">en één andere melding</item>
         <item quantity="other">en %d andere meldingen</item>
