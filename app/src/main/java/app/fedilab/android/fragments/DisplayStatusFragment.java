@@ -145,6 +145,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         @Override
         @NonNull
         public List<String> getPreloadItems(int position) {
+            if( statuses == null || statuses.size() == 0){
+                return Collections.emptyList();
+            }
             Status status = statuses.get(position);
             if (status.getMedia_attachments() == null || status.getMedia_attachments().size() ==0) {
                 return Collections.emptyList();

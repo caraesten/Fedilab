@@ -158,7 +158,15 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                     int position = mPager.getCurrentItem();
                     Attachment attachment = attachments.get(position);
                     if( attachment.getType().compareTo("image") == 0 ){
-                        Helper.manageMove(SlideMediaActivity.this, attachment.getUrl(), false);
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                            } else {
+                                Helper.manageMove(SlideMediaActivity.this, attachment.getUrl(), false);
+                            }
+                        } else {
+                            Helper.manageMove(SlideMediaActivity.this, attachment.getUrl(), false);
+                        }
                     }else {
                         if (Build.VERSION.SDK_INT >= 23) {
                             if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

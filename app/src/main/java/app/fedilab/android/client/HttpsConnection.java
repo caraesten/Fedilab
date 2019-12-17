@@ -202,7 +202,8 @@ public class HttpsConnection {
 
                     .url(httpBuider.build())
                     .build();
-            try (Response httpresponse = client.newCall(requesthttp).execute()) {
+            try {
+                Response httpresponse = client.newCall(requesthttp).execute();
                 assert httpresponse.body() != null;
                 String response = httpresponse.body().string();
                 int code = httpresponse.code();
@@ -213,7 +214,8 @@ public class HttpsConnection {
                 } else {
                     throw new HttpsConnectionException(code, error);
                 }
-            } finally {
+            } catch (Exception ignored){}
+            finally {
                 if (!cache.isClosed()) {
                     try {
                         cache.close();
@@ -222,6 +224,7 @@ public class HttpsConnection {
                     }
                 }
             }
+            return null;
         }else{
 
             if (proxy != null)
