@@ -215,6 +215,7 @@
     <string name="notif_reblog">durumunu arttırdı</string>
     <string name="notif_favourite">durumunu favorilere ekledi</string>
     <string name="notif_follow">seni takip etti</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">ve başka bildirim</item>
         <item quantity="other">ve başka bildirim</item>
