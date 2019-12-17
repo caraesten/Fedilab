@@ -223,6 +223,7 @@
     <string name="notif_reblog">передмухнув ваш статус</string>
     <string name="notif_favourite">додав до обраного ваш статус</string>
     <string name="notif_follow">підписався(-лась) на вас</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">додати нове сповіщення</item>
         <item quantity="few">додати нове сповіщення</item>
