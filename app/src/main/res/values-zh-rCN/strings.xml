@@ -211,6 +211,7 @@
     <string name="notif_reblog">转嘟了您的状态</string>
     <string name="notif_favourite">收藏了您的状态</string>
     <string name="notif_follow">关注了您</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="other">和另外 %d 条通知</item>
     </plurals>
