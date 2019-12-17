@@ -432,6 +432,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         super.onStop();
         if (updated) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Helper.INTENT_ACTION, Helper.REFRESH_TIMELINE);
             intent.putExtra(Helper.REFRESH_LIST_TIMELINE, refresh_list);
             startActivity(intent);

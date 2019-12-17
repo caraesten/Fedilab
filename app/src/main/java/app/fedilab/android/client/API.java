@@ -3258,6 +3258,10 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://" + instance + "/api/v1/videos", 10, params, null);
+            if( response == null) {
+                apiResponse.setPeertubes(peertubes);
+                return apiResponse;
+            }
             JSONObject jsonObject = new JSONObject(response);
             if( jsonObject.has("data")) {
                 JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
