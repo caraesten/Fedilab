@@ -215,7 +215,7 @@
     <string name="notif_reblog">retooteó tu estado</string>
     <string name="notif_favourite">marcó como favorito tu estado</string>
     <string name="notif_follow">te siguió</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">solicitó seguirte</string>
     <plurals name="other_notifications">
         <item quantity="one">y otra notificación</item>
         <item quantity="other">y otra notificación</item>
