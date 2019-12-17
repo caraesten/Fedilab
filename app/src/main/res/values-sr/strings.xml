@@ -219,6 +219,7 @@
     <string name="notif_reblog">је подржао Ваш статус</string>
     <string name="notif_favourite">је ставио Ваш статус као омиљени</string>
     <string name="notif_follow">Вас је запратио</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">и још једно обавештење</item>
         <item quantity="few">и још %d обавештења</item>
