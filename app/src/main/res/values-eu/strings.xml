@@ -215,6 +215,7 @@
     <string name="notif_reblog">erabiltzaileak zure mezuari bultzada eman dio</string>
     <string name="notif_favourite">erabiltzaileak zure mezua gogoko du</string>
     <string name="notif_follow">zu jarraitzen hasi da</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">eta beste jakinarazpen bat</item>
         <item quantity="other">eta beste %d jakinarazpen</item>
