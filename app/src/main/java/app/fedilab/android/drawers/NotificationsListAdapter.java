@@ -307,6 +307,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.main_container_trans.setVisibility(View.VISIBLE);
                 holder.status_more.setVisibility(View.GONE);
                 break;
+            case "follow_request":
+                holder.status_action_container.setVisibility(View.GONE);
+                holder.status_date.setVisibility(View.GONE);
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow_request));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow_request));
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
+                holder.main_container_trans.setVisibility(View.GONE);
+                break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
                 holder.status_date.setVisibility(View.GONE);

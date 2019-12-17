@@ -224,6 +224,20 @@ public class NotificationsSyncJob extends Job {
                         }
                     }
                     break;
+                case "follow_request":
+                    notifType = Helper.NotifType.FOLLLOW;
+                    if (notif_follow) {
+                        newFollows++;
+                        if (notificationUrl == null) {
+                            notificationUrl = notification.getAccount().getAvatar();
+                            if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getContext().getString(R.string.notif_follow_request));
+                            else
+                                title = String.format("@%s %s", notification.getAccount().getAcct(), getContext().getString(R.string.notif_follow_request));
+                            targeted_account = notification.getAccount().getId();
+                        }
+                    }
+                    break;
                 case "follow":
                     notifType = Helper.NotifType.FOLLLOW;
                     if (notif_follow) {

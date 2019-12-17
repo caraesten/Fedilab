@@ -127,6 +127,12 @@ public class Notification implements Parcelable {
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow));
                 break;
+            case "follow_request":
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow_request));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow_request));
+                break;
         }
         SpannableString displayNameSpan = new SpannableString(typeString);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

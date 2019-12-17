@@ -414,6 +414,18 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                         canSendBroadCast = false;
                                     }
                                     break;
+                                case "follow_request":
+                                    notifType = Helper.NotifType.FOLLLOW;
+                                    if (notif_follow) {
+                                        if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                            message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_follow_request));
+                                        else
+                                            message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_follow_request));
+                                        targeted_account = notification.getAccount().getId();
+                                    } else {
+                                        canSendBroadCast = false;
+                                    }
+                                    break;
                                 case "follow":
                                     notifType = Helper.NotifType.FOLLLOW;
                                     if (notif_follow) {
