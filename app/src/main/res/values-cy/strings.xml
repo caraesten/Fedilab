@@ -231,6 +231,7 @@
     <string name="notif_reblog">wedi hybu\'ch tŵt</string>
     <string name="notif_favourite">wedi nodi\'ch tŵt yn ffefryn</string>
     <string name="notif_follow">wedi\'ch dilyn chi</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="zero">ac hysbysiad arall</item>
         <item quantity="one">ac %d hysbysiad arall</item>
