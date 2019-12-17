@@ -215,6 +215,7 @@
     <string name="notif_reblog">ha difós el teu missatge</string>
     <string name="notif_favourite">ha marcat com a preferit el teu missatge</string>
     <string name="notif_follow">t\'ha començat a seguir</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">i un altra notificació</item>
         <item quantity="other">i %d notificacions més</item>
