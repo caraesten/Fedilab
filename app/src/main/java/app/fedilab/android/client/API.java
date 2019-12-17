@@ -71,6 +71,7 @@ import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
+import app.fedilab.android.client.Entities.IdentityProof;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.InstanceReg;
@@ -1473,6 +1474,41 @@ public class API {
             e.printStackTrace();
         }
         return account;
+    }
+
+    private List<IdentityProof> parseIdentityProof(Context context, JSONArray jsonArray) {
+        List<IdentityProof> identityProofs = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                IdentityProof identityProof = parseIdentityProof(context, resobj);
+                i++;
+                if (identityProof != null) {
+                    identityProofs.add(identityProof);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return identityProofs;
+    }
+
+    private IdentityProof parseIdentityProof(Context context, JSONObject jsonObject) {
+        IdentityProof identityProof = new IdentityProof();
+        try {
+            identityProof.setProfile_url(jsonObject.getString("profile_url"));
+            identityProof.setProof_url(jsonObject.getString("proof_url"));
+            identityProof.setProvider(jsonObject.getString("provider"));
+            identityProof.setProvider_username(jsonObject.getString("provider_username"));
+            identityProof.setUpdated_at(Helper.mstStringToDate(context, jsonObject.getString("updated_at")));
+
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+        }
+        return identityProof;
     }
 
     /**
@@ -3108,6 +3144,32 @@ public class API {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
+
+    /**
+     *Get identy proof for an account *synchronously*
+     *
+     * @param userId   user_id String
+     * @return APIResponse
+     */
+    private APIResponse getIdentityProof(String userId) {
+        List<IdentityProof> identityProofs = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/identity_proofs", userId)), 10, null, prefKeyOauthTokenT);
+            identityProofs = parseIdentityProof(context, new JSONArray(response));
+        } catch (UnknownHostException e){
+        } catch(HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        if (apiResponse == null)
+            apiResponse = new APIResponse();
+        apiResponse.setIdentityProofs(identityProofs);
+        return apiResponse;
+    }
+
+
 
     /**
      * Retrieves public GNU timeline for the account *synchronously*
