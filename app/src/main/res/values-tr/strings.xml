@@ -735,8 +735,8 @@
     <string name="set_forward_tags">Yanıtlardaki etiketleri ilet</string>
     <string name="set_long_press_media">Medyayı saklamak için uzun bas</string>
     <string name="set_blur_sensitive">Hassas medyayı bulanıklaştır</string>
-    <string name="set_display_timeline_in_list">Display timelines in a list</string>
-    <string name="display_timeline">Display timelines</string>
+    <string name="set_display_timeline_in_list">Zaman çizelgelerini bir listede göster</string>
+    <string name="display_timeline">Zaman çizelgelerini göster</string>
     <string name="set_display_bot_icon">Tootlardaki bot hesaplarını işaretle</string>
     <string name="add_tags">Etiketleri yönet</string>
     <string name="set_remember_position">Ana zaman çizelgesindeki konumu hatırla</string>
@@ -763,8 +763,8 @@
     <string name="save_image_failed">Resim kaydedilemedi</string>
     <string name="opacity">Opaklık</string>
     <string name="set_photo_editor">Fotoğraf düzenleyiciyi etkinleştir</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
+    <string name="add_poll_item">Anket ögesi ekle</string>
+    <string name="remove_poll_item">Son anket ögesini kaldır</string>
     <string name="mute_conversation">Mute conversation</string>
     <string name="unmute_conversation">Unmute conversation</string>
     <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
