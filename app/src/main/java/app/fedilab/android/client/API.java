@@ -3151,11 +3151,12 @@ public class API {
      * @param userId   user_id String
      * @return APIResponse
      */
-    private APIResponse getIdentityProof(String userId) {
+    public APIResponse getIdentityProof(String userId) {
         List<IdentityProof> identityProofs = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/identity_proofs", userId)), 10, null, prefKeyOauthTokenT);
+
             identityProofs = parseIdentityProof(context, new JSONArray(response));
         } catch (UnknownHostException e){
         } catch(HttpsConnection.HttpsConnectionException e) {

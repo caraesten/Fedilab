@@ -1,4 +1,4 @@
-/* Copyright 2018 Thomas Schneider
+/* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Fedilab
  *
@@ -21,37 +21,40 @@ import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.interfaces.OnRetrieveHowToInterface;
+
+import app.fedilab.android.interfaces.OnRetrieveIdentityProofInterface;
 
 
 /**
- * Created by Thomas on 29/09/2018.
- * Retrieves how to videos
+ * Created by Thomas on 17/12/2019.
+ * Retrieves identity
  */
 
-public class RetrieveHowToAsyncTask extends AsyncTask<Void, Void, Void> {
+public class RetrieveIdentityProofAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
     private APIResponse apiResponse;
-    private OnRetrieveHowToInterface listener;
+    private OnRetrieveIdentityProofInterface listener;
     private WeakReference<Context> contextReference;
+    private String userId;
 
 
-    public RetrieveHowToAsyncTask(Context context, OnRetrieveHowToInterface onRetrieveHowToInterface) {
+    public RetrieveIdentityProofAsyncTask(Context context, String userId, OnRetrieveIdentityProofInterface onRetrieveHowToInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveHowToInterface;
+        this.userId = userId;
     }
 
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
-        apiResponse = api.getHowTo();
+        apiResponse = api.getIdentityProof(userId);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveHowTo(apiResponse);
+        listener.onIdentityProof(apiResponse);
     }
 }

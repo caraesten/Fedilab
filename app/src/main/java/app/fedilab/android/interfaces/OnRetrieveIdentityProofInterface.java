@@ -1,4 +1,4 @@
-/* Copyright 2018 Thomas Schneider
+/* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Fedilab
  *
@@ -17,9 +17,9 @@ package app.fedilab.android.interfaces;
 import app.fedilab.android.client.APIResponse;
 
 /**
- * Created by Thomas on 29/09/2018.
- * Interface when how to videos have been retrieved
+ * Created by Thomas on 17/12/2019.
+ * Interface when identity proof is retrieved
  */
-public interface OnRetrieveHowToInterface {
-    void onRetrieveHowTo(APIResponse apiResponse);
+public interface OnRetrieveIdentityProofInterface {
+    void onIdentityProof(APIResponse apiResponse);
 }

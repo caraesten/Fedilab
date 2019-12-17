@@ -32,6 +32,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +78,7 @@ import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveIdentityProofAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
@@ -84,6 +86,7 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.Entities.IdentityProof;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Relationship;
@@ -103,6 +106,7 @@ import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
+import app.fedilab.android.interfaces.OnRetrieveIdentityProofInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.InstancesDAO;
@@ -121,7 +125,7 @@ import static app.fedilab.android.helper.Helper.getLiveInstance;
  * Show account activity class
  */
 
-public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface, OnListActionInterface {
+public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface, OnListActionInterface, OnRetrieveIdentityProofInterface {
 
 
     private List<Status> statuses;
@@ -306,7 +310,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             header_edit_profile.setVisibility(View.VISIBLE);
             header_edit_profile.bringToFront();
         }
-
+        //TODO: add other software that supports identity proofs
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            new RetrieveIdentityProofAsyncTask(ShowAccountActivity.this, account.getId(), ShowAccountActivity.this).execute();
+        }
         String urlHeader = account.getHeader();
         if (urlHeader != null && urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
@@ -1535,6 +1542,17 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
     public boolean showBoosts() {
         return show_boosts;
+    }
+
+    @Override
+    public void onIdentityProof(APIResponse apiResponse) {
+        if( apiResponse == null) {
+            return;
+        }
+        List<IdentityProof> identityProofs = apiResponse.getIdentityProofs();
+        if( identityProofs != null && identityProofs.size() > 0 ){
+          
+        }
     }
 
 
