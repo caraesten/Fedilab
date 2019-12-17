@@ -215,6 +215,7 @@
     <string name="notif_reblog">megismételte posztodat</string>
     <string name="notif_favourite">lájkolta a posztodat</string>
     <string name="notif_follow">követett téged</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">és még egy értesítés</item>
         <item quantity="other">és még %d értesítés</item>
