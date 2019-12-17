@@ -227,6 +227,7 @@
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
         <item quantity="two">and %d other notifications</item>
