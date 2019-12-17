@@ -211,6 +211,7 @@
     <string name="notif_reblog">당신의 게시물을 부스트 했습니다</string>
     <string name="notif_favourite">당신의 상태를 마음에 들어했습니다</string>
     <string name="notif_follow">당신을 팔로우 했습니다</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="other">그리고 %d개의 다른 알림</item>
     </plurals>
