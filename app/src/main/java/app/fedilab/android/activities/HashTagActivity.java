@@ -186,6 +186,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
                 SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new SearchDAO(HashTagActivity.this, db).insertSearch(tag);
                 Intent intent = new Intent(HashTagActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(Helper.INTENT_ACTION, Helper.SEARCH_TAG);
                 intent.putExtra(Helper.SEARCH_KEYWORD, tag);
                 startActivity(intent);

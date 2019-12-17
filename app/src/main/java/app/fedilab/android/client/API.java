@@ -5166,6 +5166,10 @@ public class API {
         List<Filters> filters = null;
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/filters"), 10, null, prefKeyOauthTokenT);
+            if (response == null) {
+                apiResponse.setFilters(new ArrayList<>());
+                return apiResponse;
+            }
             filters = parseFilters(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);

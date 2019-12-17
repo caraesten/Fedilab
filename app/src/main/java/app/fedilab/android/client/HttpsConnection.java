@@ -209,6 +209,13 @@ public class HttpsConnection {
                 int code = httpresponse.code();
                 String error = httpresponse.message();
                 if (code >= 200 && code < 400) {
+                    if (!cache.isClosed()) {
+                        try {
+                            cache.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     getOKHttpHeader(httpresponse.headers().toMultimap());
                     return response;
                 } else {
@@ -224,7 +231,7 @@ public class HttpsConnection {
                     }
                 }
             }
-            return null;
+            throw new HttpsConnectionException(500, context.getString(R.string.toast_error));
         }else{
 
             if (proxy != null)
