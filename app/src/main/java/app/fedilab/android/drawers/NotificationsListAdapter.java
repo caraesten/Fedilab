@@ -70,6 +70,7 @@ import java.util.TimerTask;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.activities.BaseActivity;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.CustomSharingActivity;
 import app.fedilab.android.activities.MainActivity;
@@ -1481,10 +1482,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
             if (!disableAnimatedEmoji) {
-                if (BaseMainActivity.timer == null) {
-                    BaseMainActivity.timer = new Timer();
+                if (BaseActivity.timer == null) {
+                    BaseActivity.timer = new Timer();
                 }
-                BaseMainActivity.timer.schedule(new TimerTask() {
+                BaseActivity.timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         mHandler.post(updateAnimatedEmoji);
