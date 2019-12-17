@@ -215,6 +215,7 @@
     <string name="notif_reblog">ha ricondiviso il tuo stato</string>
     <string name="notif_favourite">ha messo tra i preferiti il tuo stato</string>
     <string name="notif_follow">ti segue</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">e un\'altra notifica</item>
         <item quantity="other">e %d altre notifiche</item>
