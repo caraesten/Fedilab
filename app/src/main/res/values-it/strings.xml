@@ -1100,4 +1100,5 @@
     <string name="talking_about">%d persone ne parlano</string>
     <string name="twitter_accounts">Account Twitter (via Nitter)</string>
     <string name="list_of_twitter_accounts">Nomi utente Twitter separati da spazio</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
