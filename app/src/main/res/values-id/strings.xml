@@ -1095,5 +1095,5 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
     <string name="identity_proofs">Identity proofs</string>
     <string name="verified_user">Verified identity</string>
-    <string name="verified_by">Verified by %1$s</string>
+    <string name="verified_by">Verified by %1$s (%2$s)</string>
 </resources>
