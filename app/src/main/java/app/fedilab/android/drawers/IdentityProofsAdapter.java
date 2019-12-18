@@ -63,6 +63,9 @@ public class IdentityProofsAdapter extends RecyclerView.Adapter {
         });
         holder.proof_name_network.setText(context.getString(R.string.verified_by, identityProof.getProvider(),Helper.shortDateToString(identityProof.getUpdated_at())));
         holder.proof_container.setOnClickListener(v -> {
+            Helper.openBrowser(context, identityProof.getProfile_url());
+        });
+        holder.proof_name_network.setOnClickListener(v -> {
             Helper.openBrowser(context, identityProof.getProof_url());
         });
     }

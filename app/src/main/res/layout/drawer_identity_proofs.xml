@@ -68,6 +68,7 @@
         android:src="@drawable/ic_keyboard_arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/identity_proofs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
