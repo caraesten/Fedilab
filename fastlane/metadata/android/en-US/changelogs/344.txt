@@ -1,6 +1,14 @@
 Added
 - Original & boost dates added separately
+- Follow request notifications
+- Identity proofs support
+
+Changed
+- Media are preloaded when scrolling
+- Improve live/delayed notifications
 
 Fixed
 - Counter for mentions
 - Preview images displayed twice
+- Media not saved on Android 10+
+- Issue when following instances/pinging tags
