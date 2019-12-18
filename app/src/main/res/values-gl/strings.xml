@@ -1100,4 +1100,5 @@
     <string name="talking_about">%d xente comentando</string>
     <string name="twitter_accounts">Contas de Twitter (vía Nitter)</string>
     <string name="list_of_twitter_accounts">Nomes de usuario Twitter separados por vírgulas</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
