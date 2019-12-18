@@ -1091,4 +1091,6 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="twitter_accounts">Comptes de Twitter (via Nitter)</string>
     <string name="list_of_twitter_accounts">Usuaris de Twitter separats per espais</string>
     <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>
