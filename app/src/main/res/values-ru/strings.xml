@@ -1116,4 +1116,5 @@
     <string name="talking_about">%d люди говорят</string>
     <string name="twitter_accounts">Аккаунты Twitter (с помощью Nitter)</string>
     <string name="list_of_twitter_accounts">Имена пользователей Twitter разделённые пробелом</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
