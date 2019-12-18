@@ -215,7 +215,7 @@
     <string name="notif_reblog">boostede din status</string>
     <string name="notif_favourite">favoriserede din status</string>
     <string name="notif_follow">fulgte dig</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">bad om at måtte følge dig</string>
     <plurals name="other_notifications">
         <item quantity="one">og en anden notifikation</item>
         <item quantity="other">og %d andre notifikationer</item>
