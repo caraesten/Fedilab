@@ -18,7 +18,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,11 +61,10 @@ public class IdentityProofsAdapter extends RecyclerView.Adapter {
         holder.proof_name.setOnClickListener(v -> {
             Helper.openBrowser(context, identityProof.getProfile_url());
         });
-        holder.proof_name_network.setText(context.getString(R.string.verified_by, identityProof.getProvider()));
+        holder.proof_name_network.setText(context.getString(R.string.verified_by, identityProof.getProvider(),Helper.shortDateToString(identityProof.getUpdated_at())));
         holder.proof_container.setOnClickListener(v -> {
             Helper.openBrowser(context, identityProof.getProof_url());
         });
-        holder.proof_date.setText(Helper.shortDateToString(identityProof.getUpdated_at()));
     }
 
     @Override
@@ -79,15 +78,14 @@ public class IdentityProofsAdapter extends RecyclerView.Adapter {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView proof_name, proof_name_network, proof_date;
-        private LinearLayout proof_container;
+        private TextView proof_name, proof_name_network;
+        private ConstraintLayout proof_container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             proof_name = itemView.findViewById(R.id.proof_name);
             proof_name_network = itemView.findViewById(R.id.proof_name_network);
             proof_container = itemView.findViewById(R.id.proof_container);
-            proof_date = itemView.findViewById(R.id.proof_date);
         }
     }
 
