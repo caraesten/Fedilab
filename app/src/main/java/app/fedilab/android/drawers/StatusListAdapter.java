@@ -1676,8 +1676,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.status_account_displayname_owner.setText(status.getReblog().getAccount().getAcct().replace("@", ""));
                 holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
-
-                holder.status_boosted_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                if (holder.status_boosted_date != null) {
+                    holder.status_boosted_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                }
             } else {
                 accountForUrl = status.getAccount();
                 holder.status_account_displayname.setVisibility(View.GONE);
