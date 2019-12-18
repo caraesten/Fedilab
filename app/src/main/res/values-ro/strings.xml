@@ -218,6 +218,7 @@
     <string name="notif_reblog">a amplificat statusul tău</string>
     <string name="notif_favourite">a favorizat statusul tău</string>
     <string name="notif_follow">vă urmărește</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">și încă o notificare</item>
         <item quantity="few">și incă %d alte notificări</item>
@@ -1104,4 +1105,7 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="talking_about">%d people talking</string>
     <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>

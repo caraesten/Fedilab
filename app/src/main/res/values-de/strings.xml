@@ -215,6 +215,7 @@
     <string name="notif_reblog">hat deinen Beitrag geteilt</string>
     <string name="notif_favourite">hat deinen Status favorisiert</string>
     <string name="notif_follow">folgt dir</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">und eine weitere Benachrichtigung</item>
         <item quantity="other">und %d weitere Benachrichtigungen</item>
@@ -1085,6 +1086,9 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="action_trends">Trends</string>
     <string name="trending_now">Gerade im Trend</string>
     <string name="talking_about">%d Leute sprechen</string>
-    <string name="twitter_accounts">Twitter-accounts (über Nitter)</string>
-    <string name="list_of_twitter_accounts">Twitter Benutzernamen durch ein Leerzeichen getrennt</string>
+    <string name="twitter_accounts">Twitter-Konten (über Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter-Benutzernamen durch ein Leerzeichen getrennt</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>

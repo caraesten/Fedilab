@@ -214,6 +214,7 @@
     <string name="notif_reblog">ha ricondiviso il tuo stato</string>
     <string name="notif_favourite">ha messo tra i preferiti il tuo stato</string>
     <string name="notif_follow">ti segue</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">e un\'altra notifica</item>
         <item quantity="other">e %d altre notifiche</item>
@@ -1098,4 +1099,7 @@
     <string name="talking_about">%d persone ne parlano</string>
     <string name="twitter_accounts">Account Twitter (via Nitter)</string>
     <string name="list_of_twitter_accounts">Nomi utente Twitter separati da spazio</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>

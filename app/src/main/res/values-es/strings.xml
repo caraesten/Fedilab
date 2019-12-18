@@ -214,6 +214,7 @@
     <string name="notif_reblog">retooteó tu estado</string>
     <string name="notif_favourite">marcó como favorito tu estado</string>
     <string name="notif_follow">te siguió</string>
+    <string name="notif_follow_request">solicitó seguirte</string>
     <plurals name="other_notifications">
         <item quantity="one">y otra notificación</item>
         <item quantity="other">y otra notificación</item>
@@ -1092,4 +1093,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="talking_about">%d personas hablando</string>
     <string name="twitter_accounts">Cuentas de Twitter (vía Nitter)</string>
     <string name="list_of_twitter_accounts">Nombres de usuario de Twitter separados por un espacio</string>
+    <string name="identity_proofs">Pruebas de identidad</string>
+    <string name="verified_user">Identidad verificada</string>
+    <string name="verified_by">Verificado por %1$s</string>
 </resources>

@@ -214,6 +214,7 @@
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous suit</string>
+    <string name="notif_follow_request">a demandé à vous suivre</string>
     <plurals name="other_notifications">
         <item quantity="one">et %d autre notification</item>
         <item quantity="other">et %d autres notifications</item>
@@ -1095,4 +1096,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="talking_about">%d personnes en parlent</string>
     <string name="twitter_accounts">Comptes Twitter (via Nitter)</string>
     <string name="list_of_twitter_accounts">Noms d\'utilisateurs Twitter séparés par un espace</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>

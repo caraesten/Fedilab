@@ -215,6 +215,7 @@
     <string name="notif_reblog">ökat din status</string>
     <string name="notif_favourite">favourited din status</string>
     <string name="notif_follow">följt dig</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">och en till notifikation</item>
         <item quantity="other">och %d till notifikationer</item>
@@ -1099,4 +1100,7 @@
     <string name="talking_about">%d people talking</string>
     <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>

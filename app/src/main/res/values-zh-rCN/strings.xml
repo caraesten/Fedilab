@@ -210,6 +210,7 @@
     <string name="notif_reblog">转嘟了您的状态</string>
     <string name="notif_favourite">收藏了您的状态</string>
     <string name="notif_follow">关注了您</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="other">和另外 %d 条通知</item>
     </plurals>
@@ -1090,4 +1091,7 @@
     <string name="talking_about">%d people talking</string>
     <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s</string>
 </resources>
