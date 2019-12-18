@@ -1551,7 +1551,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         List<IdentityProof> identityProofs = apiResponse.getIdentityProofs();
         if( identityProofs != null && identityProofs.size() > 0 ){
-
+            ImageView identity_proofs_indicator = findViewById(R.id.identity_proofs_indicator);
+            identity_proofs_indicator.setVisibility(View.VISIBLE);
         }
     }
 
