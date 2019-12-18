@@ -1098,4 +1098,5 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="talking_about">%d people talking</string>
     <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
