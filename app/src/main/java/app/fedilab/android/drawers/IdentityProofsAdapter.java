@@ -15,38 +15,34 @@ package app.fedilab.android.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import app.fedilab.android.R;
-import app.fedilab.android.activities.HashTagActivity;
+import app.fedilab.android.client.Entities.IdentityProof;
+import app.fedilab.android.helper.Helper;
 
 
 /**
- * Created by Thomas on 31/03/2019.
- * Adapter for tags results
+ * Created by Thomas on 19/12/2019.
+ * Adapter for identity proofs
  */
-public class SearchTagsAdapter extends RecyclerView.Adapter {
+public class IdentityProofsAdapter extends RecyclerView.Adapter {
 
     private Context context;
-    private List<String> tags;
+    private List<IdentityProof> identityProofs;
 
-    public SearchTagsAdapter(List<String> tags) {
-        this.tags = (tags != null) ? tags : new ArrayList<>();
+    public IdentityProofsAdapter(List<IdentityProof> identityProofs) {
+        this.identityProofs = identityProofs;
     }
 
-    public String getItem(int position) {
-        return tags.get(position);
+    public IdentityProof getItem(int position) {
+        return identityProofs.get(position);
     }
 
     @NonNull
@@ -54,26 +50,22 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_search_tab, parent, false));
+        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_identity_proofs, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         final ViewHolder holder = (ViewHolder) viewHolder;
-        final String tag = getItem(i);
-
-        holder.tag_name.setText(String.format("#%s", tag));
-        holder.tag_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, HashTagActivity.class);
-                Bundle b = new Bundle();
-                b.putString("tag", tag.trim());
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
+        final IdentityProof identityProof = getItem(i);
+        holder.proof_name.setText(String.format("@%s", identityProof.getProvider_username()));
+        holder.proof_name.setOnClickListener(v -> {
+            Helper.openBrowser(context, identityProof.getProfile_url());
         });
-
+        holder.proof_name_network.setText(context.getString(R.string.verified_by, identityProof.getProvider()));
+        holder.proof_container.setOnClickListener(v -> {
+            Helper.openBrowser(context, identityProof.getProof_url());
+        });
+        holder.proof_date.setText(Helper.shortDateToString(identityProof.getUpdated_at()));
     }
 
     @Override
@@ -83,15 +75,19 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return tags.size();
+        return identityProofs.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tag_name;
+        private TextView proof_name, proof_name_network, proof_date;
+        private LinearLayout proof_container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tag_name = itemView.findViewById(R.id.tag_name);
+            proof_name = itemView.findViewById(R.id.proof_name);
+            proof_name_network = itemView.findViewById(R.id.proof_name_network);
+            proof_container = itemView.findViewById(R.id.proof_container);
+            proof_date = itemView.findViewById(R.id.proof_date);
         }
     }
 

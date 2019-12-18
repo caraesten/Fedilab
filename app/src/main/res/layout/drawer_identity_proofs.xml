@@ -14,12 +14,50 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/identity_proofs_list"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/fab_margin"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    />
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_margin="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_verified_user"
+        android:contentDescription="@string/verified_user" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/proof_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+        <LinearLayout
+            android:id="@+id/proof_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/proof_name_network"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/proof_date"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                />
+        </LinearLayout>
 
-
+    </LinearLayout>
+</LinearLayout>

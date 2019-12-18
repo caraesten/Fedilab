@@ -32,7 +32,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +52,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -73,7 +75,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.DeleteDomainsAsyncTask;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
@@ -95,7 +96,7 @@ import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.UserNote;
 import app.fedilab.android.client.HttpsConnection;
-import app.fedilab.android.drawers.DomainsListAdapter;
+import app.fedilab.android.drawers.IdentityProofsAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
@@ -1568,19 +1569,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             identity_proofs_indicator.setOnClickListener(v -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShowAccountActivity.this, style);
 
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ShowAccountActivity.this, android.R.layout.select_dialog_item);
-                for (IdentityProof identityProof: identityProofs) {
-                    arrayAdapter.add(String.format("✅ @%s \uD83D\uDD17 %s", identityProof.getProvider_username(), identityProof.getProvider() ));
-                }
-                builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int position) {
-                        if( identityProofs.size() > position ) {
-                            String url = identityProofs.get(position).getProfile_url();
-                            Helper.openBrowser(ShowAccountActivity.this, url);
-                        }
-                    }
-                });
+                LayoutInflater inflater = getLayoutInflater();
+                View  identityProofsView = inflater.inflate(R.layout.popup_identity_proof, new LinearLayout(ShowAccountActivity.this), false);
+                RecyclerView  identityProofsRecycler = identityProofsView.findViewById(R.id.identity_proofs_list);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(ShowAccountActivity.this);
+                identityProofsRecycler.setLayoutManager(mLayoutManager);
+                IdentityProofsAdapter identityProofsAdapter = new IdentityProofsAdapter(identityProofs);
+                identityProofsRecycler.setAdapter(identityProofsAdapter);
+                builder.setView(identityProofsView);
                 builder
                         .setTitle(R.string.identity_proofs)
                         .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
