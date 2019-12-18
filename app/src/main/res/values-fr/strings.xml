@@ -1097,4 +1097,5 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="talking_about">%d personnes en parlent</string>
     <string name="twitter_accounts">Comptes Twitter (via Nitter)</string>
     <string name="list_of_twitter_accounts">Noms d\'utilisateurs Twitter séparés par un espace</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
