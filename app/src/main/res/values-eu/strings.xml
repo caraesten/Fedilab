@@ -1099,4 +1099,5 @@
     <string name="talking_about">%d pertsona hitz egiten</string>
     <string name="twitter_accounts">Twitter kontuak (Nitter bidez)</string>
     <string name="list_of_twitter_accounts">Twitter erabiltzaile-izenak zuriunez bereizita</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
