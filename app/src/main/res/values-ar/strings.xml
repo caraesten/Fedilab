@@ -1131,4 +1131,5 @@
     <string name="talking_about">%d أشخاص يتحدثون عن ذلك</string>
     <string name="twitter_accounts">حسابات تويتر (عبر Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
