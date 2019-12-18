@@ -1088,4 +1088,5 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="talking_about">%d Leute sprechen</string>
     <string name="twitter_accounts">Twitter-Konten (über Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter-Benutzernamen durch ein Leerzeichen getrennt</string>
+    <string name="identity_proofs">Identity proofs</string>
 </resources>
