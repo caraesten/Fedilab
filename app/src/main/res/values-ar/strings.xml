@@ -1054,7 +1054,7 @@
     <string name="order_by">ترتيب حسب</string>
     <string name="title_video_peertube">عنوان للفيديو</string>
     <string name="join_peertube">انظم إلى PeerTube</string>
-    <string name="agreement_check_peertube">أبلُغ مِن العُمر 16 سنة علئ الأقل وأوافق على %1$s لهذا الخادم</string>
+    <string name="agreement_check_peertube">أبلُغ مِن العُمر 16 سنة على الأقل وأوافق على %1$s هذا الخادم</string>
     <string name="link_color_title">الروابط</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">رأسية إعادات النشر</string>
@@ -1133,5 +1133,5 @@
     <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
     <string name="identity_proofs">دلائل الهوية</string>
     <string name="verified_user">هوية مُتحقّق منها</string>
-    <string name="verified_by">تم التحقق منها عبر %1$s</string>
+    <string name="verified_by">تم التحقق منه عبر %1$s (%2$s)</string>
 </resources>
