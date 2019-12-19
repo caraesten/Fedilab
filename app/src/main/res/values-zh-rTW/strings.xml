@@ -1092,6 +1092,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="twitter_accounts">Twitter 帳號（透過 Nitter）</string>
     <string name="list_of_twitter_accounts">以空格分開的 Twitter 使用者名稱</string>
     <string name="identity_proofs">身份證明</string>
-    <string name="verified_user">Verified identity</string>
-    <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="verified_user">已驗證的身份</string>
+    <string name="verified_by">由 %1$s 驗證 (%2$s)</string>
 </resources>
