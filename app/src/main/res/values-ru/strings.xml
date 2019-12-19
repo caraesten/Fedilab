@@ -300,7 +300,7 @@
     <string name="set_notify">Уведомлять?</string>
     <string name="set_notif_silent">Тихие уведомления</string>
     <string name="set_nsfw_timeout">Время просмотра NSFW (в секундах, 0 означает выключено)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Время просмотра описания (в секундах, 0 означает выключено)</string>
     <string name="settings_title_profile">Изменить профиль</string>
     <string name="settings_title_custom_sharing">Пользовательский обмен</string>
     <string name="settings_custom_sharing_url">Ваш пользовательский URL для обмена&#8230;</string>
@@ -1067,7 +1067,7 @@
     <string name="pref_custom_theme">Использовать собственную тему</string>
     <string name="pref_custom_theme_summary">Позволяет переопределить цвета выбранной темы выше</string>
     <string name="theming">Настройки оформления</string>
-    <string name="store_before">Store before</string>
+    <string name="store_before">Сначала сохранить</string>
     <string name="data_export_theme">Тема была экспортирована</string>
     <string name="data_export_theme_success">Тема была успешна экспортирована в формат CSV</string>
     <string name="pref_colored_status_bar_summary">Применить основной цвет к строке состояния</string>
