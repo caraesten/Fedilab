@@ -869,9 +869,9 @@
     <string name="reply_might_be_useless">Cevap verdiğiniz hesap mesajınızı görmeyebilir!</string>
     <string name="set_remember_position_indication">Devre dışı bırakılırsa, uygulama her zaman son durumları yükleyecektir</string>
     <string name="set_blur_sensitive_indication">Devre dışı bırakılırsa, hassas medya bir buton ile gizlenecektir</string>
-    <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
-    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
-    <string name="live_notif_indication">Keep an open connection to the streaming API for live notifications.</string>
+    <string name="set_long_press_media_indication">Önizlemelere uzun basarak medyayı tam boyutunda kaydedin</string>
+    <string name="set_display_timeline_in_list_indication">Tüm etiketleri/örnekleri/listeleri listelemek için sağ üste bir üç nokta butonu ekle</string>
+    <string name="live_notif_indication">Canlı bildirimler için streaming API\'si ile bir bağlantıyı açık tut.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
     <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
