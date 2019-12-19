@@ -1100,7 +1100,7 @@
     <string name="talking_about">%d folk omtaler</string>
     <string name="twitter_accounts">Twitter-konti (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitter-brugernavne, adskilt af mellemrum</string>
-    <string name="identity_proofs">Identity proofs</string>
-    <string name="verified_user">Verified identity</string>
-    <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="identity_proofs">Identitetsbeviser</string>
+    <string name="verified_user">Bekræftet identitet</string>
+    <string name="verified_by">Bekræftet af %1$s (%2$s)</string>
 </resources>
