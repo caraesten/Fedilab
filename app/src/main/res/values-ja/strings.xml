@@ -211,7 +211,7 @@
     <string name="notif_reblog">がブーストしました</string>
     <string name="notif_favourite">がお気に入りに登録しました</string>
     <string name="notif_follow">があなたをフォローしました</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">フォローリクエストが来ています</string>
     <plurals name="other_notifications">
         <item quantity="other">別の通知</item>
     </plurals>
@@ -982,7 +982,7 @@
     <string name="set_nitter_indication">Nitterはプライバシーに重点を置いたオープンソースのTwitter代替フロントエンドです。</string>
     <string name="set_nitter_host">カスタムホストを入力してください。空欄にするとnitter.netが使用されます。</string>
     <string name="set_hide_status_bar">通知バーからFedilabを非表示にする</string>
-    <string name="set_hide_status_bar_indication">ステータスバーに残っている通知を非表示にするには、目のアイコンをタップして「ステータスバーに表示する」のチェックを外します</string>
+    <string name="set_hide_status_bar_indication">ステータスバー上の通知を非表示にするには、目のアイコンボタンをタップして「ステータスバーに表示する」のチェックを外します</string>
     <string name="set_live_type_indication">通知は30秒ごとに遅延が発生します。バッテリーの持ちが改善します。</string>
     <string name="live_delayed">遅延ありのライブ通知</string>
     <string name="no_live_notif">ライブ通知なし</string>
@@ -1082,9 +1082,9 @@
     <string name="action_trends">トレンド</string>
     <string name="trending_now">トレンド</string>
     <string name="talking_about">%d人が話題にしています</string>
-    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
-    <string name="identity_proofs">Identity proofs</string>
-    <string name="verified_user">Verified identity</string>
-    <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="twitter_accounts">Twitterアカウント(via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitterのユーザー名をスペースで区切って入力</string>
+    <string name="identity_proofs">身分証明</string>
+    <string name="verified_user">認証済み</string>
+    <string name="verified_by">%1$s(%2$s)によって認証されました</string>
 </resources>
