@@ -201,6 +201,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 t = null;
             };
         }
+        Thread.currentThread().interrupt();
         if( networkStateReceiver != null) {
             networkStateReceiver.removeListener(this);
             unregisterReceiver(networkStateReceiver);
@@ -535,5 +536,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 t = null;
             };
         }
+        Thread.currentThread().interrupt();
     }
 }

@@ -143,10 +143,11 @@ public class LiveNotificationDelayedService extends Service {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().startsWith("notif_delayed_")){
                 t.interrupt();
-                t = null;
-            };
+            }
         }
+        Thread.currentThread().interrupt();
     }
+
 
 
     @Override
