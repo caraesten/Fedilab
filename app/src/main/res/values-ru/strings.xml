@@ -807,7 +807,7 @@
     <string name="toast_error_instance_reg">Что-то пошло не так при проверке доступных инстансов!</string>
     <string name="join_mastodon">Присоединиться к Mastodon</string>
     <string name="pickup_instance_category">Выберите инстанс, подобрав категорию и нажмите кнопку проверки.</string>
-    <string name="pickup_instance_peertube">Choose an instance by tapping on a check button.</string>
+    <string name="pickup_instance_peertube">Выберите инстанс, нажав на кнопку проверки.</string>
     <string name="users">%1$s пользователей</string>
     <string name="password_confirm">Подтвердить пароль</string>
     <string name="agreement_check">Я принимаю %1$s и %2$s</string>
@@ -966,10 +966,10 @@
         <item quantity="other">%d голосов</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d voter</item>
-        <item quantity="few">%d voters</item>
-        <item quantity="many">%d voters</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">%d голосующий</item>
+        <item quantity="few">%d голосующих</item>
+        <item quantity="many">%d голосующих</item>
+        <item quantity="other">%d голосующих</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Единичный выбор</item>
@@ -1056,7 +1056,7 @@
     <string name="pin_tag">Закрепить этот тег</string>
     <string name="logo_of_the_instance">Логотип инстанса</string>
     <string name="edit_profile">Редактировать профиль</string>
-    <string name="make_an_action">Make an action</string>
+    <string name="make_an_action">Предпринять действие</string>
     <string name="translation">Перевод</string>
     <string name="image_preview">Предпросмотр изображения</string>
     <string name="text_color_title">Цвет текста</string>
@@ -1078,16 +1078,16 @@
     <string name="export_theme">Экспортировать тему</string>
     <string name="export_theme_title">Нажмите здесь чтобы экспорта текущей темы</string>
     <string name="theme_file_error">Произошла ошибка при выборе файла темы</string>
-    <string name="label_theme_picker">Theme Picker</string>
+    <string name="label_theme_picker">Выбор темы</string>
     <string name="pref_theme_summary">Выбрать предустановленную тему</string>
     <string name="pref_theme_title">Темы</string>
     <string name="pref_colored_navigation_bar_summary">Применить основной цвет к панели навигации</string>
     <string name="pref_colored_navigation_bar_title">Цвет панели навигации</string>
-    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_summary">Базовый цвет содержимого приложения.</string>
     <string name="pref_background_color_title">Цвет фона</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
-    <string name="pref_accent_color_title">Accent color</string>
-    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_accent_color_summary">Акценты выбирают части пользовательского интерфейса.</string>
+    <string name="pref_accent_color_title">Цвет акцента</string>
+    <string name="pref_primary_color_summary">Отображаемые чаще всего в вашем приложении.</string>
     <string name="pref_primary_color_title">Основной цвет</string>
     <string name="export_bookmarks">Экспортировать закладки в инстанс</string>
     <string name="import_bookmarks">Импортировать закладки из инстанса</string>
