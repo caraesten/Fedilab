@@ -83,7 +83,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         holder.btn_authorize.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green_1), PorterDuff.Mode.MULTIPLY);
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
         //TODO: check if Friendica has a way to accept/deny follow requests
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
             holder.btn_authorize.setVisibility(View.GONE);
             holder.btn_reject.setVisibility(View.GONE);
         }

@@ -268,6 +268,7 @@ public class GNUAPI {
             }
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
+            Helper.largeLog( resobj.toString());
             if (resobj.has("attentions")) {
                 JSONArray arrayMention = resobj.getJSONArray("attentions");
                 if (arrayMention != null) {
@@ -1642,55 +1643,6 @@ public class GNUAPI {
     }
 
     /**
-     * Retrieves follow requests for the authenticated account *synchronously*
-     *
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getFollowRequest(String max_id) {
-        return getFollowRequest(max_id, null, accountPerPage);
-    }
-
-    /**
-     * Retrieves follow requests for the authenticated account *synchronously*
-     *
-     * @param max_id   String id max
-     * @param since_id String since the id
-     * @param limit    int limit  - max value 40
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    private APIResponse getFollowRequest(String max_id, String since_id, int limit) {
-
-        HashMap<String, String> params = new HashMap<>();
-        if (max_id != null)
-            params.put("max_id", max_id);
-        if (since_id != null)
-            params.put("since_id", since_id);
-        if (0 > limit || limit > 40)
-            limit = 40;
-        params.put("limit", String.valueOf(limit));
-        accounts = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/friendships/incoming.json"), 60, params, prefKeyOauthTokenT);
-            params = new HashMap<>();
-            params.put("user_id", response.replace("[","").replace("]",""));
-            response = httpsConnection.get(getAbsoluteUrl("/users/lookup.json"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            accounts = parseAccountResponse(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setAccounts(accounts);
-        return apiResponse;
-    }
-
-    /**
      * Retrieves favourited status for the authenticated account *synchronously*
      *
      * @param max_id String id max
@@ -2248,6 +2200,39 @@ public class GNUAPI {
      * @param query String search
      * @return Results
      */
+    public APIResponse search2(String query) {
+        Results results = new Results();
+        HashMap<String, String> params = new HashMap<>();
+        apiResponse = new APIResponse();
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            params.put("q", query);
+        else
+            try {
+                params.put("q", URLEncoder.encode(query, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("q", query);
+            }
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/search.json"), 60, params, prefKeyOauthTokenT);
+            List<Status> statuses = parseStatuses(context, new JSONArray(response));
+            results.setStatuses(statuses);
+            apiResponse.setResults(results);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves Accounts and feeds when searching *synchronously*
+     *
+     * @param query String search
+     * @return Results
+     */
     public APIResponse search(String query, String max_id) {
 
         HashMap<String, String> params = new HashMap<>();
@@ -2570,6 +2555,11 @@ public class GNUAPI {
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.context, this.instance) + "/api" + action;
     }
+
+    private String getAbsoluteMastodonUrl(String action) {
+        return Helper.instanceWithProtocol(this.context, this.instance) + "/api/v1" + action;
+    }
+
 
     private String getAbsoluteRemoteUrl(String instance, String action) {
         return Helper.instanceWithProtocol(this.context, instance) + "/api" + action;

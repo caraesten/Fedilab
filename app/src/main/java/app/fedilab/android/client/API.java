@@ -4475,11 +4475,8 @@ public class API {
                 }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
+            } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
                 e.printStackTrace();
             }
         } else {
