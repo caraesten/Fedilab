@@ -215,7 +215,7 @@
     <string name="notif_reblog">erabiltzaileak zure mezuari bultzada eman dio</string>
     <string name="notif_favourite">erabiltzaileak zure mezua gogoko du</string>
     <string name="notif_follow">zu jarraitzen hasi da</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">zu jarraitzea eskatu du</string>
     <plurals name="other_notifications">
         <item quantity="one">eta beste jakinarazpen bat</item>
         <item quantity="other">eta beste %d jakinarazpen</item>
@@ -1099,7 +1099,7 @@
     <string name="talking_about">%d pertsona hitz egiten</string>
     <string name="twitter_accounts">Twitter kontuak (Nitter bidez)</string>
     <string name="list_of_twitter_accounts">Twitter erabiltzaile-izenak zuriunez bereizita</string>
-    <string name="identity_proofs">Identity proofs</string>
-    <string name="verified_user">Verified identity</string>
-    <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="identity_proofs">Identitate frogak</string>
+    <string name="verified_user">Egiaztatutako identitatea</string>
+    <string name="verified_by">Egiaztatzailea: %1$s (%2$s)</string>
 </resources>
