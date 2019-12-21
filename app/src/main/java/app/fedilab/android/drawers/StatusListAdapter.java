@@ -3513,7 +3513,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
-                                    .override(640, 480)
+                                    //.override(640, 480)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
@@ -3537,7 +3537,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
-                                    .override(640, 480)
+                                   // .override(640, 480)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50, 3), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
