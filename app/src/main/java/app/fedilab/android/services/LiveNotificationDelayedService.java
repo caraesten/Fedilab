@@ -89,10 +89,7 @@ public class LiveNotificationDelayedService extends Service {
         super.onCreate();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        if( !notify ){
-            stopSelf();
-            return;
-        }
+
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Live notifications",
@@ -100,6 +97,7 @@ public class LiveNotificationDelayedService extends Service {
 
             ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
         }
+
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
         totalAccount = 0;
@@ -128,6 +126,10 @@ public class LiveNotificationDelayedService extends Service {
                 .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
         startForeground(1, notification);
+        if( !notify ){
+            stopSelf();
+            return;
+        }
         if (totalAccount > 0) {
             startStream();
         } else {
