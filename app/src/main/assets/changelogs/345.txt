@@ -1,14 +1,6 @@
 Added
-- Original & boost dates added separately
-- Follow request notifications
-- Identity proofs support
-
-Changed
-- Media are preloaded when scrolling
-- Improve live/delayed notifications
+- Friendica: Authorize/Reject follow requests
 
 Fixed
-- Counter for mentions
-- Preview images displayed twice
-- Media not saved on Android 10+
-- Issue when following instances/pinging tags
+- Not cropped media
+- Crash when starting the app
