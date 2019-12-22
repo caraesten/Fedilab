@@ -105,10 +105,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         super.onCreate();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        if( !notify ){
-            stopSelf();
-            return;
-        }
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
@@ -147,6 +143,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
         startForeground(1, notification);
+        if( !notify ){
+            stopSelf();
+            return;
+        }
         if (totalAccount == 0) {
             stopSelf();
         }
