@@ -148,7 +148,7 @@
     <string name="toot_title">Tulis sebuah kutipan</string>
     <string name="toot_title_reply">Balas ke sebuah kutipan</string>
     <string name="queet_title">Tulis sebuah queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title_reply">Balas sebuah queet</string>
     <string name="toot_select_image">Pilih media</string>
     <string name="toot_select_image_error">Terjadi kesalahan saat memilih media!</string>
     <string name="toot_delete_media">Hapus media ini?</string>
@@ -211,12 +211,12 @@
     <string name="notif_reblog">tingkatkan status Kamu</string>
     <string name="notif_favourite">status kesukaan Kamu</string>
     <string name="notif_follow">mengikutimu</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">meminta untuk mengikuti anda</string>
     <plurals name="other_notifications">
         <item quantity="other">dan %d pemberitahuan lainnya</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d like</item>
     </plurals>
     <string name="delete_notification_ask">Hapus pemberitahuan?</string>
     <string name="delete_notification_ask_all">Hapus semua pemberitahuan?</string>
@@ -228,7 +228,7 @@
     <string name="pinned_toots">Disematkan</string>
     <!-- TOAST -->
     <string name="client_error">Tidak menemukan id klien!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Tidak dapat terhubung ke instance domain!</string>
     <string name="no_internet">Tidak ada koneksi internet!</string>
     <string name="toast_block">Akun diblokir!</string>
     <string name="toast_unblock">Akun tidak lagi diblokir!</string>
@@ -253,7 +253,7 @@
     <string name="nothing_to_do">Tidak dapat diambil tindakan</string>
     <string name="toast_saved">Media telah tersimpan!</string>
     <string name="toast_error_translate">Terjadi kesalahan saat menerjemahkan!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Terjemahan dinonaktifkan di pengaturan</string>
     <string name="toast_toot_saved">Konsep tersimpan!</string>
     <string name="toast_error_char_limit">Apakah anda yakin contoh ini memungkinkan jumlah karakter ini? biasanya, nilai mendekati 500 karakter.</string>
     <string name="toast_visibility_changed">Visibilitas kutipan telah diubah untuk akun %1$s</string>
@@ -275,14 +275,14 @@
     <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
     <string name="set_notif_follow_add">Beritahu ketika seseorang menyukai status Anda</string>
     <string name="set_notif_follow_mention">Beritahu ketika seseorang menyebut Anda</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Beritahu ketika pemilihan berakhir</string>
     <string name="set_share_validation">Tampilkan dialog konfirmasi sebelum meningkatkan</string>
     <string name="set_share_validation_fav">Tampilkan dialog konfirmasi sebelum menambahkan ke favorit</string>
     <string name="set_wifi_only">Beritahu hanya di WIFI</string>
     <string name="set_notify">Memberitahu?</string>
     <string name="set_notif_silent">Diamkan pemberitahuan</string>
     <string name="set_nsfw_timeout">Lihat NSFW waktu habis (detik, 0 berarti mati)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Waktu Keterangan Media habis (detik, 0 berarti mati)</string>
     <string name="settings_title_profile">Ubah profil</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
