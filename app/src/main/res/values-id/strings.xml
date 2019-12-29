@@ -291,7 +291,7 @@
     <string name="set_save_changes">Simpan perubahan</string>
     <string name="set_header_picture_overlay">Pilih gambar header</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
+    <string name="set_automatically_split_toot">Pisah toots secara otomatis di balasan ketika karakter lebih dari:</string>
     <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
     <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
     <string name="settings_time_from">Antara</string>
@@ -301,7 +301,7 @@
     <string name="settings_hour_init">Waktu mulai</string>
     <string name="settings_hour_end">Waktu akhir</string>
     <string name="embedded_browser">Gunakan browser built-in</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Tab kustom</string>
     <string name="use_javascript">Aktifkan Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Izinkan cookie pihak ketiga</string>
