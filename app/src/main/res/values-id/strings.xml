@@ -128,16 +128,16 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <plurals name="date_seconds_polls">
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d detik</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="other">%d minutes</item>
+        <item quantity="other">%d menit</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="other">%d hours</item>
+        <item quantity="other">%d jam</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="other">%d days</item>
+        <item quantity="other">%d hari</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Peringatan</string>
@@ -147,7 +147,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Tulis sebuah kutipan</string>
     <string name="toot_title_reply">Balas ke sebuah kutipan</string>
-    <string name="queet_title">Write a queet</string>
+    <string name="queet_title">Tulis sebuah queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_select_image">Pilih media</string>
     <string name="toot_select_image_error">Terjadi kesalahan saat memilih media!</string>
