@@ -1060,7 +1060,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="pref_background_color_summary">Color subjacent del contingut de l\'aplicació.</string>
     <string name="pref_background_color_title">Color de fons</string>
     <string name="pref_accent_color_summary">Ressalta cromàticament parts de la IU.</string>
-    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_accent_color_title">Color d\'èmfasi</string>
     <string name="pref_primary_color_summary">Els mostrats amb més freqüència en la teva aplicació.</string>
     <string name="pref_primary_color_title">Color primari</string>
     <string name="export_bookmarks">Exporta els marcadors de la instància</string>
@@ -1079,8 +1079,8 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="open_other_app">Obre amb una altra aplicació</string>
     <string name="check_redirect">Comprova la redirecció</string>
     <string name="no_redirect">El redireccionament de la URL no funciona</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
+    <string name="redirect_detected">%1$s \n\nredireccions a\n\n %2$s</string>
+    <string name="set_user_agent">Canvieu l\'agent d\'usuari</string>
     <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
     <string name="set_utm_parameters">Eliminar seguiments de màrketing (UTM)</string>
