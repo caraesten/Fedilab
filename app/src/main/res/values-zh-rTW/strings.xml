@@ -789,7 +789,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="toast_error_instance_reg">在檢查可用站台時發生了些問題！</string>
     <string name="join_mastodon">加入 Mastodon</string>
     <string name="pickup_instance_category">透過挑選分類，然後按下按鈕來選擇站台。</string>
-    <string name="pickup_instance_peertube">點擊勾選按鈕來選擇站臺。</string>
+    <string name="pickup_instance_peertube">按一下勾選按鈕以選擇站台。</string>
     <string name="users">%1$s 位使用者</string>
     <string name="password_confirm">確認密碼</string>
     <string name="agreement_check">我同意 %1$s 和 %2$s</string>
@@ -945,7 +945,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
         <item quantity="other">%d 人投票</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="other">%d 個投票者</item>
+        <item quantity="other">%d 位投票者</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>單種選擇</item>
@@ -1000,29 +1000,29 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_resize_video_indication">允許在維持品質的同時壓縮影片。</string>
     <string name="please_wait_compression">應用程式正在壓縮媒體，可能會很久……</string>
     <string name="change_app_icon_experimental">變更應用程式圖示</string>
-    <string name="click_to_change_the_app_icon">點擊以變更應用程式圖示</string>
+    <string name="click_to_change_the_app_icon">按一下變更應用程式圖示</string>
     <string name="post">張貼</string>
     <string name="post_visibility_tilte">嘟文可見度</string>
-    <string name="add_photo_pixelfed">點選此處以新增照片</string>
+    <string name="add_photo_pixelfed">按一下這裡新增照片</string>
     <string name="add_photo_indication_pixelfed">可用格式：JPEG、PNG、GIF \n\n 最大檔案大小：15 MB \n\n 相簿可以包含最多 4 張照片或影片</string>
     <string name="upload_media">上傳媒體</string>
-    <string name="pixelfed_compose_placeholder">新增可選的選項</string>
+    <string name="pixelfed_compose_placeholder">新增可選標題</string>
     <string name="long_api_error">應用程式從 API %1$s 收到非常長的錯誤訊息</string>
     <string name="message_preview">訊息預覽</string>
     <string name="report_mention">在每個訊息中新增提及</string>
-    <string name="fetch_conversation">擷取對話</string>
-    <string name="order_by">排序由</string>
+    <string name="fetch_conversation">正在擷取對話</string>
+    <string name="order_by">排序依</string>
     <string name="title_video_peertube">影片標題</string>
     <string name="join_peertube">加入 Peertube</string>
-    <string name="agreement_check_peertube">我至少 16 歲並同意此站臺的 %1$s</string>
+    <string name="agreement_check_peertube">我至少 16 歲並同意此站台的 %1$s</string>
     <string name="link_color_title">連結</string>
     <string name="link_color">在訊息中變更連結的顏色（URL、提及、標籤等等）</string>
     <string name="boost_header_color_title">轉發標頭</string>
     <string name="displayname_title">更改訊息頂部的顯示名稱色彩</string>
     <string name="username_title">更改訊息頂部的使用者名稱色彩</string>
     <string name="boost_header_color">變更轉發標頭的顏色</string>
-    <string name="background_status_title">貼文</string>
-    <string name="background_status">時間軸中貼文的背景顏色</string>
+    <string name="background_status_title">嘟文</string>
+    <string name="background_status">時間軸中嘟文的背景顏色</string>
     <string name="reset_color">重設顏色</string>
     <string name="clik_reset">在此點擊以重設您所有自訂的顏色</string>
     <string name="reset">重設</string>
