@@ -873,10 +873,10 @@
     <string name="set_display_timeline_in_list_indication">Tüm etiketleri/örnekleri/listeleri listelemek için sağ üste bir üç nokta butonu ekle</string>
     <string name="live_notif_indication">Canlı bildirimler için streaming API\'si ile bir bağlantıyı açık tut.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
-    <string name="set_display_fedilab_features_button_indication">Display a Fedilab button below profile picture. It is a shortcut for accessing in-app features.</string>
-    <string name="set_quick_reply_indication">Allow to reply directly in timelines below statuses</string>
-    <string name="set_fit_preview_indication">Previews will not be cropped in timelines</string>
-    <string name="set_display_video_preview_indication">Allow to play embedded videos directly in timelines</string>
+    <string name="set_display_fedilab_features_button_indication">Profil resminin altında bir Fedilab butonu göster. Bu, uygulama içi özelliklere erişmek için bir kısayoldur.</string>
+    <string name="set_quick_reply_indication">Doğrudan zaman çizelgelerinde, durumların altında yanıt vermeye izin ver</string>
+    <string name="set_fit_preview_indication">Önizlemeler, zaman çizelgelerinde kırpılmayacak</string>
+    <string name="set_display_video_preview_indication">Gömülü videoları doğrudan zaman çizelgelerinde oynatmaya izin ver</string>
     <string name="set_display_content_after_fetch_more_indication">Allow to reverse the way to read statuses that are displayed once tapping the fetch more button</string>
     <string name="set_security_provider_indication">This option allows to support recent cipher suites. It is useful for older Android devices or if you cannot connect to your instance.</string>
     <string name="set_video_mode_indication">Exclusively for Peertube videos. Switch this mode if you cannot play them.</string>
