@@ -1057,9 +1057,16 @@ public class Status implements Parcelable {
                                         if (endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
                                             ImageSpan imageSpan;
                                             if (!disableAnimatedEmoji) {
-                                                resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
-                                                resource.setVisible(true, true);
-                                                imageSpan = new ImageSpan(resource);
+                                                try {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                }catch (Exception e) {
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
 
                                             } else {
                                                 Bitmap bitmap = drawableToBitmap(resource.getCurrent());
@@ -1126,7 +1133,7 @@ public class Status implements Parcelable {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
         Poll poll = status.getReblog() == null ? status.getPoll() : status.getReblog().getPoll();
-        if (poll == null) {
+        if (poll == null || poll.getOptionsList() == null) {
             status.setPollEmojiFound(true);
             return;
         }
