@@ -1075,7 +1075,7 @@
     <string name="import_theme">Импортировать тему</string>
     <string name="import_theme_title">Нажмите здесь чтобы импортировать тему из предыдущего экспорта</string>
     <string name="export_theme">Экспортировать тему</string>
-    <string name="export_theme_title">Нажмите здесь чтобы экспорта текущей темы</string>
+    <string name="export_theme_title">Нажмите здесь для экспорта текущей темы</string>
     <string name="theme_file_error">Произошла ошибка при выборе файла темы</string>
     <string name="label_theme_picker">Выбор темы</string>
     <string name="pref_theme_summary">Выбрать предустановленную тему</string>

@@ -127,16 +127,16 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <plurals name="date_seconds_polls">
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d detik</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="other">%d minutes</item>
+        <item quantity="other">%d menit</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="other">%d hours</item>
+        <item quantity="other">%d jam</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="other">%d days</item>
+        <item quantity="other">%d hari</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Peringatan</string>
@@ -146,8 +146,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">Tulis sebuah kutipan</string>
     <string name="toot_title_reply">Balas ke sebuah kutipan</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Tulis sebuah queet</string>
+    <string name="queet_title_reply">Balas sebuah queet</string>
     <string name="toot_select_image">Pilih media</string>
     <string name="toot_select_image_error">Terjadi kesalahan saat memilih media!</string>
     <string name="toot_delete_media">Hapus media ini?</string>
@@ -210,12 +210,12 @@
     <string name="notif_reblog">tingkatkan status Kamu</string>
     <string name="notif_favourite">status kesukaan Kamu</string>
     <string name="notif_follow">mengikutimu</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">meminta untuk mengikuti anda</string>
     <plurals name="other_notifications">
         <item quantity="other">dan %d pemberitahuan lainnya</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d like</item>
     </plurals>
     <string name="delete_notification_ask">Hapus pemberitahuan?</string>
     <string name="delete_notification_ask_all">Hapus semua pemberitahuan?</string>
@@ -227,7 +227,7 @@
     <string name="pinned_toots">Disematkan</string>
     <!-- TOAST -->
     <string name="client_error">Tidak menemukan id klien!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Tidak dapat terhubung ke instance domain!</string>
     <string name="no_internet">Tidak ada koneksi internet!</string>
     <string name="toast_block">Akun diblokir!</string>
     <string name="toast_unblock">Akun tidak lagi diblokir!</string>
@@ -252,7 +252,7 @@
     <string name="nothing_to_do">Tidak dapat diambil tindakan</string>
     <string name="toast_saved">Media telah tersimpan!</string>
     <string name="toast_error_translate">Terjadi kesalahan saat menerjemahkan!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Terjemahan dinonaktifkan di pengaturan</string>
     <string name="toast_toot_saved">Konsep tersimpan!</string>
     <string name="toast_error_char_limit">Apakah anda yakin contoh ini memungkinkan jumlah karakter ini? biasanya, nilai mendekati 500 karakter.</string>
     <string name="toast_visibility_changed">Visibilitas kutipan telah diubah untuk akun %1$s</string>
@@ -274,14 +274,14 @@
     <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
     <string name="set_notif_follow_add">Beritahu ketika seseorang menyukai status Anda</string>
     <string name="set_notif_follow_mention">Beritahu ketika seseorang menyebut Anda</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Beritahu ketika pemilihan berakhir</string>
     <string name="set_share_validation">Tampilkan dialog konfirmasi sebelum meningkatkan</string>
     <string name="set_share_validation_fav">Tampilkan dialog konfirmasi sebelum menambahkan ke favorit</string>
     <string name="set_wifi_only">Beritahu hanya di WIFI</string>
     <string name="set_notify">Memberitahu?</string>
     <string name="set_notif_silent">Diamkan pemberitahuan</string>
     <string name="set_nsfw_timeout">Lihat NSFW waktu habis (detik, 0 berarti mati)</string>
-    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Waktu Keterangan Media habis (detik, 0 berarti mati)</string>
     <string name="settings_title_profile">Ubah profil</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -290,7 +290,7 @@
     <string name="set_save_changes">Simpan perubahan</string>
     <string name="set_header_picture_overlay">Pilih gambar header</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
+    <string name="set_automatically_split_toot">Pisah toots secara otomatis di balasan ketika karakter lebih dari:</string>
     <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
     <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
     <string name="settings_time_from">Antara</string>
@@ -300,7 +300,7 @@
     <string name="settings_hour_init">Waktu mulai</string>
     <string name="settings_hour_end">Waktu akhir</string>
     <string name="embedded_browser">Gunakan browser built-in</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Tab kustom</string>
     <string name="use_javascript">Aktifkan Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Izinkan cookie pihak ketiga</string>
