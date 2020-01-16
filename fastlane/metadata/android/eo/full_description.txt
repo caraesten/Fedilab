@@ -1,5 +1,3 @@
-Fedilab estas multfunkcia klienta de Androido aliri la distribuita Fediverse, konsistanta mikraj blogoj, foto dividanta kaj video gastigado.
-
 Subtenaj:
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 
