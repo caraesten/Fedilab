@@ -1,14 +1,14 @@
-São suportados:
+It supports:
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 
 
 The app has advanced features (especially for Pleroma and Mastodon):
 
-- Suporte a várias contas
+- Multi-accounts support
 - Schedule messages from the device
 - Schedule boosts
 - Bookmark messages
-- Seguir e interagir com instâncias remotas
+- Follow and interact with remote instances
 - Timed mute accounts
 - Cross-account actions with a long press
 - Translation feature
