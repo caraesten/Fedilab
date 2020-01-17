@@ -176,7 +176,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if (!notify || intent == null || intent.getBooleanExtra("stop", false)) {
             totalAccount = 0;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                stopForeground(true);
+                stopForeground(STOP_FOREGROUND_DETACH);
                 NotificationManager notificationManager =  (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 assert notificationManager != null;
                 notificationManager.deleteNotificationChannel(CHANNEL_ID);

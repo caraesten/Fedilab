@@ -536,7 +536,9 @@ public class Sqlite extends SQLiteOpenHelper {
             case 35:
                 db.execSQL(CREATE_TABLE_USER_NOTES);
             case 36:
-                db.execSQL("ALTER TABLE " + TABLE_MAIN_MENU_ITEMS + " ADD COLUMN " + COL_NAV_TRENDS + " INTEGER  DEFAULT 1");
+                if (oldVersion > 33) {
+                    db.execSQL("ALTER TABLE " + TABLE_MAIN_MENU_ITEMS + " ADD COLUMN " + COL_NAV_TRENDS + " INTEGER  DEFAULT 1");
+                }
             default:
                 break;
         }

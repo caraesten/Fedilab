@@ -218,7 +218,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
     @Override
     public void onRetrieveInstance(APIResponse apiResponse) {
-        if (apiResponse.getError() != null) {
+        if (apiResponse.getError() != null || apiResponse.getInstanceRegs() == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
             return;
         }
