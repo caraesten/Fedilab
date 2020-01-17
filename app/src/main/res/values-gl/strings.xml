@@ -1099,7 +1099,7 @@
     <string name="trending_now">Tendencia agora</string>
     <string name="talking_about">%d xente comentando</string>
     <string name="twitter_accounts">Contas de Twitter (vía Nitter)</string>
-    <string name="list_of_twitter_accounts">Nomes de usuario Twitter separados por vírgulas</string>
+    <string name="list_of_twitter_accounts">Nomes de usuaria Twitter separados por vírgulas</string>
     <string name="identity_proofs">Probas de identidade</string>
     <string name="verified_user">Identidade verificada</string>
     <string name="verified_by">Verificada por %1$s (%2$s)</string>
