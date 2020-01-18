@@ -1103,4 +1103,6 @@
     <string name="identity_proofs">Identitetsbeviser</string>
     <string name="verified_user">Bekræftet identitet</string>
     <string name="verified_by">Bekræftet af %1$s (%2$s)</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>
