@@ -1099,4 +1099,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="identity_proofs">Preuves d’identité</string>
     <string name="verified_user">Identité vérifiée</string>
     <string name="verified_by">Vérifié par %1$s (%2$s)</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>

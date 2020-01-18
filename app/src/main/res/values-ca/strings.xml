@@ -1093,4 +1093,6 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="identity_proofs">Proves d\'identitat</string>
     <string name="verified_user">Verified identity</string>
     <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="remove_notification">Suprimir la notificació</string>
+    <string name="display_more_options">Mostrar més opcions</string>
 </resources>

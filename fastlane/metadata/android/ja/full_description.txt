@@ -1,5 +1,3 @@
-Fedilabはマイクロブログや写真の共有、ビデオのホスティングなどの分散型Fediverseにアクセスするための多機能なAndroidクライアントです。
-
 対応:
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica
 

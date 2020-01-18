@@ -1,5 +1,3 @@
-Fedilab 是一個可以存取分散式 Fediverse 的多功能 Android 客戶端，包含了微部落格、照片分享與影片託管。
-
 它支援了：
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica。
 

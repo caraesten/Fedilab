@@ -1,5 +1,3 @@
-Fedilab Fedibertso banatua atzitzeko funtzio anitzeko Android bezeroa da, mikroblogintzarako, argazkiak partekatzeko, edo bideoak ostatatzeko erabili daiteke.
-
 Hauentzako euskarria du:
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 

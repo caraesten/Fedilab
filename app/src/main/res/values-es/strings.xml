@@ -1096,4 +1096,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="identity_proofs">Pruebas de identidad</string>
     <string name="verified_user">Identidad verificada</string>
     <string name="verified_by">Verificado por %1$s (%2$s)</string>
+    <string name="remove_notification">Eliminar la notificación</string>
+    <string name="display_more_options">Mostrar más opciones</string>
 </resources>
