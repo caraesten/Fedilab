@@ -1087,4 +1087,6 @@
     <string name="identity_proofs">身分証明</string>
     <string name="verified_user">認証済み</string>
     <string name="verified_by">%1$s(%2$s)によって認証されました</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>
