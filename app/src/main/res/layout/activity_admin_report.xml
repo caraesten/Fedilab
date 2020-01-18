@@ -42,7 +42,7 @@
 
             <Button
                 android:id="@+id/assign"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:textSize="16sp"
@@ -52,7 +52,7 @@
 
             <Button
                 android:id="@+id/status"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:textSize="16sp"
@@ -224,7 +224,7 @@
 
             <Button
                 android:id="@+id/reject"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -236,7 +236,7 @@
 
             <Button
                 android:id="@+id/allow"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -261,7 +261,7 @@
 
             <Button
                 android:id="@+id/warn"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -273,7 +273,7 @@
 
             <Button
                 android:id="@+id/disable"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -292,7 +292,7 @@
 
             <Button
                 android:id="@+id/silence"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -304,7 +304,7 @@
 
             <Button
                 android:id="@+id/suspend"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -373,7 +373,7 @@
             <!--
             <Button
                 android:id="@+id/action"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

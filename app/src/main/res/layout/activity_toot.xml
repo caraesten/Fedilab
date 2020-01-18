@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:animateLayoutChanges="true"
+        android:maxHeight="80dp"
         android:hint="@string/toot_cw_placeholder"
         android:visibility="gone" />
 
