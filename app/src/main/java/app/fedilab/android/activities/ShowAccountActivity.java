@@ -1530,7 +1530,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         if (apiResponse.getError() != null) {
-            if (!apiResponse.getError().getError().startsWith("404 -"))
+            if (!apiResponse.getError().getError().startsWith("404 -")&&!apiResponse.getError().getError().startsWith("501 -"))
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             return;
         }

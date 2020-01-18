@@ -216,7 +216,7 @@ public class PlaylistsActivity extends BaseActivity implements OnPlaylistActionI
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
-            if (!apiResponse.getError().getError().startsWith("404 -"))
+            if (!apiResponse.getError().getError().startsWith("404 -")&&!apiResponse.getError().getError().startsWith("501 -"))
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;

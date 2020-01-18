@@ -463,7 +463,15 @@ public class Status implements Parcelable {
                     uri = new URI(url);
                     instance = uri.getHost();
                 } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                    if( url.contains("|")) {
+                        try {
+                            uri = new URI(url.split("\\|")[0]);
+                            instance = uri.getHost();
+                        } catch (URISyntaxException ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
                 }
                 if (key.startsWith("@"))
                     acct = key.substring(1).split("\\|")[0];

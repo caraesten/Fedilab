@@ -519,7 +519,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
 
         //handle other API error but discards 404 - error which can often happen due to toots which have been deleted
-        if (this.peertubes == null || this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
+        if (this.peertubes == null || this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else {
@@ -1008,7 +1008,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         if (statusListAdapter == null && pixelfedListAdapter == null)
             return;
-        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
+        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else if (apiResponse.getError().getError().length() < 100) {
@@ -1151,7 +1151,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         if (apiResponse.getError() != null) {
-            if (!apiResponse.getError().getError().startsWith("404 -"))
+            if (!apiResponse.getError().getError().startsWith("404 -")&&!apiResponse.getError().getError().startsWith("501 -"))
                 if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
                 } else {

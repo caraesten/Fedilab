@@ -108,7 +108,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError().getStatusCode() != 501) {
             if (apiResponse.getError().getError().length() < 100) {
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             } else {

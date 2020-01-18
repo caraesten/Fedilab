@@ -581,27 +581,29 @@ public class API {
                 status.setLanguage("ja");
             }
             status.setUrl(resobj.get("url").toString());
-            //Retrieves attachments
-            JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
             ArrayList<Attachment> attachments = new ArrayList<>();
-            if (arrayAttachement != null) {
-                for (int j = 0; j < arrayAttachement.length(); j++) {
-                    JSONObject attObj = arrayAttachement.getJSONObject(j);
-                    Attachment attachment = new Attachment();
-                    attachment.setId(attObj.get("id").toString());
-                    attachment.setPreview_url(attObj.get("preview_url").toString());
-                    attachment.setRemote_url(attObj.get("remote_url").toString());
-                    attachment.setType(attObj.get("type").toString());
-                    attachment.setText_url(attObj.get("text_url").toString());
-                    attachment.setUrl(attObj.get("url").toString());
-                    try {
-                        attachment.setDescription(attObj.get("description").toString());
-                    } catch (JSONException ignore) {
+            //Retrieves attachments
+            if( resobj.has("media_attachments")) {
+                JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
+
+                if (arrayAttachement != null) {
+                    for (int j = 0; j < arrayAttachement.length(); j++) {
+                        JSONObject attObj = arrayAttachement.getJSONObject(j);
+                        Attachment attachment = new Attachment();
+                        attachment.setId(attObj.get("id").toString());
+                        attachment.setPreview_url(attObj.get("preview_url").toString());
+                        attachment.setRemote_url(attObj.get("remote_url").toString());
+                        attachment.setType(attObj.get("type").toString());
+                        attachment.setText_url(attObj.get("text_url").toString());
+                        attachment.setUrl(attObj.get("url").toString());
+                        try {
+                            attachment.setDescription(attObj.get("description").toString());
+                        } catch (JSONException ignore) {
+                        }
+                        attachments.add(attachment);
                     }
-                    attachments.add(attachment);
                 }
             }
-
             try {
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
             } catch (Exception e) {
@@ -2104,7 +2106,7 @@ public class API {
             } catch (NoSuchAlgorithmException | JSONException | KeyManagementException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
-                if (e1.getStatusCode() == 404) {
+                if (e1.getStatusCode() == 404 || e1.getStatusCode() == 501  ) {
                     instanceNodeInfo.setName("GNU");
                     instanceNodeInfo.setVersion("unknown");
                     instanceNodeInfo.setOpenRegistrations(true);
@@ -2128,7 +2130,7 @@ public class API {
             } catch (NoSuchAlgorithmException | JSONException | KeyManagementException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
-                if (e1.getStatusCode() == 404) {
+                if (e1.getStatusCode() == 404|| e1.getStatusCode() == 501) {
                     instanceNodeInfo.setName("GNU");
                     instanceNodeInfo.setVersion("unknown");
                     instanceNodeInfo.setOpenRegistrations(true);

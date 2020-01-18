@@ -745,7 +745,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     @Override
     public void onRetrievePeertubeComments(APIResponse apiResponse) {
-        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
+        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse == null)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else

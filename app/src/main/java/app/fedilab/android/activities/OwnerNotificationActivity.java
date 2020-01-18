@@ -477,7 +477,7 @@ public class OwnerNotificationActivity extends BaseActivity implements OnRetriev
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+        if (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404&& apiResponse.getError().getStatusCode() != 501) {
             Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;

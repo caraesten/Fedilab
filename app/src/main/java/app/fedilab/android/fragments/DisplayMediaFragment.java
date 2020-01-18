@@ -176,7 +176,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if (apiResponse == null || apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse != null && apiResponse.getError() != null && apiResponse.getError().getError() != null)
                 if (apiResponse.getError().getError().length() < 100) {
                     Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();

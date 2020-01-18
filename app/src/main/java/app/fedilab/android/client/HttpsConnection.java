@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 
 import com.google.gson.JsonObject;
 
@@ -64,6 +65,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.client.Entities.Error;
@@ -202,11 +204,12 @@ public class HttpsConnection {
 
                     .url(httpBuider.build())
                     .build();
+            int code = 500;
             try {
                 Response httpresponse = client.newCall(requesthttp).execute();
                 assert httpresponse.body() != null;
                 String response = httpresponse.body().string();
-                int code = httpresponse.code();
+                code = httpresponse.code();
                 String error = httpresponse.message();
                 if (code >= 200 && code < 400) {
                     if (!cache.isClosed()) {
@@ -231,7 +234,7 @@ public class HttpsConnection {
                     }
                 }
             }
-            throw new HttpsConnectionException(500, context.getString(R.string.toast_error));
+            throw new HttpsConnectionException(code, context.getString(R.string.toast_error));
         }else{
 
             if (proxy != null)

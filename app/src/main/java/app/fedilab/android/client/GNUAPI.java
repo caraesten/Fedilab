@@ -1104,7 +1104,7 @@ public class GNUAPI {
             }
 
         } catch (HttpsConnection.HttpsConnectionException e) {
-            if (e.getStatusCode() != 404)
+            if (e.getStatusCode() != 404 && e.getStatusCode() != 501)
                 setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

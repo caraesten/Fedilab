@@ -2568,7 +2568,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     return fragment;
                 }else if (position == 3) {
                     DisplayStoriesFragment fragment = new DisplayStoriesFragment();
-                    bundle.putSerializable("type", RetrieveStoriesAsyncTask.type.FRIENDS);
+                    bundle.putSerializable("type", RetrieveStoriesAsyncTask.type.ME);
                     fragment.setArguments(bundle);
                     return fragment;
                 }
