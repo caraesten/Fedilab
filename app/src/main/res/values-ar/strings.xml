@@ -1134,4 +1134,6 @@
     <string name="identity_proofs">دلائل الهوية</string>
     <string name="verified_user">هوية مُتحقّق منها</string>
     <string name="verified_by">تم التحقق منه عبر %1$s (%2$s)</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>
