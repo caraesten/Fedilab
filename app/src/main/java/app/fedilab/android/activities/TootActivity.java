@@ -249,7 +249,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private ImageView pp_actionBar;
     private ProgressBar pp_progress;
     private Toast mToast;
-    private RelativeLayout drawer_layout;
+    private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
     private TextView toot_space_left;
     private String initialContent;

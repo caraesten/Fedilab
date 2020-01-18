@@ -14,287 +14,275 @@
     You should have received a copy of the GNU General Public License along with Fedilab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
+<LinearLayout android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    app:ignore="NamespaceTypo">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/toot_padding"
+    android:paddingTop="@dimen/toot_padding"
+    android:paddingRight="@dimen/toot_padding"
+    android:paddingBottom="@dimen/toot_padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/drawer_layout"
+    <TextView
+        android:id="@+id/warning_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/toot_padding"
-        android:paddingTop="@dimen/toot_padding"
-        android:paddingRight="@dimen/toot_padding"
-        android:paddingBottom="@dimen/toot_padding">
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/red_border"
+        android:gravity="center"
+        android:text="@string/reply_might_be_useless"
+        android:textColor="@color/red_1"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/warning_message"
+    <EditText
+        android:id="@+id/toot_cw_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:animateLayoutChanges="true"
+        android:hint="@string/toot_cw_placeholder"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/composer_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:fillViewport="true">
+
+        <app.fedilab.android.helper.MastalabAutoCompleteTextView
+            android:id="@+id/toot_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/red_border"
-            android:gravity="center"
-            android:text="@string/reply_might_be_useless"
-            android:textColor="@color/red_1"
-            android:visibility="gone" />
+            android:layout_marginTop="10dp"
+            android:gravity="top|start"
+            android:hint="@string/toot_placeholder"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="4" />
+    </ScrollView>
 
-        <EditText
-            android:id="@+id/toot_cw_content"
+    <HorizontalScrollView
+        android:id="@+id/toolbar_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:id="@+id/wysiwyg_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <com.github.irshulx.Editor
+            android:id="@+id/editor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/warning_message"
-            android:layout_marginTop="20dp"
-            android:animateLayoutChanges="true"
-            android:hint="@string/toot_cw_placeholder"
-            android:visibility="gone" />
+            android:hint="@string/toot_placeholder"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="100dp"
+            app:render_type="Editor" />
+    </ScrollView>
 
-        <ScrollView
-            android:id="@+id/composer_container"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/suggestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/bottom_bar_tooting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/progress_bar_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_bar_tooting"
-            android:layout_below="@+id/toot_cw_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-            <app.fedilab.android.helper.MastalabAutoCompleteTextView
-                android:id="@+id/toot_content"
+            <ProgressBar
+                android:id="@+id/upload_progress"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="top|start"
-                android:hint="@string/toot_placeholder"
-                android:inputType="textMultiLine|textCapSentences"
-                android:minLines="4" />
-        </ScrollView>
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/toolbar_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/dark_text"
+                android:textSize="12sp" />
+        </RelativeLayout>
 
         <HorizontalScrollView
-            android:id="@+id/toolbar_scrollview"
+            android:id="@+id/picture_scrollview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?colorPrimary"
-            android:scrollbars="none"
             android:visibility="gone">
-
-            <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
-        </HorizontalScrollView>
-
-        <ScrollView
-            android:id="@+id/wysiwyg_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_bar_tooting"
-            android:layout_below="@+id/toolbar_scrollview"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            android:fillViewport="true"
-            android:visibility="gone">
-
-            <com.github.irshulx.Editor
-                android:id="@+id/editor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/toot_placeholder"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="100dp"
-                app:render_type="Editor" />
-        </ScrollView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/suggestions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/bottom_bar_tooting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/progress_bar_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <ProgressBar
-                    android:id="@+id/upload_progress"
-                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="false"
-                    android:max="100"
-                    android:progress="0" />
-
-                <TextView
-                    android:id="@+id/toolbar_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/dark_text"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <HorizontalScrollView
-                android:id="@+id/picture_scrollview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/toot_picture_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:maxHeight="100dp"
-                    android:orientation="horizontal"
-                    android:padding="5dp" />
-            </HorizontalScrollView>
 
             <LinearLayout
-                android:id="@+id/compression_loader"
-                android:layout_width="match_parent"
+                android:id="@+id/toot_picture_container"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/activity_vertical_margin"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:maxHeight="100dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:padding="5dp" />
+        </HorizontalScrollView>
 
-                <ProgressBar
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_gravity="center" />
+        <LinearLayout
+            android:id="@+id/compression_loader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/please_wait_compression"
-                    android:textColor="?colorAccent"
-                    android:textSize="12sp" />
-            </LinearLayout>
+            <ProgressBar
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/toot_picture"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/toot_select_image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_insert_photo"
-                    android:tint="?attr/iconColor" />
-
-                <ImageButton
-                    android:id="@+id/poll_action"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/poll"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_view_list_poll"
-                    android:tint="?attr/iconColor"
-                    android:visibility="gone" />
-
-                <ImageButton
-                    android:id="@+id/toot_visibility"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/toot_visibility_tilte"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_public"
-                    android:tint="?attr/iconColor" />
-
-                <Button
-                    android:id="@+id/toot_cw"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:text="@string/cw" />
-
-                <ImageButton
-                    android:id="@+id/toot_emoji"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/emoji_picker"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_insert_emoticon"
-                    android:tint="?attr/iconColor" />
-
-                <TextView
-                    android:id="@+id/toot_space_left"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="?colorAccent" />
-
-                <Button
-                    android:id="@+id/toot_it"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_gravity="end"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:text="@string/toot_it" />
-
-            </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/toot_sensitive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/toot_sensitive"
-                android:visibility="gone" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:gravity="center_vertical"
+                android:text="@string/please_wait_compression"
+                android:textColor="?colorAccent"
+                android:textSize="12sp" />
         </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/toot_picture"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:contentDescription="@string/toot_select_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_insert_photo"
+                android:tint="?attr/iconColor" />
+
+            <ImageButton
+                android:id="@+id/poll_action"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:contentDescription="@string/poll"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_view_list_poll"
+                android:tint="?attr/iconColor"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/toot_visibility"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:contentDescription="@string/toot_visibility_tilte"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_public"
+                android:tint="?attr/iconColor" />
+
+            <Button
+                android:id="@+id/toot_cw"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:text="@string/cw" />
+
+            <ImageButton
+                android:id="@+id/toot_emoji"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:contentDescription="@string/emoji_picker"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_insert_emoticon"
+                android:tint="?attr/iconColor" />
+
+            <TextView
+                android:id="@+id/toot_space_left"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="?colorAccent" />
+
+            <Button
+                android:id="@+id/toot_it"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="@string/toot_it" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/toot_sensitive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/toot_sensitive"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

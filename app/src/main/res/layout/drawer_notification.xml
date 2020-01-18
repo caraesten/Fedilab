@@ -98,7 +98,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:contentDescription="@string/delete_notification"
+                    android:contentDescription="@string/remove_notification"
                     android:src="@drawable/ic_delete"
                     android:tint="?attr/iconColor" />
             </RelativeLayout>
