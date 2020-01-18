@@ -1103,4 +1103,6 @@
     <string name="identity_proofs">Identity proofs</string>
     <string name="verified_user">Verified identity</string>
     <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>
