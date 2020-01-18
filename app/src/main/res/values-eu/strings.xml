@@ -1102,4 +1102,6 @@
     <string name="identity_proofs">Identitate frogak</string>
     <string name="verified_user">Egiaztatutako identitatea</string>
     <string name="verified_by">Egiaztatzailea: %1$s (%2$s)</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>
