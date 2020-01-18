@@ -37,17 +37,20 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseActivity;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.activities.ShowConversationActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Mention;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.drawers.AccountsSearchAdapter;
 import app.fedilab.android.drawers.PixelfedListAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
@@ -94,7 +97,7 @@ public class CrossActions {
                         for (Account account : accountstmp) {
                             String mentionAcct = (mention.getAcct().contains("@")) ? mention.getAcct() : mention.getAcct() + "@" + currentAccount.getInstance();
                             if ((account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA"))
+                                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("FRIENDICA"))
                                     accounts.add(account);
                             }
                         }
@@ -103,7 +106,7 @@ public class CrossActions {
                         Account tootOwner = status.getAccount();
                         String mentionAcct = (tootOwner.getAcct().contains("@")) ? tootOwner.getAcct() : tootOwner.getAcct() + "@" + currentAccount.getInstance();
                         if ((account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                            if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA"))
+                            if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")|| account.getSocial().equals("FRIENDICA"))
                                 accounts.add(account);
                         }
                     }
@@ -329,7 +332,7 @@ public class CrossActions {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+
                 String url = remoteAccount.getUrl();
                 if (url == null) {
                     if (remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1) //Peertube compatibility
@@ -337,7 +340,14 @@ public class CrossActions {
                     else
                         url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
                 }
-                APIResponse apiResponse = api.search2(url, null, null);
+                APIResponse apiResponse;
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                    GNUAPI api = new GNUAPI(contextReference.get(), account.getInstance(), account.getToken());
+                    apiResponse = api.search(remoteAccount.getAcct()+"@"+remoteAccount.getInstance());
+                } else {
+                    API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                    apiResponse = api.search2(url, null, null);
+                }
                 response = apiResponse.getResults();
                 return null;
             }
@@ -414,8 +424,15 @@ public class CrossActions {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                APIResponse apiResponse = api.search(remoteStatus.getUrl());
+
+                APIResponse apiResponse;
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                    GNUAPI api = new GNUAPI(contextReference.get(), account.getInstance(), account.getToken());
+                    apiResponse = api.search2(remoteStatus.getUrl());
+                } else {
+                    API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                    apiResponse = api.search(remoteStatus.getUrl());
+                }
                 response = apiResponse.getResults();
                 return null;
             }
@@ -626,7 +643,7 @@ public class CrossActions {
                                 protected Void doInBackground(Void... voids) {
 
 
-                                    API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+
                                     String uri;
                                     if (status.getReblog() != null) {
                                         if (status.getReblog().getUri().startsWith("http"))
@@ -639,9 +656,18 @@ public class CrossActions {
                                         else
                                             uri = status.getUrl();
                                     }
-                                    APIResponse search = api.search(uri);
-                                    if (search != null && search.getResults() != null) {
-                                        remoteStatuses = search.getResults().getStatuses();
+                                    if( account.getSocial().compareTo("FRIENDICA") != 0 ) {
+                                        API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                                        APIResponse search = api.search(uri);
+                                        if (search != null && search.getResults() != null) {
+                                            remoteStatuses = search.getResults().getStatuses();
+                                        }
+                                    }else{
+                                        GNUAPI api = new GNUAPI(contextReference.get(), account.getInstance(), account.getToken());
+                                        APIResponse search = api.search2(uri);
+                                        if (search != null && search.getResults() != null) {
+                                            remoteStatuses = search.getResults().getStatuses();
+                                        }
                                     }
                                     return null;
                                 }

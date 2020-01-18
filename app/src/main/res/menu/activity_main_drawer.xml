@@ -18,6 +18,10 @@
                         android:title="@string/action_news"
                         app:actionLayout="@layout/item_menu_news" />
                     <item
+                        android:id="@+id/nav_trends"
+                        android:icon="@drawable/ic_trending_tags"
+                        android:title="@string/action_trends" />
+                    <item
                         android:id="@+id/nav_list"
                         android:icon="@drawable/ic_list"
                         android:title="@string/action_lists" />

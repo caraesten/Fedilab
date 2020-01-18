@@ -126,6 +126,22 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d t</string>
     <string name="date_day">%d d</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d sekund</item>
+        <item quantity="other">%d sekunder</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minut</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dage</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Advarsel</string>
     <string name="toot_placeholder">Hvad har du i tankerne?</string>
@@ -198,6 +214,7 @@
     <string name="notif_reblog">boostede din status</string>
     <string name="notif_favourite">favoriserede din status</string>
     <string name="notif_follow">fulgte dig</string>
+    <string name="notif_follow_request">bad om at måtte følge dig</string>
     <plurals name="other_notifications">
         <item quantity="one">og en anden notifikation</item>
         <item quantity="other">og %d andre notifikationer</item>
@@ -270,6 +287,7 @@
     <string name="set_notify">Notificér?</string>
     <string name="set_notif_silent">Tavse Notifikationer</string>
     <string name="set_nsfw_timeout">NSFW-visningstimeout (sekunder, 0 betyder slået fra)</string>
+    <string name="set_med_desc_timeout">Mediebeskrivelses-timeout (sekunder, 0 = Fra)</string>
     <string name="settings_title_profile">Redigér profil</string>
     <string name="settings_title_custom_sharing">Tilpasset deling</string>
     <string name="settings_custom_sharing_url">Din tilpassede delings-URL&#8230;</string>
@@ -292,11 +310,6 @@
     <string name="use_javascript">Aktivér JavaScript</string>
     <string name="expand_cw">Udvid automatisk cw</string>
     <string name="use_cookies">Tillad tredjeparts-cookies</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Nej</item>
-    </string-array>
     <string name="your_api_key">Din API-nøgle, kan være tom for Yandex</string>
     <string-array name="settings_theme">
         <item>Mørk</item>
@@ -937,6 +950,10 @@
         <item quantity="one">%d stemme</item>
         <item quantity="other">%d stemmer</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d stemmeafgiver</item>
+        <item quantity="other">%d stemmeafgivere</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Enkeltvalg</item>
         <item>Multivalg</item>
@@ -1009,6 +1026,8 @@
     <string name="link_color_title">Links</string>
     <string name="link_color">Skift farven på links (URL\'er, omtaler, tags mv.) i beskeder</string>
     <string name="boost_header_color_title">Overskrift på genblogninger</string>
+    <string name="displayname_title">Skift navnevisningsfarven øverst i beskeder</string>
+    <string name="username_title">Skift brugernavnsfarven øverst i beskeder</string>
     <string name="boost_header_color">Skift farven på overskriften på genblogninger</string>
     <string name="background_status_title">Indlæg</string>
     <string name="background_status">Baggrundsfarve på indlæg på tidslinjer</string>
@@ -1028,18 +1047,59 @@
     <string name="apply_changes">Effektuér ændringer</string>
     <string name="restart_message">Appen skal genstartes for at effektuere ændringerne</string>
     <string name="restart">Genstart</string>
-    <string name="pref_custom_theme">Use a custom theme</string>
-    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
-    <string name="theming">Theming</string>
-    <string name="store_before">Store before</string>
-    <string name="data_export_theme">The theme was exported</string>
-    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
-    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="pref_custom_theme">Benyt et tilpasset tema</string>
+    <string name="pref_custom_theme_summary">Tillader farvetilsidesættelse for det ovenfor valgte tema</string>
+    <string name="theming">Tematisering</string>
+    <string name="store_before">Gem inden</string>
+    <string name="data_export_theme">Temaet er eksporteret</string>
+    <string name="data_export_theme_success">Temaet er eksporteret til CSV</string>
+    <string name="pref_colored_status_bar_summary">Anvend den primære farve på statusbjælken</string>
+    <string name="pref_colored_status_bar_title">Statusbjælkefarve</string>
+    <string name="restore_default_theme">Gendan et standardtema</string>
+    <string name="import_theme">Importér et tema</string>
+    <string name="import_theme_title">Tryk hér for at importere et tema fra en tidligere eksport</string>
+    <string name="export_theme">Eksportér dette tema</string>
+    <string name="export_theme_title">Tryk hér for at eksportere det aktuelle tema</string>
+    <string name="theme_file_error">En fejl opstod under valg af temafilen</string>
+    <string name="label_theme_picker">Temavælger</string>
+    <string name="pref_theme_summary">Vælg et præinstalleret tema</string>
+    <string name="pref_theme_title">Temaer</string>
+    <string name="pref_colored_navigation_bar_summary">Anvend primærfarven på navigeringsbjælken</string>
+    <string name="pref_colored_navigation_bar_title">Navigeringsbjælkefarve</string>
+    <string name="pref_background_color_summary">Den underliggende farve for appens indhold.</string>
+    <string name="pref_background_color_title">Baggrundsfarve</string>
+    <string name="pref_accent_color_summary">Markeringsfarver vælger dele af UI\'en.</string>
+    <string name="pref_accent_color_title">Markeringsfarve</string>
+    <string name="pref_primary_color_summary">Vist hyppigst i hele din app.</string>
+    <string name="pref_primary_color_title">Primærfarve</string>
+    <string name="export_bookmarks">Eksportér bogmærker til denne instans</string>
+    <string name="import_bookmarks">Importér bogmærker fra denne instans</string>
+    <string name="user_count">Brugerantal</string>
+    <string name="status_count">Statusantal</string>
+    <string name="instance_count">Instansantal</string>
+    <string name="blocked">Blokeret</string>
+    <string name="poll_finish_in">Slutter om %s</string>
+    <string name="release_note_title">Nyheder i %s</string>
+    <string name="follow_account_update">Du kan følge min konto for opdateringer</string>
+    <string name="no_instance_reccord">Denne instans er ikke tilgængelig på https://instances.social</string>
+    <string name="display_full_link">Vis fuldt link</string>
+    <string name="share_link">Del link</string>
+    <string name="link_copy">URL\'en er blevet kopieret til udklipsholderen</string>
+    <string name="open_other_app">Åbn med en anden app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">Denne URL omdirigerer ikke</string>
+    <string name="redirect_detected">%1$s\n\nomdirigerer til\n\n%2$s</string>
+    <string name="set_user_agent">Skift brugeragenten</string>
+    <string name="set_user_agent_hint">Angive en tilpasset brugeragent eller lad stå tom</string>
+    <string name="set_user_agent_indication">Muliggør tilpasning af brugeragenten, der benyttes til API-kald eller med den indbyggede browser.</string>
+    <string name="set_utm_parameters">Fjern UTM-parametre</string>
+    <string name="set_utm_parameters_indication">Appen fjerner automatisk UTM-parametre fra URL\'er, inden du følger et link.</string>
+    <string name="action_trends">Tendenser</string>
+    <string name="trending_now">Hot lige nu</string>
+    <string name="talking_about">%d folk omtaler</string>
+    <string name="twitter_accounts">Twitter-konti (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter-brugernavne, adskilt af mellemrum</string>
+    <string name="identity_proofs">Identitetsbeviser</string>
+    <string name="verified_user">Bekræftet identitet</string>
+    <string name="verified_by">Bekræftet af %1$s (%2$s)</string>
 </resources>

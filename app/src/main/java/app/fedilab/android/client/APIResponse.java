@@ -25,6 +25,7 @@ import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
+import app.fedilab.android.client.Entities.IdentityProof;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.Notification;
@@ -38,6 +39,7 @@ import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
+import app.fedilab.android.client.Entities.Trends;
 
 /**
  * Created by Thomas on 03/06/2017.
@@ -73,6 +75,9 @@ public class APIResponse {
     private Context context = null;
     private List<PixelFedStory> pixelFedStories = null;
     private List<PixelFedStoryItem> pixelFedStoryItems = null;
+    private PixelFedStory pixelFedStory = null;
+    private List<Trends> trends = null;
+    private List<IdentityProof> identityProofs = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -297,5 +302,21 @@ public class APIResponse {
 
     public void setPixelFedStoryItems(List<PixelFedStoryItem> pixelFedStoryItems) {
         this.pixelFedStoryItems = pixelFedStoryItems;
+    }
+
+    public List<Trends> getTrends() {
+        return trends;
+    }
+
+    public void setTrends(List<Trends> trends) {
+        this.trends = trends;
+    }
+
+    public List<IdentityProof> getIdentityProofs() {
+        return identityProofs;
+    }
+
+    public void setIdentityProofs(List<IdentityProof> identityProofs) {
+        this.identityProofs = identityProofs;
     }
 }

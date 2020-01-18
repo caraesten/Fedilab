@@ -45,7 +45,6 @@ public class RetrieveFollowRequestSentAsyncTask extends AsyncTask<Void, Void, Vo
 
     @Override
     protected Void doInBackground(Void... params) {
-
         apiResponse = new API(this.contextReference.get()).getFollowRequest(max_id);
         return null;
     }

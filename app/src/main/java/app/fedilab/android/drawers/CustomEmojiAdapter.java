@@ -84,7 +84,7 @@ public class CustomEmojiAdapter extends BaseAdapter {
         }
 
 
-        if (!emoji.isDrawableFound()) {
+        //if (!emoji.isDrawableFound()) {
             emoji.setDrawableFound(true);
             Glide.with(parent.getContext())
                     .asFile()
@@ -116,7 +116,7 @@ public class CustomEmojiAdapter extends BaseAdapter {
                             imageView.setImageDrawable(emoji.getDrawable());
                         }
                     });
-        }
+       // }
         return convertView;
     }
 }

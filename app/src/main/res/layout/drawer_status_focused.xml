@@ -189,7 +189,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@string/cached_status"
                         android:src="@drawable/ic_cached_black"
-                        android:tint="?attr/iconColorMenu"
+                        android:tint="?attr/textColor"
                         android:visibility="gone" />
 
                     <TextView
@@ -258,7 +258,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more_toot_content"
-                android:drawableLeft="@drawable/ic_more_toot_content"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
@@ -411,7 +410,7 @@
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/play_video"
                         android:src="@drawable/ic_play_arrow"
-                        android:tint="@color/white" />
+                        />
 
                 </RelativeLayout>
 
@@ -465,7 +464,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -490,7 +488,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -523,7 +520,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -547,7 +543,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -592,7 +587,6 @@
                             android:layout_centerInParent="true"
                             android:contentDescription="@string/play_video"
                             android:src="@drawable/ic_play_arrow"
-                            android:tint="@color/white"
                             android:visibility="gone" />
 
                         <ImageView
@@ -634,7 +628,6 @@
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/play_video"
                                 android:src="@drawable/ic_play_arrow"
-                                android:tint="@color/white"
                                 android:visibility="gone" />
                         </RelativeLayout>
 
@@ -665,7 +658,7 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
+
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -674,7 +667,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="2dp"
-                                android:layout_marginLeft="2dp"
                                 android:layout_weight="1">
 
                                 <ImageView
@@ -690,7 +682,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 

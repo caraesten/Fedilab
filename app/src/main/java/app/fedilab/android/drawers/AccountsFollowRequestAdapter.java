@@ -39,8 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
@@ -80,6 +82,11 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         final Account account = accounts.get(position);
         holder.btn_authorize.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green_1), PorterDuff.Mode.MULTIPLY);
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
+        //TODO: check if Friendica has a way to accept/deny follow requests
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            holder.btn_authorize.setVisibility(View.GONE);
+            holder.btn_reject.setVisibility(View.GONE);
+        }
         holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         holder.account_un.setText(account.getAcct());
         //Profile picture

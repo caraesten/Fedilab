@@ -78,10 +78,11 @@ public class SettingsActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SettingsActivity.this, R.color.cyanea_primary)));
+
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(SettingsActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -109,6 +110,7 @@ public class SettingsActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings_category_label_interface)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.compose)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.action_privacy)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.theming)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.hide_menu_items)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.administration)));
@@ -215,14 +217,17 @@ public class SettingsActivity extends BaseActivity {
                     typeOfSettings = ContentSettingsFragment.type.COMPOSE;
                     break;
                 case 4:
-                    return new ColorSettingsFragment();
+                    typeOfSettings = ContentSettingsFragment.type.PRIVACY;
+                    break;
                 case 5:
+                    return new ColorSettingsFragment();
+                case 6:
                     typeOfSettings = ContentSettingsFragment.type.MENU;
                     break;
-                case 6:
+                case 7:
                     typeOfSettings = ContentSettingsFragment.type.ADMIN;
                     break;
-                case 7:
+                case 8:
                     typeOfSettings = ContentSettingsFragment.type.LANGUAGE;
                     break;
                 default:
@@ -238,7 +243,7 @@ public class SettingsActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 8;
+            return 9;
         }
     }
 }

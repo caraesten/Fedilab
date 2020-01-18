@@ -41,7 +41,9 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.client.Entities.Trends;
 import app.fedilab.android.drawers.SearchListAdapter;
+import app.fedilab.android.drawers.TrendsAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.interfaces.OnRetrieveSearchStatusInterface;
@@ -59,6 +61,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     private String search;
     private ListView lv_search;
     private RelativeLayout loader;
+    private boolean forTrends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +72,13 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;
             default:
                 setTheme(R.style.AppThemeDark);
         }
-
+        forTrends = false;
         setContentView(R.layout.activity_search_result);
 
         loader = findViewById(R.id.loader);
@@ -94,14 +94,17 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
         } else {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_search), Toast.LENGTH_LONG).show();
         }
+        if( search.compareTo("fedilab_trend") == 0 ) {
+            forTrends = true;
+        }
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(SearchResultActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(SearchResultActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -112,9 +115,17 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                     finish();
                 }
             });
-            toolbar_title.setText(search);
+            if( !forTrends) {
+                toolbar_title.setText(search);
+            }else{
+                toolbar_title.setText(getString(R.string.trending_now));
+            }
         }
-        setTitle(search);
+        if( !forTrends) {
+            setTitle(search);
+        }else{
+            setTitle(R.string.trending_now);
+        }
         loader.setVisibility(View.VISIBLE);
         lv_search.setVisibility(View.GONE);
 
@@ -147,20 +158,31 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        if (apiResponse.getResults() == null || (apiResponse.getResults().getAccounts().size() == 0 && apiResponse.getResults().getStatuses().size() == 0 && apiResponse.getResults().getHashtags().size() == 0)) {
-            RelativeLayout no_result = findViewById(R.id.no_result);
-            no_result.setVisibility(View.VISIBLE);
-            return;
-        }
         lv_search.setVisibility(View.VISIBLE);
-        List<String> tags = apiResponse.getResults().getHashtags();
-        List<Account> accounts = apiResponse.getResults().getAccounts();
-        List<Status> statuses = apiResponse.getResults().getStatuses();
+        if (!forTrends) {
+            if (apiResponse.getResults() == null || (apiResponse.getResults().getAccounts().size() == 0 && apiResponse.getResults().getStatuses().size() == 0 && apiResponse.getResults().getHashtags().size() == 0)) {
+                RelativeLayout no_result = findViewById(R.id.no_result);
+                no_result.setVisibility(View.VISIBLE);
+                return;
+            }
+            List<String> tags = apiResponse.getResults().getHashtags();
+            List<Account> accounts = apiResponse.getResults().getAccounts();
+            List<Status> statuses = apiResponse.getResults().getStatuses();
 
-        SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
-        lv_search.setAdapter(searchListAdapter);
-        searchListAdapter.notifyDataSetChanged();
-
+            SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
+            lv_search.setAdapter(searchListAdapter);
+            searchListAdapter.notifyDataSetChanged();
+        } else {
+            if (apiResponse.getTrends() == null || apiResponse.getTrends().size() == 0 ) {
+                RelativeLayout no_result = findViewById(R.id.no_result);
+                no_result.setVisibility(View.VISIBLE);
+                return;
+            }
+            List<Trends> trends = apiResponse.getTrends();
+            TrendsAdapter trendsAdapter = new TrendsAdapter(SearchResultActivity.this, trends);
+            lv_search.setAdapter(trendsAdapter);
+            trendsAdapter.notifyDataSetChanged();
+        }
     }
 
 

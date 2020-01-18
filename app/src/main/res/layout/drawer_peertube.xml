@@ -42,9 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:gravity="center"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/image_preview"/>
 
     <LinearLayout
+        android:id="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -55,13 +57,13 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/profile_picture" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
@@ -95,16 +97,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp" />
+                     />
 
                 <TextView
                     android:id="@+id/peertube_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp" />
+                    />
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -41,6 +41,7 @@
         android:required="false" />
     <application
         android:name="app.fedilab.android.activities.MainApplication"
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_bubbles"
@@ -89,7 +90,13 @@
                 <action android:name="StopLiveNotificationReceiver" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:name="app.fedilab.android.services.StopDelayedNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="StopDelayedNotificationReceiver" />
+            </intent-filter>
+        </receiver>
         <service
             android:name="app.fedilab.android.services.StreamingHomeTimelineService"
             android:exported="false" />
@@ -468,6 +475,10 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.InstanceHealthActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
+        <activity
+            android:name="app.fedilab.android.activities.InstanceProfileActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
         <activity

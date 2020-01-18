@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.circularreveal.CircularRevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.CircularRevealFrameLayout xmlns:TagsEditText="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView xmlns:TagsEditText="http://schemas.android.com/apk/res-auto"
+        <ScrollView
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -192,96 +193,6 @@
                             android:layout_gravity="center_vertical" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_invidious"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_invidious_indication"
-                                android:textColor="@color/mastodonC2"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/set_invidious"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/set_invidious_host"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:hint="@string/set_invidious_host"
-                        android:inputType="textWebEditText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_nitter"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_nitter_indication"
-                                android:textColor="@color/mastodonC2"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/set_nitter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-
-                    <EditText
-                        android:id="@+id/set_nitter_host"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:hint="@string/set_nitter_host"
-                        android:inputType="textWebEditText" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -729,7 +640,8 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/set_notify"
@@ -745,616 +657,627 @@
                     </LinearLayout>
 
 
-                    <!-- Choose stream -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <Spinner
-                            android:id="@+id/set_live_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/set_live_type_indication"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:textColor="@color/mastodonC2" />
-
-                    <LinearLayout
-                        android:id="@+id/live_notif_per_account"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/set_allow_live_notifications_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_allow_live_notifications"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_allow_live_notifications_indication"
-                                android:textColor="@color/mastodonC2"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_allow_live_notifications"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <ImageButton
-                                android:id="@+id/set_allow_live_notifications_others"
-                                style="@style/Base.Widget.AppCompat.Button.Colored"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="end"
-                                android:contentDescription="@string/live_notif"
-                                android:padding="5dp"
-                                android:src="@drawable/ic_account_circle_acct" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/set_hide_status_bar_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_hide_status_bar"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_hide_status_bar_indication"
-                                android:textColor="@color/mastodonC2"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <ImageButton
-                            android:id="@+id/set_hide_status_bar"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="@string/bookmark_add"
-                            android:padding="5dp"
-                            android:src="@drawable/ic_hide_status_bar" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/notification_settings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
+                        android:orientation="vertical"
+                        android:id="@+id/notification_container">
+                        <!-- Choose stream -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/settings_category_notif_customize"
-                                android:textColor="?colorAccent"
-                                android:textSize="16sp" />
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-                        </LinearLayout>
-
-                        <Button
-                            android:id="@+id/set_notif_sound"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center"
-                            android:text="@string/set_notif_sound"
-                            android:tint="@android:color/white" />
-
-                        <LinearLayout
-                            android:id="@+id/channels_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <Button
-                                    android:id="@+id/sound_mention"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_mention"
-                                    android:tint="@android:color/white" />
-
-                                <Button
-                                    android:id="@+id/sound_follow"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_follow"
-                                    android:tint="@android:color/white" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <Button
-                                    android:id="@+id/sound_boost"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_boost"
-                                    android:tint="@android:color/white" />
-
-                                <Button
-                                    android:id="@+id/sound_fav"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_fav"
-                                    android:tint="@android:color/white" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <Button
-                                    android:id="@+id/sound_poll"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_poll"
-                                    android:tint="@android:color/white" />
-
-                                <Button
-                                    android:id="@+id/sound_media"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_media"
-                                    android:tint="@android:color/white" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <Button
-                                    android:id="@+id/sound_backup"
-                                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/channel_notif_backup"
-                                    android:tint="@android:color/white" />
-
-                                <Button
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:visibility="invisible" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                        <!-- NOTIFICATIONS SETTINGS -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/settings_category_notif_categories"
-                                android:textColor="?colorAccent"
-                                android:textSize="16sp" />
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:text="@string/set_notif_follow"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_notif_follow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:text="@string/set_notif_follow_add"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_notif_follow_add"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:text="@string/set_notif_follow_mention"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_notif_follow_mention"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:text="@string/set_notif_follow_share"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_notif_follow_share"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:text="@string/set_notif_follow_poll"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_notif_follow_poll"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                        <!-- END NOTIFICATIONS SETTINGS -->
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/settings_category_notif_time_slot"
-                                android:textColor="?colorAccent"
-                                android:textSize="16sp" />
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/settings_option_margin"
-                            android:layout_marginBottom="@dimen/settings_option_margin"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:text="@string/set_enable_time_slot"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_enable_time_slot"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/settings_time_from" />
-
-                            <Button
-                                android:id="@+id/settings_time_from"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:focusableInTouchMode="false" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/settings_time_to" />
-
-                            <Button
-                                android:id="@+id/settings_time_to"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:focusableInTouchMode="false" />
 
                             <Spinner
-                                android:id="@+id/action_notification"
+                                android:id="@+id/set_live_type"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:entries="@array/action_notification" />
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/set_live_type_indication"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="10dp"
-                            android:text="@string/set_enable_time_slot_indication"
+                            android:layout_marginBottom="10dp"
                             android:textColor="@color/mastodonC2" />
-                        <!-- MORE OPTIONS SETTINGS -->
+
                         <LinearLayout
+                            android:id="@+id/live_notif_per_account"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/settings_option_margin"
+                            android:layout_marginBottom="@dimen/settings_option_margin"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <View
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
                                 android:layout_weight="1"
-                                android:background="?colorAccent" />
+                                android:orientation="vertical">
 
-                            <TextView
+                                <TextView
+                                    android:id="@+id/set_allow_live_notifications_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/set_allow_live_notifications"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/set_allow_live_notifications_indication"
+                                    android:textColor="@color/mastodonC2"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_allow_live_notifications"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <ImageButton
+                                    android:id="@+id/set_allow_live_notifications_others"
+                                    style="@style/colored_button"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="end"
+                                    android:contentDescription="@string/live_notif"
+                                    android:padding="5dp"
+                                    android:src="@drawable/ic_account_circle_acct" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/set_hide_status_bar_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/settings_option_margin"
+                            android:layout_marginBottom="@dimen/settings_option_margin"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/set_hide_status_bar"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/set_hide_status_bar_indication"
+                                    android:textColor="@color/mastodonC2"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/set_hide_status_bar"
+                                style="@style/colored_button"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:contentDescription="@string/bookmark_add"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hide_status_bar" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/notification_settings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/settings_category_notif_customize"
+                                    android:textColor="?colorAccent"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/set_notif_sound"
+                                style="@style/colored_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
                                 android:gravity="center"
-                                android:text="@string/settings_category_notif_advanced"
-                                android:textColor="?colorAccent"
-                                android:textSize="16sp" />
+                                android:text="@string/set_notif_sound"
+                                android:tint="@android:color/white" />
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_margin="10dp"
-                                android:layout_weight="1"
-                                android:background="?colorAccent" />
-                        </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/channels_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/sound_mention"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_mention"
+                                        android:tint="@android:color/white" />
+
+                                    <Button
+                                        android:id="@+id/sound_follow"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_follow"
+                                        android:tint="@android:color/white" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/sound_boost"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_boost"
+                                        android:tint="@android:color/white" />
+
+                                    <Button
+                                        android:id="@+id/sound_fav"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_fav"
+                                        android:tint="@android:color/white" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/sound_poll"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_poll"
+                                        android:tint="@android:color/white" />
+
+                                    <Button
+                                        android:id="@+id/sound_media"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_media"
+                                        android:tint="@android:color/white" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/sound_backup"
+                                        style="@style/colored_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="@string/channel_notif_backup"
+                                        android:tint="@android:color/white" />
+
+                                    <Button
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:visibility="invisible" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <!-- NOTIFICATIONS SETTINGS -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/settings_category_notif_categories"
+                                    android:textColor="?colorAccent"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/set_notif_follow"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_notif_follow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/set_notif_follow_add"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_notif_follow_add"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/set_notif_follow_mention"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_notif_follow_mention"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/set_notif_follow_share"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_notif_follow_share"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/set_notif_follow_poll"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_notif_follow_poll"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- END NOTIFICATIONS SETTINGS -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/settings_category_notif_time_slot"
+                                    android:textColor="?colorAccent"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/settings_option_margin"
+                                android:layout_marginBottom="@dimen/settings_option_margin"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/set_enable_time_slot"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_enable_time_slot"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/settings_time_from" />
+
+                                <Button
+                                    style="@style/colored_button"
+                                    android:id="@+id/settings_time_from"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:focusableInTouchMode="false" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/settings_time_to" />
+
+                                <Button
+                                    style="@style/colored_button"
+                                    android:id="@+id/settings_time_to"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:focusableInTouchMode="false" />
+
+                                <Spinner
+                                    android:id="@+id/action_notification"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:entries="@array/action_notification" />
+                            </LinearLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="10dp"
+                                android:text="@string/set_enable_time_slot_indication"
+                                android:textColor="@color/mastodonC2" />
+                            <!-- MORE OPTIONS SETTINGS -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/settings_category_notif_advanced"
+                                    android:textColor="?colorAccent"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:background="?colorAccent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="@string/set_wifi_only"
-                                android:textSize="16sp" />
+                                android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_wifi_only"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="@string/set_wifi_only"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_wifi_only"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_margin="10dp"
-                                android:gravity="center" />
-                        </LinearLayout>
+                                android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="@string/set_notif_silent"
+                                    android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/set_silence"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="@string/set_notif_silent"
-                                android:textSize="16sp" />
+                                android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_silence"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_margin="10dp"
-                                android:gravity="center" />
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/set_led_colour_label"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="@string/set_led_colour"
+                                    android:textSize="16sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/set_led_colour_label"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="@string/set_led_colour"
-                                android:textSize="16sp" />
-
-                            <Spinner
-                                android:id="@+id/led_colour_spinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:entries="@array/led_colours" />
+                                <Spinner
+                                    android:id="@+id/led_colour_spinner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:entries="@array/led_colours" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -1508,7 +1431,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1523,7 +1446,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1608,7 +1531,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1623,7 +1546,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1672,7 +1595,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1687,7 +1610,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -1817,6 +1740,8 @@
 
                     <!-- Featured tags -->
                     <LinearLayout
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -1847,6 +1772,8 @@
                             android:text="@string/featured_hashtags_indication"
                             android:textColor="@color/mastodonC2" />
                     </LinearLayout>
+
+
 
                     <!-- TRUNCATE LONG TOOTS -->
                     <TextView
@@ -1957,127 +1884,7 @@
                             android:textStyle="italic" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:text="@string/embedded_browser"
-                            android:textSize="16sp" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/set_embedded_browser"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/update_tracking_domains"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
-                        android:text="@string/update_tracking_domains"
-                        android:textSize="16sp" />
-
-                    <LinearLayout
-                        android:id="@+id/custom_tabs_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/settings_option_margin"
-                        android:layout_marginBottom="@dimen/settings_option_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/custom_tabs"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/set_enable_crash_report_indication"
-                                android:textColor="@color/mastodonC2"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/set_custom_tabs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/set_javascript_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="@string/use_javascript"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_javascript"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_margin="10dp"
-                                android:gravity="center" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/set_cookies_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="@string/use_cookies"
-                                android:textSize="16sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/set_cookies"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_margin="10dp"
-                                android:gravity="center" />
-                        </LinearLayout>
-                    </LinearLayout>
 
 
                     <!-- NSFW Timeout -->
@@ -2092,7 +1899,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
@@ -2106,6 +1913,38 @@
 
                         <SeekBar
                             android:id="@+id/set_nsfw_timeout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+                    <!-- Media Description Timeout -->
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/set_med_desc_timeout"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/set_med_desc_timeout_value"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="16sp" />
+
+                        <SeekBar
+                            android:id="@+id/set_med_desc_timeout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical" />
@@ -2128,7 +1967,7 @@
 
                         <ImageButton
                             android:id="@+id/btn_select_icon"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
@@ -2474,7 +2313,7 @@
 
                         <ImageButton
                             android:id="@+id/set_toot_visibility"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="20dp"
@@ -2609,6 +2448,299 @@
 
                 </LinearLayout>
 
+                <!--  Privacy -->
+                <LinearLayout
+                    android:id="@+id/settings_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_invidious"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_invidious_indication"
+                                android:textColor="@color/mastodonC2"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/set_invidious"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/set_invidious_host"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:hint="@string/set_invidious_host"
+                        android:inputType="textWebEditText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_nitter"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_nitter_indication"
+                                android:textColor="@color/mastodonC2"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/set_nitter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/set_nitter_host"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:hint="@string/set_nitter_host"
+                        android:inputType="textWebEditText" />
+
+                    <!-- utm parameters -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_utm_parameters"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_utm_parameters_indication"
+                                android:textColor="@color/mastodonC2"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/set_utm_parameters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <!-- user agent  -->
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@+id/set_user_agent"
+                            android:text="@string/set_user_agent"
+                            android:textSize="16sp" />
+
+                        <EditText
+                            android:id="@+id/set_user_agent"
+                            android:ellipsize="end"
+                            android:hint="@string/set_user_agent_hint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:lines="2"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_user_agent_indication"
+                            android:textColor="@color/mastodonC2" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/embedded_browser"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/set_embedded_browser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/update_tracking_domains"
+                        style="@style/colored_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/update_tracking_domains"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:id="@+id/custom_tabs_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/custom_tabs"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_enable_crash_report_indication"
+                                android:textColor="@color/mastodonC2"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/set_custom_tabs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/set_javascript_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/use_javascript"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/set_javascript"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="10dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/set_cookies_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/use_cookies"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/set_cookies"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="10dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
                 <!--  HIDE MENU -->
                 <LinearLayout
                     android:id="@+id/settings_hide_menu"
@@ -2622,7 +2754,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -2637,7 +2769,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -2663,6 +2795,30 @@
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/nav_news"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/settings_option_margin"
+                        android:layout_marginBottom="@dimen/settings_option_margin"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/action_trends"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/nav_trends"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -2835,12 +2991,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?colorAccent" />
+                            android:background="?colorAccent"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -2850,12 +3006,12 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?colorAccent" />
+                            android:background="?colorAccent"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -2933,12 +3089,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
-                            android:background="?colorAccent" />
+                            android:background="?colorAccent"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -2948,7 +3104,7 @@
                             android:textColor="?colorAccent"
                             android:textSize="16sp" />
 
-                        <View
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
@@ -2982,7 +3138,7 @@
 
                     <Button
                         android:id="@+id/validate"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
+                        style="@style/colored_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -3067,7 +3223,7 @@
 
                         <Button
                             android:id="@+id/about_translation"
-                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            style="@style/colored_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"

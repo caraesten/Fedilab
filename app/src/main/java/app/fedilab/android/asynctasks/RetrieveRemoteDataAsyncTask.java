@@ -39,8 +39,16 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
     private String url;
     private Results results;
     private WeakReference<Context> contextReference;
+    private boolean developerAccount = false;
 
 
+
+    public RetrieveRemoteDataAsyncTask(Context context, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface) {
+        this.url = "https://toot.fedilab.app/@fedilab";
+        developerAccount = true;
+        this.listener = onRetrieveRemoteAccountInterface;
+        this.contextReference = new WeakReference<>(context);
+    }
     public RetrieveRemoteDataAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface) {
         this.url = Helper.instanceWithProtocol(context, instance) + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
@@ -64,7 +72,7 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRemoteAccount(results);
+        listener.onRetrieveRemoteAccount(results, developerAccount);
     }
 
 }

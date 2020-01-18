@@ -14,6 +14,7 @@ stages:
   stage: build-and-test
   retry: 2
 
+
 assembleDebug:
   <<: *no-upload
   cache:
@@ -38,6 +39,7 @@ debugTests:
     - ./gradlew -Pci --console=plain :app:testFdroidDebugUnitTest
   except:
     - tags
+
 
 ## PROTECTED VARIABLES TO SET IN GITLAB:
 # - GITLAB_API_TOKEN: token you create on Gitlab

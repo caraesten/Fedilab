@@ -126,6 +126,18 @@
     <string name="date_minutes">%d 分</string>
     <string name="date_hours">%d 小时</string>
     <string name="date_day">%d 天</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="other">%d 秒</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="other">%d 分钟</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="other">%d 小时</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="other">%d 天</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
     <string name="toot_placeholder">你在想什么？</string>
@@ -198,6 +210,7 @@
     <string name="notif_reblog">转嘟了您的状态</string>
     <string name="notif_favourite">收藏了您的状态</string>
     <string name="notif_follow">关注了您</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="other">和另外 %d 条通知</item>
     </plurals>
@@ -268,6 +281,7 @@
     <string name="set_notify">开启通知？</string>
     <string name="set_notif_silent">静音通知</string>
     <string name="set_nsfw_timeout">NSFW 查看超时（秒，0 表示关闭）</string>
+    <string name="set_med_desc_timeout">媒体描述超时(秒，0表示关闭)</string>
     <string name="settings_title_profile">编辑个人资料</string>
     <string name="settings_title_custom_sharing">自定义分享</string>
     <string name="settings_custom_sharing_url">您的自定义分享链接&#8230;</string>
@@ -290,11 +304,6 @@
     <string name="use_javascript">启用 Javascript</string>
     <string name="expand_cw">自动展开带有警告的内容</string>
     <string name="use_cookies">允许第三方 cookie</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>否</item>
-    </string-array>
     <string name="your_api_key">您的 API 密钥，对于 Yandex 您可以留空</string>
     <string-array name="settings_theme">
         <item>暗色</item>
@@ -935,6 +944,9 @@
     <plurals name="number_of_vote">
         <item quantity="other">%d 票</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d 位投票者</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>单选</item>
         <item>多选</item>
@@ -1006,6 +1018,8 @@
     <string name="link_color_title">链接</string>
     <string name="link_color">更改消息中链接的颜色 (URL、提及、标签等)</string>
     <string name="boost_header_color_title">重发博客标题</string>
+    <string name="displayname_title">更改消息顶部显示名称的颜色</string>
+    <string name="username_title">更改消息顶部用户名的颜色</string>
     <string name="boost_header_color">更改重发博客头的颜色</string>
     <string name="background_status_title">发布</string>
     <string name="background_status">时间线中发布的背景颜色</string>
@@ -1039,4 +1053,45 @@
     <string name="export_theme">导出主题</string>
     <string name="export_theme_title">点击此处以导出当前主题</string>
     <string name="theme_file_error">选择主题文件时出错</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
+    <string name="export_bookmarks">导出书签到实例</string>
+    <string name="import_bookmarks">从实例导入书签</string>
+    <string name="user_count">用户数</string>
+    <string name="status_count">状态数</string>
+    <string name="instance_count">实例数</string>
+    <string name="blocked">已阻止</string>
+    <string name="poll_finish_in">结束于 %s</string>
+    <string name="release_note_title">%s 的新功能</string>
+    <string name="follow_account_update">您可以关注我的帐户以获取更新</string>
+    <string name="no_instance_reccord">此实例在 https://instance.social 上不可用</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">已验证身份</string>
+    <string name="verified_by">验证通过 %1$s (%2$s)</string>
 </resources>

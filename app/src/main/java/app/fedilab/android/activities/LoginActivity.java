@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -95,7 +96,6 @@ public class LoginActivity extends BaseActivity {
     private static boolean client_id_for_webview = false;
     private static String instance;
     private final int PICK_IMPORT = 5557;
-    boolean isLoadingInstance = false;
     private AutoCompleteTextView login_instance;
     private EditText login_uid;
     private EditText login_passwd;
@@ -103,13 +103,12 @@ public class LoginActivity extends BaseActivity {
     private Button connectionButton, connect_button;
     private String actionToken;
     private String autofilledInstance;
-    private String social;
     private UpdateAccountInfoAsyncTask.SOCIAL socialNetwork;
     private String basicAuth;
     private InstanceNodeInfo instanceNodeInfo;
-    private LinearLayout step_login_credential, step_instance;
+    private ConstraintLayout step_login_credential, step_instance;
     private TextView instance_chosen;
-    private ImageView info_instance;
+    private Thread thread = null;
 
     public static String redirectUserToAuthorizeAndLogin(Context context, UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
         String queryString = Helper.CLIENT_ID + "=" + clientId;
@@ -131,7 +130,6 @@ public class LoginActivity extends BaseActivity {
         admin = false;
         if (b != null) {
             autofilledInstance = b.getString("instance", null);
-            social = b.getString("social", null);
             if (instanceNodeInfo != null) {
                 socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
             }
@@ -183,9 +181,6 @@ public class LoginActivity extends BaseActivity {
                 case Helper.THEME_LIGHT:
                     setTheme(R.style.AppTheme_Fedilab);
                     break;
-                case Helper.THEME_DARK:
-                    setTheme(R.style.AppThemeDark);
-                    break;
                 case Helper.THEME_BLACK:
                     setTheme(R.style.AppThemeBlack);
                     break;
@@ -196,10 +191,10 @@ public class LoginActivity extends BaseActivity {
             setContentView(R.layout.activity_login);
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_primary)));
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 assert inflater != null;
-                View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+                View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(LoginActivity.this), false);
+                view.setBackground(new ColorDrawable(ContextCompat.getColor(LoginActivity.this, R.color.cyanea_primary)));
                 actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
                 ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -246,7 +241,7 @@ public class LoginActivity extends BaseActivity {
             instance_chosen = findViewById(R.id.instance_chosen);
             step_instance = findViewById(R.id.step_instance);
             connectionButton = findViewById(R.id.login_button);
-            info_instance = findViewById(R.id.info_instance);
+            ImageView info_instance = findViewById(R.id.info_instance);
             ImageView main_logo = findViewById(R.id.main_logo);
             main_logo.setImageResource(Helper.getMainLogo(getApplicationContext()));
             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
@@ -280,7 +275,6 @@ public class LoginActivity extends BaseActivity {
                                     connect_button.setEnabled(true);
                                     if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
                                         socialNetwork = Helper.setSoftware(instanceNodeInfo.getName(), false);
-
                                         if (instanceNodeInfo.getName().equals("PLEROMA") || instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
                                             client_id_for_webview = true;
                                             retrievesClientId();
@@ -331,22 +325,37 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (s.length() > 2 && !isLoadingInstance) {
+
+                    if (s.length() > 2) {
+
                         final String action = "/instances/search";
                         final HashMap<String, String> parameters = new HashMap<>();
-                        parameters.put("q", s.toString().trim());
+                        String query = s.toString().trim();
+                        if (query.startsWith("http://")){
+                            query =query.replace("http://", "");
+                        }
+                        if (query.startsWith("https://")){
+                            query =query.replace("https://", "");
+                        }
+                        parameters.put("q", query);
                         parameters.put("count", String.valueOf(1000));
                         parameters.put("name", String.valueOf(true));
-                        isLoadingInstance = true;
-                        if (oldSearch == null || !oldSearch.equals(s.toString().trim()))
-                            new Thread(new Runnable() {
+                        if( thread != null && thread.isAlive()){
+                            thread.interrupt();
+                            thread = null;
+                        }
+
+                        if (oldSearch == null || !oldSearch.equals(s.toString().trim())) {
+                            thread = new Thread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
                                         final String response = new HttpsConnection(LoginActivity.this, instance).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                        if( response == null) {
+                                            return;
+                                        }
                                         runOnUiThread(new Runnable() {
                                             public void run() {
-                                                isLoadingInstance = false;
                                                 String[] instances;
                                                 try {
                                                     JSONObject jsonObject = new JSONObject(response);
@@ -373,27 +382,29 @@ public class LoginActivity extends BaseActivity {
                                                     oldSearch = s.toString().trim();
 
                                                 } catch (JSONException ignored) {
-                                                    isLoadingInstance = false;
                                                 }
                                             }
                                         });
 
                                     } catch (Exception e) {
-                                        isLoadingInstance = false;
+                                        e.printStackTrace();
                                     }
                                 }
-                            }).start();
+                            });
+                            thread.start();
+                        }
                     }
                 }
             });
 
-            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 connectionButton.setEnabled(false);
             login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         connectionButton.setEnabled(false);
+                    }
                     TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
                     if (!hasFocus) {
                         retrievesClientId();
@@ -465,8 +476,14 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void retrievesClientId() {
-        if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             String instanceFromField = login_instance.getText().toString().trim();
+            if (instanceFromField.startsWith("http://")){
+                instanceFromField =instanceFromField.replace("http://", "");
+            }
+            if (instanceFromField.startsWith("https://")){
+                instanceFromField =instanceFromField.replace("https://", "");
+            }
             String host = instanceFromField;
             try {
                 URL url = new URL(instanceFromField);
@@ -564,7 +581,7 @@ public class LoginActivity extends BaseActivity {
 
                 final HashMap<String, String> parameters = new HashMap<>();
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     parameters.put(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
                     parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
                 }
@@ -586,7 +603,7 @@ public class LoginActivity extends BaseActivity {
                 } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", "user");
                     oauthUrl = "/api/v1/users/token";
-                } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                } else if (socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU || socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     String instanceFromField = login_instance.getText().toString().trim();
                     String host;
                     try {
@@ -611,21 +628,21 @@ public class LoginActivity extends BaseActivity {
                     public void run() {
                         try {
                             String response;
-                            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                                 response = new HttpsConnection(LoginActivity.this, instance).post(Helper.instanceWithProtocol(getApplicationContext(), instance) + finalOauthUrl, 30, parameters, null);
-                            else {
+                            } else {
                                 response = new HttpsConnection(LoginActivity.this, instance).get(Helper.instanceWithProtocol(getApplicationContext(), instance) + finalOauthUrl, 30, null, basicAuth);
                             }
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;
-                                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU && socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                                         try {
                                             resobj = new JSONObject(response);
                                             String token = resobj.get("access_token").toString();
                                             String refresh_token = null;
                                             if (resobj.has("refresh_token"))
-                                                refresh_token = resobj.get("refresh_token").toString();
+                                                refresh_token = resobj.getString("refresh_token");
                                             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
                                             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
@@ -729,7 +746,7 @@ public class LoginActivity extends BaseActivity {
         menu.findItem(R.id.action_custom_tabs).setChecked(!embedded_browser);
         boolean security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
         menu.findItem(R.id.action_provider).setChecked(security_provider);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override

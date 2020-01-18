@@ -126,6 +126,22 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d e</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">Segundo %d</item>
+        <item quantity="other">%d segundo</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">Minutu %d</item>
+        <item quantity="other">%d minutu</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">Ordu %d</item>
+        <item quantity="other">%d ordu</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">Egun %d</item>
+        <item quantity="other">%d egun</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Abisua</string>
     <string name="toot_placeholder">Zer duzu buruan?</string>
@@ -198,6 +214,7 @@
     <string name="notif_reblog">erabiltzaileak zure mezuari bultzada eman dio</string>
     <string name="notif_favourite">erabiltzaileak zure mezua gogoko du</string>
     <string name="notif_follow">zu jarraitzen hasi da</string>
+    <string name="notif_follow_request">zu jarraitzea eskatu du</string>
     <plurals name="other_notifications">
         <item quantity="one">eta beste jakinarazpen bat</item>
         <item quantity="other">eta beste %d jakinarazpen</item>
@@ -270,6 +287,7 @@
     <string name="set_notify">Jakinarazi?</string>
     <string name="set_notif_silent">Jakinarazpen isilak</string>
     <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
+    <string name="set_med_desc_timeout">Multimediaren deskripzioaren denbora-muga (segundoak, 0 desgaituta esan nahi du)</string>
     <string name="settings_title_profile">Editatu profila</string>
     <string name="settings_title_custom_sharing">Partekatze pertsonalizatua</string>
     <string name="settings_custom_sharing_url">Zure partekatze pertsonalizaturako URL-a&#8230;</string>
@@ -292,11 +310,6 @@
     <string name="use_javascript">Gaitu JavaScript</string>
     <string name="expand_cw">Hedatu automatikoki CW</string>
     <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>Ez</item>
-        <item>Ez</item>
-    </string-array>
     <string name="your_api_key">Zure API gakoa, Yandex erabiltzeko hutsik laga dezakezu</string>
     <string-array name="settings_theme">
         <item>Iluna</item>
@@ -937,6 +950,10 @@
         <item quantity="one">boto %d</item>
         <item quantity="other">%d boto</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">Bozkatzaile %d</item>
+        <item quantity="other">%d bozkatzaile</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Aukera bakarra</item>
         <item>Hainbat aukera</item>
@@ -1008,12 +1025,14 @@
     <string name="link_color_title">Estekak</string>
     <string name="link_color">Aldatu mezuetako esteken koloreak (URL-ak, aipamenak, etiketak, eta abar)</string>
     <string name="boost_header_color_title">Bultzaden goiburua</string>
+    <string name="displayname_title">Aldatu mezuen goialdeko pantaila-izenaren kolorea</string>
+    <string name="username_title">Aldatu mezuen goialdeko erabiltzaile-izenaren kolorea</string>
     <string name="boost_header_color">Aldatu bultzaden goiburuen kolorea</string>
-    <string name="background_status_title">Mezuak</string>
+    <string name="background_status_title">Bidalketak</string>
     <string name="background_status">Mezuen atzealdearen kolorea denbora-lerroetan</string>
     <string name="reset_color">Berrezarri koloreak</string>
-    <string name="clik_reset">Sakatu hemen zure kolore pertsonalizatuak berrezartzeko</string>
-    <string name="reset">Berrezarri</string>
+    <string name="clik_reset">Sakatu hemen zure kolore pertsonalizatu guztiak leheneratzeko</string>
+    <string name="reset">Leheneratu</string>
     <string name="icons_color_title">Ikonoak</string>
     <string name="icons_color">Denbora-lerroen azpialdeko botoien kolorea</string>
     <string name="pin_tag">Finkatu etiketa hau</string>
@@ -1022,23 +1041,64 @@
     <string name="make_an_action">Burutu ekintza bat</string>
     <string name="translation">Itzulpena</string>
     <string name="image_preview">Irudiaren aurrebista</string>
-    <string name="text_color_title">Text color</string>
-    <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
-    <string name="pref_custom_theme">Use a custom theme</string>
-    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
-    <string name="theming">Theming</string>
-    <string name="store_before">Store before</string>
-    <string name="data_export_theme">The theme was exported</string>
-    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
-    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="text_color_title">Testuaren kolorea</string>
+    <string name="text_color">Aldatu mezuen testuaren kolorea</string>
+    <string name="apply_changes">Aplikatu aldaketak</string>
+    <string name="restart_message">Aplikazioa berrabiarazi behar duzu aldaketak aplikatzeko</string>
+    <string name="restart">Berrabiarazi</string>
+    <string name="pref_custom_theme">Erabili gai pertsonalizatua</string>
+    <string name="pref_custom_theme_summary">Baimendu goian hautatutako gaiaren koloreak gainidaztea</string>
+    <string name="theming">Gaiak</string>
+    <string name="store_before">Lehenbizi gorde</string>
+    <string name="data_export_theme">Gaia esportatu da</string>
+    <string name="data_export_theme_success">Gaia ongi esportatu da CSV gisa</string>
+    <string name="pref_colored_status_bar_summary">Aplikatu kolore nagusia egoera barrari</string>
+    <string name="pref_colored_status_bar_title">Egoera barraren kolorea</string>
+    <string name="restore_default_theme">Berrezarri lehenetsitako gai bat</string>
+    <string name="import_theme">Inportatu gai bat</string>
+    <string name="import_theme_title">Sakatu hemen aurretik esportatutako gai bat inportatzeko</string>
+    <string name="export_theme">Esportatu gaia</string>
+    <string name="export_theme_title">Sakatu hemen oraingo gaia esportatzeko</string>
+    <string name="theme_file_error">Errore bat gertatu da gaiaren fitxategia hautatzean</string>
+    <string name="label_theme_picker">Gai hautatzailea</string>
+    <string name="pref_theme_summary">Hautatu aurrez instalatutako gai bat</string>
+    <string name="pref_theme_title">Gaiak</string>
+    <string name="pref_colored_navigation_bar_summary">Aplikatu kolore nagusia nabigazio barrari</string>
+    <string name="pref_colored_navigation_bar_title">Nabigazio barraren kolorea</string>
+    <string name="pref_background_color_summary">Aplikazioaren edukien atzeko kolorea.</string>
+    <string name="pref_background_color_title">Atzeko kolorea</string>
+    <string name="pref_accent_color_summary">Interfazearen atal hautatuak nabarmentzen ditu.</string>
+    <string name="pref_accent_color_title">Nabarmentze kolorea</string>
+    <string name="pref_primary_color_summary">Zure aplikazioan gehien erabiliko dena.</string>
+    <string name="pref_primary_color_title">Kolore nagusia</string>
+    <string name="export_bookmarks">Esportatu gogokoak instantziara</string>
+    <string name="import_bookmarks">Inportatu gogokoak instantziatik</string>
+    <string name="user_count">Erabiltzaile kopurua</string>
+    <string name="status_count">Mezu kopurua</string>
+    <string name="instance_count">Instantzia kopurua</string>
+    <string name="blocked">Blokeatuta</string>
+    <string name="poll_finish_in">Amaitzeko %s</string>
+    <string name="release_note_title">Zer dago berri %s bertsioan</string>
+    <string name="follow_account_update">Nire kontua jarraitu dezakezu eguneraketetarako</string>
+    <string name="no_instance_reccord">Instantzia hau ez dago eskuragarri https://instances.social gunean</string>
+    <string name="display_full_link">Erakutsi esteka osoa</string>
+    <string name="share_link">Partekatu esteka</string>
+    <string name="link_copy">URL-a arbelera kopiatu da</string>
+    <string name="open_other_app">Ireki beste aplikazio batekin</string>
+    <string name="check_redirect">Egiaztatu birbideratzea</string>
+    <string name="no_redirect">URL honek ez du birbideratzen</string>
+    <string name="redirect_detected">%1$s \n\n helbideak \n\n %2$s helbidera birbideratzen du</string>
+    <string name="set_user_agent">Aldatu erabiltzaile-agentea</string>
+    <string name="set_user_agent_hint">Ezarri erabiltzaile-agente pertsonalizatu bat edo laga hutsik</string>
+    <string name="set_user_agent_indication">API deietarako eta barne nabigatzailean erabilitako erabiltzaile-agentea pertsonalizatzeko aukera ematen du.</string>
+    <string name="set_utm_parameters">Kendu UTM parametroak</string>
+    <string name="set_utm_parameters_indication">Aplikazioak automatikoki kenduko ditu URL baten UTM parametroak hau bisitatu aurretik.</string>
+    <string name="action_trends">Joerak</string>
+    <string name="trending_now">Joera orain</string>
+    <string name="talking_about">%d pertsona hitz egiten</string>
+    <string name="twitter_accounts">Twitter kontuak (Nitter bidez)</string>
+    <string name="list_of_twitter_accounts">Twitter erabiltzaile-izenak zuriunez bereizita</string>
+    <string name="identity_proofs">Identitate frogak</string>
+    <string name="verified_user">Egiaztatutako identitatea</string>
+    <string name="verified_by">Egiaztatzailea: %1$s (%2$s)</string>
 </resources>

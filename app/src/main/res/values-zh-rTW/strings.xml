@@ -126,6 +126,18 @@
     <string name="date_minutes">%d 分鐘</string>
     <string name="date_hours">%d 小時</string>
     <string name="date_day">%d 天</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="other">%d秒</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="other">%d分</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="other">%d小時</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="other">%d天</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
     <string name="toot_placeholder">您正在想些什麼？</string>
@@ -198,6 +210,7 @@
     <string name="notif_reblog">已轉嘟您的嘟文</string>
     <string name="notif_favourite">將您的嘟文加到最愛</string>
     <string name="notif_follow">關注了您</string>
+    <string name="notif_follow_request">要求追蹤您</string>
     <plurals name="other_notifications">
         <item quantity="other">和另外 %d 個通知</item>
     </plurals>
@@ -268,6 +281,7 @@
     <string name="set_notify">通知？</string>
     <string name="set_notif_silent">靜音通知</string>
     <string name="set_nsfw_timeout">NSFW 檢視逾時（秒，0 代表關閉）</string>
+    <string name="set_med_desc_timeout">媒體描述逾時（秒，0 代表關閉）</string>
     <string name="settings_title_profile">編輯個人資料</string>
     <string name="settings_title_custom_sharing">自訂分享</string>
     <string name="settings_custom_sharing_url">您的自訂分享 URL&#8230;</string>
@@ -290,11 +304,6 @@
     <string name="use_javascript">啟用 Javascript</string>
     <string name="expand_cw">自動展開 cw</string>
     <string name="use_cookies">允許第三方 cookies</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>否</item>
-    </string-array>
     <string name="your_api_key">您的 API 金鑰，若為 Yandex 則可留空</string>
     <string-array name="settings_theme">
         <item>暗</item>
@@ -779,7 +788,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="toast_error_instance_reg">在檢查可用站台時發生了些問題！</string>
     <string name="join_mastodon">加入 Mastodon</string>
     <string name="pickup_instance_category">透過挑選分類，然後按下按鈕來選擇站台。</string>
-    <string name="pickup_instance_peertube">點擊勾選按鈕來選擇站臺。</string>
+    <string name="pickup_instance_peertube">按一下勾選按鈕以選擇站台。</string>
     <string name="users">%1$s 位使用者</string>
     <string name="password_confirm">確認密碼</string>
     <string name="agreement_check">我同意 %1$s 和 %2$s</string>
@@ -934,6 +943,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d 位投票者</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>單種選擇</item>
         <item>多種選擇</item>
@@ -978,7 +990,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_hide_status_bar">隱藏 Fedilab 通知列</string>
     <string name="set_hide_status_bar_indication">要隱藏狀態列中的其餘通知，點擊眼睛圖示的按鈕上然後取消勾選「在狀態列中顯示」</string>
     <string name="set_live_type_indication">通知將會每30秒被延遲一次。這將會降低電池的消耗。</string>
-    <string name="live_delayed">即時通知已延遲</string>
+    <string name="live_delayed">延遲即時通知</string>
     <string name="no_live_notif">沒有即時通知</string>
     <string name="no_live_indication">將會每15分鐘擷取一次通知。</string>
     <string name="action_add_notes">新增註記</string>
@@ -987,55 +999,98 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="set_resize_video_indication">允許在維持品質的同時壓縮影片。</string>
     <string name="please_wait_compression">應用程式正在壓縮媒體，可能會很久……</string>
     <string name="change_app_icon_experimental">變更應用程式圖示</string>
-    <string name="click_to_change_the_app_icon">點擊以變更應用程式圖示</string>
+    <string name="click_to_change_the_app_icon">按一下變更應用程式圖示</string>
     <string name="post">張貼</string>
     <string name="post_visibility_tilte">嘟文可見度</string>
-    <string name="add_photo_pixelfed">點選此處以新增照片</string>
+    <string name="add_photo_pixelfed">按一下這裡新增照片</string>
     <string name="add_photo_indication_pixelfed">可用格式：JPEG、PNG、GIF \n\n 最大檔案大小：15 MB \n\n 相簿可以包含最多 4 張照片或影片</string>
     <string name="upload_media">上傳媒體</string>
-    <string name="pixelfed_compose_placeholder">新增可選的選項</string>
+    <string name="pixelfed_compose_placeholder">新增可選標題</string>
     <string name="long_api_error">應用程式從 API %1$s 收到非常長的錯誤訊息</string>
     <string name="message_preview">訊息預覽</string>
     <string name="report_mention">在每個訊息中新增提及</string>
-    <string name="fetch_conversation">擷取對話</string>
-    <string name="order_by">排序由</string>
+    <string name="fetch_conversation">正在擷取對話</string>
+    <string name="order_by">排序依</string>
     <string name="title_video_peertube">影片標題</string>
     <string name="join_peertube">加入 Peertube</string>
-    <string name="agreement_check_peertube">我至少 16 歲並同意此站臺的 %1$s</string>
+    <string name="agreement_check_peertube">我至少 16 歲並同意此站台的 %1$s</string>
     <string name="link_color_title">連結</string>
     <string name="link_color">在訊息中變更連結的顏色（URL、提及、標籤等等）</string>
     <string name="boost_header_color_title">轉發標頭</string>
+    <string name="displayname_title">更改訊息頂部的顯示名稱色彩</string>
+    <string name="username_title">更改訊息頂部的使用者名稱色彩</string>
     <string name="boost_header_color">變更轉發標頭的顏色</string>
-    <string name="background_status_title">貼文</string>
-    <string name="background_status">時間軸中貼文的背景顏色</string>
+    <string name="background_status_title">嘟文</string>
+    <string name="background_status">時間軸中嘟文的背景顏色</string>
     <string name="reset_color">重設顏色</string>
-    <string name="clik_reset">在此點擊以重設您所有自訂的顏色</string>
+    <string name="clik_reset">按一下這裡重設所有自訂顏色</string>
     <string name="reset">重設</string>
     <string name="icons_color_title">圖示</string>
     <string name="icons_color">時間軸底部圖示的顏色</string>
     <string name="pin_tag">釘選此標籤</string>
-    <string name="logo_of_the_instance">站臺圖示</string>
+    <string name="logo_of_the_instance">站台圖示</string>
     <string name="edit_profile">編輯個人資料</string>
     <string name="make_an_action">做動作</string>
     <string name="translation">翻譯</string>
     <string name="image_preview">圖片預覽</string>
     <string name="text_color_title">文字色彩</string>
-    <string name="text_color">變更 pots 中的文字色彩</string>
+    <string name="text_color">變更嘟文／轉嘟／訊息等的文字色彩</string>
     <string name="apply_changes">套用變更</string>
     <string name="restart_message">您必須重新啟動應用程式以套用變更</string>
     <string name="restart">重新啟動</string>
     <string name="pref_custom_theme">使用自訂佈景主題</string>
     <string name="pref_custom_theme_summary">允許覆寫在上方選定的佈景主題的顏色</string>
     <string name="theming">主題</string>
-    <string name="store_before">Store before</string>
-    <string name="data_export_theme">The theme was exported</string>
-    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
-    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="store_before">儲存之前</string>
+    <string name="data_export_theme">佈景主題已匯出</string>
+    <string name="data_export_theme_success">佈景主題已成功匯出為 CSV</string>
+    <string name="pref_colored_status_bar_summary">將主要色彩套用到狀態列上</string>
+    <string name="pref_colored_status_bar_title">狀態列色彩</string>
+    <string name="restore_default_theme">恢復預設佈景主題</string>
+    <string name="import_theme">匯入佈景主題</string>
+    <string name="import_theme_title">點擊這裡以從先前匯出的檔案匯入佈景主題</string>
+    <string name="export_theme">匯出佈景主題</string>
+    <string name="export_theme_title">點擊這裡以匯出目前的佈景主題</string>
+    <string name="theme_file_error">選取佈景主題檔案時遇到錯誤</string>
+    <string name="label_theme_picker">佈景主題挑選程式</string>
+    <string name="pref_theme_summary">選取預先安裝的佈景主題</string>
+    <string name="pref_theme_title">佈景主題</string>
+    <string name="pref_colored_navigation_bar_summary">將主要顏色套用到導覽列上</string>
+    <string name="pref_colored_navigation_bar_title">導航列顏色</string>
+    <string name="pref_background_color_summary">應用程式內容的基礎顏色。</string>
+    <string name="pref_background_color_title">背景色彩</string>
+    <string name="pref_accent_color_summary">選取部份使用者界面的強調色彩。</string>
+    <string name="pref_accent_color_title">強調色彩</string>
+    <string name="pref_primary_color_summary">最常顯示在您的應用程式中。</string>
+    <string name="pref_primary_color_title">主要色彩</string>
+    <string name="export_bookmarks">匯出書籤到站臺</string>
+    <string name="import_bookmarks">從站臺匯入書籤</string>
+    <string name="user_count">使用者數量</string>
+    <string name="status_count">狀態數量</string>
+    <string name="instance_count">站臺數量</string>
+    <string name="blocked">已阻擋</string>
+    <string name="poll_finish_in">結束於 %s</string>
+    <string name="release_note_title">%s 新鮮事</string>
+    <string name="follow_account_update">您可以追蹤我的帳號來取得更新</string>
+    <string name="no_instance_reccord">此站臺於 https://instances.social 上不可用</string>
+    <string name="display_full_link">顯示完整連結</string>
+    <string name="share_link">分享連結</string>
+    <string name="link_copy">URL 已複製到剪貼簿</string>
+    <string name="open_other_app">使用其他應用程式開啟</string>
+    <string name="check_redirect">檢查重新導向</string>
+    <string name="no_redirect">此 URL 不會重新導向</string>
+    <string name="redirect_detected">%1$s \n\n重新導向到\n\n %2$s</string>
+    <string name="set_user_agent">變更使用者代理字串</string>
+    <string name="set_user_agent_hint">設定自訂的使用者代理字串或留空</string>
+    <string name="set_user_agent_indication">允許自訂用於 api 呼叫或內建瀏覽器的使用者字串</string>
+    <string name="set_utm_parameters">移除 UTM 參數</string>
+    <string name="set_utm_parameters_indication">應用程式將會在造訪連結前自動移除 UTM 參數</string>
+    <string name="action_trends">趨勢</string>
+    <string name="trending_now">目前趨勢</string>
+    <string name="talking_about">%d 個正在談論</string>
+    <string name="twitter_accounts">Twitter 帳號（透過 Nitter）</string>
+    <string name="list_of_twitter_accounts">以空格分開的 Twitter 使用者名稱</string>
+    <string name="identity_proofs">身份證明</string>
+    <string name="verified_user">已驗證的身份</string>
+    <string name="verified_by">由 %1$s 驗證 (%2$s)</string>
 </resources>

@@ -249,7 +249,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private ImageView pp_actionBar;
     private ProgressBar pp_progress;
     private Toast mToast;
-    private RelativeLayout drawer_layout;
+    private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
     private TextView toot_space_left;
     private String initialContent;
@@ -340,6 +340,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (status != null) {
                     status.setQuickReplyContent(s.toString());
                 }
@@ -687,7 +688,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         String cwContent = toot_cw_content.getText().toString();
         String contentCount = content;
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
+            contentCount = contentCount.replaceAll("(?i)(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
             Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
             while (matcherALink.find()) {
                 final String url = matcherALink.group(1);
@@ -729,13 +730,13 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
 
         autocomplete = false;
-
+        setContentView(R.layout.activity_toot);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(TootActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(TootActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
@@ -792,7 +793,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-        setContentView(R.layout.activity_toot);
+
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
@@ -1005,7 +1006,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
             restored = b.getLong("restored", -1);
         }
-        if (tootReply != null) {
+        if (tootReply != null && tootReply.getAccount() != null) {
             if (tootReply.getAccount() != null && tootReply.getAccount().getMoved_to_account() != null) {
                 warning_message.setVisibility(View.VISIBLE);
             }
@@ -1315,10 +1316,15 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
         Attachment attachment;
         //response = new JSONObject(serverResponse.getBodyAsString());
-        if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+        if( response == null ){
+            Toasty.error(TootActivity.this, getString(R.string.toast_error), Toasty.LENGTH_SHORT).show();
+            return;
+        }
+        if (social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             attachment = API.parseAttachmentResponse(response);
-        else
+        } else {
             attachment = GNUAPI.parseUploadedAttachmentResponse(response);
+        }
 
         boolean alreadyAdded = false;
         int index = 0;
@@ -1691,7 +1697,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         int style;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
@@ -1895,6 +1901,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
                 return true;
             case R.id.action_emoji:
+                if( emojis != null){
+                    emojis.clear();
+                    emojis = null;
+                }
                 emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis(account.getInstance());
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
                 int paddingPixel = 15;
@@ -2302,7 +2312,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         toot.setVisibility(visibility);
         if (tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
-        toot.setContent(tootContent);
+        toot.setContent(TootActivity.this, tootContent);
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
             if (poll != null) {
                 toot.setPoll(poll);
@@ -2692,7 +2702,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             toot.setVisibility(visibility);
             if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
-            toot.setContent(tootContent);
+            toot.setContent(TootActivity.this, tootContent);
             new PostStatusAsyncTask(getApplicationContext(), social, account, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
 
@@ -3661,10 +3671,10 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         });
 
         ArrayAdapter<CharSequence> pollduration = ArrayAdapter.createFromResource(TootActivity.this,
-                R.array.poll_duration, android.R.layout.simple_spinner_item);
+                R.array.poll_duration, android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<CharSequence> pollchoice = ArrayAdapter.createFromResource(TootActivity.this,
-                R.array.poll_choice_type, android.R.layout.simple_spinner_item);
+                R.array.poll_choice_type, android.R.layout.simple_spinner_dropdown_item);
         poll_choice.setAdapter(pollchoice);
         poll_duration.setAdapter(pollduration);
         poll_duration.setSelection(4);
@@ -3857,7 +3867,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
         if (toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
-        toot.setContent(currentContent);
+        toot.setContent(TootActivity.this, currentContent);
 
         if (poll != null)
             toot.setPoll(poll);
@@ -4169,8 +4179,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
 
         @Override
         protected void onPostExecute(Void result) {
-            activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
-            activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
+            if( activityWeakReference.get().findViewById(R.id.compression_loader) != null) {
+                activityWeakReference.get().findViewById(R.id.compression_loader).setVisibility(View.GONE);
+            }
+            if( activityWeakReference.get().findViewById(R.id.picture_scrollview) != null){
+                activityWeakReference.get().findViewById(R.id.picture_scrollview).setVisibility(View.VISIBLE);
+            }
             if (!error) {
                 if (commpressedFilePath != null) {
                     uriFile = Uri.fromFile(new File(commpressedFilePath));
@@ -4181,15 +4195,19 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
                 toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
                 toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
-
-                toot_picture_container.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                toot_it.setEnabled(false);
+                if( toot_picture_container != null){
+                    toot_picture_container.setVisibility(View.VISIBLE);
+                }
+                if( toot_picture != null){
+                    toot_picture.setEnabled(false);
+                }
+                if( toot_it != null){
+                    toot_it.setEnabled(false);
+                }
                 if (filename == null) {
                     filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 }
                 filesMap.put(filename, uriFile);
-
                 upload(activityWeakReference.get(), account, social, uriFile, filename, uploadReceiver);
             }
         }

@@ -1,1 +1,1 @@
-Fedilab is a multifunctional Android client to access the distributed Fediverse
+فدیلب یک کارخواه اندرویدی چندکاربرده برای دسترسی به دنیای توزیع‌شدهٔ فدیورس است

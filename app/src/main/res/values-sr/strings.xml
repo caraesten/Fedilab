@@ -126,6 +126,26 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d д</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="few">%d seconds</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d hour</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d day</item>
+        <item quantity="few">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Упозорење</string>
     <string name="toot_placeholder">Шта Вам је на уму?</string>
@@ -198,6 +218,7 @@
     <string name="notif_reblog">је подржао Ваш статус</string>
     <string name="notif_favourite">је ставио Ваш статус као омиљени</string>
     <string name="notif_follow">Вас је запратио</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">и још једно обавештење</item>
         <item quantity="few">и још %d обавештења</item>
@@ -272,6 +293,7 @@
     <string name="set_notify">Обавештења?</string>
     <string name="set_notif_silent">Тиха обавештења</string>
     <string name="set_nsfw_timeout">NSFW временско ограничење приказа (у секундама, 0 значи искључено)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Измени профил</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -294,11 +316,6 @@
     <string name="use_javascript">Омогућите JavaScript</string>
     <string name="expand_cw">Аутоматски приказуј осетљиве садржаје</string>
     <string name="use_cookies">Дозволите независне колачиће</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Не</item>
-    </string-array>
     <string name="your_api_key">Ваш API кључ, можете оставити празно за Yandex</string>
     <string-array name="settings_theme">
         <item>Тамна</item>
@@ -940,6 +957,11 @@
         <item quantity="few">%d votes</item>
         <item quantity="other">%d votes</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
@@ -1012,6 +1034,8 @@
     <string name="link_color_title">Links</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Background color of posts in timelines</string>
@@ -1045,4 +1069,45 @@
     <string name="export_theme">Export the theme</string>
     <string name="export_theme_title">Tap here to export the current theme</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
+    <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s (%2$s)</string>
 </resources>

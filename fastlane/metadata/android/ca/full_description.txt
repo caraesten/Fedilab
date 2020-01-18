@@ -14,5 +14,5 @@ L'aplicació té funcionalitats avançades (sobretot per a Pleroma i Mastodont):
 - Silenciar comptes temporalment
 - Executar accions entre els comptes amb pitjada llarga
 - Funcionalitat de traducció
-- Pissarres de creació artística
+- Pissarres amb Art
 - Pissarres de vídeo

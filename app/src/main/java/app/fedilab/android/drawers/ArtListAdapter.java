@@ -280,19 +280,6 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status) {
-        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
-            //noinspection ConstantConditions
-            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                try {
-                    statuses.set(i, status);
-                    statusListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) {
-                }
-            }
-        }
-    }
-
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
         if (status != null) {

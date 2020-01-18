@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -78,9 +79,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
@@ -95,8 +93,9 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
-        if (b != null)
+        if (b != null) {
             tag = b.getString("tag", null);
+        }
         if (tag == null)
             finish();
         statuses = new ArrayList<>();
@@ -112,7 +111,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         swipeRefreshLayout.setColorSchemeColors(
                 c1, c2, c1
         );
-
+        toolbar.setBackgroundColor(ContextCompat.getColor(HashTagActivity.this, R.color.cyanea_primary));
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         mainLoader = findViewById(R.id.loader);
@@ -187,6 +186,7 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
                 SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new SearchDAO(HashTagActivity.this, db).insertSearch(tag);
                 Intent intent = new Intent(HashTagActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(Helper.INTENT_ACTION, Helper.SEARCH_TAG);
                 intent.putExtra(Helper.SEARCH_KEYWORD, tag);
                 startActivity(intent);

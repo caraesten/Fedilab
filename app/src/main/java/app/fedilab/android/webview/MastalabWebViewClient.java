@@ -83,7 +83,9 @@ public class MastalabWebViewClient extends WebViewClient {
                 }
             } catch (URISyntaxException e) {
                 try {
-                    url = url.substring(0, 50);
+                    if ( url.length() > 50) {
+                        url = url.substring(0, 50);
+                    }
                     uri = new URI(url);
                     String domain = uri.getHost();
                     if (domain != null) {

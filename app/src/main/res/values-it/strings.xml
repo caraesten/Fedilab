@@ -126,6 +126,22 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d o</string>
     <string name="date_day">%d g</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d secondo</item>
+        <item quantity="other">%d secondi</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minuti</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d ora</item>
+        <item quantity="other">%d ore</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d giorno</item>
+        <item quantity="other">%d giorni</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Attenzione</string>
     <string name="toot_placeholder">Cosa ti passa per la mente?</string>
@@ -198,6 +214,7 @@
     <string name="notif_reblog">ha ricondiviso il tuo stato</string>
     <string name="notif_favourite">ha messo tra i preferiti il tuo stato</string>
     <string name="notif_follow">ti segue</string>
+    <string name="notif_follow_request">ha richiesto di seguirti</string>
     <plurals name="other_notifications">
         <item quantity="one">e un\'altra notifica</item>
         <item quantity="other">e %d altre notifiche</item>
@@ -269,7 +286,8 @@
     <string name="set_wifi_only">Notifica solo in WIFI</string>
     <string name="set_notify">Notifica?</string>
     <string name="set_notif_silent">Notifiche silenziose</string>
-    <string name="set_nsfw_timeout">Timeout visualizzazione NSFW (secondi, 0 significa spento)</string>
+    <string name="set_nsfw_timeout">Timeout visualizzazione NSFW (secondi, 0 significa disattivato)</string>
+    <string name="set_med_desc_timeout">Timeout descrizione media (secondi, 0 significa disattivato)</string>
     <string name="settings_title_profile">Modifica profilo</string>
     <string name="settings_title_custom_sharing">Condivisione personalizzata</string>
     <string name="settings_custom_sharing_url">L\'URL della tua condivisione personalizzata&#8230;</string>
@@ -292,11 +310,6 @@
     <string name="use_javascript">Abilita Javascript</string>
     <string name="expand_cw">Espandi automaticamente cw</string>
     <string name="use_cookies">Permetti cookie di terze-parti</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">La tua chiave API, puoi lasciarla vuota per Yandex</string>
     <string-array name="settings_theme">
         <item>Scuro</item>
@@ -937,6 +950,10 @@
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d votante</item>
+        <item quantity="other">%d votanti</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Scelta singola</item>
         <item>Scelta multipla</item>
@@ -1009,6 +1026,8 @@
     <string name="link_color_title">Collegamenti</string>
     <string name="link_color">Cambiare il colore dei collegamenti (URL, menzioni, etichette, ecc.) nei messaggi</string>
     <string name="boost_header_color_title">Intestazione dei reblog</string>
+    <string name="displayname_title">Cambia il colore del nome visualizzato nella parte superiore dei messaggi</string>
+    <string name="username_title">Cambia il colore del nome utente nella parte superiore dei messaggi</string>
     <string name="boost_header_color">Cambia il colore dell\'intestazione per i reblog</string>
     <string name="background_status_title">Messaggi</string>
     <string name="background_status">Colore di sfondo dei messaggi nelle timeline</string>
@@ -1020,26 +1039,67 @@
     <string name="pin_tag">Metti etichetta in evidenza</string>
     <string name="logo_of_the_instance">Logo dell\'istanza</string>
     <string name="edit_profile">Modifica profilo</string>
-    <string name="make_an_action">Make an action</string>
+    <string name="make_an_action">Scegli un\'azione</string>
     <string name="translation">Traduzione</string>
     <string name="image_preview">Anteprima immagine</string>
     <string name="text_color_title">Colore del testo</string>
-    <string name="text_color">Change the text color in pots</string>
+    <string name="text_color">Cambia il colore del testo nei riquadri</string>
     <string name="apply_changes">Applica le modifiche</string>
     <string name="restart_message">È necessario riavviare l\'applicazione per applicare le modifiche</string>
     <string name="restart">Riavvia</string>
-    <string name="pref_custom_theme">Use a custom theme</string>
-    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
-    <string name="theming">Theming</string>
-    <string name="store_before">Store before</string>
-    <string name="data_export_theme">The theme was exported</string>
-    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
-    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="pref_custom_theme">Usa un tema personalizzato</string>
+    <string name="pref_custom_theme_summary">Permetti di non tenere conto dei colori del tema selezionato sopra</string>
+    <string name="theming">Temi</string>
+    <string name="store_before">Archivia prima</string>
+    <string name="data_export_theme">Il tema è stato esportato</string>
+    <string name="data_export_theme_success">Il tema è stato esportato correttamente in CSV</string>
+    <string name="pref_colored_status_bar_summary">Applica il colore primario alla barra di stato</string>
+    <string name="pref_colored_status_bar_title">Colore della barra di stato</string>
+    <string name="restore_default_theme">Ripristina un tema predefinito</string>
+    <string name="import_theme">Importa un tema</string>
+    <string name="import_theme_title">Premi qui per importare un tema da un\'esportazione precedente</string>
+    <string name="export_theme">Esporta il tema</string>
+    <string name="export_theme_title">Premi qui per esportare il tema corrente</string>
+    <string name="theme_file_error">Si è verificato un errore durante la selezione del file di tema</string>
+    <string name="label_theme_picker">Selettore Tema</string>
+    <string name="pref_theme_summary">Seleziona un tema preinstallato</string>
+    <string name="pref_theme_title">Temi</string>
+    <string name="pref_colored_navigation_bar_summary">Applica il colore primario alla barra di navigazione</string>
+    <string name="pref_colored_navigation_bar_title">Colore della barra di navigazione</string>
+    <string name="pref_background_color_summary">Colore sottostante al contenuto dell\'app.</string>
+    <string name="pref_background_color_title">Colore di sfondo</string>
+    <string name="pref_accent_color_summary">Colori in tinta per alcune parti dell\'interfaccia.</string>
+    <string name="pref_accent_color_title">Colore in tinta</string>
+    <string name="pref_primary_color_summary">Visualizzati più di frequente nella tua applicazione.</string>
+    <string name="pref_primary_color_title">Colore primario</string>
+    <string name="export_bookmarks">Esporta segnalibri nell\'istanza</string>
+    <string name="import_bookmarks">Importa segnalibri dall\'istanza</string>
+    <string name="user_count">Numero di utenti</string>
+    <string name="status_count">Numero di stati</string>
+    <string name="instance_count">Numero di istanze</string>
+    <string name="blocked">Bloccati</string>
+    <string name="poll_finish_in">Termina tra %s</string>
+    <string name="release_note_title">Cosa c\'è di nuovo nella %s</string>
+    <string name="follow_account_update">Puoi seguire il mio account per gli aggiornamenti</string>
+    <string name="no_instance_reccord">Questa istanza non è disponibile su https://instances.social</string>
+    <string name="display_full_link">Mostra collegamento completo</string>
+    <string name="share_link">Condividi collegamento</string>
+    <string name="link_copy">L\'URL è stato copiato negli appunti</string>
+    <string name="open_other_app">Apri con un\'altra app</string>
+    <string name="check_redirect">Controlla reindirizzamento</string>
+    <string name="no_redirect">Questo URL non reindirizza</string>
+    <string name="redirect_detected">%1$s \n\nreindirizza verso\n\n %2$s</string>
+    <string name="set_user_agent">Cambia l\'agente dell\'utente</string>
+    <string name="set_user_agent_hint">Imposta un agente utente personalizzato o lascia vuoto</string>
+    <string name="set_user_agent_indication">Permetti la personalizzazione dell\'agente utente utilizzata per le chiamate dell\'API o con il browser integrato.</string>
+    <string name="set_utm_parameters">Rimuovi parametri UTM</string>
+    <string name="set_utm_parameters_indication">L\'app rimuoverà automaticamente i parametri UTM dagli URL prima di aprire un collegamento.</string>
+    <string name="action_trends">Tendenze</string>
+    <string name="trending_now">Di tendenza ora</string>
+    <string name="talking_about">%d persone ne parlano</string>
+    <string name="twitter_accounts">Account Twitter (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Nomi utente Twitter separati da spazio</string>
+    <string name="identity_proofs">Prove d\'identità</string>
+    <string name="verified_user">Identità verificata</string>
+    <string name="verified_by">Verificata da %1$s (%2$s)</string>
 </resources>

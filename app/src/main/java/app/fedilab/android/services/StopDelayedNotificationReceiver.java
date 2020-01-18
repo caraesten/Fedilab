@@ -34,8 +34,7 @@ public class StopDelayedNotificationReceiver extends BroadcastReceiver {
         streamingServiceIntent.putExtra("stop", true);
         try {
             context.startService(streamingServiceIntent);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
 }

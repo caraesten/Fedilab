@@ -125,10 +125,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(EditProfileActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(EditProfileActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
@@ -456,10 +456,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                GlideApp.get(getApplicationContext()).clearDiskCache();
+                                Glide.get(getApplicationContext()).clearDiskCache();
                             }
                         }).start();
-                        GlideApp.get(getApplicationContext()).clearMemory();
+                        Glide.get(getApplicationContext()).clearMemory();
                         HashMap<String, String> newCustomFields = new HashMap<>();
 
                         String key1, key2, key3, key4, val1, val2, val3, val4;

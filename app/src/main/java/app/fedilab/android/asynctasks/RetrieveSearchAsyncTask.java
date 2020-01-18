@@ -72,7 +72,9 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if (this.type == null) {
+        if( query.compareTo("fedilab_trend") == 0 ) {
+            apiResponse = new API(this.contextReference.get()).getTrends();
+        }else if (this.type == null) {
             if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 API api = new API(this.contextReference.get());
                 String[] split = query.trim().split("@");

@@ -126,6 +126,22 @@
     <string name="date_minutes">%d min</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d j</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d seconde</item>
+        <item quantity="other">%d secondes</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d heure</item>
+        <item quantity="other">%d heures</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Avertissement</string>
     <string name="toot_placeholder">Qu’avez-vous en tête ?</string>
@@ -198,6 +214,7 @@
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous suit</string>
+    <string name="notif_follow_request">a demandé à vous suivre</string>
     <plurals name="other_notifications">
         <item quantity="one">et %d autre notification</item>
         <item quantity="other">et %d autres notifications</item>
@@ -270,6 +287,7 @@
     <string name="set_notify">Notifier ?</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
     <string name="set_nsfw_timeout">Délai d’affichage NSFW (en secondes, 0 signifie aucun délai)</string>
+    <string name="set_med_desc_timeout">Délai de l\'affichage de la description des médias (en secondes, 0 signifie désactivé)</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="settings_title_custom_sharing">Partage personnalisé</string>
     <string name="settings_custom_sharing_url">Votre URL de partage personnalisé&#8230;</string>
@@ -292,11 +310,6 @@
     <string name="use_javascript">Activer Javascript</string>
     <string name="expand_cw">Afficher automatiquement le contenu masqué</string>
     <string name="use_cookies">Autoriser les cookies tiers</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Non</item>
-    </string-array>
     <string name="your_api_key">Votre clé API, vous pouvez laisser vide pour Yandex</string>
     <string-array name="settings_theme">
         <item>Sombre</item>
@@ -934,6 +947,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
         <item quantity="one">%d voix</item>
         <item quantity="other">%d voix</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d votant</item>
+        <item quantity="other">%d votants</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Choix unique</item>
         <item>Choix multiple</item>
@@ -1005,8 +1022,10 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="agreement_check_peertube">J\'ai au moins 16 ans et je suis d\'accord avec les %1$s de cette instance</string>
     <string name="link_color_title">Liens</string>
     <string name="link_color">Changer la couleur des liens (URL, mentions, tags, etc.) dans les messages</string>
-    <string name="boost_header_color_title">Reblogs header</string>
-    <string name="boost_header_color">Change the color of the header for reblogs</string>
+    <string name="boost_header_color_title">En-tête des partages</string>
+    <string name="displayname_title">Changer la couleur du nom affiché en haut des messages</string>
+    <string name="username_title">Changer la couleur du nom de l\'utilisateur en haut des messages</string>
+    <string name="boost_header_color">Modifie la couleur de l’en-tête des partages</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Couleur du fond des post des fils</string>
     <string name="reset_color">Réinitialiser les couleurs</string>
@@ -1028,7 +1047,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="pref_custom_theme">Utiliser un thème personnalisé</string>
     <string name="pref_custom_theme_summary">Permettre de modifier les couleurs du thème sélectionné ci-dessus</string>
     <string name="theming">Thème</string>
-    <string name="store_before">Store before</string>
+    <string name="store_before">Sauvegarder au préalable</string>
     <string name="data_export_theme">Le thème a été exporté</string>
     <string name="data_export_theme_success">Le thème a été exporté avec succès en CSV</string>
     <string name="pref_colored_status_bar_summary">Appliquer la couleur primaire à la barre d\'état</string>
@@ -1039,4 +1058,45 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="export_theme">Exporter le thème</string>
     <string name="export_theme_title">Appuyez ici pour exporter le thème actuel</string>
     <string name="theme_file_error">Une erreur s\'est produite lors de la sélection du fichier de thème</string>
+    <string name="label_theme_picker">Sélecteur de thème</string>
+    <string name="pref_theme_summary">Sélectionner un thème préinstallé</string>
+    <string name="pref_theme_title">Thèmes</string>
+    <string name="pref_colored_navigation_bar_summary">Appliquer la couleur principale à la barre de navigation</string>
+    <string name="pref_colored_navigation_bar_title">Couleur de la barre de navigation</string>
+    <string name="pref_background_color_summary">Couleur sous-jacente du contenu de l’application.</string>
+    <string name="pref_background_color_title">Couleur du fond</string>
+    <string name="pref_accent_color_summary">Les Accents sélectionnent des parties de l\'interface utilisateur.</string>
+    <string name="pref_accent_color_title">Couleur d\'accentuation</string>
+    <string name="pref_primary_color_summary">Affiché le plus souvent dans l\'application.</string>
+    <string name="pref_primary_color_title">Couleur primaire</string>
+    <string name="export_bookmarks">Exporter les signets vers l\'instance</string>
+    <string name="import_bookmarks">Importer les signets de l\'instance</string>
+    <string name="user_count">Nombre d\'utilisateurs</string>
+    <string name="status_count">Nombre de statuts</string>
+    <string name="instance_count">L’instance comprend</string>
+    <string name="blocked">Bloqué</string>
+    <string name="poll_finish_in">Fin dans %s</string>
+    <string name="release_note_title">Quoi de neuf dans %s</string>
+    <string name="follow_account_update">Vous pouvez suivre mon compte pour les mises à jour</string>
+    <string name="no_instance_reccord">Cette instance n’est pas disponible sur https://instances.social</string>
+    <string name="display_full_link">Afficher le lien complet</string>
+    <string name="share_link">Partager le lien</string>
+    <string name="link_copy">L\'url a été copiée dans le presse-papiers</string>
+    <string name="open_other_app">Ouvrir avec une autre application</string>
+    <string name="check_redirect">Vérifier la redirection</string>
+    <string name="no_redirect">Cette URL ne redirige pas</string>
+    <string name="redirect_detected">%1$s\n\nredirige vers\n\n%2$s</string>
+    <string name="set_user_agent">Modifier l\'agent d\'utilisateur</string>
+    <string name="set_user_agent_hint">Définir un agent utilisateur personnalisé ou laisser vide</string>
+    <string name="set_user_agent_indication">Permet de personnaliser l\'agent de l\'utilisateur utilisé pour les appels de l\'api ou avec le navigateur intégré.</string>
+    <string name="set_utm_parameters">Supprimer les paramètres UTM</string>
+    <string name="set_utm_parameters_indication">L’application supprimera automatiquement les paramètres UTM des URL avant de visiter un lien.</string>
+    <string name="action_trends">Tendances</string>
+    <string name="trending_now">Tendance en ce moment</string>
+    <string name="talking_about">%d personnes en parlent</string>
+    <string name="twitter_accounts">Comptes Twitter (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Noms d\'utilisateurs Twitter séparés par un espace</string>
+    <string name="identity_proofs">Preuves d’identité</string>
+    <string name="verified_user">Identité vérifiée</string>
+    <string name="verified_by">Vérifié par %1$s (%2$s)</string>
 </resources>

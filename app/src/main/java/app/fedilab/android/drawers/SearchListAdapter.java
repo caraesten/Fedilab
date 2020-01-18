@@ -63,9 +63,9 @@ public class SearchListAdapter extends BaseAdapter {
 
     public SearchListAdapter(Context context, List<Status> statuses, List<Account> accounts, List<String> tags) {
         this.context = context;
-        this.statuses = (statuses != null) ? statuses : new ArrayList<Status>();
-        this.accounts = (accounts != null) ? accounts : new ArrayList<Account>();
-        this.tags = (tags != null) ? tags : new ArrayList<String>();
+        this.statuses = (statuses != null) ? statuses : new ArrayList<>();
+        this.accounts = (accounts != null) ? accounts : new ArrayList<>();
+        this.tags = (tags != null) ? tags : new ArrayList<>();
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -180,7 +180,6 @@ public class SearchListAdapter extends BaseAdapter {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 holder.status_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
             else
-                //noinspection deprecation
                 holder.status_content.setText(Html.fromHtml(content));
             holder.status_content.setAutoLinkMask(Linkify.WEB_URLS);
             holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));

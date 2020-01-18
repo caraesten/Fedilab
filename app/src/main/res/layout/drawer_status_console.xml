@@ -193,7 +193,7 @@
                     android:layout_height="20dp"
                     android:contentDescription="@string/cached_status"
                     android:src="@drawable/ic_cached_black"
-                    android:tint="?attr/iconColorMenu"
+                    android:tint="?attr/textColor"
                     android:visibility="gone" />
 
                 <LinearLayout
@@ -431,7 +431,7 @@
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/play_video"
                         android:src="@drawable/ic_play_arrow"
-                        android:tint="@color/white" />
+                         />
                 </RelativeLayout>
 
                 <app.fedilab.android.webview.CustomWebview
@@ -486,7 +486,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -495,7 +494,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="1dp"
-                                android:layout_marginLeft="1dp"
                                 android:layout_weight="1">
 
                                 <ImageView
@@ -512,7 +510,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -530,7 +527,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="1dp"
-                                android:layout_marginLeft="1dp"
                                 android:layout_weight="1">
 
                                 <ImageView
@@ -547,7 +543,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -571,7 +566,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -616,7 +610,6 @@
                             android:layout_centerInParent="true"
                             android:contentDescription="@string/play_video"
                             android:src="@drawable/ic_play_arrow"
-                            android:tint="@color/white"
                             android:visibility="gone" />
 
                         <ImageView
@@ -658,7 +651,6 @@
                                 android:layout_centerInParent="true"
                                 android:contentDescription="@string/play_video"
                                 android:src="@drawable/ic_play_arrow"
-                                android:tint="@color/white"
                                 android:visibility="gone" />
                         </RelativeLayout>
 
@@ -689,7 +681,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -714,7 +705,6 @@
                                     android:layout_centerInParent="true"
                                     android:contentDescription="@string/play_video"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:tint="@color/white"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
@@ -790,7 +780,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/new_toot"
-                android:tint="?attr/colorAccent"
+                android:backgroundTint="?attr/colorAccent"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

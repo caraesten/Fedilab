@@ -133,9 +133,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private MastalabAutoCompleteTextView comment_content;
     private String in_reply_to_status;
     private String visibility;
-    private int theme;
-    private long currentToId = -1;
-    private Status tootReply;
     private boolean redraft = false;
     private Status toot;
 
@@ -204,8 +201,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
 
         comment_content = null;
-        tootReply = null;
-        currentToId = -1;
+        long currentToId = -1;
         if (apiResponse.getError() == null) {
             boolean display_confirm = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONFIRM, true);
             if (display_confirm) {
@@ -434,14 +430,32 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 iconColor = ThemeHelper.getAttColor(context, R.attr.iconColor);
             }
             int reblogColor = prefs.getInt("theme_boost_header_color", -1);
+
+            holder.pf_likes.setTextColor(iconColor);
             int statusColor = prefs.getInt("theme_statuses_color", -1);
             if (holder.pf_cardview != null && statusColor != -1) {
                 holder.pf_cardview.setCardBackgroundColor(statusColor);
             } else if (holder.pf_cardview != null) {
                 holder.pf_cardview.setCardBackgroundColor(ThemeHelper.getAttColor(context, R.attr.cardviewColor));
             }
+            int theme_text_color = prefs.getInt("theme_text_color", -1);
+            if (holder.pf_description != null && theme_text_color != -1) {
+                holder.pf_description.setTextColor(theme_text_color);
+            }
+
+            int theme_text_header_2_line = prefs.getInt("theme_text_header_2_line", -1);
+            if (theme_text_header_2_line == -1) {
+                theme_text_header_2_line = ThemeHelper.getAttColor(context, R.attr.textHeader);
+            }
+
+            holder.pf_username.setTextColor(theme_text_header_2_line);
+            holder.pf_date.setTextColor(theme_text_header_2_line);
+            if (statusColor != -1) {
+                holder.quick_reply_container.setBackgroundColor(statusColor);
+            }
 
             holder.quick_reply_switch_to_full.setVisibility(View.GONE);
+            int theme;
             if (status.isShortReply()) {
                 holder.quick_reply_container.setVisibility(View.VISIBLE);
                 holder.pixelfed_comments.setVisibility(View.VISIBLE);
@@ -457,7 +471,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     status.setCommentsFetched(true);
                     new RetrieveContextAsyncTask(context, false, false, status.getId(), PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
-
+                InputMethodManager inputMethodManager =
+                        (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.toggleSoftInputFromWindow(
+                        holder.quick_reply_text.getApplicationWindowToken(),
+                        InputMethodManager.SHOW_FORCED, 0);
                 EditText content_cw = new EditText(context);
                 content_cw.setText(status.getReblog() != null ? status.getReblog().getSpoiler_text() : status.getSpoiler_text());
                 String content = TootActivity.manageMentions(context, userId, status.getReblog() != null ? status.getReblog() : status);
@@ -471,7 +489,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 int newInputType = comment_content.getInputType() & (comment_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
                 comment_content.setInputType(newInputType);
                 in_reply_to_status = status.getReblog() != null ? status.getReblog().getId() : status.getId();
-                tootReply = status;
                 theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
                 final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -596,12 +613,12 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.quick_reply_privacy.setVisibility(View.GONE);
 
             holder.quick_reply_button.setOnClickListener(view -> {
-                sendToot();
-                //status.setShortReply(false);
+                sendToot(status);
+                status.setShortReply(false);
+                holder.quick_reply_container.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 assert imm != null;
                 imm.hideSoftInputFromWindow(holder.quick_reply_button.getWindowToken(), 0);
-                notifyStatusChanged(status);
             });
 
             holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
@@ -900,7 +917,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                                                 toot.setMedia_attachments(status.getMedia_attachments());
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 toot.setVisibility(status.getVisibility());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
@@ -915,7 +932,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setVisibility(status.getVisibility());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
                                                 } else if (status.getReblog() != null && status.getReblog().getPoll() != null) {
@@ -1065,6 +1082,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             et = MyTransL.translatorEngine.YANDEX;
         } else if (trans == Helper.TRANS_DEEPL) {
             et = MyTransL.translatorEngine.DEEPL;
+        }else if (trans == Helper.TRANS_SYSTRAN) {
+            et = MyTransL.translatorEngine.SYSTRAN;
         }
         final MyTransL myTransL = MyTransL.getInstance(et);
         myTransL.setObfuscation(true);
@@ -1074,6 +1093,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         } else if (trans == Helper.TRANS_DEEPL) {
             api_key = sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, "");
             myTransL.setDeeplAPIKey(api_key);
+        } else if (trans == Helper.TRANS_SYSTRAN) {
+            api_key = sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, "");
+            myTransL.setSystranAPIKey(api_key);
         }
 
 
@@ -1127,7 +1149,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         context.startActivity(intent);
     }
 
-    private void sendToot() {
+    private void sendToot(Status status) {
 
         if (comment_content.getText() == null) {
             Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -1148,8 +1170,10 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         toot.setVisibility(visibility);
         toot.setIn_reply_to_id(in_reply_to_status);
-        toot.setContent(tootContent);
+        toot.setContent(context, tootContent);
         new PostStatusAsyncTask(context, social, account, toot, PixelfedListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        status.setQuickReplyPrivacy(null);
+        status.setQuickReplyContent(null);
 
     }
 
@@ -1411,18 +1435,6 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status) {
-        for (int i = 0; i < pixelfedListAdapter.getItemCount(); i++) {
-            //noinspection ConstantConditions
-            if (pixelfedListAdapter.getItemAt(i) != null && pixelfedListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                try {
-                    statuses.set(i, status);
-                    pixelfedListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) {
-                }
-            }
-        }
-    }
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {

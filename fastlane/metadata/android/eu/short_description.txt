@@ -1,1 +1,1 @@
-Fedilab banatutako Fedibertsoa atzitzeko funtzio anitzeko Android bezeroa da
+Fedilab Fedibertso banatua atzitzeko funtzio anitzeko Android bezeroa da

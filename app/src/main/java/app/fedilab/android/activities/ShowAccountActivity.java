@@ -32,6 +32,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +52,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -77,6 +80,7 @@ import app.fedilab.android.asynctasks.PostActionAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveIdentityProofAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
@@ -84,6 +88,7 @@ import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
+import app.fedilab.android.client.Entities.IdentityProof;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.Relationship;
@@ -91,6 +96,7 @@ import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.UserNote;
 import app.fedilab.android.client.HttpsConnection;
+import app.fedilab.android.drawers.IdentityProofsAdapter;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
@@ -103,6 +109,7 @@ import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
+import app.fedilab.android.interfaces.OnRetrieveIdentityProofInterface;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.InstancesDAO;
@@ -121,7 +128,7 @@ import static app.fedilab.android.helper.Helper.getLiveInstance;
  * Show account activity class
  */
 
-public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface, OnListActionInterface {
+public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface, OnListActionInterface, OnRetrieveIdentityProofInterface {
 
 
     private List<Status> statuses;
@@ -306,7 +313,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             header_edit_profile.setVisibility(View.VISIBLE);
             header_edit_profile.bringToFront();
         }
-
+        //TODO: add other software that supports identity proofs
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            new RetrieveIdentityProofAsyncTask(ShowAccountActivity.this, account.getId(), ShowAccountActivity.this).execute();
+        }
         String urlHeader = account.getHeader();
         if (urlHeader != null && urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
@@ -335,7 +345,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
         if (account.isLocked()) {
-            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
+            Drawable img = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_locked_account);
             assert img != null;
             img.setBounds(0, 0, (int) (16 * scale + 0.5f), (int) (16 * scale + 0.5f));
             account_un.setCompoundDrawables(null, null, img, null);
@@ -343,9 +353,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_un.setCompoundDrawables(null, null, null, null);
         }
         //Peertube account watched by a Mastodon account
-        /*if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
-            account_type.setVisibility(View.VISIBLE);
-        }*/
         //Bot account
         if (account.isBot()) {
             account_bot.setVisibility(View.VISIBLE);
@@ -861,6 +868,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         TextView account_date = findViewById(R.id.account_date);
         account_date.setText(Helper.shortDateToString(account.getCreated_at()));
+        account_date.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -870,15 +878,22 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     instance = account.getAcct().split("@")[1];
                 }
                 InstanceNodeInfo instanceNodeInfo = new API(ShowAccountActivity.this).displayNodeInfo(instance);
-
+                String finalInstance = instance;
                 runOnUiThread(new Runnable() {
                     public void run() {
                         if (instanceNodeInfo != null && instanceNodeInfo.getName() != null) {
                             TextView instance_info = findViewById(R.id.instance_info);
                             instance_info.setText(instanceNodeInfo.getName());
                             instance_info.setVisibility(View.VISIBLE);
-                            TextView seperator = findViewById(R.id.seperator);
-                            seperator.setVisibility(View.VISIBLE);
+
+                            instance_info.setOnClickListener(v -> {
+                                Intent intent = new Intent(getApplicationContext(), InstanceProfileActivity.class);
+                                Bundle b = new Bundle();
+                                b.putString("instance", finalInstance);
+                                intent.putExtras(b);
+                                startActivity(intent);
+
+                            });
                         }
                     }
                 });
@@ -941,15 +956,34 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private void manageButtonVisibility() {
         if (relationship == null)
             return;
-        account_follow.setEnabled(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
+            int[][] states = new int[][] {
+                    new int[] { android.R.attr.state_enabled}, // enabled
+                    new int[] {-android.R.attr.state_enabled}, // disabled
+                    new int[] {-android.R.attr.state_checked}, // unchecked
+                    new int[] { android.R.attr.state_pressed}  // pressed
+            };
+
+            int[] colors = new int[] {
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4),
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4___),
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4),
+                    ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)
+            };
+            account_follow.setBackgroundTintList(new ColorStateList(states, colors));
         }
+        account_follow.setEnabled(true);
         if (relationship.isBlocking()) {
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
-        } else if (relationship.isRequested()) {
+        } else if (relationship.isBlocked_by()) {
+            account_follow.setImageResource(R.drawable.ic_user_plus);
+            account_follow.setVisibility(View.VISIBLE);
+            account_follow.setEnabled(false);
+            doAction = action.NOTHING;
+        }else if (relationship.isRequested()) {
             account_follow_request.setVisibility(View.VISIBLE);
             account_follow.setImageResource(R.drawable.ic_hourglass_full);
             account_follow.setVisibility(View.VISIBLE);
@@ -1511,6 +1545,50 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
     public boolean showBoosts() {
         return show_boosts;
+    }
+
+    @Override
+    public void onIdentityProof(APIResponse apiResponse) {
+        if( apiResponse == null) {
+            return;
+        }
+        List<IdentityProof> identityProofs = apiResponse.getIdentityProofs();
+        if( identityProofs != null && identityProofs.size() > 0 ){
+            ImageView identity_proofs_indicator = findViewById(R.id.identity_proofs_indicator);
+            identity_proofs_indicator.setVisibility(View.VISIBLE);
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            accountUrl = account.getUrl();
+            int style;
+            if (theme == Helper.THEME_LIGHT)
+                style = R.style.Dialog;
+            else if (theme == Helper.THEME_BLACK)
+                style = R.style.DialogBlack;
+            else
+                style = R.style.DialogDark;
+            identity_proofs_indicator.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShowAccountActivity.this, style);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View  identityProofsView = inflater.inflate(R.layout.popup_identity_proof, new LinearLayout(ShowAccountActivity.this), false);
+                RecyclerView  identityProofsRecycler = identityProofsView.findViewById(R.id.identity_proofs_list);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(ShowAccountActivity.this);
+                identityProofsRecycler.setLayoutManager(mLayoutManager);
+                IdentityProofsAdapter identityProofsAdapter = new IdentityProofsAdapter(identityProofs);
+                identityProofsRecycler.setAdapter(identityProofsAdapter);
+                builder.setView(identityProofsView);
+                builder
+                        .setTitle(R.string.identity_proofs)
+                        .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            });
+
+        }
     }
 
 

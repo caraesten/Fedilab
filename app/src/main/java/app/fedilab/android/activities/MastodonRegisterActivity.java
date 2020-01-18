@@ -32,12 +32,14 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +48,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -91,9 +91,6 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
                 break;
@@ -104,10 +101,10 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         setContentView(R.layout.activity_register);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -122,7 +119,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         }
 
 
-        MaterialSpinner reg_category = findViewById(R.id.reg_category);
+        Spinner reg_category = findViewById(R.id.reg_category);
         String[] categoriesA = {
                 getString(R.string.category_general),
                 getString(R.string.category_regional),
@@ -155,12 +152,16 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
         reg_category.setAdapter(adcategories);
 
-        reg_category.setSelectedIndex(0);
+        reg_category.setSelection(0);
         //Manage privacies
-        reg_category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        reg_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, itemA[position], MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -217,7 +218,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
     @Override
     public void onRetrieveInstance(APIResponse apiResponse) {
-        if (apiResponse.getError() != null) {
+        if (apiResponse.getError() != null || apiResponse.getInstanceRegs() == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
             return;
         }

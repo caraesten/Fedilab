@@ -33,21 +33,25 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Patterns;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,9 +75,11 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -92,6 +98,7 @@ import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveMetaDataAsyncTask;
 import app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.asynctasks.RetrieveStoriesAsyncTask;
 import app.fedilab.android.asynctasks.SyncTimelinesAsyncTask;
@@ -99,13 +106,16 @@ import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.ManageTimelines;
+import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.TagTimeline;
 import app.fedilab.android.client.Entities.Version;
+import app.fedilab.android.drawers.AccountSearchDevAdapter;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplayBookmarksPixelfedFragment;
 import app.fedilab.android.fragments.DisplayDraftsFragment;
@@ -124,12 +134,14 @@ import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.fragments.TabLayoutScheduleFragment;
 import app.fedilab.android.fragments.WhoToFollowFragment;
 import app.fedilab.android.helper.CrossActions;
+import app.fedilab.android.helper.ExpandableHeightListView;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.MenuFloating;
 import app.fedilab.android.interfaces.OnFilterActionInterface;
 import app.fedilab.android.interfaces.OnRetrieveEmojiAccountInterface;
 import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
 import app.fedilab.android.interfaces.OnRetrieveMetaDataInterface;
+import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
 import app.fedilab.android.interfaces.OnSyncTimelineInterface;
 import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
@@ -148,7 +160,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnSyncTimelineInterface, OnRetrieveRelationshipInterface {
 
 
     public static String currentLocale;
@@ -185,6 +197,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private Activity activity;
     private BroadcastReceiver hidde_menu, update_topbar;
     private Instance instanceClass;
+    private View dialogReleaseNoteView;
+    private List<Account> developers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -430,6 +444,15 @@ public abstract class BaseMainActivity extends BaseActivity
             pTabLocal.setCustomView(R.layout.tab_badge);
 
 
+
+
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_subscriptions, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_overview, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_trending_up, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_recently_added, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_home, R.attr.iconColorMenu);
+
+
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconSub = pTabsub.getCustomView().findViewById(R.id.tab_icon);
 
@@ -521,6 +544,10 @@ public abstract class BaseMainActivity extends BaseActivity
             TabLayout.Tab pfStories = tabLayout.newTab();
             //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
+
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_notifications, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_people, R.attr.iconColorMenu);
+            Helper.changeDrawableColor(getApplicationContext(),R.drawable.ic_home, R.attr.iconColorMenu);
 
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
@@ -628,9 +655,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
 
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
-            Helper.startStreaming(BaseMainActivity.this);
-        }
+        Helper.startStreaming(BaseMainActivity.this);
 
         if (hidde_menu != null)
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(hidde_menu);
@@ -1123,10 +1148,12 @@ public abstract class BaseMainActivity extends BaseActivity
         MenuFloating.tags = new ArrayList<>();
         Helper.updateHeaderAccountInfo(activity, account, headerLayout);
         //Locked account can see follow request
-        if (account.isLocked()) {
-            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-        } else {
-            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA ) {
+            if (account.isLocked()) {
+                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            }
         }
 
         if (!BuildConfig.DONATIONS) {
@@ -1179,7 +1206,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 delete_instance.setVisibility(View.GONE);
             }
         });
-        final int[] count2 = {0};
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
@@ -1199,9 +1225,9 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
             //Live notification mode
-            final MaterialSpinner set_live_type = dialogView.findViewById(R.id.set_live_type);
+            final Spinner set_live_type = dialogView.findViewById(R.id.set_live_type);
             String[] labels = {getString(R.string.live_notif), getString(R.string.live_delayed), getString(R.string.no_live_notif)};
-            ArrayAdapter<String> adapterLive = new ArrayAdapter<>(getApplicationContext(),
+            ArrayAdapter<String> adapterLive = new ArrayAdapter<>(BaseMainActivity.this,
                     android.R.layout.simple_spinner_dropdown_item, labels);
             set_live_type.setAdapter(adapterLive);
             TextView set_live_type_indication = dialogView.findViewById(R.id.set_live_type_indication);
@@ -1216,10 +1242,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     set_live_type_indication.setText(R.string.no_live_indication);
                     break;
             }
-            set_live_type.setSelectedIndex(Helper.liveNotifType(getApplicationContext()));
-            set_live_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            set_live_type.setSelection(Helper.liveNotifType(getApplicationContext()));
+            set_live_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case Helper.NOTIF_LIVE:
@@ -1254,9 +1280,12 @@ public abstract class BaseMainActivity extends BaseActivity
                             break;
                     }
                 }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
             });
-
-
             dialogBuilderOptin.setTitle(R.string.settings_popup_title);
             dialogBuilderOptin.setCancelable(false);
             dialogBuilderOptin.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
@@ -1268,14 +1297,72 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             });
             try {
-                dialogBuilderOptin.show();
-            } catch (Exception ignored) {
-            }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dialogBuilderOptin.show();
+                    }
+                }, 1000);
+            } catch (Exception ignored) {}
 
+        }else{
+
+            int lastReleaseNoteRead = sharedpreferences.getInt(Helper.SET_POPUP_RELEASE_NOTES, 0);
+            int versionCode = BuildConfig.VERSION_CODE;
+            if( lastReleaseNoteRead != versionCode ){ //Need to push release notes
+                if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ) {
+                    new RetrieveRemoteDataAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+                BufferedReader reader = null;
+                try {
+                    reader = new BufferedReader(
+                            new InputStreamReader(getAssets().open("changelogs/"+versionCode+".txt")));
+                    String mLine;
+                    StringBuilder finalContent = new StringBuilder();
+                    while ((mLine = reader.readLine()) != null) {
+                      finalContent.append(mLine).append("\n");
+                    }
+                    AlertDialog.Builder dialogBuilderOptin = new AlertDialog.Builder(BaseMainActivity.this, style);
+                    LayoutInflater inflater = getLayoutInflater();
+                    dialogReleaseNoteView = inflater.inflate(R.layout.popup_release_notes, new LinearLayout(getApplicationContext()), false);
+                    dialogBuilderOptin.setView(dialogReleaseNoteView);
+                    TextView release_title = dialogReleaseNoteView.findViewById(R.id.release_title);
+                    TextView release_notes = dialogReleaseNoteView.findViewById(R.id.release_notes);
+                    release_title.setText(getString(R.string.release_note_title, BuildConfig.VERSION_NAME));
+                    release_notes.setText(finalContent);
+
+                    dialogBuilderOptin.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    try {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                if (!BaseMainActivity.this.isFinishing()) {
+                                    dialogBuilderOptin.show();
+                                }
+                            }
+                        }, 1000);
+                    } catch (Exception ignored) {}
+                }
+                catch (IOException ignored) {}
+                finally {
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException ignored) {}
+                    }
+                }
+
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_POPUP_RELEASE_NOTES, versionCode);
+                editor.apply();
+            }
         }
         Helper.switchLayout(BaseMainActivity.this);
-
-
         mamageNewIntent(getIntent());
 
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
@@ -1629,6 +1716,12 @@ public abstract class BaseMainActivity extends BaseActivity
 
     }
 
+
+
+
+
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -1682,6 +1775,13 @@ public abstract class BaseMainActivity extends BaseActivity
         int id = item.getItemId();
         if (id == R.id.nav_archive) {
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
+            startActivity(myIntent);
+            return false;
+        }if (id == R.id.nav_trends) {
+            Intent myIntent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
+            Bundle b = new Bundle();
+            b.putString("search", "fedilab_trend");
+            myIntent.putExtras(b);
             startActivity(myIntent);
             return false;
         } else if (id == R.id.nav_archive_notifications) {
@@ -1992,23 +2092,49 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
+    public void onRetrieveRemoteAccount(Results results, boolean developerAccount) {
         if (results == null)
             return;
         List<Account> accounts = results.getAccounts();
         List<Status> statuses = results.getStatuses();
-        if (accounts != null && accounts.size() > 0) {
-            Intent intent = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
-            Bundle b = new Bundle();
-            b.putParcelable("account", accounts.get(0));
-            intent.putExtras(b);
-            startActivity(intent);
-        } else if (statuses != null && statuses.size() > 0) {
-            Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
-            Bundle b = new Bundle();
-            b.putParcelable("status", statuses.get(0));
-            intent.putExtras(b);
-            startActivity(intent);
+        if( !developerAccount) {
+
+            if (accounts != null && accounts.size() > 0) {
+                Intent intent = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("account", accounts.get(0));
+                intent.putExtras(b);
+                startActivity(intent);
+            } else if (statuses != null && statuses.size() > 0) {
+                Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", statuses.get(0));
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        }else{
+            if( accounts != null && accounts.size() > 0 ) {
+                developers = new ArrayList<>();
+                developers.addAll(accounts);
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), accounts.get(0).getId(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+    }
+
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+        if( dialogReleaseNoteView != null && developers != null && developers.size() > 0){
+            if( !relationship.isFollowing()){
+                TextView dev_follow_title = dialogReleaseNoteView.findViewById(R.id.dev_follow_title);
+                if( dev_follow_title != null){
+                    dev_follow_title.setVisibility(View.VISIBLE);
+                }
+                ExpandableHeightListView lv_developers = dialogReleaseNoteView.findViewById(R.id.lv_developers);
+                lv_developers.setExpanded(true);
+                AccountSearchDevAdapter accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(developers);
+                lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
+                accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+            }
         }
     }
 
@@ -2044,12 +2170,6 @@ public abstract class BaseMainActivity extends BaseActivity
         if (position >= manageTimelines.size()) {
             position = manageTimelines.size() - 1;
         }
-        if (position == -1)
-            position = (timelines.size() - 1);
-        if (position < 0)
-            position = 0;
-        if (toolbarTitle != null)
-            viewPager.setOffscreenPageLimit(2);
         main_app_container = findViewById(R.id.main_app_container);
 
         boolean iconOnly = true;
@@ -2139,8 +2259,6 @@ public abstract class BaseMainActivity extends BaseActivity
                         displayStatusFragment.scrollToTop();
                     }
                 }
-                DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
             }
         });
 
@@ -2307,6 +2425,8 @@ public abstract class BaseMainActivity extends BaseActivity
         return toot.getVisibility() == View.VISIBLE;
     }
 
+
+
     public enum iconLauncher {
         BUBBLES,
         FEDIVERSE,
@@ -2326,6 +2446,8 @@ public abstract class BaseMainActivity extends BaseActivity
             super(fm);
             this.mNumOfTabs = NumOfTabs;
         }
+
+
 
         @Override
         public Parcelable saveState() {
@@ -2466,7 +2588,7 @@ public abstract class BaseMainActivity extends BaseActivity
             } else {
                 mPageReferenceMap = new HashMap<>();
             }
-            super.destroyItem(container, position, object);
+           // super.destroyItem(container, position, object);
         }
 
         @Override

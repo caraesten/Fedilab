@@ -53,7 +53,7 @@ public class RetrieveOpenCollectiveAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRemoteAccount(results);
+        listener.onRetrieveRemoteAccount(results, false);
     }
 
     public enum Type {

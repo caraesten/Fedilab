@@ -70,6 +70,7 @@ import java.util.TimerTask;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.activities.BaseActivity;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.CustomSharingActivity;
 import app.fedilab.android.activities.MainActivity;
@@ -247,6 +248,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             style = R.style.Dialog;
         }
 
+        int theme_text_color = prefs.getInt("theme_text_color", -1);
+        if (holder.notification_status_content != null && theme_text_color != -1) {
+            holder.notification_status_content.setTextColor(theme_text_color);
+            holder.status_spoiler.setTextColor(theme_text_color);
+        }
 
         int reblogColor = prefs.getInt("theme_statuses_color", -1);
         if (holder.main_linear_container != null && reblogColor != -1) {
@@ -301,6 +307,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.main_container_trans.setVisibility(View.VISIBLE);
                 holder.status_more.setVisibility(View.GONE);
                 break;
+            case "follow_request":
+                holder.status_action_container.setVisibility(View.GONE);
+                holder.status_date.setVisibility(View.GONE);
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow_request));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow_request));
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
+                holder.main_container_trans.setVisibility(View.GONE);
+                break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
                 holder.status_date.setVisibility(View.GONE);
@@ -336,7 +352,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
         holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
         holder.status_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
-
+        int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
+        if (theme_text_header_1_line == -1) {
+            theme_text_header_1_line = ThemeHelper.getAttColor(context, R.attr.textColor);
+        }
+        holder.notification_type.setTextColor(theme_text_header_1_line);
 
         holder.spark_button_fav.pressOnTouch(false);
         holder.spark_button_reblog.pressOnTouch(false);
@@ -534,7 +554,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 greaterValue = pollOption.getVotes_count();
                         }
                         for (PollOptions pollOption : status.getPoll().getOptionsList()) {
-                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVotes_count());
+                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVoters_count());
                             if (pollOption.getVotes_count() == greaterValue) {
                                 BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
                                 bar.setRounded(true);
@@ -623,8 +643,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote, status.getPoll().getVotes_count(), status.getPoll().getVotes_count()));
-                    holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_voters, status.getPoll().getVoters_count(), status.getPoll().getVoters_count()));
+                    if( poll.isExpired()){
+                        holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                    }else{
+                        holder.remaining_time.setText(context.getString(R.string.poll_finish_in, Helper.dateDiffPoll(context, poll.getExpires_at())));
+                    }
                 } else {
                     holder.poll_container.setVisibility(View.GONE);
                 }
@@ -1282,6 +1306,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 if (!url.trim().contains("missing.png"))
                     Glide.with(imageView.getContext())
                             .load(url)
+                            .override(640, 480)
                             .into(imageView);
                 final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
@@ -1468,10 +1493,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
             if (!disableAnimatedEmoji) {
-                if (BaseMainActivity.timer == null) {
-                    BaseMainActivity.timer = new Timer();
+                if (BaseActivity.timer == null) {
+                    BaseActivity.timer = new Timer();
                 }
-                BaseMainActivity.timer.schedule(new TimerTask() {
+                BaseActivity.timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         mHandler.post(updateAnimatedEmoji);

@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
 import android.text.InputType;
 import android.text.Spannable;
@@ -110,11 +111,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.AccountReportActivity;
+import app.fedilab.android.activities.BaseActivity;
 import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.CustomSharingActivity;
 import app.fedilab.android.activities.MainActivity;
@@ -148,10 +151,12 @@ import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.TagTimeline;
+import app.fedilab.android.client.Glide.GlideApp;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomTextView;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.LongClickLinkMovementMethod;
 import app.fedilab.android.helper.MastalabAutoCompleteTextView;
 import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnPollInterface;
@@ -224,6 +229,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<ViewHolder> lstHolders;
     private List<Emojis> emojisPicker;
     private Status statusForQuickReply;
+    private String instanceType;
 
     private Runnable updateAnimatedEmoji = new Runnable() {
         @Override
@@ -263,6 +269,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         currentToId = -1;
     }
 
+    public StatusListAdapter(String instanceType, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses) {
+        super();
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        statusListAdapter = this;
+        this.type = type;
+        this.targetedId = targetedId;
+        redraft = false;
+        lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
+        this.instanceType = instanceType;
+    }
 
     public StatusListAdapter(TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
         super();
@@ -273,6 +294,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         redraft = false;
         this.tagTimeline = tagTimeline;
+        lstHolders = new ArrayList<>();
+        toot_content = null;
+        toot_cw_content = null;
+        tootReply = null;
+        currentToId = -1;
+    }
+
+    public StatusListAdapter(String instanceType, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses) {
+        super();
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        statusListAdapter = this;
+        this.type = RetrieveFeedsAsyncTask.Type.TAG;
+        this.targetedId = targetedId;
+        redraft = false;
+        this.tagTimeline = tagTimeline;
+        this.instanceType = instanceType;
         lstHolders = new ArrayList<>();
         toot_content = null;
         toot_cw_content = null;
@@ -352,7 +390,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             new TimelineCacheDAO(context, db).remove(refreshedStatus.getId());
             new PostActionAsyncTask(context, API.StatusAction.UNSTATUS, refreshedStatus.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        statusListAdapter.notifyStatusWithActionChanged(refreshedStatus);
+        statusListAdapter.notifyStatusChanged(refreshedStatus);
     }
 
     @Override
@@ -361,7 +399,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return;
 
         final List<Account> accounts = apiResponse.getAccounts();
-        if (accounts != null && accounts.size() > 0) {
+        if (accounts != null && accounts.size() > 0 && toot_content != null) {
             int currentCursorPosition = toot_content.getSelectionStart();
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(context, accounts);
             toot_content.setThreshold(1);
@@ -415,9 +453,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
-        int currentCursorPosition = toot_content.getSelectionStart();
 
-        if (emojis != null && emojis.size() > 0) {
+        if (emojis != null && emojis.size() > 0 && toot_content != null) {
+            int currentCursorPosition = toot_content.getSelectionStart();
             EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(context, emojis);
             toot_content.setThreshold(1);
             toot_content.setAdapter(emojisSearchAdapter);
@@ -543,7 +581,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setVisibility(apiResponse.getStatuses().get(0).getVisibility());
             if (apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
-            toot.setContent(tootContent);
+            toot.setContent(context, tootContent);
             final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -613,15 +651,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             show_boosts = ((ShowAccountActivity) context).showBoosts();
             show_replies = ((ShowAccountActivity) context).showReplies();
         }
-        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type, context instanceof ShowAccountActivity, show_boosts, show_replies))
+        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && type != RetrieveFeedsAsyncTask.Type.NEWS && !Helper.filterToots(statuses.get(position), type, context instanceof ShowAccountActivity, show_boosts, show_replies)) {
             return HIDDEN_STATUS;
+        }
         if (statuses.get(position).isFocused() && type == RetrieveFeedsAsyncTask.Type.CONTEXT && statuses.get(position).getViewType() != CONSOLE_STATUS)
             return FOCUSED_STATUS;
         else {
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
                 return COMPACT_STATUS;
             } else {
-                return statuses.get(position).getViewType();
+                if( instanceType == null || instanceType.compareTo("NITTER") != 0 ) {
+                    return statuses.get(position).getViewType();
+                }else{
+                    return COMPACT_STATUS;
+                }
             }
         }
     }
@@ -650,6 +693,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         context = viewHolder.itemView.getContext();
+
         if (viewHolder.getItemViewType() != HIDDEN_STATUS) {
             final ViewHolder holder = (ViewHolder) viewHolder;
             synchronized (lock) {
@@ -659,9 +703,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.startUpdateTimer();
             final Status status = statuses.get(i);
+
+
             if (status == null)
                 return;
-
             //TODO:It sounds that sometimes this value is null - need deeper investigation
             if (status.getVisibility() == null) {
                 status.setVisibility("public");
@@ -688,11 +733,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_reply_indicator_top.setVisibility(View.VISIBLE);
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);
                     if (holder.status_reply_indicator_diag_top != null) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top_android4);
-                        } else {
-                            holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top);
-                        }
+                        holder.status_reply_indicator_diag_top.setBackgroundResource(R.drawable.diag_top);
                         holder.status_reply_indicator_diag_top.setVisibility(View.VISIBLE);
                     }
                 }
@@ -700,12 +741,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.reply_indicator_dot.setVisibility(View.VISIBLE);
                     holder.status_reply_indicator_bottom.setVisibility(View.VISIBLE);
                     if (holder.status_reply_indicator_diag_bottom != null) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom_android4);
-                        } else {
-                            holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
-                        }
-
+                        holder.status_reply_indicator_diag_bottom.setBackgroundResource(R.drawable.diag_bottom);
                         holder.status_reply_indicator_diag_bottom.setVisibility(View.VISIBLE);
                     }
                 }
@@ -792,7 +828,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 greaterValue = pollOption.getVotes_count();
                         }
                         for (PollOptions pollOption : poll.getOptionsList()) {
-                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVotes_count());
+                            double value = ((double) (pollOption.getVotes_count() * 100) / (double) poll.getVoters_count());
                             if (pollOption.getVotes_count() == greaterValue) {
                                 BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
                                 bar.setDescriptionSpan(pollOption.getTitleSpan());
@@ -894,8 +930,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote, poll.getVotes_count(), poll.getVotes_count()));
-                    holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_voters, poll.getVoters_count(), poll.getVoters_count()));
+                    if( poll.isExpired()){
+                        holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                    }else{
+                        holder.remaining_time.setText(context.getString(R.string.poll_finish_in, Helper.dateDiffPoll(context, poll.getExpires_at())));
+                    }
                 } else {
                     holder.poll_container.setVisibility(View.GONE);
                 }
@@ -1113,9 +1153,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reblog_count.setTextColor(iconColor);
 
 
-            holder.status_account_displayname.setTextColor(ThemeHelper.getAttColor(context, R.attr.textHeader));
-            holder.status_toot_date.setTextColor(ThemeHelper.getAttColor(context, R.attr.textHeader));
-            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, R.attr.textHeader);
+            int theme_text_header_2_line = prefs.getInt("theme_text_header_2_line", -1);
+            if (theme_text_header_2_line == -1) {
+                theme_text_header_2_line = ThemeHelper.getAttColor(context, R.attr.textHeader);
+            }
+
+            holder.status_account_displayname.setTextColor(theme_text_header_2_line);
+            holder.status_toot_date.setTextColor(theme_text_header_2_line);
+            if( holder.status_boosted_date != null ) {
+                holder.status_boosted_date.setTextColor(theme_text_header_2_line);
+            }
+            Helper.changeDrawableColor(context, R.drawable.ic_repeat_head_toot, theme_text_header_2_line);
+
+            int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
+            if (theme_text_header_1_line == -1) {
+                theme_text_header_1_line = ThemeHelper.getAttColor(context, R.attr.textColor);
+            }
+            holder.status_account_displayname_owner.setTextColor(theme_text_header_1_line);
+            Helper.changeDrawableColor(context, holder.cached_status, theme_text_header_1_line);
+
 
 
             if (holder.cached_status != null && holder.getItemViewType() == DISPLAYED_STATUS) {
@@ -1250,10 +1306,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.spark_button_reblog.setMinimumWidth((int) Helper.convertDpToPixel((20 * iconSizePercent / 100 * scale + 0.5f), context));
 
             Drawable imgConversation = null;
-            if (type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
-                    || (status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getReblog().getAccount().getId())))) {
-                imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
-                imgConversation.setBounds(0, 0, (int) (15 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if (type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
+                        || (status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getReblog().getAccount().getId())))) {
+                    imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
+                    imgConversation.setBounds(0, 0, (int) (15 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
+                }
+            }else {
+                if (type != RetrieveFeedsAsyncTask.Type.CONTEXT && status.getIn_reply_to_id() != null) {
+                    imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
+                    imgConversation.setBounds(0, 0, (int) (15 * iconSizePercent / 100 * scale + 0.5f), (int) (15 * iconSizePercent / 100 * scale + 0.5f));
+                }
             }
             if (status.getReblog() != null) {
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head_toot);
@@ -1290,6 +1353,38 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.setImageFound(true);
                 Status.makeImage(context, this, status);
             }
+            if (instanceType != null && instanceType.compareTo("NITTER") == 0) {
+                holder.status_action_container.setVisibility(View.GONE);
+                if( holder.status_action_container_twitter != null){
+                    holder.status_action_container_twitter.setVisibility(View.VISIBLE);
+                    holder.status_action_container_twitter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                            String  url = status.getUrl();
+                            String extra_text;
+
+                            extra_text = (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
+                            if (extra_text.split("@").length == 1)
+                                extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                            else
+                                extra_text = "@" + extra_text;
+                            extra_text += " " + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
+                            final String contentToot;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                            else
+                                //noinspection deprecation
+                                contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent()).toString();
+                            extra_text += contentToot;
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
+                            sendIntent.setType("text/plain");
+                            context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        }
+                    });
+                }
+            }
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -1317,7 +1412,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
             //Click on a conversation
 
-            if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
+            if (( instanceType == null || instanceType.compareTo("NITTER") != 0) && (getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
 
                 holder.status_spoiler.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1513,7 +1608,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
 
-            holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
+            holder.status_content.setMovementMethod(LongClickLinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             if (truncate_toots_size > 0) {
                 holder.status_content.setMaxLines(truncate_toots_size);
@@ -1581,7 +1676,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.status_account_displayname_owner.setText(status.getReblog().getAccount().getAcct().replace("@", ""));
                 holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
-
+                if (holder.status_boosted_date != null) {
+                    holder.status_boosted_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                }
             } else {
                 accountForUrl = status.getAccount();
                 holder.status_account_displayname.setVisibility(View.GONE);
@@ -1608,7 +1705,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     int matchStart = matcherAcct.start(1);
                     int matchEnd = matcherAcct.end();
                     if (wordtoSpan.length() >= matchEnd && matchStart < matchEnd) {
-                        wordtoSpan.setSpan(new ForegroundColorSpan(ThemeHelper.getAttColor(context, R.attr.textHeader)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        wordtoSpan.setSpan(new ForegroundColorSpan(theme_text_header_2_line), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
 
                 }
@@ -1730,7 +1827,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     fullDate = fullDate_tmp.substring(0, 1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);
             } else {
-                holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                if (status.getReblog() != null)
+                    holder.status_toot_date.setText(Helper.dateDiff(context, status.getReblog().getCreated_at()));
+                else
+                    holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
                 Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
             }
 
@@ -2029,11 +2129,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.isTranslationShown() && status.getContentSpanTranslated() != null) {
                 holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
                 holder.status_content_translated_container.setVisibility(View.VISIBLE);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    holder.translation_border_view.setBackgroundResource(R.drawable.translation_border_android4);
-                } else {
-                    holder.translation_border_view.setBackgroundResource(R.drawable.translation_border);
-                }
+                holder.translation_border_view.setBackgroundResource(R.drawable.translation_border);
 
             } else { //Toot is not translated
                 holder.status_content_translated_container.setVisibility(View.GONE);
@@ -2054,11 +2150,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_reblog_count.setVisibility(View.GONE);
                             holder.spark_button_reblog.setVisibility(View.GONE);
                         }
-                        break;
-                    case "public":
-                    case "unlisted":
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
                         break;
                     default:
                         holder.status_reblog_count.setVisibility(View.VISIBLE);
@@ -2303,6 +2394,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 .into(holder.webview_preview_card);
                         holder.status_cardview.setVisibility(View.GONE);
                         holder.status_cardview_video.setVisibility(View.VISIBLE);
+                        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+                        if( user_agent != null) {
+                            holder.status_cardview_webview.getSettings().setUserAgentString(user_agent);
+                        }
                         holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
                         String html = card.getHtml();
                         String src = card.getUrl();
@@ -2508,8 +2603,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         break;
                                 }
                             }
-                            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
-                                holder.quick_reply_text.addTextChangedListener(textWatcher);
+                            holder.quick_reply_text.addTextChangedListener(textWatcher);
+
 
                         } else {
                             status.setShortReply(false);
@@ -2664,7 +2759,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     toot.setMedia_attachments(status.getMedia_attachments());
                                     if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                         toot.setSpoiler_text(status.getSpoiler_text().trim());
-                                    toot.setContent(status.getContent());
+                                    toot.setContent(context, status.getContent());
                                     toot.setVisibility(status.getVisibility());
                                     new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 } else {
@@ -2674,7 +2769,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                         toot.setSpoiler_text(status.getSpoiler_text().trim());
                                     toot.setVisibility(status.getVisibility());
-                                    toot.setContent(status.getContent());
+                                    toot.setContent(context, status.getContent());
                                     final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                     long id = new StatusStoredDAO(context, db).insertStatus(toot, null);
                                     Intent intentToot = new Intent(context, TootActivity.class);
@@ -3065,7 +3160,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 toot.setMedia_attachments(status.getMedia_attachments());
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 toot.setVisibility(status.getVisibility());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
@@ -3080,7 +3175,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setVisibility(status.getVisibility());
-                                                toot.setContent(status.getContent());
+                                                toot.setContent(context, status.getContent());
                                                 if (status.getPoll() != null) {
                                                     toot.setPoll(status.getPoll());
                                                 } else if (status.getReblog() != null && status.getReblog().getPoll() != null) {
@@ -3146,7 +3241,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
 
-            } else {
+            } else if( instanceType == null || instanceType.compareTo("NITTER") != 0){
                 holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -3219,6 +3314,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
         }
 
+
     }
 
     private void loadAttachments(final Status status, final ViewHolder holder, boolean blur) {
@@ -3240,21 +3336,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_horizontal_document_container.setVisibility(View.VISIBLE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
-            if (attachments.size() == 1) {
-                if (!fullAttachement)
-                    holder.status_container2.setVisibility(View.GONE);
-                else {
-                    holder.status_prev1_h.setVisibility(View.VISIBLE);
-                    holder.status_prev2_h.setVisibility(View.GONE);
-                    holder.status_prev3_h.setVisibility(View.GONE);
-                    holder.status_prev4_h.setVisibility(View.GONE);
-                    holder.horizontal_second_image.setVisibility(View.GONE);
-                }
-                if (attachments.get(0).getUrl().trim().contains("missing.png"))
+            if (attachments.size() == 1 ) {
+                if ((status.getCard() == null || status.getCard().getType().compareTo("video") != 0|| status.getCard().getImage() == null)) {
+                    if (!fullAttachement)
+                        holder.status_container2.setVisibility(View.GONE);
+                    else {
+                        holder.status_prev1_h.setVisibility(View.VISIBLE);
+                        holder.status_prev2_h.setVisibility(View.GONE);
+                        holder.status_prev3_h.setVisibility(View.GONE);
+                        holder.status_prev4_h.setVisibility(View.GONE);
+                        holder.horizontal_second_image.setVisibility(View.GONE);
+                    }
+                    if (attachments.get(0).getUrl().trim().contains("missing.png")) {
+                        if (fullAttachement)
+                            holder.status_horizontal_document_container.setVisibility(View.GONE);
+                        else
+                            holder.status_document_container.setVisibility(View.GONE);
+                    }
+                }else {
                     if (fullAttachement)
                         holder.status_horizontal_document_container.setVisibility(View.GONE);
                     else
                         holder.status_document_container.setVisibility(View.GONE);
+                }
             } else if (attachments.size() == 2) {
                 if (!fullAttachement) {
                     holder.status_container2.setVisibility(View.VISIBLE);
@@ -3409,6 +3513,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    //.override(640, 480)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
@@ -3432,6 +3537,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .asBitmap()
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                   // .override(640, 480)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50, 3), new RoundedCorners(10)))
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
@@ -3457,6 +3563,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             Glide.with(imageView.getContext())
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    .override(640, 480)
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
@@ -3464,6 +3571,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             Glide.with(imageView.getContext())
                                     .load(!attachment.getType().toLowerCase().equals("audio") ? url : R.drawable.ic_audio_wave)
                                     .thumbnail(0.1f)
+                                    .override(640, 480)
                                     .apply(new RequestOptions().transforms(new BlurTransformation(50, 3), new RoundedCorners(10)))
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageView);
@@ -3520,12 +3628,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
                 boolean long_press_media = sharedpreferences.getBoolean(Helper.SET_LONG_PRESS_MEDIA, true);
                 if (long_press_media) {
+                    String finalUrl = url;
                     imageView.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-                            String fileName = URLUtil.guessFileName(attachment.getUrl(), null, null);
-                            Helper.download(context, myDir + "/" + fileName, attachment.getUrl());
+                            Helper.manageMove(context, finalUrl, false);
                             return true;
                         }
                     });
@@ -3819,19 +3926,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
+
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE + userId + instance, Helper.SPLIT_TOOT_SIZE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);
-        String tootContent;
         if (toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0)
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (TootActivity.countLength(social, toot_content, toot_cw_content) < split_toot_size)) {
-            tootContent = toot_content.getText().toString().trim();
-            createAndSendToot(status, content_type, userId, instance);
+            createAndSendToot(status, null, content_type, userId, instance);
         } else {
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size, true);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            tootContent = splitToot.get(0);
             stepSpliToot = 1;
             int style;
             if (theme == Helper.THEME_DARK) {
@@ -3881,7 +3986,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    createAndSendToot(status, content_type, userId, instance);
+                    createAndSendToot(status, splitToot.get(0), content_type, userId, instance);
                     dialog.dismiss();
                 }
             });
@@ -3891,7 +3996,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
-    private void createAndSendToot(Status status, String content_type, String userId, String instance) {
+    private void createAndSendToot(Status status, String content, String content_type, String userId, String instance) {
         Status toot = new Status();
         if (content_type != null)
             toot.setContentType(content_type);
@@ -3902,7 +4007,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(status.getQuickReplyPrivacy());
         toot.setIn_reply_to_id(in_reply_to_status);
-        toot.setContent(status.getQuickReplyContent());
+        if( content == null) {
+            content = status.getQuickReplyContent();
+        }
+        toot.setContent(context, content);
         new PostStatusAsyncTask(context, social, account, toot, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         status.setQuickReplyPrivacy(null);
         status.setQuickReplyContent(null);
@@ -4015,38 +4123,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    if (statuses.get(i).isFocused()) {
-                        status.setFocused(true);
-                    }
-                    if (statuses.get(i).isFetchMore()) {
-                        status.setFetchMore(true);
-                    }
-                    if (statuses.get(i).isShortReply()) {
-                        status.setShortReply(true);
-                    }
-                    if (statuses.get(i).getQuickReplyContent() != null) {
-                        status.setQuickReplyContent(statuses.get(i).getQuickReplyContent());
-                    }
-                    if (statuses.get(i).getQuickReplyPrivacy() != null) {
-                        status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
-                    }
-                    if (statuses.get(i).isShowTopLine()) {
-                        status.setShowTopLine(true);
-                    }
-                    if (statuses.get(i).isShowBottomLine()) {
-                        status.setShowBottomLine(true);
-                    }
-                    statuses.set(i, status);
+                    statuses.get(i).setFavourites_count(status.getFavourites_count());
+                    statuses.get(i).setReblogs_count(status.getReblogs_count());
+                    statuses.get(i).setFavourited(status.isFavourited());
+                    statuses.get(i).setReblogged(status.isReblogged());
+                    statuses.get(i).setReplies_count(status.getReplies_count());
                     statusListAdapter.notifyItemChanged(i);
-                    /*if( mRecyclerView != null) {
-                        int finalI = i;
-                        mRecyclerView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                statusListAdapter.notifyItemChanged(finalI);
-                            }
-                        });
-                    }*/
                 } catch (Exception ignored) {
                 }
                 break;
@@ -4054,51 +4136,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status) {
-        if (status == null)
-            return;
-        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
-            //noinspection ConstantConditions
-            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                try {
-                    if (statuses.get(i).isFocused()) {
-                        status.setFocused(true);
-                    }
-                    if (statuses.get(i).isFetchMore()) {
-                        status.setFetchMore(true);
-                    }
-                    if (statuses.get(i).isShortReply()) {
-                        status.setShortReply(true);
-                    }
-                    if (statuses.get(i).getQuickReplyContent() != null) {
-                        status.setQuickReplyContent(statuses.get(i).getQuickReplyContent());
-                    }
-                    if (statuses.get(i).getQuickReplyPrivacy() != null) {
-                        status.setQuickReplyPrivacy(statuses.get(i).getQuickReplyPrivacy());
-                    }
-                    if (statuses.get(i).isShowTopLine()) {
-                        status.setShowTopLine(true);
-                    }
-                    if (statuses.get(i).isShowBottomLine()) {
-                        status.setShowBottomLine(true);
-                    }
-                    statuses.set(i, status);
-                    statusListAdapter.notifyItemChanged(i);
-                    /*if( mRecyclerView != null) {
-                        int finalI = i;
-                        mRecyclerView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                statusListAdapter.notifyItemChanged(finalI);
-                            }
-                        });
-                    }*/
-                } catch (Exception ignored) {
-                }
-                break;
-            }
-        }
-    }
 
     @Override
     public void onRetrieveImage(Status status, boolean fromTranslation) {
@@ -4134,13 +4171,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int trans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         MyTransL.translatorEngine et = MyTransL.translatorEngine.YANDEX;
-        String api_key = null;
+        String api_key;
 
 
         if (trans == Helper.TRANS_YANDEX) {
             et = MyTransL.translatorEngine.YANDEX;
         } else if (trans == Helper.TRANS_DEEPL) {
             et = MyTransL.translatorEngine.DEEPL;
+        } else if (trans == Helper.TRANS_SYSTRAN) {
+            et = MyTransL.translatorEngine.SYSTRAN;
         }
         final MyTransL myTransL = MyTransL.getInstance(et);
         myTransL.setObfuscation(true);
@@ -4150,6 +4189,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         } else if (trans == Helper.TRANS_DEEPL) {
             api_key = sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, "");
             myTransL.setDeeplAPIKey(api_key);
+        } else if (trans == Helper.TRANS_SYSTRAN) {
+            api_key = sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, "");
+            myTransL.setSystranAPIKey(api_key);
         }
 
 
@@ -4158,7 +4200,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
             else
-                //noinspection deprecation
                 statusToTranslate = Html.fromHtml(status.getReblog() != null ? status.getReblog().getContent() : status.getContent()).toString();
             //TODO: removes the replaceAll once fixed with the lib
             myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
@@ -4203,7 +4244,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             toot.setVisibility(statusForQuickReply.getQuickReplyPrivacy());
         }
         if (statusForQuickReply.getQuickReplyContent() != null) {
-            toot.setContent(statusForQuickReply.getQuickReplyContent().trim());
+            toot.setContent(context, statusForQuickReply.getQuickReplyContent().trim());
         }
 
         toot.setIn_reply_to_id(tootReply.getId());
@@ -4238,7 +4279,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_content_translated;
         ConstraintLayout status_content_translated_container;
         TextView status_account_username;
-        TextView status_account_displayname, status_account_displayname_owner;
+        TextView status_account_displayname, status_account_displayname_owner, status_boosted_date;
         ImageView status_account_profile;
         ImageView status_account_profile_boost_by;
         ConstraintLayout status_boosted_by_info;
@@ -4281,6 +4322,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ConstraintLayout main_container;
         TextView yandex_translate;
         ConstraintLayout status_action_container;
+        ConstraintLayout status_action_container_twitter;
         Button fetch_more;
         ImageView new_element;
         LinearLayout status_spoiler_mention_container;
@@ -4342,6 +4384,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
             status_account_username = itemView.findViewById(R.id.status_account_username);
             status_account_displayname = itemView.findViewById(R.id.status_account_displayname);
+            status_boosted_date = itemView.findViewById(R.id.status_boosted_date);
             status_account_displayname_owner = itemView.findViewById(R.id.status_account_displayname_owner);
             status_account_profile = itemView.findViewById(R.id.status_account_profile);
             status_account_profile_boost_by = itemView.findViewById(R.id.status_account_profile_boost_by);
@@ -4386,6 +4429,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
+            status_action_container_twitter = itemView.findViewById(R.id.status_action_container_twitter);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
             status_cardview = itemView.findViewById(R.id.status_cardview);
@@ -4474,10 +4518,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
             if (!disableAnimatedEmoji) {
-                if (BaseMainActivity.timer == null) {
-                    BaseMainActivity.timer = new Timer();
+                if (BaseActivity.timer == null) {
+                    BaseActivity.timer = new Timer();
                 }
-                BaseMainActivity.timer.schedule(new TimerTask() {
+                BaseActivity.timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         mHandler.post(updateAnimatedEmoji);

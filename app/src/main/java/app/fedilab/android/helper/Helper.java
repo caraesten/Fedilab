@@ -58,6 +58,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -161,6 +162,7 @@ import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URISyntaxException;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
@@ -182,6 +184,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -238,6 +241,7 @@ import static app.fedilab.android.activities.BaseMainActivity.mutedAccount;
 import static app.fedilab.android.activities.BaseMainActivity.regex_home;
 import static app.fedilab.android.activities.BaseMainActivity.regex_local;
 import static app.fedilab.android.activities.BaseMainActivity.regex_public;
+import static app.fedilab.android.activities.BaseMainActivity.social;
 import static app.fedilab.android.helper.Helper.NotifType.MENTION;
 import static app.fedilab.android.sqlite.StatusCacheDAO.ARCHIVE_CACHE;
 import static app.fedilab.android.sqlite.StatusCacheDAO.BOOKMARK_CACHE;
@@ -337,7 +341,9 @@ public class Helper {
     public static final String SET_TIME_TO = "set_time_to";
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push_new";
+    public static final String SET_POPUP_RELEASE_NOTES = "set_popup_push_release_notes";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
+    public static final String SET_MED_DESC_TIMEOUT = "set_med_desc_timeout";
     public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
@@ -414,7 +420,8 @@ public class Helper {
 
     public static final int TRANS_YANDEX = 0;
     public static final int TRANS_DEEPL = 1;
-    public static final int TRANS_NONE = 2;
+    public static final int TRANS_NONE = 3;
+    public static final int TRANS_SYSTRAN = 2;
 
     public static final int ACTION_SILENT = 0;
     public static final int ACTION_ACTIVE = 1;
@@ -439,6 +446,7 @@ public class Helper {
     public static final String SET_INVIDIOUS_HOST = "set_invidious_host";
     public static final String DEFAULT_INVIDIOUS_HOST = "invidio.us";
 
+    public static final String SET_FILTER_UTM = "set_filter_utm";
     public static final String SET_NITTER = "set_nitter";
     public static final String SET_NITTER_HOST = "set_nitter_host";
     public static final String DEFAULT_NITTER_HOST = "nitter.net";
@@ -473,6 +481,7 @@ public class Helper {
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
     public static final String SET_SECURITY_PROVIDER = "set_security_provider";
     public static final String SET_ALLOW_STREAM = "set_allow_stream";
+    public static final String SET_CUSTOM_USER_AGENT = "set_custom_user_agent";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -510,9 +519,10 @@ public class Helper {
     public static final String RECEIVE_UPDATE_TOPBAR = "receive_update_topbar";
     //User agent
     //public static final String USER_AGENT = "Fedilab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
-    public static final String USER_AGENT = System.getProperty("http.agent");
+    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0";
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
+    public static final String SET_SYSTRAN_API_KEY = "set_systran_api_key";
     public static final String VIDEO_ID = "video_id_update";
     public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
@@ -997,6 +1007,33 @@ public class Helper {
             if (seconds < 0)
                 seconds = 0;
             return context.getResources().getString(R.string.date_seconds, (int) seconds);
+        }
+    }
+
+    /***
+     * Returns a String depending of the date
+     * @param context Context
+     * @param dateEndPoll Date
+     * @return String
+     */
+    public static String dateDiffPoll(Context context, Date dateEndPoll) {
+        Date now = new Date();
+        long diff = dateEndPoll.getTime() - now.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+
+        if (days > 0)
+            return context.getResources().getQuantityString(R.plurals.date_day_polls, (int) days, (int) days);
+        else if (hours > 0)
+            return context.getResources().getQuantityString(R.plurals.date_hours_polls, (int) hours, (int) hours);
+        else if (minutes > 0)
+            return context.getResources().getQuantityString(R.plurals.date_minutes_polls, (int) minutes, (int) minutes);
+        else {
+            if (seconds < 0)
+                seconds = 0;
+            return context.getResources().getQuantityString(R.plurals.date_seconds_polls, (int) seconds, (int) seconds);
         }
     }
 
@@ -1641,6 +1678,9 @@ public class Helper {
                 MenuItem nav_list = menu.findItem(R.id.nav_list);
                 if (nav_list != null)
                     nav_list.setVisible(false);
+                MenuItem nav_trends = menu.findItem(R.id.nav_trends);
+                if (nav_trends != null)
+                    nav_trends.setVisible(false);
                 MenuItem nav_peertube = menu.findItem(R.id.nav_peertube);
                 if (nav_peertube != null)
                     nav_peertube.setVisible(false);
@@ -1649,7 +1689,7 @@ public class Helper {
                     nav_filters.setVisible(false);
                 MenuItem nav_follow_request = menu.findItem(R.id.nav_follow_request);
                 if (nav_follow_request != null)
-                    nav_follow_request.setVisible(false);
+                    nav_follow_request.setVisible(true);
                 MenuItem nav_who_to_follow = menu.findItem(R.id.nav_who_to_follow);
                 if (nav_who_to_follow != null)
                     nav_who_to_follow.setVisible(false);
@@ -1709,6 +1749,19 @@ public class Helper {
                 }
                 if (!mainMenuItem.isNav_scheduled()) {
                     menu.findItem(R.id.nav_scheduled).setVisible(false);
+                }
+                if (!mainMenuItem.isNav_trends() || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                    menu.findItem(R.id.nav_trends).setVisible(false);
+                }
+                if (!mainMenuItem.isNav_scheduled()) {
+                    menu.findItem(R.id.nav_scheduled).setVisible(false);
+                }
+                final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(activity));
+                boolean display_admin_menu = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ADMIN_MENU + userId + instance, false);
+                if (!display_admin_menu) {
+                    menu.findItem(R.id.nav_administration).setVisible(false);
                 }
             }
         }
@@ -2419,15 +2472,10 @@ public class Helper {
         webView.getSettings().setAllowContentAccess(true);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setSupportMultipleWindows(false);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            //noinspection deprecation
-            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
-        }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+        if( user_agent != null) {
+            webView.getSettings().setUserAgentString(user_agent);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             boolean cookies = sharedpreferences.getBoolean(Helper.SET_COOKIES, false);
@@ -3093,12 +3141,14 @@ public class Helper {
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity, db).getUniqAccount(userID, instance);
         if (account != null) {
-            if (account.isLocked()) {
-                if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-            } else {
-                if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA && social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if (account.isLocked()) {
+                    if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                        navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+                } else {
+                    if (navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                        navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+                }
             }
 
             if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
@@ -3531,8 +3581,6 @@ public class Helper {
                 }
                 byte[] data = bao.toByteArray();
                 bs = new ByteArrayInputStream(data);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -4071,14 +4119,18 @@ public class Helper {
         }
     }
 
-    public static String remove_tracking_param(String original_content) {
+    public static String remove_tracking_param(Context context, String original_content) {
         if (original_content == null)
             return original_content;
         String cleaned_content = original_content;
-        for (String utm : UTM_PARAMS) {
-            cleaned_content = cleaned_content.replaceAll("&amp;" + utm + "=[0-9a-zA-Z._-]*", "");
-            cleaned_content = cleaned_content.replaceAll("&" + utm + "=[0-9a-zA-Z._-]*", "");
-            cleaned_content = cleaned_content.replaceAll("\\?" + utm + "=[0-9a-zA-Z._-]*", "?");
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean utm_parameters = sharedpreferences.getBoolean(Helper.SET_FILTER_UTM, true);
+        if( utm_parameters ) {
+            for (String utm : UTM_PARAMS) {
+                cleaned_content = cleaned_content.replaceAll("&amp;" + utm + "=[0-9a-zA-Z._-]*", "");
+                cleaned_content = cleaned_content.replaceAll("&" + utm + "=[0-9a-zA-Z._-]*", "");
+                cleaned_content = cleaned_content.replaceAll("\\?" + utm + "=[0-9a-zA-Z._-]*", "?");
+            }
         }
         return cleaned_content;
     }
@@ -4183,10 +4235,98 @@ public class Helper {
             //Request was successfully enqueued for download.
         }, error -> {
         });
-
-
     }
 
+
+    /**
+     * Download from Glid cache
+     * @param context
+     * @param url
+     */
+    public static void manageMove(Context context, String url, boolean share){
+        Glide.with(context)
+                .asFile()
+                .load(url)
+                .into(new SimpleTarget<File>() {
+                    @Override
+                    public void onResourceReady(@NotNull File file, Transition<? super File> transition) {
+                        Helper.notifyDownload(context, url, file, share);
+                    }
+                });
+    }
+
+    /**
+     * Notify after moving a file from Glide cache
+     * @param context
+     * @param url
+     * @param sourceFile
+     */
+    private static void notifyDownload(Context context, String url, File sourceFile, boolean share){
+
+        final String fileName = URLUtil.guessFileName(url, null, null);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final String targeted_folder = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        FileChannel in = null;
+        FileChannel out = null;
+        try
+        {
+            File backupFile = new File(targeted_folder+"/"+fileName);
+            backupFile.createNewFile();
+            fis = new FileInputStream(sourceFile);
+            fos = new FileOutputStream(backupFile);
+            in = fis.getChannel();
+            out = fos.getChannel();
+            long size = in.size();
+            in.transferTo(0, size, out);
+            String mime = Helper.getMimeType(url);
+            final Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri uri = Uri.fromFile(backupFile);
+            intent.setDataAndType(uri, mime);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+            if (!share) {
+                Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
+                        R.mipmap.ic_launcher_bubbles), NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                Toasty.success(context, context.getString(R.string.save_over), Toasty.LENGTH_LONG).show();
+            } else {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.setType(mime);
+                try {
+                    context.startActivity(shareIntent);
+                } catch (Exception ignored) {
+                    ignored.printStackTrace();
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (fis != null)
+                    fis.close();
+            } catch (Throwable ignore) {}
+            try {
+                if (fos != null)
+                    fos.close();
+            } catch (Throwable ignore) {}
+            try {
+                if (in != null && in.isOpen())
+                    in.close();
+            } catch (Throwable ignore) {}
+
+            try {
+                if (out != null && out.isOpen())
+                    out.close();
+            } catch (Throwable ignore) {}
+        }
+    }
 
     public static Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -4556,9 +4696,7 @@ public class Helper {
                 } else {
                     context.startService(streamingIntent);
                 }
-                context.startService(streamingIntent);
-            } catch (Exception ignored) {
-            }
+            } catch (Exception ignored) {}
         }
     }
 
@@ -4726,4 +4864,11 @@ public class Helper {
         }
     }
 
+
+    public static Thread getThreadByName(String threadName) {
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals(threadName)) return t;
+        }
+        return null;
+    }
 }

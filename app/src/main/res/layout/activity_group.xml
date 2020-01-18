@@ -37,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                app:layout_scrollFlags="scroll|enterAlways"
+               />
         </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
@@ -57,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@null"
-                    android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+                    android:scrollbars="none"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <RelativeLayout

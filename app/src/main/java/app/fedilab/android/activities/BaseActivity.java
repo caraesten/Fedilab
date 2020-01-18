@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.vanniktech.emoji.one.EmojiOneProvider;
 
 import java.util.Timer;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
 
@@ -35,6 +38,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
 
     public static final int READ_WRITE_STORAGE = 52;
     public static Timer timer;
+    public static boolean canShowActionMode = true;
 
     static {
         Helper.installProvider();
@@ -46,7 +50,7 @@ public class BaseActivity extends CyaneaAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-       /* if (BuildConfig.DEBUG) {
+        /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
@@ -59,9 +63,10 @@ public class BaseActivity extends CyaneaAppCompatActivity {
                     .detectLeakedRegistrationObjects()
                     .detectActivityLeaks()
                     .penaltyLog()
-                    .penaltyDeath()
+                   // .penaltyDeath()
                     .build());
         }*/
+        canShowActionMode = true;
         super.onCreate(savedInstanceState);
 
     }
@@ -134,5 +139,15 @@ public class BaseActivity extends CyaneaAppCompatActivity {
         } else {
             Toasty.info(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        if (!canShowActionMode) {
+            mode.finish();
+        }
+        super.onActionModeStarted(mode);
+
     }
 }

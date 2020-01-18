@@ -34,6 +34,20 @@
 
     <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
         android:defaultValue="-1"
+        android:key="theme_text_header_1_line"
+        android:summary="@string/displayname_title"
+        android:title="@string/display_name"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
+        android:key="theme_text_header_2_line"
+        android:summary="@string/username_title"
+        android:title="@string/username"
+        app:iconSpaceReserved="false" />
+
+    <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+        android:defaultValue="-1"
         android:key="theme_statuses_color"
         android:summary="@string/background_status"
         android:title="@string/background_status_title"

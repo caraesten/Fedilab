@@ -27,11 +27,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +42,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
@@ -55,6 +56,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -89,8 +91,8 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
     private RelativeLayout textviewNoAction;
     private HashMap<Integer, String> privacyToSend;
     private HashMap<String, String> channelToSend;
-    private MaterialSpinner set_upload_channel;
-    private MaterialSpinner set_upload_privacy;
+    private Spinner set_upload_channel;
+    private Spinner set_upload_privacy;
     private HashMap<String, String> channels;
 
     @Override
@@ -394,7 +396,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
         channelToSend = new HashMap<>();
         channelToSend.put(channelName[0], channelId[0]);
-        ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
@@ -421,14 +423,14 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
             i++;
         }
 
-        ArrayAdapter<String> adapterPrivacies = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterPrivacies = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, privaciesA);
         set_upload_privacy.setAdapter(adapterPrivacies);
 
         //Manage privacies
-        set_upload_privacy.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_privacy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<Integer, String> privaciesCheck = new LinkedHashMap<>(peertubeInformation.getPrivacies());
                 Iterator it = privaciesCheck.entrySet().iterator();
                 int i = 0;
@@ -443,11 +445,16 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     i++;
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
         //Manage languages
-        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_channel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
@@ -461,6 +468,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     it.remove();
                     i++;
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }

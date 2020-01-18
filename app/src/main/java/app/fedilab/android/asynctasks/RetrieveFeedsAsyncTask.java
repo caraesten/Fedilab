@@ -32,6 +32,7 @@ import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.RetrieveFeedsParam;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
+import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.FilterToots;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.InstancesDAO;
@@ -66,6 +67,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private int timelineId;
     private String currentfilter;
     private String social;
+    private boolean fromCahe;
 
     public RetrieveFeedsAsyncTask(Context context, FilterToots filterToots, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
@@ -73,15 +75,25 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.filterToots = filterToots;
+        this.fromCahe = false;
     }
-
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
+        this.fromCahe = false;
     }
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, boolean fromCahe, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
+        this.contextReference = new WeakReference<>(context);
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.fromCahe = fromCahe;
+    }
+
 
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -90,6 +102,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.instanceName = instanceName;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, int timelineId, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -98,6 +111,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.timelineId = timelineId;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -108,6 +122,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedID = targetedID;
         this.showMediaOnly = showMediaOnly;
         this.showPinned = showPinned;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, boolean showReply, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -119,6 +134,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.showMediaOnly = showMediaOnly;
         this.showPinned = showPinned;
         this.showReply = showReply;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -128,6 +144,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
         this.tag = tag;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, String remoteInstance, String name, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -137,6 +154,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.name = name;
         this.action = Type.REMOTE_INSTANCE;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, RetrieveFeedsParam retrieveFeedsParam, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -154,7 +172,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.social = retrieveFeedsParam.getSocial();
         this.instanceName = retrieveFeedsParam.getInstanceName();
         this.remoteInstance = retrieveFeedsParam.getRemoteInstance();
+        this.fromCahe = false;
     }
+
+
+
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -164,7 +186,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             return null;
         switch (action) {
             case HOME:
-                apiResponse = api.getHomeTimelineCache(max_id);
+                if (this.fromCahe) {
+                    apiResponse = api.getHomeTimelineCache(max_id);
+                } else {
+                    apiResponse = api.getHomeTimeline(max_id);
+                }
                 break;
             case LOCAL:
                 apiResponse = api.getPublicTimeline(true, max_id);
@@ -223,7 +249,15 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                 status.setType(action);
                             }
                         }
-                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
+                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("NITTER")) {
+                        apiResponse = api.getNitter(this.instanceName, max_id);
+                        List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if (statusesTemp != null) {
+                            for (app.fedilab.android.client.Entities.Status status : statusesTemp) {
+                                status.setType(action);
+                            }
+                        }
+                    }else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
                         apiResponse = api.getPixelfedTimeline(instanceName, max_id);
                     } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("GNU")) {
                         apiResponse = api.getGNUTimeline(instanceName, max_id);

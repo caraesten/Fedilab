@@ -46,9 +46,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import app.fedilab.android.R;
 import app.fedilab.android.helper.Helper;
@@ -90,7 +87,6 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
     private ConstraintSet mConstraintSet = new ConstraintSet();
     private boolean mIsFilterVisible;
     private Uri uri;
-    private String tempname;
     private boolean exit;
 
     private static int exifToDegrees(int exifOrientation) {
@@ -114,9 +110,6 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
         switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -188,12 +181,9 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
 
         Button send = findViewById(R.id.send);
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exit = true;
-                saveImage();
-            }
+        send.setOnClickListener(v -> {
+            exit = true;
+            saveImage();
         });
     }
 
@@ -295,7 +285,7 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
         }
     }
 
-    @SuppressLint("MissingPermission")
+
     private void saveImage() {
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             showLoading(getString(R.string.saving));
@@ -311,7 +301,6 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
                         .setClearViewsEnabled(true)
                         .setTransparencyEnabled(true)
                         .build();
-
                 mPhotoEditor.saveAsFile(file.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
                     @Override
                     public void onSuccess(@NonNull String imagePath) {
@@ -335,7 +324,9 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
             } catch (IOException e) {
                 e.printStackTrace();
                 hideLoading();
-                showSnackbar(e.getMessage());
+                if (e.getMessage() != null) {
+                    showSnackbar(e.getMessage());
+                }
             }
         }
     }
@@ -344,8 +335,8 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            ExifInterface exif = null;
-            int rotation = 0;
+            ExifInterface exif;
+            int rotation;
             int rotationInDegrees = 0;
             if (data != null && data.getData() != null) {
                 try (InputStream inputStream = getContentResolver().openInputStream(data.getData())) {
@@ -357,42 +348,51 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
                     e.printStackTrace();
                 }
             }
+
             switch (requestCode) {
                 case CAMERA_REQUEST:
-                    mPhotoEditor.clearAllViews();
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    mPhotoEditorView.getSource().setImageBitmap(photo);
-                    mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                    if( data != null && data.getExtras() != null) {
+                        mPhotoEditor.clearAllViews();
+                        Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        mPhotoEditorView.getSource().setImageBitmap(photo);
+                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                    }
                     break;
                 case PICK_REQUEST:
-                    try {
-                        mPhotoEditor.clearAllViews();
-                        Uri uri = data.getData();
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        mPhotoEditorView.getSource().setImageBitmap(bitmap);
-                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if( data != null && data.getData() != null) {
+                        try {
+                            mPhotoEditor.clearAllViews();
+                            Uri uri = data.getData();
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            mPhotoEditorView.getSource().setImageBitmap(bitmap);
+                            mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
                 case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                    Uri resultUri = result.getUri();
-                    if (resultUri != null) {
-                        mPhotoEditorView.getSource().setImageURI(resultUri);
-                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
-                        File fdelete = new File(uri.getPath());
-                        if (fdelete.exists()) {
-                            fdelete.delete();
-                        }
-                        uri = resultUri;
-                        String filename = System.currentTimeMillis() + "_" + Helper.getFileName(PhotoEditorActivity.this, uri);
-                        tempname = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + filename;
 
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    if (result != null) {
+                        Uri resultUri = result.getUri();
+                        if (resultUri != null) {
+                            mPhotoEditorView.getSource().setImageURI(resultUri);
+                            mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                            if (uri != null && uri.getPath() != null) {
+                                File fdelete = new File(uri.getPath());
+                                if (fdelete.exists()) {
+                                    //noinspection ResultOfMethodCallIgnored
+                                    fdelete.delete();
+                                }
+                            }
+                            uri = resultUri;
+                        }
                     }
                     break;
             }
         }
+
     }
 
     @Override

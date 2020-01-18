@@ -126,6 +126,38 @@
     <string name="date_minutes">%d د</string>
     <string name="date_hours">%d سا</string>
     <string name="date_day">%d يو</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="zero">لا ثانية</item>
+        <item quantity="one">ثانية واحدة</item>
+        <item quantity="two">ثانيتَيْن</item>
+        <item quantity="few">%d ثوانٍ</item>
+        <item quantity="many">%d ثوانٍ</item>
+        <item quantity="other">%d ثوانٍ</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="zero">صفر دقيقة</item>
+        <item quantity="one">دقيقة واحدة</item>
+        <item quantity="two">دقيقتَيْن</item>
+        <item quantity="few">%d دقائق</item>
+        <item quantity="many">%d دقائق</item>
+        <item quantity="other">%d دقائق</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="zero">صفر ساعة</item>
+        <item quantity="one">ساعة واحدة</item>
+        <item quantity="two">ساعتان</item>
+        <item quantity="few">%d ساعات</item>
+        <item quantity="many">%d ساعات</item>
+        <item quantity="other">%d ساعات</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="zero">لا يوم</item>
+        <item quantity="one">يوم واحد</item>
+        <item quantity="two">يومَيْن</item>
+        <item quantity="few">%d أيام</item>
+        <item quantity="many">%d أيام</item>
+        <item quantity="other">%d أيام</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">تحذير</string>
     <string name="toot_placeholder">فيم تفكر؟</string>
@@ -198,6 +230,7 @@
     <string name="notif_reblog">رقى تبويقك</string>
     <string name="notif_favourite">أُعجِب بتبويقك</string>
     <string name="notif_follow">يتابعك</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="zero">و اشعار آخَر</item>
         <item quantity="one">و إشعار آخر</item>
@@ -278,6 +311,7 @@
     <string name="set_notify">هل تود الإشعار؟</string>
     <string name="set_notif_silent">كتم الاشعارات</string>
     <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">تعديل الملف الشخصي</string>
     <string name="settings_title_custom_sharing">المشاركة المخصصة</string>
     <string name="settings_custom_sharing_url">رابط المشاركة المعدل&#8230;</string>
@@ -300,11 +334,6 @@
     <string name="use_javascript">تفعيل الجافاسكريبت</string>
     <string name="expand_cw">توسيع نافذة التحذير عن المحتوى تلقائيًا</string>
     <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
-    <string-array name="settings_translation">
-        <item>يانديكس</item>
-        <item>DeepL</item>
-        <item>لا</item>
-    </string-array>
     <string name="your_api_key">مفتاح API، يمكن تركه فارغا لاستخدام ياندكس</string>
     <string-array name="settings_theme">
         <item>مظلمة</item>
@@ -948,6 +977,14 @@
         <item quantity="many">%d أصوات</item>
         <item quantity="other">%d صوتا</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="zero">لا مصوّت</item>
+        <item quantity="one">مصوّت واحد</item>
+        <item quantity="two">مصوّتَيْن</item>
+        <item quantity="few">%d مصوّت</item>
+        <item quantity="many">%d مصوّت</item>
+        <item quantity="other">%d مصوّت</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>خيار واحد</item>
         <item>خيارات متعددة</item>
@@ -1016,10 +1053,12 @@
     <string name="order_by">ترتيب حسب</string>
     <string name="title_video_peertube">عنوان للفيديو</string>
     <string name="join_peertube">انظم إلى PeerTube</string>
-    <string name="agreement_check_peertube">أبلُغ مِن العُمر 16 سنة علئ الأقل وأوافق على %1$s لهذا الخادم</string>
+    <string name="agreement_check_peertube">أبلُغ مِن العُمر 16 سنة على الأقل وأوافق على %1$s هذا الخادم</string>
     <string name="link_color_title">الروابط</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">رأسية إعادات النشر</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">يغيّر لون الرأسية الخاصة بإعادة النشر</string>
     <string name="background_status_title">المنشورات</string>
     <string name="background_status">لون خلفية المنشورات على الخيوط</string>
@@ -1034,23 +1073,64 @@
     <string name="make_an_action">القيام بإجراء</string>
     <string name="translation">الترجمة</string>
     <string name="image_preview">معاينة الصورة</string>
-    <string name="text_color_title">Text color</string>
+    <string name="text_color_title">لون النص</string>
     <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
+    <string name="apply_changes">احفظ التعديلات</string>
     <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
-    <string name="pref_custom_theme">Use a custom theme</string>
+    <string name="restart">إعادة التشغيل</string>
+    <string name="pref_custom_theme">استخدم قالبا مخصصا</string>
     <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
-    <string name="theming">Theming</string>
-    <string name="store_before">Store before</string>
-    <string name="data_export_theme">The theme was exported</string>
+    <string name="theming">المظهر</string>
+    <string name="store_before">احتفظ به أولًا</string>
+    <string name="data_export_theme">تم تصدير القالب</string>
     <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
     <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
-    <string name="import_theme">Import a theme</string>
+    <string name="pref_colored_status_bar_title">لون شريط الحالة</string>
+    <string name="restore_default_theme">استرجاع القالب الإفتراضي</string>
+    <string name="import_theme">استيراد قالب</string>
     <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
+    <string name="export_theme">تصدير قالب</string>
     <string name="export_theme_title">Tap here to export the current theme</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">القوالب</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">لون شريط التصفّح</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">لون الخلفية</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">اللون الأساسي</string>
+    <string name="export_bookmarks">صدّر الفواصل المرجعية إلى مثيل الخادم</string>
+    <string name="import_bookmarks">استيراد الفواصل المرجعية مِن مثيل الخادم</string>
+    <string name="user_count">عدد المستخدمين</string>
+    <string name="status_count">عدد المنشورات</string>
+    <string name="instance_count">عدد مثيلات الخوادم</string>
+    <string name="blocked">تم حجبه</string>
+    <string name="poll_finish_in">ينتهي في %s</string>
+    <string name="release_note_title">ما الجديد في %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="display_full_link">اظهر الرابط كاملًا</string>
+    <string name="share_link">شارك الرابط</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">افتح في تطبيق آخر</string>
+    <string name="check_redirect">تحقّق مِن التوجيه</string>
+    <string name="no_redirect">هذا العنوان لا يحوّل إلى عنوان آخر</string>
+    <string name="redirect_detected">%1$s \n\nيُحوّل إلى\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">أزل معلّمات UTM</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">المتداوَلة</string>
+    <string name="trending_now">المتداوَلة الآن</string>
+    <string name="talking_about">%d أشخاص يتحدثون عن ذلك</string>
+    <string name="twitter_accounts">حسابات تويتر (عبر Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">دلائل الهوية</string>
+    <string name="verified_user">هوية مُتحقّق منها</string>
+    <string name="verified_by">تم التحقق منه عبر %1$s (%2$s)</string>
 </resources>

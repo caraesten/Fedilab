@@ -41,6 +41,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.BaseMainActivity;
@@ -134,8 +135,8 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                 CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
                 CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
                 Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
-                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(context,
-                        R.array.filter_expire, android.R.layout.simple_spinner_item);
+                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(context),
+                        R.array.filter_expire, android.R.layout.simple_spinner_dropdown_item);
                 filter_expire.setAdapter(adapterResize);
                 final int[] expire = {-1};
                 filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

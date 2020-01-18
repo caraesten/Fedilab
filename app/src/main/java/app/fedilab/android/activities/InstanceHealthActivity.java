@@ -124,17 +124,26 @@ public class InstanceHealthActivity extends BaseActivity {
 
     private void checkInstance() {
 
-        if (instance == null)
+        if (instance == null){
+            LinearLayout main_container = findViewById(R.id.main_container);
+            TextView no_instance = findViewById(R.id.no_instance);
+            instance_container.setVisibility(View.VISIBLE);
+            main_container.setVisibility(View.GONE);
+            no_instance.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.GONE);
             return;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
-                    final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                    if (response != null)
+                    final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 5, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                    if (response != null) {
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
+                    }
                     runOnUiThread(new Runnable() {
                         @SuppressLint({"SetTextI18n", "DefaultLocale"})
                         public void run() {
@@ -160,7 +169,17 @@ public class InstanceHealthActivity extends BaseActivity {
                         }
                     });
 
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            LinearLayout main_container = findViewById(R.id.main_container);
+                            TextView no_instance = findViewById(R.id.no_instance);
+                            instance_container.setVisibility(View.VISIBLE);
+                            main_container.setVisibility(View.GONE);
+                            no_instance.setVisibility(View.VISIBLE);
+                            loader.setVisibility(View.GONE);
+                        }
+                    });
                 }
             }
         }).start();

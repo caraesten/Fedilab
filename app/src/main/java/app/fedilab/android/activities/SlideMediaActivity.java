@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,6 +64,7 @@ import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.fragments.MediaSliderFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -95,13 +97,14 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 Uri uri = manager.getUriForDownloadedFile(downloadID);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_with));
                 ContentResolver cR = context.getContentResolver();
                 shareIntent.setType(cR.getType(uri));
                 try {
                     startActivity(shareIntent);
                 } catch (Exception ignored) {
                 }
+            }else{
+                Toasty.success(context, context.getString(R.string.save_over), Toasty.LENGTH_LONG).show();
             }
         }
     };
@@ -126,6 +129,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
 
         fullscreen = false;
         media_description = findViewById(R.id.media_description);
+        final int med_desc_timeout = sharedpreferences.getInt(Helper.SET_MED_DESC_TIMEOUT, 3) * 1000;
         flags = getWindow().getDecorView().getSystemUiVisibility();
 
         swipeEnabled = true;
@@ -135,6 +139,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.media_action_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(SlideMediaActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -152,17 +157,30 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 public void onClick(View view) {
                     int position = mPager.getCurrentItem();
                     Attachment attachment = attachments.get(position);
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                    if( attachment.getType().compareTo("image") == 0 ){
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                            } else {
+                                Helper.manageMove(SlideMediaActivity.this, attachment.getUrl(), false);
+                            }
+                        } else {
+                            Helper.manageMove(SlideMediaActivity.this, attachment.getUrl(), false);
+                        }
+                    }else {
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            if (ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(SlideMediaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(SlideMediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Helper.EXTERNAL_STORAGE_REQUEST_CODE);
+                            } else {
+                                Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
+                                downloadID = -1;
+                            }
                         } else {
                             Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
                             downloadID = -1;
                         }
-                    } else {
-                        Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
-                        downloadID = -1;
                     }
+
                 }
             });
             media_share.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +188,9 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 public void onClick(View view) {
                     int position = mPager.getCurrentItem();
                     Attachment attachment = attachments.get(position);
-                    if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
+                    if( attachment.getType().compareTo("image") == 0 ){
+                        Helper.manageMove(SlideMediaActivity.this, attachment.getUrl(), true);
+                    }else if (attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("audio") || attachment.getType().toLowerCase().equals("gifv")) {
                         downloadID = Helper.manageDownloadsNoPopup(SlideMediaActivity.this, attachment.getUrl());
                     } else {
                         if (Build.VERSION.SDK_INT >= 23) {
@@ -212,7 +232,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                 public void run() {
                     media_description.setVisibility(View.GONE);
                 }
-            }, 3000);
+            }, med_desc_timeout);
 
         } else {
             media_description.setVisibility(View.GONE);
@@ -239,7 +259,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                         public void run() {
                             media_description.setVisibility(View.GONE);
                         }
-                    }, 3000);
+                    }, med_desc_timeout);
 
                 } else {
                     media_description.setVisibility(View.GONE);
@@ -273,6 +293,9 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
 
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+        final int med_desc_timeout = sharedpreferences.getInt(Helper.SET_MED_DESC_TIMEOUT, 3) * 1000;
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
@@ -298,7 +321,7 @@ public class SlideMediaActivity extends BaseActivity implements OnDownloadInterf
                                 public void run() {
                                     media_description.setVisibility(View.GONE);
                                 }
-                            }, 3000);
+                            }, med_desc_timeout);
 
                         } else {
                             media_description.setVisibility(View.GONE);

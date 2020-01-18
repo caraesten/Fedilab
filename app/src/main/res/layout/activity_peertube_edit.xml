@@ -119,11 +119,11 @@
                     android:gravity="center"
                     android:text="@string/channel" />
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:id="@+id/set_upload_channel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ms_background_color="?colorPrimaryDark" />
+                     />
             </LinearLayout>
 
 
@@ -142,11 +142,11 @@
                     android:gravity="center"
                     android:text="@string/category" />
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:id="@+id/set_upload_categories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ms_background_color="?colorPrimaryDark" />
+                    />
             </LinearLayout>
 
 
@@ -165,11 +165,11 @@
                     android:gravity="center"
                     android:text="@string/license" />
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:id="@+id/set_upload_licenses"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ms_background_color="?colorPrimaryDark" />
+                     />
             </LinearLayout>
 
 
@@ -188,11 +188,11 @@
                     android:gravity="center"
                     android:text="@string/language" />
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:id="@+id/set_upload_languages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ms_background_color="?colorPrimaryDark" />
+                    />
             </LinearLayout>
 
             <!-- Videos Privacy -->
@@ -210,11 +210,11 @@
                     android:gravity="center"
                     android:text="@string/action_privacy" />
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:id="@+id/set_upload_privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ms_background_color="?colorPrimaryDark" />
+                    />
             </LinearLayout>
 
 

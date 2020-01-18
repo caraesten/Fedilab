@@ -34,6 +34,7 @@
     <color name="mastodonC3">#d9e1e8</color>
     <color name="mastodonC3__">#efefef</color>
     <color name="mastodonC4__">#772b90d9</color>
+    <color name="mastodonC4___">#9FBEDD</color>
     <color name="mastodonC4">#2b90d9</color>
 
 
@@ -124,7 +125,7 @@
     <color name="dark_blockquote">#5E68A0</color>
 
     <color name="cyanea_primary_reference">#0288D1</color>
-    <color name="cyanea_accent_reference">#FFA000</color>
+    <color name="cyanea_accent_reference">#2b90d9</color>
 
 
     <color name="dark_icon_theme">#f3f3f3</color>

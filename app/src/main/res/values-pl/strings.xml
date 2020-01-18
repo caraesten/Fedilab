@@ -126,6 +126,30 @@
     <string name="date_minutes">%d min</string>
     <string name="date_hours">%d godz.</string>
     <string name="date_day">%d dni</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="few">%d seconds</item>
+        <item quantity="many">%d seconds</item>
+        <item quantity="other">%d sekundd</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d godzina</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+        <item quantity="other">%d godzin</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d dzień</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+        <item quantity="other">%d dni</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Ostrzeżenie</string>
     <string name="toot_placeholder">Co Ci chodzi po głowie?</string>
@@ -198,6 +222,7 @@
     <string name="notif_reblog">podbił twój wpis</string>
     <string name="notif_favourite">dodał(a) Twój wpis do ulubionych</string>
     <string name="notif_follow">zaczął(-ęła) Cię śledzić</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">dodaj %d innych powiadomień</item>
         <item quantity="few">dodaj %d innych powiadomień</item>
@@ -205,10 +230,10 @@
         <item quantity="other">dodaj %d innych powiadomień</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="few">%d likes</item>
-        <item quantity="many">%d likes</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d polubienie</item>
+        <item quantity="few">%d polubienia</item>
+        <item quantity="many">%d polubień</item>
+        <item quantity="other">%d polubień</item>
     </plurals>
     <string name="delete_notification_ask">Czy na pewno chcesz usunąć to powiadomienie?</string>
     <string name="delete_notification_ask_all">Wyczyścić wszytstkie powiadomienia?</string>
@@ -220,7 +245,7 @@
     <string name="pinned_toots">Przypięte</string>
     <!-- TOAST -->
     <string name="client_error">Nie można pobrać identyfikatora klienta!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Nie można połączyć się z domeną instancji!</string>
     <string name="no_internet">Brak połączenia z Internetem!</string>
     <string name="toast_block">Konto zostało zablokowane!</string>
     <string name="toast_unblock">Konto nie jest już zablokowane!</string>
@@ -245,7 +270,7 @@
     <string name="nothing_to_do">Żadna akcja nie może zostać podjęta</string>
     <string name="toast_saved">Zapisano zawartość multimedialną!</string>
     <string name="toast_error_translate">Tłumaczenie nieudane!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Tłumaczenia są wyłączone w ustawieniach</string>
     <string name="toast_toot_saved">Zapisano szkic!</string>
     <string name="toast_error_char_limit">Czy na pewno ta instancja zezwala na więcej, niż domyślne 500 znaków?</string>
     <string name="toast_visibility_changed">Widoczność wpisu została zmieniona na %1$s</string>
@@ -267,16 +292,17 @@
     <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś podbije mój wpis</string>
     <string name="set_notif_follow_add">Powiadom mnie, gdy ktoś polubi mój wpis</string>
     <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś mnie wspomni</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Powiadom kiedy głosowanie zostanie zakończone</string>
     <string name="set_share_validation">Proś o potwierdzenie przed podbiciem</string>
     <string name="set_share_validation_fav">Proś o potwierdzenie przed dodaniem wpisu do ulubionych</string>
     <string name="set_wifi_only">Powiadamiaj tylko w sieci WiFi</string>
     <string name="set_notify">Powiadamiać?</string>
     <string name="set_notif_silent">Ciche powiadomienia</string>
     <string name="set_nsfw_timeout">Czas do automatycznego ukrycia treści wrażliwej w sekundach. 0 oznacza dezaktywację.</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edytuj profil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Niestandardowe udostępnianie</string>
+    <string name="settings_custom_sharing_url">Twoje URL do niestandardowego udostępniania&#8230;</string>
     <string name="set_profile_description">Biografia…</string>
     <string name="set_lock_account">Zablokuj konto</string>
     <string name="set_save_changes">Zapisz zmiany</string>
@@ -296,11 +322,6 @@
     <string name="use_javascript">Włącz Javascript</string>
     <string name="expand_cw">Zawsze rozwijaj ostrzeżenia o zawartości</string>
     <string name="use_cookies">Zezwalaj na pliki cookie firm trzecich</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Brak</item>
-    </string-array>
     <string name="your_api_key">Klucz API, można zostawić puste dla Yandex</string>
     <string-array name="settings_theme">
         <item>Ciemny</item>
@@ -326,7 +347,7 @@
     <string name="action_search">Wyszukaj</string>
     <string name="set_capitalize">Zaczynaj wpisy z wielkiej litery</string>
     <string name="set_resize_picture">Zmniejszanie zdjęć</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Zmień rozmiar wideo</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Powiadomienia</string>
     <string name="settings_popup_message">Wskaż, jakie powiadomienia chcesz otrzymywać.
@@ -340,13 +361,13 @@
     <string name="title_header_custom_sharing">Tytuł</string>
     <string name="title_hint_custom_sharing">Tytuł&#8230;</string>
     <string name="description_header_custom_sharing">Opis</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="keywords_header_custom_sharing">Słowa kluczowe</string>
+    <string name="keywords_hint_custom_sharing">Słowa kluczowe&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizacja</string>
     <string name="action_filter">Filtrowanie</string>
     <string name="owner_cached_toots">Twoje wpisy</string>
-    <string name="owner_cached_notifications">Your notifications</string>
+    <string name="owner_cached_notifications">Twoje powiadomienia</string>
     <string name="v_public">Publiczne</string>
     <string name="v_unlisted">Niepubliczne</string>
     <string name="v_private">Tylko śledzeni</string>
@@ -357,10 +378,10 @@
     <string name="filter_no_result">Nie znaleziono pasujących wpisów!</string>
     <string name="data_backup_toots">Kopia zapasowa dla %1$s</string>
     <string name="data_backup_success">Zaimportowano %1$s nowych wpisów</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">Zaimportowano %1$s nowych powiadomień</string>
     <string-array name="filter_order">
-        <item>Dates descending</item>
-        <item>Dates ascending</item>
+        <item>Data malejąco</item>
+        <item>Data rosnąco</item>
     </string-array>
     <string-array name="filter_select">
         <item>Żaden</item>
@@ -414,8 +435,8 @@
     <string name="action_lists_delete">Usuń listę</string>
     <string name="action_lists_update">Edytuj listę</string>
     <string name="action_lists_title_placeholder">Nowy tytuł listy</string>
-    <string name="action_lists_add_user">The account was added to the list!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_add_user">Konto zostały dodane do listy!</string>
+    <string name="action_lists_empty">Nie masz jeszcze żadnych list!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s przeniósł się do %2$s</string>
     <string name="issue_login_title">Problem z uwierzytelnieniem?</string>
@@ -433,8 +454,8 @@
     <string name="data_export_toots">Eksportuj wpisy dla %1$s</string>
     <string name="data_export_success">Wyeksportowano %1$s wpisów z dostępnych %2$s.</string>
     <string name="data_export_error">Coś poszło nie tak podczas próby eksportu danych %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Coś poszło nie tak podczas próby eksportu danych!</string>
+    <string name="data_import_error_simple">Coś poszło nie tak podczas próby importu danych!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_enable">Włączyć proxy?</string>
@@ -500,7 +521,7 @@
     <string name="channel_notif_boost">Nowe Podbicie</string>
     <string name="channel_notif_fav">Nowe ulubione</string>
     <string name="channel_notif_mention">Nowe Wspomnienie</string>
-    <string name="channel_notif_poll">Poll Ended</string>
+    <string name="channel_notif_poll">Głosowanie zakończone</string>
     <string name="channel_notif_toot">Nowy Wpis</string>
     <string name="channel_notif_backup">Kopia zapasowa wpisów</string>
     <string name="channel_notif_media">Pobrane Media</string>
@@ -556,7 +577,7 @@
     <string name="no_scheduled_boosts_indications"><![CDATA[Otwórz menu toota i wybierz <b>Zaplanuj podbicie</b>.]]></string>
     <string name="art_menu">Oś sztuki</string>
     <string name="open_menu">Otwórz menu</string>
-    <string name="go_back">Go back</string>
+    <string name="go_back">Powrót</string>
     <string name="app_logo">Logo aplikacji</string>
     <string name="profile_picture">Zdjęcie profilowe</string>
     <string name="profile_banner">Baner profilowy</string>
@@ -604,7 +625,7 @@
     <string name="none_tags">Zadne z wymienionych</string>
     <string name="some_words_any">Dowolne z tych słów (oddzielone spacją)</string>
     <string name="some_words_all">Wszystkie z tych słów (rozdzielone spacją)</string>
-    <string name="some_tags">Add some words to filter (space-separated)</string>
+    <string name="some_tags">Dodaj kilka słów do filtru (oddzielone spacjami)</string>
     <string name="change_tag_column">Zmień nazwę kolumny</string>
     <string name="misskey_instance">Instancja Misskey</string>
     <string name="toast_no_apps">Brak zainstalowanej aplikacji do otwarcia tego odnośnika.</string>
@@ -619,112 +640,112 @@
     <string name="delete_comment_confirm">Czy na pewno chcesz usunąć ten komentarz?</string>
     <string name="fullscreen">Odtwarzanie pełnoekranowe</string>
     <string name="set_video_mode">Tryb wideo</string>
-    <string name="file_to_upload">Select the file to upload</string>
+    <string name="file_to_upload">Wybierz plik do przesłania</string>
     <string name="my_videos">Moje filmy</string>
     <string name="title">Tytuł</string>
     <string name="license">Licencja</string>
     <string name="category">Kategoria</string>
     <string name="language">Język</string>
-    <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
+    <string name="peertube_nsfw">Ten film zawiera dojrzałe lub nieodpowiednie treści</string>
+    <string name="peertube_enable_comments">Włącz komentarze na filmach</string>
+    <string name="update_video">Aktualizuj filmy</string>
     <string name="description">Opis</string>
     <string name="toast_peertube_video_updated">Film został zaaktualizowany!</string>
     <string name="toast_cancelled">Wysyłanie anulowane!</string>
     <string name="upload_video_success">Film został przesłany!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Tap here to edit the video data.</string>
+    <string name="uploading">Przesyłanie, proszę czekać…</string>
+    <string name="video_uploaded_action">Naciśnij tutaj, aby edytować informacje o filmie.</string>
     <string name="delete_video">Usuń film</string>
     <string name="delete_video_confirmation">Czy na pewno chcesz usunąć ten film?</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="leave_a_comment">Leave a comment</string>
+    <string name="display_nsfw_videos">Wyświetlaj filmy NSFW</string>
+    <string name="no_video_to_display">Brak filmów do wyświetlenia!</string>
+    <string name="leave_a_comment">Zostaw komentarz</string>
     <string name="share">Udostępnij</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="choose_schedule">Wybierz tryb harmonogramu</string>
     <string name="device_schedule">Z urządzenia</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
+    <string name="server_schedule">Z serwera</string>
+    <string name="toots_server">Wpisy (Serwer)</string>
+    <string name="toots_client">Wpisy (Urządzenie)</string>
     <string name="modify">Modyfikuj</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_label_timelines">Timelines</string>
-    <string name="settings_category_label_interface">Interface</string>
-    <string name="contact">Contacts</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="set_display_content_after_fetch_more">Wyświetl nowe wpisy nad przyciskiem \"Pobierz wpisy\"</string>
+    <string name="settings_category_label_timelines">Osi czasu</string>
+    <string name="settings_category_label_interface">Interfejs</string>
+    <string name="contact">Kontakty</string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> skomentował twój film <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> śledzi twój kanał <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> śledzi twoje konto]]></string>
+    <string name="peertube_video_published"><![CDATA[Twój film <b>%1$s</b> został opublikowany]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Import wideo <b>%1$s</b> zakończony powodzeniem]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Import wideo <b>%1$s</b> nie powiódł się]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> opublikował nowy film: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Twój film <b>%1$s</b> został dodany do czarnej listy]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Twój film <b>%1$s</b> został usunięty z czarnej listy]]></string>
     <string name="export_data">Eksportuj dane</string>
     <string name="import_data">Importuj dane</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="toot_select_import">Wybierz plik do zaimportowania</string>
+    <string name="toot_select_file_error">Wystąpił błąd podczas wybierania pliku z kopią zapasową!</string>
+    <string name="add_public_comment">Dodaj publiczny komentarz</string>
+    <string name="send_comment">Wyślij komentarz</string>
+    <string name="toast_toot_saved_error">Brak połączenia z Internetem. Twoja wiadomość została zapisana w szkicach.</string>
     <string name="action_plain_text">Zwykły tekst</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="action_logout_account">Wyloguj konto</string>
+    <string name="all">Wszystko</string>
+    <string name="about_opencollective">Wspomóż aplikację</string>
+    <string name="more_about_opencollective">Open Collective umożliwia grupom szybkie tworzenie kolektywów, pozyskiwanie funduszy i zarządzanie nimi w przejrzysty sposób.</string>
     <string name="copy_link">Skopiuj adres</string>
     <string name="connect_instance">Połącz</string>
-    <string name="set_normal">Normal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
+    <string name="set_normal">Normalny</string>
+    <string name="set_compact">Kompaktowy</string>
+    <string name="set_console">Konsola</string>
+    <string name="set_mode">Ustaw tryb wyświetlania</string>
     <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
-    <string name="data_base_exported">The data base has been exported!</string>
-    <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
-    <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
-    <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
+    <string name="update_tracking_domains">Aktualizuj śledzące domeny</string>
+    <string name="tracking_db_updated">Baza danych śledzących domen została zaktualizowana!</string>
+    <string name="calls_blocked">połączenia http zablokowane przez aplikację</string>
+    <string name="list_of_blocked_domains">Lista zablokowanych połączeń</string>
+    <string name="submit">Wyślij</string>
+    <string name="data_base_exported">Baza danych została wyeksportowana!</string>
+    <string name="featured_hashtags">Wyróżnione hashtagi</string>
+    <string name="filter_timeline_with_a_tag">Filtruj oś czasu z tagami</string>
+    <string name="no_tags">Brak tagów</string>
+    <string name="set_hide_delete_notification_on_tab">Ukryj przycisk \"Usuń\" na karcie Powiadomienia</string>
+    <string name="set_retrieve_metadata_share_from_extras">Dołącz obraz podczas udostępniania adresu URL</string>
     <!-- end languages -->
-    <string name="poll">Poll</string>
-    <string name="polls">Polls</string>
-    <string name="create_poll">Create a poll</string>
-    <string name="poll_choice_1">Choice 1</string>
-    <string name="poll_choice_2">Choice 2</string>
-    <string name="poll_choice_s">Choice %d</string>
-    <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
-    <string name="done">Done</string>
-    <string name="poll_finish_at">end at %s</string>
-    <string name="refresh_poll">Refresh poll</string>
-    <string name="vote">Vote</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
-    <string name="notif_poll_self">A poll you tooted has ended</string>
-    <string name="settings_category_notif_customize">Customize</string>
-    <string name="settings_category_notif_categories">Categories</string>
+    <string name="poll">Głosowanie</string>
+    <string name="polls">Głosowania</string>
+    <string name="create_poll">Utwórz głosowanie</string>
+    <string name="poll_choice_1">Opcja 1</string>
+    <string name="poll_choice_2">Opcja 2</string>
+    <string name="poll_choice_s">Opcja %d</string>
+    <string name="poll_invalid_choices">Potrzebujesz conajmniej dwóch opcji dla głosowania!</string>
+    <string name="done">Gotowe</string>
+    <string name="poll_finish_at">zakończ o %s</string>
+    <string name="refresh_poll">Odśwież głosowanie</string>
+    <string name="vote">Zagłosuj</string>
+    <string name="notif_poll">Głosowanie, w którym brałeś(-aś) udział, zostało zakończone</string>
+    <string name="notif_poll_self">Głosowanie, które stworzyłeś(-aś), zostało zakończone</string>
+    <string name="settings_category_notif_customize">Dostosuj</string>
+    <string name="settings_category_notif_categories">Kategorie</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
-    <string name="settings_category_notif_advanced">Advanced</string>
-    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
+    <string name="settings_category_notif_advanced">Zaawansowane</string>
+    <string name="set_display_new_badge">Wyświetl plakietkę \"nowy\" na nieprzeczytanych wpisach</string>
     <string name="peertube_menu">Peertube</string>
-    <string name="move_timeline">Move timeline</string>
-    <string name="hide_timeline">Hide timeline</string>
-    <string name="reorder_timelines">Reorder timelines</string>
-    <string name="reorder_list_deleted">List permanently deleted</string>
-    <string name="reorder_instance_removed">Followed instance removed</string>
-    <string name="reorder_tag_removed">Pinned tag removed</string>
-    <string name="undo">Undo</string>
-    <string name="visible_tabs_needed">You need to keep two visible tabs!</string>
-    <string name="action_reorder_timeline">Reorder timelines</string>
-    <string name="warning_main_timeline">Main timelines can only be hidden!</string>
+    <string name="move_timeline">Przesuń oś czasu</string>
+    <string name="hide_timeline">Ukryj oś czasu</string>
+    <string name="reorder_timelines">Zmień kolejność osi czasu</string>
+    <string name="reorder_list_deleted">Lista permanentnie usunięta</string>
+    <string name="reorder_instance_removed">Śledzona instancja usunięta</string>
+    <string name="reorder_tag_removed">Przypięty tag usunięty</string>
+    <string name="undo">Cofnij</string>
+    <string name="visible_tabs_needed">Musisz mieć dwie widoczne karty!</string>
+    <string name="action_reorder_timeline">Zmień kolejność osi czasu</string>
+    <string name="warning_main_timeline">Główne osi czasu mogą jedynie być ukryte!</string>
     <string name="action_bbcode">BBCode</string>
-    <string name="set_sensitive_content">Always mark media as sensitive</string>
-    <string name="gnu_instance">GNU instance</string>
-    <string name="cached_status">Cached status</string>
+    <string name="set_sensitive_content">Zawsze oznaczaj media jako wrażliwe</string>
+    <string name="gnu_instance">Instancja GNU</string>
+    <string name="cached_status">Wpis zapisany w pamięci podręcznej</string>
     <string name="set_forward_tags">Forward tags in replies</string>
     <string name="set_long_press_media">Long press to store media</string>
     <string name="set_blur_sensitive">Blur sensitive media</string>
@@ -751,17 +772,17 @@
     <string name="label_brush">Brush</string>
     <string name="confirm_exit_editing">Are you sure you want to exit without saving the image?</string>
     <string name="discard">Discard</string>
-    <string name="saving">Saving…</string>
-    <string name="image_saved">Image Saved Successfully!</string>
-    <string name="save_image_failed">Failed to save Image</string>
-    <string name="opacity">Opacity</string>
-    <string name="set_photo_editor">Enable photo editor</string>
-    <string name="add_poll_item">Add a poll item</string>
-    <string name="remove_poll_item">Remove last poll item</string>
-    <string name="mute_conversation">Mute conversation</string>
-    <string name="unmute_conversation">Unmute conversation</string>
-    <string name="toast_unmute_conversation">The conversation is no longer muted!</string>
-    <string name="toast_mute_conversation">The conversation is muted</string>
+    <string name="saving">Zapisywanie…</string>
+    <string name="image_saved">Obraz zapisany pomyślnie!</string>
+    <string name="save_image_failed">Nie udało się zapisać obrazu</string>
+    <string name="opacity">Przezroczystość</string>
+    <string name="set_photo_editor">Włącz edytor zdjęć</string>
+    <string name="add_poll_item">Dodaj opcję</string>
+    <string name="remove_poll_item">Usuń ostatnią opcję</string>
+    <string name="mute_conversation">Wycisz rozmowę</string>
+    <string name="unmute_conversation">Wyłącz wyciszenie rozmowy</string>
+    <string name="toast_unmute_conversation">Rozmowa nie jest już wyciszona!</string>
+    <string name="toast_mute_conversation">Ta rozmowa jest wyciszona</string>
     <string name="app_features">Open application features</string>
     <string name="timed_mute">Timed mute</string>
     <string name="mention_account">Mention the account</string>
@@ -940,6 +961,12 @@
         <item quantity="many">%d votes</item>
         <item quantity="other">%d votes</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="few">%d voters</item>
+        <item quantity="many">%d voters</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
@@ -1012,6 +1039,8 @@
     <string name="link_color_title">Links</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Background color of posts in timelines</string>
@@ -1045,4 +1074,45 @@
     <string name="export_theme">Export the theme</string>
     <string name="export_theme_title">Tap here to export the current theme</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
+    <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s (%2$s)</string>
 </resources>

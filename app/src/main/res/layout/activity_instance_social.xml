@@ -28,58 +28,76 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/main_container">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center" />
+
+
+            <TextView
+                android:id="@+id/checked_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/uptime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/ref_instance"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:text="via instances.social"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/values"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:gravity="center" />
-
-
-        <TextView
-            android:id="@+id/checked_at"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:id="@+id/up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/uptime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/no_instance"
+            android:visibility="gone"
+            android:autoLink="web"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:id="@+id/ref_instance"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:text="via instances.social"
-            tools:ignore="HardcodedText" />
-
+            android:text="@string/no_instance_reccord"
+            />
         <Button
             android:id="@+id/close"
             style="@style/Base.Widget.AppCompat.Button.Colored"
@@ -92,6 +110,7 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/loader"

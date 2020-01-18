@@ -17,6 +17,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:background="?colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height">
 
@@ -71,7 +72,7 @@
                 android:id="@+id/header_option_menu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:contentDescription="@string/truncate_long_toots"
+                android:contentDescription="@string/display_more_options"
                 android:gravity="center_vertical|end"
                 android:src="@drawable/ic_more_vert"
                 android:tint="?attr/iconColorMenu" />

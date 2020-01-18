@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +35,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.ListPreloader;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
+import com.bumptech.glide.util.FixedPreloadSizeProvider;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -56,6 +65,7 @@ import app.fedilab.android.asynctasks.RetrievePeertubeSearchAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
@@ -130,6 +140,35 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public DisplayStatusFragment() {
     }
 
+
+    private class MyPreloadModelProvider implements ListPreloader.PreloadModelProvider<String> {
+        @Override
+        @NonNull
+        public List<String> getPreloadItems(int position) {
+            if( statuses == null || statuses.size() == 0){
+                return Collections.emptyList();
+            }
+            Status status = statuses.get(position);
+            if (status.getMedia_attachments() == null || status.getMedia_attachments().size() ==0) {
+                return Collections.emptyList();
+            }
+            List<String> preloaded_urls = new ArrayList<>();
+            for(Attachment attachment: status.getMedia_attachments()) {
+                preloaded_urls.add(attachment.getPreview_url());
+            }
+            return  preloaded_urls;
+        }
+
+        @Nullable
+        @Override
+        public RequestBuilder<?> getPreloadRequestBuilder(@NonNull String url) {
+            return Glide.with(context)
+                    .load(url)
+                    .override(640, 480);
+        }
+
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
@@ -189,6 +228,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 c1, c2, c1
         );
         lv_status = rootView.findViewById(R.id.lv_status);
+        ListPreloader.PreloadSizeProvider sizeProvider =
+                new FixedPreloadSizeProvider(640, 480);
+        ListPreloader.PreloadModelProvider modelProvider = new MyPreloadModelProvider();
+        RecyclerViewPreloader<ContactsContract.CommonDataKinds.Photo> preloader =
+                new RecyclerViewPreloader<>(
+                        Glide.with(context), modelProvider, sizeProvider, 20 );
+        lv_status.addOnScrollListener(preloader);
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
         textviewNoAction = rootView.findViewById(R.id.no_action);
@@ -206,7 +252,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
             lastReadTootDate = Helper.stringToDate(context, sharedpreferences.getString(Helper.LAST_READ_TOOT_DATE + userId + instance, null));
         }
-        if (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")) {
+        if (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU") || instanceType.equals("NITTER")) {
             if (type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
                 BaseMainActivity.displayPeertube = null;
                 List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
@@ -217,7 +263,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             } else {
                 BaseMainActivity.displayPeertube = null;
-                statusListAdapter = new StatusListAdapter(type, targetedId, isOnWifi, this.statuses);
+                statusListAdapter = new StatusListAdapter(instanceType, type, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
         } else if (instanceType.equals("PEERTUBE")) {
@@ -257,7 +303,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Status status = b.getParcelable("status");
                     String delete_statuses_from = b.getString("delete_statuses_for_id", null);
                     if (status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(status);
+                        statusListAdapter.notifyStatusChanged(status);
                     } else if (delete_statuses_from != null) {
                         List<Status> statusesToRemove = new ArrayList<>();
                         for (Status status_temp : statuses) {
@@ -580,7 +626,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             //Let's deal with statuses
             if (statuses != null && statuses.size() > 0) {
-                if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
+                if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("NITTER") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 } else if (artListAdapter != null && instanceType.equals("ART")) {
@@ -736,7 +782,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         if (type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.PF_HOME)
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, false, DisplayStatusFragment.this).execute();
-        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (instanceType == null || instanceType.compareTo("NITTER") != 0))
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).execute();
         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).execute();
@@ -831,15 +877,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     public void scrollToTop() {
-        if (lv_status != null && instanceType != null) {
-            if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")))
-                lv_status.setAdapter(statusListAdapter);
-            else if (pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
-                lv_status.setAdapter(pixelfedListAdapter);
-            else if (artListAdapter != null && instanceType.equals("ART"))
-                lv_status.setAdapter(artListAdapter);
-            else if (peertubeAdapater != null && instanceType.equals("PEERTUBE"))
-                lv_status.setAdapter(peertubeAdapater);
+        if( mLayoutManager != null ) {
+            mLayoutManager.scrollToPositionWithOffset(0, 0);
         }
     }
 
@@ -870,6 +909,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             switch (instanceType) {
                 case "MASTODON":
                 case "MISSKEY":
+                case "NITTER":
                 case "GNU":
                     statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
                     break;
@@ -899,7 +939,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         Status status = it.next();
                         for (Status status1 : statuses) {
                             if (status.getConversationId() != null && status.getConversationId().equals(status1.getConversationId())) {
-                                if (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))
+                                if (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("NITTER")|| instanceType.equals("GNU"))
                                     statusListAdapter.notifyItemRemoved(position);
                                 else if (instanceType.equals("PIXELFED"))
                                     pixelfedListAdapter.notifyItemRemoved(position);
@@ -938,7 +978,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                 }
             }
-            if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("GNU")))
+
+            if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY") || instanceType.equals("NITTER") || instanceType.equals("GNU")))
                 statusListAdapter.notifyItemRangeInserted(0, inserted);
             else if (pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
                 pixelfedListAdapter.notifyItemRangeInserted(0, inserted);
@@ -1083,7 +1124,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if (context instanceof BaseMainActivity) {
                         boolean remember_position_home = sharedpreferences.getBoolean(Helper.SET_REMEMBER_POSITION_HOME, true);
                         if (remember_position_home)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).execute();
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, true,DisplayStatusFragment.this).execute();
                         else
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).execute();
                     }
@@ -1165,6 +1206,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             switch (instanceType) {
                 case "MASTODON":
                 case "MISSKEY":
+                case "NITTER":
                 case "GNU":
                     statusListAdapter.notifyItemRangeRemoved(0, lenght);
                     break;

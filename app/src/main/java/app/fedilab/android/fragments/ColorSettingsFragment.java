@@ -178,12 +178,16 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
                                 if (key.compareTo("base_theme") == 0) {
                                     SharedPreferences sharedpreferences = getActivity().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor appEditor = sharedpreferences.edit();
-                                    appEditor.putInt(Helper.SET_THEME, Integer.parseInt(value));
+                                    if( value != null && value.matches("-?\\d+")) {
+                                        appEditor.putInt(Helper.SET_THEME, Integer.parseInt(value));
+                                    }
                                     appEditor.commit();
                                 } else if (key.compareTo("pref_color_navigation_bar") == 0 || key.compareTo("pref_color_status_bar") == 0) {
-                                    editor.putBoolean(key, Boolean.valueOf(value));
+                                    editor.putBoolean(key, Boolean.parseBoolean(value));
                                 } else {
-                                    editor.putInt(key, Integer.valueOf(value));
+                                    if( value != null && value.matches("-?\\d+")) {
+                                        editor.putInt(key, Integer.parseInt(value));
+                                    }
                                 }
                             }
                         }
@@ -246,10 +250,16 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         FragmentActivity context = getActivity();
         assert context != null;
+        if( preferenceScreen == null){
+            Toasty.error(getActivity(), getString(R.string.toast_error), Toasty.LENGTH_SHORT).show();
+            return;
+        }
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
         ListPreference pref_theme_picker = (ListPreference) findPreference("pref_theme_picker");
         Preference theme_link_color = findPreference("theme_link_color");
         Preference theme_boost_header_color = findPreference("theme_boost_header_color");
+        Preference theme_text_header_1_line = findPreference("theme_text_header_1_line");
+        Preference theme_text_header_2_line = findPreference("theme_text_header_2_line");
         Preference theme_statuses_color = findPreference("theme_statuses_color");
         Preference theme_icons_color = findPreference("theme_icons_color");
         Preference theme_text_color = findPreference("theme_text_color");
@@ -261,9 +271,11 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         Preference pref_import = findPreference("pref_import");
         Preference pref_export = findPreference("pref_export");
         Preference reset_pref = findPreference("reset_pref");
-        if (!sharedpreferences.getBoolean("use_custom_theme", false)) {
+        if (!sharedpreferences.getBoolean("use_custom_theme", false) ) {
             preferenceScreen.removePreference(theme_link_color);
             preferenceScreen.removePreference(theme_boost_header_color);
+            preferenceScreen.removePreference(theme_text_header_1_line);
+            preferenceScreen.removePreference(theme_text_header_2_line);
             preferenceScreen.removePreference(theme_statuses_color);
             preferenceScreen.removePreference(theme_icons_color);
             preferenceScreen.removePreference(theme_text_color);
@@ -361,6 +373,8 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("theme_boost_header_color");
+        editor.remove("theme_text_header_1_line");
+        editor.remove("theme_text_header_2_line");
         editor.remove("theme_statuses_color");
         editor.remove("theme_link_color");
         editor.remove("theme_icons_color");
@@ -370,7 +384,7 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
         editor.remove("theme_accent");
         editor.remove("theme_text_color");
         editor.remove("theme_primary");
-        editor.remove("use_custom_theme");
+        //editor.remove("use_custom_theme");
         editor.commit();
     }
 
@@ -387,6 +401,8 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
             builder.append("value").append(',');
             builder.append('\n');
             int theme_boost_header_color = prefs.getInt("theme_boost_header_color", -1);
+            int theme_text_header_1_line = prefs.getInt("theme_text_header_1_line", -1);
+            int theme_text_header_2_line = prefs.getInt("theme_text_header_2_line", -1);
             int theme_statuses_color = prefs.getInt("theme_statuses_color", -1);
             int theme_link_color = prefs.getInt("theme_link_color", -1);
             int theme_icons_color = prefs.getInt("theme_icons_color", -1);
@@ -406,6 +422,14 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
 
             builder.append("theme_boost_header_color").append(',');
             builder.append(theme_boost_header_color).append(',');
+            builder.append('\n');
+
+            builder.append("theme_text_header_1_line").append(',');
+            builder.append(theme_text_header_1_line).append(',');
+            builder.append('\n');
+
+            builder.append("theme_text_header_2_line").append(',');
+            builder.append(theme_text_header_2_line).append(',');
             builder.append('\n');
 
             builder.append("theme_statuses_color").append(',');

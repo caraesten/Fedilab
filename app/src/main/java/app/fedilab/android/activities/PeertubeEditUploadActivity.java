@@ -24,20 +24,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -72,8 +72,8 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     HashMap<Integer, String> privacyToSend;
     HashMap<String, String> languageToSend;
     HashMap<String, String> channelToSend;
-    private Button set_upload_submit, set_upload_delete;
-    private MaterialSpinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
+    private Button set_upload_submit;
+    private Spinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
     private EditText p_video_title, p_video_description;
     private TagsEditText p_video_tags;
     private CheckBox set_upload_nsfw, set_upload_enable_comments;
@@ -90,9 +90,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         switch (theme) {
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_Fedilab);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -112,10 +109,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(PeertubeEditUploadActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(PeertubeEditUploadActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -132,7 +129,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
 
 
         set_upload_submit = findViewById(R.id.set_upload_submit);
-        set_upload_delete = findViewById(R.id.set_upload_delete);
+        Button set_upload_delete = findViewById(R.id.set_upload_delete);
         set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_channel = findViewById(R.id.set_upload_channel);
         set_upload_categories = findViewById(R.id.set_upload_categories);
@@ -413,9 +410,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         }
 
         //Manage privacies
-        set_upload_privacy.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_privacy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<Integer, String> privaciesCheck = new LinkedHashMap<>(peertubeInformation.getPrivacies());
                 Iterator it = privaciesCheck.entrySet().iterator();
                 int i = 0;
@@ -430,11 +427,15 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     i++;
                 }
             }
-        });
-        //Manage license
-        set_upload_licenses.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        set_upload_licenses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<Integer, String> licensesCheck = new LinkedHashMap<>(peertubeInformation.getLicences());
                 Iterator it = licensesCheck.entrySet().iterator();
                 int i = 0;
@@ -449,11 +450,16 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     i++;
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
         //Manage categories
-        set_upload_categories.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<Integer, String> categoriesCheck = new LinkedHashMap<>(peertubeInformation.getCategories());
                 Iterator it = categoriesCheck.entrySet().iterator();
                 int i = 0;
@@ -468,11 +474,17 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     i++;
                 }
             }
-        });
-        //Manage languages
-        set_upload_languages.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //Manage languages
+        set_upload_languages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<String, String> languagesCheck = new LinkedHashMap<>(peertubeInformation.getLanguages());
                 Iterator it = languagesCheck.entrySet().iterator();
                 int i = 0;
@@ -487,13 +499,16 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     i++;
                 }
             }
-        });
 
-
-        //Manage languages
-        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //Manage languages
+        set_upload_channel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
@@ -508,6 +523,11 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     it.remove();
                     i++;
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -535,10 +555,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         });
 
-        set_upload_privacy.setSelectedIndex(privacyPosition);
-        set_upload_languages.setSelectedIndex(languagePosition);
-        set_upload_licenses.setSelectedIndex(licensePosition);
-        set_upload_categories.setSelectedIndex(categoryPosition);
+        set_upload_privacy.setSelection(privacyPosition);
+        set_upload_languages.setSelection(languagePosition);
+        set_upload_licenses.setSelection(licensePosition);
+        set_upload_categories.setSelection(categoryPosition);
 
         List<String> tags = peertube.getTags();
         if (tags != null && tags.size() > 0) {
@@ -591,7 +611,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 channelPosition++;
             }
         }
-        set_upload_channel.setSelectedIndex(channelPosition);
+        set_upload_channel.setSelection(channelPosition);
 
         set_upload_submit.setEnabled(true);
     }

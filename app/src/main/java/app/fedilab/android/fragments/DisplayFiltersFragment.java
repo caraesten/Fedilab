@@ -127,8 +127,8 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                     CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
                     CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
                     Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
-                    ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()),
-                            R.array.filter_expire, android.R.layout.simple_spinner_item);
+                    ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                            R.array.filter_expire, android.R.layout.simple_spinner_dropdown_item);
                     filter_expire.setAdapter(adapterResize);
                     final int[] expire = {-1};
                     filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

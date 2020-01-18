@@ -84,7 +84,7 @@
     <string name="live_notif">লাইভ বিজ্ঞপ্তিগুলি</string>
     <!-- Status -->
     <string name="no_status">প্রদর্শনের জন্য কোন টুট নেই</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_by">%1$s দ্বারা সমর্থন</string>
     <string name="favourite_add">এই টুটটি আপনার পছন্দসইয়ের সাথে যুক্ত করবেন?</string>
     <string name="favourite_remove">আপনার পছন্দসই থেকে এই টুট সরাবেন?</string>
     <string name="reblog_add">এই টুট টি সমর্থন করবেন?</string>
@@ -113,58 +113,74 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>এই টুট টি মুছে ফেলবেন?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>এই টুট টি মুছে &amp; পুনঃসংশ্লিষ্ট করবেন?</item>
     </string-array>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="bookmarks">বুকমার্কগুলি</string>
+    <string name="bookmark_add">বুকমার্ক তালিকা এ যোগ করুন</string>
+    <string name="bookmark_remove">বুকমার্ক মুছে ফেলুন</string>
+    <string name="bookmarks_empty">প্রদর্শনের জন্য কোনও বুকমার্ক নেই</string>
+    <string name="status_bookmarked">বুকমার্কগুলিতে স্ট্যাটাস যুক্ত হয়েছে!</string>
+    <string name="status_unbookmarked">বুকমার্কগুলি থেকে স্থিতি সরানো হয়েছিল!</string>
     <!-- Date -->
-    <string name="date_seconds">%d s</string>
-    <string name="date_minutes">%d m</string>
-    <string name="date_hours">%d h</string>
-    <string name="date_day">%d d</string>
+    <string name="date_seconds">%d সেকেন্ড</string>
+    <string name="date_minutes">%d মিনিট</string>
+    <string name="date_hours">%d ঘন্টা</string>
+    <string name="date_day">%d দিন</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d সেকেন্ড</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d মিনিট</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d ঘণ্টা</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d দিন</item>
+    </plurals>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
-    <string name="toot_placeholder">What is on your mind?</string>
-    <string name="toot_it">TOOT!</string>
-    <string name="queet_it">QUEET!</string>
-    <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_cw_placeholder">সতর্কতা</string>
+    <string name="toot_placeholder">আপনার মনে কি আছে?</string>
+    <string name="toot_it">টুট!</string>
+    <string name="queet_it">ক্যুইট!</string>
+    <string name="cw">সঃবঃ</string>
+    <string name="toot_title">একটি টুট লিখুন</string>
+    <string name="toot_title_reply">একটি টুট এ উত্তর দিন</string>
+    <string name="queet_title">একটি ক্যুইট লিখুন</string>
+    <string name="queet_title_reply">একটি ক্যুইট এ উত্তর দিন</string>
+    <string name="toot_select_image">একটি মিডিয়া নির্বাচন করুন</string>
+    <string name="toot_select_image_error">মিডিয়া নির্বাচন করার সময় একটি ত্রুটি ঘটেছে!</string>
+    <string name="toot_delete_media">এই মিডিয়া মুছবেন?</string>
+    <string name="toot_error_no_content">আপনার টুট ফাঁকা!</string>
+    <string name="toot_visibility_tilte">টুটের দৃশ্যমানতা</string>
+    <string name="toots_visibility_tilte">ডিফল্টরূপে টুটগুলির দৃশ্যমানতা: </string>
+    <string name="toot_sent">টুট পাঠানো হয়েছে!</string>
+    <string name="toot_reply_content_title">আপনি এই টুটের উত্তর দিচ্ছেন:</string>
+    <string name="toot_sensitive">সংবেদনশীল কন্টেন্ট?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>জনসাধারণের টাইমলাইনে পোস্ট করুন</item>
+        <item>জনসাধারণের টাইমলাইনে পোস্ট করবেন না</item>
+        <item>শুধুমাত্র অনুসরণকারীদের পোস্ট করুন</item>
+        <item>শুধুমাত্র উল্লিখিত ব্যবহারকারীদের জন্য পোস্ট করুন</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Tap on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="no_draft">কোন খসড়া নেই!</string>
+    <string name="choose_toot">একটি টুট চয়ন করুন</string>
+    <string name="choose_accounts">একটি অ্যাকাউন্ট চয়ন করুন</string>
+    <string name="select_accounts">কিছু অ্যাকাউন্টগুলি নির্বাচন করুন</string>
+    <string name="remove_draft">খসড়া সরান?</string>
+    <string name="show_reply">আসল টুটটি প্রদর্শন করতে বোতামে আলতো চাপুন</string>
+    <string name="upload_form_description">দৃষ্টি প্রতিবন্ধীদের জন্য বর্ণনা করুন</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">কোন বর্ণনা নাই!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
-    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_vesrion">রিলিজ %1$s</string>
+    <string name="about_developer">বিকাশকারী:</string>
+    <string name="about_license">লাইসেন্স: </string>
+    <string name="about_license_action">জিএনইউ জিপিএল ভার্সন ৩</string>
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
@@ -198,6 +214,7 @@
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
         <item quantity="other">and %d other notifications</item>
@@ -228,21 +245,21 @@
     <string name="toast_unreblog">The toot is no longer boosted!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
-    <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_report">টুটটির প্রতিবেদন করা হয়েছে!</string>
+    <string name="toast_unstatus">টুটটি মুছে ফেলা হয়েছে!</string>
+    <string name="toast_pin">টুটটি পিন করা হয়েছে!</string>
+    <string name="toast_unpin">টুটটি আনপিন করা হয়েছে!</string>
+    <string name="toast_error">উফফফফ! একটি ত্রুটি ঘটেছে!</string>
+    <string name="toast_code_error">একটি ত্রুটি ঘটেছে! ইনস্ট্যান্স একটি অনুমোদন কোড ফেরায় নি!</string>
+    <string name="toast_error_instance">ইনস্ট্যান্স এর ডোমেনটি বৈধ বলে মনে হচ্ছে না!</string>
+    <string name="toast_error_loading_account">অ্যাকাউন্টগুলির মধ্যে স্যুইচ করার সময় একটি ত্রুটি ঘটেছে!</string>
+    <string name="toast_error_search">অনুসন্ধানের সময় একটি ত্রুটি ঘটেছে!</string>
+    <string name="toast_update_credential_ok">প্রোফাইল তথ্য সংরক্ষণ করা হয়েছে!</string>
+    <string name="nothing_to_do">কোনও পদক্ষেপ নেওয়া যাবে না</string>
+    <string name="toast_saved">মিডিয়া রক্ষা পেয়েছে!</string>
+    <string name="toast_error_translate">অনুবাদ করার সময় একটি ত্রুটি ঘটেছে!</string>
+    <string name="toast_error_translations_disabled">অনুবাদসমূহ সেটিংসে অক্ষম রয়েছে</string>
+    <string name="toast_toot_saved">খসড়া সংরক্ষিত করা হয়েছে!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <!-- Settings -->
@@ -270,6 +287,7 @@
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_med_desc_timeout">Media Description timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -292,11 +310,6 @@
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>No</item>
-    </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Dark</item>
@@ -937,6 +950,10 @@
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d voter</item>
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
@@ -1009,6 +1026,8 @@
     <string name="link_color_title">Links</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Background color of posts in timelines</string>
@@ -1042,4 +1061,45 @@
     <string name="export_theme">Export the theme</string>
     <string name="export_theme_title">Tap here to export the current theme</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
+    <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s (%2$s)</string>
 </resources>

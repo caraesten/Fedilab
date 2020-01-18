@@ -1,4 +1,0 @@
-Changed
-- Improvements for the media activity
-- Better management of live notifications
-- Add icon for videos (Pixelfed)

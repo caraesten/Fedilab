@@ -68,9 +68,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import app.fedilab.android.R;
@@ -118,6 +120,7 @@ import static app.fedilab.android.fragments.ContentSettingsFragment.type.INTERFA
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.LANGUAGE;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.MENU;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.NOTIFICATIONS;
+import static app.fedilab.android.fragments.ContentSettingsFragment.type.PRIVACY;
 import static app.fedilab.android.fragments.ContentSettingsFragment.type.TIMELINES;
 
 public class ContentSettingsFragment extends Fragment implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
@@ -263,7 +266,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
     }
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
+    public void onRetrieveRemoteAccount(Results results, boolean devAccount) {
         if (results == null) {
             return;
         }
@@ -378,6 +381,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         LinearLayout settings_admin = rootView.findViewById(R.id.settings_admin);
         LinearLayout settings_interface = rootView.findViewById(R.id.settings_interface);
         LinearLayout settings_compose = rootView.findViewById(R.id.settings_compose);
+        LinearLayout settings_privacy = rootView.findViewById(R.id.settings_privacy);
         LinearLayout settings_hide_menu = rootView.findViewById(R.id.settings_hide_menu);
         LinearLayout settings_translation = rootView.findViewById(R.id.settings_translation);
 
@@ -392,6 +396,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             settings_interface.setVisibility(View.VISIBLE);
         } else if (type == COMPOSE) {
             settings_compose.setVisibility(View.VISIBLE);
+        } else if (type == PRIVACY) {
+            settings_privacy.setVisibility(View.VISIBLE);
         } else if (type == MENU) {
             settings_hide_menu.setVisibility(View.VISIBLE);
         } else if (type == LANGUAGE) {
@@ -504,7 +510,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         Spinner set_attachment_group = rootView.findViewById(R.id.set_attachment_group);
         String[] attachment_labels = {context.getString(R.string.set_attachment_always), context.getString(R.string.set_attachment_wifi), context.getString(R.string.set_attachment_ask)};
-        ArrayAdapter<String> adapterAttachment = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterAttachment = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, attachment_labels);
         set_attachment_group.setAdapter(adapterAttachment);
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
@@ -552,8 +558,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         //Video mode
         final Spinner video_mode_spinner = rootView.findViewById(R.id.set_video_mode);
-        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_video_mode, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                R.array.settings_video_mode, android.R.layout.simple_spinner_dropdown_item);
         video_mode_spinner.setAdapter(video_mode_spinnerAdapter);
         if (videoMode == Helper.VIDEO_MODE_TORRENT)
             videoMode = Helper.VIDEO_MODE_DIRECT;
@@ -715,6 +721,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                     store = Helper.SET_YANDEX_API_KEY;
                 else if (translatore == Helper.TRANS_DEEPL)
                     store = Helper.SET_DEEPL_API_KEY;
+                else if (translatore == Helper.TRANS_SYSTRAN)
+                    store = Helper.SET_SYSTRAN_API_KEY;
                 if (store != null)
                     if (s != null && s.length() > 0)
                         editor.putString(store, s.toString().trim());
@@ -914,6 +922,46 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             }
         });
 
+
+
+        TextView set_user_agent = rootView.findViewById(R.id.set_user_agent);
+        String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+
+        if (user_agent != null) {
+            set_user_agent.setText(user_agent);
+        }
+        set_user_agent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                if (s.toString().trim().length() > 0) {
+                    editor.putString(Helper.SET_CUSTOM_USER_AGENT, s.toString().toLowerCase().trim());
+                } else {
+                    editor.putString(Helper.SET_CUSTOM_USER_AGENT, null);
+                }
+                editor.apply();
+            }
+        });
+
+
+        final SwitchCompat set_utm_parameters = rootView.findViewById(R.id.set_utm_parameters);
+        boolean utm_parameters = sharedpreferences.getBoolean(Helper.SET_FILTER_UTM, true);
+        set_utm_parameters.setChecked(utm_parameters);
+
+        set_utm_parameters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_FILTER_UTM, set_utm_parameters.isChecked());
+                editor.apply();
+            }
+        });
 
         TextView set_nitter_host = rootView.findViewById(R.id.set_nitter_host);
         boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
@@ -1138,7 +1186,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         Spinner set_mode = rootView.findViewById(R.id.set_mode);
         String[] mode_labels = {context.getString(R.string.set_normal), context.getString(R.string.set_compact), context.getString(R.string.set_console)};
-        ArrayAdapter<String> adapterMode = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterMode = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, mode_labels);
         set_mode.setAdapter(adapterMode);
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
@@ -1303,11 +1351,12 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         final SwitchCompat switchCompatNotify = rootView.findViewById(R.id.set_notify);
         switchCompatNotify.setChecked(notify);
-        final LinearLayout notification_settings = rootView.findViewById(R.id.notification_settings);
-        if (notify)
-            notification_settings.setVisibility(View.VISIBLE);
-        else
-            notification_settings.setVisibility(View.GONE);
+        final LinearLayout notification_container = rootView.findViewById(R.id.notification_container);
+        if (notify) {
+            notification_container.setVisibility(View.VISIBLE);
+        } else {
+            notification_container.setVisibility(View.GONE);
+        }
         switchCompatNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1316,9 +1365,15 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 editor.putBoolean(Helper.SET_NOTIFY, isChecked);
                 editor.apply();
                 if (isChecked) {
-                    notification_settings.setVisibility(View.VISIBLE);
+                    notification_container.setVisibility(View.VISIBLE);
+                    notification_container.setVisibility(View.VISIBLE);
+                    Helper.startStreaming(context);
+                }else {
+                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                    context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                    ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                    notification_container.setVisibility(View.GONE);
                 }
-                Helper.startStreaming(context);
             }
         });
 
@@ -1326,7 +1381,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         //Live notification mode
         final Spinner set_live_type = rootView.findViewById(R.id.set_live_type);
         String[] labels = {context.getString(R.string.live_notif), context.getString(R.string.live_delayed), context.getString(R.string.no_live_notif)};
-        ArrayAdapter<String> adapterLive = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterLive = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, labels);
 
         LinearLayout live_notif_per_account = rootView.findViewById(R.id.live_notif_per_account);
@@ -1353,43 +1408,34 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (liveNotificationCount > 0) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                    context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
+                    context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
+                    ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
                     switch (position) {
                         case Helper.NOTIF_LIVE:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
                             live_notif_per_account.setVisibility(View.VISIBLE);
-                            editor.apply();
-                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-                            ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                            editor.commit();
+                            set_live_type_indication.setText(R.string.live_notif_indication);
+                            Helper.startStreaming(context);
                             break;
                         case Helper.NOTIF_DELAYED:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, true);
                             live_notif_per_account.setVisibility(View.VISIBLE);
-                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                            editor.apply();
-                            ApplicationJob.cancelAllJob(NotificationsSyncJob.NOTIFICATION_REFRESH);
+                            set_live_type_indication.setText(R.string.set_live_type_indication);
+                            editor.commit();
+                            Helper.startStreaming(context);
                             break;
                         case Helper.NOTIF_NONE:
                             editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
                             editor.putBoolean(Helper.SET_DELAYED_NOTIFICATIONS, false);
-                            live_notif_per_account.setVisibility(View.GONE);
-                            context.sendBroadcast(new Intent(context, StopLiveNotificationReceiver.class));
-                            context.sendBroadcast(new Intent(context, StopDelayedNotificationReceiver.class));
-                            NotificationsSyncJob.schedule(false);
-                            editor.apply();
-                            break;
-                    }
-                    Helper.startStreaming(context);
-                    switch (Helper.liveNotifType(context)) {
-                        case Helper.NOTIF_LIVE:
-                            set_live_type_indication.setText(R.string.live_notif_indication);
-                            break;
-                        case Helper.NOTIF_DELAYED:
-                            set_live_type_indication.setText(R.string.set_live_type_indication);
-                            break;
-                        case Helper.NOTIF_NONE:
+                            editor.commit();
                             set_live_type_indication.setText(R.string.no_live_indication);
+                            live_notif_per_account.setVisibility(View.GONE);
+                            NotificationsSyncJob.schedule(false);
                             break;
                     }
                 } else {
@@ -1605,6 +1651,38 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         });
 
 
+        // Media Description Timeout
+        SeekBar medDescTimeoutSeekBar = rootView.findViewById(R.id.set_med_desc_timeout);
+        final TextView set_med_desc_timeout_value = rootView.findViewById(R.id.set_med_desc_timeout_value);
+
+        medDescTimeoutSeekBar.setMax(30);
+
+        int medDescTimeout = sharedpreferences.getInt(Helper.SET_MED_DESC_TIMEOUT, 3);
+
+        medDescTimeoutSeekBar.setProgress(medDescTimeout);
+        set_med_desc_timeout_value.setText(String.valueOf(medDescTimeout));
+
+        medDescTimeoutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                set_med_desc_timeout_value.setText(String.valueOf(progress));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_MED_DESC_TIMEOUT, progress);
+                editor.apply();
+            }
+        });
+
+
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
@@ -1691,7 +1769,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         boolean allow_live_notifications = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + userId + instance, true);
         TextView set_allow_live_notifications_title = rootView.findViewById(R.id.set_allow_live_notifications_title);
-        set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@" + account.getInstance()));
+        if (account != null) {
+            set_allow_live_notifications_title.setText(context.getString(R.string.set_allow_live_notifications, account.getAcct() + "@" + account.getInstance()));
+        }
         final SwitchCompat set_allow_live_notifications = rootView.findViewById(R.id.set_allow_live_notifications);
         set_allow_live_notifications.setChecked(allow_live_notifications);
         set_allow_live_notifications.setOnClickListener(new View.OnClickListener() {
@@ -1784,10 +1864,15 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
         //Translators
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
-        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_translation, android.R.layout.simple_spinner_item);
-        translation_layout_spinner.setAdapter(adapterTrans);
 
+
+        List<String> translatorsList = Arrays.asList(getResources().getStringArray(R.array.settings_translation));
+        ArrayList<String> trans = new ArrayList<>(translatorsList);
+        trans.add(getString(R.string.no));
+
+        ArrayAdapter<String> adapterTrans = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, trans);
+        translation_layout_spinner.setAdapter(adapterTrans);
         int positionSpinnerTrans;
         switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)) {
             case Helper.TRANS_YANDEX:
@@ -1800,8 +1885,13 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                 your_api_key.setVisibility(View.VISIBLE);
                 your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                 break;
-            case Helper.TRANS_NONE:
+            case Helper.TRANS_SYSTRAN:
                 positionSpinnerTrans = 2;
+                your_api_key.setVisibility(View.VISIBLE);
+                your_api_key.setText(sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, ""));
+                break;
+            case Helper.TRANS_NONE:
+                positionSpinnerTrans = 3;
                 your_api_key.setVisibility(View.GONE);
                 break;
             default:
@@ -1819,30 +1909,30 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                         case 0:
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
+                            editor.commit();
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, ""));
+
                             break;
                         case 1:
                             your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
-                            editor.apply();
-                            if (sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, null));
+                            editor.commit();
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                             break;
                         case 2:
+                            your_api_key.setVisibility(View.VISIBLE);
+                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_SYSTRAN);
+                            editor.commit();
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_SYSTRAN_API_KEY, ""));
+                            break;
+                        case 3:
                             your_api_key.setVisibility(View.GONE);
                             set_trans_forced.isChecked();
                             editor.putBoolean(Helper.SET_TRANS_FORCED, false);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
-                            editor.apply();
+                            editor.commit();
                             break;
                     }
-                    if (getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(Helper.INTENT_ACTION, Helper.BACK_TO_SETTINGS);
-                    startActivity(intent);
                 } else {
                     countTrans++;
                 }
@@ -2092,8 +2182,8 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
 
 
         final Spinner action_notification = rootView.findViewById(R.id.action_notification);
-        ArrayAdapter<CharSequence> adapterAction = ArrayAdapter.createFromResource(getContext(),
-                R.array.action_notification, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterAction = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                R.array.action_notification, android.R.layout.simple_spinner_dropdown_item);
         action_notification.setAdapter(adapterAction);
         int positionNotificationAntion;
         switch (sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE)) {
@@ -2227,7 +2317,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             ledLabel.setEnabled(true);
             led_colour_spinner.setEnabled(true);
 
-            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(getContext(), R.array.led_colours, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()), R.array.led_colours, android.R.layout.simple_spinner_dropdown_item);
             led_colour_spinner.setAdapter(adapterLEDColour);
             int positionSpinnerLEDColour = (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR));
             led_colour_spinner.setSelection(positionSpinnerLEDColour);
@@ -2258,6 +2348,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         }
 
         SwitchCompat nav_news = rootView.findViewById(R.id.nav_news);
+        SwitchCompat nav_trends = rootView.findViewById(R.id.nav_trends);
         SwitchCompat nav_list = rootView.findViewById(R.id.nav_list);
         SwitchCompat nav_scheduled = rootView.findViewById(R.id.nav_scheduled);
         SwitchCompat nav_archive = rootView.findViewById(R.id.nav_archive);
@@ -2276,6 +2367,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
             mainMenu = new MainMenuItem();
         }
         nav_news.setChecked(mainMenu.isNav_news());
+        nav_trends.setChecked(mainMenu.isNav_trends());
         nav_list.setChecked(mainMenu.isNav_list());
         nav_scheduled.setChecked(mainMenu.isNav_scheduled());
         nav_archive.setChecked(mainMenu.isNav_archive());
@@ -2292,6 +2384,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         validate.setOnClickListener(view -> {
             MainMenuItem mainMenuItem = new MainMenuItem();
             mainMenuItem.setNav_news(nav_news.isChecked());
+            mainMenuItem.setNav_trends(nav_trends.isChecked());
             mainMenuItem.setNav_list(nav_list.isChecked());
             mainMenuItem.setNav_scheduled(nav_scheduled.isChecked());
             mainMenuItem.setNav_archive(nav_archive.isChecked());
@@ -2340,7 +2433,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
         Locale currentLocale = Helper.restoreLocaleFromString(currentLanguage);
         final Spinner set_change_locale = rootView.findViewById(R.id.set_change_locale);
-        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, Helper.getLocales(context));
 
         set_change_locale.setAdapter(adapterLocale);
@@ -2595,6 +2688,7 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
         NOTIFICATIONS,
         INTERFACE,
         COMPOSE,
+        PRIVACY,
         LANGUAGE,
         MENU,
         COLORS

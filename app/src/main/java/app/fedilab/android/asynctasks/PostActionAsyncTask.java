@@ -239,7 +239,15 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 statusCode = gnuapi.statusAction(status);
             else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
                 statusCode = gnuapi.muteNotifications(targetedId, muteNotifications);
-            else
+            else if (apiAction == API.StatusAction.AUTHORIZE || apiAction == API.StatusAction.REJECT) {
+                //This part uses the Mastodon API
+                API api;
+                if (account != null)
+                    api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                else
+                    api = new API(contextReference.get());
+                statusCode = api.postAction(apiAction, targetedId);
+            } else
                 statusCode = gnuapi.postAction(apiAction, targetedId);
             error = gnuapi.getError();
         }

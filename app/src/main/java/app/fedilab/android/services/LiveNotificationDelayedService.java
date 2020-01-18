@@ -80,7 +80,6 @@ public class LiveNotificationDelayedService extends Service {
     public static int totalAccount = 0;
     public static int eventsCount = 0;
     public static HashMap<String, String> since_ids = new HashMap<>();
-    public static HashMap<String, Thread> threads = new HashMap<>();
     protected Account account;
     private NotificationChannel channel;
     private boolean fetch;
@@ -88,6 +87,8 @@ public class LiveNotificationDelayedService extends Service {
 
     public void onCreate() {
         super.onCreate();
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
 
         if (Build.VERSION.SDK_INT >= 26) {
             channel = new NotificationChannel(CHANNEL_ID,
@@ -96,47 +97,76 @@ public class LiveNotificationDelayedService extends Service {
 
             ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
         }
+
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
         totalAccount = 0;
-        for (Account account : accountStreams) {
-            if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
-                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
-                if (allowStream) {
-                    totalAccount++;
+        if( accountStreams != null) {
+            for (Account account : accountStreams) {
+                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
+                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
+                    if (allowStream) {
+                        totalAccount++;
+                    }
                 }
             }
         }
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                myIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
+        android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setShowWhen(false)
+                .setContentIntent(pendingIntent)
+                .setContentTitle(getString(R.string.top_notification))
+                .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+        startForeground(1, notification);
+        if( !notify ){
+            stopSelf();
+            return;
+        }
         if (totalAccount > 0) {
-            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    getApplicationContext(),
-                    0,
-                    myIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-
-            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setShowWhen(false)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-            startForeground(1, notification);
+            startStream();
         } else {
             stopSelf();
         }
-        startStream();
+
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith("notif_delayed_")){
+                t.interrupt();
+            }
+        }
+        Thread.currentThread().interrupt();
+    }
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (intent == null || intent.getBooleanExtra("stop", false)) {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if (!notify || intent == null || intent.getBooleanExtra("stop", false)) {
             totalAccount = 0;
-            stopForeground(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                stopForeground(STOP_FOREGROUND_DETACH);
+                NotificationManager notificationManager =  (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                assert notificationManager != null;
+                notificationManager.deleteNotificationChannel(CHANNEL_ID);
+            }
+            if (intent != null) {
+                intent.replaceExtras(new Bundle());
+            }
             stopSelf();
         }
         if (totalAccount > 0) {
@@ -154,7 +184,6 @@ public class LiveNotificationDelayedService extends Service {
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             fetch = true;
             if (accountStreams != null) {
-                Thread thread;
                 for (final Account accountStream : accountStreams) {
                     String key = accountStream.getUsername() + "@" + accountStream.getInstance();
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + accountStream.getId() + accountStream.getInstance(), true);
@@ -164,36 +193,38 @@ public class LiveNotificationDelayedService extends Service {
                     if (!sleeps.containsKey(key)) {
                         sleeps.put(key, 30000);
                     }
-                    if (threads.containsKey(key) && threads.get(key) != null) {
-                        thread = threads.get(key);
-                        if (thread != null && !thread.isInterrupted()) {
-                            thread.interrupt();
-                            threads.put(key, null);
-                        }
+                    Thread thread = Helper.getThreadByName("notif_delayed_"+key);
+                    if( thread == null){
+                        startThread(accountStream, key);
+                    } else if(thread.getState() != Thread.State.RUNNABLE) {
+                        thread.interrupt();
+                        startThread(accountStream, key);
                     }
-                    thread = new Thread() {
-                        @Override
-                        public void run() {
-                            while (fetch) {
-                                taks(accountStream);
-                                fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
-                                if (sleeps.containsKey(key) && sleeps.get(key) != null) {
-                                    try {
-                                        Thread.sleep(sleeps.get(key));
-                                    } catch (InterruptedException e) {
-                                        SystemClock.sleep(sleeps.get(key));
-                                    }
-                                }
-                            }
-                        }
-                    };
-                    thread.start();
-                    threads.put(key, thread);
                 }
             }
         }
     }
 
+    private void startThread(Account accountStream, String key){
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (fetch) {
+                    taks(accountStream);
+                    fetch = (Helper.liveNotifType(getApplicationContext()) == Helper.NOTIF_DELAYED);
+                    if (sleeps.containsKey(key) && sleeps.get(key) != null) {
+                        try {
+                            Thread.sleep(sleeps.get(key));
+                        } catch (InterruptedException e) {
+                            SystemClock.sleep(sleeps.get(key));
+                        }
+                    }
+                }
+            }
+        };
+        thread.setName("notif_delayed_"+key);
+        thread.start();
+    }
 
     @Nullable
     @Override
@@ -337,6 +368,18 @@ public class LiveNotificationDelayedService extends Service {
                                     message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_favourite));
                                 else
                                     message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_favourite));
+                            } else {
+                                canSendBroadCast = false;
+                            }
+                            break;
+                        case "follow_request":
+                            notifType = Helper.NotifType.FOLLLOW;
+                            if (notif_follow) {
+                                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                    message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_follow_request));
+                                else
+                                    message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_follow_request));
+                                targeted_account = notification.getAccount().getId();
                             } else {
                                 canSendBroadCast = false;
                             }

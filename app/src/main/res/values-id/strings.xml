@@ -126,6 +126,18 @@
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="other">%d detik</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="other">%d menit</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="other">%d jam</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="other">%d hari</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Peringatan</string>
     <string name="toot_placeholder">Apa yang Anda pikirkan?</string>
@@ -134,8 +146,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">Tulis sebuah kutipan</string>
     <string name="toot_title_reply">Balas ke sebuah kutipan</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Tulis sebuah queet</string>
+    <string name="queet_title_reply">Balas sebuah queet</string>
     <string name="toot_select_image">Pilih media</string>
     <string name="toot_select_image_error">Terjadi kesalahan saat memilih media!</string>
     <string name="toot_delete_media">Hapus media ini?</string>
@@ -198,11 +210,12 @@
     <string name="notif_reblog">tingkatkan status Kamu</string>
     <string name="notif_favourite">status kesukaan Kamu</string>
     <string name="notif_follow">mengikutimu</string>
+    <string name="notif_follow_request">meminta untuk mengikuti anda</string>
     <plurals name="other_notifications">
         <item quantity="other">dan %d pemberitahuan lainnya</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d like</item>
     </plurals>
     <string name="delete_notification_ask">Hapus pemberitahuan?</string>
     <string name="delete_notification_ask_all">Hapus semua pemberitahuan?</string>
@@ -214,7 +227,7 @@
     <string name="pinned_toots">Disematkan</string>
     <!-- TOAST -->
     <string name="client_error">Tidak menemukan id klien!</string>
-    <string name="connect_error">Unable to connect to instance domain!</string>
+    <string name="connect_error">Tidak dapat terhubung ke instance domain!</string>
     <string name="no_internet">Tidak ada koneksi internet!</string>
     <string name="toast_block">Akun diblokir!</string>
     <string name="toast_unblock">Akun tidak lagi diblokir!</string>
@@ -239,7 +252,7 @@
     <string name="nothing_to_do">Tidak dapat diambil tindakan</string>
     <string name="toast_saved">Media telah tersimpan!</string>
     <string name="toast_error_translate">Terjadi kesalahan saat menerjemahkan!</string>
-    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
+    <string name="toast_error_translations_disabled">Terjemahan dinonaktifkan di pengaturan</string>
     <string name="toast_toot_saved">Konsep tersimpan!</string>
     <string name="toast_error_char_limit">Apakah anda yakin contoh ini memungkinkan jumlah karakter ini? biasanya, nilai mendekati 500 karakter.</string>
     <string name="toast_visibility_changed">Visibilitas kutipan telah diubah untuk akun %1$s</string>
@@ -261,13 +274,14 @@
     <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
     <string name="set_notif_follow_add">Beritahu ketika seseorang menyukai status Anda</string>
     <string name="set_notif_follow_mention">Beritahu ketika seseorang menyebut Anda</string>
-    <string name="set_notif_follow_poll">Notify when a poll ended</string>
+    <string name="set_notif_follow_poll">Beritahu ketika pemilihan berakhir</string>
     <string name="set_share_validation">Tampilkan dialog konfirmasi sebelum meningkatkan</string>
     <string name="set_share_validation_fav">Tampilkan dialog konfirmasi sebelum menambahkan ke favorit</string>
     <string name="set_wifi_only">Beritahu hanya di WIFI</string>
     <string name="set_notify">Memberitahu?</string>
     <string name="set_notif_silent">Diamkan pemberitahuan</string>
     <string name="set_nsfw_timeout">Lihat NSFW waktu habis (detik, 0 berarti mati)</string>
+    <string name="set_med_desc_timeout">Waktu Keterangan Media habis (detik, 0 berarti mati)</string>
     <string name="settings_title_profile">Ubah profil</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -276,7 +290,7 @@
     <string name="set_save_changes">Simpan perubahan</string>
     <string name="set_header_picture_overlay">Pilih gambar header</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots in replies when chars are over:</string>
+    <string name="set_automatically_split_toot">Pisah toots secara otomatis di balasan ketika karakter lebih dari:</string>
     <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
     <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
     <string name="settings_time_from">Antara</string>
@@ -286,15 +300,10 @@
     <string name="settings_hour_init">Waktu mulai</string>
     <string name="settings_hour_end">Waktu akhir</string>
     <string name="embedded_browser">Gunakan browser built-in</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Tab kustom</string>
     <string name="use_javascript">Aktifkan Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Izinkan cookie pihak ketiga</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Tidak</item>
-    </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>Dark</item>
@@ -936,6 +945,9 @@ https://yandex.ru/legal/confidential/?lang=en
     <plurals name="number_of_vote">
         <item quantity="other">%d votes</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="other">%d voters</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Single choice</item>
         <item>Multiple choices</item>
@@ -1008,6 +1020,8 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="link_color_title">Links</string>
     <string name="link_color">Change the color of links (URLs, mentions, tags, etc.) in messages</string>
     <string name="boost_header_color_title">Reblogs header</string>
+    <string name="displayname_title">Change the color of display name at the top of messages</string>
+    <string name="username_title">Change the color of the user name at the top of messages</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Posts</string>
     <string name="background_status">Background color of posts in timelines</string>
@@ -1041,4 +1055,45 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="export_theme">Export the theme</string>
     <string name="export_theme_title">Tap here to export the current theme</string>
     <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
+    <string name="export_bookmarks">Export bookmarks to the instance</string>
+    <string name="import_bookmarks">Import bookmarks from the instance</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Blocked</string>
+    <string name="poll_finish_in">End in %s</string>
+    <string name="release_note_title">What\'s new in %s</string>
+    <string name="follow_account_update">You can follow my account for updates</string>
+    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s (%2$s)</string>
 </resources>

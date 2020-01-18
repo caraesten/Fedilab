@@ -126,6 +126,22 @@
     <string name="date_minutes">%d λεπ.</string>
     <string name="date_hours">%d ώρ.</string>
     <string name="date_day">%d ημ.</string>
+    <plurals name="date_seconds_polls">
+        <item quantity="one">%d δευτερόλεπτο</item>
+        <item quantity="other">%d δευτερόλεπτα</item>
+    </plurals>
+    <plurals name="date_minutes_polls">
+        <item quantity="one">%d λεπτό</item>
+        <item quantity="other">%d λεπτά</item>
+    </plurals>
+    <plurals name="date_hours_polls">
+        <item quantity="one">%d ώρα</item>
+        <item quantity="other">%d ώρες</item>
+    </plurals>
+    <plurals name="date_day_polls">
+        <item quantity="one">%d ημέρα</item>
+        <item quantity="other">%d ημέρες</item>
+    </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Προειδοποίηση</string>
     <string name="toot_placeholder">Τι συλλογιέσαι;</string>
@@ -198,6 +214,7 @@
     <string name="notif_reblog">ενίσχυσε την κατάστασή σου</string>
     <string name="notif_favourite">έδειξε προτίμηση στην κατάστασή σου</string>
     <string name="notif_follow">άρχισε να σε παρακολουθεί</string>
+    <string name="notif_follow_request">asked to follow you</string>
     <plurals name="other_notifications">
         <item quantity="one">και ακόμη μία ειδοποίηση</item>
         <item quantity="other">και %d άλλες ειδοποιήσεις</item>
@@ -270,6 +287,7 @@
     <string name="set_notify">Ειδοποιήσεις;</string>
     <string name="set_notif_silent">Άηχες Ειδοποιήσεις</string>
     <string name="set_nsfw_timeout">Χρόνος λήξης της προβολής των Ακατάλληλων (σε δευτερόλεπτα· το 0 σημαίνει ανενεργό)</string>
+    <string name="set_med_desc_timeout">Χρόνος λήξης της Περιγραφής των Πολυμέσων (σε δευτερόλεπτα, το 0 σημαίνει ανενεργό)</string>
     <string name="settings_title_profile">Επεξεργασία του προσώπου</string>
     <string name="settings_title_custom_sharing">Προσαρμοσμένη κοινοποίηση</string>
     <string name="settings_custom_sharing_url">Η διεύθυνση URL&#8230; τς προσαρμοσμένης μοιρασιάς</string>
@@ -292,11 +310,6 @@
     <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
     <string name="expand_cw">Αυτόματη επέκταση της Προειδοποίησης Περιεχομένου</string>
     <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
-    <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>Καθόλου</item>
-    </string-array>
     <string name="your_api_key">Το API κλειδί σου· μπορείς να το αφήσεις κενό για το Yandex</string>
     <string-array name="settings_theme">
         <item>Σκοτεινό</item>
@@ -862,7 +875,7 @@
     <string name="set_remember_position_indication">Αν απενεργοποιηθεί, η εφαρμογή θα φορτώνει, πάντα, τις τελευταίες καταστάσεις</string>
     <string name="set_blur_sensitive_indication">Αν απενεργοποιηθεί, τα πολυμέσα με ευαίσθητο περιεχόμενο θα αποκρύπτονται με ένα πλήκτρο</string>
     <string name="set_long_press_media_indication">Αποθήκευση των πολυμέσων, στις πλήρης διαστάσεις τους, με πάτημα διαρκείας στην προ-επισκόπηση</string>
-    <string name="set_display_timeline_in_list_indication">Add an ellipse button at the top right for listing all tags/instances/lists</string>
+    <string name="set_display_timeline_in_list_indication">Προσθήκη ενός πλήκτρου αποσιωπητικών, πάνω δεξιά, για την παράθεση όλων των ετικετών/υποστάσεων/κατάστιχων</string>
     <string name="live_notif_indication">Διατήρηση συνεχής της σύνδεσης στην API, που παρέχει τη ροή, για ζωντανές ειδοποιήσεις.</string>
     <string name="set_enable_time_slot_indication">During the time slot, the app will send notifications. You can reverse (ie: silent) this time slot with the right spinner.</string>
     <string name="set_display_fedilab_features_button_indication">Προβολή ενός Φενδιλάμπιου πλήκτρου κάτω από την εικόνα του προσώπου. Είναι μια συντόμευση, η οποία επιτρέπει την πρόσβαση σε λειτουργίες της εφαρμογής.</string>
@@ -937,6 +950,10 @@
         <item quantity="one">%d ψήφος</item>
         <item quantity="other">%d ψήφοι</item>
     </plurals>
+    <plurals name="number_of_voters">
+        <item quantity="one">%d ψηφοφόρος</item>
+        <item quantity="other">%d ψηφοφόροι</item>
+    </plurals>
     <string-array name="poll_choice_type">
         <item>Μονή επιλογή</item>
         <item>Πολλαπλές επιλογές</item>
@@ -1009,6 +1026,8 @@
     <string name="link_color_title">Σύνδεσμοι</string>
     <string name="link_color">Αλλαγή των χρωμάτων των συνδέσμων (URL, μνημονεύσεις, ετικέτες, κλπ) στα μηνύματα</string>
     <string name="boost_header_color_title">Reblogs header</string>
+    <string name="displayname_title">Αλλαγή του χρώματος, του προβαλλόμενου ονόματος, στην κορυφή των μηνυμάτων</string>
+    <string name="username_title">Αλλαγή του χρώματος, του ονόματος χρήστη, στην κορυφή των μηνυμάτων</string>
     <string name="boost_header_color">Change the color of the header for reblogs</string>
     <string name="background_status_title">Δημοσιεύσεις</string>
     <string name="background_status">Χρώμα παρασκηνίου των δημοσιεύσεων στις χρονοστήλες</string>
@@ -1020,26 +1039,67 @@
     <string name="pin_tag">Καρφίτσωμα αυτής της ετικέτας</string>
     <string name="logo_of_the_instance">Το λογότυπο της υπόστασης</string>
     <string name="edit_profile">Επεξεργασία του προσώπου</string>
-    <string name="make_an_action">Make an action</string>
+    <string name="make_an_action">Επέλεξε μία κίνηση</string>
     <string name="translation">Μετάφραση</string>
     <string name="image_preview">Προεπισκόπηση εικόνας</string>
-    <string name="text_color_title">Text color</string>
+    <string name="text_color_title">Χρώμα κειμένου</string>
     <string name="text_color">Change the text color in pots</string>
-    <string name="apply_changes">Apply changes</string>
-    <string name="restart_message">You need to restart the application to apply changes</string>
-    <string name="restart">Restart</string>
-    <string name="pref_custom_theme">Use a custom theme</string>
-    <string name="pref_custom_theme_summary">Allow to override colors of the  selected theme above</string>
-    <string name="theming">Theming</string>
-    <string name="store_before">Store before</string>
-    <string name="data_export_theme">The theme was exported</string>
-    <string name="data_export_theme_success">The theme has been successfully exported in CSV</string>
-    <string name="pref_colored_status_bar_summary">Apply the primary color to the status bar</string>
-    <string name="pref_colored_status_bar_title">Status bar color</string>
-    <string name="restore_default_theme">Restore a default theme</string>
-    <string name="import_theme">Import a theme</string>
-    <string name="import_theme_title">Tap here to import a theme from a previous export</string>
-    <string name="export_theme">Export the theme</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
-    <string name="theme_file_error">An error occurred when selecting the theme file</string>
+    <string name="apply_changes">Εφαρμογή των αλλαγών</string>
+    <string name="restart_message">Θα πρέπει να επανεκκινήσεις την εφαρμογή για να εφαρμοστούν οι αλλαγές</string>
+    <string name="restart">Επανεκκίνηση</string>
+    <string name="pref_custom_theme">Χρήση ενός προσαρμοσμένου θέματος</string>
+    <string name="pref_custom_theme_summary">Να επιτρέπεται η αντικατάσταση των χρωμάτων του παραπάνω επιλεγμένου θέματος</string>
+    <string name="theming">Θεματισμός</string>
+    <string name="store_before">Πρώτα αποθήκευση</string>
+    <string name="data_export_theme">Έγινε εξαγωγή του θέματος</string>
+    <string name="data_export_theme_success">Έγινε επιτυχής εξαγωγή του θέματος σε μορφή CSV</string>
+    <string name="pref_colored_status_bar_summary">Εφαρμογή του πρωτεύοντος χρώματος στη γραμμή κατάστασης</string>
+    <string name="pref_colored_status_bar_title">Χρώμα γραμμής κατάστασης</string>
+    <string name="restore_default_theme">Αποκατάσταση ενός προεπιλεγμένου θέματος</string>
+    <string name="import_theme">Εισαγωγή ενός θέματος</string>
+    <string name="import_theme_title">Πίεσε εδώ, για να γίνει εισαγωγή ενός θέματος, από προηγούμενη εξαγωγή</string>
+    <string name="export_theme">Εξαγωγή του θέματος</string>
+    <string name="export_theme_title">Πίεσε εδώ για να εξάγεις το τωρινό θέμα</string>
+    <string name="theme_file_error">Παρουσιάστηκε κάποιο σφάλμα στην επιλογή του αρχείου με το θέμα</string>
+    <string name="label_theme_picker">Theme Picker</string>
+    <string name="pref_theme_summary">Select a pre-installed theme</string>
+    <string name="pref_theme_title">Themes</string>
+    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
+    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
+    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
+    <string name="pref_background_color_title">Background color</string>
+    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_title">Accent color</string>
+    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_title">Primary color</string>
+    <string name="export_bookmarks">Εξαγωγή των σελιδοδεικτών στην υπόσταση</string>
+    <string name="import_bookmarks">Εισαγωγή των σελιδοδεικτών από την υπόσταση</string>
+    <string name="user_count">User count</string>
+    <string name="status_count">Status count</string>
+    <string name="instance_count">Instance count</string>
+    <string name="blocked">Φραγμένοι</string>
+    <string name="poll_finish_in">Να τελειώσει στις %s</string>
+    <string name="release_note_title">Τι είναι νέο στο %s</string>
+    <string name="follow_account_update">Μπορείς να παρακολουθείς των λογαριασμό μου για ενημερώσεις</string>
+    <string name="no_instance_reccord">Αυτή η υπόσταση δεν είναι διαθέσιμη στην https://instances.social</string>
+    <string name="display_full_link">Display full link</string>
+    <string name="share_link">Share link</string>
+    <string name="link_copy">The URL has been copied to the clipboard</string>
+    <string name="open_other_app">Open with another app</string>
+    <string name="check_redirect">Check redirect</string>
+    <string name="no_redirect">This URL does not redirect</string>
+    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
+    <string name="set_user_agent">Change the user agent</string>
+    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
+    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
+    <string name="set_utm_parameters">Remove UTM parameters</string>
+    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="action_trends">Trends</string>
+    <string name="trending_now">Trending now</string>
+    <string name="talking_about">%d people talking</string>
+    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
+    <string name="identity_proofs">Identity proofs</string>
+    <string name="verified_user">Verified identity</string>
+    <string name="verified_by">Verified by %1$s (%2$s)</string>
 </resources>

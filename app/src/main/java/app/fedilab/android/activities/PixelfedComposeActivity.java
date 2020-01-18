@@ -512,7 +512,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         String content = toot_content.getText().toString();
         String contentCount = content;
         if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            contentCount = contentCount.replaceAll("(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9.\\-]+[a-z0-9]+)", "$1@$3");
+            contentCount = contentCount.replaceAll("(?i)(^|[^/\\w])@(([a-z0-9_]+)@[a-z0-9\\.\\-]+[a-z0-9]+)", "$1@$3");
             Matcher matcherALink = Patterns.WEB_URL.matcher(contentCount);
             while (matcherALink.find()) {
                 final String url = matcherALink.group(1);
@@ -559,10 +559,10 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         setContentView(R.layout.activity_pixelfed_compose);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(PixelfedComposeActivity.this, R.color.cyanea_primary)));
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.toot_action_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(PixelfedComposeActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
@@ -1277,7 +1277,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         toot.setSensitive(isSensitive);
         toot.setVisibility(visibility);
         toot.setMedia_attachments(attachments);
-        toot.setContent(tootContent);
+        toot.setContent(PixelfedComposeActivity.this, tootContent);
         if (timestamp == null)
             if (scheduledstatus == null)
                 new PostStatusAsyncTask(getApplicationContext(), social, account, toot, PixelfedComposeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1960,7 +1960,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         toot.setSensitive(isSensitive);
         toot.setMedia_attachments(attachments);
         toot.setVisibility(visibility);
-        toot.setContent(currentContent);
+        toot.setContent(PixelfedComposeActivity.this, currentContent);
 
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
