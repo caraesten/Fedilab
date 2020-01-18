@@ -1119,4 +1119,6 @@
     <string name="identity_proofs">Подтверждение личности</string>
     <string name="verified_user">Подтверждённая личность</string>
     <string name="verified_by">Подтверждено %1$s (%2$s)</string>
+    <string name="remove_notification">Delete the notification</string>
+    <string name="display_more_options">Display more options</string>
 </resources>
