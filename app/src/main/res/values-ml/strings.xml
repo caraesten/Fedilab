@@ -85,6 +85,8 @@
     <string name="live_notif">തത്സമയ അറിയിപ്പുകൾ</string>
     <!-- Status -->
     <string name="no_status">പ്രദർശിപ്പിക്കാൻ ടൂട്ടുകൾ ഇല്ല</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">ബൂസ്റ്റ് ചെയ്തത് %1$s</string>
     <string name="favourite_add">ഈ ടൂട്ടിനെ പ്രിയപ്പെ ട്ടവയിലേക്ക് ചേർക്കട്ടെ?</string>
     <string name="favourite_remove">ഈ ടൂട്ടിനെ പ്രിയപ്പെ ട്ടവയിൽ നിന്ന് മാറ്റട്ടെ?</string>
@@ -1103,4 +1105,7 @@
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
