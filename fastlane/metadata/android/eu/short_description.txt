@@ -1,1 +1,1 @@
-Fedilab Fedibertso banatua atzitzeko funtzio anitzeko Android bezeroa da
+Fedilab fedibertso banatua atzitzeko funtzio anitzeko Android bezeroa da, mikro-blogintzarako, argazkiak partekatzeko, edo bideoak ostatatzeko erabili daiteke.

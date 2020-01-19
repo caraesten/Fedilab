@@ -1,1 +1,1 @@
-Fedilab é un cliente Android multifuncional para acceder ao Fediverso distribuído
+Fedilab é un cliente Android multifuncional para acceder ao Fediverso distribuído, consistente en microbloggin, compartición de fotos e aloxamento de vídeo.
