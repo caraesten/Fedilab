@@ -85,6 +85,8 @@
     <string name="live_notif">即時通知</string>
     <!-- Status -->
     <string name="no_status">尚無嘟文</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">被 %1$s 轉嘟</string>
     <string name="favourite_add">將此嘟文新增到您的最愛？</string>
     <string name="favourite_remove">從您的最愛中移除此嘟文？</string>
@@ -1096,4 +1098,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="verified_by">由 %1$s 驗證 (%2$s)</string>
     <string name="remove_notification">刪除通知</string>
     <string name="display_more_options">顯示更多選項</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
