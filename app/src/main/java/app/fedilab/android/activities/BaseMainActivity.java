@@ -541,7 +541,7 @@ public abstract class BaseMainActivity extends BaseActivity
             TabLayout.Tab pfTabHome = tabLayout.newTab();
             TabLayout.Tab pfTabLocal = tabLayout.newTab();
             TabLayout.Tab pfTabNotification = tabLayout.newTab();
-            TabLayout.Tab pfStories = tabLayout.newTab();
+          //  TabLayout.Tab pfStories = tabLayout.newTab();
             //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
 
@@ -552,7 +552,7 @@ public abstract class BaseMainActivity extends BaseActivity
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
             pfTabNotification.setCustomView(R.layout.tab_badge);
-            pfStories.setCustomView(R.layout.tab_badge);
+            //pfStories.setCustomView(R.layout.tab_badge);
             //pfTabDiscover.setCustomView(R.layout.tab_badge);
 
 
@@ -575,21 +575,21 @@ public abstract class BaseMainActivity extends BaseActivity
             ImageView iconDiscover = pfTabDiscover.getCustomView().findViewById(R.id.tab_icon);
             iconDiscover.setImageResource(R.drawable.ic_people);*/
 
-            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            /*@SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconStories = pfStories.getCustomView().findViewById(R.id.tab_icon);
-            iconStories.setImageResource(R.drawable.ic_story);
+            iconStories.setImageResource(R.drawable.ic_story);*/
 
 
             iconHome.setContentDescription(getString(R.string.home_menu));
             // iconDiscover.setContentDescription(getString(R.string.overview));
             iconLocal.setContentDescription(getString(R.string.local));
             iconNotif.setContentDescription(getString(R.string.notifications));
-            iconStories.setContentDescription(getString(R.string.stories));
+            //iconStories.setContentDescription(getString(R.string.stories));
 
             tabLayout.addTab(pfTabHome);
             tabLayout.addTab(pfTabLocal);
             tabLayout.addTab(pfTabNotification);
-            tabLayout.addTab(pfStories);
+           // tabLayout.addTab(pfStories);
             //    tabLayout.addTab(pfTabDiscover);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -2566,12 +2566,12 @@ public abstract class BaseMainActivity extends BaseActivity
                     bundle.putSerializable("type", DisplayNotificationsFragment.Type.ALL);
                     fragment.setArguments(bundle);
                     return fragment;
-                }else if (position == 3) {
+                }/*else if (position == 3) {
                     DisplayStoriesFragment fragment = new DisplayStoriesFragment();
                     bundle.putSerializable("type", RetrieveStoriesAsyncTask.type.ME);
                     fragment.setArguments(bundle);
                     return fragment;
-                }
+                }*/
                 /*else if( position == 3) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_DISCOVER);
                 }*/

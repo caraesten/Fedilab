@@ -60,6 +60,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -89,6 +90,7 @@ import net.gotev.uploadservice.UploadServiceSingleBroadcastReceiver;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
 import org.apache.poi.util.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -207,6 +209,8 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     private LinearLayout pickup_picture;
     private SliderView imageSlider;
     private SliderAdapter sliderAdapter;
+    private CheckBox pixelfed_story;
+
     private BroadcastReceiver imageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -219,7 +223,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     private BroadcastReceiver add_new_media = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            pixelfed_story.setEnabled(true);
             JSONObject response = null;
             ArrayList<String> successfullyUploadedFiles = null;
             try {
@@ -432,7 +436,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         return textw;
     }
 
-    static private void upload(Activity activity, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+    static private void upload(Activity activity, boolean pixelfedStory, Uri inUri, String fname, UploadServiceSingleBroadcastReceiver uploadReceiver) {
         String uploadId = UUID.randomUUID().toString();
         if (uploadReceiver != null) {
             uploadReceiver.setUploadID(uploadId);
@@ -480,6 +484,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             IOUtils.closeQuietly(tempOut);
         }
 
+
         try {
             final String fileName = FileNameCleaner.cleanFileName(fname);
             SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -487,6 +492,9 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             int maxUploadRetryTimes = sharedpreferences.getInt(Helper.MAX_UPLOAD_IMG_RETRY_TIMES, 3);
             String url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/v1/media";
+            if( pixelfedStory) {
+                url = scheme + "://" + Helper.getLiveInstance(activity) + "/api/stories/v1/add";
+            }
             UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
             uploadConfig
                     .setClearOnActionForAllStatuses(true);
@@ -496,13 +504,14 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             request.addHeader("Authorization", "Bearer " + token);
             request.setNotificationConfig(uploadConfig);
             request.addFileToUpload(uri.toString().replace("file://", ""), "file");
-            request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes)
-                    .startUpload();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+            if( !pixelfedStory) {
+                request.addParameter("filename", fileName).setMaxRetries(maxUploadRetryTimes);
+            }
+            request.startUpload();
+        } catch (MalformedURLException | FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 
     public static int countLength(UpdateAccountInfoAsyncTask.SOCIAL social, MastalabAutoCompleteTextView toot_content) {
@@ -634,14 +643,14 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         toot_content = findViewById(R.id.toot_content);
         int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         toot_content.setInputType(newInputType);
-
-
+        ScrollView composer_container = findViewById(R.id.composer_container);
+        pixelfed_story = findViewById(R.id.pixelfed_story);
         //There is no media the button is hidden
         upload_media.setVisibility(View.INVISIBLE);
         toot_sensitive = findViewById(R.id.toot_sensitive);
         LinearLayout drawer_layout = findViewById(R.id.drawer_layout);
         ImageButton toot_emoji = findViewById(R.id.toot_emoji);
-
+        LinearLayout bottom_bar_tooting  = findViewById(R.id.bottom_bar_tooting);
         isScheduled = false;
         if (sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
             final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
@@ -655,7 +664,18 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         } else {
             toot_emoji.setVisibility(View.GONE);
         }
-
+        TextView indication_story = findViewById(R.id.indication_story);
+        pixelfed_story.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if( isChecked){
+                composer_container.setVisibility(View.GONE);
+                indication_story.setVisibility(View.VISIBLE);
+                bottom_bar_tooting.setVisibility(View.GONE);
+            }else{
+                composer_container.setVisibility(View.VISIBLE);
+                indication_story.setVisibility(View.GONE);
+                bottom_bar_tooting.setVisibility(View.VISIBLE);
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -797,9 +817,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     startActivityForResult(intent, PICK_IMAGE);
                 } else {
                     intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    }
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
@@ -831,9 +849,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     startActivityForResult(intent, PICK_IMAGE);
                 } else {
                     intent.setType("image/* video/* audio/mpeg audio/opus audio/flac audio/wav audio/ogg");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    }
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
@@ -871,40 +887,44 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
     private void addNewMedia(JSONObject response, ArrayList<String> successfullyUploadedFiles) {
-
-        Attachment attachment;
-        attachment = API.parseAttachmentResponse(response);
-        boolean alreadyAdded = false;
-        int index = 0;
-        for (Attachment attach_ : attachments) {
-            if (attach_.getId().equals(attachment.getId())) {
-                alreadyAdded = true;
-                break;
+        if( !pixelfed_story.isChecked()) {
+            Attachment attachment;
+            attachment = API.parseAttachmentResponse(response);
+            boolean alreadyAdded = false;
+            int index = 0;
+            for (Attachment attach_ : attachments) {
+                if (attach_.getId().equals(attachment.getId())) {
+                    alreadyAdded = true;
+                    break;
+                }
+                index++;
             }
-            index++;
-        }
-        if (attachment.getPreview_url().contains("no-preview.png") && successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
-            attachment.setPreview_url(successfullyUploadedFiles.get(0));
-        }
-        if (!alreadyAdded) {
-            attachments.add(attachment);
-            sliderAdapter.notifyDataSetChanged();
-            imageSlider.setVisibility(View.VISIBLE);
-            pickup_picture.setVisibility(View.GONE);
-            upload_media.setVisibility(View.VISIBLE);
-            if (attachments.size() < max_media_count)
-                upload_media.setEnabled(true);
-            toot_it.setEnabled(true);
-            toot_sensitive.setVisibility(View.VISIBLE);
-            if (account.isSensitive()) {
-                toot_sensitive.setChecked(true);
+            if (attachment.getPreview_url().contains("no-preview.png") && successfullyUploadedFiles != null && successfullyUploadedFiles.size() > 0) {
+                attachment.setPreview_url(successfullyUploadedFiles.get(0));
             }
-            imageSlider.setCurrentPagePosition(imageSlider.getChildCount());
+            if (!alreadyAdded) {
+                attachments.add(attachment);
+                sliderAdapter.notifyDataSetChanged();
+                imageSlider.setVisibility(View.VISIBLE);
+                pickup_picture.setVisibility(View.GONE);
+                upload_media.setVisibility(View.VISIBLE);
+                if (attachments.size() < max_media_count)
+                    upload_media.setEnabled(true);
+                toot_it.setEnabled(true);
+                toot_sensitive.setVisibility(View.VISIBLE);
+                if (account.isSensitive()) {
+                    toot_sensitive.setChecked(true);
+                }
+                imageSlider.setCurrentPagePosition(imageSlider.getChildCount());
+            } else {
+                if (attachments.size() > index && attachment.getDescription() != null) {
+                    attachments.get(index).setDescription(attachment.getDescription());
+                }
+            }
         } else {
-            if (attachments.size() > index && attachment.getDescription() != null) {
-                attachments.get(index).setDescription(attachment.getDescription());
-            }
+            Toasty.success(getApplicationContext(), getString(R.string.added_to_story), Toast.LENGTH_LONG).show();
         }
+
     }
 
     @Override
@@ -1058,11 +1078,12 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
     private void prepareUpload(Activity activity, Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+        pixelfed_story.setEnabled(false);
         if (uploadReceiver == null) {
             uploadReceiver = new UploadServiceSingleBroadcastReceiver(PixelfedComposeActivity.this);
             uploadReceiver.register(this);
         }
-        new asyncPicture(activity, social, uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new asyncPicture(activity, pixelfed_story.isChecked(), uri, filename, uploadReceiver).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -1091,11 +1112,13 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         }
         upload_media.setEnabled(true);
         toot_it.setEnabled(true);
+        pixelfed_story.setEnabled(true);
     }
 
     @Override
     public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
         JSONObject response = null;
+        pixelfed_story.setEnabled(true);
         try {
             response = new JSONObject(serverResponse.getBodyAsString());
         } catch (JSONException e) {
@@ -1107,6 +1130,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     @Override
     public void onCancelled(Context context, UploadInfo uploadInfo) {
         // your code here
+        pixelfed_story.setEnabled(true);
     }
 
 
@@ -1128,8 +1152,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         int style;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -1269,8 +1292,6 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         }
 
 
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-
         String tootContent = toot_content.getText().toString().trim();
 
         Status toot = new Status();
@@ -1334,19 +1355,16 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         getMenuInflater().inflate(R.menu.main_compose_pixelfed, menu);
         if (restored != -1) {
             MenuItem itemRestore = menu.findItem(R.id.action_restore);
             if (itemRestore != null)
                 itemRestore.setVisible(false);
             MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
-            if (restoredScheduled)
+            if (restoredScheduled || pixelfed_story.isChecked())
                 itemSchedule.setVisible(false);
         }
-
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         return true;
     }
 
@@ -1359,7 +1377,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             String filename = FileNameCleaner.cleanFileName(url);
             upload_media.setEnabled(false);
             toot_it.setEnabled(false);
-            upload(PixelfedComposeActivity.this, uri, filename, uploadReceiver);
+            upload(PixelfedComposeActivity.this, pixelfed_story.isChecked(), uri, filename, uploadReceiver);
         }
     }
 
@@ -2003,13 +2021,14 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
         UploadServiceSingleBroadcastReceiver uploadReceiver;
         String filename;
         UpdateAccountInfoAsyncTask.SOCIAL social;
+        boolean pixelfedStory;
 
-        asyncPicture(Activity activity, UpdateAccountInfoAsyncTask.SOCIAL social, Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
+        asyncPicture(Activity activity, boolean pixelfedStory, Uri uri, String filename, UploadServiceSingleBroadcastReceiver uploadReceiver) {
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;
             this.uploadReceiver = uploadReceiver;
             this.filename = filename;
-            this.social = social;
+            this.pixelfedStory = pixelfedStory;
         }
 
         @Override
@@ -2047,7 +2066,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                     filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
                 }
                 filesMap.put(filename, uriFile);
-                upload(activityWeakReference.get(), uriFile, filename, uploadReceiver);
+                upload(activityWeakReference.get(), pixelfedStory, uriFile, filename, uploadReceiver);
             }
         }
     }

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,9 +24,12 @@ import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.PixelFedStory;
 import app.fedilab.android.client.Entities.PixelFedStoryItem;
+import app.fedilab.android.client.Entities.PollOptions;
+import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
@@ -124,6 +130,41 @@ public class PixelfedAPI {
         if (apiResponse == null)
             apiResponse = new APIResponse();
         apiResponse.setPixelFedStories(pixelFedStories);
+        return apiResponse;
+    }
+
+
+
+    /**
+     * Posts a story
+     *
+     * @param status Status object related to the status
+     * @return APIResponse
+     */
+    public APIResponse postStory(Status status) {
+
+        JsonObject jsonObject = new JsonObject();
+        if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
+            JsonArray mediaArray = new JsonArray();
+            for (Attachment attachment : status.getMedia_attachments())
+                mediaArray.add(attachment.getId());
+            jsonObject.add("media_ids", mediaArray);
+        }
+        ArrayList<PixelFedStory> statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.postJson(getAbsoluteUrl("/add"), 30, jsonObject, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            PixelFedStory statusreturned = parseStory(new JSONObject(response));
+            statuses.add(statusreturned);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPixelFedStories(statuses);
         return apiResponse;
     }
 
@@ -280,7 +321,7 @@ public class PixelfedAPI {
      * @param statusCode int code
      * @param error      Throwable error
      */
-    private void setError(int statusCode, Throwable error) {
+    public void setError(int statusCode, Throwable error) {
         APIError = new Error();
         APIError.setStatusCode(statusCode);
         String message = statusCode + " - " + error.getMessage();
@@ -311,6 +352,8 @@ public class PixelfedAPI {
             APIError.setError(context.getString(R.string.toast_error));
         apiResponse.setError(APIError);
     }
+
+
 
 
     public Error getError() {

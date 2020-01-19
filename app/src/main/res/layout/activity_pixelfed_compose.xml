@@ -93,6 +93,21 @@
                 android:text="@string/upload_media" />
         </LinearLayout>
 
+        <CheckBox
+            android:id="@+id/pixelfed_story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pixelfed_story"/>
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green"
+            android:background="@drawable/green_border"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/story_indication"
+            android:id="@+id/indication_story"/>
         <ScrollView
             android:id="@+id/composer_container"
             android:layout_width="match_parent"
@@ -176,6 +191,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/button_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -219,6 +235,7 @@
                     android:buttonTint="?attr/iconColor"
                     android:text="@string/cw"
                     android:textColor="?attr/iconColor" />
+
 
                 <TextView
                     android:id="@+id/toot_space_left"
