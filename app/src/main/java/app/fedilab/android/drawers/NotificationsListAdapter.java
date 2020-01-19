@@ -234,7 +234,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         Helper.changeDrawableColor(context, R.drawable.ic_repeat, iconColor);
         Helper.changeDrawableColor(context, R.drawable.ic_plus_one, iconColor);
         Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, iconColor);
-
+        //holder.status_privacy.setContentDescription(context.getString(R.string.toot_visibility_tilte));
 
         holder.status_reply_count.setTextColor(iconColor);
         holder.status_favorite_count.setTextColor(iconColor);

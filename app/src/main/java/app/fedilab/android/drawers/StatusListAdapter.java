@@ -700,7 +700,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 lstHolders.add(holder);
             }
 
-
+            //holder.status_privacy.setContentDescription(context.getString(R.string.toot_visibility_tilte));
             holder.startUpdateTimer();
             final Status status = statuses.get(i);
 

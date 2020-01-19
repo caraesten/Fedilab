@@ -977,7 +977,6 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="15dp"
-                        android:contentDescription="@string/toot_visibility_tilte"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/status_more"
                         app:layout_constraintTop_toTopOf="parent" />
