@@ -240,6 +240,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
+                        android:textIsSelectable="true"
                         android:id="@+id/account_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
