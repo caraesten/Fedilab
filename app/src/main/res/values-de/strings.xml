@@ -1091,6 +1091,6 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="identity_proofs">Identitätsnachweise</string>
     <string name="verified_user">Verifizierte Identität</string>
     <string name="verified_by">Verifiziert von %1$s (%2$s)</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
+    <string name="remove_notification">Benachrichtigung löschen</string>
+    <string name="display_more_options">Weitere Optionen anzeigen</string>
 </resources>
