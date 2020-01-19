@@ -85,6 +85,8 @@
     <string name="live_notif">Notificaciones</string>
     <!-- Status -->
     <string name="no_status">Ningún toot para mostrar</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Retooteado por %1$s</string>
     <string name="favourite_add">¿Agregar este toot a favoritos?</string>
     <string name="favourite_remove">¿Remover este toot de tus favoritos?</string>
@@ -1099,4 +1101,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="verified_by">Verificado por %1$s (%2$s)</string>
     <string name="remove_notification">Eliminar la notificación</string>
     <string name="display_more_options">Mostrar más opciones</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
