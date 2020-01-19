@@ -85,6 +85,8 @@
     <string name="live_notif">Echtzeit-Benachrichtigungen</string>
     <!-- Status -->
     <string name="no_status">Kein Toot zum Anzeigen</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Geteilt von %1$s</string>
     <string name="favourite_add">Diesen Toot deinen Favoriten hinzufügen?</string>
     <string name="favourite_remove">Diesen Toot aus Ihren Favoriten entfernen?</string>
@@ -1093,4 +1095,7 @@ Sobald du die ersten Buchstaben eintippst, werden Namensvorschläge angezeigt\n\
     <string name="verified_by">Verifiziert von %1$s (%2$s)</string>
     <string name="remove_notification">Benachrichtigung löschen</string>
     <string name="display_more_options">Weitere Optionen anzeigen</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
