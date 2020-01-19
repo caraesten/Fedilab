@@ -951,7 +951,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 popup.getMenuInflater()
                         .inflate(R.menu.main, popup.getMenu());
 
-                if (social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if (social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && social != UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                     MenuItem action_about_instance = popup.getMenu().findItem(R.id.action_about_instance);
                     if (action_about_instance != null)
                         action_about_instance.setVisible(false);

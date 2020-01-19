@@ -234,7 +234,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         Helper.changeDrawableColor(context, R.drawable.ic_repeat, iconColor);
         Helper.changeDrawableColor(context, R.drawable.ic_plus_one, iconColor);
         Helper.changeDrawableColor(context, R.drawable.ic_pin_drop, iconColor);
-        //holder.status_privacy.setContentDescription(context.getString(R.string.toot_visibility_tilte));
+
+
 
         holder.status_reply_count.setTextColor(iconColor);
         holder.status_favorite_count.setTextColor(iconColor);
@@ -393,6 +394,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 status.setImageFound(true);
                 Status.makeImage(context, NotificationsListAdapter.this, status);
             }
+
+            holder.status_privacy.setOnClickListener(view -> {
+                String v = status.getVisibility();
+                holder.status_privacy.setContentDescription(context.getString(R.string.toot_visibility_tilte) + ": " +  v);
+            });
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());

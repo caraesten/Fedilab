@@ -695,7 +695,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 lstHolders.add(holder);
             }
 
-            //holder.status_privacy.setContentDescription(context.getString(R.string.toot_visibility_tilte));
+
             holder.startUpdateTimer();
             final Status status = statuses.get(i);
 
@@ -711,6 +711,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             status.setItemViewType(viewHolder.getItemViewType());
 
+            holder.status_privacy.setOnClickListener(view -> {
+                String v = status.getVisibility();
+                holder.status_privacy.setContentDescription(context.getString(R.string.toot_visibility_tilte)+": " + v);
+            });
 
             if (type == RetrieveFeedsAsyncTask.Type.CONTEXT && holder.status_reply_indicator_top != null) {
 
