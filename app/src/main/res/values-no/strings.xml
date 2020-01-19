@@ -85,6 +85,8 @@
     <string name="live_notif">Direktevarsler</string>
     <!-- Status -->
     <string name="no_status">Ingen toots å vise</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Boostet av %1$s</string>
     <string name="favourite_add">Legge dette tootet til dine favoritter?</string>
     <string name="favourite_remove">Fjerne dette tootet fra favorittene dine?</string>
@@ -1095,4 +1097,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
