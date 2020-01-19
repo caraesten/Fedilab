@@ -557,13 +557,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
         if (apiResponse.getError() != null) {
-            if (apiResponse.getError().getError().contains("422")) {
-                Toasty.error(context, context.getString(R.string.toast_error_char_limit), Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_SHORT).show();
-                return;
-            }
+            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_SHORT).show();
+            return;
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

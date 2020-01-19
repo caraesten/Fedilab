@@ -1498,10 +1498,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
     public void onPostStatusAction(APIResponse apiResponse) {
         if (apiResponse.getError() != null) {
             toot_it.setEnabled(true);
-            if (apiResponse.getError().getError().contains("422")) {
-                showAToast(getString(R.string.toast_error_char_limit));
-                return;
-            } else if (apiResponse.getError().getStatusCode() == -33) {
+            if (apiResponse.getError().getStatusCode() == -33) {
                 storeToot(false, true);
             } else {
                 showAToast(apiResponse.getError().getError());

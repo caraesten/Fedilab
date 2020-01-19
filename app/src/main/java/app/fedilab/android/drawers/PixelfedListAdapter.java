@@ -186,17 +186,12 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
         if (apiResponse.getError() != null) {
-            if (apiResponse.getError().getError().contains("422")) {
-                Toasty.error(context, context.getString(R.string.toast_error_char_limit), Toast.LENGTH_SHORT).show();
-                return;
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             } else {
-                if (apiResponse.getError().getError().length() < 100) {
-                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
-                } else {
-                    Toasty.error(context, context.getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
-                }
-                return;
+                Toasty.error(context, context.getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
             }
+            return;
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
 
