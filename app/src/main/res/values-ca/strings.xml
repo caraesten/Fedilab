@@ -85,8 +85,8 @@
     <string name="live_notif">Notificacions en directe</string>
     <!-- Status -->
     <string name="no_status">Cap bram per mostrar</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">No hi ha històries per mostrar</string>
+    <string name="stories">Històries</string>
     <string name="reblog_by">Difós per %1$s</string>
     <string name="favourite_add">Afegir aquest bram als preferits?</string>
     <string name="favourite_remove">Esborrar aquest bram dels preferits?</string>
@@ -1097,7 +1097,7 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Suprimir la notificació</string>
     <string name="display_more_options">Mostrar més opcions</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="pixelfed_story">És una història Pixelfed</string>
+    <string name="story_indication">Puja un contingut, serà automàticament afegit a la vostra història Pixelfed.</string>
+    <string name="added_to_story">Contingut afegit correctament a la vostra història!</string>
 </resources>
