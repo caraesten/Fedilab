@@ -84,6 +84,8 @@
     <string name="live_notif">Live-notifikationer</string>
     <!-- Status -->
     <string name="no_status">Ingen toot at vise</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Boostet af %1$s</string>
     <string name="favourite_add">Føj dette toot til dine favoritter?</string>
     <string name="favourite_remove">Fjern dette toot fra dine favoritter?</string>
@@ -1104,4 +1106,7 @@
     <string name="verified_by">Bekræftet af %1$s (%2$s)</string>
     <string name="remove_notification">Slet notifikationen</string>
     <string name="display_more_options">Vis flere muligheder</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

@@ -84,6 +84,8 @@
     <string name="live_notif">Thông báo trực tiếp</string>
     <!-- Status -->
     <string name="no_status">Không thổi còi để hiển thị</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Được thúc đẩy bởi %1$s</string>
     <string name="favourite_add">Thêm cái còi này vào mục yêu thích của bạn?</string>
     <string name="favourite_remove">Loại bỏ thổi còi này khỏi mục yêu thích của bạn?</string>
@@ -1093,4 +1095,7 @@ và %d thông báo khác</item>
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

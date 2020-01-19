@@ -84,6 +84,8 @@
     <string name="live_notif">Anlık Bildirimler</string>
     <!-- Status -->
     <string name="no_status">Görüntülenecek yazı yok</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">%1$s arttırdı</string>
     <string name="favourite_add">Bu toot\'u favorilere ekleyin?</string>
     <string name="favourite_remove">Bu toot\'u favorilerden kaldırın?</string>
@@ -1098,4 +1100,7 @@
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

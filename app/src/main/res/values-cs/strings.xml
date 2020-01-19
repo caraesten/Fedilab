@@ -84,6 +84,8 @@
     <string name="live_notif">Živá oznámení</string>
     <!-- Status -->
     <string name="no_status">Žádné tooty k zobrazení</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Boostnuto uživatelem %1$s</string>
     <string name="favourite_add">Přidat tento toot k oblíbeným?</string>
     <string name="favourite_remove">Odstranit tento toot z oblíbených?</string>
@@ -1118,4 +1120,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

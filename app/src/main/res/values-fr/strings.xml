@@ -84,6 +84,8 @@
     <string name="live_notif">Notifications en direct</string>
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Partagé par %1$s</string>
     <string name="favourite_add">Ajouter ce pouet aux favoris ?</string>
     <string name="favourite_remove">Supprimer ce pouet des favoris ?</string>
@@ -1099,6 +1101,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="identity_proofs">Preuves d’identité</string>
     <string name="verified_user">Identité vérifiée</string>
     <string name="verified_by">Vérifié par %1$s (%2$s)</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
+    <string name="remove_notification">Supprimer la notification</string>
+    <string name="display_more_options">Afficher plus d\'options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

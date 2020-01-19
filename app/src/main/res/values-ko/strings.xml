@@ -84,6 +84,8 @@
     <string name="live_notif">실시간 알림</string>
     <!-- Status -->
     <string name="no_status">표시할 툿이 없습니다</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">%1$s에 의해 부스트되었습니다</string>
     <string name="favourite_add">이 툿을 즐겨찾기에 추가하시겠습니까?</string>
     <string name="favourite_remove">이 툿을 즐겨찾기에서 삭제하시겠습니까?</string>
@@ -1096,4 +1098,7 @@
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

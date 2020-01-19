@@ -84,6 +84,8 @@
     <string name="live_notif">Απ\' ευθείας ειδοποιήσεις</string>
     <!-- Status -->
     <string name="no_status">Καμία φωνή προς εμφάνιση</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Ενίσχυση από %1$s</string>
     <string name="favourite_add">Προσθήκη αυτής της φωνής στις αγαπημένες σου;</string>
     <string name="favourite_remove">Απομάκρυνση αυτής της φωνής από τις αγαπημένες σου;</string>
@@ -1104,4 +1106,7 @@
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

@@ -84,6 +84,8 @@
     <string name="live_notif">实时通知</string>
     <!-- Status -->
     <string name="no_status">没有嘟文可以显示</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">由 %1$s 转嘟</string>
     <string name="favourite_add">添加此嘟文到您的收藏夹中？</string>
     <string name="favourite_remove">从您的收藏夹中移除此嘟文？</string>
@@ -1096,4 +1098,7 @@
     <string name="verified_by">验证通过 %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>

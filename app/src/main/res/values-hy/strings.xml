@@ -84,6 +84,8 @@
     <string name="live_notif">Ուղիղ ծանուցումներ</string>
     <!-- Status -->
     <string name="no_status">Թութ չկա</string>
+    <string name="no_stories">No stories to display</string>
+    <string name="stories">Stories</string>
     <string name="reblog_by">Խրախուսվել է %1$s-ի կողմից</string>
     <string name="favourite_add">Ավելացնե՞լ այս թութը նախընտրություններին</string>
     <string name="favourite_remove">Հեռացնե՞լ այս թութը Նախընտրություններից</string>
@@ -1103,4 +1105,7 @@
     <string name="verified_by">Verified by %1$s (%2$s)</string>
     <string name="remove_notification">Delete the notification</string>
     <string name="display_more_options">Display more options</string>
+    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
+    <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
