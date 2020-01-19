@@ -115,8 +115,6 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
                 dialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("use_custom_theme", true);
                         dialog.dismiss();
                     }
                 });
@@ -287,8 +285,6 @@ public class ColorSettingsFragment extends PreferenceFragmentCompat implements S
             preferenceScreen.removePreference(reset_pref);
             preferenceScreen.removePreference(pref_export);
 
-        } else {
-            preferenceScreen.removePreference(pref_import);
         }
         List<String> array = Arrays.asList(getResources().getStringArray(R.array.settings_theme));
         CharSequence[] entries = array.toArray(new CharSequence[array.size()]);

@@ -16,8 +16,6 @@ package app.fedilab.android.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.StrictMode;
 
 import androidx.multidex.MultiDex;
@@ -149,13 +147,8 @@ public class MainApplication extends MultiDexApplication {
         if (send_crash_reports) {
             CoreConfigurationBuilder ACRABuilder = new CoreConfigurationBuilder(this);
             ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.KEY_VALUE_LIST);
-            String version = "";
-            try {
-                PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                version = pInfo.versionName;
-            } catch (PackageManager.NameNotFoundException ignored) {
-            }
-            ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setReportAsFile(false).setMailTo("hello@fedilab.app").setSubject("[Fedilab] - Crash Report " + version).setEnabled(true);
+            int versionCode = BuildConfig.VERSION_CODE;
+            ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setReportAsFile(false).setMailTo("hello@fedilab.app").setSubject("[Fedilab] - Crash Report " + versionCode).setEnabled(true);
             ACRABuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class).setEnabled(true);
             ACRA.init(this, ACRABuilder);
         }

@@ -1,6 +1,13 @@
 Added
-- Friendica: Authorize/Reject follow requests
+- Pixelfed: post media to stories
+- Long press bio to open the contextual menu
+- Allow to invite with Pleroma
+
+Changed
+- Import theme always visible
+- Improve login activity
 
 Fixed
-- Not cropped media
-- Crash when starting the app
+- Filter with regex
+- Issues with talk back and magnifying glass
+- Some crashes

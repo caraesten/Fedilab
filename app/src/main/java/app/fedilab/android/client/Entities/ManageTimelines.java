@@ -60,6 +60,7 @@ import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
+import static app.fedilab.android.activities.BaseMainActivity.regex_home;
 import static app.fedilab.android.sqlite.Sqlite.DB_NAME;
 
 
@@ -596,11 +597,11 @@ public class ManageTimelines {
             final boolean[] show_replies = {sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)};
 
             String show_filtered = null;
-            if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME)
+            if (tl.getType() == Type.HOME)
                 show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-            if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL)
+            if (tl.getType() == Type.LOCAL)
                 show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
-            if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC)
+            if (tl.getType() == Type.PUBLIC)
                 show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
 
             itemShowBoosts.setChecked(show_boosts[0]);
@@ -693,15 +694,15 @@ public class ManageTimelines {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     itemFilter.setTitle(editText.getText().toString().trim());
-                                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME) {
+                                    if (tl.getType() == Type.HOME) {
                                         editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
                                         MainActivity.regex_home = editText.getText().toString().trim();
                                     }
-                                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL) {
+                                    if (tl.getType() == Type.LOCAL) {
                                         editor.putString(Helper.SET_FILTER_REGEX_LOCAL, editText.getText().toString().trim());
                                         MainActivity.regex_local = editText.getText().toString().trim();
                                     }
-                                    if (displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC) {
+                                    if (tl.getType() == Type.PUBLIC) {
                                         editor.putString(Helper.SET_FILTER_REGEX_PUBLIC, editText.getText().toString().trim());
                                         MainActivity.regex_public = editText.getText().toString().trim();
                                     }

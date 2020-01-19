@@ -167,7 +167,6 @@
                     android:id="@+id/login_uid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="username"
                     android:hint="@string/username"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
@@ -181,13 +180,13 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:passwordToggleEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/login_uid_container">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_passwd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="password"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLines="1" />

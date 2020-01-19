@@ -21,6 +21,7 @@ import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
 
+
 import com.google.gson.JsonObject;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -214,7 +215,7 @@ public class HttpsConnection {
                     if (!cache.isClosed()) {
                         try {
                             cache.close();
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -228,7 +229,7 @@ public class HttpsConnection {
                 if (!cache.isClosed()) {
                     try {
                         cache.close();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

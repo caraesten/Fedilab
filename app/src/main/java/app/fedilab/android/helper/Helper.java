@@ -4692,7 +4692,7 @@ public class Helper {
         if (streamingIntent != null) {
             try {
                 if (Build.VERSION.SDK_INT >= 26) {
-                    context.startForegroundService(streamingIntent);
+                    context.startService(streamingIntent);
                 } else {
                     context.startService(streamingIntent);
                 }
