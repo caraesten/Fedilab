@@ -1098,6 +1098,6 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="remove_notification">Suprimir la notificació</string>
     <string name="display_more_options">Mostrar més opcions</string>
     <string name="pixelfed_story">És una història de Pixelfed</string>
-    <string name="story_indication">Puja un contingut, serà automàticament afegit a la vostra història Pixelfed.</string>
-    <string name="added_to_story">Contingut afegit correctament a la vostra història!</string>
+    <string name="story_indication">Puja un contingut i s\'afegirà automàticament a la teva història de Pixelfed.</string>
+    <string name="added_to_story">Contingut afegit correctament a la teva història!</string>
 </resources>
