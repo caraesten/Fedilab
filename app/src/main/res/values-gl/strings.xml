@@ -85,8 +85,8 @@
     <string name="live_notif">Notificacións ao vivo</string>
     <!-- Status -->
     <string name="no_status">Sen toot que mostrar</string>
-    <string name="no_stories">Non hai contos que mostrar</string>
-    <string name="stories">Contos</string>
+    <string name="no_stories">Non hai historias que mostrar</string>
+    <string name="stories">Historias</string>
     <string name="reblog_by">Promovido por %1$s</string>
     <string name="favourite_add">Engadir este toot aos seus favoritos?</string>
     <string name="favourite_remove">Eliminar este toot dos seus favoritos?</string>
@@ -1107,7 +1107,7 @@
     <string name="verified_by">Verificada por %1$s (%2$s)</string>
     <string name="remove_notification">Borrar a notificación</string>
     <string name="display_more_options">Mostrar máis opcións</string>
-    <string name="pixelfed_story">É un Conto en Pixelfed</string>
-    <string name="story_indication">Subir medios, engadirase automaticamente ao teu Conto en Pixelfed.</string>
-    <string name="added_to_story">Medios engadidos correctamente ao Conto!</string>
+    <string name="pixelfed_story">É unha Historia en Pixelfed</string>
+    <string name="story_indication">Subir medios, engadirase automaticamente a Historia en Pixelfed.</string>
+    <string name="added_to_story">Medios engadidos correctamente a Historia!</string>
 </resources>
