@@ -1,1 +1,1 @@
-Fedilab is a multifunctional Android client to access the distributed Fediverse, consisting of micro blogging, photo sharing and video hosting.
+Fedilab - это мультифункциональный Android клиент для доступа к распределенному Федивёрсу, состоящего из микроблогов, публикаций фотографий и видео хостингов.
