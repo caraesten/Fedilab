@@ -85,8 +85,8 @@
     <string name="live_notif">Живые уведомления</string>
     <!-- Status -->
     <string name="no_status">Нет тутов для отображения</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">Нет историй для отображения</string>
+    <string name="stories">Истории</string>
     <string name="reblog_by">Продвинут %1$s</string>
     <string name="favourite_add">Добавить этот тут в избранное?</string>
     <string name="favourite_remove">Удалить этот тут из избранного?</string>
@@ -1121,9 +1121,9 @@
     <string name="identity_proofs">Подтверждение личности</string>
     <string name="verified_user">Подтверждённая личность</string>
     <string name="verified_by">Подтверждено %1$s (%2$s)</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="remove_notification">Удалить уведомление</string>
+    <string name="display_more_options">Показать больше опций</string>
+    <string name="pixelfed_story">Это Pixelfed история</string>
     <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
     <string name="added_to_story">Media successfully added to your story!</string>
 </resources>
