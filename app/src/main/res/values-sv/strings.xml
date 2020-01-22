@@ -130,19 +130,19 @@
     <string name="date_hours">%d t</string>
     <string name="date_day">%d d</string>
     <plurals name="date_seconds_polls">
-        <item quantity="one">%d second</item>
+        <item quantity="one">%d sekund</item>
         <item quantity="other">%d sekunder</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="one">%d minute</item>
+        <item quantity="one">%d minut</item>
         <item quantity="other">%d minuter</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
+        <item quantity="one">%d timma</item>
         <item quantity="other">%d timmar</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
+        <item quantity="one">%d dag</item>
         <item quantity="other">%d dagar</item>
     </plurals>
     <!-- TOOT -->
@@ -954,8 +954,8 @@
         <item quantity="other">%d röster</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d röster</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">%d röst</item>
+        <item quantity="other">%d röster</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Enkel val</item>
@@ -1071,9 +1071,9 @@
     <string name="pref_colored_navigation_bar_title">Navigationsfältets färg</string>
     <string name="pref_background_color_summary">Den underliggande färgen av appens innehåll.</string>
     <string name="pref_background_color_title">Bakgrundsfärg</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
+    <string name="pref_accent_color_summary">Accenter välj delar av användargränssnittet.</string>
     <string name="pref_accent_color_title">Accentfärg</string>
-    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
+    <string name="pref_primary_color_summary">Visa \"oftast\" i din app.</string>
     <string name="pref_primary_color_title">Primärfärg</string>
     <string name="export_bookmarks">Exportera bokmärken till instans</string>
     <string name="import_bookmarks">Importera bokmärken från instans</string>
@@ -1091,20 +1091,20 @@
     <string name="open_other_app">Öppna med en annan app</string>
     <string name="check_redirect">Kontrollera omdirigering</string>
     <string name="no_redirect">Denna URL kan inte omdirigera</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
-    <string name="set_utm_parameters">Remove UTM parameters</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="redirect_detected">%1$s \n\nomdirigerar till\n\n %2$s</string>
+    <string name="set_user_agent">Ändra användaragenten</string>
+    <string name="set_user_agent_hint">Ange en anpassad användaragent eller lämna tomt</string>
+    <string name="set_user_agent_indication">Gör det möjligt att anpassa den användaragent som används för api-anrop, eller med den inbyggda webbläsaren.</string>
+    <string name="set_utm_parameters">Ta bort UTM parametrar</string>
+    <string name="set_utm_parameters_indication">Appen kommer automatiskt ta bort UTM-parametrar från webbadresser innan du besöker en länk.</string>
     <string name="action_trends">Trender</string>
     <string name="trending_now">Trendar nu</string>
     <string name="talking_about">%d personer pratar</string>
-    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
+    <string name="twitter_accounts">Twitter-konton (via Nitter)</string>
     <string name="list_of_twitter_accounts">Twitteranvändarnamn separerade med mellanslag</string>
     <string name="identity_proofs">Identitetsbevis</string>
     <string name="verified_user">Verifiera identitet</string>
-    <string name="verified_by">Verified by %1$s (%2$s)</string>
+    <string name="verified_by">Verifierad av %1$s (%2$s)</string>
     <string name="remove_notification">Ta bort notifiering</string>
     <string name="display_more_options">Visa fler alternativ</string>
     <string name="pixelfed_story">Det är en Pixelfed story</string>
