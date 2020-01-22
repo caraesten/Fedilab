@@ -1124,6 +1124,6 @@
     <string name="remove_notification">Удалить уведомление</string>
     <string name="display_more_options">Показать больше опций</string>
     <string name="pixelfed_story">Это Pixelfed история</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="story_indication">Загрузите медиа, она будет автоматически добавлена к вашей Pixelfed истории.</string>
+    <string name="added_to_story">Медиа успешно добавлена в вашу историю!</string>
 </resources>
