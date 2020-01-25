@@ -85,8 +85,8 @@
     <string name="live_notif">Direktevarsler</string>
     <!-- Status -->
     <string name="no_status">Ingen toots å vise</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">Ingen historier å vise</string>
+    <string name="stories">Historier</string>
     <string name="reblog_by">Boostet av %1$s</string>
     <string name="favourite_add">Legge dette tootet til dine favoritter?</string>
     <string name="favourite_remove">Fjerne dette tootet fra favorittene dine?</string>
@@ -130,20 +130,20 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <plurals name="date_seconds_polls">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="one">%d sekund</item>
+        <item quantity="other">%d sekunder</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">%d minutt</item>
+        <item quantity="other">%d minutter</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d timer</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dager</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Innholdsadvarsel</string>
@@ -217,7 +217,7 @@
     <string name="notif_reblog">boostet tootet ditt</string>
     <string name="notif_favourite">favoriserte tootet ditt</string>
     <string name="notif_follow">fulgte deg</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">bedt om å følge deg</string>
     <plurals name="other_notifications">
         <item quantity="one">og et annet varsel</item>
         <item quantity="other">og %d andre varsler</item>
@@ -811,15 +811,15 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
         <b>Viktig</b>: Hvis instansen krever invitasjon, vil du motta en e-post når kontoen er godkjent!    </string>
     <string name="save_draft">Lagre meldingen som kladd?</string>
     <string name="administration">Administration</string>
-    <string name="reports">Reports</string>
-    <string name="no_reports">No reports to display!</string>
+    <string name="reports">Rapporter</string>
+    <string name="no_reports">Ingen rapporter å vise!</string>
     <string name="reconnect_account">Reconnect the account</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
     <string name="unresolved">Unresolved</string>
     <string name="remote">Remote</string>
     <string name="active">Active</string>
     <string name="pending">Pending</string>
-    <string name="disabled">Disabled</string>
+    <string name="disabled">Deaktivert</string>
     <string name="silenced">Silenced</string>
     <string name="suspended">Suspended</string>
     <string name="permissions">Permissions</string>
