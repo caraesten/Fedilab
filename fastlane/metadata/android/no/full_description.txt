@@ -1,8 +1,8 @@
-It supports:
+Det støtter:
 - Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
 
 
-The app has advanced features (especially for Pleroma and Mastodon):
+Appen har avanserte funksjoner (spesielt for Pleroma og Mastodon):
 
 - Multi-accounts support
 - Schedule messages from the device
