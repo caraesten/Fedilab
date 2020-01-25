@@ -4,13 +4,13 @@ Det støtter:
 
 Appen har avanserte funksjoner (spesielt for Pleroma og Mastodon):
 
-- Multi-accounts support
-- Schedule messages from the device
+- Multi-kontoer støtte
+- Planlegg meldinger fra enheten
 - Schedule boosts
-- Bookmark messages
-- Follow and interact with remote instances
-- Timed mute accounts
-- Cross-account actions with a long press
-- Translation feature
-- Art timelines
-- Video timelines
+- Bokmerke meldinger
+- Følg med og samhandle med eksterne instanser
+- Tidsbestemt dempe kontoer
+- Handlinger på tvers av kontoer med et langt trykk
+- Oversettelsesfunksjon
+- Tidslinjer for kunst
+- Tidslinjer for video
