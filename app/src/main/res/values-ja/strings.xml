@@ -86,7 +86,7 @@
     <!-- Status -->
     <string name="no_status">トゥートがありません</string>
     <string name="no_stories">表示するストーリーがありません</string>
-    <string name="stories">Stories</string>
+    <string name="stories">ストーリー</string>
     <string name="reblog_by">%1$s にブーストされました</string>
     <string name="favourite_add">このトゥートをお気に入りに追加しますか？</string>
     <string name="favourite_remove">このトゥートをお気に入りから削除しますか？</string>
@@ -1089,8 +1089,8 @@
     <string name="identity_proofs">身分証明</string>
     <string name="verified_user">認証済み</string>
     <string name="verified_by">%1$s(%2$s)によって認証されました</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
+    <string name="remove_notification">通知を消去</string>
+    <string name="display_more_options">さらに多くのオプションを表示</string>
     <string name="pixelfed_story">It is a Pixelfed story</string>
     <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
     <string name="added_to_story">Media successfully added to your story!</string>
