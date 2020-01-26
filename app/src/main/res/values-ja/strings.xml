@@ -85,7 +85,7 @@
     <string name="live_notif">ライブ通知</string>
     <!-- Status -->
     <string name="no_status">トゥートがありません</string>
-    <string name="no_stories">No stories to display</string>
+    <string name="no_stories">表示するストーリーがありません</string>
     <string name="stories">Stories</string>
     <string name="reblog_by">%1$s にブーストされました</string>
     <string name="favourite_add">このトゥートをお気に入りに追加しますか？</string>
