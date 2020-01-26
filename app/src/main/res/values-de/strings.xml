@@ -85,7 +85,7 @@
     <string name="live_notif">Echtzeit-Benachrichtigungen</string>
     <!-- Status -->
     <string name="no_status">Kein Toot zum Anzeigen</string>
-    <string name="no_stories">No stories to display</string>
+    <string name="no_stories">Keine anzuzeigenden Elemente</string>
     <string name="stories">Stories</string>
     <string name="reblog_by">Geteilt von %1$s</string>
     <string name="favourite_add">Diesen Toot deinen Favoriten hinzufügen?</string>
