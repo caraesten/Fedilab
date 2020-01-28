@@ -1032,7 +1032,7 @@
     <string name="post_visibility_tilte">Видимость записи</string>
     <string name="add_photo_pixelfed">Нажмите здесь, чтобы добавить фотографии</string>
     <string name="add_photo_indication_pixelfed">Поддерживаемые форматы: jpeg, png, gif \n\nМаксимальный размер файла: 15 Мб \n\nАльбомы могут содержать 4 фотографии или видео</string>
-    <string name="upload_media">Загрузить медиа</string>
+    <string name="upload_media">Загрузить медиафайл</string>
     <string name="pixelfed_compose_placeholder">Добавить подпись (необязательно)</string>
     <string name="long_api_error">Приложение получило очень длинное сообщение об ошибке от API %1$s</string>
     <string name="message_preview">Предпросмотр сообщения</string>
@@ -1124,6 +1124,6 @@
     <string name="remove_notification">Удалить уведомление</string>
     <string name="display_more_options">Показать больше опций</string>
     <string name="pixelfed_story">Это Pixelfed история</string>
-    <string name="story_indication">Загрузите медиа, она будет автоматически добавлена к вашей Pixelfed истории.</string>
-    <string name="added_to_story">Медиа успешно добавлена в вашу историю!</string>
+    <string name="story_indication">Загрузите медиафайл, он будет автоматически добавлен к вашей Pixelfed истории.</string>
+    <string name="added_to_story">Медиафайл успешно добавлен в вашу историю!</string>
 </resources>
