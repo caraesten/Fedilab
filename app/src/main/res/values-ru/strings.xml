@@ -600,7 +600,7 @@
     <string name="card_view_image">Изображение карты</string>
     <string name="hide_media">Скрыть медиа</string>
     <string name="favicon">Значок сайта</string>
-    <string name="media_description">Медиа для добавления описания</string>
+    <string name="media_description">Добавить описание для медиафайла (для слабовидящих)</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
