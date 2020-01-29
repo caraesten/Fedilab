@@ -3193,6 +3193,12 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             content = matcher.replaceAll("$3@$2");
         }
 
+        Pattern mentionLinkPleroma = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/users/([\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Matcher matcherPleroma = mentionLinkPleroma.matcher(content);
+        if (matcherPleroma.find()) {
+            content = matcherPleroma.replaceAll("@$3@$2");
+        }
+
         if (removed) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
