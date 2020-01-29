@@ -338,7 +338,7 @@
     <string name="action_search">Søk</string>
     <string name="set_capitalize">Stor forbokstav i svar</string>
     <string name="set_resize_picture">Endre størrelsen på bilder</string>
-    <string name="set_resize_video">Resize videos</string>
+    <string name="set_resize_video">Endre størrelse på videoer</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-varsler</string>
     <string name="settings_popup_message">Vennligst bekreft push notifications som du vil motta.
@@ -369,7 +369,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="filter_no_result">Ingen treff!</string>
     <string name="data_backup_toots">Sikkerhetskopier toots for %1$s</string>
     <string name="data_backup_success">%1$s nye toots er importert</string>
-    <string name="data_backup_notification_success">%1$s new notifications have been imported</string>
+    <string name="data_backup_notification_success">%1$s nye varsler er importert</string>
     <string-array name="filter_order">
         <item>Dates descending</item>
         <item>Dates ascending</item>
@@ -422,7 +422,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="action_lists_update">Rediger liste</string>
     <string name="action_lists_title_placeholder">Tittel på liste</string>
     <string name="action_lists_add_user">Kontoen ble lagt til på listen!</string>
-    <string name="action_lists_empty">You don\'t have any lists yet!</string>
+    <string name="action_lists_empty">Du har ikke noen lister ennå!</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
     <string name="issue_login_title">Får du ikke logget inn?</string>
@@ -810,10 +810,10 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
         Du kan nå koble kontoen din ved å skrive <b>%1$s</b> i det første feltet og klikk på <b>Koble til</b>.\n\n
         <b>Viktig</b>: Hvis instansen krever invitasjon, vil du motta en e-post når kontoen er godkjent!    </string>
     <string name="save_draft">Lagre meldingen som kladd?</string>
-    <string name="administration">Administration</string>
+    <string name="administration">Administrasjon</string>
     <string name="reports">Rapporter</string>
     <string name="no_reports">Ingen rapporter å vise!</string>
-    <string name="reconnect_account">Reconnect the account</string>
+    <string name="reconnect_account">Koble til kontoen på nytt</string>
     <string name="reconnect_account_message">The application failed to access the admin features. You might need to reconnect the account for having the correct scope.</string>
     <string name="unresolved">Uløst</string>
     <string name="remote">Ekstern</string>
