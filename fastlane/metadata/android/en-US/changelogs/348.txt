@@ -1,0 +1,2 @@
+Fixed:
+- Mentions with delete & re-draft for Pleroma accounts
