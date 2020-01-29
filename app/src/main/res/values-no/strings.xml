@@ -837,7 +837,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="administrator">Administrator</string>
     <string name="confirmed">Bekreftet</string>
     <string name="unconfirmed">Ikke bekreftet</string>
-    <string name="list_reported_statuses">Reported statuses</string>
+    <string name="list_reported_statuses">Rapporterte statuser</string>
     <string name="account">Konto</string>
     <string name="unsilence">Undo silence</string>
     <string name="undisable">Undo disable</string>
@@ -857,14 +857,14 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="account_rejected">Kontoen er forkastet!</string>
     <string name="assign_to_me">Assign to me</string>
     <string name="unassign">Unassign</string>
-    <string name="mark_resolved">Mark as resolved</string>
-    <string name="mark_unresolved">Mark as unresolved</string>
+    <string name="mark_resolved">Merk som løst</string>
+    <string name="mark_unresolved">Merk som uoppklart</string>
     <string name="toast_empty_content">Empty content!</string>
     <string name="set_display_fedilab_features_button">Display Fedilab features button</string>
     <string name="audio">Applikasjonen trenger tilgang til lydopptak</string>
     <string name="voice_message">Talemelding</string>
     <string name="set_quick_reply">Enable quick reply</string>
-    <string name="reply_might_be_useless">The account you are replying might not see your message!</string>
+    <string name="reply_might_be_useless">Det kan hende at kontoen du svarer ikke ser meldingen din!</string>
     <string name="set_remember_position_indication">If disabled, the app will always load last statuses</string>
     <string name="set_blur_sensitive_indication">If disabled, sensitive media will be hidden with a button</string>
     <string name="set_long_press_media_indication">Store media in full size with a long press on previews</string>
@@ -912,7 +912,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="number_polls">Number of polls</string>
     <string name="number_replies">Number of replies</string>
     <string name="number_statuses">Number of statuses</string>
-    <string name="statuses">Statuses</string>
+    <string name="statuses">Statuser</string>
     <string name="visibility">Synlighet</string>
     <string name="number_with_media">Number with media</string>
     <string name="number_with_sensitive_media">Number with sensitive media</string>
