@@ -85,8 +85,8 @@
     <string name="live_notif">الإشعارات الحية</string>
     <!-- Status -->
     <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">ليس هناك حكايات للعرض</string>
+    <string name="stories">الحكايات</string>
     <string name="reblog_by">رقاه %1$s</string>
     <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
     <string name="favourite_remove">هل تود إزالة هذا التبويق من مفضلاتك ؟</string>
@@ -1093,7 +1093,7 @@
     <string name="import_theme">استيراد قالب</string>
     <string name="import_theme_title">Tap here to import a theme from a previous export</string>
     <string name="export_theme">تصدير قالب</string>
-    <string name="export_theme_title">Tap here to export the current theme</string>
+    <string name="export_theme_title">اضغط هنا لتصدير قالب السمة الحالي</string>
     <string name="theme_file_error">حدث خطأ أثناء اختيار ملف قالب السمة</string>
     <string name="label_theme_picker">منتقي القوالب</string>
     <string name="pref_theme_summary">Select a pre-installed theme</string>
@@ -1127,7 +1127,7 @@
     <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
     <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
     <string name="set_utm_parameters">أزل معلّمات UTM</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
+    <string name="set_utm_parameters_indication">يقوم التطبيق تلقائيا بإزالة معلمات UTM مِن عناوين المواقع قبل زيارة الرابط.</string>
     <string name="action_trends">المتداوَلة</string>
     <string name="trending_now">المتداوَلة الآن</string>
     <string name="talking_about">%d أشخاص يتحدثون عن ذلك</string>
@@ -1138,7 +1138,7 @@
     <string name="verified_by">تم التحقق منه عبر %1$s (%2$s)</string>
     <string name="remove_notification">احذف الإشعار</string>
     <string name="display_more_options">اعرض المزيد من الخيارات</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
+    <string name="pixelfed_story">إنها حكاية پيكسل فد</string>
     <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
     <string name="added_to_story">Media successfully added to your story!</string>
     <string name="action_disabled">الإجراء مُعطّل</string>
