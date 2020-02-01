@@ -1109,4 +1109,6 @@
     <string name="pixelfed_story">Pixelfed istorio bat da</string>
     <string name="story_indication">Igo multimedia, automatikoki gehituko da zure Pixelfed istoriora.</string>
     <string name="added_to_story">Multimedia ongi gehitu da zure istoriora!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>
