@@ -1107,6 +1107,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="pixelfed_story">C\'est une histoire Pixelfed</string>
     <string name="story_indication">Téléversez un média, il sera automatiquement ajouté à votre histoire Pixelfed.</string>
     <string name="added_to_story">Média ajouté avec succès à votre histoire!</string>
-    <string name="action_disabled">Action disabled</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_disabled">Action désactivé</string>
+    <string name="action_unfollow">Se désabonner</string>
 </resources>
