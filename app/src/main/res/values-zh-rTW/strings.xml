@@ -1101,6 +1101,6 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="pixelfed_story">這是一則 Pixelfed 動態</string>
     <string name="story_indication">上傳媒體，它將會自動加入到您的 Pixelfed 動態。</string>
     <string name="added_to_story">媒體已成功新增到您的動態中！</string>
-    <string name="action_disabled">Action disabled</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_disabled">動作已停用</string>
+    <string name="action_unfollow">取消追蹤</string>
 </resources>
