@@ -111,21 +111,25 @@ public class LiveNotificationDelayedService extends Service {
                 }
             }
         }
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                getApplicationContext(),
-                0,
-                myIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
 
-        android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setShowWhen(false)
-                .setContentIntent(pendingIntent)
-                .setContentTitle(getString(R.string.top_notification))
-                .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+        if (Build.VERSION.SDK_INT >= 26) {
+            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0,
+                    myIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
-        startForeground(1, notification);
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setShowWhen(false)
+                    .setContentIntent(pendingIntent)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+            startForeground(1, notification);
+        }
+
+
         if( !notify ){
             stopSelf();
             return;
@@ -297,14 +301,15 @@ public class LiveNotificationDelayedService extends Service {
                         "Live notifications",
                         NotificationManager.IMPORTANCE_DEFAULT);
                 ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-            }
-            android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setShowWhen(false)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+                android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setShowWhen(false)
+                        .setContentTitle(getString(R.string.top_notification))
+                        .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                        .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
-            startForeground(1, notificationChannel);
+                startForeground(1, notificationChannel);
+            }
+
             event = Helper.EventStreaming.NOTIFICATION;
             boolean canNotify = Helper.canNotify(getApplicationContext());
             boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);

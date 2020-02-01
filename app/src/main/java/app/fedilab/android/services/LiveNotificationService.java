@@ -130,19 +130,21 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 }
             }
         }
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                getApplicationContext(),
-                0,
-                myIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle(getString(R.string.top_notification))
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+        if (Build.VERSION.SDK_INT >= 26) {
+            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0,
+                    myIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
-        startForeground(1, notification);
+            startForeground(1, notification);
+        }
         if( !notify ){
             stopSelf();
             return;
@@ -325,13 +327,14 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                 "Live notifications",
                                 NotificationManager.IMPORTANCE_DEFAULT);
                         ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-                    }
-                    android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
-                            .setContentTitle(getString(R.string.top_notification))
-                            .setSmallIcon(getNotificationIcon(getApplicationContext()))
-                            .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+                        android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
+                                .setContentTitle(getString(R.string.top_notification))
+                                .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                                .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
-                    startForeground(1, notificationChannel);
+                        startForeground(1, notificationChannel);
+                    }
+
                     event = Helper.EventStreaming.NOTIFICATION;
                     notification = API.parseNotificationResponse(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     if (notification == null) {
