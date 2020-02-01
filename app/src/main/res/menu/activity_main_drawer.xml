@@ -170,8 +170,8 @@
                 <group android:checkableBehavior="single">
                     <item
                         android:id="@+id/nav_opencollective"
-                        android:icon="@drawable/ic_opencollective"
-                        android:title="Open Collective" />
+                        android:icon="@drawable/ic_attach_money"
+                        android:title="PaypalMe" />
                     <item
                         android:id="@+id/nav_how_to"
                         android:icon="@drawable/ic_videocam"

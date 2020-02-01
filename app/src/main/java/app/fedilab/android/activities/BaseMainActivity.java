@@ -1801,8 +1801,13 @@ public abstract class BaseMainActivity extends BaseActivity
             startActivity(intent);
             return false;
         } else if (id == R.id.nav_opencollective) {
-            Intent intent = new Intent(getApplicationContext(), OpencollectiveActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.paypal.me/mastalab"));
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Helper.openBrowser(BaseMainActivity.this, "https://www.paypal.me/mastalab");
+            }
             return false;
         } else if (id == R.id.nav_upload) {
             Intent intent = new Intent(getApplicationContext(), PeertubeUploadActivity.class);
