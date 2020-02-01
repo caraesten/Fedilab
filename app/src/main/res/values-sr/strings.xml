@@ -1117,4 +1117,6 @@
     <string name="pixelfed_story">It is a Pixelfed story</string>
     <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
     <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>

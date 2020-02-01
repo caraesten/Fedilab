@@ -1103,4 +1103,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="pixelfed_story">Es una historia de Pixelfed</string>
     <string name="story_indication">Sube un archivo multimedia, se añadirá automáticamente a tu historia de Pixelfed.</string>
     <string name="added_to_story">¡Archivos multimedia añadidos con éxito a tu historia!</string>
+    <string name="action_disabled">Acción desactivada</string>
+    <string name="action_unfollow">Dejar de seguir</string>
 </resources>

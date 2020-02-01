@@ -85,8 +85,8 @@
     <string name="live_notif">Livenotiser</string>
     <!-- Status -->
     <string name="no_status">Ingen toot att visa</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">Inga berättelser att visa</string>
+    <string name="stories">Berättelser</string>
     <string name="reblog_by">Knuffad av %1$s</string>
     <string name="favourite_add">Lägg till detta toot till dina favoriter?</string>
     <string name="favourite_remove">Ta bort detta toot från dina favoriter?</string>
@@ -130,20 +130,20 @@
     <string name="date_hours">%d t</string>
     <string name="date_day">%d d</string>
     <plurals name="date_seconds_polls">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="one">%d sekund</item>
+        <item quantity="other">%d sekunder</item>
     </plurals>
     <plurals name="date_minutes_polls">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">%d minut</item>
+        <item quantity="other">%d minuter</item>
     </plurals>
     <plurals name="date_hours_polls">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d timma</item>
+        <item quantity="other">%d timmar</item>
     </plurals>
     <plurals name="date_day_polls">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagar</item>
     </plurals>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Varning</string>
@@ -217,7 +217,7 @@
     <string name="notif_reblog">ökat din status</string>
     <string name="notif_favourite">favourited din status</string>
     <string name="notif_follow">följt dig</string>
-    <string name="notif_follow_request">asked to follow you</string>
+    <string name="notif_follow_request">vill följa dig</string>
     <plurals name="other_notifications">
         <item quantity="one">och en till notifikation</item>
         <item quantity="other">och %d till notifikationer</item>
@@ -954,8 +954,8 @@
         <item quantity="other">%d röster</item>
     </plurals>
     <plurals name="number_of_voters">
-        <item quantity="one">%d röster</item>
-        <item quantity="other">%d voters</item>
+        <item quantity="one">%d röst</item>
+        <item quantity="other">%d röster</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>Enkel val</item>
@@ -1053,7 +1053,7 @@
     <string name="pref_custom_theme">Använd ett anpassat tema</string>
     <string name="pref_custom_theme_summary">Tillåt att åsidosätta färger på valt tema ovan</string>
     <string name="theming">Tema</string>
-    <string name="store_before">Store before</string>
+    <string name="store_before">Spara innan</string>
     <string name="data_export_theme">Temat har exporterats</string>
     <string name="data_export_theme_success">Temat har exporteras till CSV</string>
     <string name="pref_colored_status_bar_summary">Använd den primära färgen till statusraden</string>
@@ -1064,50 +1064,52 @@
     <string name="export_theme">Exportera tema</string>
     <string name="export_theme_title">Tryck här för att exportera nuvarande tema</string>
     <string name="theme_file_error">Ett fel uppstod när tema valdes</string>
-    <string name="label_theme_picker">Theme Picker</string>
-    <string name="pref_theme_summary">Select a pre-installed theme</string>
-    <string name="pref_theme_title">Themes</string>
-    <string name="pref_colored_navigation_bar_summary">Apply the primary color to the navigation bar</string>
-    <string name="pref_colored_navigation_bar_title">Navigation bar color</string>
-    <string name="pref_background_color_summary">The underlying color of the app’s content.</string>
-    <string name="pref_background_color_title">Background color</string>
-    <string name="pref_accent_color_summary">Accents select parts of the UI.</string>
-    <string name="pref_accent_color_title">Accent color</string>
-    <string name="pref_primary_color_summary">Displayed most frequently across your app.</string>
-    <string name="pref_primary_color_title">Primary color</string>
+    <string name="label_theme_picker">Tema väljare</string>
+    <string name="pref_theme_summary">Välj ett förinstallerat tema</string>
+    <string name="pref_theme_title">Tema</string>
+    <string name="pref_colored_navigation_bar_summary">Använd den primära färgen för navigationsfältet</string>
+    <string name="pref_colored_navigation_bar_title">Navigationsfältets färg</string>
+    <string name="pref_background_color_summary">Den underliggande färgen av appens innehåll.</string>
+    <string name="pref_background_color_title">Bakgrundsfärg</string>
+    <string name="pref_accent_color_summary">Accenter välj delar av användargränssnittet.</string>
+    <string name="pref_accent_color_title">Accentfärg</string>
+    <string name="pref_primary_color_summary">Visa \"oftast\" i din app.</string>
+    <string name="pref_primary_color_title">Primärfärg</string>
     <string name="export_bookmarks">Exportera bokmärken till instans</string>
     <string name="import_bookmarks">Importera bokmärken från instans</string>
     <string name="user_count">Antal användare</string>
     <string name="status_count">Status, antal</string>
     <string name="instance_count">Instanser, antal</string>
     <string name="blocked">Blockerad</string>
-    <string name="poll_finish_in">End in %s</string>
-    <string name="release_note_title">What\'s new in %s</string>
-    <string name="follow_account_update">You can follow my account for updates</string>
-    <string name="no_instance_reccord">This instance is not available on https://instances.social</string>
-    <string name="display_full_link">Display full link</string>
-    <string name="share_link">Share link</string>
-    <string name="link_copy">The URL has been copied to the clipboard</string>
-    <string name="open_other_app">Open with another app</string>
-    <string name="check_redirect">Check redirect</string>
-    <string name="no_redirect">This URL does not redirect</string>
-    <string name="redirect_detected">%1$s \n\nredirects to\n\n %2$s</string>
-    <string name="set_user_agent">Change the user agent</string>
-    <string name="set_user_agent_hint">Set a custom user agent or leave blank</string>
-    <string name="set_user_agent_indication">Allows to customize the user agent used for api calls or with the built-in browser.</string>
-    <string name="set_utm_parameters">Remove UTM parameters</string>
-    <string name="set_utm_parameters_indication">The app will automatically remove UTM parameters from URLs before visiting a link.</string>
-    <string name="action_trends">Trends</string>
-    <string name="trending_now">Trending now</string>
-    <string name="talking_about">%d people talking</string>
-    <string name="twitter_accounts">Twitter accounts (via Nitter)</string>
-    <string name="list_of_twitter_accounts">Twitter usernames space separated</string>
-    <string name="identity_proofs">Identity proofs</string>
-    <string name="verified_user">Verified identity</string>
-    <string name="verified_by">Verified by %1$s (%2$s)</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="poll_finish_in">Slutar om %s</string>
+    <string name="release_note_title">Vad är nytt i %s</string>
+    <string name="follow_account_update">Du kan följa mitt konto för uppdateringar</string>
+    <string name="no_instance_reccord">Denna instans är inte tillgänglig på https://instances.social</string>
+    <string name="display_full_link">Visa fullständig länk</string>
+    <string name="share_link">Dela länk</string>
+    <string name="link_copy">URL:en har kopierats till urklipp</string>
+    <string name="open_other_app">Öppna med en annan app</string>
+    <string name="check_redirect">Kontrollera omdirigering</string>
+    <string name="no_redirect">Denna URL kan inte omdirigera</string>
+    <string name="redirect_detected">%1$s \n\nomdirigerar till\n\n %2$s</string>
+    <string name="set_user_agent">Ändra användaragenten</string>
+    <string name="set_user_agent_hint">Ange en anpassad användaragent eller lämna tomt</string>
+    <string name="set_user_agent_indication">Gör det möjligt att anpassa den användaragent som används för api-anrop, eller med den inbyggda webbläsaren.</string>
+    <string name="set_utm_parameters">Ta bort UTM parametrar</string>
+    <string name="set_utm_parameters_indication">Appen kommer automatiskt ta bort UTM-parametrar från webbadresser innan du besöker en länk.</string>
+    <string name="action_trends">Trender</string>
+    <string name="trending_now">Trendar nu</string>
+    <string name="talking_about">%d personer pratar</string>
+    <string name="twitter_accounts">Twitter-konton (via Nitter)</string>
+    <string name="list_of_twitter_accounts">Twitteranvändarnamn separerade med mellanslag</string>
+    <string name="identity_proofs">Identitetsbevis</string>
+    <string name="verified_user">Verifiera identitet</string>
+    <string name="verified_by">Verifierad av %1$s (%2$s)</string>
+    <string name="remove_notification">Ta bort notifiering</string>
+    <string name="display_more_options">Visa fler alternativ</string>
+    <string name="pixelfed_story">Det är en Pixelfed story</string>
+    <string name="story_indication">Ladda upp media, det kommer automatiskt att läggas till på din Pixelfed story.</string>
+    <string name="added_to_story">Media har lagts till i din berättelse!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>

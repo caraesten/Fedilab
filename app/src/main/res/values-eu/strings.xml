@@ -84,8 +84,8 @@
     <string name="live_notif">Zuzeneko jakinarazpenak</string>
     <!-- Status -->
     <string name="no_status">Ez dago toot-ik bistaratzeko</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">Ez dago istoriorik bistaratzeko</string>
+    <string name="stories">Istorioak</string>
     <string name="reblog_by">%1$s(e)k bultzatua</string>
     <string name="favourite_add">Gehitu toot hau zure gogokoetara?</string>
     <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
@@ -1105,7 +1105,9 @@
     <string name="verified_by">Egiaztatzailea: %1$s (%2$s)</string>
     <string name="remove_notification">Ezabatu jakinarazpena</string>
     <string name="display_more_options">Erakutsi aukera gehiago</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="pixelfed_story">Pixelfed istorio bat da</string>
+    <string name="story_indication">Igo multimedia, automatikoki gehituko da zure Pixelfed istoriora.</string>
+    <string name="added_to_story">Multimedia ongi gehitu da zure istoriora!</string>
+    <string name="action_disabled">Ekintza desgaituta</string>
+    <string name="action_unfollow">Utzi jarraitzeari</string>
 </resources>

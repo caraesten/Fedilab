@@ -84,8 +84,8 @@
     <string name="live_notif">Notifiche in tempo reale</string>
     <!-- Status -->
     <string name="no_status">Nessun toot da mostrare</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">Nessuna storia da mostrare</string>
+    <string name="stories">Storie</string>
     <string name="reblog_by">Ricondiviso da %1$s</string>
     <string name="favourite_add">Aggiungere questo toot ai tuoi preferiti?</string>
     <string name="favourite_remove">Rimuovere questo toot dai tuoi preferiti?</string>
@@ -1104,9 +1104,11 @@
     <string name="identity_proofs">Prove d\'identità</string>
     <string name="verified_user">Identità verificata</string>
     <string name="verified_by">Verificata da %1$s (%2$s)</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="remove_notification">Elimina la notifica</string>
+    <string name="display_more_options">Mostra più opzioni</string>
+    <string name="pixelfed_story">È una storia Pixelfed</string>
+    <string name="story_indication">Carica un media, che verrà automaticamente aggiunto alla tua storia Pixelfed.</string>
+    <string name="added_to_story">Media aggiunto correttamente alla tua storia!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>

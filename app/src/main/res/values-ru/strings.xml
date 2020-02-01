@@ -84,8 +84,8 @@
     <string name="live_notif">Живые уведомления</string>
     <!-- Status -->
     <string name="no_status">Нет тутов для отображения</string>
-    <string name="no_stories">No stories to display</string>
-    <string name="stories">Stories</string>
+    <string name="no_stories">Нет историй для отображения</string>
+    <string name="stories">Истории</string>
     <string name="reblog_by">Продвинут %1$s</string>
     <string name="favourite_add">Добавить этот тут в избранное?</string>
     <string name="favourite_remove">Удалить этот тут из избранного?</string>
@@ -599,7 +599,7 @@
     <string name="card_view_image">Изображение карты</string>
     <string name="hide_media">Скрыть медиа</string>
     <string name="favicon">Значок сайта</string>
-    <string name="media_description">Медиа для добавления описания</string>
+    <string name="media_description">Добавить описание для медиафайла (для слабовидящих)</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
@@ -1031,7 +1031,7 @@
     <string name="post_visibility_tilte">Видимость записи</string>
     <string name="add_photo_pixelfed">Нажмите здесь, чтобы добавить фотографии</string>
     <string name="add_photo_indication_pixelfed">Поддерживаемые форматы: jpeg, png, gif \n\nМаксимальный размер файла: 15 Мб \n\nАльбомы могут содержать 4 фотографии или видео</string>
-    <string name="upload_media">Загрузить медиа</string>
+    <string name="upload_media">Загрузить медиафайл</string>
     <string name="pixelfed_compose_placeholder">Добавить подпись (необязательно)</string>
     <string name="long_api_error">Приложение получило очень длинное сообщение об ошибке от API %1$s</string>
     <string name="message_preview">Предпросмотр сообщения</string>
@@ -1120,9 +1120,11 @@
     <string name="identity_proofs">Подтверждение личности</string>
     <string name="verified_user">Подтверждённая личность</string>
     <string name="verified_by">Подтверждено %1$s (%2$s)</string>
-    <string name="remove_notification">Delete the notification</string>
-    <string name="display_more_options">Display more options</string>
-    <string name="pixelfed_story">It is a Pixelfed story</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
+    <string name="remove_notification">Удалить уведомление</string>
+    <string name="display_more_options">Показать больше опций</string>
+    <string name="pixelfed_story">Это Pixelfed история</string>
+    <string name="story_indication">Загрузите медиафайл, он будет автоматически добавлен к вашей Pixelfed истории.</string>
+    <string name="added_to_story">Медиафайл успешно добавлен в вашу историю!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>
