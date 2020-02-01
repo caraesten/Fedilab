@@ -666,7 +666,12 @@ public class Helper {
                 InetAddress ipAddr = InetAddress.getByName(instance);
                 return !ipAddr.toString().equals("");
             } catch (Exception e) {
-                return false;
+                try {
+                    InetAddress ipAddr = InetAddress.getByName("mastodon.social");
+                    return !ipAddr.toString().equals("");
+                } catch (Exception ex) {
+                    return false;
+                }
             }
         } else {
             return false;
