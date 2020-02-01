@@ -54,9 +54,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,18 +63,12 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.activities.TootActivity;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
-import okhttp3.Cache;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import static app.fedilab.android.helper.Helper.urlPattern;
 
@@ -98,7 +90,7 @@ public class HttpsConnection {
     private Proxy proxy;
     private String instance;
     private String USER_AGENT;
-    private int cacheSize = 30*1024*1024;
+
 
     public HttpsConnection(Context context, String instance) {
         this.instance = instance;
@@ -185,103 +177,50 @@ public class HttpsConnection {
             url = new URL(urlConnection);
         }
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            Cache cache = new Cache(context.getCacheDir(), cacheSize);
-            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).cache(cache);
-            if (proxy != null) {
-                builder.proxy(proxy);
+        if (proxy != null)
+            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setConnectTimeout(timeout * 1000);
+        httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
+        httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+        httpsURLConnection.setRequestProperty("Accept", "application/json");
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
+        if (token != null && !token.startsWith("Basic "))
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+        else if (token != null && token.startsWith("Basic "))
+            httpsURLConnection.setRequestProperty("Authorization", token);
+        httpsURLConnection.setRequestMethod("GET");
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            response = converToString(httpsURLConnection.getInputStream());
+        } else {
+            String error = null;
+            if (httpsURLConnection.getErrorStream() != null) {
+                InputStream stream = httpsURLConnection.getErrorStream();
+                if (stream == null) {
+                    stream = httpsURLConnection.getInputStream();
+                }
+                try (Scanner scanner = new Scanner(stream)) {
+                    scanner.useDelimiter("\\Z");
+                    if (scanner.hasNext()) {
+                        error = scanner.next();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            OkHttpClient client = builder.build();
-            Request.Builder requestBuilder = new Request.Builder()
-                    .url(urlConnection);
-            HttpUrl.Builder httpBuider = Objects.requireNonNull(HttpUrl.parse(url.toString())).newBuilder();
-            if (token != null && !token.startsWith("Basic ")) {
-                requestBuilder.addHeader("Authorization", "Bearer " + token);
-            } else if (token != null && token.startsWith("Basic ")) {
-                requestBuilder.addHeader("Authorization", token);
-            }
-            Request requesthttp = requestBuilder
-
-                    .url(httpBuider.build())
-                    .build();
-            int code = 500;
+            int responseCode = httpsURLConnection.getResponseCode();
             try {
-                Response httpresponse = client.newCall(requesthttp).execute();
-                assert httpresponse.body() != null;
-                String response = httpresponse.body().string();
-                code = httpresponse.code();
-                String error = httpresponse.message();
-                if (code >= 200 && code < 400) {
-                    if (!cache.isClosed()) {
-                        try {
-                            cache.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    getOKHttpHeader(httpresponse.headers().toMultimap());
-                    return response;
-                } else {
-                    throw new HttpsConnectionException(code, error);
-                }
-            } catch (Exception ignored){}
-            finally {
-                if (!cache.isClosed()) {
-                    try {
-                        cache.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                httpsURLConnection.getInputStream().close();
+            } catch (Exception ignored) {
             }
-            throw new HttpsConnectionException(code, context.getString(R.string.toast_error));
-        }else{
-
-            if (proxy != null)
-                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-            else
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
-            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpsURLConnection.setRequestProperty("Accept", "application/json");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-            if (token != null && !token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            else if (token != null && token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", token);
-            httpsURLConnection.setRequestMethod("GET");
-            String response;
-            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                response = converToString(httpsURLConnection.getInputStream());
-            } else {
-                String error = null;
-                if (httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        if (scanner.hasNext()) {
-                            error = scanner.next();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                int responseCode = httpsURLConnection.getResponseCode();
-                try {
-                    httpsURLConnection.getInputStream().close();
-                } catch (Exception ignored) {
-                }
-                throw new HttpsConnectionException(responseCode, error);
-            }
-            getSinceMaxId();
-            httpsURLConnection.getInputStream().close();
-            return response;
+            throw new HttpsConnectionException(responseCode, error);
         }
+        getSinceMaxId();
+        httpsURLConnection.getInputStream().close();
+        return response;
     }
 
 
@@ -333,88 +272,50 @@ public class HttpsConnection {
 
     public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            Cache cache = new Cache(context.getCacheDir(), cacheSize);
-            OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).cache(cache);
-            if (proxy != null) {
-                builder.proxy(proxy);
-            }
-            if( !urlConnection.startsWith("http")){
-                urlConnection = "http://" + urlConnection;
-            }
-            OkHttpClient client = builder.build();
-            Request.Builder requestBuilder = new Request.Builder()
-                    .url(urlConnection);
-            HttpUrl.Builder httpBuider = Objects.requireNonNull(HttpUrl.parse(urlConnection)).newBuilder();
-            Request requesthttp = requestBuilder
 
-                    .url(httpBuider.build())
-                    .build();
-            try (Response httpresponse = client.newCall(requesthttp).execute()) {
-                assert httpresponse.body() != null;
-                String response = httpresponse.body().string();
-                int code = httpresponse.code();
-                String error = httpresponse.message();
-                if (code >= 200 && code < 400) {
-                    getOKHttpHeader(httpresponse.headers().toMultimap());
-                    return response;
-                } else {
-                    throw new HttpsConnectionException(code, error);
-                }
-            }finally {
-                if (!cache.isClosed()) {
-                    try {
-                        cache.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        } else {
-            URL url = new URL(urlConnection);
-            if (proxy != null)
-                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-            else
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setConnectTimeout(30 * 1000);
-            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpsURLConnection.setRequestProperty("Accept", "application/json");
-            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-            httpsURLConnection.setRequestMethod("GET");
-            String response;
-            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = converToString(httpsURLConnection.getInputStream());
-            } else {
-                String error = null;
-                if (httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        if (scanner.hasNext()) {
-                            error = scanner.next();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                int responseCode = httpsURLConnection.getResponseCode();
-                try {
-                    httpsURLConnection.getInputStream().close();
-                } catch (Exception ignored) {
-                }
-                throw new HttpsConnectionException(responseCode, error);
-            }
+        URL url = new URL(urlConnection);
+        if (proxy != null)
+            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setConnectTimeout(30 * 1000);
+        httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+        httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+        httpsURLConnection.setRequestProperty("Accept", "application/json");
+        httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
+        httpsURLConnection.setRequestMethod("GET");
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             getSinceMaxId();
-            httpsURLConnection.getInputStream().close();
-            return response;
+            response = converToString(httpsURLConnection.getInputStream());
+        } else {
+            String error = null;
+            if (httpsURLConnection.getErrorStream() != null) {
+                InputStream stream = httpsURLConnection.getErrorStream();
+                if (stream == null) {
+                    stream = httpsURLConnection.getInputStream();
+                }
+                try (Scanner scanner = new Scanner(stream)) {
+                    scanner.useDelimiter("\\Z");
+                    if (scanner.hasNext()) {
+                        error = scanner.next();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            int responseCode = httpsURLConnection.getResponseCode();
+            try {
+                httpsURLConnection.getInputStream().close();
+            } catch (Exception ignored) {
+            }
+            throw new HttpsConnectionException(responseCode, error);
         }
+        getSinceMaxId();
+        httpsURLConnection.getInputStream().close();
+        return response;
+
     }
 
 

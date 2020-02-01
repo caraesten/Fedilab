@@ -1,2 +1,4 @@
 Fixed:
 - Mentions with delete & re-draft for Pleroma accounts
+- Nitter timeline refresh
+- Remove notification bar for Android 8-
