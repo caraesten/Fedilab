@@ -1110,4 +1110,6 @@
     <string name="pixelfed_story">È una storia Pixelfed</string>
     <string name="story_indication">Carica un media, che verrà automaticamente aggiunto alla tua storia Pixelfed.</string>
     <string name="added_to_story">Media aggiunto correttamente alla tua storia!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>
