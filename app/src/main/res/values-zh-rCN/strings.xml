@@ -1102,4 +1102,6 @@
     <string name="pixelfed_story">这是Pixelfed的故事</string>
     <string name="story_indication">上传媒体，它将自动添加到您的 Pixelfed 故事中。</string>
     <string name="added_to_story">媒体成功添加到您的故事中！</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>
