@@ -1110,4 +1110,6 @@
     <string name="pixelfed_story">Det är en Pixelfed story</string>
     <string name="story_indication">Ladda upp media, det kommer automatiskt att läggas till på din Pixelfed story.</string>
     <string name="added_to_story">Media har lagts till i din berättelse!</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>
