@@ -1094,4 +1094,6 @@
     <string name="pixelfed_story">Pixelfedのストーリーです</string>
     <string name="story_indication">メディアをアップロードすると、自動的にあなたのPixelfedストーリーに追加されます。</string>
     <string name="added_to_story">メディアをあなたのストーリーにアップロードしました！</string>
+    <string name="action_disabled">Action disabled</string>
+    <string name="action_unfollow">Unfollow</string>
 </resources>
