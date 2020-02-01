@@ -978,15 +978,18 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
+            account_follow.setContentDescription(getString(R.string.action_unblock));
         } else if (relationship.isBlocked_by()) {
             account_follow.setImageResource(R.drawable.ic_user_plus);
             account_follow.setVisibility(View.VISIBLE);
             account_follow.setEnabled(false);
+            account_follow.setContentDescription(getString(R.string.action_disabled));
             doAction = action.NOTHING;
         }else if (relationship.isRequested()) {
             account_follow_request.setVisibility(View.VISIBLE);
             account_follow.setImageResource(R.drawable.ic_hourglass_full);
             account_follow.setVisibility(View.VISIBLE);
+            account_follow.setContentDescription(getString(R.string.follow_request));
             doAction = action.UNFOLLOW;
         } else if (relationship.isFollowing()) {
             account_follow.setImageResource(R.drawable.ic_user_minus);
@@ -994,11 +997,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.red_1)));
             }
             doAction = action.UNFOLLOW;
+            account_follow.setContentDescription(getString(R.string.action_unfollow));
             account_follow.setVisibility(View.VISIBLE);
         } else if (!relationship.isFollowing()) {
             account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = action.FOLLOW;
             account_follow.setVisibility(View.VISIBLE);
+            account_follow.setContentDescription(getString(R.string.action_follow));
         } else {
             account_follow.setVisibility(View.GONE);
             doAction = action.NOTHING;
