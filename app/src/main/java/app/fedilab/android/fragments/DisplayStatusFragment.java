@@ -382,7 +382,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             });
 
 
-        if (instanceType == null || !instanceType.equals("PEERTUBE"))
+        if (instanceType == null || (!instanceType.equals("PEERTUBE") && !instanceType.equals("NITTER"))) {
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -400,7 +400,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                 }
             });
-        else {
+        }else if(instanceType.equals("PEERTUBE")){
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -419,6 +419,23 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                 }
             });
+        }else {
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if (statuses.size() > 0) {
+                        int size = statuses.size();
+                        isSwipped = true;
+                        statuses.clear();
+                        statuses = new ArrayList<>();
+                        max_id = null;
+                        statusListAdapter.notifyItemRangeRemoved(0, size);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).execute();
+                    }
+                }
+            });
+
+
         }
         if (context != null) {
             //Load data depending of the value
@@ -517,7 +534,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //hide loaders
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-
         //handle other API error but discards 404 - error which can often happen due to toots which have been deleted
         if (this.peertubes == null || this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse == null)
@@ -533,7 +549,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-
         //For remote Peertube remote instances
         if (instanceType.equals("PEERTUBE")) {
             int previousPosition = this.peertubes.size();
@@ -554,8 +569,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
             //remove handlers
             swipeRefreshLayout.setRefreshing(false);
+            textviewNoAction.setVisibility(View.GONE);
             if (firstLoad && (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0)) {
                 textviewNoActionText.setText(R.string.no_video_to_display);
+                textviewNoAction.setVisibility(View.VISIBLE);
+            }
+            flag_loading = false;
+            firstLoad = false;
+        }else if (instanceType.equals("NITTER")) {
+            int previousPosition = this.statuses.size();
+            //max_id needs to work like an offset
+            this.statuses.addAll(apiResponse.getStatuses());
+            //If no item were inserted previously the adapter is created
+            if (previousPosition == 0) {
+                boolean isOnWifi = Helper.isOnWIFI(context);
+                statusListAdapter = new StatusListAdapter(instanceType, type, targetedId, isOnWifi, this.statuses);
+                lv_status.setAdapter(statusListAdapter);
+            } else {
+                statusListAdapter.notifyItemRangeInserted(previousPosition, apiResponse.getStatuses().size());
+            }
+            textviewNoAction.setVisibility(View.GONE);
+            //remove handlers
+            swipeRefreshLayout.setRefreshing(false);
+            if (firstLoad && (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0)) {
                 textviewNoAction.setVisibility(View.VISIBLE);
             }
             flag_loading = false;
@@ -626,7 +662,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             //Let's deal with statuses
             if (statuses != null && statuses.size() > 0) {
-                if (statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("NITTER") || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
+                if (statusListAdapter != null && (instanceType.equals("MASTODON")  || instanceType.equals("MISSKEY") || instanceType.equals("GNU"))) {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 } else if (artListAdapter != null && instanceType.equals("ART")) {
@@ -651,7 +687,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
-
         }
     }
 
