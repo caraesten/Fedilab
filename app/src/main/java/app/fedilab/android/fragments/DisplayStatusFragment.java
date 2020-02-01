@@ -35,21 +35,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.ListPreloader;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
-import com.bumptech.glide.util.FixedPreloadSizeProvider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +58,6 @@ import app.fedilab.android.asynctasks.RetrievePeertubeSearchAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
@@ -141,33 +133,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
 
-    private class MyPreloadModelProvider implements ListPreloader.PreloadModelProvider<String> {
-        @Override
-        @NonNull
-        public List<String> getPreloadItems(int position) {
-            if( statuses == null || statuses.size() == 0){
-                return Collections.emptyList();
-            }
-            Status status = statuses.get(position);
-            if (status.getMedia_attachments() == null || status.getMedia_attachments().size() ==0) {
-                return Collections.emptyList();
-            }
-            List<String> preloaded_urls = new ArrayList<>();
-            for(Attachment attachment: status.getMedia_attachments()) {
-                preloaded_urls.add(attachment.getPreview_url());
-            }
-            return  preloaded_urls;
-        }
 
-        @Nullable
-        @Override
-        public RequestBuilder<?> getPreloadRequestBuilder(@NonNull String url) {
-            return Glide.with(context)
-                    .load(url)
-                    .override(640, 480);
-        }
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -228,13 +194,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 c1, c2, c1
         );
         lv_status = rootView.findViewById(R.id.lv_status);
-        ListPreloader.PreloadSizeProvider sizeProvider =
-                new FixedPreloadSizeProvider(640, 480);
-        ListPreloader.PreloadModelProvider modelProvider = new MyPreloadModelProvider();
-        RecyclerViewPreloader<ContactsContract.CommonDataKinds.Photo> preloader =
-                new RecyclerViewPreloader<>(
-                        Glide.with(context), modelProvider, sizeProvider, 20 );
-        lv_status.addOnScrollListener(preloader);
+
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
         textviewNoAction = rootView.findViewById(R.id.no_action);

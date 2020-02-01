@@ -24,7 +24,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.ListPreloader;
 import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
 import com.bumptech.glide.util.FixedPreloadSizeProvider;
 
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +56,6 @@ import app.fedilab.android.asynctasks.RetrieveNotificationsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.NotificationsListAdapter;
@@ -125,15 +122,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if (bundle != null) {
             type = (Type) bundle.get("type");
         }
-        RelativeLayout main_timeline_container;
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
-        ListPreloader.PreloadSizeProvider sizeProvider =
-                new FixedPreloadSizeProvider(640, 480);
-        ListPreloader.PreloadModelProvider modelProvider = new MyPreloadModelProvider();
-        RecyclerViewPreloader<ContactsContract.CommonDataKinds.Photo> preloader =
-                new RecyclerViewPreloader<>(
-                        Glide.with(context), modelProvider, sizeProvider, 20 );
-        lv_notifications.addOnScrollListener(preloader);
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_notifications);
         textviewNoAction = rootView.findViewById(R.id.no_action);
@@ -516,32 +505,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         }
     }
-
-    private class MyPreloadModelProvider implements ListPreloader.PreloadModelProvider<String> {
-        @Override
-        @NonNull
-        public List<String> getPreloadItems(int position) {
-            Status status = notifications.get(position).getStatus();
-            if (status == null || status.getMedia_attachments() == null || status.getMedia_attachments().size() ==0) {
-                return Collections.emptyList();
-            }
-            List<String> preloaded_urls = new ArrayList<>();
-            for(Attachment attachment: status.getMedia_attachments()) {
-                preloaded_urls.add(attachment.getPreview_url());
-            }
-            return  preloaded_urls;
-        }
-
-        @Nullable
-        @Override
-        public RequestBuilder<?> getPreloadRequestBuilder(@NonNull String url) {
-            return Glide.with(context)
-                    .load(url)
-                    .override(640, 480);
-        }
-
-    }
-
 
     public enum Type {
         ALL,
