@@ -1108,8 +1108,8 @@
     <string name="remove_notification">Slet notifikationen</string>
     <string name="display_more_options">Vis flere muligheder</string>
     <string name="pixelfed_story">Det er en Pixelfed-historie</string>
-    <string name="story_indication">Upload a media, it will be automatically added to your Pixelfed story.</string>
-    <string name="added_to_story">Media successfully added to your story!</string>
-    <string name="action_disabled">Action disabled</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="story_indication">Upload et medie. Det føjes automatisk til din Pixelfed-historie.</string>
+    <string name="added_to_story">Medie nu føjet til din historie!</string>
+    <string name="action_disabled">Handling deaktiveret</string>
+    <string name="action_unfollow">Stop følgning</string>
 </resources>
