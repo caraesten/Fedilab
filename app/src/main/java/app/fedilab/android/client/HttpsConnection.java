@@ -186,6 +186,7 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
         httpsURLConnection.setRequestProperty("Content-Type", "application/json");
         httpsURLConnection.setRequestProperty("Accept", "application/json");
+        httpsURLConnection.setUseCaches(true);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         if (token != null && !token.startsWith("Basic "))
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -282,9 +283,10 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("http.keepAlive", "false");
         httpsURLConnection.setRequestProperty("Content-Type", "application/json");
         httpsURLConnection.setRequestProperty("Accept", "application/json");
-        httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpsURLConnection.setRequestMethod("GET");
+        httpsURLConnection.setUseCaches(true);
         String response;
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             getSinceMaxId();

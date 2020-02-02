@@ -4376,6 +4376,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             fetch_more = itemView.findViewById(R.id.fetch_more);
             webview_preview_card = itemView.findViewById(R.id.webview_preview_card);
             webview_preview = itemView.findViewById(R.id.webview_preview);
+
             status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
             status_document_container = itemView.findViewById(R.id.status_document_container);
             status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
@@ -4437,7 +4438,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_content = itemView.findViewById(R.id.status_cardview_content);
             status_cardview_url = itemView.findViewById(R.id.status_cardview_url);
             status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
-            status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
+            //status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
+            status_cardview_webview = Helper.initializeWebview((Activity) context, R.id.status_cardview_webview, itemView);
+            status_cardview_webview.getSettings().setJavaScriptEnabled(true);
             hide_preview = itemView.findViewById(R.id.hide_preview);
             hide_preview_h = itemView.findViewById(R.id.hide_preview_h);
             status_toot_app = itemView.findViewById(R.id.status_toot_app);

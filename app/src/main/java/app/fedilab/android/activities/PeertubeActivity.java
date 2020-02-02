@@ -265,7 +265,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             webview_video.setVisibility(View.VISIBLE);
             playerView.setVisibility(View.GONE);
 
-            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video);
+            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video, null);
             FrameLayout webview_container = findViewById(R.id.main_media_frame);
             final ViewGroup videoLayout = findViewById(R.id.videoLayout);
 

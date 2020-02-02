@@ -31,13 +31,7 @@ public class ProxyHelper {
 
     public static void setProxy(Context context, CustomWebview webview, String host, int port, String applicationClassName) {
 
-        if (Build.VERSION.SDK_INT <= 18) {
-            setProxyJB(webview, host, port);
-        }
-        // 4.4 (KK) & 5.0 (Lollipop)
-        else {
-            setProxyKKPlus(context, webview, host, port, applicationClassName);
-        }
+        setProxyKKPlus(context, webview, host, port, applicationClassName);
     }
 
 

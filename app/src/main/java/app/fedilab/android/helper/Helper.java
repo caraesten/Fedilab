@@ -228,9 +228,11 @@ import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.webview.CustomWebview;
+import app.fedilab.android.webview.ProxyHelper;
 import es.dmoral.toasty.Toasty;
 import info.guardianproject.netcipher.client.StrongBuilder;
 import info.guardianproject.netcipher.client.StrongOkHttpClientBuilder;
+import okhttp3.Cache;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
@@ -2462,9 +2464,14 @@ public class Helper {
         return spannableString;
     }
 
-    public static CustomWebview initializeWebview(Activity activity, int webviewId) {
+    public static CustomWebview initializeWebview(Activity activity, int webviewId, View rootView) {
 
-        CustomWebview webView = activity.findViewById(webviewId);
+        CustomWebview webView;
+        if( rootView == null) {
+            webView = activity.findViewById(webviewId);
+        }else{
+            webView = rootView.findViewById(webviewId);
+        }
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
 
@@ -2491,6 +2498,13 @@ public class Helper {
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDatabaseEnabled(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        if (proxyEnabled) {
+            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+            ProxyHelper.setProxy(activity, webView, host, port, WebviewActivity.class.getName());
+        }
 
         return webView;
     }
@@ -4372,14 +4386,16 @@ public class Helper {
     public static OkHttpClient getHttpClient(Context context) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        int cacheSize = 30*1024*1024;
+        Cache cache = new Cache(context.getCacheDir(), cacheSize);
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .followRedirects(true)
                 .followSslRedirects(true)
                 .retryOnConnectionFailure(true)
                 .connectTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
-                .cache(null);
+                .cache(cache);
         if (proxyEnabled) {
             Proxy proxy;
             int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);

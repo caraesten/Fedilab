@@ -158,12 +158,6 @@ public class WebviewConnectActivity extends BaseActivity {
             }
         });
 
-        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
-        if (proxyEnabled) {
-            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            ProxyHelper.setProxy(getApplicationContext(), webView, host, port, WebviewConnectActivity.class.getName());
-        }
 
         webView.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")

@@ -263,7 +263,7 @@ public class MediaSliderFragment extends Fragment implements MediaPlayer.OnCompl
                 break;
             case "web":
                 loader.setVisibility(View.GONE);
-                webview_video = Helper.initializeWebview((Activity) context, R.id.webview_video);
+                webview_video = Helper.initializeWebview((Activity) context, R.id.webview_video, null);
                 webview_video.setVisibility(View.VISIBLE);
                 FrameLayout webview_container = rootView.findViewById(R.id.main_media_frame);
                 final ViewGroup videoLayout = rootView.findViewById(R.id.videoLayout);

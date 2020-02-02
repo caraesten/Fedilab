@@ -108,19 +108,13 @@ public class WebviewActivity extends BaseActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
+        webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview, null);
         setTitle("");
         FrameLayout webview_container = findViewById(R.id.webview_container);
         final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
         webView.getSettings().setJavaScriptEnabled(true);
 
 
-        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
-        if (proxyEnabled) {
-            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            ProxyHelper.setProxy(getApplicationContext(), webView, host, port, WebviewActivity.class.getName());
-        }
 
         MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(WebviewActivity.this, webView, webview_container, videoLayout);
         mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
