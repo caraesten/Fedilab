@@ -551,7 +551,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             textviewNoAction.setVisibility(View.GONE);
             //remove handlers
             swipeRefreshLayout.setRefreshing(false);
-            if (firstLoad && (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0)) {
+            if (firstLoad && (apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0)) {
                 textviewNoAction.setVisibility(View.VISIBLE);
             }
             flag_loading = false;
