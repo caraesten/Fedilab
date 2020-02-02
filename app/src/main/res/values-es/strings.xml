@@ -76,7 +76,7 @@
     <string name="delete_account_title">Eliminar una cuenta</string>
     <string name="delete_account_message" formatted="false">¿Borrar la cuenta %1$s de la aplicación?</string>
     <string name="send_email">Envíar un correo</string>
-    <string name="click_to_change">Haz clic en la dirección para cambiarla</string>
+    <string name="click_to_change">Pulsa en la dirección para cambiarla</string>
     <string name="failed">¡Falló!</string>
     <string name="scheduled_toots">Toots programados</string>
     <string name="disclaimer_full">La siguiente información puede mostrar el perfil del usuario incompleto.</string>
@@ -175,7 +175,7 @@
     <string name="choose_accounts">Elegir una cuenta</string>
     <string name="select_accounts">Seleccionar alguna cuenta</string>
     <string name="remove_draft">¿Remover cuenta?</string>
-    <string name="show_reply">Haz clic en el botón para mostrar el toot original</string>
+    <string name="show_reply">Pulsa en el botón para mostrar el toot original</string>
     <string name="upload_form_description">Describir para los discapacitados visuales</string>
     <!-- Instance -->
     <string name="instance_no_description">¡No hay descripción disponible!</string>
@@ -210,7 +210,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">El tiempo de silenciado debería ser mayor que un minuto.</string>
     <string name="timed_mute_date">%1$s ha sido silenciado hasta %2$s.\n Puedes anular el silenciado de esta cuenta desde su página de perfil.</string>
-    <string name="timed_mute_profile">%1$s está silenciado hasta %2$s.\n Haz clic aquí para anular el silenciado de la cuenta.</string>
+    <string name="timed_mute_profile">%1$s está silenciado hasta %2$s.\n Pulsa aquí para anular el silenciado de la cuenta.</string>
     <!-- Notifications -->
     <string name="no_notifications">Ninguna notificación para mostrar</string>
     <string name="notif_mention">te mencionó</string>
@@ -435,7 +435,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
 -Si tu usas el factor de autenticación de dos pasos (2FA), por favor usa el link al pie (una vez que el nombre de la instancia esta lleno) \n\n
 -Puedes usar también este link sin usar el \"Fa \n\n
 -Si eso todavía no funciona, por favor notifica el problema en Framagit https://framagit.org/tom79/fedilab/issues    </string>
-    <string name="media_ready">Se ha cargado el archivo. Haz clic aquí para mostrarlo.</string>
+    <string name="media_ready">Se ha cargado el archivo. Pulsa aquí para mostrarlo.</string>
     <string name="data_export_start">Este proceso puede ser bastante largo. Recibirás una notificación cuando esté finalizado.</string>
     <string name="data_export_running">Todavía en curso, por favor espera…</string>
     <string name="data_export">Exportar estados</string>
@@ -472,7 +472,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toast_hide_boost">¡Los impulsos han sido ocultados!</string>
     <string name="direct_message">Mensaje directo</string>
     <string name="filters">Filtros</string>
-    <string name="action_filters_empty_content">No hay filtros para mostrar. Se puede crear uno haciendo clic en el botón \"+\".</string>
+    <string name="action_filters_empty_content">No hay filtros para mostrar. Se puede crear uno pulsando en el botón \"+\".</string>
     <string name="filter_keyword">Palabra clave o frase</string>
     <string name="context_home">Linea de tiempo central</string>
     <string name="context_public">Linea de tiempo publica</string>
@@ -499,7 +499,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="add_account_list_trunk">Añadiendo cuentas a la lista</string>
     <string name="account_added_list_trunk">Las cuentas fueron añadidas a la lista</string>
     <string name="adding_account_list_trunk">Añadiendo cuentas a la lista</string>
-    <string name="action_list_add">Todavía no has creado una lista. Haz clic en el botón \"+\" para añadir una nueva.</string>
+    <string name="action_list_add">Todavía no has creado una lista. Pulsa en el botón \"+\" para añadir una nueva.</string>
     <string name="about_trunk">A quiénes seguir</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">La(s) cuenta(s) no puede(n) ser seguida(s)</string>
@@ -642,7 +642,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toast_cancelled">! Carga cancelada!</string>
     <string name="upload_video_success">¡Se ha subido el video!</string>
     <string name="uploading">Subiendo, espere por favor…</string>
-    <string name="video_uploaded_action">Haga clic aquí para editar los datos del vídeo.</string>
+    <string name="video_uploaded_action">Pulsa aquí para editar los datos del vídeo.</string>
     <string name="delete_video">Eliminar vídeo</string>
     <string name="delete_video_confirmation">¿Está seguro de eliminar este video?</string>
     <string name="display_nsfw_videos">Mostrar vídeos NSFW</string>
@@ -745,7 +745,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="history">Historia</string>
     <string name="playlists">Listas de reproducción</string>
     <string name="display_name">Nombra para mostrar</string>
-    <string name="action_playlist_add">Usted no tiene ninguna lista de reproducción. Haga clic en el icono \"+\" para agregar una nueva lista de reproducción</string>
+    <string name="action_playlist_add">Usted no tiene ninguna lista de reproducción. Pulsa en el icono \"+\" para agregar una nueva lista de reproducción</string>
     <string name="error_display_name">¡Debes proporcionar un nombre a mostrar!</string>
     <string name="error_channel_mandatory">El canal es necesario cuando la lista de reproducción es pública.</string>
     <string name="action_playlist_create">Crear una lista de reproducción</string>
@@ -790,7 +790,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="instance_logo">Logotipo de la instancia</string>
     <string name="toast_error_instance_reg">¡Algo salió mal al comprobar las instancias disponibles!</string>
     <string name="join_mastodon">Unirse a Mastodon</string>
-    <string name="pickup_instance_category">Elija una instancia escogiendo una categoría, y luego haga clic en un botón de verificación.</string>
+    <string name="pickup_instance_category">Elija una instancia escogiendo una categoría, y luego pulsa en un botón de verificación.</string>
     <string name="pickup_instance_peertube">Elegir una instancia pulsando en un botón de selección.</string>
     <string name="users">%1$s usuarios</string>
     <string name="password_confirm">Confirmar la contraseña</string>
