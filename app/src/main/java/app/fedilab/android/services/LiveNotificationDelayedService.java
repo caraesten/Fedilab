@@ -57,6 +57,7 @@ import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
+import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -103,11 +104,9 @@ public class LiveNotificationDelayedService extends Service {
         totalAccount = 0;
         if( accountStreams != null) {
             for (Account account : accountStreams) {
-                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA") || account.getSocial().equals("PIXELFED")) {
-                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
-                    if (allowStream) {
-                        totalAccount++;
-                    }
+                boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
+                if (allowStream) {
+                    totalAccount++;
                 }
             }
         }
@@ -240,15 +239,22 @@ public class LiveNotificationDelayedService extends Service {
     private void taks(Account account) {
         String key = account.getUsername() + "@" + account.getInstance();
         APIResponse apiResponse;
-        API api;
-        api = new API(getApplicationContext(), account.getInstance(), account.getToken());
+
         String last_notifid = null;
         if (since_ids.containsKey(key)) {
             last_notifid = since_ids.get(key);
         }
         apiResponse = null;
         try {
-            apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+            if(account.getSocial().compareTo("FRIENDICA") != 0 && account.getSocial().compareTo("GNU") != 0 ) {
+                API api;
+                api = new API(getApplicationContext(), account.getInstance(), account.getToken());
+                apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+            }else{
+                GNUAPI gnuApi;
+                gnuApi = new GNUAPI(getApplicationContext(), account.getInstance(), account.getToken());
+                apiResponse = gnuApi.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, last_notifid, false);
+            }
         } catch (Exception ignored) {
         }
 

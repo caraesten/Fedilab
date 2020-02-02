@@ -48,6 +48,7 @@ import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
+import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -139,11 +140,15 @@ public class NotificationsSyncJob extends Job {
                 return;
             //Retrieve users in db that owner has.
             for (Account account : accounts) {
-                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
+                APIResponse apiResponse;
+                if(account.getSocial().compareTo("FRIENDICA") != 0 && account.getSocial().compareTo("GNU") != 0 ) {
                     API api = new API(getContext(), account.getInstance(), account.getToken());
-                    APIResponse apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
-                    onRetrieveNotifications(apiResponse, account);
+                    apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
+                }else{
+                    GNUAPI gnuApi = new GNUAPI(getContext(), account.getInstance(), account.getToken());
+                    apiResponse = gnuApi.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
                 }
+                onRetrieveNotifications(apiResponse, account);
             }
         }
     }
