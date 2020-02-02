@@ -463,7 +463,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="action_partnership">Asociaciones</string>
     <string name="neutral_menu_information">Información</string>
     <string name="hide_boost">Ocultar impulsos de %s</string>
-    <string name="endorse">Destacar en perfil</string>
+    <string name="endorse">Destacar en el perfil</string>
     <string name="show_boost">Mostrar impulsos de %s</string>
     <string name="unendorse">No muestre en perfil</string>
     <string name="toast_endorse">La cuenta ha sido promocionada en el perfil</string>
@@ -547,7 +547,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_display_card">Mostrar vistas previas de todos los toots</string>
     <string name="thanks_text_ux">Nuevo diseñador UX/UI</string>
     <string name="set_display_video_preview">Mostrar previsualización de videos</string>
-    <string name="account_id_clipbloard">! La identificación de la cuenta ha sido copiada en el portapapeles!</string>
+    <string name="account_id_clipbloard">¡El identificador de la cuenta ha sido copiado en el portapapeles!</string>
     <string name="set_change_locale">Cambiar idioma</string>
     <string name="default_language">Idioma predeterminado</string>
     <string name="truncate_long_toots">Truncar toots largos</string>
@@ -744,7 +744,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_remember_position">Recordar la posición en la línea de tiempo de inicio</string>
     <string name="history">Historia</string>
     <string name="playlists">Listas de reproducción</string>
-    <string name="display_name">Nombra para mostrar</string>
+    <string name="display_name">Nombre para mostrar</string>
     <string name="action_playlist_add">Usted no tiene ninguna lista de reproducción. Pulsa en el icono \"+\" para agregar una nueva lista de reproducción</string>
     <string name="error_display_name">¡Debes proporcionar un nombre a mostrar!</string>
     <string name="error_channel_mandatory">El canal es necesario cuando la lista de reproducción es pública.</string>
@@ -810,7 +810,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="account_created">¡Cuenta creada!</string>
     <string name="account_created_message">       ¡Su cuenta ha sido creada!\n\n
         Piense en validar su correo electrónico dentro de las próximas 48 horas.\n\n
-        ahora puedes conectar tu cuenta escribiendo <b>%1$s</b> en el primer campo y haciendo clic en <b>Conectar</b>.\n\n
+        ahora puedes conectar tu cuenta escribiendo <b>%1$s</b> en el primer campo y pulsando en <b>Conectar</b>.\n\n
         <b>Importante</b>: Si tu instancia requiere validación, usted recibirá un correo electrónico una vez que haya sido validada!
     </string>
     <string name="save_draft">¿Guardar el mensaje en borradores?</string>
@@ -879,7 +879,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="set_quick_reply_indication">Permite responder directamente en las líneas de tiempo debajo de los estados</string>
     <string name="set_fit_preview_indication">Las vistas previas no se recortarán en las líneas de tiempo</string>
     <string name="set_display_video_preview_indication">Permite reproducir videos incrustados directamente en las líneas de tiempo</string>
-    <string name="set_display_content_after_fetch_more_indication">Permite invertir la forma de leer los estados que se muestran al hacer clic en el botón de obtener más</string>
+    <string name="set_display_content_after_fetch_more_indication">Permite invertir la forma de leer los estados que se muestran al pulsar el botón de obtener más</string>
     <string name="set_security_provider_indication">Esta opción da soporte a las suites recientes de cifrado. Es útil para dispositivos Android antiguos o si no se puede conectar a su instancia.</string>
     <string name="set_video_mode_indication">Exclusivamente para videos de Peertube. Cambia este modo si no puedes reproducirlos.</string>
     <string name="featured_hashtags_indication">Estas etiquetas permitirán filtrar los estados de los perfiles. Tendrá que usar el menú contextual para verlos.</string>
