@@ -4,3 +4,4 @@ Added:
 
 Fixed:
 - Proxy not applied with embedded videos
+- Fix no toots that remains displayed on Nitter timelines
