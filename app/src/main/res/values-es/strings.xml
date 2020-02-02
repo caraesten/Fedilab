@@ -38,7 +38,7 @@
     <string name="camera">Cámara</string>
     <string name="delete_all">Eliminar todo</string>
     <string name="translate_toot">Traducir este toot.</string>
-    <string name="schedule">Programa</string>
+    <string name="schedule">Programar</string>
     <string name="text_size">Texto y tamaño de los íconos</string>
     <string name="text_size_change">Cambiar el tamaño del texto actual:</string>
     <string name="icon_size_change">Cambiar el tamaño del ícono actual:</string>
@@ -118,12 +118,12 @@
         <item>¿Remover este toot?</item>
         <item>Borrar &amp; redactar este Toot?</item>
     </string-array>
-    <string name="bookmarks">Marcapáginas</string>
-    <string name="bookmark_add">Añadir a marcapáginas</string>
-    <string name="bookmark_remove">Remover marcapágina</string>
-    <string name="bookmarks_empty">No hay marcapáginas para mostrar</string>
-    <string name="status_bookmarked">¡Estado ha sido añadido a marcapáginas!</string>
-    <string name="status_unbookmarked">¡Estado fue removido de marcapáginas!</string>
+    <string name="bookmarks">Marcadores</string>
+    <string name="bookmark_add">Añadir a marcadores</string>
+    <string name="bookmark_remove">Eliminar marcador</string>
+    <string name="bookmarks_empty">No hay marcadores para mostrar</string>
+    <string name="status_bookmarked">¡El estado ha sido añadido a marcadores!</string>
+    <string name="status_unbookmarked">¡El estado fue eliminado de marcadores!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -201,7 +201,7 @@
     <string name="reject">Rechazar</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">¡Ningún toot programado para mostrar!</string>
-    <string name="no_scheduled_toots_indications">Escribe un toot y luego elige un <b>programa</b> del menú superior.</string>
+    <string name="no_scheduled_toots_indications">Escribe un toot y luego elige <b>Programar</b> desde menú superior.</string>
     <string name="remove_scheduled">¿Borrar el toot programado?</string>
     <string name="media_count">Contenido multimedia: %d</string>
     <string name="toot_scheduled">¡El toot ha sido programado!</string>
@@ -536,8 +536,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="comment_no_allowed_peertube">¡Los comentarios no estan habilidatos para este video!</string>
     <string name="pickup_resolution">Escoger resolución</string>
     <string name="peertube_favorites">Peertube favoritos</string>
-    <string name="bookmark_add_peertube">¡Estado ha sido añadido a favoritos!</string>
-    <string name="bookmark_remove_peertube">¡Estado ha sido eliminado de tus favoritos!</string>
+    <string name="bookmark_add_peertube">¡El vídeo ha sido añadido a marcadores!</string>
+    <string name="bookmark_remove_peertube">¡El video ha sido eliminado de tus favoritos!</string>
     <string name="bookmark_peertube_empty">¡No hay videos de Peertube en tus favoritos!</string>
     <string name="channel">Canal</string>
     <string name="videos">Vídeos</string>
@@ -1006,7 +1006,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="please_wait_compression">La aplicación está comprimiendo el archivo multimedia, puede tardar un rato…</string>
     <string name="change_app_icon_experimental">Cambio de icono de la aplicación</string>
     <string name="click_to_change_the_app_icon">Pulsa para cambiar el icono de la aplicación</string>
-    <string name="post">Publicación</string>
+    <string name="post">Publicar</string>
     <string name="post_visibility_tilte">Visibilidad de la publicación</string>
     <string name="add_photo_pixelfed">Pulsa aquí para añadir fotos</string>
     <string name="add_photo_indication_pixelfed">Formatos aceptados: jpeg, png, gif  \n\nTamaño máximo de archivo: 15 MB  \n\nLos álbumes pueden contener hasta 4 fotos o videos</string>
@@ -1070,7 +1070,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="pref_primary_color_summary">Mostrado más frecuentemente por tu aplicación.</string>
     <string name="pref_primary_color_title">Color principal</string>
     <string name="export_bookmarks">Exportar marcadores a la instancia</string>
-    <string name="import_bookmarks">Importar marcadores de la instancia</string>
+    <string name="import_bookmarks">Importar marcadores desde la instancia</string>
     <string name="user_count">Número de usuarios</string>
     <string name="status_count">Número de estados</string>
     <string name="instance_count">Número de instancias</string>
