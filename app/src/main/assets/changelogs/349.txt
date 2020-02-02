@@ -1,3 +1,6 @@
 Added:
 - Català language
 - Push notifications for Friendica & GNU Social
+
+Fixed:
+- Proxy not applied with embedded videos
