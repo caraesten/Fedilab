@@ -1,0 +1,3 @@
+Added:
+- Català language
+- Push notifications for Friendica & GNU Social
