@@ -1100,6 +1100,6 @@ Ara ja pots connectar-te al compte escrivint <b>%1$s</b> en el primer camp i fen
     <string name="pixelfed_story">És una història de Pixelfed</string>
     <string name="story_indication">Puja un contingut i s\'afegirà automàticament a la teva història de Pixelfed.</string>
     <string name="added_to_story">Contingut afegit correctament a la teva història!</string>
-    <string name="action_disabled">Action disabled</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_disabled">Acció deshabilitada</string>
+    <string name="action_unfollow">Deixar de seguir</string>
 </resources>
