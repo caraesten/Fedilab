@@ -2530,6 +2530,9 @@ public class ContentSettingsFragment extends Fragment implements OnRetrieveRemot
                         case 20:
                             editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "kab");
                             editor.commit();
+                        case 21:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ca");
+                            editor.commit();
                             break;
                     }
 

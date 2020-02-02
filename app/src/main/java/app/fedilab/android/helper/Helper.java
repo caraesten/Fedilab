@@ -3937,11 +3937,7 @@ public class Helper {
     }
 
     private static void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
-        } else {
-            v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
-        }
+        v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
     }
 
     public static String getLocalesTwoChars(int stringLocaleId) {
@@ -4045,13 +4041,15 @@ public class Helper {
                 return 19;
             case "kab":
                 return 20;
+            case "ca":
+                return 21;
             default:
                 return 0;
         }
     }
 
     public static String[] getLocales(Context context) {
-        String[] locale = new String[21];
+        String[] locale = new String[22];
         locale[0] = context.getString(R.string.default_language);
         locale[1] = context.getString(R.string.english);
         locale[2] = context.getString(R.string.french);
@@ -4073,6 +4071,7 @@ public class Helper {
         locale[18] = context.getString(R.string.russian);
         locale[19] = context.getString(R.string.norwegian);
         locale[20] = context.getString(R.string.kabyle);
+        locale[21] = context.getString(R.string.catalan);
         return locale;
     }
 
