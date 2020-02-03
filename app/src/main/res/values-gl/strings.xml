@@ -1110,6 +1110,6 @@
     <string name="pixelfed_story">É unha Historia en Pixelfed</string>
     <string name="story_indication">Subir medios, engadirase automaticamente a Historia en Pixelfed.</string>
     <string name="added_to_story">Medios engadidos correctamente a Historia!</string>
-    <string name="action_disabled">Action disabled</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_disabled">Acción desactivada</string>
+    <string name="action_unfollow">Deixar de seguir</string>
 </resources>
