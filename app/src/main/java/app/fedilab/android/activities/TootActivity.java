@@ -2683,7 +2683,6 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                 showAToast(apiResponse.getError().getError());
                 return;
             }
-
         }
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS + userId + instance, false);

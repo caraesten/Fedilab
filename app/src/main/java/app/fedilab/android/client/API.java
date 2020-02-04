@@ -52,6 +52,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -4719,6 +4720,7 @@ public class API {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -6469,7 +6471,7 @@ public class API {
         APIError.setStatusCode(statusCode);
         String message = statusCode + " - " + error.getMessage();
         try {
-            JSONObject jsonObject = new JSONObject(error.getMessage());
+            JSONObject jsonObject = new JSONObject(Objects.requireNonNull(error.getMessage()));
             String errorM = jsonObject.get("error").toString();
             message = "Error " + statusCode + " : " + errorM;
         } catch (JSONException e) {
