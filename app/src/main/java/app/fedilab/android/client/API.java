@@ -2555,7 +2555,10 @@ public class API {
         List<Relationship> relationships;
         Relationship relationship = null;
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", accountId);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED)
+            params.put("id[]", accountId);
+        else
+            params.put("id", accountId);
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/relationships"), 10, params, prefKeyOauthTokenT);
             relationships = parseRelationshipResponse(new JSONArray(response));
