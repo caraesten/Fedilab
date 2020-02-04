@@ -5,3 +5,4 @@ Added:
 Fixed:
 - Proxy not applied with embedded videos
 - Fix no toots that remains displayed on Nitter timelines
+- Avoid to lose composed message when not sent

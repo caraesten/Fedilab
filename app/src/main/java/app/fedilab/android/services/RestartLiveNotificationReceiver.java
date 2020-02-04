@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.jobs.NotificationsSyncJob;
 
 /**
  * Created by Thomas on 22/09/2017.
@@ -45,6 +46,8 @@ public class RestartLiveNotificationReceiver extends BroadcastReceiver {
                 context.startService(streamingServiceIntent);
             } catch (Exception ignored) {
             }
+        }else{
+            NotificationsSyncJob.schedule(false);
         }
     }
 
