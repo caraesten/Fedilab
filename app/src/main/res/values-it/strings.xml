@@ -75,7 +75,7 @@
     <string name="delete_account_title">Elimina un account</string>
     <string name="delete_account_message" formatted="false">Eliminare l\'account %1$s dall\'applicazione?</string>
     <string name="send_email">Invia un\'email</string>
-    <string name="click_to_change">Fai clic sul percorso per cambiarlo</string>
+    <string name="click_to_change">Premi sul percorso per cambiarlo</string>
     <string name="failed">Errore!</string>
     <string name="scheduled_toots">Toot programmati</string>
     <string name="disclaimer_full">Le informazioni qui sotto potrebbero riflettere in modo incompleto il profilo dell\'utente.</string>
@@ -174,7 +174,7 @@
     <string name="choose_accounts">Seleziona un account</string>
     <string name="select_accounts">Seleziona alcuni account</string>
     <string name="remove_draft">Rimuovere bozza?</string>
-    <string name="show_reply">Clicca sul pulsante per visualizzare il toot originale</string>
+    <string name="show_reply">Premi il pulsante per visualizzare il toot originale</string>
     <string name="upload_form_description">Descrivi per ipovedenti</string>
     <!-- Instance -->
     <string name="instance_no_description">Nessuna descrizione disponibile!</string>
@@ -209,7 +209,7 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">Il tempo di silenziamento deve essere maggiore di un minuto.</string>
     <string name="timed_mute_date">%1$s è stato silenziato fino al %2$s.\n Puoi smettere di silenziare questo account dalla sua pagina di profilo.</string>
-    <string name="timed_mute_profile">%1$s è silenziato fino al%2$s.\n Fai clic qui per non silenziare l\'account.</string>
+    <string name="timed_mute_profile">%1$s è silenziato fino al%2$s.\n Premi qui per smettere di silenziare l\'account.</string>
     <!-- Notifications -->
     <string name="no_notifications">Nessuna notifica da visualizzare</string>
     <string name="notif_mention">ti ha menzionato</string>
@@ -439,7 +439,7 @@
         - Puoi anche usare questo link senza usare la 2FA\n\n
         - Se ancora continua a non funzionare, apri un issue su Framagit all\'indirizzo https://framagit.org/tom79/fedilab/issues
     </string>
-    <string name="media_ready">Il media è stato caricato. Fai clic qui per visualizzarlo.</string>
+    <string name="media_ready">Il media è stato caricato. Premi qui per visualizzarlo.</string>
     <string name="data_export_start">Questa azione richiede molto tempo. Verrai avvisato quando sarà finita.</string>
     <string name="data_export_running">Ancora in corso, attendere prego…</string>
     <string name="data_export">Esporta stati</string>
@@ -476,7 +476,7 @@
     <string name="toast_hide_boost">I boost ora sono nascosti!</string>
     <string name="direct_message">Messaggi diretti</string>
     <string name="filters">Filtri</string>
-    <string name="action_filters_empty_content">Nessun filtro da visualizzare. Puoi crearne uno cliccando sul bottone \"+\".</string>
+    <string name="action_filters_empty_content">Nessun filtro da visualizzare. Puoi crearne uno premendo il bottone \"+\".</string>
     <string name="filter_keyword">Parola chiave o frase</string>
     <string name="context_home">La tua timeline</string>
     <string name="context_public">Timeline pubblica</string>
@@ -503,7 +503,7 @@
     <string name="add_account_list_trunk">Aggiunta degli account alla lista</string>
     <string name="account_added_list_trunk">Gli account sono stati aggiunti alla lista</string>
     <string name="adding_account_list_trunk">Aggiunta degli account alla lista</string>
-    <string name="action_list_add">Non hai ancora creato nessuna lista. Clicca sul pulsante \"+\" per aggiungerne una nuova.</string>
+    <string name="action_list_add">Non hai ancora creato nessuna lista. Premi il pulsante \"+\" per aggiungerne una nuova.</string>
     <string name="about_trunk">Chi seguire</string>
     <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Il/gli account non può/possono essere seguito/i</string>
@@ -647,7 +647,7 @@
     <string name="toast_cancelled">Caricamento annullato!</string>
     <string name="upload_video_success">Il video è stato caricato!</string>
     <string name="uploading">Caricamento, attendere prego…</string>
-    <string name="video_uploaded_action">Clicca qui per modificare i dati del video.</string>
+    <string name="video_uploaded_action">Premi qui per modificare i dati del video.</string>
     <string name="delete_video">Elimina video</string>
     <string name="delete_video_confirmation">Sei sicuro di voler eliminare questo video?</string>
     <string name="display_nsfw_videos">Mostrare video NSFW</string>
@@ -750,7 +750,7 @@
     <string name="history">Cronologia</string>
     <string name="playlists">Playlist</string>
     <string name="display_name">Nome visualizzato</string>
-    <string name="action_playlist_add">Non hai nessuna playlist. Clicca sull\'icona \"+\" per aggiungere una nuova playlist</string>
+    <string name="action_playlist_add">Non hai nessuna playlist. Premi l\'icona \"+\" per aggiungere una nuova playlist</string>
     <string name="error_display_name">È necessario fornire un nome da visualizzare!</string>
     <string name="error_channel_mandatory">Il canale è richiesto quando la playlist è pubblica.</string>
     <string name="action_playlist_create">Crea una playlist</string>
@@ -795,7 +795,7 @@
     <string name="instance_logo">Icona dell\'istanza</string>
     <string name="toast_error_instance_reg">Qualcosa è andato storto nel cercare istanze disponibili!</string>
     <string name="join_mastodon">Unisciti a Mastodon</string>
-    <string name="pickup_instance_category">Scegli un\'istanza selezionando una categoria, poi clicca sul pulsante con la spunta.</string>
+    <string name="pickup_instance_category">Scegli un\'istanza selezionando una categoria, poi premi il pulsante con la spunta.</string>
     <string name="pickup_instance_peertube">Scegli un\'istanza premendo il pulsante di controllo.</string>
     <string name="users">%1$s utenti</string>
     <string name="password_confirm">Conferma password</string>
@@ -815,7 +815,7 @@
     <string name="account_created">Account creato!</string>
     <string name="account_created_message">        Il tuo account è stato creato!\n\n
         Dovresti confermare la tua email entro le prossime 48 ore.\n\n
-        Ora puoi connetterti al tuo account scrivendo <b>%1$s</b> nel primo campo e cliccando su <b>Connetti</b>.\n\n
+        Ora puoi connetterti al tuo account scrivendo <b>%1$s</b> nel primo campo e premendo <b>Connetti</b>.\n\n
         <b>Importante</b>: Se la tua istanza richiede l\'approvazione, riceverai una mail solo quando sarà approvato il tuo account!
     </string>
     <string name="save_draft">Salvare il messaggio in bozze?</string>
@@ -884,7 +884,7 @@
     <string name="set_quick_reply_indication">Consenti di rispondere direttamente nelle timeline sotto gli stati</string>
     <string name="set_fit_preview_indication">Le anteprime non saranno ritagliate nelle timeline</string>
     <string name="set_display_video_preview_indication">Consenti di riprodurre video incorporati direttamente nelle timeline</string>
-    <string name="set_display_content_after_fetch_more_indication">Consenti di invertire il verso di lettura degli stati che sono mostrati una volta cliccato il pulsante \"Recupera altri toot\"</string>
+    <string name="set_display_content_after_fetch_more_indication">Consenti di invertire il verso di lettura degli stati che sono mostrati una volta premuto il pulsante \"Recupera altri toot\"</string>
     <string name="set_security_provider_indication">Questa opzione consente di supportare i recenti metodi di crittografia. É utile per vecchi dispositivi Android o se non riesci a connetterti alla tua istanza.</string>
     <string name="set_video_mode_indication">Esclusivamente per video da Peertube. Cambia modalità se non riesci a riprodurli.</string>
     <string name="featured_hashtags_indication">Queste etichette ti consentono di filtrare stati dai profili. Dovrai usare il menu contestuale per visualizzarli.</string>
@@ -999,7 +999,7 @@
     <string name="set_nitter_indication">Nitter è un\'interfaccia alternativa e open source per Twitter, focalizzata sulla privacy.</string>
     <string name="set_nitter_host">Inserisci il tuo host personalizzato o lascia vuoto per usare nitter.net</string>
     <string name="set_hide_status_bar">Nascondi barra di notifica di Fedilab</string>
-    <string name="set_hide_status_bar_indication">Per nascondere le notifiche rimanenti nella barra di stato, clicca sul pulsante con l\'icona di un occhio e deseleziona: \"Mostra nella barra di stato\"</string>
+    <string name="set_hide_status_bar_indication">Per nascondere le notifiche rimanenti nella barra di stato, premi il pulsante con l\'icona di un occhio e deseleziona: \"Mostra nella barra di stato\"</string>
     <string name="set_live_type_indication">Le notifiche saranno differite ogni 30 secondi. Questo consentirà un minore consumo di batteria.</string>
     <string name="live_delayed">Notifiche in tempo reale differite</string>
     <string name="no_live_notif">Nessuna notifica in tempo reale</string>
@@ -1010,10 +1010,10 @@
     <string name="set_resize_video_indication">Permette di comprimere video mantenendo la loro qualità.</string>
     <string name="please_wait_compression">L\'app sta comprimendo il media, può volerci un po\'…</string>
     <string name="change_app_icon_experimental">Cambia icona dell\'app</string>
-    <string name="click_to_change_the_app_icon">Clicca per cambiare l\'icona dell\'app</string>
+    <string name="click_to_change_the_app_icon">Premi per cambiare l\'icona dell\'app</string>
     <string name="post">Pubblica</string>
     <string name="post_visibility_tilte">Visibilità del post</string>
-    <string name="add_photo_pixelfed">Clicca qui per aggiungere foto</string>
+    <string name="add_photo_pixelfed">Premi qui per aggiungere foto</string>
     <string name="add_photo_indication_pixelfed">Formati Accettati: jpeg, png, gif  \n\nDimensione massima del file: 15 MB  \n\nGli album possono contenere fino a 4 foto o video</string>
     <string name="upload_media">Carica media</string>
     <string name="pixelfed_compose_placeholder">Aggiungi una didascalia opzionale</string>
@@ -1109,6 +1109,6 @@
     <string name="pixelfed_story">È una storia Pixelfed</string>
     <string name="story_indication">Carica un media, che verrà automaticamente aggiunto alla tua storia Pixelfed.</string>
     <string name="added_to_story">Media aggiunto correttamente alla tua storia!</string>
-    <string name="action_disabled">Action disabled</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_disabled">Azione disabilitata</string>
+    <string name="action_unfollow">Smetti di seguire</string>
 </resources>
