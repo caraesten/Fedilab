@@ -97,7 +97,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
         API.StatusAction doAction = null;
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             holder.account_mute_notification.hide();
             if (action == RetrieveAccountsAsyncTask.Type.BLOCKED)
                 account.setFollowType(Account.followAction.BLOCK);

@@ -239,7 +239,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if (type != RetrieveAccountsAsyncTask.Type.BLOCKED && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA))
+        if (type != RetrieveAccountsAsyncTask.Type.BLOCKED && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED))
             new RetrieveManyRelationshipsAsyncTask(context, accounts, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
