@@ -275,6 +275,7 @@ public class HttpsConnection {
 
 
         URL url = new URL(urlConnection);
+
         if (proxy != null)
             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
         else

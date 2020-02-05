@@ -2713,14 +2713,9 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;

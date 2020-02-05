@@ -231,20 +231,22 @@ public class Notification implements Parcelable {
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if (endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
-                                            ImageSpan imageSpan;
-                                            if (!disableAnimatedEmoji) {
-                                                resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
-                                                resource.setVisible(true, true);
-                                                imageSpan = new ImageSpan(resource);
-                                            } else {
-                                                Bitmap bitmap = drawableToBitmap(resource);
-                                                imageSpan = new ImageSpan(context,
-                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
-                                                                (int) Helper.convertDpToPixel(20, context), false));
-                                            }
-                                            contentSpan.setSpan(
-                                                    imageSpan, startPosition,
-                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            try {
+                                                ImageSpan imageSpan;
+                                                if (!disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                } else {
+                                                    Bitmap bitmap = drawableToBitmap(resource);
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
+                                                contentSpan.setSpan(
+                                                        imageSpan, startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }catch (Exception ignored){}
                                         }
                                     }
                                 }

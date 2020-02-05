@@ -63,6 +63,7 @@ import java.util.Map;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveAccountInfoAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.asynctasks.UpdateCredentialAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
@@ -248,8 +249,12 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 160) {
-                    String content = s.toString().substring(0, 160);
+                int maxChar = 160;
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+                    maxChar = 500;
+                }
+                if (s.length() > maxChar) {
+                    String content = s.toString().substring(0, maxChar);
                     set_profile_description.setText(content);
                     set_profile_description.setSelection(set_profile_description.getText().length());
                     Toasty.info(getApplicationContext(), getString(R.string.note_no_space), Toast.LENGTH_LONG).show();
@@ -348,14 +353,12 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             @Override
             public void onClick(View v) {
 
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    if (ContextCompat.checkSelfPermission(EditProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(EditProfileActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE);
-                        return;
-                    }
+                if (ContextCompat.checkSelfPermission(EditProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(EditProfileActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE);
+                    return;
                 }
 
                 Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -370,12 +373,14 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             }
         });
 
-        Glide.with(set_profile_picture.getContext())
-                .load(account.getAvatar())
-                .into(set_profile_picture);
-        Glide.with(set_header_picture.getContext())
-                .load(account.getHeader())
-                .into(set_header_picture);
+        if( !EditProfileActivity.this.isFinishing()) {
+            Glide.with(set_profile_picture.getContext())
+                    .load(account.getAvatar())
+                    .into(set_profile_picture);
+            Glide.with(set_header_picture.getContext())
+                    .load(account.getHeader())
+                    .into(set_header_picture);
+        }
         if (account.getHeader() == null || account.getHeader().contains("missing.png"))
             set_header_picture_overlay.setVisibility(View.VISIBLE);
 
