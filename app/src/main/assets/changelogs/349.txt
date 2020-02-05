@@ -1,6 +1,7 @@
 Added:
 - Català language
 - Push notifications for Friendica & GNU Social
+- Add follow/unfollow buttons for Pixelfed
 
 Fixed:
 - Proxy not applied with embedded videos
