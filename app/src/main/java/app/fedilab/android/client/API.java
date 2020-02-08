@@ -4377,6 +4377,12 @@ public class API {
             case UNPIN:
                 action = String.format("/statuses/%s/unpin", targetedId);
                 break;
+            case REACT:
+                action = String.format("/pleroma/statuses/%s/react_with_emoji", targetedId);
+                break;
+            case UNREACT:
+                action = String.format("/pleroma/statuses/%s/unreact_with_emoji", targetedId);
+                break;
             case ENDORSE:
                 action = String.format("/accounts/%s/pin", targetedId);
                 break;
@@ -5894,21 +5900,21 @@ public class API {
     private Trends parseTrends(JSONObject resobj) {
         Trends trend = new Trends();
         try {
-           trend.setName(resobj.getString("name"));
-           trend.setUrl(resobj.getString("url"));
-           List<TrendsHistory> historyList = new ArrayList<>();
-           if( resobj.has("history")) {
-               JSONArray histories = resobj.getJSONArray("history");
-               for(int i = 0 ; i < histories.length() ; i++ ) {
-                   JSONObject hystory = histories.getJSONObject(i);
-                   TrendsHistory trendsHistory = new TrendsHistory();
-                   trendsHistory.setDays(hystory.getLong("day"));
-                   trendsHistory.setUses(hystory.getInt("uses"));
-                   trendsHistory.setAccounts(hystory.getInt("accounts"));
-                   historyList.add(trendsHistory);
-               }
-           }
-           trend.setTrendsHistory(historyList);
+            trend.setName(resobj.getString("name"));
+            trend.setUrl(resobj.getString("url"));
+            List<TrendsHistory> historyList = new ArrayList<>();
+            if( resobj.has("history")) {
+                JSONArray histories = resobj.getJSONArray("history");
+                for(int i = 0 ; i < histories.length() ; i++ ) {
+                    JSONObject hystory = histories.getJSONObject(i);
+                    TrendsHistory trendsHistory = new TrendsHistory();
+                    trendsHistory.setDays(hystory.getLong("day"));
+                    trendsHistory.setUses(hystory.getInt("uses"));
+                    trendsHistory.setAccounts(hystory.getInt("accounts"));
+                    historyList.add(trendsHistory);
+                }
+            }
+            trend.setTrendsHistory(historyList);
         } catch (JSONException ignored) {
         }
         return trend;
@@ -6570,6 +6576,8 @@ public class API {
         REMOTE_FOLLOW,
         PIN,
         UNPIN,
+        REACT,
+        UNREACT,
         ENDORSE,
         UNENDORSE,
         SHOW_BOOST,
