@@ -187,6 +187,7 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("Content-Type", "application/json");
         httpsURLConnection.setRequestProperty("Accept", "application/json");
         httpsURLConnection.setUseCaches(true);
+        httpsURLConnection.setDefaultUseCaches(true);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         if (token != null && !token.startsWith("Basic "))
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -287,6 +288,7 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
         httpsURLConnection.setRequestMethod("GET");
+        httpsURLConnection.setDefaultUseCaches(true);
         httpsURLConnection.setUseCaches(true);
         String response;
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
