@@ -972,13 +972,29 @@ public abstract class BaseMainActivity extends BaseActivity
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_logout:
-                                Helper.logout(getApplicationContext());
-                                Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
-                                startActivity(myIntent);
-                                finish();
+                                AlertDialog.Builder dialogBuilderLogout = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                dialogBuilderLogout.setMessage(R.string.logout_confirmation);
+                                dialogBuilderLogout.setPositiveButton(R.string.action_logout, (dialog, id) -> {
+                                    Helper.logout(getApplicationContext());
+                                    Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
+                                    startActivity(myIntent);
+                                    dialog.dismiss();
+                                    finish();
+                                });
+                                dialogBuilderLogout.setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss());
+                                AlertDialog alertDialogLogout = dialogBuilderLogout.create();
+                                alertDialogLogout.show();
                                 return true;
                             case R.id.action_logout_account:
-                                Helper.logoutCurrentUser(BaseMainActivity.this);
+                                AlertDialog.Builder dialogBuilderLogoutAccount = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                dialogBuilderLogoutAccount.setMessage(R.string.logout_confirmation);
+                                dialogBuilderLogoutAccount.setPositiveButton(R.string.action_logout, (dialog, id) -> {
+                                    Helper.logoutCurrentUser(BaseMainActivity.this);
+                                    dialog.dismiss();
+                                });
+                                dialogBuilderLogoutAccount.setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss());
+                                AlertDialog alertDialogLogoutAccount = dialogBuilderLogoutAccount.create();
+                                alertDialogLogoutAccount.show();
                                 return true;
                             case R.id.action_privacy:
                                 Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
