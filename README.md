@@ -41,8 +41,6 @@
 
 
 Lead developer: [toot.fedilab.app/@fedilab](https://toot.fedilab.app/@fedilab)
-<br>
-Developer: [toot.fedilab.app/@kasun](https://toot.fedilab.app/@kasun)
 
 ## Backers
 
