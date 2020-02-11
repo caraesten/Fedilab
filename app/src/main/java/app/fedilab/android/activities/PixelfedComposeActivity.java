@@ -591,7 +591,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                         } else {
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
                             dialogBuilder.setMessage(R.string.save_draft);
-                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     if (accountReply == null) {
@@ -603,7 +603,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                                     finish();
                                 }
                             });
-                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            dialogBuilder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.dismiss();
@@ -1473,7 +1473,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
             } else {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PixelfedComposeActivity.this, style);
                 dialogBuilder.setMessage(R.string.save_draft);
-                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         if (accountReply == null) {
@@ -1485,7 +1485,7 @@ public class PixelfedComposeActivity extends BaseActivity implements UploadStatu
                         finish();
                     }
                 });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

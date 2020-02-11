@@ -130,7 +130,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         TextView txt_developers, txt_ux, txt_thankyou3, txt_thankyou1, txt_thankyou2;
         txt_developers = findViewById(R.id.txt_developers);
         txt_ux = findViewById(R.id.txt_ux);
-        txt_thankyou3 = findViewById(R.id.txt_thankyou3);
         txt_thankyou1 = findViewById(R.id.txt_thankyou1);
         txt_thankyou2 = findViewById(R.id.txt_thankyou2);
 
@@ -241,7 +240,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         lv_ux.setAdapter(accountSearchWebAdapterUxUiDesigners);
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "toot.fedilab.app", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "toot.fedilab.app", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -286,17 +284,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 @Override
                 public void onClick(View v) {
                     Helper.openBrowser(AboutActivity.this, "https://social.tchncs.de/@angrytux");
-                }
-            });
-
-            name = new SpannableString("@kasun@stoot.fedilab.app");
-            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
-            txt_thankyou3.setText(name);
-            txt_thankyou3.setVisibility(View.VISIBLE);
-            txt_thankyou3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Helper.openBrowser(AboutActivity.this, "https://toot.fedilab.app/@kasun");
                 }
             });
         }

@@ -166,13 +166,6 @@
             android:scrollbars="none" />
 
         <TextView
-            android:id="@+id/txt_thankyou3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-        <TextView
             android:id="@+id/txt_thankyou1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

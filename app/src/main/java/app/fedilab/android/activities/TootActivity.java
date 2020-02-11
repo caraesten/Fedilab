@@ -51,6 +51,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -758,7 +759,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         } else {
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                             dialogBuilder.setMessage(R.string.save_draft);
-                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     if (accountReply == null) {
@@ -770,7 +771,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                                     finish();
                                 }
                             });
-                            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            dialogBuilder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.dismiss();
@@ -2510,7 +2511,9 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             }
         });
         AlertDialog alertDialog = builderInner.create();
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         alertDialog.show();
+        input.requestFocus();
     }
 
     /**
@@ -2634,7 +2637,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
             } else {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                 dialogBuilder.setMessage(R.string.save_draft);
-                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         if (accountReply == null) {
@@ -2646,7 +2649,7 @@ public class TootActivity extends BaseActivity implements UploadStatusDelegate, 
                         finish();
                     }
                 });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
