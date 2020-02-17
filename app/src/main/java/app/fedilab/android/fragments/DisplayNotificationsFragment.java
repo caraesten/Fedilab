@@ -24,41 +24,48 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.ListPreloader;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.util.FixedPreloadSizeProvider;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.RetrieveMissingNotificationsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveNotificationsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.NotificationsListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
+import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
 import app.fedilab.android.services.LiveNotificationDelayedService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.RetrieveMissingNotificationsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveNotificationsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveMissingNotificationsInterface;
-import app.fedilab.android.interfaces.OnRetrieveNotificationsInterface;
 
 import static android.content.Context.MODE_PRIVATE;
 import static app.fedilab.android.activities.BaseMainActivity.countNewNotifications;
@@ -71,6 +78,8 @@ import static app.fedilab.android.activities.BaseMainActivity.countNewNotificati
 public class DisplayNotificationsFragment extends Fragment implements OnRetrieveNotificationsInterface, OnRetrieveMissingNotificationsInterface {
 
 
+    LinearLayoutManager mLayoutManager;
+    Type type;
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -84,23 +93,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private RecyclerView lv_notifications;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
-    LinearLayoutManager mLayoutManager;
     private BroadcastReceiver receive_action;
     private BroadcastReceiver receive_data;
 
     public DisplayNotificationsFragment() {
     }
-
-    public enum Type {
-        ALL,
-        MENTION,
-        FAVORITE,
-        BOOST,
-        POLL,
-        FOLLOW
-    }
-
-    Type type;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,12 +110,18 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         notifications = new ArrayList<>();
         swiped = false;
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             type = (Type) bundle.get("type");
         }
-
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_notifications);
@@ -151,7 +154,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
             }
         });
-
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
@@ -209,27 +211,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
-                break;
-        }
         if (context != null)
             asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, max_id, DisplayNotificationsFragment.this).execute();
         else
@@ -243,15 +224,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         return rootView;
     }
 
-
     @Override
     public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
     }
 
-
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         this.context = context;
     }
@@ -305,7 +284,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if (apiResponse.getError() != null) {
 
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
@@ -418,7 +401,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         asyncTask = new RetrieveNotificationsAsyncTask(context, type, true, null, null, DisplayNotificationsFragment.this).execute();
     }
 
-
     public void refresh(Notification notification) {
         if (context == null)
             return;
@@ -446,7 +428,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         }
     }
-
 
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
@@ -493,7 +474,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-
     /**
      * Records the id of the notification only if its greater than the previous one.
      *
@@ -511,7 +491,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-
     /**
      * Records the id of the notification only if its greater than the previous one.
      */
@@ -525,5 +504,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 editor.apply();
             }
         }
+    }
+
+    public enum Type {
+        ALL,
+        MENTION,
+        FAVORITE,
+        BOOST,
+        POLL,
+        FOLLOW
     }
 }

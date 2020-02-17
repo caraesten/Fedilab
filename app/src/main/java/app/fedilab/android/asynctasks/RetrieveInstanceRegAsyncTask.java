@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
 
 
@@ -35,22 +36,33 @@ public class RetrieveInstanceRegAsyncTask extends AsyncTask<Void, Void, Void> {
     private APIResponse apiResponse;
     private WeakReference<Context> contextReference;
     private String category;
+    private instanceType type;
 
-    public RetrieveInstanceRegAsyncTask(Context context, String category, OnRetrieveInstanceInterface onRetrieveInstanceInterface) {
+    public RetrieveInstanceRegAsyncTask(Context context, instanceType type, String category, OnRetrieveInstanceInterface onRetrieveInstanceInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveInstanceInterface;
         this.category = category;
+        this.type = type;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(this.contextReference.get()).getInstanceReg(category);
+        if (type == instanceType.MASTODON) {
+            apiResponse = new API(this.contextReference.get()).getInstanceReg(category);
+        } else if (type == instanceType.PEERTUBE) {
+            apiResponse = new PeertubeAPI(this.contextReference.get()).getInstanceReg();
+        }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveInstance(apiResponse);
+    }
+
+    public enum instanceType {
+        MASTODON,
+        PEERTUBE
     }
 
 }

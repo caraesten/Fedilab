@@ -137,7 +137,11 @@ public class BackupNotificationInDataBaseService extends IntentService {
                     new NotificationCacheDAO(BackupNotificationInDataBaseService.this, db).insertNotification(tmpNotification, userId, instance);
                     backupNotifications.add(tmpNotification);
                 }
-                SystemClock.sleep(500);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    SystemClock.sleep(2000);
+                }
             } while (max_id != null && canContinue);
 
             if (backupNotifications.size() > 0) {
@@ -149,8 +153,9 @@ public class BackupNotificationInDataBaseService extends IntentService {
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_NOTIFICATION_INTENT);
             String title = getString(R.string.data_backup_toots, account.getAcct());
             if (finalToastMessage) {
+
                 Helper.notify_user(getApplicationContext(), account, mainActivity, BitmapFactory.decodeResource(getResources(),
-                        R.drawable.mastodonlogo), Helper.NotifType.BACKUP, title, message);
+                        Helper.getMainLogo(getApplicationContext())), Helper.NotifType.BACKUP, title, message);
             }
         } catch (Exception e) {
             e.printStackTrace();

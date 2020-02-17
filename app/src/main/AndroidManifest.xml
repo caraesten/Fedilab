@@ -16,8 +16,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto"
-    package="app.fedilab.android">
+    package="app.fedilab.android"
+    android:installLocation="auto">
 
 
     <uses-feature
@@ -41,16 +41,17 @@
         android:required="false" />
     <application
         android:name="app.fedilab.android.activities.MainApplication"
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="false"
-        tools:replace="android:allowBackup"
-        android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher_bubbles"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:hardwareAccelerated="true"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_bubbles_round"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeDark">
+        android:theme="@style/AppThemeDark"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
 
         <service
             android:name="app.fedilab.android.services.LiveNotificationDelayedService"
@@ -89,7 +90,13 @@
                 <action android:name="StopLiveNotificationReceiver" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:name="app.fedilab.android.services.StopDelayedNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="StopDelayedNotificationReceiver" />
+            </intent-filter>
+        </receiver>
         <service
             android:name="app.fedilab.android.services.StreamingHomeTimelineService"
             android:exported="false" />
@@ -102,13 +109,11 @@
 
         <activity
             android:name="app.fedilab.android.activities.MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppThemeDark_NoActionBar">
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -138,9 +143,9 @@
                 <!-- The app is a good candidate for URL in https://domain.name/@xxxxxx-->
                 <!-- It should cover every URLs for statuses but some others not related to mastodon matching this scheme -->
                 <data
-                    android:scheme="https"
                     android:host="*"
-                    android:pathPrefix="/@" />
+                    android:pathPrefix="/@"
+                    android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -152,16 +157,113 @@
                 <data android:pathPattern=".*\\.fedilab" />
             </intent-filter>
         </activity>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Bubbles"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher_bubbles"
+            android:roundIcon="@mipmap/ic_launcher_bubbles_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data
+                android:name="icon"
+                android:value="bubbles" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Fediverse"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_fediverse"
+            android:roundIcon="@mipmap/ic_launcher_fediverse_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data
+                android:name="icon"
+                android:value="fediverse" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Hero"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_hero"
+            android:roundIcon="@mipmap/ic_launcher_hero_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data
+                android:name="icon"
+                android:value="hero" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Atom"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_atom"
+            android:roundIcon="@mipmap/ic_launcher_atom_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data
+                android:name="icon"
+                android:value="atom" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.BrainCrash"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_crash"
+            android:roundIcon="@mipmap/ic_launcher_crash_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data
+                android:name="icon"
+                android:value="braincrash" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.MainActivity.Mastalab"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_mastalab"
+            android:roundIcon="@mipmap/ic_launcher_mastalab_round"
+            android:targetActivity=".activities.MainActivity">
+            <meta-data
+                android:name="icon"
+                android:value="mastalab" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+
         <activity
             android:name="app.fedilab.android.activities.MastodonRegisterActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.PeertubeRegisterActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.MastodonShareRegisterActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -170,15 +272,15 @@
 
                 <data
                     android:host="fedilab.app"
-                    android:scheme="https"
-                    android:pathPattern="/registration_helper/.*" />
+                    android:pathPattern="/registration_helper/.*"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name="app.fedilab.android.activities.LoginActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -192,209 +294,233 @@
         </activity>
         <activity
             android:name="app.fedilab.android.activities.ShowAccountActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.TootInfoActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.HashTagActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.WebviewConnectActivity"
-            android:label="@string/app_name"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
         <activity
             android:name="app.fedilab.android.activities.PeertubeActivity"
-            android:label="@string/app_name"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
         <activity
             android:name="app.fedilab.android.activities.PlaylistsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:theme="@style/AppThemeDark_NoActionBar" />
         <activity
             android:name="app.fedilab.android.activities.PhotoEditorActivity"
-            android:label="@string/app_name"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
         <activity
             android:name="app.fedilab.android.activities.WebviewActivity"
-            android:label="@string/app_name"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name="app.fedilab.android.activities.MediaActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Transparent"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:noHistory="true" />
+            android:label="@string/app_name" />
+        <activity
+            android:name="app.fedilab.android.activities.SlideMediaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/TransparentDark" />
         <activity
             android:name="app.fedilab.android.activities.SearchResultActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.SearchResultTabActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.ListActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.WhoToFollowActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.ShowConversationActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.OwnerStatusActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.OwnerNotificationChartsActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.OwnerChartsActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.OwnerNotificationActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" />
-        <activity
-            android:name="app.fedilab.android.activities.LanguageActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.AboutActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="app.fedilab.android.activities.HideItemActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
+            android:name="app.fedilab.android.activities.BookmarkActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.SettingsActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.AdminActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.AccountReportActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.ReorderTimelinesActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.OpencollectiveActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.PartnerShipActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.InstanceActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.PrivacyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
-            android:name="app.fedilab.android.activities.TootActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize"
-            android:fitsSystemWindows="true"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme_NoActionBar_Fedilab" />
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.AccountReportActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.ReorderTimelinesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.OpencollectiveActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.PartnerShipActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.InstanceActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.PrivacyActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.TootActivity"
+            android:configChanges="orientation|screenSize"
+            android:fitsSystemWindows="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeDark"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="app.fedilab.android.activities.PixelfedComposeActivity"
+            android:configChanges="orientation|screenSize"
+            android:fitsSystemWindows="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeDark"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.EditProfileActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.CustomSharingActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.InstanceHealthActivity"
-            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
-            android:excludeFromRecents="true" />
+            android:excludeFromRecents="true"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
+        <activity
+            android:name="app.fedilab.android.activities.InstanceProfileActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
         <activity
             android:name="app.fedilab.android.activities.ProxyActivity"
-            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
-            android:excludeFromRecents="true" />
+            android:excludeFromRecents="true"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
         <activity
             android:name="app.fedilab.android.activities.ManageAccountsInListActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:excludeFromRecents="true"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
-            android:excludeFromRecents="true" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="app.fedilab.android.activities.TagCacheActivity"
-            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
-            android:excludeFromRecents="true" />
+            android:excludeFromRecents="true"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog" />
         <activity
             android:name="app.fedilab.android.activities.PeertubeUploadActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="app.fedilab.android.activities.LiveNotificationSettingsAccountsActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.MutedInstanceActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.PeertubeEditUploadActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="app.fedilab.android.activities.GroupActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

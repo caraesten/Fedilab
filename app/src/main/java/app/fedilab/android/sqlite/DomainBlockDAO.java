@@ -29,8 +29,8 @@ import java.util.List;
  */
 public class DomainBlockDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public DomainBlockDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables

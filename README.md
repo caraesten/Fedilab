@@ -3,7 +3,7 @@
 [![pipeline status](https://framagit.org/tom79/fedilab/badges/develop/pipeline.svg)](https://framagit.org/tom79/fedilab/commits/develop)
 &nbsp;&nbsp;&nbsp;[![Crowdin](https://d322cqt584bo4o.cloudfront.net/mastalab/localized.svg)](https://crowdin.com/project/mastalab)
 &nbsp;&nbsp;&nbsp;[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-# Mastalab is a multi-accounts client for Mastodon, Pleroma, Peertube, GNU Social, Friendica and Pixelfed 
+# Fedilab is a multi-accounts client for Mastodon, Pleroma, Peertube, GNU Social, Friendica and Pixelfed
 
 ## Donate
 
@@ -40,9 +40,7 @@
 <img src="./images/device-2019-02-02-114910.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-Lead developer: [framapiaf.org/@fedilab](https://framapiaf.org/@fedilab)
-<br>
-Developer: [mastodon.social/@kasun](https://mastodon.social/@kasun)
+Lead developer: [toot.fedilab.app/@fedilab](https://toot.fedilab.app/@fedilab)
 
 ## Backers
 

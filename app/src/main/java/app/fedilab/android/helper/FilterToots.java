@@ -21,27 +21,26 @@ package app.fedilab.android.helper;
 
 public class FilterToots {
 
-    public enum typeFilter {
-        NONE,
-        ONLY,
-        BOTH
-    }
-
     private typeFilter pinned = typeFilter.BOTH;
     private typeFilter boosts = typeFilter.BOTH;
     private typeFilter replies = typeFilter.BOTH;
     private typeFilter media = typeFilter.BOTH;
-
+    private typeOrder order = typeOrder.DESC;
     private boolean v_public = true;
     private boolean v_unlisted = true;
     private boolean v_direct = true;
     private boolean v_private = true;
-
     private String filter = null;
-
-
     private String dateIni = null;
     private String dateEnd = null;
+
+    public typeOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(typeOrder order) {
+        this.order = order;
+    }
 
     public typeFilter getPinned() {
         return pinned;
@@ -129,5 +128,16 @@ public class FilterToots {
 
     public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    public enum typeFilter {
+        NONE,
+        ONLY,
+        BOTH
+    }
+
+    public enum typeOrder {
+        DESC,
+        ASC,
     }
 }

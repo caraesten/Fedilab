@@ -19,27 +19,24 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.drawers.TagsEditAdapter;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 
 /**
@@ -56,26 +53,12 @@ public class TagCacheActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(TagCacheActivity.this, R.color.mastodonC3__));
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(TagCacheActivity.this, R.color.mastodonC1));
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(TagCacheActivity.this, R.color.black_3));
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(TagCacheActivity.this, R.color.mastodonC1));
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Dialog);
+        } else {
+            setTheme(R.style.DialogDark);
         }
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 

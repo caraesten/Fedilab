@@ -17,16 +17,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/trans_container"
-    android:padding="10dp"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
-        android:text="@string/toot_cw_placeholder"
-        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/toot_cw_placeholder"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,25 +35,25 @@
         android:orientation="vertical">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/cw_trans"
-            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
 
         <ProgressBar
-            android:layout_gravity="center"
             android:id="@+id/trans_progress_cw"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/toot_placeholder"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,27 +62,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/toot_trans"
-            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
 
         <ProgressBar
-            android:layout_gravity="center"
             android:id="@+id/trans_progress_toot"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/yandex_translate"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:padding="2dp"
-        android:gravity="end"
-        android:text="Powered by Yandex.Translate"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:padding="2dp"
+        android:text="Powered by Yandex.Translate"
         tools:ignore="HardcodedText" />
 
 </LinearLayout>

@@ -14,22 +14,11 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,18 +31,27 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.interfaces.OnListActionInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -64,6 +62,7 @@ import app.fedilab.android.interfaces.OnListActionInterface;
 public class ListActivity extends BaseActivity implements OnListActionInterface {
 
 
+    LinearLayoutManager mLayoutManager;
     private String title, listId;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -73,8 +72,6 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
     private boolean firstLoad;
     private boolean flag_loading;
     private StatusListAdapter statusListAdapter;
-    LinearLayoutManager mLayoutManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +93,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         }
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(ListActivity.this, R.color.black));
+        toolbar.setBackgroundColor(ContextCompat.getColor(ListActivity.this, R.color.cyanea_primary));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,6 +105,13 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         max_id = null;
         flag_loading = true;
         firstLoad = true;
@@ -169,27 +172,6 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 new ManageListsAsyncTask(ListActivity.this, listId, null, null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ListActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ListActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ListActivity.this, R.color.black_3));
-                break;
-        }
 
         new ManageListsAsyncTask(ListActivity.this, listId, null, null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -275,7 +257,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if (apiResponse.getError() != null) {
-            if (!apiResponse.getError().getError().startsWith("404 -"))
+            if (!apiResponse.getError().getError().startsWith("404 -") && !apiResponse.getError().getError().startsWith("501 -"))
                 Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;

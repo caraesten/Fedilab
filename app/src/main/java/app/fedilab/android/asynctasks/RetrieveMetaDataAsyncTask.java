@@ -22,10 +22,14 @@ import android.util.Patterns;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
@@ -91,6 +95,14 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                 Pattern descriptionPattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:description[\"']\\s+content=[\"']([^>]*)[\"']");
                 Pattern imagePattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:image[\"']\\s+content=[\"']([^>]*)[\"']");
                 try {
+                    if( !potentialUrl.startsWith("http")){
+                        potentialUrl = "https://" + potentialUrl;
+                    }
+                    URLConnection conn = new URL(potentialUrl).openConnection();
+                    if (conn instanceof HttpsURLConnection) {
+                        error = true;
+                        return null;
+                    }
                     String response = new HttpsConnection(this.contextWeakReference.get(), null).get(potentialUrl);
                     Matcher matcherTitle = titlePattern.matcher(response);
                     Matcher matcherDescription = descriptionPattern.matcher(response);
@@ -110,18 +122,13 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                         if (descriptionEncoded != null)
                             description = Html.fromHtml(descriptionEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
                     } else {
-                        //noinspection deprecation
                         if (titleEncoded != null)
                             title = Html.fromHtml(titleEncoded).toString();
                         if (descriptionEncoded != null)
                             description = Html.fromHtml(descriptionEncoded).toString();
                     }
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (HttpsConnection.HttpsConnectionException e) {
-                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException | KeyManagementException | HttpsConnection.HttpsConnectionException e) {
+                    error = true;
                 }
             }
         } catch (IOException | IndexOutOfBoundsException e) {

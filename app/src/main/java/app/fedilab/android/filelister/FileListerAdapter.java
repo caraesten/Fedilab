@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -63,17 +62,42 @@ class FileListerAdapter extends RecyclerView.Adapter<FileListerAdapter.FileListH
         listerView = view;
     }
 
+    private static String[] getPhysicalPaths() {
+        return new String[]{
+                "/storage/sdcard0",
+                "/storage/sdcard1",                 //Motorola Xoom
+                "/storage/extsdcard",               //Samsung SGS3
+                "/storage/sdcard0/external_sdcard", //User request
+                "/mnt/extsdcard",
+                "/mnt/sdcard/external_sd",          //Samsung galaxy family
+                "/mnt/external_sd",
+                "/mnt/media_rw/sdcard1",            //4.4.2 on CyanogenMod S3
+                "/removable/microsd",               //Asus transformer prime
+                "/mnt/emmc",
+                "/storage/external_SD",             //LG
+                "/storage/ext_sd",                  //HTC One Max
+                "/storage/removable/sdcard1",       //Sony Xperia Z1
+                "/data/sdext",
+                "/data/sdext2",
+                "/data/sdext3",
+                "/data/sdext4",
+                "/sdcard1",                         //Sony Xperia Z
+                "/sdcard2",                         //HTC One M8s
+                "/storage/microsd"                  //ASUS ZenFone 2
+        };
+    }
+
     void start() {
         fileLister(defaultDir);
+    }
+
+    File getDefaultDir() {
+        return defaultDir;
     }
 
     void setDefaultDir(File dir) {
         defaultDir = dir;
         //parent = defaultDir;
-    }
-
-    File getDefaultDir() {
-        return defaultDir;
     }
 
     FileListerDialog.FILE_FILTER getFileFilter() {
@@ -248,6 +272,10 @@ class FileListerAdapter extends RecyclerView.Adapter<FileListerAdapter.FileListH
         fileLister(defaultDir);
     }
 
+    private Context getContext() {
+        return context;
+    }
+
     class FileListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView name;
@@ -303,34 +331,5 @@ class FileListerAdapter extends RecyclerView.Adapter<FileListerAdapter.FileListH
                 }
             }
         }
-    }
-
-    private static String[] getPhysicalPaths() {
-        return new String[]{
-                "/storage/sdcard0",
-                "/storage/sdcard1",                 //Motorola Xoom
-                "/storage/extsdcard",               //Samsung SGS3
-                "/storage/sdcard0/external_sdcard", //User request
-                "/mnt/extsdcard",
-                "/mnt/sdcard/external_sd",          //Samsung galaxy family
-                "/mnt/external_sd",
-                "/mnt/media_rw/sdcard1",            //4.4.2 on CyanogenMod S3
-                "/removable/microsd",               //Asus transformer prime
-                "/mnt/emmc",
-                "/storage/external_SD",             //LG
-                "/storage/ext_sd",                  //HTC One Max
-                "/storage/removable/sdcard1",       //Sony Xperia Z1
-                "/data/sdext",
-                "/data/sdext2",
-                "/data/sdext3",
-                "/data/sdext4",
-                "/sdcard1",                         //Sony Xperia Z
-                "/sdcard2",                         //HTC One M8s
-                "/storage/microsd"                  //ASUS ZenFone 2
-        };
-    }
-
-    private Context getContext() {
-        return context;
     }
 }

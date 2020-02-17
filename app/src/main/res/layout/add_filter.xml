@@ -19,42 +19,42 @@
     android:layout_height="wrap_content">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@string/filter_keyword"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/filter_keyword" />
 
         <TextView
-            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/filter_keyword_explanations"
-            android:layout_width="match_parent"
             android:textColor="?colorAccent"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/add_phrase"
-            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:maxLines="1" />
 
         <TextView
-            android:textSize="12sp"
-            android:text="@string/filter_context"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/filter_context"
+            android:textSize="12sp" />
 
         <TextView
-            android:textSize="12sp"
-            android:text="@string/filter_context_explanations"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_context_explanations"
             android:textColor="?colorAccent"
-            android:layout_height="wrap_content" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,16 +69,16 @@
                 <CheckBox
                     android:id="@+id/context_home"
                     android:layout_width="0dp"
-                    android:text="@string/context_home"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/context_home" />
 
                 <CheckBox
                     android:id="@+id/context_public"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/context_public"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/context_public" />
             </LinearLayout>
 
             <LinearLayout
@@ -89,53 +89,53 @@
                 <CheckBox
                     android:id="@+id/context_notification"
                     android:layout_width="0dp"
-                    android:text="@string/context_notification"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/context_notification" />
 
                 <CheckBox
                     android:id="@+id/context_conversation"
                     android:layout_width="0dp"
-                    android:text="@string/context_conversation"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/context_conversation" />
             </LinearLayout>
         </LinearLayout>
 
         <CheckBox
             android:id="@+id/context_drop"
             android:layout_width="match_parent"
-            android:text="@string/context_drop"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/context_drop" />
 
         <TextView
-            android:textSize="12sp"
-            android:text="@string/context_drop_explanations"
             android:layout_width="match_parent"
-            android:textColor="?colorAccent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:text="@string/context_drop_explanations"
+            android:textColor="?colorAccent"
+            android:textSize="12sp" />
 
         <CheckBox
             android:id="@+id/context_whole_word"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/context_whole_word"
-            android:layout_height="wrap_content" />
+            android:text="@string/context_whole_word" />
 
         <TextView
-            android:textSize="12sp"
-            android:text="@string/context_whole_word_explanations"
             android:layout_width="match_parent"
-            android:textColor="?colorAccent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:text="@string/context_whole_word_explanations"
+            android:textColor="?colorAccent"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,15 +143,15 @@
             android:orientation="horizontal">
 
             <TextView
-                android:text="@string/filter_expire"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/filter_expire" />
 
             <Spinner
-                android:layout_marginStart="30dp"
                 android:id="@+id/filter_expire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp" />
         </LinearLayout>
     </LinearLayout>

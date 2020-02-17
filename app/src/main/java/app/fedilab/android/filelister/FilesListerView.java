@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,11 +60,11 @@ class FilesListerView extends RecyclerView {
         adapter.goToDefault();
     }
 
-    void setFileFilter(FileListerDialog.FILE_FILTER fileFilter) {
-        adapter.setFileFilter(fileFilter);
-    }
-
     FileListerDialog.FILE_FILTER getFileFilter() {
         return adapter.getFileFilter();
+    }
+
+    void setFileFilter(FileListerDialog.FILE_FILTER fileFilter) {
+        adapter.setFileFilter(fileFilter);
     }
 }

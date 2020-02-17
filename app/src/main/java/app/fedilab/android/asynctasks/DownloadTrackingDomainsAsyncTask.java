@@ -32,10 +32,10 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import app.fedilab.android.R;
 import app.fedilab.android.sqlite.DomainBlockDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 /**
  * Created by NickFreeman on 11/05/2019.

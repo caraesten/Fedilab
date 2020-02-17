@@ -16,8 +16,8 @@
 -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:keepScreenOn="true"
@@ -36,14 +36,14 @@
             <FrameLayout
                 android:id="@+id/main_media_frame"
                 android:layout_width="match_parent"
-                android:layout_centerInParent="true"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:background="#000000">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                     android:id="@+id/media_video"
@@ -51,21 +51,21 @@
                     android:layout_height="match_parent"
                     android:gravity="center" />
 
-                <WebView
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
+                <app.fedilab.android.webview.CustomWebview
                     android:id="@+id/webview_video"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
 
             </FrameLayout>
 
             <!-- Main Loader -->
             <RelativeLayout
                 android:id="@+id/loader"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
 
                 <ProgressBar
                     android:layout_width="wrap_content"
@@ -83,17 +83,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:id="@+id/peertube_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,179 +103,180 @@
 
                     <TextView
                         android:id="@+id/peertube_view_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:drawableTop="@drawable/ic_visibility_peertube"
                         android:drawablePadding="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
+                        android:gravity="center_horizontal"
                         android:text="0"
-                        android:layout_height="wrap_content"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/peertube_like_count"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:drawablePadding="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="20dp"
-                        android:text="0"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawableTop="@drawable/ic_thumb_up_peertube"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="0"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/peertube_dislike_count"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:drawablePadding="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="0"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawableTop="@drawable/ic_thumb_down_peertube"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="0"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/peertube_bookmark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:drawableTop="@drawable/ic_bookmark_peertube_border"
                         android:drawablePadding="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text=""
-                        android:layout_height="wrap_content" />
+                        android:gravity="center_horizontal"
+                        android:text="" />
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/peertube_playlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:drawableTop="@drawable/ic_list_peertube_activity"
                         android:drawablePadding="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
+                        android:gravity="center_horizontal"
                         android:text=""
-                        android:layout_height="wrap_content" />
+                        android:visibility="gone" />
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         tools:ignore="UselessLeaf" />
 
                     <TextView
                         android:id="@+id/peertube_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:drawableTop="@drawable/ic_share_peertube"
                         android:drawablePadding="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:textSize="12sp"
+                        android:gravity="center_horizontal"
                         android:text="@string/more_action_6"
-                        android:layout_height="wrap_content" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/peertube_download"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:drawableTop="@drawable/ic_cloud_download_peertube"
                         android:drawablePadding="5dp"
-                        android:layout_width="wrap_content"
-                        android:textSize="12sp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
+                        android:gravity="center_horizontal"
                         android:text="@string/download"
-                        android:layout_height="wrap_content" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginTop="10dp"
                     android:id="@+id/peertube_description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
 
                 <LinearLayout
                     android:id="@+id/write_comment_container"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:visibility="gone">
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <ImageView
-                            android:contentDescription="@string/profile_picture"
                             android:id="@+id/my_pp"
                             android:layout_width="40dp"
-                            android:layout_height="40dp" />
+                            android:layout_height="40dp"
+                            android:contentDescription="@string/profile_picture" />
 
                         <ImageView
-                            android:contentDescription="@string/send_comment"
                             android:id="@+id/send"
-                            android:layout_marginTop="5dp"
-                            android:visibility="gone"
-                            android:src="@drawable/ic_send"
                             android:layout_width="30dp"
-                            android:layout_height="30dp" />
+                            android:layout_height="30dp"
+                            android:layout_marginTop="5dp"
+                            android:contentDescription="@string/send_comment"
+                            android:src="@drawable/ic_send"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_height="wrap_content">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/add_comment_read"
-                            android:text="@string/add_public_comment"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@string/add_public_comment" />
 
                         <EditText
-                            android:visibility="gone"
-                            android:hint="@string/add_public_comment"
                             android:id="@+id/add_comment_write"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/add_public_comment"
+                            android:inputType="textMultiLine"
+                            android:maxLines="4"
                             android:overScrollMode="always"
                             android:scrollbarStyle="insideInset"
                             android:scrollbars="vertical"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:maxLines="4"
-                            android:inputType="textMultiLine" />
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -287,30 +288,30 @@
 
                 <RelativeLayout
                     android:id="@+id/no_action"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
-                        android:padding="10dp"
                         android:id="@+id/no_action_text"
-                        android:gravity="center"
-                        android:textSize="25sp"
-                        android:layout_gravity="center"
-                        android:textStyle="italic|bold"
-                        android:typeface="serif"
-                        android:text="@string/no_comments"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/no_comments"
+                        android:textSize="25sp"
+                        android:textStyle="italic|bold"
+                        android:typeface="serif" />
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>
         <!-- View where the video will be shown when video goes fullscreen -->
         <RelativeLayout
             android:id="@+id/videoLayout"
-            android:visibility="gone"
-            android:background="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

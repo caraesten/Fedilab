@@ -33,8 +33,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class AccountDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
 
     public AccountDAO(Context context, SQLiteDatabase db) {
@@ -161,7 +161,9 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER_STATIC, account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
-        values.put(Sqlite.COL_SOCIAL, account.getSocial());
+        if (account.getSocial() != null) {
+            values.put(Sqlite.COL_SOCIAL, account.getSocial());
+        }
         if (account.getClient_id() != null && account.getClient_secret() != null && account.getRefresh_token() != null) {
             values.put(Sqlite.COL_CLIENT_ID, account.getClient_id());
             values.put(Sqlite.COL_CLIENT_SECRET, account.getClient_secret());
@@ -253,7 +255,7 @@ public class AccountDAO {
     public List<Account> getAllAccountCrossAction() {
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE' AND " + Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE' AND " +  Sqlite.COL_SOCIAL + " != 'GNU' AND " +Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListUser(c);
         } catch (Exception e) {
             return null;
@@ -303,7 +305,7 @@ public class AccountDAO {
      */
     public boolean userExist(Account account) {
         Cursor mCount = db.rawQuery("select count(*) from " + Sqlite.TABLE_USER_ACCOUNT
-                + " where " + Sqlite.COL_ACCT + " = '" + account.getAcct() + "' AND " + Sqlite.COL_INSTANCE + " = '" + account.getInstance() + "'", null);
+                + " where " + Sqlite.COL_USERNAME + " = '" + account.getUsername() + "' AND " + Sqlite.COL_INSTANCE + " = '" + account.getInstance() + "'", null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

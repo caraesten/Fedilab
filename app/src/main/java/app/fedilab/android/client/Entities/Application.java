@@ -25,17 +25,6 @@ import android.os.Parcelable;
 
 public class Application implements Parcelable {
 
-    private String name;
-    private String website;
-
-    public Application() {
-    }
-
-    protected Application(Parcel in) {
-        name = in.readString();
-        website = in.readString();
-    }
-
     public static final Creator<Application> CREATOR = new Creator<Application>() {
         @Override
         public Application createFromParcel(Parcel in) {
@@ -47,6 +36,16 @@ public class Application implements Parcelable {
             return new Application[size];
         }
     };
+    private String name;
+    private String website;
+
+    public Application() {
+    }
+
+    protected Application(Parcel in) {
+        name = in.readString();
+        website = in.readString();
+    }
 
     public String getName() {
         return name;

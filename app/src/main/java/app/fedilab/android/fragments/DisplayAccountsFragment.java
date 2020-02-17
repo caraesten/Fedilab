@@ -18,38 +18,36 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.TootInfoActivity;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveManyRelationshipsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.drawers.AccountsListAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveManyRelationshipsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveAccountsInterface;
 import app.fedilab.android.interfaces.OnRetrieveManyRelationshipsInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -95,6 +93,13 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         swiped = false;
 
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         lv_accounts = rootView.findViewById(R.id.lv_accounts);
         lv_accounts.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader = rootView.findViewById(R.id.loader);
@@ -147,28 +152,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
-                break;
-        }
 
         if (type == RetrieveAccountsAsyncTask.Type.SEARCH || type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING || type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
             asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -208,7 +191,11 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -252,14 +239,18 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if (type != RetrieveAccountsAsyncTask.Type.BLOCKED && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA))
+        if (type != RetrieveAccountsAsyncTask.Type.BLOCKED && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED))
             new RetrieveManyRelationshipsAsyncTask(context, accounts, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onRetrieveRelationship(APIResponse apiResponse) {
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

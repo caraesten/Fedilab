@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,10 +39,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -51,6 +51,7 @@ import java.util.List;
 
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.CreateMastodonAccountAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveInstanceRegAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.AccountCreation;
 import app.fedilab.android.client.Entities.InstanceReg;
@@ -82,7 +83,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -100,6 +101,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(MastodonShareRegisterActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -111,10 +113,6 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
                 }
             });
             toolbar_title.setText(R.string.sign_up);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, MastodonShareRegisterActivity.this);
-            }
         }
         if (this.getIntent() == null || this.getIntent().getData() == null) {
             Intent mainActivity = new Intent(MastodonShareRegisterActivity.this, MastodonRegisterActivity.class);
@@ -177,7 +175,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonShareRegisterActivity.this, accountCreation, instance, MastodonShareRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(MastodonShareRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, accountCreation, instance, MastodonShareRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 
@@ -190,7 +188,7 @@ public class MastodonShareRegisterActivity extends BaseActivity implements OnRet
 
     @Override
     public void onRetrieveInstance(APIResponse apiResponse) {
-        if (apiResponse.getError() != null) {
+        if (apiResponse.getError() != null || apiResponse.getInstanceRegs() == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
             return;
         }

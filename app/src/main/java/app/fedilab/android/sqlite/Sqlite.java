@@ -33,12 +33,11 @@ import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -49,64 +48,45 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 36;
+    public static final int DB_VERSION = 37;
     public static final String DB_NAME = "mastodon_etalab_db";
-    public static SQLiteDatabase db;
-    private static Sqlite sInstance;
-
+    //Table for custom emoji
+    public static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
+    //Table for cached statuses
+    public static final String TABLE_STATUSES_CACHE = "STATUSES_CACHE";
+    //Table for timeline cache
+    public static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
+    //Table for scheduling boosts
+    public static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
+    //Table for blocking tracking domains
+    public static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
+    //Table for timelines
+    public static final String TABLE_TIMELINES = "TIMELINES";
+    //Table for timelines
+    public static final String TABLE_REMOTE_INSTANCE_TAGS = "REMOTE_INSTANCE_TAGS";
+    //Table for notifications
+    public static final String TABLE_NOTIFICATION_CACHE = "NOTIFICATION_CACHE";
+    //Table for main menu items
+    public static final String TABLE_MAIN_MENU_ITEMS = "MAIN_MENU_ITEMS";
+    //Table for taking notes about accounts
+    public static final String TABLE_USER_NOTES = "USER_NOTES";
     /***
      * List of tables to manage users and data
      */
     //Table of owned accounts
     static final String TABLE_USER_ACCOUNT = "USER_ACCOUNT";
-    private static final String TABLE_USER_ACCOUNT_TEMP = "USER_ACCOUNT_TEMP";
     //Table of stored status
     static final String TABLE_STATUSES_STORED = "STATUSES_STORED";
-    //Table for custom emoji
-    public static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
     //Table for search
     static final String TABLE_SEARCH = "SEARCH";
-
     //Table for temp muting
     static final String TABLE_TEMP_MUTE = "TEMP_MUTE";
-
-    //Table for cached statuses
-    public static final String TABLE_STATUSES_CACHE = "STATUSES_CACHE";
-
     //Table for instance names
     static final String TABLE_INSTANCES = "INSTANCES";
-
     //Table for peertube favorites
     static final String TABLE_PEERTUBE_FAVOURITES = "PEERTUBE_FAVOURITES";
-
-    //Table for timeline cache
-    public static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
-
     //Table for tags cache
     static final String TABLE_CACHE_TAGS = "CACHE_TAGS";
-
-    //Table for scheduling boosts
-    public static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
-
-    //Table for blocking tracking domains
-    public static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
-
-    //Table for timelines
-    public static final String TABLE_TIMELINES = "TIMELINES";
-
-    //Table for timelines
-    public static final String TABLE_REMOTE_INSTANCE_TAGS = "REMOTE_INSTANCE_TAGS";
-
-
-    //Table for notifications
-    public static final String TABLE_NOTIFICATION_CACHE = "NOTIFICATION_CACHE";
-
-    //Table for main menu items
-    public static final String TABLE_MAIN_MENU_ITEMS = "MAIN_MENU_ITEMS";
-
-    //Table for taking notes about accounts
-    public static final String TABLE_USER_NOTES = "USER_NOTES";
-
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
     static final String COL_ACCT = "ACCT";
@@ -134,7 +114,77 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_UPDATED_AT = "UPDATED_AT";
     static final String COL_PRIVACY = "PRIVACY";
     static final String COL_SENSITIVE = "SENSITIVE";
-
+    static final String COL_ID = "ID";
+    static final String COL_STATUS_SERIALIZED = "STATUS_SERIALIZED";
+    static final String COL_STATUS_REPLY_SERIALIZED = "STATUS_REPLY_SERIALIZED";
+    static final String COL_DATE_CREATION = "DATE_CREATION";
+    static final String COL_IS_SCHEDULED = "IS_SCHEDULED";
+    static final String COL_DATE_SCHEDULED = "DATE_SCHEDULED";
+    static final String COL_SENT = "SENT";
+    static final String COL_DATE_SENT = "DATE_SENT";
+    static final String COL_SHORTCODE = "SHORTCODE";
+    static final String COL_URL_STATIC = "URL_STATIC";
+    static final String COL_KEYWORDS = "KEYWORDS";
+    static final String COL_IS_ART = "IS_ART";
+    static final String COL_IS_NSFW = "IS_NSFW";
+    static final String COL_ANY = "ANY_TAG";
+    static final String COL_ALL = "ALL_TAG";
+    static final String COL_NONE = "NONE_TAG";
+    static final String COL_NAME = "NAME";
+    static final String COL_TARGETED_USER_ID = "TARGETED_USER_ID";
+    static final String COL_DATE_END = "DATE_END";
+    static final String COL_CACHED_ACTION = "CACHED_ACTION";
+    static final String COL_STATUS_ID = "STATUS_ID";
+    static final String COL_URI = "URI";
+    static final String COL_ACCOUNT = "ACCOUNT";
+    static final String COL_IN_REPLY_TO_ID = "IN_REPLY_TO_ID";
+    static final String COL_IN_REPLY_TO_ACCOUNT_ID = "IN_REPLY_TO_ACCOUNT_ID";
+    static final String COL_REBLOG = "REBLOG";
+    static final String COL_CONTENT = "CONTENT";
+    static final String COL_REBLOGS_COUNT = "REBLOGS_COUNT";
+    static final String COL_FAVOURITES_COUNT = "FAVOURITES_COUNT";
+    static final String COL_REBLOGGED = "REBLOGGED";
+    static final String COL_FAVOURITED = "FAVOURITED";
+    static final String COL_MUTED = "MUTED";
+    static final String COL_SPOILER_TEXT = "SPOILER_TEXT";
+    static final String COL_VISIBILITY = "VISIBILITY";
+    static final String COL_MEDIA_ATTACHMENTS = "MEDIA_ATTACHMENTS";
+    static final String COL_MENTIONS = "MENTIONS";
+    static final String COL_TAGS = "TAGS";
+    static final String COL_APPLICATION = "APPLICATION";
+    static final String COL_LANGUAGE = "LANGUAGE";
+    static final String COL_PINNED = "PINNED";
+    static final String COL_DATE_BACKUP = "DATE_BACKUP";
+    static final String COL_CARD = "CARD";
+    static final String COL_INSTANCE_TYPE = "INSTANCE_TYPE";
+    static final String COL_FILTERED_WITH = "FILTERED_WITH";
+    static final String COL_UUID = "UUID";
+    static final String COL_CACHE = "CACHE";
+    static final String COL_DATE = "DATE";
+    static final String COL_DOMAIN = "DOMAIN";
+    static final String COL_TYPE = "TYPE";
+    static final String COL_LIST_TIMELINE = "LIST_TIMELINE";
+    static final String COL_DISPLAYED = "DISPLAYED";
+    static final String COL_POSITION = "POSITION";
+    static final String COL_REMOTE_INSTANCE = "REMOTE_INSTANCE";
+    static final String COL_TAG_TIMELINE = "TAG_TIMELINE";
+    static final String COL_NOTIFICATION_ID = "NOTIFICATION_ID";
+    static final String COL_STATUS_ID_CACHE = "STATUS_ID_CACHE";
+    static final String COL_NAV_NEWS = "NAV_NEWS";
+    static final String COL_NAV_LIST = "NAV_LIST";
+    static final String COL_NAV_SCHEDULED = "NAV_SCHEDULED";
+    static final String COL_NAV_ARCHIVE = "NAV_ARCHIVE";
+    static final String COL_NAV_ARCHIVE_NOTIFICATIONS = "NAV_ARCHIVE_NOTIFICATIONS";
+    static final String COL_NAV_PEERTUBE = "NAV_PEERTUBE";
+    static final String COL_NAV_FILTERS = "NAV_FILTERS";
+    static final String COL_NAV_HOW_TO_FOLLOW = "NAV_HOW_TO_FOLLOW";
+    static final String COL_NAV_ADMINISTRATION = "NAV_ADMINISTRATION";
+    static final String COL_NAV_BLOCKED = "NAV_BLOCKED";
+    static final String COL_NAV_MUTED = "NAV_MUTED";
+    static final String COL_NAV_BLOCKED_DOMAINS = "NAV_BLOCKED_DOMAINS";
+    static final String COL_NAV_HOWTO = "NAV_HOWTO";
+    static final String COL_NAV_TRENDS = "NAV_TRENDS";
+    private static final String TABLE_USER_ACCOUNT_TEMP = "USER_ACCOUNT_TEMP";
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
             + COL_USER_ID + " TEXT, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
             + COL_DISPLAYED_NAME + " TEXT NOT NULL, " + COL_LOCKED + " INTEGER NOT NULL, "
@@ -151,140 +201,20 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_PRIVACY + " TEXT, "
             + COL_SENSITIVE + " INTEGER DEFAULT 0, "
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
-
-
-    static final String COL_ID = "ID";
-    static final String COL_STATUS_SERIALIZED = "STATUS_SERIALIZED";
-    static final String COL_STATUS_REPLY_SERIALIZED = "STATUS_REPLY_SERIALIZED";
-    static final String COL_DATE_CREATION = "DATE_CREATION";
-    static final String COL_IS_SCHEDULED = "IS_SCHEDULED";
-    static final String COL_DATE_SCHEDULED = "DATE_SCHEDULED";
-    static final String COL_SENT = "SENT";
-    static final String COL_DATE_SENT = "DATE_SENT";
-
     private static final String CREATE_TABLE_STATUSES_STORED = "CREATE TABLE " + TABLE_STATUSES_STORED + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
             + COL_STATUS_SERIALIZED + " TEXT NOT NULL, " + COL_STATUS_REPLY_SERIALIZED + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL, "
             + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_DATE_SCHEDULED + " TEXT, "
             + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
-
-
-    static final String COL_SHORTCODE = "SHORTCODE";
-    static final String COL_URL_STATIC = "URL_STATIC";
-    private final String CREATE_TABLE_CUSTOM_EMOJI = "CREATE TABLE " + TABLE_CUSTOM_EMOJI + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
-            + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
-
-
-    static final String COL_KEYWORDS = "KEYWORDS";
-    static final String COL_IS_ART = "IS_ART";
-    static final String COL_IS_NSFW = "IS_NSFW";
-    static final String COL_ANY = "ANY_TAG";
-    static final String COL_ALL = "ALL_TAG";
-    static final String COL_NONE = "NONE_TAG";
-    static final String COL_NAME = "NAME";
-    private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, "
-            + COL_ANY + " TEXT, " + COL_ALL + " TEXT, " + COL_NONE + " TEXT, " + COL_NAME + " TEXT, "
-            + COL_IS_ART + " INTEGER  DEFAULT 0, " + COL_IS_NSFW + " INTEGER  DEFAULT 0, "
-            + COL_DATE_CREATION + " TEXT NOT NULL)";
-
-    static final String COL_TARGETED_USER_ID = "TARGETED_USER_ID";
-    static final String COL_DATE_END = "DATE_END";
-    private final String CREATE_TABLE_TEMP_MUTE = "CREATE TABLE " + TABLE_TEMP_MUTE + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_ACCT + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_TARGETED_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, " + COL_DATE_END + " TEXT NOT NULL)";
-
-
-    static final String COL_CACHED_ACTION = "CACHED_ACTION";
-    static final String COL_STATUS_ID = "STATUS_ID";
-    static final String COL_URI = "URI";
-    static final String COL_ACCOUNT = "ACCOUNT";
-    static final String COL_IN_REPLY_TO_ID = "IN_REPLY_TO_ID";
-    static final String COL_IN_REPLY_TO_ACCOUNT_ID = "IN_REPLY_TO_ACCOUNT_ID";
-    static final String COL_REBLOG = "REBLOG";
-    static final String COL_CONTENT = "CONTENT";
-    static final String COL_REBLOGS_COUNT = "REBLOGS_COUNT";
-    static final String COL_FAVOURITES_COUNT = "FAVOURITES_COUNT";
-    static final String COL_REBLOGGED = "REBLOGGED";
-    static final String COL_FAVOURITED = "FAVOURITED";
-    static final String COL_MUTED = "MUTED";
-
-    static final String COL_SPOILER_TEXT = "SPOILER_TEXT";
-    static final String COL_VISIBILITY = "VISIBILITY";
-    static final String COL_MEDIA_ATTACHMENTS = "MEDIA_ATTACHMENTS";
-    static final String COL_MENTIONS = "MENTIONS";
-    static final String COL_TAGS = "TAGS";
-    static final String COL_APPLICATION = "APPLICATION";
-    static final String COL_LANGUAGE = "LANGUAGE";
-    static final String COL_PINNED = "PINNED";
-    static final String COL_DATE_BACKUP = "DATE_BACKUP";
-    static final String COL_CARD = "CARD";
-
-
-    private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_CACHED_ACTION + " INTEGER NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " NOT NULL, " + COL_DATE_BACKUP + " TEXT NOT NULL, "
-            + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
-            + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
-            + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
-            + COL_EMOJIS + " TEXT, " + COL_REBLOGS_COUNT + " INTEGER NOT NULL, " + COL_FAVOURITES_COUNT + " INTEGER NOT NULL, "
-            + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
-            + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT," + COL_CARD + " TEXT,"
-            + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
-            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
-
-    private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
-            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE + "," + COL_STATUS_ID + "," + COL_CACHED_ACTION + ")";
-
-    static final String COL_INSTANCE_TYPE = "INSTANCE_TYPE";
-    static final String COL_FILTERED_WITH = "FILTERED_WITH";
-    private final String CREATE_TABLE_INSTANCES = "CREATE TABLE " + TABLE_INSTANCES + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_TAGS + " TEXT, " + COL_FILTERED_WITH + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL)";
-
-
-    static final String COL_UUID = "UUID";
-    static final String COL_CACHE = "CACHE";
-    static final String COL_DATE = "DATE";
-
-    private final String CREATE_TABLE_PEERTUBE_FAVOURITES = "CREATE TABLE "
-            + TABLE_PEERTUBE_FAVOURITES + "("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_UUID + " TEXT NOT NULL, "
-            + COL_INSTANCE + " TEXT NOT NULL, "
-            + COL_CACHE + " TEXT NOT NULL, "
-            + COL_DATE + " TEXT NOT NULL)";
-
-
-    private final String CREATE_TABLE_CACHE_TAGS = "CREATE TABLE "
-            + TABLE_CACHE_TAGS + "("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_TAGS + " TEXT NOT NULL)";
-
-
     private static final String CREATE_TABLE_BOOST_SCHEDULE = "CREATE TABLE " + TABLE_BOOST_SCHEDULE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
             + COL_STATUS_SERIALIZED + " TEXT NOT NULL, " + COL_DATE_SCHEDULED + " TEXT, "
             + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
-
-
-    static final String COL_DOMAIN = "DOMAIN";
     private static final String CREATE_TABLE_TRACKING_BLOCK = "CREATE TABLE " + TABLE_TRACKING_BLOCK + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_DOMAIN + " TEXT NOT NULL)";
-
-    static final String COL_TYPE = "TYPE";
-    static final String COL_LIST_TIMELINE = "LIST_TIMELINE";
-    static final String COL_DISPLAYED = "DISPLAYED";
-    static final String COL_POSITION = "POSITION";
-    static final String COL_REMOTE_INSTANCE = "REMOTE_INSTANCE";
-    static final String COL_TAG_TIMELINE = "TAG_TIMELINE";
-
     private static final String CREATE_TABLE_TIMELINES = "CREATE TABLE IF NOT EXISTS " + TABLE_TIMELINES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_POSITION + " INTEGER NOT NULL, "
@@ -294,8 +224,6 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_TAG_TIMELINE + " TEXT, "
             + COL_DISPLAYED + " INTEGER NOT NULL, "
             + COL_LIST_TIMELINE + " TEXT)";
-
-
     private static final String CREATE_TABLE_TIMELINE_CACHE = "CREATE TABLE "
             + TABLE_TIMELINE_CACHE + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -304,10 +232,6 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_USER_ID + " TEXT NOT NULL, "
             + COL_CACHE + " TEXT NOT NULL, "
             + COL_DATE + " TEXT NOT NULL)";
-
-
-    static final String COL_NOTIFICATION_ID = "NOTIFICATION_ID";
-    static final String COL_STATUS_ID_CACHE = "STATUS_ID_CACHE";
     private static final String CREATE_TABLE_NOTIFICATIONS = "CREATE TABLE "
             + TABLE_NOTIFICATION_CACHE + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -320,21 +244,6 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_IN_REPLY_TO_ID + " TEXT, "
             + COL_STATUS_ID_CACHE + " INTEGER, "
             + COL_CREATED_AT + " TEXT NOT NULL)";
-
-    static final String COL_NAV_NEWS = "NAV_NEWS";
-    static final String COL_NAV_LIST = "NAV_LIST";
-    static final String COL_NAV_SCHEDULED = "NAV_SCHEDULED";
-    static final String COL_NAV_ARCHIVE = "NAV_ARCHIVE";
-    static final String COL_NAV_ARCHIVE_NOTIFICATIONS = "NAV_ARCHIVE_NOTIFICATIONS";
-    static final String COL_NAV_PEERTUBE = "NAV_PEERTUBE";
-    static final String COL_NAV_FILTERS = "NAV_FILTERS";
-    static final String COL_NAV_HOW_TO_FOLLOW = "NAV_HOW_TO_FOLLOW";
-    static final String COL_NAV_ADMINISTRATION = "NAV_ADMINISTRATION";
-    static final String COL_NAV_BLOCKED = "NAV_BLOCKED";
-    static final String COL_NAV_MUTED = "NAV_MUTED";
-    static final String COL_NAV_BLOCKED_DOMAINS = "NAV_BLOCKED_DOMAINS";
-    static final String COL_NAV_HOWTO = "NAV_HOWTO";
-
     private static final String CREATE_TABLE_MAIN_MENU_ITEMS = "CREATE TABLE "
             + TABLE_MAIN_MENU_ITEMS + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -352,15 +261,56 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_NAV_BLOCKED + " INTEGER  DEFAULT 1, "
             + COL_NAV_MUTED + " INTEGER  DEFAULT 1, "
             + COL_NAV_BLOCKED_DOMAINS + " INTEGER  DEFAULT 1, "
+            + COL_NAV_TRENDS + " INTEGER  DEFAULT 1, "
             + COL_NAV_HOWTO + " INTEGER  DEFAULT 1)";
-
-
     private static final String CREATE_TABLE_USER_NOTES = "CREATE TABLE "
             + TABLE_USER_NOTES + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_ACCT + " TEXT NOT NULL, "
             + COL_NOTE + " TEXT, "
             + COL_DATE_CREATION + " TEXT NOT NULL)";
+    public static SQLiteDatabase db;
+    private static Sqlite sInstance;
+    private final String CREATE_TABLE_CUSTOM_EMOJI = "CREATE TABLE " + TABLE_CUSTOM_EMOJI + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+    private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, "
+            + COL_ANY + " TEXT, " + COL_ALL + " TEXT, " + COL_NONE + " TEXT, " + COL_NAME + " TEXT, "
+            + COL_IS_ART + " INTEGER  DEFAULT 0, " + COL_IS_NSFW + " INTEGER  DEFAULT 0, "
+            + COL_DATE_CREATION + " TEXT NOT NULL)";
+    private final String CREATE_TABLE_TEMP_MUTE = "CREATE TABLE " + TABLE_TEMP_MUTE + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_ACCT + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_TARGETED_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, " + COL_DATE_END + " TEXT NOT NULL)";
+    private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_CACHED_ACTION + " INTEGER NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " NOT NULL, " + COL_DATE_BACKUP + " TEXT NOT NULL, "
+            + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
+            + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
+            + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
+            + COL_EMOJIS + " TEXT, " + COL_REBLOGS_COUNT + " INTEGER NOT NULL, " + COL_FAVOURITES_COUNT + " INTEGER NOT NULL, "
+            + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
+            + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT," + COL_CARD + " TEXT,"
+            + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
+            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
+    private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
+            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE + "," + COL_STATUS_ID + "," + COL_CACHED_ACTION + ")";
+    private final String CREATE_TABLE_INSTANCES = "CREATE TABLE " + TABLE_INSTANCES + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_TAGS + " TEXT, " + COL_FILTERED_WITH + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+    private final String CREATE_TABLE_PEERTUBE_FAVOURITES = "CREATE TABLE "
+            + TABLE_PEERTUBE_FAVOURITES + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_UUID + " TEXT NOT NULL, "
+            + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_CACHE + " TEXT NOT NULL, "
+            + COL_DATE + " TEXT NOT NULL)";
+    private final String CREATE_TABLE_CACHE_TAGS = "CREATE TABLE "
+            + TABLE_CACHE_TAGS + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_TAGS + " TEXT NOT NULL)";
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -372,6 +322,57 @@ public class Sqlite extends SQLiteOpenHelper {
             sInstance = new Sqlite(context, name, factory, version);
         }
         return sInstance;
+    }
+
+    public static void importDB(Activity activity, String backupDBPath) {
+        try {
+            db.close();
+            File dbDest = activity.getDatabasePath(DB_NAME);
+            File dbSource = new File(backupDBPath);
+            FileChannel src = new FileInputStream(dbSource).getChannel();
+            FileChannel dst = new FileOutputStream(dbDest).getChannel();
+            dst.transferFrom(src, 0, src.size());
+            src.close();
+            dst.close();
+            Helper.logoutCurrentUser(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toasty.error(activity.getApplicationContext(), activity.getString(R.string.data_import_error_simple), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void exportDB(Context context) {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+
+            if (sd.canWrite()) {
+
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+                String backupDBPath = "Fedilab_export_" + timeStamp + ".fedilab";
+                File dbSource = context.getDatabasePath(DB_NAME);
+                File dbDest = new File(sd, backupDBPath);
+                FileChannel src = new FileInputStream(dbSource).getChannel();
+                FileChannel dst = new FileOutputStream(dbDest).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+                final Intent intent = new Intent();
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                Uri uri = Uri.fromFile(dbDest);
+                intent.setDataAndType(uri, "*/*");
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
+                Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
+                        R.mipmap.ic_launcher_bubbles), Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
+                Toasty.success(context, context.getString(R.string.data_base_exported), Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toasty.error(context, context.getString(R.string.data_export_error_simple), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -534,6 +535,10 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             case 35:
                 db.execSQL(CREATE_TABLE_USER_NOTES);
+            case 36:
+                if (oldVersion > 33) {
+                    db.execSQL("ALTER TABLE " + TABLE_MAIN_MENU_ITEMS + " ADD COLUMN " + COL_NAV_TRENDS + " INTEGER  DEFAULT 1");
+                }
             default:
                 break;
         }
@@ -549,58 +554,6 @@ public class Sqlite extends SQLiteOpenHelper {
         //Close the db
         if (db != null && db.isOpen()) {
             db.close();
-        }
-    }
-
-
-    public static void importDB(Activity activity, String backupDBPath) {
-        try {
-            db.close();
-            File dbDest = activity.getDatabasePath(DB_NAME);
-            File dbSource = new File(backupDBPath);
-            FileChannel src = new FileInputStream(dbSource).getChannel();
-            FileChannel dst = new FileOutputStream(dbDest).getChannel();
-            dst.transferFrom(src, 0, src.size());
-            src.close();
-            dst.close();
-            Helper.logoutCurrentUser(activity);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toasty.error(activity.getApplicationContext(), activity.getString(R.string.data_import_error_simple), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public static void exportDB(Context context) {
-        try {
-            File sd = Environment.getExternalStorageDirectory();
-
-            if (sd.canWrite()) {
-
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-                String backupDBPath = "Fedilab_export_" + timeStamp + ".fedilab";
-                File dbSource = context.getDatabasePath(DB_NAME);
-                File dbDest = new File(sd, backupDBPath);
-                FileChannel src = new FileInputStream(dbSource).getChannel();
-                FileChannel dst = new FileOutputStream(dbDest).getChannel();
-                dst.transferFrom(src, 0, src.size());
-                src.close();
-                dst.close();
-                final Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_VIEW);
-                Uri uri = Uri.fromFile(dbDest);
-                intent.setDataAndType(uri, "*/*");
-                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
-                Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
-                Helper.notify_user(context, account, intent, BitmapFactory.decodeResource(context.getResources(),
-                        R.mipmap.ic_launcher), Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
-                Toasty.success(context, context.getString(R.string.data_base_exported), Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toasty.error(context, context.getString(R.string.data_export_error_simple), Toast.LENGTH_LONG).show();
         }
     }
 

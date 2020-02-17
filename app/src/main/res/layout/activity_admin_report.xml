@@ -27,8 +27,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -43,7 +42,7 @@
 
             <Button
                 android:id="@+id/assign"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:textSize="16sp"
@@ -53,7 +52,7 @@
 
             <Button
                 android:id="@+id/status"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:textSize="16sp"
@@ -62,11 +61,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/assign_status_buttons_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="assign,status"
-                android:id="@+id/assign_status_buttons_barrier" />
+                app:constraint_referenced_ids="assign,status" />
 
             <TextView
                 android:id="@+id/permissions_label"
@@ -225,7 +224,7 @@
 
             <Button
                 android:id="@+id/reject"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -237,7 +236,7 @@
 
             <Button
                 android:id="@+id/allow"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -248,21 +247,21 @@
                 app:layout_constraintTop_toBottomOf="@id/stats_bottom_barrier" />
 
             <androidx.constraintlayout.widget.Group
+                android:id="@+id/allow_reject_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="reject,allow"
-                android:id="@+id/allow_reject_group" />
+                app:constraint_referenced_ids="reject,allow" />
 
             <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/allow_reject_buttons_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="reject,allow"
-                android:id="@+id/allow_reject_buttons_barrier" />
+                app:constraint_referenced_ids="reject,allow" />
 
             <Button
                 android:id="@+id/warn"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -274,7 +273,7 @@
 
             <Button
                 android:id="@+id/disable"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -293,7 +292,7 @@
 
             <Button
                 android:id="@+id/silence"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -305,7 +304,7 @@
 
             <Button
                 android:id="@+id/suspend"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -374,7 +373,7 @@
             <!--
             <Button
                 android:id="@+id/action"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
+                style="@style/colored_button"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

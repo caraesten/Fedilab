@@ -22,5 +22,5 @@ import app.fedilab.android.client.Entities.Results;
  * Interface for retrieving a remote account
  */
 public interface OnRetrieveRemoteAccountInterface {
-    void onRetrieveRemoteAccount(Results results);
+    void onRetrieveRemoteAccount(Results results, boolean developerAccount);
 }

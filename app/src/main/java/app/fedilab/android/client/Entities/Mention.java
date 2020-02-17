@@ -24,6 +24,17 @@ import android.os.Parcelable;
 
 public class Mention implements Parcelable {
 
+    public static final Creator<Mention> CREATOR = new Creator<Mention>() {
+        @Override
+        public Mention createFromParcel(Parcel in) {
+            return new Mention(in);
+        }
+
+        @Override
+        public Mention[] newArray(int size) {
+            return new Mention[size];
+        }
+    };
     private String url;
     private String username;
     private String acct;
@@ -38,18 +49,6 @@ public class Mention implements Parcelable {
 
     public Mention() {
     }
-
-    public static final Creator<Mention> CREATOR = new Creator<Mention>() {
-        @Override
-        public Mention createFromParcel(Parcel in) {
-            return new Mention(in);
-        }
-
-        @Override
-        public Mention[] newArray(int size) {
-            return new Mention[size];
-        }
-    };
 
     public String getUrl() {
         return url;

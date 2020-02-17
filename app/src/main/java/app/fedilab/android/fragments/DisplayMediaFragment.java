@@ -20,30 +20,29 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.ImageAdapter;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -53,6 +52,7 @@ import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInterface {
 
 
+    boolean firstTootsLoaded;
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -61,7 +61,6 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
     private boolean firstLoad;
     private String targetedId;
     private boolean showMediaOnly, showPinned, showReply;
-    boolean firstTootsLoaded;
     private SharedPreferences sharedpreferences;
     private ArrayList<Status> statuses;
     private ImageAdapter gridAdaper;
@@ -177,9 +176,13 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if (apiResponse == null || apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) {
+        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse != null && apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if (apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             else
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             flag_loading = false;

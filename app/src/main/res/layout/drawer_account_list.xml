@@ -15,58 +15,58 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/account_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="2dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:id="@+id/account_container"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="2dp">
 
     <ImageView
-        android:layout_margin="5dp"
-        android:layout_gravity="center"
         android:id="@+id/account_pp"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:contentDescription="@string/profile_picture" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/account_un"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:maxLines="1"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:id="@+id/account_un"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/account_ac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:maxLines="1"
-            android:textSize="14sp"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="14sp" />
     </LinearLayout>
     <!-- Content description set programmatically -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/account_action"
-        app:fabSize="mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:scaleType="fitXY"
         android:layout_gravity="center"
-        android:gravity="center" />
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        app:fabSize="mini" />
 </LinearLayout>

@@ -23,16 +23,41 @@ import java.util.List;
 
 public class Poll implements Parcelable {
 
+    public static final Parcelable.Creator<Poll> CREATOR = new Parcelable.Creator<Poll>() {
+        @Override
+        public Poll createFromParcel(Parcel source) {
+            return new Poll(source);
+        }
+
+        @Override
+        public Poll[] newArray(int size) {
+            return new Poll[size];
+        }
+    };
     private String id;
     private Date expires_at;
     private int expires_in;
     private boolean expired;
     private boolean multiple;
     private int votes_count;
+    private int voters_count;
     private boolean voted;
     private List<PollOptions> optionsList;
 
     public Poll() {
+    }
+
+    protected Poll(Parcel in) {
+        this.id = in.readString();
+        long tmpExpires_at = in.readLong();
+        this.expires_at = tmpExpires_at == -1 ? null : new Date(tmpExpires_at);
+        this.expires_in = in.readInt();
+        this.expired = in.readByte() != 0;
+        this.multiple = in.readByte() != 0;
+        this.votes_count = in.readInt();
+        this.voters_count = in.readInt();
+        this.voted = in.readByte() != 0;
+        this.optionsList = in.createTypedArrayList(PollOptions.CREATOR);
     }
 
     public String getId() {
@@ -99,7 +124,6 @@ public class Poll implements Parcelable {
         this.expires_in = expires_in;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -113,31 +137,16 @@ public class Poll implements Parcelable {
         dest.writeByte(this.expired ? (byte) 1 : (byte) 0);
         dest.writeByte(this.multiple ? (byte) 1 : (byte) 0);
         dest.writeInt(this.votes_count);
+        dest.writeInt(this.voters_count);
         dest.writeByte(this.voted ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.optionsList);
     }
 
-    protected Poll(Parcel in) {
-        this.id = in.readString();
-        long tmpExpires_at = in.readLong();
-        this.expires_at = tmpExpires_at == -1 ? null : new Date(tmpExpires_at);
-        this.expires_in = in.readInt();
-        this.expired = in.readByte() != 0;
-        this.multiple = in.readByte() != 0;
-        this.votes_count = in.readInt();
-        this.voted = in.readByte() != 0;
-        this.optionsList = in.createTypedArrayList(PollOptions.CREATOR);
+    public int getVoters_count() {
+        return voters_count;
     }
 
-    public static final Parcelable.Creator<Poll> CREATOR = new Parcelable.Creator<Poll>() {
-        @Override
-        public Poll createFromParcel(Parcel source) {
-            return new Poll(source);
-        }
-
-        @Override
-        public Poll[] newArray(int size) {
-            return new Poll[size];
-        }
-    };
+    public void setVoters_count(int voters_count) {
+        this.voters_count = voters_count;
+    }
 }

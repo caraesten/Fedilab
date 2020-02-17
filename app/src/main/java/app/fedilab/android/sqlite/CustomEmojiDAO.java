@@ -33,8 +33,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class CustomEmojiDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
 
     public CustomEmojiDAO(Context context, SQLiteDatabase db) {
@@ -160,7 +160,7 @@ public class CustomEmojiDAO {
     public List<Emojis> getEmojiStartingBy(String shortCode) {
         try {
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, Sqlite.COL_SHORTCODE, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, Sqlite.COL_SHORTCODE, null, null, "20");
             return cursorToListEmojis(c);
         } catch (Exception e) {
             return null;

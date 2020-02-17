@@ -18,85 +18,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
-    android:contentInsetLeft="0dp"
-    android:contentInsetStart="0dp"
-    app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp"
-    android:contentInsetRight="0dp"
-    android:contentInsetEnd="0dp"
-    app:contentInsetRight="0dp"
-    app:contentInsetEnd="0dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    app:popupTheme="?attr/popupOverlay"
+    android:background="?colorPrimary"
+    android:contentInsetStart="0dp"
+    android:contentInsetLeft="0dp"
+    android:contentInsetEnd="0dp"
+    android:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp"
+    app:layout_scrollFlags="scroll|enterAlways"
     tools:ignore="UnusedAttribute">
 
     <ImageView
         android:id="@+id/close_conversation"
-        android:src="@drawable/ic_close"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:contentDescription="@string/close" />
+        android:contentDescription="@string/close"
+        android:gravity="center_vertical"
+        android:src="@drawable/ic_close"
+        android:tint="?attr/iconColorMenu" />
 
     <ImageView
         android:id="@+id/pp_actionBar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:contentDescription="@string/profile_picture" />
+        android:contentDescription="@string/profile_picture"
+        android:gravity="center_vertical" />
 
     <TextView
+        android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:textColor="?attr/actionBarTextColor"
-        android:textSize="14sp"
-        android:id="@+id/toolbar_title" />
+        android:layout_gravity="center_vertical"
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/action_unhide"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="end"
-        android:src="@drawable/ic_show_hidden"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:contentDescription="@string/expand_cw"
         android:gravity="center_vertical"
-        android:contentDescription="@string/expand_cw" />
+        android:src="@drawable/ic_show_hidden"
+        android:tint="?attr/iconColorMenu" />
 
     <ImageView
         android:id="@+id/action_refresh"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="end"
-        android:src="@drawable/ic_refresh"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:contentDescription="@string/refresh"
         android:gravity="center_vertical"
-        android:contentDescription="@string/refresh" />
+        android:src="@drawable/ic_refresh"
+        android:tint="?attr/iconColorMenu" />
 
     <ImageView
         android:id="@+id/action_expand"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="end"
-        android:src="@drawable/ic_expand_more"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:contentDescription="@string/expand_conversation"
         android:gravity="center_vertical"
-        android:contentDescription="@string/expand_conversation" />
+        android:src="@drawable/ic_expand_more"
+        android:tint="?attr/iconColorMenu" />
 
 </androidx.appcompat.widget.Toolbar>

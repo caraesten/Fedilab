@@ -1,0 +1,13 @@
+Added:
+- Català language
+- Push notifications for Friendica & GNU Social
+- Add follow/unfollow buttons for Pixelfed
+- View your own story (need to wait the endpoint)
+- Increase max bio chars to 500 for Pleroma
+
+Fixed:
+- Proxy not applied with embedded videos
+- Fix no toots that remains displayed on Nitter timelines
+- Avoid to lose composed message when not sent
+- Notifications not pushed
+- Fix some crashes

@@ -26,187 +26,158 @@
         android:orientation="vertical">
         <!-- About app name -->
         <TextView
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="@string/app_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="20sp" />
         <!-- About version -->
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/about_version"
-            android:textSize="16sp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textSize="16sp" />
 
         <!-- About developer -->
         <TextView
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textColor="?colorAccent"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
+            android:padding="5dp"
             android:text="@string/about_developer"
+            android:textColor="?colorAccent"
             android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_developers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
         <TextView
             android:id="@+id/txt_developers"
-            android:visibility="gone"
-            android:textSize="18sp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/about_support"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="@string/support_the_app_on_liberapay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="@string/support_the_app_on_liberapay" />
 
         <Button
             android:id="@+id/about_support_paypal"
-            android:layout_gravity="center"
-            android:gravity="center"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="PayPal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="PayPal"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/about_wiki"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:autoLink="web"
-            android:text="@string/how_to_videos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/how_to_videos"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/about_website"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:autoLink="web"
-            android:text="https://fedilab.app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="web"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="https://fedilab.app"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
         <!-- About UX/UI designer -->
         <TextView
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/about_thanks_ux"
             android:layout_width="match_parent"
-            android:textColor="?colorAccent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:textSize="16sp"
-            android:text="@string/thanks_text_ux" />
+            android:padding="5dp"
+            android:text="@string/thanks_text_ux"
+            android:textColor="?colorAccent"
+            android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_ux"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
         <TextView
             android:id="@+id/txt_ux"
-            android:visibility="gone"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/txt_support"
-            android:visibility="gone"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        <!-- About logo designer -->
-        <TextView
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/about_thanks_logo"
-            android:layout_width="match_parent"
-            android:textColor="?colorAccent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:textSize="16sp"
-            android:text="@string/thanks_text_logo" />
-
-        <app.fedilab.android.helper.ExpandableHeightListView
-            android:id="@+id/lv_designers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/txt_designers"
-            android:visibility="gone"
-            android:textSize="16sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+
         <!-- About contributors -->
 
         <TextView
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/about_thanks_dev"
             android:layout_width="match_parent"
-            android:textColor="?colorAccent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:textSize="16sp"
-            android:text="@string/thanks_text_dev" />
+            android:padding="5dp"
+            android:text="@string/thanks_text_dev"
+            android:textColor="?colorAccent"
+            android:textSize="16sp" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_contributors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
         <TextView
             android:id="@+id/txt_thankyou1"
-            android:visibility="gone"
-            android:textSize="16sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_thankyou2"
-            android:visibility="gone"
-            android:textSize="16sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <!-- About license -->
         <LinearLayout

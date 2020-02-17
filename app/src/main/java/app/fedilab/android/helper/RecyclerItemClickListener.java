@@ -16,11 +16,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private final OnItemClickListener mListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
     private final GestureDetector mGestureDetector;
 
     public RecyclerItemClickListener(Context context, OnItemClickListener listener) {
@@ -49,5 +44,9 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         // do nothing
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
     }
 }

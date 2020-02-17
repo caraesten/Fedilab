@@ -17,38 +17,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:layout_height="match_parent">
+    android:paddingRight="20dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
             android:id="@+id/poll_items_container"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/choice_1"
-                android:hint="@string/poll_choice_1"
-                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/poll_choice_1"
                 android:inputType="text"
-                android:layout_marginBottom="10dp" />
+                android:singleLine="true" />
 
             <EditText
                 android:id="@+id/choice_2"
-                android:hint="@string/poll_choice_2"
-                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/poll_choice_2"
                 android:inputType="text"
-                android:layout_marginBottom="10dp" />
+                android:singleLine="true" />
         </LinearLayout>
     </ScrollView>
 
@@ -62,8 +62,8 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:adjustViewBounds="true"
             android:background="@color/transparent"
             android:contentDescription="@string/add_poll_item"
@@ -75,8 +75,8 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:adjustViewBounds="true"
             android:background="@color/transparent"
             android:contentDescription="@string/remove_poll_item"
@@ -92,13 +92,13 @@
         <Spinner
             android:id="@+id/poll_choice"
             android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="3" />
 
         <Spinner
             android:id="@+id/poll_duration"
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
     </LinearLayout>
 </LinearLayout>

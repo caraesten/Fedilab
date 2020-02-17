@@ -14,7 +14,6 @@ package app.fedilab.android.fragments;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,15 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,18 +33,27 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.drawers.ListAdapter;
-import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.ListActivity;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.drawers.ListAdapter;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -160,7 +159,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         this.context = context;
     }
@@ -177,7 +176,11 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         if (actionType == ManageListsAsyncTask.action.GET_LIST) {

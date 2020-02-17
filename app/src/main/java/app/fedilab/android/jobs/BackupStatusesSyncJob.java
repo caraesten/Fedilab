@@ -14,56 +14,25 @@ package app.fedilab.android.jobs;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import app.fedilab.android.R;
-import app.fedilab.android.activities.BaseMainActivity;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.OwnerStatusActivity;
-import app.fedilab.android.client.API;
-import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Notification;
-import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.services.BackupStatusInDataBaseService;
-import app.fedilab.android.services.BackupStatusService;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-
-import static app.fedilab.android.helper.Helper.INTENT_ACTION;
-import static app.fedilab.android.helper.Helper.INTENT_TARGETED_ACCOUNT;
-import static app.fedilab.android.helper.Helper.NOTIFICATION_INTENT;
-import static app.fedilab.android.helper.Helper.PREF_INSTANCE;
-import static app.fedilab.android.helper.Helper.PREF_KEY_ID;
-import static app.fedilab.android.helper.Helper.canNotify;
-import static app.fedilab.android.helper.Helper.notify_user;
 
 
 /**
@@ -73,21 +42,11 @@ import static app.fedilab.android.helper.Helper.notify_user;
 
 public class BackupStatusesSyncJob extends Job {
 
-    static final String BACKUP_SYNC = "job_backup";
+    public static final String BACKUP_SYNC = "job_backup";
 
     static {
         Helper.installProvider();
     }
-
-    @NonNull
-    @Override
-    protected Result onRunJob(@NonNull Params params) {
-        //Code refresh here
-
-        backupService();
-        return Result.SUCCESS;
-    }
-
 
     public static int schedule(boolean updateCurrent) {
 
@@ -111,6 +70,14 @@ public class BackupStatusesSyncJob extends Job {
         return jobRequestschedule;
     }
 
+    @NonNull
+    @Override
+    protected Result onRunJob(@NonNull Params params) {
+        //Code refresh here
+
+        backupService();
+        return Result.SUCCESS;
+    }
 
     /**
      * Task in background starts here.

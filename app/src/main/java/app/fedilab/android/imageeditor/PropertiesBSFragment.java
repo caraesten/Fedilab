@@ -1,19 +1,17 @@
 package app.fedilab.android.imageeditor;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,18 +21,10 @@ import app.fedilab.android.R;
 
 public class PropertiesBSFragment extends BottomSheetDialogFragment implements SeekBar.OnSeekBarChangeListener {
 
-    public PropertiesBSFragment() {
-        // Required empty public constructor
-    }
-
     private Properties mProperties;
 
-    public interface Properties {
-        void onColorChanged(int colorCode);
-
-        void onOpacityChanged(int opacity);
-
-        void onBrushSizeChanged(int brushSize);
+    public PropertiesBSFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -101,5 +91,13 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    public interface Properties {
+        void onColorChanged(int colorCode);
+
+        void onOpacityChanged(int opacity);
+
+        void onBrushSizeChanged(int brushSize);
     }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    Copyright 2019 Thomas Schneider
+
+    This file is a part of Fedilab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Fedilab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Fedilab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/proof_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/green_border"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/proof_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/verified_user"
+        android:src="@drawable/ic_verified_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/proof_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:ellipsize="end"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/proof_name_network"
+        app:layout_constraintEnd_toStartOf="@id/proof_arrow"
+        app:layout_constraintStart_toEndOf="@id/proof_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/proof_name_network"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/proof_arrow"
+        app:layout_constraintStart_toEndOf="@id/proof_icon"
+        app:layout_constraintTop_toBottomOf="@id/proof_name" />
+
+    <ImageView
+        android:id="@+id/proof_arrow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_keyboard_arrow_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/identity_proofs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

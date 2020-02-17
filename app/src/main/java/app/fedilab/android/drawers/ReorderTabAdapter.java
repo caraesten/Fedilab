@@ -19,10 +19,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
-
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,11 +27,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.ReorderTimelinesActivity;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.itemtouchhelper.ItemTouchHelperAdapter;
@@ -45,8 +46,6 @@ import app.fedilab.android.helper.itemtouchhelper.OnUndoListener;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.ReorderTimelinesActivity;
 
 
 /**
@@ -57,11 +56,9 @@ import app.fedilab.android.activities.ReorderTimelinesActivity;
  */
 public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
-    private List<ManageTimelines> mItems;
-
     private final OnStartDragListener mDragStartListener;
     private final OnUndoListener mUndoListener;
-
+    private List<ManageTimelines> mItems;
     private Context context;
     private SharedPreferences sharedpreferences;
 
@@ -121,7 +118,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                         holder.iconView.setImageResource(R.drawable.peertube_icon);
                         break;
                     case "MASTODON":
-                        holder.iconView.setImageResource(R.drawable.mastodon_icon);
+                        holder.iconView.setImageResource(R.drawable.mastodon_icon_item);
                         break;
                     case "PIXELFED":
                         holder.iconView.setImageResource(R.drawable.pixelfed);
@@ -131,6 +128,9 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                         break;
                     case "GNU":
                         holder.iconView.setImageResource(R.drawable.ic_gnu_social);
+                        break;
+                    case "NITTER":
+                        holder.iconView.setImageResource(R.drawable.nitter);
                         break;
                 }
                 holder.textView.setText(tl.getRemoteInstance().getHost());

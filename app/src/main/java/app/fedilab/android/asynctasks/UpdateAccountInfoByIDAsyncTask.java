@@ -28,10 +28,10 @@ import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.interfaces.OnUpdateAccountInfoInterface;
 
 /**
  * Created by Thomas on 17/05/2017.
@@ -58,7 +58,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, null);
         Account account = null;
-        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED)
             account = new API(this.contextReference.get()).verifyCredentials();
         else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
@@ -86,7 +86,9 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                 if (response != null && response.getEmojis() != null && response.getEmojis().size() > 0) {
                     new CustomEmojiDAO(contextReference.get(), db).removeAll();
                     for (Emojis emojis : response.getEmojis()) {
-                        new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+                        if( emojis.isVisible_in_picker()) {
+                            new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+                        }
                     }
                 }
             } catch (Exception ignored) {

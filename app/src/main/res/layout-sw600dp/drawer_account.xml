@@ -16,31 +16,31 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
     android:layout_marginStart="10dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginEnd="20dp"
+    android:layout_marginLeft="10dp"
     android:layout_marginTop="10dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginRight="20dp"
     android:layout_marginBottom="10dp"
-    android:id="@+id/main_container"
     android:orientation="horizontal">
 
     <ImageView
-        android:layout_gravity="center_horizontal"
         android:id="@+id/account_pp"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
         android:contentDescription="@string/profile_picture" />
 
     <LinearLayout
         android:id="@+id/account_container"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
@@ -75,11 +75,11 @@
 
         <LinearLayout
             android:id="@+id/account_info"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -153,14 +153,14 @@
 
     <TextView
         android:id="@+id/account_follow_request"
-        android:textColor="?attr/colorAccent"
-        android:text="@string/request_sent"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
         android:layout_gravity="center"
-        android:gravity="center" />
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/request_sent"
+        android:textColor="?colorAccent"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -169,24 +169,24 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_follow"
-            android:visibility="gone"
-            app:fabSize="mini"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:gravity="center" />
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            app:fabSize="mini" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/account_mute_notification"
-            android:visibility="gone"
-            app:fabSize="mini"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:gravity="center" />
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            app:fabSize="mini" />
     </LinearLayout>
 </LinearLayout>

@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,23 +57,6 @@ public class FilterViewAdapter extends RecyclerView.Adapter<FilterViewAdapter.Vi
         return mPairList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImageFilterView;
-        TextView mTxtFilterName;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            mImageFilterView = itemView.findViewById(R.id.imgFilterView);
-            mTxtFilterName = itemView.findViewById(R.id.txtFilterName);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mFilterListener.onFilterSelected(mPairList.get(getLayoutPosition()).second);
-                }
-            });
-        }
-    }
-
     private Bitmap getBitmapFromAsset(Context context, String strName) {
         AssetManager assetManager = context.getAssets();
         InputStream istr = null;
@@ -113,5 +94,22 @@ public class FilterViewAdapter extends RecyclerView.Adapter<FilterViewAdapter.Vi
         mPairList.add(new Pair<>("filters/flip_horizental.png", PhotoFilter.FLIP_HORIZONTAL));
         mPairList.add(new Pair<>("filters/flip_vertical.png", PhotoFilter.FLIP_VERTICAL));
         mPairList.add(new Pair<>("filters/rotate.png", PhotoFilter.ROTATE));
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView mImageFilterView;
+        TextView mTxtFilterName;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            mImageFilterView = itemView.findViewById(R.id.imgFilterView);
+            mTxtFilterName = itemView.findViewById(R.id.txtFilterName);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mFilterListener.onFilterSelected(mPairList.get(getLayoutPosition()).second);
+                }
+            });
+        }
     }
 }

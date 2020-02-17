@@ -2,20 +2,18 @@ package app.fedilab.android.imageeditor;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,16 +24,7 @@ import ja.burhanrashid52.photoeditor.PhotoEditor;
 
 public class EmojiBSFragment extends BottomSheetDialogFragment {
 
-    public EmojiBSFragment() {
-        // Required empty public constructor
-    }
-
     private EmojiListener mEmojiListener;
-
-    public interface EmojiListener {
-        void onEmojiClick(String emojiUnicode);
-    }
-
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
 
         @Override
@@ -50,6 +39,10 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {
         }
     };
+
+    public EmojiBSFragment() {
+        // Required empty public constructor
+    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -76,6 +69,9 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         mEmojiListener = emojiListener;
     }
 
+    public interface EmojiListener {
+        void onEmojiClick(String emojiUnicode);
+    }
 
     public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> {
 

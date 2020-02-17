@@ -1,0 +1,12 @@
+Added
+- Unshortened URLs can be copied or shared
+- Trends in tags search
+- Image are shared/stored from cache
+- Message when a media is successfully downloaded
+
+Fixed
+- Issue with polls not displayed
+- Notifications not stopped
+- Pleroma wysiwyg
+- Login issue
+- Some crashes

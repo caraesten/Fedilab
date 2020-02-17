@@ -16,18 +16,16 @@ package app.fedilab.android.drawers;
 
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -49,18 +47,13 @@ import app.fedilab.android.helper.Helper;
  * Created by Thomas on 03/11/2017.
  * Adapter to display custom emojis
  */
-public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
+public class CustomEmojiAdapter extends BaseAdapter {
 
 
-    private Context context;
     private List<Emojis> emojis;
-    private CustomEmojiAdapter customEmojiAdapter;
 
-    public CustomEmojiAdapter(@NonNull Context context, int resource, List<Emojis> emojis) {
-        super(context, resource, resource);
-        this.context = context;
+    public CustomEmojiAdapter(List<Emojis> emojis) {
         this.emojis = emojis;
-        customEmojiAdapter = this;
     }
 
     @Override
@@ -83,7 +76,7 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
         final ImageView imageView;
         Emojis emoji = emojis.get(position);
         if (convertView == null) {
-            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             convertView = layoutInflater.inflate(R.layout.drawer_emoji_picker, parent, false);
             imageView = convertView.findViewById(R.id.img_custom_emoji);
         } else {
@@ -91,9 +84,9 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
         }
 
 
-        if (!emoji.isDrawableFound()) {
+        //if (!emoji.isDrawableFound()) {
             emoji.setDrawableFound(true);
-            Glide.with(context)
+            Glide.with(parent.getContext())
                     .asFile()
                     .load(emoji.getUrl())
                     .thumbnail(0.1f)
@@ -102,7 +95,7 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
                         public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
                             //new transform(context, emoji,resourceFile, imageView).execute();
                             Drawable resource;
-                            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                            SharedPreferences sharedpreferences = parent.getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                             boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
                             if (!disableAnimatedEmoji) {
                                 if (GifParser.isGif(resourceFile.getAbsolutePath())) {
@@ -120,12 +113,10 @@ public class CustomEmojiAdapter extends ArrayAdapter<Emojis> {
                                 resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
                                 emoji.setDrawable(resource);
                             }
-                            customEmojiAdapter.notifyDataSetChanged();
+                            imageView.setImageDrawable(emoji.getDrawable());
                         }
                     });
-        } else {
-            imageView.setImageDrawable(emoji.getDrawable());
-        }
+       // }
         return convertView;
     }
 }

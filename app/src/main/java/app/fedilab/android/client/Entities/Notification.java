@@ -19,18 +19,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -60,6 +57,17 @@ import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 public class Notification implements Parcelable {
 
+    public static final Creator<Notification> CREATOR = new Creator<Notification>() {
+        @Override
+        public Notification createFromParcel(Parcel in) {
+            return new Notification(in);
+        }
+
+        @Override
+        public Notification[] newArray(int size) {
+            return new Notification[size];
+        }
+    };
     private String id;
     private String type;
     private Date created_at;
@@ -77,79 +85,6 @@ public class Notification implements Parcelable {
 
     public Notification() {
     }
-
-    ;
-
-    public static final Creator<Notification> CREATOR = new Creator<Notification>() {
-        @Override
-        public Notification createFromParcel(Parcel in) {
-            return new Notification(in);
-        }
-
-        @Override
-        public Notification[] newArray(int size) {
-            return new Notification[size];
-        }
-    };
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(type);
-        dest.writeParcelable(account, flags);
-        dest.writeParcelable(status, flags);
-    }
-
-    @Override
-    public boolean equals(Object otherNotifications) {
-        return otherNotifications != null && (otherNotifications == this || otherNotifications instanceof Notification && this.getId().equals(((Notification) otherNotifications).getId()));
-    }
-
 
     public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Notification notification) {
 
@@ -173,7 +108,6 @@ public class Notification implements Parcelable {
                 break;
             case "poll":
                 typeString = context.getString(R.string.notif_poll);
-                ;
                 break;
             case "reblog":
                 if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
@@ -192,6 +126,12 @@ public class Notification implements Parcelable {
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow));
+                break;
+            case "follow_request":
+                if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), context.getString(R.string.notif_follow_request));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(), context.getString(R.string.notif_follow_request));
                 break;
         }
         SpannableString displayNameSpan = new SpannableString(typeString);
@@ -291,20 +231,22 @@ public class Notification implements Parcelable {
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
                                         if (endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
-                                            ImageSpan imageSpan;
-                                            if (!disableAnimatedEmoji) {
-                                                resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
-                                                resource.setVisible(true, true);
-                                                imageSpan = new ImageSpan(resource);
-                                            } else {
-                                                Bitmap bitmap = drawableToBitmap(resource);
-                                                imageSpan = new ImageSpan(context,
-                                                        Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
-                                                                (int) Helper.convertDpToPixel(20, context), false));
-                                            }
-                                            contentSpan.setSpan(
-                                                    imageSpan, startPosition,
-                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            try {
+                                                ImageSpan imageSpan;
+                                                if (!disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                } else {
+                                                    Bitmap bitmap = drawableToBitmap(resource);
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
+                                                contentSpan.setSpan(
+                                                        imageSpan, startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                            }catch (Exception ignored){}
                                         }
                                     }
                                 }
@@ -343,6 +285,64 @@ public class Notification implements Parcelable {
 
             }
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(type);
+        dest.writeParcelable(account, flags);
+        dest.writeParcelable(status, flags);
+    }
+
+    @Override
+    public boolean equals(Object otherNotifications) {
+        return otherNotifications != null && (otherNotifications == this || otherNotifications instanceof Notification && this.getId().equals(((Notification) otherNotifications).getId()));
     }
 
     public boolean isNotificationAnimated() {

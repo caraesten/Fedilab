@@ -15,11 +15,11 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/account_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="2dp"
-    android:id="@+id/account_container"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="2dp">
 
     <CheckBox
         android:id="@+id/checkbox"
@@ -27,23 +27,23 @@
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:id="@+id/account_pp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_gravity="center"
-        android:id="@+id/account_pp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:contentDescription="@string/profile_picture" />
 
     <TextView
+        android:id="@+id/account_dn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:maxLines="1"
-        android:id="@+id/account_dn"
-        android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:maxLines="1" />
 
 </LinearLayout>

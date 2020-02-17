@@ -17,14 +17,13 @@ package app.fedilab.android.drawers;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,15 +57,6 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_search_tab, parent, false));
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tag_name;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tag_name = itemView.findViewById(R.id.tag_name);
-        }
-    }
-
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         final ViewHolder holder = (ViewHolder) viewHolder;
@@ -94,6 +84,15 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return tags.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView tag_name;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tag_name = itemView.findViewById(R.id.tag_name);
+        }
     }
 
 

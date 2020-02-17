@@ -1,0 +1,16 @@
+Es unterstützt:
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
+
+
+Die App verfügt über erweiterte Funktionen (insbesondere für Pleroma und Mastodon):
+
+- Unterstützung von Mehrfachkonten
+- Zeitgesteuerte Nachrichten vom Smartphone senden
+- Zeitgesteuerte Boosts
+- Lesezeichen für Nachrichten
+- Folgen und Interagieren mit Remote-Instanzen
+- Zeitgesteuerte Stummschaltung von Konten
+- Kontoübergreifende Aktionen mit langem Tastendruck
+- Übersetzungsfunktion
+- Bilder-Zeitleiste
+- Video-Zeitleiste

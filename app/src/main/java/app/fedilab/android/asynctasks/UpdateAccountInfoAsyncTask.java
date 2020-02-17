@@ -25,14 +25,15 @@ import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.activities.MainActivity;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -45,15 +46,6 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     private String instance;
     private WeakReference<Context> contextReference;
     private SOCIAL social;
-
-    public enum SOCIAL {
-        MASTODON,
-        PEERTUBE,
-        PIXELFED,
-        PLEROMA,
-        GNU,
-        FRIENDICA
-    }
 
     public UpdateAccountInfoAsyncTask(Context context, String token, String client_id, String client_secret, String refresh_token, String instance, SOCIAL social) {
         this.contextReference = new WeakReference<>(context);
@@ -68,18 +60,20 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Account account;
-        if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
+        if (this.contextReference == null) {
+            return null;
+        }
+        if (social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED || social == SOCIAL.PLEROMA) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-            if (account != null)
-                account.setSocial(account.getSocial());
+            InstanceNodeInfo info = new API(this.contextReference.get(), instance, null).displayNodeInfo(this.instance);
+            if (info != null && info.getName() != null && account != null)
+                account.setSocial(info.getName().toUpperCase());
         } else if (social == SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
             if (account != null)
                 account.setSocial("PEERTUBE");
         } else {
             account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            if (account != null)
-                account.setSocial(account.getSocial());
         }
         if (account == null)
             return null;
@@ -123,6 +117,15 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             ((Activity) this.contextReference.get()).finish();
         }
 
+    }
+
+    public enum SOCIAL {
+        MASTODON,
+        PEERTUBE,
+        PIXELFED,
+        PLEROMA,
+        GNU,
+        FRIENDICA
     }
 
 }

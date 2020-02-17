@@ -15,11 +15,12 @@
     see <http://www.gnu.org/licenses>.
 -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pf_cardview"
-    android:layout_marginBottom="20dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,48 +30,88 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:paddingBottom="10dp"
+            android:orientation="horizontal"
             android:paddingLeft="10dp"
+            android:paddingTop="5dp"
             android:paddingRight="10dp"
-            android:orientation="horizontal">
+            android:paddingBottom="10dp"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/pf_pp"
-                android:layout_gravity="center"
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/profile_picture" />
 
             <TextView
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
                 android:id="@+id/pf_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                tools:ignore="RtlHardcoded" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/art_media"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="300dp"
+            android:visibility="gone"
+            app:sliderAnimationDuration="1000"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="false" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/art_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/art_media_play"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/play_video"
+                android:src="@drawable/ic_play_arrow"
+                android:visibility="gone" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="5dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -78,30 +119,39 @@
                     android:id="@+id/pf_fav"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:sparkbutton_activeImage="@drawable/ic_pixelfed_favorite"
-                    app:sparkbutton_inActiveImage="@drawable/ic_pixelfed_favorite_border"
                     android:contentDescription="@string/favourite"
-                    app:sparkbutton_iconSize="30dp" />
+                    app:sparkbutton_activeImage="@drawable/ic_pixelfed_favorite"
+                    app:sparkbutton_iconSize="30dp"
+                    app:sparkbutton_inActiveImage="@drawable/ic_pixelfed_favorite_border" />
 
                 <ImageView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/pf_comment"
-                    android:contentDescription="@string/leave_a_comment"
-                    android:src="@drawable/ic_pixelfed_comment"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
-
-                <com.varunest.sparkbutton.SparkButton
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:id="@+id/pf_share"
-                    app:sparkbutton_activeImage="@drawable/ic_pixelfed_share"
-                    app:sparkbutton_inActiveImage="@drawable/ic_pixelfed_share"
-                    android:contentDescription="@string/share"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:sparkbutton_iconSize="30dp" />
+                    android:layout_marginStart="15dp"
+                    android:contentDescription="@string/leave_a_comment"
+                    android:src="@drawable/ic_pixelfed_comment"
+                    android:tint="?attr/iconColor" />
+
+                <com.varunest.sparkbutton.SparkButton
+                    android:id="@+id/pf_share"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="15dp"
+                    android:contentDescription="@string/share"
+                    app:sparkbutton_activeImage="@drawable/ic_repeat_boost"
+                    app:sparkbutton_iconSize="30dp"
+                    app:sparkbutton_inActiveImage="@drawable/ic_repeat" />
+
+                <ImageView
+                    android:id="@+id/status_more"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:contentDescription="@string/display_toot_truncate"
+                    android:src="@drawable/ic_more_pixelfed"
+                    android:tint="?attr/iconColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,26 +161,47 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
                     android:id="@+id/pf_likes"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:id="@+id/pf_description"
-                    android:textIsSelectable="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textIsSelectable="true" />
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:id="@+id/pf_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pixelfed_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+
+            <include
+                layout="@layout/layout_quick_reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

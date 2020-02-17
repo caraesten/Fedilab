@@ -16,7 +16,6 @@ package app.fedilab.android.activities;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,21 +26,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,7 +41,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -61,6 +50,14 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -73,6 +70,8 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -82,7 +81,13 @@ import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask;
+import app.fedilab.android.asynctasks.PostActionAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeSingleAsyncTask;
+import app.fedilab.android.asynctasks.RetrievePeertubeSingleCommentsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -96,20 +101,15 @@ import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.FullScreenMediaController;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnPlaylistActionInterface;
+import app.fedilab.android.interfaces.OnPostActionInterface;
+import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
+import app.fedilab.android.webview.CustomWebview;
 import app.fedilab.android.webview.MastalabWebChromeClient;
 import app.fedilab.android.webview.MastalabWebViewClient;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.PostActionAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeSingleAsyncTask;
-import app.fedilab.android.asynctasks.RetrievePeertubeSingleCommentsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnPostActionInterface;
-import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
 
 import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_PLAYLIST;
 import static app.fedilab.android.asynctasks.ManagePlaylistsAsyncTask.action.GET_PLAYLIST_FOR_VIDEO;
@@ -123,6 +123,7 @@ import static app.fedilab.android.helper.Helper.changeDrawableColor;
 
 public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface, OnPlaylistActionInterface {
 
+    public static String video_id;
     private String peertubeInstance, videoId;
     private FullScreenMediaController.fullscreen fullscreen;
     private RelativeLayout loader;
@@ -131,7 +132,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private int stopPosition;
     private Peertube peertube;
     private TextView toolbar_title;
-    public static String video_id;
     private SimpleExoPlayerView playerView;
     private SimpleExoPlayer player;
     private boolean fullScreenMode;
@@ -141,12 +141,19 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private DefaultTrackSelector trackSelector;
     private int mode;
     private LinearLayout write_comment_container;
-    private ImageView my_pp, send;
+    private ImageView send;
     private TextView add_comment_read;
     private EditText add_comment_write;
     private String instance;
     private List<String> playlistForVideo;
     private List<Playlist> playlists;
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,10 +163,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -180,10 +184,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_description = findViewById(R.id.peertube_description);
         peertube_title = findViewById(R.id.peertube_title);
         peertube_information_container = findViewById(R.id.peertube_information_container);
-        WebView webview_video = findViewById(R.id.webview_video);
+        CustomWebview webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
         write_comment_container = findViewById(R.id.write_comment_container);
-        my_pp = findViewById(R.id.my_pp);
+        ImageView my_pp = findViewById(R.id.my_pp);
         add_comment_read = findViewById(R.id.add_comment_read);
         add_comment_write = findViewById(R.id.add_comment_write);
         peertube_playlist = findViewById(R.id.peertube_playlist);
@@ -199,7 +203,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
             }
         });
-        Helper.changeDrawableColor(getApplicationContext(), send, R.color.mastodonC4);
+        Helper.changeDrawableColor(getApplicationContext(), send, R.color.cyanea_accent);
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             write_comment_container.setVisibility(View.GONE);
         }
@@ -240,6 +244,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(PeertubeActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -250,10 +255,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     finish();
                 }
             });
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
-            }
         }
 
 
@@ -264,7 +265,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             webview_video.setVisibility(View.VISIBLE);
             playerView.setVisibility(View.GONE);
 
-            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video);
+            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video, null);
             FrameLayout webview_container = findViewById(R.id.main_media_frame);
             final ViewGroup videoLayout = findViewById(R.id.videoLayout);
 
@@ -292,13 +293,15 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     }
                 }
             });
+            String user_agent = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, null);
+            if( user_agent != null) {
+                webview_video.getSettings().setUserAgentString(user_agent);
+            }
             webview_video.getSettings().setAllowFileAccess(true);
             webview_video.setWebChromeClient(mastalabWebChromeClient);
             webview_video.getSettings().setDomStorageEnabled(true);
             webview_video.getSettings().setAppCacheEnabled(true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
-            }
+            webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
             webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
             webview_video.loadUrl("https://" + peertubeInstance + "/videos/embed/" + videoId);
         } else {
@@ -343,7 +346,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         if ((ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
                 v instanceof EditText &&
                 v.getId() == R.id.add_comment_write) {
-            int scrcoords[] = new int[2];
+            int[] scrcoords = new int[2];
             v.getLocationOnScreen(scrcoords);
             float x = ev.getRawX() + v.getLeft() - scrcoords[0];
             float y = ev.getRawY() + v.getTop() - scrcoords[1];
@@ -358,23 +361,12 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         return super.dispatchTouchEvent(ev);
     }
 
-    public static void hideKeyboard(Activity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
-    }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
         menu.findItem(R.id.action_go).setVisible(false);
         menu.findItem(R.id.action_block).setVisible(false);
         menu.findItem(R.id.action_comment).setVisible(true);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             MenuItem item = menu.findItem(R.id.action_comment);
             if (item != null)
@@ -753,7 +745,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     @Override
     public void onRetrievePeertubeComments(APIResponse apiResponse) {
-        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404)) {
+        if (apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 && apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 501)) {
             if (apiResponse == null)
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             else
@@ -936,19 +928,14 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     private void changeColor() {
         if (peertube.getMyRating() != null && peertube.getMyRating().equals("like")) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.positive_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.neutral_thumbs);
+            changeDrawableColor(PeertubeActivity.this, R.drawable.ic_thumb_up_peertube, R.color.positive_thumbs);
+            Drawable thumbUp = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_thumb_up_peertube);
+            peertube_like_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbUp, null, null);
         } else if (peertube.getMyRating() != null && peertube.getMyRating().equals("dislike")) {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.neutral_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.negative_thumbs);
-        } else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube, R.color.neutral_thumbs);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube, R.color.neutral_thumbs);
+            changeDrawableColor(PeertubeActivity.this, R.drawable.ic_thumb_down_peertube, R.color.negative_thumbs);
+            Drawable thumbDown = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_thumb_down_peertube);
+            peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbDown, null, null);
         }
-        Drawable thumbUp = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_up_peertube);
-        Drawable thumbDown = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_down_peertube);
-        peertube_like_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbUp, null, null);
-        peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds(null, thumbDown, null, null);
     }
 
     @Override

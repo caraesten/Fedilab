@@ -19,10 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,17 +26,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import app.fedilab.android.client.APIResponse;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Peertube;
-import app.fedilab.android.helper.CrossActions;
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.activities.PeertubeActivity;
@@ -48,6 +42,11 @@ import app.fedilab.android.activities.PeertubeEditUploadActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.ManageListsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Peertube;
+import app.fedilab.android.helper.CrossActions;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnListActionInterface;
 
 
@@ -173,12 +172,32 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 }
             });
         } else {
-            holder.main_container.setOnClickListener(new View.OnClickListener() {
+            holder.bottom_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PeertubeEditUploadActivity.class);
                     Bundle b = new Bundle();
                     b.putString("video_id", peertube.getUuid());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+            holder.peertube_video_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PeertubeActivity.class);
+                    Bundle b = new Bundle();
+                    if ((instance == null || instance.trim().length() == 0) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                        instance = Helper.getLiveInstance(context);
+                    String finalUrl = "https://" + instance + peertube.getEmbedPath();
+                    Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                    Matcher matcherLink = link.matcher(finalUrl);
+                    if (matcherLink.find()) {
+                        String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                        b.putString("peertubeLinkToFetch", url);
+                        b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
+                        b.putString("video_id", matcherLink.group(2));
+                    }
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -204,7 +223,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout main_container;
+        LinearLayout main_container, bottom_container;
         ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
         TextView peertube_title, peertube_date, header_title;
@@ -220,6 +239,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             peertube_duration = itemView.findViewById(R.id.peertube_duration);
             main_container = itemView.findViewById(R.id.main_container);
             header_title = itemView.findViewById(R.id.header_title);
+            bottom_container = itemView.findViewById(R.id.bottom_container);
         }
     }
 

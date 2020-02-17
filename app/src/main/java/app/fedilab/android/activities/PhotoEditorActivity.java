@@ -14,17 +14,38 @@ package app.fedilab.android.activities;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.ChangeBounds;
+import androidx.transition.TransitionManager;
 
-import android.view.Window;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import app.fedilab.android.R;
 import app.fedilab.android.helper.Helper;
@@ -36,43 +57,10 @@ import app.fedilab.android.imageeditor.filters.FilterListener;
 import app.fedilab.android.imageeditor.filters.FilterViewAdapter;
 import app.fedilab.android.imageeditor.tools.EditingToolsAdapter;
 import app.fedilab.android.imageeditor.tools.ToolType;
+import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 import ja.burhanrashid52.photoeditor.PhotoFilter;
-
-
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.provider.MediaStore;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.transition.ChangeBounds;
-import androidx.transition.TransitionManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-
-import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
 
@@ -99,23 +87,29 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
     private ConstraintSet mConstraintSet = new ConstraintSet();
     private boolean mIsFilterVisible;
     private Uri uri;
-    private String tempname;
     private boolean exit;
+
+    private static int exifToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
 
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -187,24 +181,10 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
 
         Button send = findViewById(R.id.send);
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exit = true;
-                saveImage();
-            }
+        send.setOnClickListener(v -> {
+            exit = true;
+            saveImage();
         });
-    }
-
-    private static int exifToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
     }
 
     private void initViews() {
@@ -305,7 +285,7 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
         }
     }
 
-    @SuppressLint("MissingPermission")
+
     private void saveImage() {
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             showLoading(getString(R.string.saving));
@@ -321,7 +301,6 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
                         .setClearViewsEnabled(true)
                         .setTransparencyEnabled(true)
                         .build();
-
                 mPhotoEditor.saveAsFile(file.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
                     @Override
                     public void onSuccess(@NonNull String imagePath) {
@@ -345,17 +324,19 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
             } catch (IOException e) {
                 e.printStackTrace();
                 hideLoading();
-                showSnackbar(e.getMessage());
+                if (e.getMessage() != null) {
+                    showSnackbar(e.getMessage());
+                }
             }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            ExifInterface exif = null;
-            int rotation = 0;
+            ExifInterface exif;
+            int rotation;
             int rotationInDegrees = 0;
             if (data != null && data.getData() != null) {
                 try (InputStream inputStream = getContentResolver().openInputStream(data.getData())) {
@@ -367,42 +348,51 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
                     e.printStackTrace();
                 }
             }
+
             switch (requestCode) {
                 case CAMERA_REQUEST:
-                    mPhotoEditor.clearAllViews();
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    mPhotoEditorView.getSource().setImageBitmap(photo);
-                    mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                    if( data != null && data.getExtras() != null) {
+                        mPhotoEditor.clearAllViews();
+                        Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        mPhotoEditorView.getSource().setImageBitmap(photo);
+                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                    }
                     break;
                 case PICK_REQUEST:
-                    try {
-                        mPhotoEditor.clearAllViews();
-                        Uri uri = data.getData();
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        mPhotoEditorView.getSource().setImageBitmap(bitmap);
-                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if( data != null && data.getData() != null) {
+                        try {
+                            mPhotoEditor.clearAllViews();
+                            Uri uri = data.getData();
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            mPhotoEditorView.getSource().setImageBitmap(bitmap);
+                            mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
                 case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                    Uri resultUri = result.getUri();
-                    if (resultUri != null) {
-                        mPhotoEditorView.getSource().setImageURI(resultUri);
-                        mPhotoEditorView.getSource().setRotation(rotationInDegrees);
-                        File fdelete = new File(uri.getPath());
-                        if (fdelete.exists()) {
-                            fdelete.delete();
-                        }
-                        uri = resultUri;
-                        String filename = System.currentTimeMillis() + "_" + Helper.getFileName(PhotoEditorActivity.this, uri);
-                        tempname = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + filename;
 
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    if (result != null) {
+                        Uri resultUri = result.getUri();
+                        if (resultUri != null) {
+                            mPhotoEditorView.getSource().setImageURI(resultUri);
+                            mPhotoEditorView.getSource().setRotation(rotationInDegrees);
+                            if (uri != null && uri.getPath() != null) {
+                                File fdelete = new File(uri.getPath());
+                                if (fdelete.exists()) {
+                                    //noinspection ResultOfMethodCallIgnored
+                                    fdelete.delete();
+                                }
+                            }
+                            uri = resultUri;
+                        }
                     }
                     break;
             }
         }
+
     }
 
     @Override
@@ -469,7 +459,7 @@ public class PhotoEditorActivity extends BaseActivity implements OnPhotoEditorLi
             }
         });
 
-        builder.setNeutralButton(R.string.discard, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();

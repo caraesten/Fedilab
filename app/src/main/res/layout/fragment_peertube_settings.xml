@@ -17,34 +17,34 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeContainer"
-    android:paddingLeft="@dimen/drawer_padding"
-    android:paddingRight="@dimen/drawer_padding"
-    android:layout_marginLeft="@dimen/fab_margin"
-    android:layout_marginRight="@dimen/fab_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/fab_margin"
-    android:layout_marginEnd="@dimen/fab_margin">
+    android:layout_marginLeft="@dimen/fab_margin"
+    android:layout_marginEnd="@dimen/fab_margin"
+    android:layout_marginRight="@dimen/fab_margin"
+    android:paddingLeft="@dimen/drawer_padding"
+    android:paddingRight="@dimen/drawer_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin"
-        android:orientation="vertical"
         tools:ignore="UselessParent">
         <!-- Choose stream -->
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:text="@string/set_video_mode" />
 
             <Spinner
@@ -55,11 +55,11 @@
 
         <!-- DISPLAY NSFW VIDEOS -->
         <CheckBox
-            android:layout_marginTop="10dp"
             android:id="@+id/set_video_nsfw"
             android:layout_width="wrap_content"
-            android:text="@string/display_nsfw_videos"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/display_nsfw_videos" />
 
     </LinearLayout>
 

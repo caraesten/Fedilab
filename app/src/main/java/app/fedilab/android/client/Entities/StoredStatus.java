@@ -13,6 +13,17 @@ import java.util.Date;
 
 public class StoredStatus implements Parcelable {
 
+    public static final Creator<StoredStatus> CREATOR = new Creator<StoredStatus>() {
+        @Override
+        public StoredStatus createFromParcel(Parcel source) {
+            return new StoredStatus(source);
+        }
+
+        @Override
+        public StoredStatus[] newArray(int size) {
+            return new StoredStatus[size];
+        }
+    };
     private int id;
     private Date creation_date;
     private Date scheduled_date;
@@ -24,6 +35,26 @@ public class StoredStatus implements Parcelable {
     private String instance;
     private String userId;
     private String scheduledServerdId;
+
+    public StoredStatus() {
+    }
+
+    protected StoredStatus(Parcel in) {
+        this.id = in.readInt();
+        long tmpCreation_date = in.readLong();
+        this.creation_date = tmpCreation_date == -1 ? null : new Date(tmpCreation_date);
+        long tmpScheduled_date = in.readLong();
+        this.scheduled_date = tmpScheduled_date == -1 ? null : new Date(tmpScheduled_date);
+        long tmpSent_date = in.readLong();
+        this.sent_date = tmpSent_date == -1 ? null : new Date(tmpSent_date);
+        this.jobId = in.readInt();
+        this.isSent = in.readByte() != 0;
+        this.status = in.readParcelable(Status.class.getClassLoader());
+        this.statusReply = in.readParcelable(Status.class.getClassLoader());
+        this.instance = in.readString();
+        this.userId = in.readString();
+        this.scheduledServerdId = in.readString();
+    }
 
     public int getId() {
         return id;
@@ -56,7 +87,6 @@ public class StoredStatus implements Parcelable {
     public void setSent_date(Date sent_date) {
         this.sent_date = sent_date;
     }
-
 
     public boolean isSent() {
         return isSent;
@@ -106,7 +136,6 @@ public class StoredStatus implements Parcelable {
         this.statusReply = statusReply;
     }
 
-
     public String getScheduledServerdId() {
         return scheduledServerdId;
     }
@@ -134,36 +163,4 @@ public class StoredStatus implements Parcelable {
         dest.writeString(this.userId);
         dest.writeString(this.scheduledServerdId);
     }
-
-    public StoredStatus() {
-    }
-
-    protected StoredStatus(Parcel in) {
-        this.id = in.readInt();
-        long tmpCreation_date = in.readLong();
-        this.creation_date = tmpCreation_date == -1 ? null : new Date(tmpCreation_date);
-        long tmpScheduled_date = in.readLong();
-        this.scheduled_date = tmpScheduled_date == -1 ? null : new Date(tmpScheduled_date);
-        long tmpSent_date = in.readLong();
-        this.sent_date = tmpSent_date == -1 ? null : new Date(tmpSent_date);
-        this.jobId = in.readInt();
-        this.isSent = in.readByte() != 0;
-        this.status = in.readParcelable(Status.class.getClassLoader());
-        this.statusReply = in.readParcelable(Status.class.getClassLoader());
-        this.instance = in.readString();
-        this.userId = in.readString();
-        this.scheduledServerdId = in.readString();
-    }
-
-    public static final Creator<StoredStatus> CREATOR = new Creator<StoredStatus>() {
-        @Override
-        public StoredStatus createFromParcel(Parcel source) {
-            return new StoredStatus(source);
-        }
-
-        @Override
-        public StoredStatus[] newArray(int size) {
-            return new StoredStatus[size];
-        }
-    };
 }

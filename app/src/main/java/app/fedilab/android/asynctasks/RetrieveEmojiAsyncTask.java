@@ -22,9 +22,9 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Emojis;
+import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.sqlite.CustomEmojiDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 
 
 /**

@@ -20,43 +20,38 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Context;
-import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.client.Entities.Status;
-import app.fedilab.android.drawers.ConversationDecoration;
-import app.fedilab.android.drawers.StatusListAdapter;
-import app.fedilab.android.helper.Helper;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.Sqlite;
-import es.dmoral.toasty.Toasty;
 import app.fedilab.android.R;
 import app.fedilab.android.asynctasks.RetrieveContextAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.client.APIResponse;
+import app.fedilab.android.client.Entities.Account;
+import app.fedilab.android.client.Entities.Status;
+import app.fedilab.android.drawers.StatusListAdapter;
+import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnRetrieveContextInterface;
+import app.fedilab.android.sqlite.AccountDAO;
+import app.fedilab.android.sqlite.Sqlite;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -71,13 +66,13 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     private Status detailsStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView lv_status;
-    private ImageView pp_actionBar;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
     private boolean expanded;
     private BroadcastReceiver receive_action;
     private String conversationId;
     private boolean spoilerShown, spoilerBehaviour;
+    private LinearLayout loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,22 +84,14 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
             default:
                 setTheme(R.style.AppThemeDark_NoActionBar);
         }
-
         setContentView(R.layout.activity_show_conversation);
         lv_status = findViewById(R.id.lv_status);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black));
-        setSupportActionBar(toolbar);
         spoilerShown = spoilerBehaviour = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
         Bundle b = getIntent().getExtras();
         statuses = new ArrayList<>();
@@ -117,7 +104,8 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         if (detailsStatus == null || detailsStatus.getId() == null)
             finish();
 
-
+        loader = findViewById(R.id.loader);
+        loader.setVisibility(View.VISIBLE);
         detailsStatus.setFocused(true);
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
@@ -131,106 +119,95 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     assert b != null;
                     Status status = b.getParcelable("status");
                     if (status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(status);
+                        statusListAdapter.notifyStatusChanged(status);
                     }
                 }
             };
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
         }
-
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (getSupportActionBar() != null) {
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-            assert inflater != null;
-            View view = inflater.inflate(R.layout.conversation_action_bar, new LinearLayout(getApplicationContext()), false);
-            getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
-            ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
-            ImageView action_expand = getSupportActionBar().getCustomView().findViewById(R.id.action_expand);
-            title.setText(R.string.conversation);
-            ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
-            ImageView action_unhide = getSupportActionBar().getCustomView().findViewById(R.id.action_unhide);
-            if (expanded)
-                action_expand.setImageResource(R.drawable.ic_expand_less);
-            else
-                action_expand.setImageResource(R.drawable.ic_expand_more);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (lv_status != null) {
-                        lv_status.setAdapter(statusListAdapter);
-                    }
-                }
-            });
-            if (close_conversation != null) {
-                close_conversation.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-            }
-            action_refresh.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable("status", detailsStatus);
-                    b.putBoolean("expanded", expanded);
-                    if (expanded && statuses != null && statuses.size() > 0)
-                        b.putParcelable("initialStatus", statuses.get(0));
-                    intent.putExtras(b);
-                    finish();
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }
-            });
-            action_unhide.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (statuses != null && statuses.size() > 0) {
-                        spoilerShown = !spoilerShown;
-                        for (Status status : statuses) {
-                            if (spoilerBehaviour && !status.isSpoilerShown()) {
-                                status.setAutoHiddenCW(true);
-                            } else {
-                                status.setAutoHiddenCW(false);
-                            }
-                            status.setSpoilerShown(spoilerShown);
-                            status.setShowSpoiler(spoilerShown);
-                        }
-                        statusListAdapter.notifyItemRangeChanged(0, statuses.size());
-                    }
-
-                }
-            });
-            action_expand.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    expanded = !expanded;
-                    Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable("status", detailsStatus);
-                    b.putBoolean("expanded", expanded);
-                    if (expanded && statuses != null && statuses.size() > 0)
-                        b.putParcelable("initialStatus", statuses.get(0));
-                    intent.putExtras(b);
-                    finish();
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                }
-            });
-
-            if (theme == Helper.THEME_LIGHT) {
-                Helper.colorizeToolbar(getSupportActionBar().getCustomView().findViewById(R.id.toolbar), R.color.black, ShowConversationActivity.this);
-            }
-        } else {
-            setTitle(R.string.conversation);
+        Toolbar actionBar = findViewById(R.id.toolbar);
+        if (actionBar != null) {
+            actionBar.setBackground(new ColorDrawable(ContextCompat.getColor(ShowConversationActivity.this, R.color.cyanea_primary)));
         }
+        TextView title = findViewById(R.id.toolbar_title);
+        ImageView pp_actionBar = findViewById(R.id.pp_actionBar);
+        ImageView action_refresh = findViewById(R.id.action_refresh);
+        ImageView action_expand = findViewById(R.id.action_expand);
+        title.setText(R.string.conversation);
+        ImageView close_conversation = findViewById(R.id.close_conversation);
+        ImageView action_unhide = findViewById(R.id.action_unhide);
+        if (expanded)
+            action_expand.setImageResource(R.drawable.ic_expand_less);
+        else
+            action_expand.setImageResource(R.drawable.ic_expand_more);
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (lv_status != null) {
+                    lv_status.setAdapter(statusListAdapter);
+                }
+            }
+        });
+        if (close_conversation != null) {
+            close_conversation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+        action_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", detailsStatus);
+                b.putBoolean("expanded", expanded);
+                if (expanded && statuses != null && statuses.size() > 0)
+                    b.putParcelable("initialStatus", statuses.get(0));
+                intent.putExtras(b);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+        action_unhide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (statuses != null && statuses.size() > 0) {
+                    spoilerShown = !spoilerShown;
+                    for (Status status : statuses) {
+                        if (spoilerBehaviour && !status.isSpoilerShown()) {
+                            status.setAutoHiddenCW(true);
+                        } else {
+                            status.setAutoHiddenCW(false);
+                        }
+                        status.setSpoilerShown(spoilerShown);
+                        status.setShowSpoiler(spoilerShown);
+                    }
+                    statusListAdapter.notifyItemRangeChanged(0, statuses.size());
+                }
+
+            }
+        });
+        action_expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expanded = !expanded;
+                Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", detailsStatus);
+                b.putBoolean("expanded", expanded);
+                if (expanded && statuses != null && statuses.size() > 0)
+                    b.putParcelable("initialStatus", statuses.get(0));
+                intent.putExtras(b);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+            }
+        });
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -244,6 +221,13 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
 
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         if (initialStatus != null)
             statuses.add(initialStatus);
@@ -254,7 +238,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
-        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme));
         lv_status.setAdapter(statusListAdapter);
         String statusIdToFetch = null;
         if (initialStatus != null)
@@ -267,26 +250,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             statusIdToFetch = conversationId;
 
         new RetrieveContextAsyncTask(getApplicationContext(), expanded, detailsStatus.getVisibility().equals("direct"), statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.white));
-                break;
-            case Helper.THEME_DARK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
-                        R.color.mastodonC4,
-                        R.color.mastodonC4);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.mastodonC1_));
-                break;
-            case Helper.THEME_BLACK:
-                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
-                        R.color.mastodonC2,
-                        R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black_3));
-                break;
-        }
         swipeRefreshLayout.setDistanceToTriggerSync(500);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -330,16 +293,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onDestroy() {
@@ -349,28 +302,35 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     }
 
     @Override
-    public void onRetrieveContext(Context context, Error error) {
+    public void onRetrieveContext(APIResponse apiResponse) {
         swipeRefreshLayout.setRefreshing(false);
-        if (error != null) {
-            Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (context.getAncestors() == null) {
-            return;
-        }
-        if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            statusListAdapter.setConversationPosition(context.getAncestors().size());
-            if (!expanded) {
-                if (context.getAncestors() != null && context.getAncestors().size() > 0) {
-                    statuses.addAll(0, context.getAncestors());
-                    statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size());
-                }
-                if (context.getDescendants() != null && context.getDescendants().size() > 0) {
-                    statuses.addAll(context.getAncestors().size() + 1, context.getDescendants());
-                    statusListAdapter.notifyItemRangeChanged(context.getAncestors().size() + 1, context.getDescendants().size());
-                }
+        loader.setVisibility(View.GONE);
+        if (apiResponse.getError() != null) {
+            if (apiResponse.getError().getError() != null) {
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             } else {
-                List<Status> statusesTemp = context.getDescendants();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            }
+            return;
+        }
+        if (apiResponse.getContext() == null || apiResponse.getContext().getAncestors() == null) {
+            return;
+        }
+        if (BaseMainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && BaseMainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+            statusListAdapter.setConversationPosition(apiResponse.getContext().getAncestors().size());
+            if (!expanded) {
+                if (apiResponse.getContext().getAncestors() != null && apiResponse.getContext().getAncestors().size() > 0) {
+                    statuses.addAll(0, apiResponse.getContext().getAncestors());
+                    statusListAdapter.notifyItemRangeInserted(0, apiResponse.getContext().getAncestors().size());
+                }
+                int targetedPosition = statuses.size() - 1;
+                if (apiResponse.getContext().getDescendants() != null && apiResponse.getContext().getDescendants().size() > 0) {
+                    statuses.addAll(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants());
+                    statusListAdapter.notifyItemRangeChanged(apiResponse.getContext().getAncestors().size() + 1, apiResponse.getContext().getDescendants().size());
+                }
+                decorate(targetedPosition);
+            } else {
+                List<Status> statusesTemp = apiResponse.getContext().getDescendants();
                 int i = 1;
                 int position = 0;
                 for (Status status : statusesTemp) {
@@ -382,50 +342,56 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     }
                     i++;
                 }
-                statusListAdapter.notifyItemRangeChanged(1, context.getDescendants().size());
+                decorate(position);
+                statusListAdapter.notifyItemRangeChanged(1, apiResponse.getContext().getDescendants().size());
                 lv_status.scrollToPosition(position);
             }
         } else {
             int i = 0;
-            if (context.getAncestors() != null && context.getAncestors().size() > 1) {
+            if (apiResponse.getContext().getAncestors() != null && apiResponse.getContext().getAncestors().size() > 1) {
                 statuses = new ArrayList<>();
                 statuses.clear();
-                for (Status status : context.getAncestors()) {
+                for (Status status : apiResponse.getContext().getAncestors()) {
                     if (detailsStatus.equals(status)) {
                         break;
                     }
                     i++;
                 }
                 boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-                for (Status status : context.getAncestors()) {
+                for (Status status : apiResponse.getContext().getAncestors()) {
                     statuses.add(0, status);
                 }
                 statusListAdapter = new StatusListAdapter((statuses.size() - 1 - i), null, isOnWifi, statuses);
                 statusListAdapter.setConversationPosition((statuses.size() - 1 - i));
+                decorate(0);
                 final LinearLayoutManager mLayoutManager;
                 mLayoutManager = new LinearLayoutManager(this);
                 lv_status.setLayoutManager(mLayoutManager);
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                switch (theme) {
-                    case Helper.THEME_LIGHT:
-                        setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                        break;
-                    case Helper.THEME_DARK:
-                        setTheme(R.style.AppThemeDark_NoActionBar);
-                        break;
-                    case Helper.THEME_BLACK:
-                        setTheme(R.style.AppThemeBlack_NoActionBar);
-                        break;
-                    default:
-                        setTheme(R.style.AppThemeDark_NoActionBar);
-                }
 
-                lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme));
                 lv_status.setAdapter(statusListAdapter);
             }
         }
 
+    }
+
+
+    private void decorate(int targetedPosition) {
+        for (int i = 0; i < statuses.size(); i++) {
+            if (i == targetedPosition) {
+                if (targetedPosition < statuses.size() - 1)
+                    statuses.get(targetedPosition).setShowBottomLine(true);
+                if (targetedPosition > 0 && statuses.get(targetedPosition).getIn_reply_to_id().compareTo(statuses.get(targetedPosition - 1).getId()) == 0) {
+                    statuses.get(targetedPosition - 1).setShowBottomLine(true);
+                    statuses.get(targetedPosition).setShowTopLine(true);
+                }
+            } else if (0 < i && i <= statuses.size() - 1) {
+                if (statuses.get(i - 1).getId().compareTo(statuses.get(i).getIn_reply_to_id()) == 0) {
+                    statuses.get(i - 1).setShowBottomLine(true);
+                    statuses.get(i).setShowTopLine(true);
+                }
+            }
+        }
+        statusListAdapter.notifyItemRangeChanged(0, statuses.size());
     }
 
 }

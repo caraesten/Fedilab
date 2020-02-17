@@ -20,34 +20,33 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.drawers.StatusListAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 
 
 /**
@@ -80,9 +79,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
             case Helper.THEME_LIGHT:
                 setTheme(R.style.AppTheme_NoActionBar_Fedilab);
                 break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
                 break;
@@ -92,15 +88,14 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
         setContentView(R.layout.activity_hashtag);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (theme == Helper.THEME_BLACK)
-            toolbar.setBackgroundColor(ContextCompat.getColor(HashTagActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle b = getIntent().getExtras();
-        if (b != null)
+        if (b != null) {
             tag = b.getString("tag", null);
+        }
         if (tag == null)
             finish();
         statuses = new ArrayList<>();
@@ -109,8 +104,14 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-
-
+        int c1 = getResources().getColor(R.color.cyanea_accent);
+        int c2 = getResources().getColor(R.color.cyanea_primary_dark);
+        int c3 = getResources().getColor(R.color.cyanea_primary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(c3);
+        swipeRefreshLayout.setColorSchemeColors(
+                c1, c2, c1
+        );
+        toolbar.setBackgroundColor(ContextCompat.getColor(HashTagActivity.this, R.color.cyanea_primary));
         final RecyclerView lv_status = findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
         mainLoader = findViewById(R.id.loader);
@@ -160,17 +161,19 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NotNull Menu menu) {
+        getMenuInflater().inflate(R.menu.tag_pin, menu);
+
         SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searchInDb = new SearchDAO(HashTagActivity.this, db).getSearchByKeyword(tag.trim());
-        if (searchInDb == null || searchInDb.size() == 0) {
-            menu.clear();
-            menu.add(0, 777, Menu.NONE, R.string.pin_add).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if (searchInDb != null && searchInDb.size() > 0) {
+            menu.findItem(R.id.action_pin).setVisible(false);
         }
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_LIGHT)
-            Helper.colorizeIconMenu(menu, R.color.black);
-        return super.onPrepareOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -179,10 +182,11 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
             case android.R.id.home:
                 finish();
                 return true;
-            case 777:
+            case R.id.action_pin:
                 SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new SearchDAO(HashTagActivity.this, db).insertSearch(tag);
                 Intent intent = new Intent(HashTagActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(Helper.INTENT_ACTION, Helper.SEARCH_TAG);
                 intent.putExtra(Helper.SEARCH_KEYWORD, tag);
                 startActivity(intent);

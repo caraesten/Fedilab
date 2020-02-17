@@ -7,14 +7,14 @@
         android:color="@color/mastodonC1" />
 
     <padding
+        android:bottom="1dp"
         android:left="1dp"
-        android:top="1dp"
         android:right="1dp"
-        android:bottom="1dp" />
+        android:top="1dp" />
 
     <corners
-        android:bottomRightRadius="7dp"
         android:bottomLeftRadius="7dp"
+        android:bottomRightRadius="7dp"
         android:topLeftRadius="7dp"
         android:topRightRadius="7dp" />
 </shape>

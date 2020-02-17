@@ -17,10 +17,6 @@ package app.fedilab.android.drawers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +24,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
 
 
 /**

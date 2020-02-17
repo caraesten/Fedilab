@@ -1,0 +1,1 @@
+Fedilab ist ein multifunktionaler Android-Client für den Zugriff auf das verteilte Fediverse, bestehend aus Microblogging, Foto- und Videoaustausch.

@@ -1,0 +1,16 @@
+Es compatible con:
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
+
+
+La aplicación tiene características avanzadas (sobretodo para Pleroma y Mastodon):
+
+- Soporte de múltiples cuentas
+- Programar mensajes desde el dispositivo
+- Programar impulsos
+- Guardar mensajes como marcadores
+- Seguir e interactuar con instancias remotas
+- Silenciar cuentas temporalmente
+- Ejecutar acciones con otras cuentas con una pulsación larga
+- Traducción de estados
+- Líneas de tiempo de arte
+- Líneas de tiempo de vídeos

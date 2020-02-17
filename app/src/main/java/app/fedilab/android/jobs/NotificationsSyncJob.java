@@ -39,7 +39,6 @@ import com.evernote.android.job.JobRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +48,7 @@ import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
+import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -60,6 +60,7 @@ import static app.fedilab.android.helper.Helper.NOTIFICATION_INTENT;
 import static app.fedilab.android.helper.Helper.PREF_INSTANCE;
 import static app.fedilab.android.helper.Helper.PREF_KEY_ID;
 import static app.fedilab.android.helper.Helper.canNotify;
+import static app.fedilab.android.helper.Helper.getMainLogo;
 import static app.fedilab.android.helper.Helper.notify_user;
 
 
@@ -70,20 +71,11 @@ import static app.fedilab.android.helper.Helper.notify_user;
 
 public class NotificationsSyncJob extends Job {
 
-    static final String NOTIFICATION_REFRESH = "job_notification";
+    public static final String NOTIFICATION_REFRESH = "job_notification";
 
     static {
         Helper.installProvider();
     }
-
-    @NonNull
-    @Override
-    protected Result onRunJob(@NonNull Params params) {
-        //Code refresh here
-        callAsynchronousTask();
-        return Result.SUCCESS;
-    }
-
 
     public static int schedule(boolean updateCurrent) {
 
@@ -107,6 +99,13 @@ public class NotificationsSyncJob extends Job {
         return jobRequestschedule;
     }
 
+    @NonNull
+    @Override
+    protected Result onRunJob(@NonNull Params params) {
+        //Code refresh here
+        callAsynchronousTask();
+        return Result.SUCCESS;
+    }
 
     /**
      * Task in background starts here.
@@ -114,6 +113,10 @@ public class NotificationsSyncJob extends Job {
     private void callAsynchronousTask() {
         if (!canNotify(getContext()))
             return;
+        int liveNotifications = Helper.liveNotifType(getContext());
+        if (liveNotifications != Helper.NOTIF_NONE) {
+            return;
+        }
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -137,11 +140,15 @@ public class NotificationsSyncJob extends Job {
                 return;
             //Retrieve users in db that owner has.
             for (Account account : accounts) {
-                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
+                APIResponse apiResponse;
+                if(account.getSocial().compareTo("FRIENDICA") != 0 && account.getSocial().compareTo("GNU") != 0 ) {
                     API api = new API(getContext(), account.getInstance(), account.getToken());
-                    APIResponse apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
-                    onRetrieveNotifications(apiResponse, account);
+                    apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
+                }else{
+                    GNUAPI gnuApi = new GNUAPI(getContext(), account.getInstance(), account.getToken());
+                    apiResponse = gnuApi.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
                 }
+                onRetrieveNotifications(apiResponse, account);
             }
         }
     }
@@ -222,6 +229,20 @@ public class NotificationsSyncJob extends Job {
                         }
                     }
                     break;
+                case "follow_request":
+                    notifType = Helper.NotifType.FOLLLOW;
+                    if (notif_follow) {
+                        newFollows++;
+                        if (notificationUrl == null) {
+                            notificationUrl = notification.getAccount().getAvatar();
+                            if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getContext().getString(R.string.notif_follow_request));
+                            else
+                                title = String.format("@%s %s", notification.getAccount().getAcct(), getContext().getString(R.string.notif_follow_request));
+                            targeted_account = notification.getAccount().getId();
+                        }
+                    }
+                    break;
                 case "follow":
                     notifType = Helper.NotifType.FOLLLOW;
                     if (notif_follow) {
@@ -290,8 +311,9 @@ public class NotificationsSyncJob extends Job {
 
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+
                                         notify_user(getContext(), account, intent, BitmapFactory.decodeResource(getContext().getResources(),
-                                                R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
+                                                getMainLogo(getContext())), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if (lastNotif == null || notifications.get(0).getId().compareTo(lastNotif) > 0) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();

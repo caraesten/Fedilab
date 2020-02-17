@@ -16,24 +16,24 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="app.fedilab.android.activities.TootActivity"
-    android:layout_margin="@dimen/fab_margin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    tools:context="app.fedilab.android.activities.TootActivity">
 
     <ImageView
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
         android:id="@+id/media_picture"
         android:layout_width="match_parent"
-        android:contentDescription="@string/media_description" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/media_description"
+        android:scaleType="fitCenter" />
 
     <EditText
-        android:layout_alignBottom="@+id/media_picture"
         android:id="@+id/media_description"
         android:layout_width="match_parent"
-        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/media_picture"
+        android:layout_centerInParent="true"
         android:inputType="textMultiLine" />
 </RelativeLayout>

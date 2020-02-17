@@ -19,8 +19,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -32,23 +32,22 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -90,10 +89,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -108,6 +104,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -119,15 +116,10 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
                 }
             });
             toolbar_title.setText(R.string.sign_up);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, MastodonRegisterActivity.this);
-            }
         }
 
 
-        MaterialSpinner reg_category = findViewById(R.id.reg_category);
-        Helper.changeMaterialSpinnerColor(MastodonRegisterActivity.this, reg_category);
+        Spinner reg_category = findViewById(R.id.reg_category);
         String[] categoriesA = {
                 getString(R.string.category_general),
                 getString(R.string.category_regional),
@@ -160,17 +152,21 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
         reg_category.setAdapter(adcategories);
 
-        reg_category.setSelectedIndex(0);
+        reg_category.setSelection(0);
         //Manage privacies
-        reg_category.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        reg_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, itemA[position], MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, itemA[position], MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-        new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, "general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+        new RetrieveInstanceRegAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, "general", MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
 
         signup = findViewById(R.id.signup);
         EditText username = findViewById(R.id.username);
@@ -209,7 +205,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
             accountCreation.setPassword(password.getText().toString().trim());
             accountCreation.setPasswordConfirm(password_confirm.getText().toString().trim());
             accountCreation.setUsername(username.getText().toString().trim());
-            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            new CreateMastodonAccountAsyncTask(MastodonRegisterActivity.this, RetrieveInstanceRegAsyncTask.instanceType.MASTODON, accountCreation, instance, MastodonRegisterActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
         });
 
 
@@ -222,7 +218,7 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
 
     @Override
     public void onRetrieveInstance(APIResponse apiResponse) {
-        if (apiResponse.getError() != null) {
+        if (apiResponse.getError() != null || apiResponse.getInstanceRegs() == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error_instance_reg), Toast.LENGTH_LONG).show();
             return;
         }
@@ -264,15 +260,9 @@ public class MastodonRegisterActivity extends BaseActivity implements OnRetrieve
         change.setSpan(new UnderlineSpan(), 0, change.length(), 0);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if (theme == Helper.THEME_DARK)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.dark_link_toot)), 0, change.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_BLACK)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.black_link_toot)), 0, change.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if (theme == Helper.THEME_LIGHT)
-            change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.mastodonC4)), 0, change.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        change.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MastodonRegisterActivity.this, R.color.cyanea_accent_reference)), 0, change.length(),
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
         change_instance.setText(change);
         change_instance.setOnClickListener(view -> {
             drawer_layout.setVisibility(View.VISIBLE);

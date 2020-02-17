@@ -26,6 +26,15 @@ import com.evernote.android.job.JobManager;
  */
 
 public class ApplicationJob implements JobCreator {
+    @SuppressWarnings("unused")
+    public static void cancelAllJob(String TAG) {
+        JobManager.instance().cancelAllForTag(TAG);
+    }
+
+    public static void cancelJob(int jobId) {
+        JobManager.instance().cancel(jobId);
+    }
+
     @Override
     public Job create(@NonNull String tag) {
         switch (tag) {
@@ -42,14 +51,5 @@ public class ApplicationJob implements JobCreator {
             default:
                 return null;
         }
-    }
-
-    @SuppressWarnings("unused")
-    public static void cancelAllJob(String TAG) {
-        JobManager.instance().cancelAllForTag(TAG);
-    }
-
-    public static void cancelJob(int jobId) {
-        JobManager.instance().cancel(jobId);
     }
 }

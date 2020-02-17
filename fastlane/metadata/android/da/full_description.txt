@@ -1,0 +1,16 @@
+Den understøtter:
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
+
+
+Appen har avancerede funktioner (især for Pleroma og Mastodon):
+
+- Flerkontiunderstøttelse
+- Skedulér beskeder fra enheden
+- Skedulér boosts
+- Bogmærk beskeder
+- Følg og interagér med fjerninstanser
+- Gør konti tavse jf. tidsintervaller
+- Krydskontohandlinger via langt tryk
+- Oversættelsesfunktion
+- Kunsttidslinjer
+- Videotidslinjer

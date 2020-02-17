@@ -4,16 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +11,15 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,11 +39,6 @@ public class TextEditorDialogFragment extends DialogFragment {
     private InputMethodManager mInputMethodManager;
     private int mColorCode;
     private TextEditor mTextEditor;
-
-    public interface TextEditor {
-        void onDone(String inputText, int colorCode);
-    }
-
 
     //Show dialog with provide text and text color
     public static TextEditorDialogFragment show(@NonNull AppCompatActivity appCompatActivity,
@@ -126,9 +120,13 @@ public class TextEditorDialogFragment extends DialogFragment {
 
     }
 
-
     //Callback to listener if user is done with text editing
     public void setOnTextEditorListener(TextEditor textEditor) {
         mTextEditor = textEditor;
+    }
+
+
+    public interface TextEditor {
+        void onDone(String inputText, int colorCode);
     }
 }

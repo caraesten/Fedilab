@@ -14,28 +14,32 @@ package app.fedilab.android.client;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.content.Context;
 
 import java.util.List;
 
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.AccountAdmin;
+import app.fedilab.android.client.Entities.Context;
 import app.fedilab.android.client.Entities.Conversation;
 import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
+import app.fedilab.android.client.Entities.IdentityProof;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceReg;
 import app.fedilab.android.client.Entities.Notification;
 import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.PeertubeNotification;
+import app.fedilab.android.client.Entities.PixelFedStory;
+import app.fedilab.android.client.Entities.PixelFedStoryItem;
 import app.fedilab.android.client.Entities.Playlist;
 import app.fedilab.android.client.Entities.Relationship;
 import app.fedilab.android.client.Entities.Report;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
+import app.fedilab.android.client.Entities.Trends;
 
 /**
  * Created by Thomas on 03/06/2017.
@@ -46,10 +50,10 @@ public class APIResponse {
 
     private List<Account> accounts = null;
     private List<Status> statuses = null;
-    private List<Context> contexts = null;
     private List<Conversation> conversations = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
+    private String targetedId = null;
     private Results results = null;
     private List<HowToVideo> howToVideos = null;
     private List<Peertube> peertubes = null;
@@ -68,6 +72,12 @@ public class APIResponse {
     private List<InstanceReg> instanceRegs = null;
     private List<AccountAdmin> accountAdmins = null;
     private List<Report> reports = null;
+    private Context context = null;
+    private List<PixelFedStory> pixelFedStories = null;
+    private List<PixelFedStoryItem> pixelFedStoryItems = null;
+    private PixelFedStory pixelFedStory = null;
+    private List<Trends> trends = null;
+    private List<IdentityProof> identityProofs = null;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -83,14 +93,6 @@ public class APIResponse {
 
     public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
-    }
-
-    public List<Context> getContexts() {
-        return contexts;
-    }
-
-    public void setContexts(List<Context> contexts) {
-        this.contexts = contexts;
     }
 
     public List<Notification> getNotifications() {
@@ -267,5 +269,54 @@ public class APIResponse {
 
     public void setReports(List<Report> reports) {
         this.reports = reports;
+    }
+
+    public String getTargetedId() {
+        return targetedId;
+    }
+
+    public void setTargetedId(String targetedId) {
+        this.targetedId = targetedId;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+
+    public List<PixelFedStory> getPixelFedStories() {
+        return pixelFedStories;
+    }
+
+    public void setPixelFedStories(List<PixelFedStory> pixelFedStories) {
+        this.pixelFedStories = pixelFedStories;
+    }
+
+    public List<PixelFedStoryItem> getPixelFedStoryItems() {
+        return pixelFedStoryItems;
+    }
+
+    public void setPixelFedStoryItems(List<PixelFedStoryItem> pixelFedStoryItems) {
+        this.pixelFedStoryItems = pixelFedStoryItems;
+    }
+
+    public List<Trends> getTrends() {
+        return trends;
+    }
+
+    public void setTrends(List<Trends> trends) {
+        this.trends = trends;
+    }
+
+    public List<IdentityProof> getIdentityProofs() {
+        return identityProofs;
+    }
+
+    public void setIdentityProofs(List<IdentityProof> identityProofs) {
+        this.identityProofs = identityProofs;
     }
 }

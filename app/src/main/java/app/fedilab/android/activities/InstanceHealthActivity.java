@@ -18,45 +18,32 @@ package app.fedilab.android.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.InstanceSocial;
 import app.fedilab.android.client.HttpsConnection;
 import app.fedilab.android.helper.Helper;
-import app.fedilab.android.R;
 
 
 /**
@@ -69,30 +56,22 @@ public class InstanceHealthActivity extends BaseActivity {
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;
     private String instance;
-    private LinearLayout container, instance_container;
+    private LinearLayout instance_container;
+    private ImageView back_ground_image;
     private RelativeLayout loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack);
-                break;
-            default:
-                setTheme(R.style.AppThemeDark);
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Dialog);
+        } else {
+            setTheme(R.style.DialogDark);
         }
         setContentView(R.layout.activity_instance_social);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Bundle b = getIntent().getExtras();
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
@@ -106,10 +85,9 @@ public class InstanceHealthActivity extends BaseActivity {
         checked_at = findViewById(R.id.checked_at);
         up = findViewById(R.id.up);
         uptime = findViewById(R.id.uptime);
-        container = findViewById(R.id.container);
         instance_container = findViewById(R.id.instance_container);
         loader = findViewById(R.id.loader);
-
+        back_ground_image = findViewById(R.id.back_ground_image);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,17 +124,26 @@ public class InstanceHealthActivity extends BaseActivity {
 
     private void checkInstance() {
 
-        if (instance == null)
+        if (instance == null){
+            LinearLayout main_container = findViewById(R.id.main_container);
+            TextView no_instance = findViewById(R.id.no_instance);
+            instance_container.setVisibility(View.VISIBLE);
+            main_container.setVisibility(View.GONE);
+            no_instance.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.GONE);
             return;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
-                    final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                    if (response != null)
+                    final String response = new HttpsConnection(InstanceHealthActivity.this, instance).get("https://instances.social/api/1.0/instances/show", 5, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                    if (response != null) {
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
+                    }
                     runOnUiThread(new Runnable() {
                         @SuppressLint({"SetTextI18n", "DefaultLocale"})
                         public void run() {
@@ -164,31 +151,14 @@ public class InstanceHealthActivity extends BaseActivity {
                                 Glide.with(getApplicationContext())
                                         .asBitmap()
                                         .load(instanceSocial.getThumbnail())
-                                        .into(new SimpleTarget<Bitmap>() {
-                                            @Override
-                                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                                Bitmap workingBitmap = Bitmap.createBitmap(resource);
-                                                Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                                Canvas canvas = new Canvas(mutableBitmap);
-                                                Paint p = new Paint(Color.BLACK);
-                                                ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                                                p.setColorFilter(filter);
-                                                canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                                                BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                                    container.setBackground(background);
-                                                } else {
-                                                    container.setBackgroundDrawable(background);
-                                                }
-                                            }
-                                        });
+                                        .into(back_ground_image);
                             name.setText(instanceSocial.getName());
                             if (instanceSocial.isUp()) {
                                 up.setText("Is up!");
-                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green_1));
                             } else {
                                 up.setText("Is down!");
-                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_1));
                             }
                             uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime() * 100)));
                             if (instanceSocial.getChecked_at() != null)
@@ -199,7 +169,17 @@ public class InstanceHealthActivity extends BaseActivity {
                         }
                     });
 
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            LinearLayout main_container = findViewById(R.id.main_container);
+                            TextView no_instance = findViewById(R.id.no_instance);
+                            instance_container.setVisibility(View.VISIBLE);
+                            main_container.setVisibility(View.GONE);
+                            no_instance.setVisibility(View.VISIBLE);
+                            loader.setVisibility(View.GONE);
+                        }
+                    });
                 }
             }
         }).start();

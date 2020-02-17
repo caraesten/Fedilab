@@ -28,6 +28,17 @@ import java.util.HashMap;
 
 public class Playlist implements Parcelable {
 
+    public static final Parcelable.Creator<Playlist> CREATOR = new Parcelable.Creator<Playlist>() {
+        @Override
+        public Playlist createFromParcel(Parcel source) {
+            return new Playlist(source);
+        }
+
+        @Override
+        public Playlist[] newArray(int size) {
+            return new Playlist[size];
+        }
+    };
     private String id;
     private String uuid;
     private String displayName;
@@ -42,6 +53,26 @@ public class Playlist implements Parcelable {
     private Date updatedAt;
     private int videosLength;
 
+    public Playlist() {
+    }
+
+    protected Playlist(Parcel in) {
+        this.id = in.readString();
+        this.uuid = in.readString();
+        this.displayName = in.readString();
+        this.description = in.readString();
+        this.videoChannelId = in.readString();
+        long tmpCreatedAt = in.readLong();
+        this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
+        this.isLocal = in.readByte() != 0;
+        this.ownerAccount = in.readParcelable(Account.class.getClassLoader());
+        this.privacy = (HashMap<Integer, String>) in.readSerializable();
+        this.thumbnailPath = in.readString();
+        this.type = (HashMap<Integer, String>) in.readSerializable();
+        long tmpUpdatedAt = in.readLong();
+        this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
+        this.videosLength = in.readInt();
+    }
 
     public String getId() {
         return id;
@@ -168,37 +199,4 @@ public class Playlist implements Parcelable {
         dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
         dest.writeInt(this.videosLength);
     }
-
-    public Playlist() {
-    }
-
-    protected Playlist(Parcel in) {
-        this.id = in.readString();
-        this.uuid = in.readString();
-        this.displayName = in.readString();
-        this.description = in.readString();
-        this.videoChannelId = in.readString();
-        long tmpCreatedAt = in.readLong();
-        this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
-        this.isLocal = in.readByte() != 0;
-        this.ownerAccount = in.readParcelable(Account.class.getClassLoader());
-        this.privacy = (HashMap<Integer, String>) in.readSerializable();
-        this.thumbnailPath = in.readString();
-        this.type = (HashMap<Integer, String>) in.readSerializable();
-        long tmpUpdatedAt = in.readLong();
-        this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
-        this.videosLength = in.readInt();
-    }
-
-    public static final Parcelable.Creator<Playlist> CREATOR = new Parcelable.Creator<Playlist>() {
-        @Override
-        public Playlist createFromParcel(Parcel source) {
-            return new Playlist(source);
-        }
-
-        @Override
-        public Playlist[] newArray(int size) {
-            return new Playlist[size];
-        }
-    };
 }

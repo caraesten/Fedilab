@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="app.fedilab.android.activities.InstanceHealthActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_of_accounts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

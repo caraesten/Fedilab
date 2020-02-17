@@ -17,10 +17,6 @@ package app.fedilab.android.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +25,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
-import app.fedilab.android.helper.Helper;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
+
 import app.fedilab.android.R;
+import app.fedilab.android.helper.Helper;
 
 
 /**
@@ -57,8 +58,8 @@ public class SettingsPeertubeFragment extends Fragment {
 
         //Video mode
         final Spinner video_mode_spinner = rootView.findViewById(R.id.set_video_mode);
-        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.settings_video_mode, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                R.array.settings_video_mode, android.R.layout.simple_spinner_dropdown_item);
         video_mode_spinner.setAdapter(video_mode_spinnerAdapter);
         if (videoMode == Helper.VIDEO_MODE_TORRENT)
             videoMode = Helper.VIDEO_MODE_DIRECT;

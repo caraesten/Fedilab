@@ -39,11 +39,6 @@ public class ManagePollAsyncTask extends AsyncTask<Void, Void, Void> {
     private Poll poll;
     private type_s type;
 
-    public enum type_s {
-        SUBMIT,
-        REFRESH
-    }
-
     public ManagePollAsyncTask(Context context, type_s type, app.fedilab.android.client.Entities.Status status, int[] choices, OnPollInterface onPollInterface) {
         this.contextReference = new WeakReference<>(context);
         this.listener = onPollInterface;
@@ -73,6 +68,11 @@ public class ManagePollAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onPoll(status, poll);
+    }
+
+    public enum type_s {
+        SUBMIT,
+        REFRESH
     }
 
 }

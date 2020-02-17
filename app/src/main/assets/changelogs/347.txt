@@ -1,0 +1,13 @@
+Added
+- Pixelfed: post media to stories
+- Long press bio to open the contextual menu
+- Allow to invite with Pleroma
+
+Changed
+- Import theme always visible
+- Improve login activity
+
+Fixed
+- Filter with regex
+- Issues with talk back and magnifying glass
+- Some crashes

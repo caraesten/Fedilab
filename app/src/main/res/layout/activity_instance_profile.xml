@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    android:layout_margin="@dimen/fab_margin"
+    android:fitsSystemWindows="true"
+    tools:context="app.fedilab.android.activities.InstanceProfileActivity">
+
+    <ImageView
+        android:id="@+id/back_ground_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:contentDescription="@string/logo_of_the_instance"
+        android:scaleType="centerCrop" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/instance_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/blue_border"
+                android:gravity="center"
+                android:textColor="@color/mastodonC4"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:autoLink="web"
+                android:gravity="center"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name" />
+
+            <TextView
+                android:id="@+id/user_count_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/user_count"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@id/status_count_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+            <TextView
+                android:id="@+id/status_count_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/status_count"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@id/instance_count_label"
+                app:layout_constraintStart_toEndOf="@id/user_count_label"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+            <TextView
+                android:id="@+id/instance_count_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/instance_count"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/status_count_label"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+            <TextView
+                android:id="@+id/user_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@id/user_count_label"
+                app:layout_constraintStart_toStartOf="@id/user_count_label"
+                app:layout_constraintTop_toBottomOf="@id/user_count_label" />
+
+            <TextView
+                android:id="@+id/status_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@id/status_count_label"
+                app:layout_constraintStart_toStartOf="@id/status_count_label"
+                app:layout_constraintTop_toBottomOf="@id/status_count_label" />
+
+            <TextView
+                android:id="@+id/instance_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@id/instance_count_label"
+                app:layout_constraintStart_toStartOf="@id/instance_count_label"
+                app:layout_constraintTop_toBottomOf="@id/instance_count_label" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_counters_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="user_count,status_count,instance_count" />
+
+            <TextView
+                android:id="@+id/software"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toStartOf="@id/version"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_counters_bottom" />
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/software"
+                app:layout_constraintTop_toBottomOf="@id/barrier_counters_bottom" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_software_version_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="software,version" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_accounts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:divider="@null"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/barrier_software_version_bottom" />
+
+            <Button
+                android:id="@+id/close"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/close"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lv_accounts" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,14 +28,33 @@ import java.util.List;
 
 public class Schedule implements Parcelable {
 
+    public static final Parcelable.Creator<Schedule> CREATOR = new Parcelable.Creator<Schedule>() {
+        @Override
+        public Schedule createFromParcel(Parcel source) {
+            return new Schedule(source);
+        }
+
+        @Override
+        public Schedule[] newArray(int size) {
+            return new Schedule[size];
+        }
+    };
     private String id;
     private Date scheduled_at;
     private Status status;
     private List<Attachment> attachmentList;
 
+
     public Schedule() {
     }
 
+    protected Schedule(Parcel in) {
+        this.id = in.readString();
+        long tmpScheduled_at = in.readLong();
+        this.scheduled_at = tmpScheduled_at == -1 ? null : new Date(tmpScheduled_at);
+        this.status = in.readParcelable(Status.class.getClassLoader());
+        this.attachmentList = in.createTypedArrayList(Attachment.CREATOR);
+    }
 
     public String getId() {
         return id;
@@ -81,24 +100,4 @@ public class Schedule implements Parcelable {
         dest.writeParcelable(this.status, flags);
         dest.writeTypedList(this.attachmentList);
     }
-
-    protected Schedule(Parcel in) {
-        this.id = in.readString();
-        long tmpScheduled_at = in.readLong();
-        this.scheduled_at = tmpScheduled_at == -1 ? null : new Date(tmpScheduled_at);
-        this.status = in.readParcelable(Status.class.getClassLoader());
-        this.attachmentList = in.createTypedArrayList(Attachment.CREATOR);
-    }
-
-    public static final Parcelable.Creator<Schedule> CREATOR = new Parcelable.Creator<Schedule>() {
-        @Override
-        public Schedule createFromParcel(Parcel source) {
-            return new Schedule(source);
-        }
-
-        @Override
-        public Schedule[] newArray(int size) {
-            return new Schedule[size];
-        }
-    };
 }

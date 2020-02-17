@@ -15,20 +15,14 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -40,15 +34,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveInstanceAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveInstanceInterface;
-
-import static app.fedilab.android.helper.Helper.changeDrawableColor;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -69,7 +66,7 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -88,6 +85,7 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(InstanceActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -99,10 +97,6 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
                 }
             });
             toolbar_title.setText(R.string.action_about_instance);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, InstanceActivity.this);
-            }
         }
         setContentView(R.layout.activity_instance);
         Helper.changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline, R.color.white);

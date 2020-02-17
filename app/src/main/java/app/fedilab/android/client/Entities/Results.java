@@ -12,6 +12,7 @@ public class Results {
     private List<Account> accounts;
     private List<Status> statuses;
     private List<String> hashtags;
+    private List<Trends> trends;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -35,5 +36,13 @@ public class Results {
 
     public void setHashtags(List<String> hashtags) {
         this.hashtags = hashtags;
+    }
+
+    public List<Trends> getTrends() {
+        return trends;
+    }
+
+    public void setTrends(List<Trends> trends) {
+        this.trends = trends;
     }
 }

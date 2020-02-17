@@ -17,14 +17,11 @@ package app.fedilab.android.client;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
 
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -36,16 +33,11 @@ import net.gotev.uploadservice.UploadStatusDelegate;
 import org.apache.poi.util.IOUtils;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
@@ -54,6 +46,7 @@ import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -70,20 +63,14 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.activities.MediaActivity;
+import app.fedilab.android.activities.SlideMediaActivity;
 import app.fedilab.android.activities.TootActivity;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.client.Entities.Account;
-import app.fedilab.android.client.Entities.Attachment;
 import app.fedilab.android.client.Entities.Error;
-import app.fedilab.android.fragments.DisplayPlaylistsFragment;
 import app.fedilab.android.helper.FileNameCleaner;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.interfaces.OnDownloadInterface;
-import app.fedilab.android.interfaces.OnRetrieveAttachmentInterface;
-import app.fedilab.android.sqlite.AccountDAO;
-import app.fedilab.android.sqlite.Sqlite;
+
+import static app.fedilab.android.helper.Helper.urlPattern;
 
 
 /**
@@ -102,6 +89,8 @@ public class HttpsConnection {
     private SharedPreferences sharedpreferences;
     private Proxy proxy;
     private String instance;
+    private String USER_AGENT;
+
 
     public HttpsConnection(Context context, String instance) {
         this.instance = instance;
@@ -110,6 +99,8 @@ public class HttpsConnection {
         boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
         int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
         proxy = null;
+
+        USER_AGENT = sharedpreferences.getString(Helper.SET_CUSTOM_USER_AGENT, Helper.USER_AGENT);
         if (proxyEnabled) {
             try {
                 String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
@@ -148,220 +139,188 @@ public class HttpsConnection {
     }
 
 
-    @SuppressWarnings("ConstantConditions")
+    /**
+     * Get calls
+     * @param urlConnection String url
+     * @param timeout int timeout
+     * @param paramaters HashMap<String, String> paramaters
+     * @param token String token
+     * @return String
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     * @throws HttpsConnectionException
+     */
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
 
-        if (urlConnection.startsWith("https://")) {
-            Map<String, Object> params = new LinkedHashMap<>();
-            if (paramaters != null) {
-                Iterator it = paramaters.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    params.put(pair.getKey().toString(), pair.getValue());
-                    it.remove();
-                }
+        Map<String, Object> params = new LinkedHashMap<>();
+        if (paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
             }
-            StringBuilder postData = new StringBuilder();
+        }
+        StringBuilder postData = new StringBuilder();
+        URL url;
+        if( params.size() > 0 ) {
             for (Map.Entry<String, Object> param : params.entrySet()) {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            URL url = new URL(urlConnection + "?" + postData);
+            url = new URL(urlConnection + "?" + postData);
+        }else{
+            url = new URL(urlConnection);
+        }
+
+        if (proxy != null)
+            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setConnectTimeout(timeout * 1000);
+        httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
+        httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+        httpsURLConnection.setRequestProperty("Accept", "application/json");
+        httpsURLConnection.setUseCaches(true);
+        httpsURLConnection.setDefaultUseCaches(true);
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
+        if (token != null && !token.startsWith("Basic "))
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+        else if (token != null && token.startsWith("Basic "))
+            httpsURLConnection.setRequestProperty("Authorization", token);
+        httpsURLConnection.setRequestMethod("GET");
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            response = converToString(httpsURLConnection.getInputStream());
+        } else {
+            String error = null;
+            if (httpsURLConnection.getErrorStream() != null) {
+                InputStream stream = httpsURLConnection.getErrorStream();
+                if (stream == null) {
+                    stream = httpsURLConnection.getInputStream();
+                }
+                try (Scanner scanner = new Scanner(stream)) {
+                    scanner.useDelimiter("\\Z");
+                    if (scanner.hasNext()) {
+                        error = scanner.next();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            int responseCode = httpsURLConnection.getResponseCode();
+            try {
+                httpsURLConnection.getInputStream().close();
+            } catch (Exception ignored) {
+            }
+            throw new HttpsConnectionException(responseCode, error);
+        }
+        getSinceMaxId();
+        httpsURLConnection.getInputStream().close();
+        return response;
+    }
+
+
+    /**
+     * Will check if the current url is redirecting
+     * @param urlConnection String the url to check
+     * @return String null|string url redirection
+     */
+    public String checkUrl(String urlConnection){
+        URL url;
+        String redirect = null;
+        try {
+            url = new URL(urlConnection);
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpsURLConnection.setRequestProperty("Accept", "application/json");
+            httpsURLConnection.setInstanceFollowRedirects(false);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-            if (token != null && !token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            else if (token != null && token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", token);
-            httpsURLConnection.setRequestMethod("GET");
-            String response;
-            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                response = converToString(httpsURLConnection.getInputStream());
-            } else {
-                String error = null;
-                if (httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        if (scanner.hasNext()) {
-                            error = scanner.next();
+            httpsURLConnection.setRequestMethod("HEAD");
+            if( httpsURLConnection.getResponseCode() == 301) {
+                Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
+                for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                    if (entry.toString().toLowerCase().startsWith("location")) {
+                        Matcher matcher = urlPattern.matcher(entry.toString());
+                        if (matcher.find()) {
+                            redirect = matcher.group(1);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
-                int responseCode = httpsURLConnection.getResponseCode();
-                try {
-                    httpsURLConnection.getInputStream().close();
-                } catch (Exception ignored) {
-                }
-                throw new HttpsConnectionException(responseCode, error);
             }
-            getSinceMaxId();
             httpsURLConnection.getInputStream().close();
-            return response;
-        } else {
-            Map<String, Object> params = new LinkedHashMap<>();
-            if (paramaters != null) {
-                Iterator it = paramaters.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    params.put(pair.getKey().toString(), pair.getValue());
-                    it.remove();
+            if (redirect != null && redirect.compareTo(urlConnection)!=0){
+                URL redirectURL = new URL(redirect);
+                String host = redirectURL.getHost();
+                String protocol = redirectURL.getProtocol();
+                if( protocol == null || host == null){
+                    redirect = null;
                 }
             }
-            StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String, Object> param : params.entrySet()) {
-                if (postData.length() != 0) postData.append('&');
-                postData.append(param.getKey());
-                postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
-            }
-            URL url = new URL(urlConnection + "?" + postData);
-            if (proxy != null)
-                httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
-            else
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(timeout * 1000);
-            httpURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            if (token != null && !token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            else if (token != null && token.startsWith("Basic "))
-                httpsURLConnection.setRequestProperty("Authorization", token);
-            httpURLConnection.setRequestMethod("GET");
-            String response;
-            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                response = converToString(httpURLConnection.getInputStream());
-            } else {
-                String error = null;
-                if (httpURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        if (scanner.hasNext()) {
-                            error = scanner.next();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                int responseCode = httpURLConnection.getResponseCode();
-                try {
-                    httpURLConnection.getInputStream().close();
-                } catch (Exception ignored) {
-                }
-                throw new HttpsConnectionException(responseCode, error);
-            }
-            getSinceMaxId();
-            httpURLConnection.getInputStream().close();
-            return response;
+            return redirect;
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
 
     public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
-        if (urlConnection.startsWith("https://")) {
-            URL url = new URL(urlConnection);
-            if (proxy != null)
-                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-            else
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setConnectTimeout(30 * 1000);
-            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpsURLConnection.setRequestProperty("Accept", "application/json");
-            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-            httpsURLConnection.setRequestMethod("GET");
-            String response;
-            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = converToString(httpsURLConnection.getInputStream());
-            } else {
-                String error = null;
-                if (httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        if (scanner.hasNext()) {
-                            error = scanner.next();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                int responseCode = httpsURLConnection.getResponseCode();
-                try {
-                    httpsURLConnection.getInputStream().close();
-                } catch (Exception ignored) {
-                }
-                throw new HttpsConnectionException(responseCode, error);
-            }
+
+
+        URL url = new URL(urlConnection);
+
+        if (proxy != null)
+            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setConnectTimeout(30 * 1000);
+        httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+        httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+        httpsURLConnection.setRequestProperty("Accept", "application/json");
+        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
+        httpsURLConnection.setRequestMethod("GET");
+        httpsURLConnection.setDefaultUseCaches(true);
+        httpsURLConnection.setUseCaches(true);
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             getSinceMaxId();
-            httpsURLConnection.getInputStream().close();
-            return response;
+            response = converToString(httpsURLConnection.getInputStream());
         } else {
-            URL url = new URL(urlConnection);
-            if (proxy != null)
-                httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
-            else
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(30 * 1000);
-            httpURLConnection.setRequestProperty("http.keepAlive", "false");
-            httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
-            httpURLConnection.setRequestMethod("GET");
-            String response;
-            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = converToString(httpURLConnection.getInputStream());
-            } else {
-                String error = null;
-                if (httpURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpURLConnection.getErrorStream();
-                    if (stream == null) {
-                        stream = httpURLConnection.getInputStream();
-                    }
-                    try (Scanner scanner = new Scanner(stream)) {
-                        scanner.useDelimiter("\\Z");
-                        if (scanner.hasNext()) {
-                            error = scanner.next();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            String error = null;
+            if (httpsURLConnection.getErrorStream() != null) {
+                InputStream stream = httpsURLConnection.getErrorStream();
+                if (stream == null) {
+                    stream = httpsURLConnection.getInputStream();
                 }
-                int responseCode = httpURLConnection.getResponseCode();
-                try {
-                    httpURLConnection.getInputStream().close();
-                } catch (Exception ignored) {
+                try (Scanner scanner = new Scanner(stream)) {
+                    scanner.useDelimiter("\\Z");
+                    if (scanner.hasNext()) {
+                        error = scanner.next();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                throw new HttpsConnectionException(responseCode, error);
             }
-            getSinceMaxId();
-            httpURLConnection.getInputStream().close();
-            return response;
+            int responseCode = httpsURLConnection.getResponseCode();
+            try {
+                httpsURLConnection.getInputStream().close();
+            } catch (Exception ignored) {
+            }
+            throw new HttpsConnectionException(responseCode, error);
         }
+        getSinceMaxId();
+        httpsURLConnection.getInputStream().close();
+        return response;
+
     }
 
 
@@ -382,14 +341,14 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -448,15 +407,15 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST");
@@ -506,12 +465,12 @@ public class HttpsConnection {
         if (urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
             byte[] postDataBytes = new byte[0];
-            postDataBytes = jsonObject.toString().getBytes("UTF-8");
+            postDataBytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -558,13 +517,13 @@ public class HttpsConnection {
             return response;
         } else {
             URL url = new URL(urlConnection);
-            byte[] postDataBytes = jsonObject.toString().getBytes("UTF-8");
+            byte[] postDataBytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST");
@@ -611,13 +570,13 @@ public class HttpsConnection {
 
     public String postMisskey(String urlConnection, int timeout, JSONObject paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         URL url = new URL(urlConnection);
-        byte[] postDataBytes = paramaters.toString().getBytes("UTF-8");
+        byte[] postDataBytes = paramaters.toString().getBytes(StandardCharsets.UTF_8);
 
         if (proxy != null)
             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
         else
             httpsURLConnection = (HttpsURLConnection) url.openConnection();
-        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
@@ -682,7 +641,7 @@ public class HttpsConnection {
                             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
                         else
                             httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                        httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                         int responseCode = httpsURLConnection.getResponseCode();
 
                         // always check HTTP response code first
@@ -699,8 +658,8 @@ public class HttpsConnection {
                                 }
                             } else {
                                 // extracts file name from URL
-                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
-                                        downloadUrl.length());
+                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1
+                                );
                             }
                             fileName = FileNameCleaner.cleanFileName(fileName);
                             // opens input stream from the HTTP connection
@@ -718,9 +677,9 @@ public class HttpsConnection {
                             while ((bytesRead = inputStream.read(buffer)) != -1) {
                                 outputStream.write(buffer, 0, bytesRead);
                                 downloadedFileSize += bytesRead;
-                                if (context instanceof MediaActivity) {
+                                if (context instanceof SlideMediaActivity) {
                                     final int currentProgress = (downloadedFileSize * 100) / contentSize;
-                                    ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                         public void run() {
                                             listener.onUpdateProgress(currentProgress > 0 ? currentProgress : 101);
                                         }
@@ -735,8 +694,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
@@ -750,8 +709,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
@@ -770,7 +729,7 @@ public class HttpsConnection {
                             httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
                         else
                             httpURLConnection = (HttpURLConnection) url.openConnection();
-                        httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                        httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                         int responseCode = httpURLConnection.getResponseCode();
 
                         // always check HTTP response code first
@@ -787,8 +746,8 @@ public class HttpsConnection {
                                 }
                             } else {
                                 // extracts file name from URL
-                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
-                                        downloadUrl.length());
+                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1
+                                );
                             }
                             fileName = FileNameCleaner.cleanFileName(fileName);
                             // opens input stream from the HTTP connection
@@ -806,9 +765,9 @@ public class HttpsConnection {
                             while ((bytesRead = inputStream.read(buffer)) != -1) {
                                 outputStream.write(buffer, 0, bytesRead);
                                 downloadedFileSize += bytesRead;
-                                if (context instanceof MediaActivity) {
+                                if (context instanceof SlideMediaActivity) {
                                     final int currentProgress = (downloadedFileSize * 100) / contentSize;
-                                    ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                         public void run() {
                                             listener.onUpdateProgress(currentProgress > 0 ? currentProgress : 101);
                                         }
@@ -823,8 +782,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
@@ -838,8 +797,8 @@ public class HttpsConnection {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
                                 });
-                            if (context instanceof MediaActivity)
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            if (context instanceof SlideMediaActivity)
+                                ((SlideMediaActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
                                         listener.onDownloaded(null, downloadUrl, error);
                                     }
@@ -866,7 +825,7 @@ public class HttpsConnection {
                 else
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
-                httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                 int responseCode = httpsURLConnection.getResponseCode();
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -874,8 +833,7 @@ public class HttpsConnection {
                     return httpsURLConnection.getInputStream();
                 }
                 httpsURLConnection.getInputStream().close();
-            } catch (IOException | NoSuchAlgorithmException | KeyManagementException ignored) {
-            }
+            } catch (IOException | NoSuchAlgorithmException | KeyManagementException ignored) {}
             if (httpsURLConnection != null)
                 try {
                     httpsURLConnection.getInputStream().close();
@@ -889,7 +847,7 @@ public class HttpsConnection {
                     httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
                 else
                     httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
                 int responseCode = httpURLConnection.getResponseCode();
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -906,11 +864,6 @@ public class HttpsConnection {
                 }
             return null;
         }
-    }
-
-    enum imageType {
-        AVATAR,
-        BANNER
     }
 
     private void uploadMedia(String urlConnection, InputStream avatar, InputStream header, String filename) {
@@ -974,7 +927,6 @@ public class HttpsConnection {
         }
     }
 
-
     @SuppressWarnings("SameParameterValue")
     public String patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, String avatarName, InputStream header, String headerName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if (urlConnection.startsWith("https://")) {
@@ -993,16 +945,16 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = (postData.toString()).getBytes("UTF-8");
+            byte[] postDataBytes = (postData.toString()).getBytes(StandardCharsets.UTF_8);
 
 
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -1075,15 +1027,15 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = (postData.toString()).getBytes("UTF-8");
+            byte[] postDataBytes = (postData.toString()).getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpsURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 httpURLConnection.setRequestMethod("PATCH");
@@ -1141,7 +1093,6 @@ public class HttpsConnection {
 
     }
 
-
     public String put(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if (urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
@@ -1159,15 +1110,15 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
@@ -1227,15 +1178,15 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
             if (token != null && !token.startsWith("Basic "))
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -1282,7 +1233,6 @@ public class HttpsConnection {
 
     }
 
-
     public int delete(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if (urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
@@ -1300,15 +1250,15 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory(this.instance));
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -1363,15 +1313,15 @@ public class HttpsConnection {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(param.getValue());
             }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+            byte[] postDataBytes = postData.toString().getBytes(StandardCharsets.UTF_8);
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             else if (token != null && token.startsWith("Basic "))
@@ -1422,6 +1372,31 @@ public class HttpsConnection {
         return max_id;
     }
 
+    private void getOKHttpHeader(Map<String, List<String>> headers){
+        for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+            if (entry.toString().startsWith("Link") || entry.toString().startsWith("link")) {
+                Pattern patternMaxId = Pattern.compile("max_id=([0-9a-zA-Z]{1,}).*");
+                Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
+                if (matcherMaxId.find()) {
+                    max_id = matcherMaxId.group(1);
+                }
+                if (entry.toString().startsWith("Link")) {
+                    Pattern patternSinceId = Pattern.compile("since_id=([0-9a-zA-Z]{1,}).*");
+                    Matcher matcherSinceId = patternSinceId.matcher(entry.toString());
+                    if (matcherSinceId.find()) {
+                        since_id = matcherSinceId.group(1);
+                    }
+
+                }
+            }else  if (entry.toString().startsWith("Min-Id") || entry.toString().startsWith("min-id")) {
+                Pattern patternMaxId = Pattern.compile("min-id=\\[([0-9a-zA-Z]{1,}).*\\]");
+                Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
+                if (matcherMaxId.find()) {
+                    max_id = matcherMaxId.group(1);
+                }
+            }
+        }
+    }
 
     private void getSinceMaxId() {
         if (Helper.getLiveInstanceWithProtocol(context) == null)
@@ -1430,6 +1405,7 @@ public class HttpsConnection {
             if (httpsURLConnection == null)
                 return;
             Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
+
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
                 if (entry.toString().startsWith("Link") || entry.toString().startsWith("link")) {
                     Pattern patternMaxId = Pattern.compile("max_id=([0-9a-zA-Z]{1,}).*");
@@ -1444,6 +1420,12 @@ public class HttpsConnection {
                             since_id = matcherSinceId.group(1);
                         }
 
+                    }
+                }else  if (entry.toString().startsWith("Min-Id") || entry.toString().startsWith("min-id")) {
+                    Pattern patternMaxId = Pattern.compile("min-id=\\[([0-9a-zA-Z]{1,}).*\\]");
+                    Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
+                    if (matcherMaxId.find()) {
+                        max_id = matcherMaxId.group(1);
                     }
                 }
             }
@@ -1476,7 +1458,6 @@ public class HttpsConnection {
         return s.hasNext() ? s.next() : "";
     }
 
-
     int getActionCode() {
         if (Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             try {
@@ -1491,6 +1472,12 @@ public class HttpsConnection {
                 return -1;
             }
         }
+    }
+
+
+    enum imageType {
+        AVATAR,
+        BANNER
     }
 
     public class HttpsConnectionException extends Exception {

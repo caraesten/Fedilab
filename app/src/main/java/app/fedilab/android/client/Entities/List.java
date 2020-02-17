@@ -25,8 +25,27 @@ import android.os.Parcelable;
 
 public class List implements Parcelable {
 
+    public static final Parcelable.Creator<List> CREATOR = new Parcelable.Creator<List>() {
+        @Override
+        public List createFromParcel(Parcel source) {
+            return new List(source);
+        }
+
+        @Override
+        public List[] newArray(int size) {
+            return new List[size];
+        }
+    };
     private String id;
     private String title;
+
+    public List() {
+    }
+
+    protected List(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+    }
 
     public String getId() {
         return id;
@@ -54,24 +73,4 @@ public class List implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.title);
     }
-
-    public List() {
-    }
-
-    protected List(Parcel in) {
-        this.id = in.readString();
-        this.title = in.readString();
-    }
-
-    public static final Parcelable.Creator<List> CREATOR = new Parcelable.Creator<List>() {
-        @Override
-        public List createFromParcel(Parcel source) {
-            return new List(source);
-        }
-
-        @Override
-        public List[] newArray(int size) {
-            return new List[size];
-        }
-    };
 }

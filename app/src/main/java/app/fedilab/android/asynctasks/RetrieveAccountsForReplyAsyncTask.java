@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveAccountsReplyInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.interfaces.OnRetrieveAccountsReplyInterface;
 
 
 /**

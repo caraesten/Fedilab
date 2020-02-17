@@ -1,0 +1,6 @@
+Added
+- Friendica: Authorize/Reject follow requests
+
+Fixed
+- Not cropped media
+- Crash when starting the app

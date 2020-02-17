@@ -16,18 +16,8 @@ package app.fedilab.android.activities;
 
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,16 +27,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
 import org.jetbrains.annotations.NotNull;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.fragments.DisplayAccountsFragment;
 import app.fedilab.android.fragments.DisplaySearchTagsFragment;
 import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveAccountsAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 
 
 /**
@@ -69,7 +70,7 @@ public class SearchResultTabActivity extends BaseActivity {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_DARK:
                 setTheme(R.style.AppThemeDark);
@@ -96,6 +97,7 @@ public class SearchResultTabActivity extends BaseActivity {
             finish();
 
         tabLayout = findViewById(R.id.search_tabLayout);
+        tabLayout.setBackgroundColor(ContextCompat.getColor(SearchResultTabActivity.this, R.color.cyanea_primary));
         search_viewpager = findViewById(R.id.search_viewpager);
 
 
@@ -106,6 +108,7 @@ public class SearchResultTabActivity extends BaseActivity {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(SearchResultTabActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -117,10 +120,6 @@ public class SearchResultTabActivity extends BaseActivity {
                 }
             });
             toolbar_title.setText(search);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, SearchResultTabActivity.this);
-            }
         }
         setTitle(search);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tags)));
@@ -235,7 +234,10 @@ public class SearchResultTabActivity extends BaseActivity {
             return null;
         }
 
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
+        }
         @Override
         public int getCount() {
             return 4;

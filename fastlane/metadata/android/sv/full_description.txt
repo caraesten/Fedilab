@@ -1,0 +1,16 @@
+Den stöder:
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
+
+
+Appen har avancerade funktioner (särskilt för Pleroma och Mastodon):
+
+- Stöd för flera konton
+- Schemalägga meddelanden från enheten
+- Schemalägg boost
+- Bokmärk meddelanden
+- Följ och interagera med fjärrinstanser
+Tidsinställ tystadekonton
+- Cross-konto åtgärder med ett långttryck
+- Översättningsfunktion
+- Konstidslinje
+- Videotidslinjer

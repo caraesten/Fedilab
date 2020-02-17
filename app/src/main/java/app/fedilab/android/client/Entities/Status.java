@@ -16,7 +16,10 @@ package app.fedilab.android.client.Entities;
 
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -24,13 +27,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -43,7 +42,16 @@ import android.text.style.ImageSpan;
 import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -57,6 +65,7 @@ import com.github.penfeizhou.animation.apng.decode.APNGParser;
 import com.github.penfeizhou.animation.gif.GifDrawable;
 import com.github.penfeizhou.animation.gif.decode.GifParser;
 
+import net.gotev.uploadservice.http.HttpConnection;
 
 import java.io.File;
 import java.net.URI;
@@ -71,6 +80,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
+import app.fedilab.android.activities.BaseActivity;
+import app.fedilab.android.activities.BaseMainActivity;
 import app.fedilab.android.activities.GroupActivity;
 import app.fedilab.android.activities.HashTagActivity;
 import app.fedilab.android.activities.MainActivity;
@@ -78,21 +89,25 @@ import app.fedilab.android.activities.PeertubeActivity;
 import app.fedilab.android.activities.ShowAccountActivity;
 import app.fedilab.android.asynctasks.RetrieveFeedsAsyncTask;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.client.HttpsConnection;
+import app.fedilab.android.fragments.TabLayoutNotificationsFragment;
 import app.fedilab.android.helper.CrossActions;
 import app.fedilab.android.helper.CustomQuoteSpan;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.LongClickLinkMovementMethod;
+import app.fedilab.android.helper.LongClickableSpan;
+import app.fedilab.android.helper.ThemeHelper;
 import app.fedilab.android.interfaces.OnRetrieveEmojiInterface;
 import app.fedilab.android.interfaces.OnRetrieveImageInterface;
+import app.fedilab.android.sqlite.StatusStoredDAO;
+import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
-import static app.fedilab.android.drawers.StatusListAdapter.HIDDEN_STATUS;
+import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 import static app.fedilab.android.drawers.StatusListAdapter.COMPACT_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.CONSOLE_STATUS;
 import static app.fedilab.android.drawers.StatusListAdapter.DISPLAYED_STATUS;
-import static app.fedilab.android.drawers.StatusListAdapter.FOCUSED_STATUS;
 import static app.fedilab.android.helper.Helper.THEME_BLACK;
-import static app.fedilab.android.helper.Helper.THEME_DARK;
-import static app.fedilab.android.helper.Helper.THEME_LIGHT;
 import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 /**
@@ -102,6 +117,17 @@ import static app.fedilab.android.helper.Helper.drawableToBitmap;
 
 public class Status implements Parcelable {
 
+    public static final Creator<Status> CREATOR = new Creator<Status>() {
+        @Override
+        public Status createFromParcel(Parcel source) {
+            return new Status(source);
+        }
+
+        @Override
+        public Status[] newArray(int size) {
+            return new Status[size];
+        }
+    };
     private String id;
     private String uri;
     private String url;
@@ -132,6 +158,7 @@ public class Status implements Parcelable {
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
+    private boolean isPollEmojiFound = false;
     private boolean isImageFound = false;
     private boolean isEmojiTranslateFound = false;
     private boolean isClickable = false;
@@ -147,10 +174,10 @@ public class Status implements Parcelable {
     private boolean isExpanded = false;
     private int numberLines = -1;
     private boolean showSpoiler = false;
-
-    public Status() {
-    }
-
+    private String quickReplyContent;
+    private String quickReplyPrivacy;
+    private boolean showBottomLine = false;
+    private boolean showTopLine = false;
     private List<String> conversationProfilePicture;
     private String webviewURL = null;
 
@@ -171,73 +198,10 @@ public class Status implements Parcelable {
     private int viewType;
     private boolean isFocused = false;
     private long db_id;
+    private boolean commentsFetched = false;
+    private List<Status> comments = new ArrayList<>();
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.uri);
-        dest.writeString(this.url);
-        dest.writeParcelable(this.account, flags);
-        dest.writeString(this.in_reply_to_id);
-        dest.writeString(this.in_reply_to_account_id);
-        dest.writeParcelable(this.reblog, flags);
-        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
-        dest.writeInt(this.reblogs_count);
-        dest.writeInt(this.favourites_count);
-        dest.writeInt(this.replies_count);
-        dest.writeByte(this.reblogged ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.favourited ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.muted ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.pinned ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.bookmarked ? (byte) 1 : (byte) 0);
-        dest.writeString(this.visibility);
-        dest.writeByte(this.attachmentShown ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.spoilerShown ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.media_attachments);
-        dest.writeParcelable(this.art_attachment, flags);
-        dest.writeTypedList(this.mentions);
-        dest.writeTypedList(this.emojis);
-        dest.writeTypedList(this.tags);
-        dest.writeParcelable(this.application, flags);
-        dest.writeParcelable(this.card, flags);
-        dest.writeString(this.language);
-        dest.writeByte(this.isTranslated ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isTranslationShown ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isVisible ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.fetchMore ? (byte) 1 : (byte) 0);
-        dest.writeString(this.content);
-        dest.writeString(this.contentCW);
-        dest.writeString(this.contentTranslated);
-        TextUtils.writeToParcel(this.contentSpan, dest, flags);
-        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
-        TextUtils.writeToParcel(this.contentSpanCW, dest, flags);
-        TextUtils.writeToParcel(this.contentSpanTranslated, dest, flags);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeInt(this.itemViewType);
-        dest.writeString(this.conversationId);
-        dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.numberLines);
-        dest.writeStringList(this.conversationProfilePicture);
-        dest.writeString(this.webviewURL);
-        dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
-        dest.writeString(this.scheduled_at);
-        dest.writeString(this.contentType);
-        dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.poll, flags);
-        dest.writeInt(this.media_height);
-        dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.warningFetched);
-        dest.writeStringList(this.imageURL);
-        dest.writeInt(this.viewType);
-        dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
-
+    public Status() {
     }
 
     protected Status(Parcel in) {
@@ -306,312 +270,11 @@ public class Status implements Parcelable {
         this.imageURL = in.createStringArrayList();
         this.viewType = in.readInt();
         this.isFocused = in.readByte() != 0;
+        this.quickReplyContent = in.readString();
+        this.quickReplyPrivacy = in.readString();
+        this.showBottomLine = in.readByte() != 0;
+        this.showTopLine = in.readByte() != 0;
     }
-
-    public static final Creator<Status> CREATOR = new Creator<Status>() {
-        @Override
-        public Status createFromParcel(Parcel source) {
-            return new Status(source);
-        }
-
-        @Override
-        public Status[] newArray(int size) {
-            return new Status[size];
-        }
-    };
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getIn_reply_to_id() {
-        return in_reply_to_id;
-    }
-
-    public void setIn_reply_to_id(String in_reply_to_id) {
-        this.in_reply_to_id = in_reply_to_id;
-    }
-
-    public String getIn_reply_to_account_id() {
-        return in_reply_to_account_id;
-    }
-
-    public void setIn_reply_to_account_id(String in_reply_to_account_id) {
-        this.in_reply_to_account_id = in_reply_to_account_id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        //Remove UTM by default
-        this.content = Helper.remove_tracking_param(content);
-    }
-
-    public boolean isShortReply() {
-        return shortReply;
-    }
-
-    public void setShortReply(boolean shortReply) {
-        this.shortReply = shortReply;
-    }
-
-    public Status getReblog() {
-        return reblog;
-    }
-
-    public void setReblog(Status reblog) {
-        this.reblog = reblog;
-    }
-
-    public int getReblogs_count() {
-        return reblogs_count;
-    }
-
-    public void setReblogs_count(int reblogs_count) {
-        this.reblogs_count = reblogs_count;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public int getFavourites_count() {
-        return favourites_count;
-    }
-
-    public void setFavourites_count(int favourites_count) {
-        this.favourites_count = favourites_count;
-    }
-
-    public SpannableString getDisplayNameSpan() {
-        return this.displayNameSpan;
-    }
-
-    public void setDisplayNameSpan(SpannableString displayNameSpan) {
-        this.displayNameSpan = displayNameSpan;
-    }
-
-    public boolean isReblogged() {
-        return reblogged;
-    }
-
-    public void setReblogged(boolean reblogged) {
-        this.reblogged = reblogged;
-    }
-
-    public boolean isFavourited() {
-        return favourited;
-    }
-
-    public void setFavourited(boolean favourited) {
-        this.favourited = favourited;
-    }
-
-    public void setPinned(boolean pinned) {
-        this.pinned = pinned;
-    }
-
-    public boolean isPinned() {
-        return pinned;
-    }
-
-    public boolean isSensitive() {
-        return sensitive;
-    }
-
-    public void setSensitive(boolean sensitive) {
-        this.sensitive = sensitive;
-    }
-
-    public String getSpoiler_text() {
-        return contentCW;
-    }
-
-    public void setSpoiler_text(String spoiler_text) {
-        this.contentCW = spoiler_text;
-    }
-
-
-    public ArrayList<Attachment> getMedia_attachments() {
-        return media_attachments;
-    }
-
-    public void setMedia_attachments(ArrayList<Attachment> media_attachments) {
-        this.media_attachments = media_attachments;
-    }
-
-    public List<Mention> getMentions() {
-        return mentions;
-    }
-
-    public void setMentions(List<Mention> mentions) {
-        this.mentions = mentions;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public String getTagsString() {
-        //iterate through tags and create comma delimited string of tag names
-        String tag_names = "";
-        for (Tag t : tags) {
-            if (tag_names.equals("")) {
-                tag_names = t.getName();
-            } else {
-                tag_names = tag_names + ", " + t.getName();
-            }
-        }
-        return tag_names;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Application getApplication() {
-        return application;
-    }
-
-    public void setApplication(Application application) {
-        this.application = application;
-    }
-
-
-    public String getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(String visibility) {
-        this.visibility = visibility;
-    }
-
-    public boolean isAttachmentShown() {
-        return attachmentShown;
-    }
-
-    public void setAttachmentShown(boolean attachmentShown) {
-        this.attachmentShown = attachmentShown;
-    }
-
-
-    public boolean isSpoilerShown() {
-        return spoilerShown;
-    }
-
-    public void setSpoilerShown(boolean spoilerShown) {
-        this.spoilerShown = spoilerShown;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public boolean isTranslated() {
-        return isTranslated;
-    }
-
-    public void setTranslated(boolean translated) {
-        isTranslated = translated;
-    }
-
-    public boolean isTranslationShown() {
-        return isTranslationShown;
-    }
-
-    public void setTranslationShown(boolean translationShown) {
-        isTranslationShown = translationShown;
-    }
-
-    public String getContentTranslated() {
-        return contentTranslated;
-    }
-
-    public void setContentTranslated(String content_translated) {
-        this.contentTranslated = content_translated;
-    }
-
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
-
-    public List<Emojis> getEmojis() {
-        return emojis;
-    }
-
-    public void setEmojis(List<Emojis> emojis) {
-        this.emojis = emojis;
-    }
-
-
-    public boolean isEmojiFound() {
-        return isEmojiFound;
-    }
-
-    public boolean isImageFound() {
-        return isImageFound;
-    }
-
-
-    public void setEmojiFound(boolean emojiFound) {
-        isEmojiFound = emojiFound;
-    }
-
-    public void setImageFound(boolean imageFound) {
-        isImageFound = imageFound;
-    }
-
 
     public static void transform(Context context, Status status) {
 
@@ -631,12 +294,12 @@ public class Status implements Parcelable {
             while (matcher.find()) {
                 final String youtubeId = matcher.group(3);
                 String invidiousHost = sharedpreferences.getString(Helper.SET_INVIDIOUS_HOST, Helper.DEFAULT_INVIDIOUS_HOST).toLowerCase();
-                if( matcher.group(2) != null && matcher.group(2).equals("youtu.be")){
-                    content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/watch?v="+youtubeId+"&local=true"));
-                    content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/watch?v=" + youtubeId+"&local=true"));
-                }else{
-                    content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+invidiousHost + "/"+youtubeId+"&local=true"));
-                    content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+invidiousHost + "/" + youtubeId+"&local=true"));
+                if (matcher.group(2) != null && matcher.group(2).equals("youtu.be")) {
+                    content = content.replaceAll("https://" + Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://" + invidiousHost + "/watch?v=" + youtubeId + "&local=true"));
+                    content = content.replaceAll(">" + Pattern.quote(matcher.group()), Matcher.quoteReplacement(">" + invidiousHost + "/watch?v=" + youtubeId + "&local=true"));
+                } else {
+                    content = content.replaceAll("https://" + Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://" + invidiousHost + "/" + youtubeId + "&local=true"));
+                    content = content.replaceAll(">" + Pattern.quote(matcher.group()), Matcher.quoteReplacement(">" + invidiousHost + "/" + youtubeId + "&local=true"));
                 }
 
 
@@ -649,8 +312,8 @@ public class Status implements Parcelable {
             while (matcher.find()) {
                 final String nitter_directory = matcher.group(2);
                 String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
-                content = content.replaceAll("https://"+Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://"+nitterHost + nitter_directory));
-                content = content.replaceAll(">"+Pattern.quote(matcher.group()), Matcher.quoteReplacement(">"+nitterHost + nitter_directory));
+                content = content.replaceAll("https://" + Pattern.quote(matcher.group()), Matcher.quoteReplacement("https://" + nitterHost + nitter_directory));
+                content = content.replaceAll(">" + Pattern.quote(matcher.group()), Matcher.quoteReplacement(">" + nitterHost + nitter_directory));
             }
         }
 
@@ -751,7 +414,6 @@ public class Status implements Parcelable {
             status.setDisplayNameSpan(displayNameSpan);
     }
 
-
     private static SpannableString treatment(final Context context, SpannableString spannableString, Status status) {
 
         URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
@@ -801,7 +463,15 @@ public class Status implements Parcelable {
                     uri = new URI(url);
                     instance = uri.getHost();
                 } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                    if( url.contains("|")) {
+                        try {
+                            uri = new URI(url.split("\\|")[0]);
+                            instance = uri.getHost();
+                        } catch (URISyntaxException ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
                 }
                 if (key.startsWith("@"))
                     acct = key.substring(1).split("\\|")[0];
@@ -812,18 +482,20 @@ public class Status implements Parcelable {
                 account.setInstance(instance);
                 account.setUrl(url);
                 String accountId = null;
-                for (Mention mention : mentions) {
-                    String[] accountMentionAcct = mention.getAcct().split("@");
-                    //Different isntance
-                    if (accountMentionAcct.length > 1) {
-                        if (mention.getAcct().equals(account.getAcct() + "@" + account.getInstance())) {
-                            accountId = mention.getId();
-                            break;
-                        }
-                    } else {
-                        if (mention.getAcct().equals(account.getAcct())) {
-                            accountId = mention.getId();
-                            break;
+                if( mentions != null) {
+                    for (Mention mention : mentions) {
+                        String[] accountMentionAcct = mention.getAcct().split("@");
+                        //Different isntance
+                        if (accountMentionAcct.length > 1) {
+                            if (mention.getAcct().equals(account.getAcct() + "@" + account.getInstance())) {
+                                accountId = mention.getId();
+                                break;
+                            }
+                        } else {
+                            if (mention.getAcct().equals(account.getAcct())) {
+                                accountId = mention.getId();
+                                break;
+                            }
                         }
                     }
                 }
@@ -846,6 +518,14 @@ public class Status implements Parcelable {
             spannableStringT.removeSpan(span);
         }
 
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if (l_c == -1) {
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
+        }
+        final int link_color = l_c;
+
         matcher = Helper.twitterPattern.matcher(spannableStringT);
         while (matcher.find()) {
             int matchStart = matcher.start(2);
@@ -855,20 +535,25 @@ public class Status implements Parcelable {
                 spannableStringT.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View textView) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twittername.substring(1).replace("@twitter.com", "")));
-                        context.startActivity(intent);
+                        Intent intent;
+                        boolean nitter = sharedpreferences.getBoolean(Helper.SET_NITTER, false);
+                        if (nitter) {
+                            String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+                            String url = "https://" + nitterHost + "/" + twittername.substring(1).replace("@twitter.com", "");
+                            Helper.openBrowser(context, url);
+                        } else {
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twittername.substring(1).replace("@twitter.com", "")));
+                            context.startActivity(intent);
+                        }
+
+
                     }
 
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -915,12 +600,7 @@ public class Status implements Parcelable {
                                                      public void updateDrawState(@NonNull TextPaint ds) {
                                                          super.updateDrawState(ds);
                                                          ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                         ds.setColor(link_color);
                                                      }
                                                  },
                                 startPosition, endPosition,
@@ -950,63 +630,191 @@ public class Status implements Parcelable {
                         endPosition = startPosition + key.length();
                     }
                     if (endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
-                        spannableStringT.setSpan(new ClickableSpan() {
-                                                     @Override
-                                                     public void onClick(@NonNull View textView) {
-                                                         String finalUrl = url;
-                                                         Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                                                         Matcher matcherLink = link.matcher(url);
-                                                         if (matcherLink.find() && !url.contains("medium.com")) {
-                                                             if (matcherLink.group(3) != null && matcherLink.group(3).length() > 0) { //It's a toot
-                                                                 CrossActions.doCrossConversation(context, finalUrl);
-                                                             } else {//It's an account
-                                                                 Account account = new Account();
-                                                                 String acct = matcherLink.group(2);
-                                                                 if (acct != null) {
-                                                                     if (acct.startsWith("@"))
-                                                                         acct = acct.substring(1);
-                                                                     account.setAcct(acct);
-                                                                     account.setInstance(matcherLink.group(1));
-                                                                     CrossActions.doCrossProfile(context, account);
-                                                                 }
 
-                                                             }
 
-                                                         } else {
-                                                             link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                                                             matcherLink = link.matcher(url);
-                                                             if (matcherLink.find()) { //Peertubee video
-                                                                 Intent intent = new Intent(context, PeertubeActivity.class);
-                                                                 Bundle b = new Bundle();
-                                                                 String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                                                                 b.putString("peertubeLinkToFetch", url);
-                                                                 b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
-                                                                 b.putString("video_id", matcherLink.group(2));
-                                                                 intent.putExtras(b);
-                                                                 context.startActivity(intent);
-                                                             } else {
-                                                                 if (!url.startsWith("http://") && !url.startsWith("https://"))
-                                                                     finalUrl = "http://" + url;
-                                                                 Helper.openBrowser(context, finalUrl);
-                                                             }
 
+                        spannableStringT.setSpan(new LongClickableSpan() {
+                                             @Override
+                                             public void onClick(@NonNull View textView) {
+                                                 String finalUrl = url;
+                                                 Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                                 Matcher matcherLink = link.matcher(url);
+                                                 if (matcherLink.find() && !url.contains("medium.com")) {
+                                                     if (matcherLink.group(3) != null && matcherLink.group(3).length() > 0) { //It's a toot
+                                                         CrossActions.doCrossConversation(context, finalUrl);
+                                                     } else {//It's an account
+                                                         Account account = new Account();
+                                                         String acct = matcherLink.group(2);
+                                                         if (acct != null) {
+                                                             if (acct.startsWith("@"))
+                                                                 acct = acct.substring(1);
+                                                             account.setAcct(acct);
+                                                             account.setInstance(matcherLink.group(1));
+                                                             CrossActions.doCrossProfile(context, account);
                                                          }
+
                                                      }
 
-                                                     @Override
-                                                     public void updateDrawState(@NonNull TextPaint ds) {
-                                                         super.updateDrawState(ds);
-                                                         ds.setUnderlineText(false);
-                                                         if (theme == THEME_DARK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                         else if (theme == THEME_BLACK)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                         else if (theme == THEME_LIGHT)
-                                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                 } else {
+                                                     link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                                                     matcherLink = link.matcher(url);
+                                                     if (matcherLink.find()) { //Peertubee video
+                                                         Intent intent = new Intent(context, PeertubeActivity.class);
+                                                         Bundle b = new Bundle();
+                                                         String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                                                         b.putString("peertubeLinkToFetch", url);
+                                                         b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
+                                                         b.putString("video_id", matcherLink.group(2));
+                                                         intent.putExtras(b);
+                                                         context.startActivity(intent);
+                                                     } else {
+                                                         if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
+                                                             finalUrl = "http://" + url;
+                                                         Helper.openBrowser(context, finalUrl);
                                                      }
-                                                 },
-                                startPosition, endPosition,
-                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                                                 }
+                                             }
+
+                                            @Override
+                                            public void onLongClick(@NonNull View textView) {
+                                                PopupMenu popup = new PopupMenu(context, textView);
+                                                popup.getMenuInflater()
+                                                        .inflate(R.menu.links_popup, popup.getMenu());
+                                                int style;
+                                                if (theme == Helper.THEME_DARK) {
+                                                    style = R.style.DialogDark;
+                                                } else if (theme == Helper.THEME_BLACK) {
+                                                    style = R.style.DialogBlack;
+                                                } else {
+                                                    style = R.style.Dialog;
+                                                }
+                                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                    public boolean onMenuItemClick(MenuItem item) {
+                                                        switch (item.getItemId()) {
+                                                            case R.id.action_show_link:
+                                                                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                                                                builder.setMessage(url);
+                                                                builder.setTitle(context.getString(R.string.display_full_link));
+                                                                builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                dialog.dismiss();
+                                                                            }
+                                                                        })
+                                                                        .show();
+                                                                break;
+                                                            case R.id.action_share_link:
+                                                                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                                                sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                                                                sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                                                                sendIntent.setType("text/plain");
+                                                                context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                                                break;
+
+                                                            case R.id.action_open_other_app:
+                                                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                                                intent.setData(Uri.parse(url));
+                                                                try {
+                                                                    context.startActivity(intent);
+                                                                } catch (Exception e) {
+                                                                    Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                                                                }
+                                                                break;
+                                                            case R.id.action_copy_link:
+                                                                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                                                                ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, url);
+                                                                if (clipboard != null) {
+                                                                    clipboard.setPrimaryClip(clip);
+                                                                    Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
+                                                                }
+                                                                break;
+                                                            case R.id.action_unshorten:
+                                                                Thread thread = new Thread() {
+                                                                    @Override
+                                                                    public void run() {
+                                                                        String response = new HttpsConnection(context, null).checkUrl(url);
+
+                                                                        Handler mainHandler = new Handler(context.getMainLooper());
+
+                                                                        Runnable myRunnable = new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                                                                                if( response != null ) {
+                                                                                    builder.setMessage(context.getString(R.string.redirect_detected,url,response));
+                                                                                    builder.setNegativeButton(R.string.copy_link, new DialogInterface.OnClickListener() {
+                                                                                        @Override
+                                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                                            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                                                                                            ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, response);
+                                                                                            if (clipboard != null) {
+                                                                                                clipboard.setPrimaryClip(clip);
+                                                                                                Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
+                                                                                            }
+                                                                                            dialog.dismiss();
+                                                                                        }
+                                                                                    });
+                                                                                    builder.setNeutralButton(R.string.share_link, new DialogInterface.OnClickListener() {
+                                                                                        @Override
+                                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                                                                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                                                                                            sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                                                                                            sendIntent.setType("text/plain");
+                                                                                            context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                                                                            dialog.dismiss();
+                                                                                        }
+                                                                                    });
+                                                                                }else{
+                                                                                    builder.setMessage(R.string.no_redirect);
+                                                                                }
+                                                                                builder.setTitle(context.getString(R.string.check_redirect));
+                                                                                builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                        dialog.dismiss();
+                                                                                    }
+                                                                                })
+                                                                                .show();
+
+                                                                            }
+                                                                        };
+                                                                        mainHandler.post(myRunnable);
+
+                                                                    }
+                                                                };
+                                                                thread.start();
+                                                                break;
+                                                        }
+                                                        return true;
+                                                    }
+                                                });
+                                                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                                                    @Override
+                                                    public void onDismiss(PopupMenu menu) {
+                                                        BaseActivity.canShowActionMode = true;
+                                                    }
+                                                });
+                                                popup.show();
+                                                textView.clearFocus();
+                                                BaseActivity.canShowActionMode = false;
+                                            }
+
+
+                                             @Override
+                                             public void updateDrawState(@NonNull TextPaint ds) {
+                                                 super.updateDrawState(ds);
+                                                 ds.setUnderlineText(false);
+                                                 ds.setColor(link_color);
+                                             }
+                                         },
+                        startPosition, endPosition,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+
                     }
                 }
                 it.remove();
@@ -1034,12 +842,7 @@ public class Status implements Parcelable {
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        ds.setColor(link_color);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -1068,12 +871,7 @@ public class Status implements Parcelable {
                         public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
-                            if (theme == THEME_DARK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                            else if (theme == THEME_BLACK)
-                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                            else if (theme == THEME_LIGHT)
-                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            ds.setColor(link_color);
                         }
                     }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -1083,6 +881,14 @@ public class Status implements Parcelable {
     }
 
     public static void transformTranslation(Context context, Status status) {
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int l_c = prefs.getInt("theme_link_color", -1);
+        if (l_c == -1) {
+            l_c = ThemeHelper.getAttColor(context, R.attr.linkColor);
+        }
+        final int link_color = l_c;
 
         if (((Activity) context).isFinishing() || status == null)
             return;
@@ -1103,8 +909,8 @@ public class Status implements Parcelable {
         }
         SpannableString contentSpanTranslated = status.getContentSpanTranslated();
         Matcher matcherALink = Patterns.WEB_URL.matcher(contentSpanTranslated.toString());
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+
         while (matcherALink.find()) {
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
@@ -1114,7 +920,7 @@ public class Status implements Parcelable {
                                                   @Override
                                                   public void onClick(@NonNull View textView) {
                                                       String finalUrl = url;
-                                                      if (!url.startsWith("http://") && !url.startsWith("https://"))
+                                                      if (!url.toLowerCase().startsWith("http://") && !url.toLowerCase().startsWith("https://"))
                                                           finalUrl = "http://" + url;
                                                       Helper.openBrowser(context, finalUrl);
                                                   }
@@ -1123,12 +929,7 @@ public class Status implements Parcelable {
                                                   public void updateDrawState(@NonNull TextPaint ds) {
                                                       super.updateDrawState(ds);
                                                       ds.setUnderlineText(false);
-                                                      if (theme == THEME_DARK)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                      else if (theme == THEME_BLACK)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                      else if (theme == THEME_LIGHT)
-                                                          ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                                      ds.setColor(link_color);
                                                   }
                                               },
                         matchStart, matchEnd,
@@ -1139,7 +940,6 @@ public class Status implements Parcelable {
         SpannableString displayNameSpan = new SpannableString(displayName);
         status.setDisplayNameSpan(displayNameSpan);
     }
-
 
     public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Status status) {
 
@@ -1265,9 +1065,16 @@ public class Status implements Parcelable {
                                         if (endPosition <= contentSpan.toString().length() && endPosition >= startPosition) {
                                             ImageSpan imageSpan;
                                             if (!disableAnimatedEmoji) {
-                                                resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
-                                                resource.setVisible(true, true);
-                                                imageSpan = new ImageSpan(resource);
+                                                try {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+                                                }catch (Exception e) {
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
 
                                             } else {
                                                 Bitmap bitmap = drawableToBitmap(resource.getCurrent());
@@ -1318,6 +1125,104 @@ public class Status implements Parcelable {
         }
     }
 
+    public static void makeEmojiPoll(final Context context, final OnRetrieveEmojiInterface listener, Status status) {
+        if (((Activity) context).isFinishing())
+            return;
+        if (status.getReblog() != null && status.getReblog().getEmojis() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        if (status.getReblog() == null && status.getEmojis() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableAnimatedEmoji = sharedpreferences.getBoolean(Helper.SET_DISABLE_ANIMATED_EMOJI, false);
+        Poll poll = status.getReblog() == null ? status.getPoll() : status.getReblog().getPoll();
+        if (poll == null || poll.getOptionsList() == null) {
+            status.setPollEmojiFound(true);
+            return;
+        }
+        int inc = 0;
+        for (PollOptions pollOption : poll.getOptionsList()) {
+            inc++;
+            SpannableString titleSpan = new SpannableString(pollOption.getTitle());
+            if (emojis != null && emojis.size() > 0) {
+                final int[] i = {0};
+                for (final Emojis emoji : emojis) {
+                    int finalInc = inc;
+                    Glide.with(context)
+                            .asFile()
+                            .load(emoji.getUrl())
+                            .listener(new RequestListener<File>() {
+                                @Override
+                                public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    i[0]++;
+                                    if (i[0] == (emojis.size())) {
+                                        listener.onRetrieveEmoji(status, false);
+                                    }
+                                    return false;
+                                }
+                            })
+                            .into(new SimpleTarget<File>() {
+                                @Override
+                                public void onResourceReady(@NonNull File resourceFile, @Nullable Transition<? super File> transition) {
+                                    Drawable resource;
+                                    if (GifParser.isGif(resourceFile.getAbsolutePath())) {
+                                        resource = GifDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    } else if (APNGParser.isAPNG(resourceFile.getAbsolutePath())) {
+                                        resource = APNGDrawable.fromFile(resourceFile.getAbsolutePath());
+                                    } else {
+                                        resource = Drawable.createFromPath(resourceFile.getAbsolutePath());
+                                    }
+                                    if (resource == null) {
+                                        return;
+                                    }
+                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                    if (titleSpan.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = titleSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if (endPosition <= titleSpan.toString().length() && endPosition >= startPosition) {
+                                                ImageSpan imageSpan;
+                                                if (!disableAnimatedEmoji) {
+                                                    resource.setBounds(0, 0, (int) Helper.convertDpToPixel(20, context), (int) Helper.convertDpToPixel(20, context));
+                                                    resource.setVisible(true, true);
+                                                    imageSpan = new ImageSpan(resource);
+
+                                                } else {
+                                                    Bitmap bitmap = drawableToBitmap(resource.getCurrent());
+                                                    imageSpan = new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(bitmap, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false));
+                                                }
+                                                titleSpan.setSpan(
+                                                        imageSpan, startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                                pollOption.setTitleSpan(titleSpan);
+                                            }
+                                        }
+                                    }
+                                    i[0]++;
+
+                                    if (i[0] == (emojis.size()) && finalInc == poll.getOptionsList().size()) {
+                                        status.setPollEmojiFound(true);
+                                        listener.onRetrieveEmoji(status, false);
+                                    }
+                                }
+                            });
+
+                }
+            }
+        }
+    }
 
     public static void makeImage(final Context context, final OnRetrieveImageInterface listener, Status status) {
 
@@ -1386,7 +1291,6 @@ public class Status implements Parcelable {
 
         }
     }
-
 
     public static void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener, Status status) {
 
@@ -1458,7 +1362,6 @@ public class Status implements Parcelable {
         }
     }
 
-
     private static void replaceQuoteSpans(Context context, Spannable spannable) {
         QuoteSpan[] quoteSpans = spannable.getSpans(0, spannable.length(), QuoteSpan.class);
         for (QuoteSpan quoteSpan : quoteSpans) {
@@ -1468,11 +1371,7 @@ public class Status implements Parcelable {
             spannable.removeSpan(quoteSpan);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            int colord;
-            if (theme == THEME_BLACK)
-                colord = ContextCompat.getColor(context, R.color.dark_blockquote);
-            else
-                colord = ContextCompat.getColor(context, R.color.mastodonC4);
+            int colord = ContextCompat.getColor(context, R.color.cyanea_accent_reference);
             spannable.setSpan(new CustomQuoteSpan(
                             ContextCompat.getColor(context, R.color.transparent),
                             colord,
@@ -1484,6 +1383,363 @@ public class Status implements Parcelable {
         }
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.uri);
+        dest.writeString(this.url);
+        dest.writeParcelable(this.account, flags);
+        dest.writeString(this.in_reply_to_id);
+        dest.writeString(this.in_reply_to_account_id);
+        dest.writeParcelable(this.reblog, flags);
+        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeInt(this.reblogs_count);
+        dest.writeInt(this.favourites_count);
+        dest.writeInt(this.replies_count);
+        dest.writeByte(this.reblogged ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.favourited ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.muted ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.pinned ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.bookmarked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.visibility);
+        dest.writeByte(this.attachmentShown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.spoilerShown ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.media_attachments);
+        dest.writeParcelable(this.art_attachment, flags);
+        dest.writeTypedList(this.mentions);
+        dest.writeTypedList(this.emojis);
+        dest.writeTypedList(this.tags);
+        dest.writeParcelable(this.application, flags);
+        dest.writeParcelable(this.card, flags);
+        dest.writeString(this.language);
+        dest.writeByte(this.isTranslated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isTranslationShown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isVisible ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.fetchMore ? (byte) 1 : (byte) 0);
+        dest.writeString(this.content);
+        dest.writeString(this.contentCW);
+        dest.writeString(this.contentTranslated);
+        TextUtils.writeToParcel(this.contentSpan, dest, flags);
+        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
+        TextUtils.writeToParcel(this.contentSpanCW, dest, flags);
+        TextUtils.writeToParcel(this.contentSpanTranslated, dest, flags);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeInt(this.itemViewType);
+        dest.writeString(this.conversationId);
+        dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.numberLines);
+        dest.writeStringList(this.conversationProfilePicture);
+        dest.writeString(this.webviewURL);
+        dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
+        dest.writeString(this.scheduled_at);
+        dest.writeString(this.contentType);
+        dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.poll, flags);
+        dest.writeInt(this.media_height);
+        dest.writeByte(this.cached ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.autoHiddenCW ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.customFeaturesDisplayed ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.shortReply ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.warningFetched);
+        dest.writeStringList(this.imageURL);
+        dest.writeInt(this.viewType);
+        dest.writeByte(this.isFocused ? (byte) 1 : (byte) 0);
+        dest.writeString(this.quickReplyContent);
+        dest.writeString(this.quickReplyPrivacy);
+        dest.writeByte(this.showBottomLine ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.showTopLine ? (byte) 1 : (byte) 0);
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public String getIn_reply_to_id() {
+        return in_reply_to_id;
+    }
+
+    public void setIn_reply_to_id(String in_reply_to_id) {
+        this.in_reply_to_id = in_reply_to_id;
+    }
+
+    public String getIn_reply_to_account_id() {
+        return in_reply_to_account_id;
+    }
+
+    public void setIn_reply_to_account_id(String in_reply_to_account_id) {
+        this.in_reply_to_account_id = in_reply_to_account_id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(Context context, String content) {
+        //Remove UTM by default
+        this.content = Helper.remove_tracking_param(context, content);
+    }
+
+    public boolean isShortReply() {
+        return shortReply;
+    }
+
+    public void setShortReply(boolean shortReply) {
+        this.shortReply = shortReply;
+    }
+
+    public Status getReblog() {
+        return reblog;
+    }
+
+    public void setReblog(Status reblog) {
+        this.reblog = reblog;
+    }
+
+    public int getReblogs_count() {
+        return reblogs_count;
+    }
+
+    public void setReblogs_count(int reblogs_count) {
+        this.reblogs_count = reblogs_count;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public int getFavourites_count() {
+        return favourites_count;
+    }
+
+    public void setFavourites_count(int favourites_count) {
+        this.favourites_count = favourites_count;
+    }
+
+    public SpannableString getDisplayNameSpan() {
+        return this.displayNameSpan;
+    }
+
+    public void setDisplayNameSpan(SpannableString displayNameSpan) {
+        this.displayNameSpan = displayNameSpan;
+    }
+
+    public boolean isReblogged() {
+        return reblogged;
+    }
+
+    public void setReblogged(boolean reblogged) {
+        this.reblogged = reblogged;
+    }
+
+    public boolean isFavourited() {
+        return favourited;
+    }
+
+    public void setFavourited(boolean favourited) {
+        this.favourited = favourited;
+    }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    public boolean isSensitive() {
+        return sensitive;
+    }
+
+    public void setSensitive(boolean sensitive) {
+        this.sensitive = sensitive;
+    }
+
+    public String getSpoiler_text() {
+        return contentCW;
+    }
+
+    public void setSpoiler_text(String spoiler_text) {
+        this.contentCW = spoiler_text;
+    }
+
+    public ArrayList<Attachment> getMedia_attachments() {
+        return media_attachments;
+    }
+
+    public void setMedia_attachments(ArrayList<Attachment> media_attachments) {
+        this.media_attachments = media_attachments;
+    }
+
+    public List<Mention> getMentions() {
+        return mentions;
+    }
+
+    public void setMentions(List<Mention> mentions) {
+        this.mentions = mentions;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public String getTagsString() {
+        //iterate through tags and create comma delimited string of tag names
+        String tag_names = "";
+        for (Tag t : tags) {
+            if (tag_names.equals("")) {
+                tag_names = t.getName();
+            } else {
+                tag_names = tag_names + ", " + t.getName();
+            }
+        }
+        return tag_names;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public boolean isAttachmentShown() {
+        return attachmentShown;
+    }
+
+    public void setAttachmentShown(boolean attachmentShown) {
+        this.attachmentShown = attachmentShown;
+    }
+
+    public boolean isSpoilerShown() {
+        return spoilerShown;
+    }
+
+    public void setSpoilerShown(boolean spoilerShown) {
+        this.spoilerShown = spoilerShown;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public boolean isTranslated() {
+        return isTranslated;
+    }
+
+    public void setTranslated(boolean translated) {
+        isTranslated = translated;
+    }
+
+    public boolean isTranslationShown() {
+        return isTranslationShown;
+    }
+
+    public void setTranslationShown(boolean translationShown) {
+        isTranslationShown = translationShown;
+    }
+
+    public String getContentTranslated() {
+        return contentTranslated;
+    }
+
+    public void setContentTranslated(String content_translated) {
+        this.contentTranslated = content_translated;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    public List<Emojis> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<Emojis> emojis) {
+        this.emojis = emojis;
+    }
+
+    public boolean isEmojiFound() {
+        return isEmojiFound;
+    }
+
+    public void setEmojiFound(boolean emojiFound) {
+        isEmojiFound = emojiFound;
+    }
+
+    public boolean isImageFound() {
+        return isImageFound;
+    }
+
+    public void setImageFound(boolean imageFound) {
+        isImageFound = imageFound;
+    }
 
     public SpannableString getContentSpan() {
         return contentSpan;
@@ -1509,12 +1765,12 @@ public class Status implements Parcelable {
         this.contentSpanTranslated = contentSpanTranslated;
     }
 
-    public void setClickable(boolean clickable) {
-        isClickable = clickable;
-    }
-
     public boolean isClickable() {
         return isClickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        isClickable = clickable;
     }
 
     public boolean isEmojiTranslateFound() {
@@ -1556,6 +1812,9 @@ public class Status implements Parcelable {
     }
 
     public boolean isBookmarked() {
+        if (this.getReblog() != null && this.getReblog().isBookmarked()) {
+            bookmarked = true;
+        }
         return bookmarked;
     }
 
@@ -1777,5 +2036,62 @@ public class Status implements Parcelable {
 
     public void setDb_id(long db_id) {
         this.db_id = db_id;
+    }
+
+
+    public boolean isCommentsFetched() {
+        return commentsFetched;
+    }
+
+    public void setCommentsFetched(boolean commentsFetched) {
+        this.commentsFetched = commentsFetched;
+    }
+
+    public List<Status> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Status> comments) {
+        this.comments = comments;
+    }
+
+    public String getQuickReplyContent() {
+        return quickReplyContent;
+    }
+
+    public void setQuickReplyContent(String quickReplyContent) {
+        this.quickReplyContent = quickReplyContent;
+    }
+
+    public String getQuickReplyPrivacy() {
+        return quickReplyPrivacy;
+    }
+
+    public void setQuickReplyPrivacy(String quickReplyPrivacy) {
+        this.quickReplyPrivacy = quickReplyPrivacy;
+    }
+
+    public boolean isShowBottomLine() {
+        return showBottomLine;
+    }
+
+    public void setShowBottomLine(boolean showBottomLine) {
+        this.showBottomLine = showBottomLine;
+    }
+
+    public boolean isShowTopLine() {
+        return showTopLine;
+    }
+
+    public void setShowTopLine(boolean showTopLine) {
+        this.showTopLine = showTopLine;
+    }
+
+    public boolean isPollEmojiFound() {
+        return isPollEmojiFound;
+    }
+
+    public void setPollEmojiFound(boolean pollEmojiFound) {
+        isPollEmojiFound = pollEmojiFound;
     }
 }

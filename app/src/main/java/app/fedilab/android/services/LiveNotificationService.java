@@ -14,7 +14,6 @@ package app.fedilab.android.services;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,7 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.SpannableString;
@@ -64,11 +62,11 @@ import org.json.JSONObject;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Notification;
@@ -76,10 +74,10 @@ import app.fedilab.android.client.TLSSocketFactory;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
+import static app.fedilab.android.helper.Helper.getMainLogo;
+import static app.fedilab.android.helper.Helper.getNotificationIcon;
 
 
 /**
@@ -89,27 +87,71 @@ import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 
 public class LiveNotificationService extends Service implements NetworkStateReceiver.NetworkStateReceiverListener {
 
+    public static String CHANNEL_ID = "live_notifications";
+    public static int totalAccount = 0;
+    public static int eventsCount = 0;
+    private static HashMap<String, String> lastNotification = new HashMap<>();
+    private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
+
     static {
         Helper.installProvider();
     }
 
-    public static String CHANNEL_ID = "live_notifications";
     protected Account account;
-    private static HashMap<String, Thread> threads = new HashMap<>();
-    private static HashMap<String, String> lastNotification = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
-    private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
     private NotificationChannel channel;
-    public static int totalAccount = 0;
-    public static int eventsCount = 0;
 
     public void onCreate() {
         super.onCreate();
-
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            channel = new NotificationChannel(CHANNEL_ID,
+                    "Live notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
+        }
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
+        totalAccount = 0;
+        if( accountStreams != null) {
+            for (Account account : accountStreams) {
+                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
+                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
+                    if (allowStream) {
+                        totalAccount++;
+                    }
+                }
+            }
+        }
+        if (Build.VERSION.SDK_INT >= 26) {
+            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0,
+                    myIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(getString(R.string.top_notification))
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(getNotificationIcon(getApplicationContext()))
+                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
+
+            startForeground(1, notification);
+        }
+        if( !notify ){
+            stopSelf();
+            return;
+        }
+        if (totalAccount == 0) {
+            stopSelf();
+        }
     }
 
     private void startStream() {
@@ -131,44 +173,41 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (intent == null || intent.getBooleanExtra("stop", false)) {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if (!notify || intent == null || intent.getBooleanExtra("stop", false)) {
+            totalAccount = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                stopForeground(STOP_FOREGROUND_DETACH);
+                NotificationManager notificationManager =  (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                assert notificationManager != null;
+                notificationManager.deleteNotificationChannel(CHANNEL_ID);
+            }
+            if (intent != null) {
+                intent.replaceExtras(new Bundle());
+            }
             stopSelf();
         }
-        if (Build.VERSION.SDK_INT >= 26) {
-            channel = new NotificationChannel(CHANNEL_ID,
-                    "Live notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
-            totalAccount = 0;
-            for (Account account : accountStreams) {
-                if (account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA")) {
-                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
-                    if (allowStream) {
-                        totalAccount++;
-                    }
-                }
-            }
-
-            android.app.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle(getString(R.string.top_notification))
-                    .setSmallIcon(R.drawable.fedilab_notification_icon)
-                    .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
-
-            startForeground(1, notification);
+        if (totalAccount > 0) {
+            return START_STICKY;
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        networkStateReceiver.removeListener(this);
-        unregisterReceiver(networkStateReceiver);
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith("notif_live_")){
+                t.interrupt();
+                t = null;
+            };
+        }
+        Thread.currentThread().interrupt();
+        if( networkStateReceiver != null) {
+            networkStateReceiver.removeListener(this);
+            unregisterReceiver(networkStateReceiver);
+        }
     }
 
 
@@ -178,25 +217,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         return null;
     }
 
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        super.onTaskRemoved(rootIntent);
-        restart();
-    }
-
-    private void restart() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            Intent restartServiceIntent = new Intent(LiveNotificationService.this, LiveNotificationService.class);
-            restartServiceIntent.setPackage(getPackageName());
-            PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-            AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-            assert alarmService != null;
-            alarmService.set(
-                    AlarmManager.ELAPSED_REALTIME,
-                    SystemClock.elapsedRealtime() + 1000,
-                    restartServicePendingIntent);
-        }
-    }
 
     private void taks(Account account) {
 
@@ -216,9 +236,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 try {
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory(account.getInstance()).getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
+                } catch (KeyManagementException | NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
             }
@@ -265,16 +283,28 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     private void startWork(Account accountStream) {
 
         String key = accountStream.getAcct() + "@" + accountStream.getInstance();
-        if (!threads.containsKey(key) || !Objects.requireNonNull(threads.get(key)).isAlive()) {
-            Thread thread = new Thread() {
+        Thread thread = Helper.getThreadByName("notif_live_"+key);
+        if( thread == null){
+            thread = new Thread() {
                 @Override
                 public void run() {
                     taks(accountStream);
                 }
             };
+            thread.setName("notif_live_"+key);
             thread.start();
-            threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
+        } else if(thread.getState() != Thread.State.RUNNABLE) {
+            thread.interrupt();
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    taks(accountStream);
+                }
+            };
+            thread.setName("notif_live_"+key);
+            thread.start();
         }
+
 
     }
 
@@ -299,11 +329,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         ((NotificationManager) Objects.requireNonNull(getSystemService(Context.NOTIFICATION_SERVICE))).createNotificationChannel(channel);
                         android.app.Notification notificationChannel = new NotificationCompat.Builder(this, CHANNEL_ID)
                                 .setContentTitle(getString(R.string.top_notification))
-                                .setSmallIcon(R.drawable.fedilab_notification_icon)
+                                .setSmallIcon(getNotificationIcon(getApplicationContext()))
                                 .setContentText(getString(R.string.top_notification_message, String.valueOf(totalAccount), String.valueOf(eventsCount))).build();
 
                         startForeground(1, notificationChannel);
                     }
+
                     event = Helper.EventStreaming.NOTIFICATION;
                     notification = API.parseNotificationResponse(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     if (notification == null) {
@@ -320,10 +351,16 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if (lastNotification.containsKey(key) && notification.getId().compareTo(Objects.requireNonNull(lastNotification.get(key))) <= 0) {
                         canNotify = false;
                     }
+                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                    if (notification.getId().compareTo(Objects.requireNonNull(lastNotif)) <= 0) {
+                        canNotify = false;
+                    }
                     boolean allowStream = sharedpreferences.getBoolean(Helper.SET_ALLOW_STREAM + account.getId() + account.getInstance(), true);
                     if (!allowStream) {
                         canNotify = false;
                     }
+
+
                     if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && liveNotifications && canNotify && notify) {
                         lastNotification.put(key, notification.getId());
                         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -381,6 +418,18 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                         canSendBroadCast = false;
                                     }
                                     break;
+                                case "follow_request":
+                                    notifType = Helper.NotifType.FOLLLOW;
+                                    if (notif_follow) {
+                                        if (notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                                            message = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true), getString(R.string.notif_follow_request));
+                                        else
+                                            message = String.format("@%s %s", notification.getAccount().getAcct(), getString(R.string.notif_follow_request));
+                                        targeted_account = notification.getAccount().getId();
+                                    } else {
+                                        canSendBroadCast = false;
+                                    }
+                                    break;
                                 case "follow":
                                     notifType = Helper.NotifType.FOLLLOW;
                                     if (notif_follow) {
@@ -434,7 +483,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                                     @Override
                                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                         Helper.notify_user(getApplicationContext(), account, intent, BitmapFactory.decodeResource(getResources(),
-                                                                R.drawable.mastodonlogo), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
+                                                                getMainLogo(getApplicationContext())), finalNotifType, "@" + notification.getAccount().getAcct(), finalMessage);
                                                         return false;
                                                     }
                                                 })
@@ -484,14 +533,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void networkUnavailable() {
-        Iterator it = threads.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getValue() == null || !((Thread) pair.getValue()).isAlive()) {
-                if ((pair.getValue()) != null)
-                    ((Thread) pair.getValue()).interrupt();
-            }
-            it.remove();
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith("notif_live_")){
+                t.interrupt();
+                t = null;
+            };
         }
+        Thread.currentThread().interrupt();
     }
 }

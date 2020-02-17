@@ -19,12 +19,12 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
-import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.interfaces.OnRetrieveAccountInterface;
 
 
@@ -50,7 +50,7 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             API api = new API(this.contextReference.get());
             account = api.getAccount(targetedId);
             error = api.getError();

@@ -4,13 +4,14 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 29
-        versionCode 316
-        versionName "2.19.1"
+        versionCode 349
+        versionName "2.30.0"
         multiDexEnabled true
         renderscriptTargetApi 28 as int
         renderscriptSupportModeEnabled true
+
     }
     dexOptions {
         javaMaxHeapSize "4g"
@@ -54,14 +55,27 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 }
+
+
+task copyAllReleaseNotes(type: Copy) {
+    from "$buildDir/../src/main/assets/changelogs/"
+    include "*.txt"
+    into "$buildDir/../../fastlane/metadata/android/en-US/changelogs/"
+}
+
+task gitPushReleaseNotes(type: Exec, dependsOn: 'copyAllReleaseNotes') {
+    ['sh', '-c', "git add $buildDir/../../fastlane/metadata/android/en-US/changelogs/*"].execute().text.trim()
+    ['sh', '-c', "git commit -m 'copy release notes'"].execute().text.trim()
+    ['sh', '-c', "git push"].execute().text.trim()
+}
+
 ext.supportLibraryVersion = '29.0.2'
 ext.glideLibraryVersion = '4.9.0'
-ext.conscryptLibraryVersion = '2.1.0'
-ext.evernoteLibraryVersion = '1.3.0-rc1'
+ext.conscryptLibraryVersion = '2.2.1'
+ext.evernoteLibraryVersion = '1.2.6'
 ext.gsonLibraryVersion = '2.8.2'
-ext.guavaLibraryVersion = '24.1-android'
-ext.photoViewLibraryVersion = '2.1.3'
-ext.swipebackLibraryVersion = '1.0.3'
+ext.guavaLibraryVersion = '28.2-android'
+ext.photoViewLibraryVersion = '2.3.0'
 ext.ratethisappLibraryVersion = '1.2.0'
 ext.uploadServiceVersion = "3.5.2"
 ext.torrentstreamVersion = "2.5.0"
@@ -70,14 +84,19 @@ ext.netCipherVersion = "2.0.0-alpha1"
 ext.acraVersion = "5.4.0"
 
 dependencies {
+    implementation 'com.android.support:appcompat-v7:29.0.2'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.browser:browser:1.0.0'
-    implementation 'androidx.exifinterface:exifinterface:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.browser:browser:1.2.0'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     implementation "com.github.bumptech.glide:glide:$glideLibraryVersion"
+    implementation ("com.github.bumptech.glide:recyclerview-integration:$glideLibraryVersion") {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+    }
     annotationProcessor "com.github.bumptech.glide:compiler:$glideLibraryVersion"
     annotationProcessor 'com.android.support:support-annotations:28.0.0'
     implementation "org.conscrypt:conscrypt-android:$conscryptLibraryVersion"
@@ -85,10 +104,10 @@ dependencies {
     implementation "com.google.code.gson:gson:$gsonLibraryVersion"
     implementation "com.google.guava:guava:$guavaLibraryVersion"
     implementation "com.github.chrisbanes:PhotoView:$photoViewLibraryVersion"
-    implementation "com.github.stom79:SwipeBackLayout:$swipebackLibraryVersion"
+    implementation 'com.r0adkll:slidableactivity:2.1.0'
     implementation 'com.github.stom79:country-picker-android:1.2.0'
-    implementation 'com.github.stom79:mytransl:1.5'
-    implementation 'com.github.stom79:SparkButton:1.0.12'
+    implementation 'com.github.stom79:mytransl:2.0'
+    implementation 'com.github.stom79:SparkButton:1.0.13'
     implementation "com.koushikdutta.async:androidasync:2.+"
     implementation 'com.vanniktech:emoji-one:0.6.0'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
@@ -96,12 +115,11 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation 'com.elconfidencial.bubbleshowcase:bubbleshowcase:1.3.1'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.android.exoplayer:exoplayer:2.9.3'
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.6'
     implementation 'org.apache.poi:poi:3.16'
     implementation 'com.github.mabbas007:TagsEditText:1.0.5'
-    implementation 'com.jaredrummler:material-spinner:1.3.1'
     implementation "com.tonyodev.fetch2:fetch2:2.3.6"
-    implementation 'com.github.stom79:horizontalbargraph:1.5'
+    implementation 'com.github.stom79:horizontalbargraph:1.6'
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
     implementation 'ja.burhanrashid52:photoeditor:0.4.0'
@@ -123,8 +141,7 @@ dependencies {
     implementation 'com.github.penfeizhou.android.animation:apng:1.1.0'
     implementation 'com.github.penfeizhou.android.animation:gif:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-
-    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
-
+    implementation 'com.github.smarteist:autoimageslider:1.3.2'
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+    implementation 'com.jaredrummler:cyanea:1.0.2'
 }

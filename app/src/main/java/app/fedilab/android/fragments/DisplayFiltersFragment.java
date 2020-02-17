@@ -14,21 +14,12 @@ package app.fedilab.android.fragments;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,22 +35,28 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
+import app.fedilab.android.asynctasks.ManageFiltersAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.drawers.FilterAdapter;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnFilterActionInterface;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.asynctasks.ManageFiltersAsyncTask;
-import app.fedilab.android.interfaces.OnFilterActionInterface;
 
 import static app.fedilab.android.activities.BaseMainActivity.mPageReferenceMap;
 
@@ -130,8 +127,8 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                     CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
                     CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
                     Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
-                    ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()),
-                            R.array.filter_expire, android.R.layout.simple_spinner_item);
+                    ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+                            R.array.filter_expire, android.R.layout.simple_spinner_dropdown_item);
                     filter_expire.setAdapter(adapterResize);
                     final int[] expire = {-1};
                     filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -241,7 +238,11 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
         if (actionType == ManageFiltersAsyncTask.action.GET_ALL_FILTER) {

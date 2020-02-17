@@ -14,16 +14,12 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -34,9 +30,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Relationship;
@@ -44,12 +46,9 @@ import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.drawers.AccountSearchDevAdapter;
 import app.fedilab.android.helper.ExpandableHeightListView;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -70,10 +69,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -90,6 +86,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(PartnerShipActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -101,10 +98,6 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
                 }
             });
             toolbar_title.setText(R.string.action_partnership);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PartnerShipActivity.this);
-            }
         }
 
         TextView about_partnership = findViewById(R.id.about_partnership);
@@ -146,7 +139,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
 
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
+    public void onRetrieveRemoteAccount(Results results, boolean devAccount) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
         if (results == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();

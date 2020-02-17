@@ -1,0 +1,16 @@
+它支援了：
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica。
+
+
+本應用程式有進階功能（特別是對 Pleroma 與 Mastodon）：
+
+- 多帳號支援
+- 從裝置為訊息排程
+- 排程轉嘟
+- 將訊息加入書籤
+- 追蹤並與遠端站臺互動
+- 一定時間內靜音帳號
+- 長按進行跨帳號動作
+- 翻譯功能
+- 藝術時間軸
+- 影片時間軸

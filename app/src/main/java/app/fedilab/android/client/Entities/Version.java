@@ -11,10 +11,6 @@ public class Version implements Comparable<Version> {
 
     private String version;
 
-    public final String get() {
-        return this.version;
-    }
-
     public Version(String version) {
         if (version == null)
             version = "2.1";
@@ -28,6 +24,10 @@ public class Version implements Comparable<Version> {
         if (!version.matches("[0-9]+(\\.[0-9]+)*"))
             version = "2.1";
         this.version = version;
+    }
+
+    public final String get() {
+        return this.version;
     }
 
     @Override

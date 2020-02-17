@@ -1,0 +1,16 @@
+Hauentzako euskarria du:
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
+
+
+Aplikazio honek ezaugarri aurreratuak ditu (bereziki Pleroma eta Mastodonekin):
+
+- Hainbat kontuentzako euskarria
+- Programatu mezuak gailutik
+- Programatu bultzadak
+- Mezuen laster-markak
+- Jarraitu urruneko instantziak eta hauekin aritu
+- Isildu kontuak denbora baterako
+- Kontu zeharkako ekintzak luze sakatuz
+- Itzulpen funtzioa
+- Arte denbora-lerroak
+- Bideo denbora-lerroak

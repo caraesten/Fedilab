@@ -16,7 +16,6 @@ package app.fedilab.android.activities;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,28 +23,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jaredrummler.materialspinner.MaterialSpinner;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
@@ -59,6 +58,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -66,13 +66,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import app.fedilab.android.interfaces.OnRetrievePeertubeInterface;
+import es.dmoral.toasty.Toasty;
 
 import static app.fedilab.android.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 
@@ -80,11 +80,12 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
 
 
     private final int PICK_IVDEO = 52378;
-    private Button set_upload_file, set_upload_submit;
-    private MaterialSpinner set_upload_privacy, set_upload_channel;
-    private TextView set_upload_file_name;
-    private HashMap<String, String> channels;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
+    private Button set_upload_file, set_upload_submit;
+    private Spinner set_upload_privacy, set_upload_channel;
+    private TextView set_upload_file_name;
+    private EditText video_title;
+    private HashMap<String, String> channels;
     private Uri uri;
     private String filename;
     private HashMap<Integer, String> privacyToSend;
@@ -99,10 +100,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -117,6 +115,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(PeertubeUploadActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -128,10 +127,6 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 }
             });
             toolbar_title.setText(R.string.upload_video);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeUploadActivity.this);
-            }
         }
         setContentView(R.layout.activity_peertube_upload);
 
@@ -140,9 +135,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_channel = findViewById(R.id.set_upload_channel);
         set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_submit = findViewById(R.id.set_upload_submit);
-
-        Helper.changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_privacy);
-        Helper.changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_channel);
+        video_title = findViewById(R.id.video_title);
 
         new RetrievePeertubeChannelsAsyncTask(PeertubeUploadActivity.this, PeertubeUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         channels = new HashMap<>();
@@ -181,10 +174,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             } else if (uriString.startsWith("file://")) {
                 filename = myFile.getName();
             }
-            if (filename != null) {
-                set_upload_file_name.setVisibility(View.VISIBLE);
-                set_upload_file_name.setText(filename);
+            if( filename == null){
+                filename = new Date().toString();
             }
+            set_upload_file_name.setVisibility(View.VISIBLE);
+            set_upload_file_name.setText(filename);
 
         }
     }
@@ -233,6 +227,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
+        if (peertubeInformation == null) {
+            return;
+        }
         LinkedHashMap<String, String> translations = null;
         if (peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
@@ -248,10 +245,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -261,9 +258,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_privacy.setAdapter(adapterPrivacies);
 
         //Manage privacies
-        set_upload_privacy.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_privacy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<Integer, String> privaciesCheck = new LinkedHashMap<>(peertubeInformation.getPrivacies());
                 Iterator it = privaciesCheck.entrySet().iterator();
                 int i = 0;
@@ -278,21 +275,23 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                     i++;
                 }
             }
-        });
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         set_upload_file.setEnabled(true);
 
         set_upload_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    if (ContextCompat.checkSelfPermission(PeertubeUploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PeertubeUploadActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                        return;
-                    }
+                if (ContextCompat.checkSelfPermission(PeertubeUploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PeertubeUploadActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return;
                 }
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -313,9 +312,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         });
 
         //Manage languages
-        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_channel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
@@ -330,6 +329,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                     it.remove();
                     i++;
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         set_upload_submit.setOnClickListener(new View.OnClickListener() {
@@ -357,6 +361,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         uploadConfig.getCancelled().message = getString(R.string.toast_cancelled);
                         uploadConfig.getCompleted().actions.add(new UploadNotificationAction(R.drawable.ic_check, getString(R.string.video_uploaded_action), clickIntent));
 
+                        if (video_title != null && video_title.getText() != null && video_title.getText().toString().trim().length() > 0) {
+                            filename = video_title.getText().toString().trim();
+                        }
                         String uploadId = UUID.randomUUID().toString();
                         uploadReceiver.setUploadID(uploadId);
                         new MultipartUploadRequest(PeertubeUploadActivity.this, uploadId, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")

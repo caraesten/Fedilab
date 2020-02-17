@@ -18,6 +18,7 @@ public class MainMenuItem {
 
     private boolean
             nav_news = true,
+            nav_trends = true,
             nav_list = true,
             nav_scheduled = true,
             nav_archive = true,
@@ -124,5 +125,13 @@ public class MainMenuItem {
 
     public void setNav_howto(boolean nav_howto) {
         this.nav_howto = nav_howto;
+    }
+
+    public boolean isNav_trends() {
+        return nav_trends;
+    }
+
+    public void setNav_trends(boolean nav_trends) {
+        this.nav_trends = nav_trends;
     }
 }

@@ -25,6 +25,10 @@ public class InstanceReg {
     private int total_users;
     private int last_week_users;
     private boolean selected = false;
+    private int totalVideos;
+    private String country;
+    private int totalInstanceFollowers;
+    private int totalInstanceFollowing;
 
     public String getDomain() {
         return domain;
@@ -96,5 +100,37 @@ public class InstanceReg {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public int getTotalVideos() {
+        return totalVideos;
+    }
+
+    public void setTotalVideos(int totalVideos) {
+        this.totalVideos = totalVideos;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getTotalInstanceFollowers() {
+        return totalInstanceFollowers;
+    }
+
+    public void setTotalInstanceFollowers(int totalInstanceFollowers) {
+        this.totalInstanceFollowers = totalInstanceFollowers;
+    }
+
+    public int getTotalInstanceFollowing() {
+        return totalInstanceFollowing;
+    }
+
+    public void setTotalInstanceFollowing(int totalInstanceFollowing) {
+        this.totalInstanceFollowing = totalInstanceFollowing;
     }
 }

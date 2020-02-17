@@ -5,25 +5,25 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.franmontiel.localechanger.LocaleChanger;
+import com.google.android.material.snackbar.Snackbar;
+import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.one.EmojiOneProvider;
 
 import java.util.Timer;
 
+import app.fedilab.android.BuildConfig;
 import app.fedilab.android.helper.Helper;
 import es.dmoral.toasty.Toasty;
 
@@ -33,23 +33,24 @@ import es.dmoral.toasty.Toasty;
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends CyaneaAppCompatActivity {
 
 
     public static final int READ_WRITE_STORAGE = 52;
     public static Timer timer;
-    private ProgressDialog mProgressDialog;
+    public static boolean canShowActionMode = true;
 
     static {
         Helper.installProvider();
         EmojiManager.install(new EmojiOneProvider());
     }
 
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-       /* if (BuildConfig.DEBUG) {
+        /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
@@ -62,9 +63,10 @@ public class BaseActivity extends AppCompatActivity {
                     .detectLeakedRegistrationObjects()
                     .detectActivityLeaks()
                     .penaltyLog()
-                    .penaltyDeath()
+                   // .penaltyDeath()
                     .build());
         }*/
+        canShowActionMode = true;
         super.onCreate(savedInstanceState);
 
     }
@@ -137,5 +139,15 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             Toasty.info(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        if (!canShowActionMode) {
+            mode.finish();
+        }
+        super.onActionModeStarted(mode);
+
     }
 }

@@ -1,14 +1,13 @@
 package app.fedilab.android.imageeditor.tools;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,23 +35,6 @@ public class EditingToolsAdapter extends RecyclerView.Adapter<EditingToolsAdapte
         mToolList.add(new ToolModel("Sticker", R.drawable.ic_sticker, ToolType.STICKER));
     }
 
-    public interface OnItemSelected {
-        void onToolSelected(ToolType toolType);
-    }
-
-    class ToolModel {
-        private String mToolName;
-        private int mToolIcon;
-        private ToolType mToolType;
-
-        ToolModel(String toolName, int toolIcon, ToolType toolType) {
-            mToolName = toolName;
-            mToolIcon = toolIcon;
-            mToolType = toolType;
-        }
-
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,6 +53,23 @@ public class EditingToolsAdapter extends RecyclerView.Adapter<EditingToolsAdapte
     @Override
     public int getItemCount() {
         return mToolList.size();
+    }
+
+    public interface OnItemSelected {
+        void onToolSelected(ToolType toolType);
+    }
+
+    class ToolModel {
+        private String mToolName;
+        private int mToolIcon;
+        private ToolType mToolType;
+
+        ToolModel(String toolName, int toolIcon, ToolType toolType) {
+            mToolName = toolName;
+            mToolIcon = toolIcon;
+            mToolType = toolType;
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

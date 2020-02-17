@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
+
 /**
  * Created by Thomas on 22/09/2017.
  * BroadcastReceiver for restarting the service
@@ -34,8 +35,7 @@ public class StopLiveNotificationReceiver extends BroadcastReceiver {
         streamingServiceIntent.putExtra("stop", true);
         try {
             context.startService(streamingServiceIntent);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
 }

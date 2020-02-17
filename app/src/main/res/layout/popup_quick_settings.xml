@@ -16,31 +16,31 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeContainer"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_vertical"
-        android:text="@string/settings_popup_message"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/settings_popup_message" />
 
     <!-- Choose stream -->
-    <com.jaredrummler.materialspinner.MaterialSpinner
-        android:layout_marginBottom="20dp"
+    <Spinner
         android:id="@+id/set_live_type"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        />
+
     <TextView
         android:id="@+id/set_live_type_indication"
-        android:textColor="@color/mastodonC2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 </LinearLayout>
 

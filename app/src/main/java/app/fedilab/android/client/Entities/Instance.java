@@ -30,6 +30,11 @@ public class Instance {
     private String version;
     private boolean registration;
     private boolean approval_required;
+    private Account contactAccount;
+    private int userCount;
+    private int statusCount;
+    private int domainCount;
+    private String thumbnail;
 
     private HashMap<String, Integer> poll_limits;
 
@@ -95,5 +100,45 @@ public class Instance {
 
     public void setApproval_required(boolean approval_required) {
         this.approval_required = approval_required;
+    }
+
+    public Account getContactAccount() {
+        return contactAccount;
+    }
+
+    public void setContactAccount(Account contactAccount) {
+        this.contactAccount = contactAccount;
+    }
+
+    public int getUserCount() {
+        return userCount;
+    }
+
+    public void setUserCount(int userCount) {
+        this.userCount = userCount;
+    }
+
+    public int getStatusCount() {
+        return statusCount;
+    }
+
+    public void setStatusCount(int statusCount) {
+        this.statusCount = statusCount;
+    }
+
+    public int getDomainCount() {
+        return domainCount;
+    }
+
+    public void setDomainCount(int domainCount) {
+        this.domainCount = domainCount;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

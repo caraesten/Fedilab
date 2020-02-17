@@ -29,14 +29,21 @@ import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,6 +52,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -62,6 +72,7 @@ import app.fedilab.android.client.Entities.Emojis;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Filters;
 import app.fedilab.android.client.Entities.HowToVideo;
+import app.fedilab.android.client.Entities.IdentityProof;
 import app.fedilab.android.client.Entities.Instance;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.InstanceReg;
@@ -79,6 +90,8 @@ import app.fedilab.android.client.Entities.Schedule;
 import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.Entities.StoredStatus;
 import app.fedilab.android.client.Entities.Tag;
+import app.fedilab.android.client.Entities.Trends;
+import app.fedilab.android.client.Entities.TrendsHistory;
 import app.fedilab.android.fragments.DisplayNotificationsFragment;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
@@ -110,78 +123,6 @@ public class API {
     private Error APIError;
     private List<String> domains;
 
-    public enum searchType {
-        TAGS,
-        STATUSES,
-        ACCOUNTS
-    }
-
-
-    public enum adminAction {
-        ENABLE,
-        APPROVE,
-        REJECT,
-        NONE,
-        SILENCE,
-        DISABLE,
-        UNSILENCE,
-        SUSPEND,
-        UNSUSPEND,
-        ASSIGN_TO_SELF,
-        UNASSIGN,
-        REOPEN,
-        RESOLVE,
-        GET_ACCOUNTS,
-        GET_ONE_ACCOUNT,
-        GET_REPORTS,
-        GET_ONE_REPORT
-    }
-
-
-    public enum StatusAction {
-        FAVOURITE,
-        UNFAVOURITE,
-        REBLOG,
-        UNREBLOG,
-        MUTE,
-        MUTE_NOTIFICATIONS,
-        UNMUTE,
-        MUTE_CONVERSATION,
-        UNMUTE_CONVERSATION,
-        BLOCK,
-        UNBLOCK,
-        FOLLOW,
-        UNFOLLOW,
-        CREATESTATUS,
-        UNSTATUS,
-        AUTHORIZE,
-        REJECT,
-        REPORT,
-        REMOTE_FOLLOW,
-        PIN,
-        UNPIN,
-        ENDORSE,
-        UNENDORSE,
-        SHOW_BOOST,
-        HIDE_BOOST,
-        BLOCK_DOMAIN,
-        RATEVIDEO,
-        PEERTUBECOMMENT,
-        PEERTUBEREPLY,
-        PEERTUBEDELETECOMMENT,
-        PEERTUBEDELETEVIDEO,
-        UPDATESERVERSCHEDULE,
-        DELETESCHEDULED,
-        REFRESHPOLL
-    }
-
-
-    public enum accountPrivacy {
-        PUBLIC,
-        LOCKED
-    }
-
-
     public API(Context context) {
         this.context = context;
         if (context == null) {
@@ -190,6 +131,9 @@ public class API {
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && tootPerPage > 30) {
+            tootPerPage = 30;
+        }
         accountPerPage = Helper.ACCOUNTS_PER_PAGE;
         notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
         this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -211,6 +155,1551 @@ public class API {
         APIError = null;
     }
 
+
+    public API(Context context, String instance, String token) {
+        this.context = context;
+        if (context == null) {
+            apiResponse = new APIResponse();
+            APIError = new Error();
+            return;
+        }
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED && tootPerPage > 30) {
+            tootPerPage = 30;
+        }
+        accountPerPage = Helper.ACCOUNTS_PER_PAGE;
+        notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
+        if (instance != null)
+            this.instance = instance;
+        else
+            this.instance = Helper.getLiveInstance(context);
+
+        if (token != null)
+            this.prefKeyOauthTokenT = token;
+        else
+            this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        apiResponse = new APIResponse();
+        APIError = null;
+    }
+
+    /**
+     * Parse json response an unique Car
+     *
+     * @param resobj JSONObject
+     * @return Card
+     */
+    private static Card parseCardResponse(JSONObject resobj) {
+
+        Card card = new Card();
+        try {
+            card.setUrl(resobj.get("url").toString());
+            card.setTitle(resobj.get("title").toString());
+            card.setDescription(resobj.get("description").toString());
+            card.setImage(resobj.get("image").toString());
+
+            card.setType(resobj.get("type").toString());
+            try {
+                card.setAuthor_name(resobj.get("author_name").toString());
+            } catch (Exception e) {
+                card.setAuthor_name(null);
+            }
+            try {
+                card.setAuthor_url(resobj.get("author_url").toString());
+            } catch (Exception e) {
+                card.setAuthor_url(null);
+            }
+            try {
+                card.setHtml(resobj.get("html").toString());
+            } catch (Exception e) {
+                card.setHtml(null);
+            }
+            try {
+                card.setEmbed_url(resobj.get("embed_url").toString());
+            } catch (Exception e) {
+                card.setEmbed_url(null);
+            }
+            try {
+                card.setProvider_name(resobj.get("provider_name").toString());
+            } catch (Exception e) {
+                card.setProvider_name(null);
+            }
+            try {
+                card.setProvider_url(resobj.get("provider_url").toString());
+            } catch (Exception e) {
+                card.setProvider_url(null);
+            }
+            try {
+                card.setHeight(Integer.parseInt(resobj.get("height").toString()));
+            } catch (Exception e) {
+                card.setHeight(0);
+            }
+            try {
+                card.setWidth(Integer.parseInt(resobj.get("width").toString()));
+            } catch (Exception e) {
+                card.setWidth(0);
+            }
+        } catch (JSONException e) {
+            card = null;
+        }
+        return card;
+    }
+
+    /**
+     * Parse json response an unique instance social result
+     *
+     * @param resobj JSONObject
+     * @return InstanceSocial
+     */
+    public static InstanceSocial parseInstanceSocialResponse(Context context, JSONObject resobj) {
+
+        InstanceSocial instanceSocial = new InstanceSocial();
+        try {
+
+
+            instanceSocial.setUptime(Float.parseFloat(resobj.get("uptime").toString()));
+            instanceSocial.setUp(Boolean.parseBoolean(resobj.get("up").toString()));
+
+            instanceSocial.setConnections(Long.parseLong(resobj.get("connections").toString()));
+            instanceSocial.setDead(Boolean.parseBoolean(resobj.get("dead").toString()));
+
+
+            instanceSocial.setId(resobj.get("id").toString());
+
+            instanceSocial.setInfo(resobj.get("info").toString());
+            instanceSocial.setVersion(resobj.get("version").toString());
+            instanceSocial.setName(resobj.get("name").toString());
+            instanceSocial.setObs_rank(resobj.get("obs_rank").toString());
+            instanceSocial.setThumbnail(resobj.get("thumbnail").toString());
+            instanceSocial.setIpv6(Boolean.parseBoolean(resobj.get("ipv6").toString()));
+            instanceSocial.setObs_score(Integer.parseInt(resobj.get("obs_score").toString()));
+            instanceSocial.setOpen_registrations(Boolean.parseBoolean(resobj.get("open_registrations").toString()));
+
+            instanceSocial.setUsers(Long.parseLong(resobj.get("users").toString()));
+            instanceSocial.setStatuses(Long.parseLong(resobj.get("statuses").toString()));
+
+            instanceSocial.setHttps_rank(resobj.get("https_rank").toString());
+            instanceSocial.setHttps_score(Integer.parseInt(resobj.get("https_score").toString()));
+            if (!resobj.isNull("added_at")) {
+                instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
+            }
+            instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
+            instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return instanceSocial;
+    }
+
+    /**
+     * Parse json response for unique how to
+     *
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    public static Peertube parsePeertube(Context context, String instance, JSONObject resobj) {
+        Peertube peertube = new Peertube();
+        try {
+            peertube.setId(resobj.get("id").toString());
+            peertube.setCache(resobj);
+            peertube.setUuid(resobj.get("uuid").toString());
+            peertube.setName(resobj.get("name").toString());
+            peertube.setDescription(resobj.get("description").toString());
+            peertube.setEmbedPath(resobj.get("embedPath").toString());
+            peertube.setPreviewPath(resobj.get("previewPath").toString());
+            peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
+            peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));
+            peertube.setInstance(instance);
+            peertube.setView(Integer.parseInt(resobj.get("views").toString()));
+            peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
+            peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
+            peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
+            try {
+                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return peertube;
+    }
+
+    /**
+     * Parse json response for unique how to
+     *
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    private static Peertube parseSinglePeertube(Context context, String instance, JSONObject resobj) {
+        Peertube peertube = new Peertube();
+        try {
+            peertube.setId(resobj.get("id").toString());
+            peertube.setUuid(resobj.get("uuid").toString());
+            peertube.setName(resobj.get("name").toString());
+            peertube.setCache(resobj);
+            peertube.setInstance(instance);
+            peertube.setHost(resobj.getJSONObject("account").get("host").toString());
+            peertube.setDescription(resobj.get("description").toString());
+            peertube.setEmbedPath(resobj.get("embedPath").toString());
+            peertube.setPreviewPath(resobj.get("previewPath").toString());
+            peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
+            peertube.setView(Integer.parseInt(resobj.get("views").toString()));
+            peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
+            peertube.setCommentsEnabled(Boolean.parseBoolean(resobj.get("commentsEnabled").toString()));
+            peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
+            peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
+            peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));
+            try {
+                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray files = resobj.getJSONArray("files");
+            ArrayList<String> resolutions = new ArrayList<>();
+            for (int j = 0; j < files.length(); j++) {
+                JSONObject attObj = files.getJSONObject(j);
+                resolutions.add(attObj.getJSONObject("resolution").get("id").toString());
+            }
+            peertube.setResolution(resolutions);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return peertube;
+    }
+
+    /**
+     * Parse json response for peertube comments
+     *
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    private static List<Status> parseSinglePeertubeComments(Context context, String instance, JSONObject resobj) {
+        List<Status> statuses = new ArrayList<>();
+        try {
+            JSONArray jsonArray = resobj.getJSONArray("data");
+            int i = 0;
+            while (i < jsonArray.length()) {
+                Status status = new Status();
+                JSONObject comment = jsonArray.getJSONObject(i);
+                status.setId(comment.get("id").toString());
+                status.setUri(comment.get("url").toString());
+                status.setUrl(comment.get("url").toString());
+                status.setSensitive(false);
+                status.setSpoiler_text("");
+                status.setContent(context, comment.get("text").toString());
+                status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
+                status.setAccount(parseAccountResponsePeertube(context, instance, comment.getJSONObject("account")));
+                status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));
+                status.setMentions(new ArrayList<>());
+                status.setEmojis(new ArrayList<>());
+                status.setMedia_attachments(new ArrayList<>());
+                status.setVisibility("public");
+                i++;
+                statuses.add(status);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    /**
+     * Parse json response for unique how to
+     *
+     * @param resobj JSONObject
+     * @return HowToVideo
+     */
+    private static HowToVideo parseHowTo(Context context, JSONObject resobj) {
+        HowToVideo howToVideo = new HowToVideo();
+        try {
+            howToVideo.setId(resobj.get("id").toString());
+            howToVideo.setUuid(resobj.get("uuid").toString());
+            howToVideo.setName(resobj.get("name").toString());
+            howToVideo.setDescription(resobj.get("description").toString());
+            howToVideo.setEmbedPath(resobj.get("embedPath").toString());
+            howToVideo.setPreviewPath(resobj.get("previewPath").toString());
+            howToVideo.setThumbnailPath(resobj.get("thumbnailPath").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return howToVideo;
+    }
+
+    /**
+     * Parse json response for several scheduled toots
+     *
+     * @param jsonObject JSONObject
+     * @return List<Status>
+     */
+    private static Schedule parseSimpleSchedule(Context context, JSONObject jsonObject) {
+        Schedule schedule = new Schedule();
+        try {
+            JSONObject resobj = jsonObject.getJSONObject("params");
+            Status status = parseSchedule(context, resobj);
+            List<Attachment> attachements = parseAttachmentResponse(jsonObject.getJSONArray("media_attachments"));
+            status.setMedia_attachments((ArrayList<Attachment>) attachements);
+            schedule.setStatus(status);
+            schedule.setAttachmentList(attachements);
+            schedule.setId(jsonObject.get("id").toString());
+            schedule.setScheduled_at(Helper.mstStringToDate(context, jsonObject.get("scheduled_at").toString()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return schedule;
+    }
+
+    /**
+     * Parse json response for several scheduled toots
+     *
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    private static List<Schedule> parseSchedule(Context context, JSONArray jsonArray) {
+
+        List<Schedule> schedules = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+                Schedule schedule = new Schedule();
+                JSONObject resobj = jsonArray.getJSONObject(i).getJSONObject("params");
+                Status status = parseSchedule(context, resobj);
+                List<Attachment> attachements = parseAttachmentResponse(jsonArray.getJSONObject(i).getJSONArray("media_attachments"));
+                status.setMedia_attachments((ArrayList<Attachment>) attachements);
+                schedule.setStatus(status);
+                schedule.setAttachmentList(attachements);
+                schedules.add(schedule);
+                schedule.setId(jsonArray.getJSONObject(i).get("id").toString());
+                schedule.setScheduled_at(Helper.mstStringToDate(context, jsonArray.getJSONObject(i).get("scheduled_at").toString()));
+                i++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return schedules;
+    }
+
+    /**
+     * Parse json response for several status
+     *
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    private static List<Status> parseStatuses(Context context, JSONArray jsonArray) {
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Status status = parseStatuses(context, resobj);
+                i++;
+                if (status != null) {
+                    statuses.add(status);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    /**
+     * Parse a poll
+     *
+     * @param context
+     * @param resobj
+     * @return
+     */
+    private static Poll parsePoll(Context context, JSONObject resobj) {
+        Poll poll = new Poll();
+        try {
+            poll.setId(resobj.getString("id"));
+            poll.setExpires_at(Helper.mstStringToDate(context, resobj.getString("expires_at")));
+            poll.setExpired(resobj.getBoolean("expired"));
+            poll.setMultiple(resobj.getBoolean("multiple"));
+            poll.setVotes_count(resobj.getInt("votes_count"));
+            if( resobj.has("voters_count")){
+                poll.setVoters_count(resobj.getInt("voters_count"));
+            }else{
+                poll.setVoters_count(resobj.getInt("votes_count"));
+            }
+            poll.setVoted(resobj.getBoolean("voted"));
+            JSONArray options = resobj.getJSONArray("options");
+            List<PollOptions> pollOptions = new ArrayList<>();
+            for (int i = 0; i < options.length(); i++) {
+                JSONObject option = options.getJSONObject(i);
+                PollOptions pollOption = new PollOptions();
+                pollOption.setTitle(option.getString("title"));
+                pollOption.setVotes_count(option.getInt("votes_count"));
+                pollOptions.add(pollOption);
+            }
+            poll.setOptionsList(pollOptions);
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+        }
+        return poll;
+    }
+
+    /**
+     * Parse json response for unique status
+     *
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    public static Status parseStatuses(Context context, JSONObject resobj) {
+        Status status = new Status();
+        try {
+            status.setId(resobj.get("id").toString());
+            if( resobj.has("uri")) {
+                status.setUri(resobj.get("uri").toString());
+            }else {
+                status.setUri(resobj.get("id").toString());
+            }
+            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
+            status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
+            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
+            status.setSpoiler_text(resobj.get("spoiler_text").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            } catch (Exception e) {
+                status.setVisibility("public");
+            }
+            try {
+                status.setLanguage(resobj.get("language").toString());
+            } catch (Exception e) {
+                status.setLanguage("ja");
+            }
+            status.setUrl(resobj.get("url").toString());
+            ArrayList<Attachment> attachments = new ArrayList<>();
+            //Retrieves attachments
+            if( resobj.has("media_attachments")) {
+                JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
+
+                if (arrayAttachement != null) {
+                    for (int j = 0; j < arrayAttachement.length(); j++) {
+                        JSONObject attObj = arrayAttachement.getJSONObject(j);
+                        Attachment attachment = new Attachment();
+                        attachment.setId(attObj.get("id").toString());
+                        attachment.setPreview_url(attObj.get("preview_url").toString());
+                        attachment.setRemote_url(attObj.get("remote_url").toString());
+                        attachment.setType(attObj.get("type").toString());
+                        attachment.setText_url(attObj.get("text_url").toString());
+                        attachment.setUrl(attObj.get("url").toString());
+                        try {
+                            attachment.setDescription(attObj.get("description").toString());
+                        } catch (JSONException ignore) {
+                        }
+                        attachments.add(attachment);
+                    }
+                }
+            }
+            try {
+                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
+            } catch (Exception e) {
+                status.setCard(null);
+            }
+
+            status.setMedia_attachments(attachments);
+            //Retrieves mentions
+            List<Mention> mentions = new ArrayList<>();
+            JSONArray arrayMention = resobj.getJSONArray("mentions");
+            if (arrayMention != null) {
+                for (int j = 0; j < arrayMention.length(); j++) {
+                    JSONObject menObj = arrayMention.getJSONObject(j);
+                    Mention mention = new Mention();
+                    mention.setId(menObj.get("id").toString());
+                    mention.setUrl(menObj.get("url").toString());
+                    mention.setAcct(menObj.get("acct").toString());
+                    mention.setUsername(menObj.get("username").toString());
+                    mentions.add(mention);
+                }
+            }
+            status.setMentions(mentions);
+            //Retrieves tags
+            List<Tag> tags = new ArrayList<>();
+            JSONArray arrayTag = resobj.getJSONArray("tags");
+            if (arrayTag != null) {
+                for (int j = 0; j < arrayTag.length(); j++) {
+                    JSONObject tagObj = arrayTag.getJSONObject(j);
+                    Tag tag = new Tag();
+                    tag.setName(tagObj.get("name").toString());
+                    tag.setUrl(tagObj.get("url").toString());
+                    tags.add(tag);
+                }
+            }
+            status.setTags(tags);
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if (emojisTag != null) {
+                    for (int j = 0; j < emojisTag.length(); j++) {
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                status.setEmojis(emojiList);
+            } catch (Exception e) {
+                status.setEmojis(new ArrayList<>());
+            }
+            //Retrieve Application
+            Application application = new Application();
+            try {
+                if (resobj.getJSONObject("application") != null) {
+                    application.setName(resobj.getJSONObject("application").getString("name"));
+                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
+                }
+            } catch (Exception e) {
+                application = new Application();
+            }
+            status.setApplication(application);
+
+            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            status.setContent(context, resobj.get("content").toString());
+            if (!resobj.isNull("favourites_count")) {
+                status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
+            } else {
+                status.setFavourites_count(0);
+            }
+            if (!resobj.isNull("reblogs_count")) {
+                status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
+            } else {
+                status.setReblogs_count(0);
+            }
+
+            try {
+                status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
+            } catch (Exception e) {
+                status.setReplies_count(-1);
+            }
+            try {
+                status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
+            } catch (Exception e) {
+                status.setReblogged(false);
+            }
+            try {
+                status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
+            } catch (Exception e) {
+                status.setFavourited(false);
+            }
+            try {
+                status.setMuted(Boolean.valueOf(resobj.get("muted").toString()));
+            } catch (Exception e) {
+                status.setMuted(false);
+            }
+            try {
+                status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
+            } catch (JSONException e) {
+                status.setPinned(false);
+            }
+            try {
+                status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
+            } catch (Exception ignored) {
+            }
+
+            if (resobj.has("poll") && !resobj.isNull("poll")) {
+                Poll poll = new Poll();
+                poll.setId(resobj.getJSONObject("poll").getString("id"));
+                try {
+                    poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
+                } catch (Exception e) {
+                    poll.setExpires_at(new Date());
+                }
+                poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
+                poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
+                poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
+                if( resobj.getJSONObject("poll").has("voters_count") && !resobj.getJSONObject("poll").isNull("voters_count")){
+                    poll.setVoters_count(resobj.getJSONObject("poll").getInt("voters_count"));
+                }else{
+                    poll.setVoters_count(resobj.getJSONObject("poll").getInt("votes_count"));
+                }
+                poll.setVoted(resobj.getJSONObject("poll").getBoolean("voted"));
+                JSONArray options = resobj.getJSONObject("poll").getJSONArray("options");
+                List<PollOptions> pollOptions = new ArrayList<>();
+                for (int i = 0; i < options.length(); i++) {
+                    JSONObject option = options.getJSONObject(i);
+                    PollOptions pollOption = new PollOptions();
+                    pollOption.setTitle(option.getString("title"));
+                    pollOption.setVotes_count(option.getInt("votes_count"));
+                    pollOptions.add(pollOption);
+                }
+                poll.setOptionsList(pollOptions);
+                status.setPoll(poll);
+            }
+
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        status.setViewType(context);
+        return status;
+    }
+
+    /**
+     * Parse json response for unique schedule
+     *
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Status parseSchedule(Context context, JSONObject resobj) {
+        Status status = new Status();
+        try {
+            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
+            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
+            status.setSpoiler_text(resobj.get("spoiler_text").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            } catch (Exception e) {
+                status.setVisibility("public");
+            }
+            status.setContent(context, resobj.get("text").toString());
+        } catch (JSONException ignored) {
+        }
+        return status;
+    }
+
+
+    /**
+     * Parse xml response for Nitter
+     *
+     * @param xml String
+     * @return List<Status>
+     */
+
+    private List<Status> parseNitter(String xml) {
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            XmlPullParser xpp = factory.newPullParser();
+
+            xpp.setInput( new StringReader( xml ) );
+            int eventType = xpp.getEventType();
+            Account account = null;
+            Status status = null;
+            HashMap<String, String> mappedProfile = new HashMap<>();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+
+                if(eventType == XmlPullParser.START_TAG) {
+                    if( xpp.getName().compareTo("item") == 0 ){
+                        status = new Status();
+                        status.setReplies_count(0);
+                        status.setFavourites_count(0);
+                        status.setReblogs_count(0);
+                        status.setFavourited(false);
+                        status.setReblogged(false);
+                        status.setEmojiFound(true);
+                        status.setPollEmojiFound(true);
+                        status.setEmojiTranslateFound(true);
+                        status.setMedia_attachments(new ArrayList<>());
+                        account = new Account();
+                    }else if( xpp.getName().compareTo("creator") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT) {
+                            if( account != null ){
+                                account.setAcct(xpp.getText().replace("@","")+"@" + nitterHost);
+                                account.setDisplay_name(xpp.getText().replace("@",""));
+                                account.setUsername(xpp.getText().replace("@",""));
+                                account.setId("https://" + nitterHost + "/" + xpp.getText());
+                                account.setUuid("https://" + nitterHost + "/" + xpp.getText());
+                                account.setUrl("https://" + nitterHost + "/" + xpp.getText());
+                                if( !mappedProfile.containsKey(xpp.getText()) ){
+                                    HttpsConnection httpsConnection = new HttpsConnection(context, nitterHost);
+                                    try {
+                                        String response = httpsConnection.get("https://" + nitterHost + "/" + xpp.getText() + "/rss", 10, null, null);
+                                        XmlPullParserFactory factory2 = XmlPullParserFactory.newInstance();
+                                        factory2.setNamespaceAware(true);
+                                        XmlPullParser xpp2 = factory2.newPullParser();
+
+                                        xpp2.setInput( new StringReader( response ) );
+                                        int eventType2 = xpp2.getEventType();
+                                        while (eventType2 != XmlPullParser.END_DOCUMENT) {
+                                            if (eventType2 == XmlPullParser.START_TAG) {
+                                                if (xpp2.getName().compareTo("url") == 0) {
+                                                    eventType2 = xpp2.next();
+                                                    if(eventType2 == XmlPullParser.TEXT ) {
+                                                        mappedProfile.put(xpp.getText(), xpp2.getText());
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                            eventType2 = xpp2.next();
+                                        }
+                                    } catch (NoSuchAlgorithmException | KeyManagementException | HttpsConnection.HttpsConnectionException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                account.setAvatar(mappedProfile.get(xpp.getText()));
+                            }
+                        }
+                    } else if( xpp.getName().compareTo("pubDate") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                try {
+                                    DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+                                    Date date = formatter.parse(xpp.getText());
+                                    status.setCreated_at(date);
+                                } catch (ParseException e) {
+                                    status.setCreated_at(new Date());
+                                }
+                            }
+                        }
+                    }else if( xpp.getName().compareTo("description") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                String description = xpp.getText();
+                                Pattern imgPattern = Pattern.compile("<img [^>]*src=\"([^\"]+)\"[^>]*>");
+                                Matcher matcher = imgPattern.matcher(description);
+                                List<String> imgs = new ArrayList<>();
+                                int i = 1;
+                                ArrayList<Attachment> attachments = new ArrayList<>();
+                                while (matcher.find()) {
+                                    description = description.replaceAll(Pattern.quote(matcher.group()), "");
+                                    imgs.add("[media_" + i + "]|" + matcher.group(1));
+                                    Attachment attachment = new Attachment();
+                                    attachment.setType("image");
+                                    attachment.setDescription("");
+                                    attachment.setUrl(matcher.group(1));
+                                    attachment.setPreview_url(matcher.group(1));
+                                    attachment.setId(matcher.group(1));
+                                    attachments.add(attachment);
+                                }
+                                status.setMedia_attachments(attachments);
+                                status.setContent(context, description);
+                            }
+                        }
+                    }else if( xpp.getName().compareTo("guid") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                status.setUri(xpp.getText());
+                                Pattern idPattern = Pattern.compile("([0-9])+");
+                                Matcher matcher = idPattern.matcher(xpp.getText());
+                                while (matcher.find()) {
+                                    status.setId(matcher.group(0));
+                                }
+                            }
+                        }
+                    }else if( xpp.getName().compareTo("link") == 0 ){
+                        eventType = xpp.next();
+                        if(eventType == XmlPullParser.TEXT && status != null) {
+                            if( xpp.getText() != null ) {
+                                status.setUrl(xpp.getText());
+                            }
+                        }
+                    }
+                } else if(eventType == XmlPullParser.END_TAG) {
+                    if( xpp.getName().compareTo("item") == 0 ){
+                        if (status != null) {
+                            status.setAccount(account);
+                            statuses.add(status);
+                        }
+                        account = null;
+                        status = null;
+                    }
+                }
+                eventType = xpp.next();
+            }
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    /**
+     * Parse json response for several notes (Misskey)
+     *
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    public static List<Status> parseNotes(Context context, String instance, JSONArray jsonArray) {
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Status status = parseNotes(context, instance, resobj);
+                i++;
+                statuses.add(status);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    /**
+     * Parse json response for unique note (misskey)
+     *
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    public static Status parseNotes(Context context, String instance, JSONObject resobj) {
+        Status status = new Status();
+        try {
+
+            status.setId(resobj.get("id").toString());
+            status.setUri("https://" + instance + "/notes/" + resobj.get("id").toString());
+            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            status.setIn_reply_to_id(resobj.get("replyId").toString());
+            status.setSensitive(false);
+            if (resobj.get("cw") != null && !resobj.get("cw").toString().equals("null"))
+                status.setSpoiler_text(resobj.get("cw").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            } catch (Exception e) {
+                status.setVisibility("public");
+                e.printStackTrace();
+            }
+            status.setUrl("https://" + instance + "/notes/" + resobj.get("id").toString());
+            //Retrieves attachments
+            if (resobj.has("media")) {
+                JSONArray arrayAttachement = resobj.getJSONArray("media");
+                ArrayList<Attachment> attachments = new ArrayList<>();
+                if (arrayAttachement != null) {
+                    for (int j = 0; j < arrayAttachement.length(); j++) {
+                        JSONObject attObj = arrayAttachement.getJSONObject(j);
+                        Attachment attachment = new Attachment();
+                        attachment.setId(attObj.get("id").toString());
+                        attachment.setPreview_url(attObj.get("thumbnailUrl").toString());
+                        attachment.setRemote_url(attObj.get("url").toString());
+                        if (attObj.get("type").toString().contains("/")) {
+                            attachment.setType(attObj.get("type").toString().split("/")[0]);
+                        } else
+                            attachment.setType(attObj.get("type").toString());
+                        attachment.setText_url(attObj.get("url").toString());
+                        attachment.setUrl(attObj.get("url").toString());
+                        if (attObj.get("isSensitive").toString().equals("true")) {
+                            status.setSensitive(true);
+                        }
+                        try {
+                            attachment.setDescription(attObj.get("comment").toString());
+                        } catch (JSONException ignore) {
+                            ignore.printStackTrace();
+                        }
+                        attachments.add(attachment);
+                    }
+                }
+                status.setMedia_attachments(attachments);
+            } else {
+                status.setMedia_attachments(new ArrayList<>());
+            }
+            try {
+                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
+            } catch (Exception e) {
+                status.setCard(null);
+            }
+
+
+            //Retrieves mentions
+            List<Mention> mentions = new ArrayList<>();
+
+            status.setAccount(parseMisskeyAccountResponse(context, instance, resobj.getJSONObject("user")));
+
+            status.setContent(context, resobj.get("text").toString());
+            try {
+                status.setReplies_count(Integer.valueOf(resobj.get("repliesCount").toString()));
+            } catch (Exception e) {
+                status.setReplies_count(-1);
+            }
+            try {
+                status.setFavourited(Boolean.valueOf(resobj.get("isFavorited").toString()));
+            } catch (Exception e) {
+                status.setFavourited(false);
+            }
+            if (resobj.has("bookmarked") && !resobj.isNull("bookmarked")) {
+                status.setBookmarked(true);
+            } else {
+                status.setBookmarked(false);
+            }
+            try {
+                if (resobj.getJSONObject("renoteId") != null && !resobj.getJSONObject("renoteId").toString().equals("null"))
+                    status.setReblog(parseStatuses(context, resobj.getJSONObject("renote")));
+            } catch (Exception ignored) {
+            }
+
+            status.setMentions(mentions);
+            //Retrieves tags
+            List<Tag> tags = new ArrayList<>();
+            if (resobj.has("tags")) {
+                JSONArray arrayTag = resobj.getJSONArray("tags");
+                if (arrayTag != null) {
+                    for (int j = 0; j < arrayTag.length(); j++) {
+                        JSONObject tagObj = arrayTag.getJSONObject(j);
+                        Tag tag = new Tag();
+                        tag.setName(tagObj.get("name").toString());
+                        tag.setUrl(tagObj.get("url").toString());
+                        tags.add(tag);
+                    }
+                }
+            }
+            status.setTags(tags);
+
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            if (resobj.has("emojis")) {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if (emojisTag != null) {
+                    for (int j = 0; j < emojisTag.length(); j++) {
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseMisskeyEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                status.setEmojis(emojiList);
+            }
+            status.setEmojis(emojiList);
+            //Retrieve Application
+            Application application = new Application();
+            try {
+                if (resobj.getJSONObject("application") != null) {
+                    application.setName(resobj.getJSONObject("application").getString("name"));
+                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
+                }
+            } catch (Exception e) {
+                application = new Application();
+            }
+            status.setApplication(application);
+
+
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    /**
+     * Parse json response for emoji
+     *
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static Emojis parseEmojis(JSONObject resobj) {
+        Emojis emojis = new Emojis();
+        try {
+            emojis.setShortcode(resobj.get("shortcode").toString());
+            emojis.setStatic_url(resobj.get("static_url").toString());
+            emojis.setUrl(resobj.get("url").toString());
+            try {
+                emojis.setVisible_in_picker((resobj.getBoolean("visible_in_picker")));
+            } catch (Exception e) {
+                emojis.setVisible_in_picker(true);
+            }
+        } catch (Exception ignored) {
+        }
+        return emojis;
+    }
+
+    /**
+     * Parse json response for emoji
+     *
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static Emojis parseMisskeyEmojis(JSONObject resobj) {
+        Emojis emojis = new Emojis();
+        try {
+            emojis.setShortcode(resobj.get("name").toString());
+            emojis.setStatic_url(resobj.get("url").toString());
+            emojis.setUrl(resobj.get("url").toString());
+        } catch (Exception ignored) {
+        }
+        return emojis;
+    }
+
+    /**
+     * Parse json response for emoji
+     *
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static app.fedilab.android.client.Entities.List parseList(JSONObject resobj) {
+        app.fedilab.android.client.Entities.List list = new app.fedilab.android.client.Entities.List();
+        try {
+            list.setId(resobj.get("id").toString());
+            list.setTitle(resobj.get("title").toString());
+        } catch (Exception ignored) {
+        }
+        return list;
+    }
+
+    /**
+     * Parse json response an unique peertube account
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    private static Account parseAccountResponsePeertube(Context context, String instance, JSONObject resobj) {
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("id").toString());
+            account.setUsername(resobj.get("name").toString());
+            account.setAcct(resobj.get("name").toString() + "@" + resobj.get("host").toString());
+            account.setDisplay_name(resobj.get("displayName").toString());
+            account.setHost(resobj.get("host").toString());
+            if (resobj.has("createdAt"))
+                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            else
+                account.setCreated_at(new Date());
+
+            if (resobj.has("followersCount"))
+                account.setFollowers_count(Integer.valueOf(resobj.get("followersCount").toString()));
+            else
+                account.setFollowers_count(0);
+            if (resobj.has("followingCount"))
+                account.setFollowing_count(Integer.valueOf(resobj.get("followingCount").toString()));
+            else
+                account.setFollowing_count(0);
+            account.setStatuses_count(0);
+            if (resobj.has("description"))
+                account.setNote(resobj.get("description").toString());
+            else
+                account.setNote("");
+            account.setUrl(resobj.get("url").toString());
+            account.setSocial("PEERTUBE");
+            if (resobj.has("avatar") && !resobj.get("avatar").toString().equals("null")) {
+                account.setAvatar("https://" + instance + resobj.getJSONObject("avatar").get("path"));
+            } else
+                account.setAvatar(null);
+            account.setAvatar_static(resobj.get("avatar").toString());
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    /**
+     * Parse json response an unique report for admins
+     *
+     * @param resobj JSONObject
+     * @return AccountAdmin
+     */
+    private static Report parseReportAdminResponse(Context context, JSONObject resobj) {
+
+        Report report = new Report();
+        try {
+            report.setId(resobj.getString("id"));
+            if (!resobj.isNull("action_taken")) {
+                report.setAction_taken(resobj.getBoolean("action_taken"));
+            } else if (!resobj.isNull("state")) {
+                report.setAction_taken(!resobj.getString("state").equals("open"));
+            }
+            if (!resobj.isNull("comment")) {
+                report.setComment(resobj.getString("comment"));
+            } else if (!resobj.isNull("content")) {
+                report.setComment(resobj.getString("content"));
+            }
+
+
+            report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            if (!resobj.isNull("updated_at")) {
+                report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
+            }
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if (!resobj.isNull("account")) {
+                    report.setAccount(parseAccountAdminResponse(context, resobj.getJSONObject("account")));
+                }
+                if (!resobj.isNull("target_account")) {
+                    report.setTarget_account(parseAccountAdminResponse(context, resobj.getJSONObject("target_account")));
+                }
+                if (!resobj.isNull("assigned_account")) {
+                    report.setAssigned_account(parseAccountAdminResponse(context, resobj.getJSONObject("assigned_account")));
+                }
+            } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+
+                if (!resobj.isNull("account")) {
+                    Account account = parseAccountResponse(context, resobj.getJSONObject("account"));
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setId(account.getId());
+                    accountAdmin.setUsername(account.getAcct());
+                    accountAdmin.setAccount(account);
+                    report.setTarget_account(accountAdmin);
+                }
+
+                if (!resobj.isNull("actor")) {
+                    Account account = parseAccountResponse(context, resobj.getJSONObject("actor"));
+                    AccountAdmin accountAdmin = new AccountAdmin();
+                    accountAdmin.setId(account.getId());
+                    accountAdmin.setUsername(account.getAcct());
+                    accountAdmin.setAccount(account);
+                    report.setAccount(accountAdmin);
+                }
+
+            }
+
+            if (!resobj.isNull("action_taken_by_account")) {
+                report.setAction_taken_by_account(parseAccountAdminResponse(context, resobj.getJSONObject("action_taken_by_account")));
+            }
+            report.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
+        return report;
+    }
+
+    /**
+     * Parse json response an unique account for admins
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    private static AccountAdmin parseAccountAdminResponse(Context context, JSONObject resobj) {
+
+        AccountAdmin accountAdmin = new AccountAdmin();
+        try {
+            accountAdmin.setId(resobj.get("id").toString());
+            if (!resobj.isNull("username")) {
+                accountAdmin.setUsername(resobj.getString("username"));
+            }
+            if (!resobj.isNull("nickname")) {
+                accountAdmin.setUsername(resobj.getString("nickname"));
+            }
+            if (!resobj.isNull("created_at")) {
+                accountAdmin.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
+            }
+            if (!resobj.isNull("email")) {
+                accountAdmin.setEmail(resobj.getString("email"));
+            }
+            if (!resobj.isNull("role")) {
+                accountAdmin.setRole(resobj.getString("role"));
+            }
+            if (!resobj.isNull("roles")) {
+                if (resobj.getJSONObject("roles").getBoolean("admin")) {
+                    accountAdmin.setRole("admin");
+                } else if (resobj.getJSONObject("roles").getBoolean("moderator")) {
+                    accountAdmin.setRole("moderator");
+                } else {
+                    accountAdmin.setRole("user");
+                }
+            }
+            if (!resobj.isNull("ip")) {
+                accountAdmin.setIp(resobj.getString("ip"));
+            }
+            if (!resobj.isNull("domain")) {
+                accountAdmin.setDomain(resobj.getString("domain"));
+            }
+
+            if (!resobj.isNull("account")) {
+                accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            } else {
+                Account account = new Account();
+                account.setId(accountAdmin.getId());
+                account.setAcct(accountAdmin.getUsername());
+                account.setDisplay_name(accountAdmin.getUsername());
+                accountAdmin.setAccount(account);
+            }
+            if (!resobj.isNull("confirmed")) {
+                accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
+            } else {
+                accountAdmin.setConfirmed(true);
+            }
+            if (!resobj.isNull("suspended")) {
+                accountAdmin.setSuspended(resobj.getBoolean("suspended"));
+            } else {
+                accountAdmin.setSuspended(false);
+            }
+            if (!resobj.isNull("silenced")) {
+                accountAdmin.setSilenced(resobj.getBoolean("silenced"));
+            } else {
+                accountAdmin.setSilenced(false);
+            }
+            if (!resobj.isNull("disabled")) {
+                accountAdmin.setDisabled(resobj.getBoolean("disabled"));
+            } else {
+                if (!resobj.isNull("deactivated")) {
+                    accountAdmin.setDisabled(resobj.getBoolean("deactivated"));
+                } else {
+                    accountAdmin.setDisabled(false);
+                }
+            }
+
+            if (!resobj.isNull("approved")) {
+                accountAdmin.setApproved(resobj.getBoolean("approved"));
+            } else {
+                accountAdmin.setApproved(true);
+            }
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
+        return accountAdmin;
+    }
+
+    /**
+     * Parse json response an unique account
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Account parseAccountResponse(Context context, JSONObject resobj) {
+
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("id").toString());
+            account.setUuid(resobj.get("id").toString());
+            account.setUsername(resobj.get("username").toString());
+            account.setAcct(resobj.get("acct").toString());
+            account.setDisplay_name(resobj.get("display_name").toString());
+            account.setLocked(Boolean.parseBoolean(resobj.get("locked").toString()));
+            if (resobj.has("created_at") && !resobj.isNull("created_at")) {
+                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            } else {
+                account.setCreated_at(new Date());
+            }
+            if( !resobj.isNull("followers_count")) {
+                account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
+            }else{
+                account.setFollowers_count(0);
+            }
+            if( !resobj.isNull("following_count")) {
+                account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
+            }else{
+                account.setFollowing_count(0);
+            }
+            if( !resobj.isNull("statuses_count")) {
+                account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
+            }else{
+                account.setStatuses_count(0);
+            }
+            account.setNote(resobj.get("note").toString());
+            try {
+                account.setBot(Boolean.parseBoolean(resobj.get("bot").toString()));
+            } catch (Exception e) {
+                account.setBot(false);
+            }
+            try {
+                account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
+            } catch (Exception ignored) {
+                account.setMoved_to_account(null);
+            }
+            account.setUrl(resobj.get("url").toString());
+            account.setAvatar(resobj.get("avatar").toString());
+            account.setAvatar_static(resobj.get("avatar_static").toString());
+            account.setHeader(resobj.get("header").toString());
+            account.setHeader_static(resobj.get("header_static").toString());
+            try {
+                if (resobj.has("pleroma")) {
+                    account.setSocial("PLEROMA");
+                    try {
+                        account.setModerator(resobj.getJSONObject("pleroma").getBoolean("is_moderator"));
+                        account.setAdmin(resobj.getJSONObject("pleroma").getBoolean("is_admin"));
+                    } catch (Exception ignored) {
+                        account.setModerator(false);
+                        account.setAdmin(false);
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+
+            try {
+                JSONArray fields = resobj.getJSONArray("fields");
+                LinkedHashMap<String, String> fieldsMap = new LinkedHashMap<>();
+                LinkedHashMap<String, Boolean> fieldsMapVerified = new LinkedHashMap<>();
+                if (fields != null) {
+                    for (int j = 0; j < fields.length(); j++) {
+                        fieldsMap.put(fields.getJSONObject(j).getString("name"), fields.getJSONObject(j).getString("value"));
+                        try {
+                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"), (fields.getJSONObject(j).getString("verified_at") != null && !fields.getJSONObject(j).getString("verified_at").equals("null")));
+                        } catch (Exception e) {
+                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"), false);
+                        }
+
+                    }
+                }
+                account.setFields(fieldsMap);
+                account.setFieldsVerified(fieldsMapVerified);
+            } catch (Exception ignored) {
+            }
+
+
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if (emojisTag != null) {
+                    for (int j = 0; j < emojisTag.length(); j++) {
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                account.setEmojis(emojiList);
+            } catch (Exception e) {
+                account.setEmojis(new ArrayList<>());
+            }
+            if (resobj.has("source")) {
+                JSONObject source = resobj.getJSONObject("source");
+                try {
+                    if (source.has("privacy")) {
+                        account.setPrivacy(source.getString("privacy"));
+                    } else {
+                        account.setPrivacy("public");
+                    }
+                    if (source.has("sensitive")) {
+                        account.setSensitive(source.getBoolean("sensitive"));
+                    } else {
+                        account.setSensitive(false);
+                    }
+
+                } catch (Exception e) {
+                    account.setPrivacy("public");
+                    account.setSensitive(false);
+                    e.printStackTrace();
+                }
+            }
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    private List<IdentityProof> parseIdentityProof(Context context, JSONArray jsonArray) {
+        List<IdentityProof> identityProofs = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                IdentityProof identityProof = parseIdentityProof(context, resobj);
+                i++;
+                if (identityProof != null) {
+                    identityProofs.add(identityProof);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return identityProofs;
+    }
+
+    private IdentityProof parseIdentityProof(Context context, JSONObject jsonObject) {
+        IdentityProof identityProof = new IdentityProof();
+        try {
+            identityProof.setProfile_url(jsonObject.getString("profile_url"));
+            identityProof.setProof_url(jsonObject.getString("proof_url"));
+            identityProof.setProvider(jsonObject.getString("provider"));
+            identityProof.setProvider_username(jsonObject.getString("provider_username"));
+            identityProof.setUpdated_at(Helper.mstStringToDate(context, jsonObject.getString("updated_at")));
+
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+        }
+        return identityProof;
+    }
+
+    /**
+     * Parse json response an unique account
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Account parseOpencollectiveAccountResponse(Context context, RetrieveOpenCollectiveAsyncTask.Type type, JSONObject resobj) {
+
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("MemberId").toString());
+            account.setUuid(resobj.get("MemberId").toString());
+            account.setUsername(resobj.get("name").toString());
+            account.setAcct(resobj.get("tier").toString());
+            account.setDisplay_name(resobj.get("name").toString());
+            account.setLocked(false);
+            account.setCreated_at(Helper.opencollectivetStringToDate(context, resobj.get("createdAt").toString()));
+            account.setFollowers_count(0);
+            account.setFollowing_count(0);
+            account.setStatuses_count(0);
+            account.setNote(resobj.get("description").toString());
+            account.setBot(false);
+            account.setMoved_to_account(null);
+            account.setUrl(resobj.get("profile").toString());
+            account.setAvatar(resobj.get("image").toString());
+            account.setAvatar_static(resobj.get("image").toString());
+            account.setHeader(null);
+            account.setHeader_static(null);
+            if (resobj.get("role").toString().equals("BACKER"))
+                account.setSocial("OPENCOLLECTIVE_BACKER");
+            else if (resobj.get("role").toString().equals("SPONSOR"))
+                account.setSocial("OPENCOLLECTIVE_SPONSOR");
+            else
+                account.setSocial("OPENCOLLECTIVE");
+
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
+
+    /**
+     * Parse json response an unique account
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Account parseMisskeyAccountResponse(Context context, String instance, JSONObject resobj) {
+
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("id").toString());
+            account.setUsername(resobj.get("username").toString());
+            String host = null;
+            String acct;
+            if (resobj.isNull("host")) {
+                acct = resobj.get("username").toString();
+            } else {
+                host = resobj.get("host").toString();
+                acct = resobj.get("username").toString() + "@" + host;
+            }
+            account.setAcct(acct);
+            account.setDisplay_name(resobj.get("name").toString());
+            account.setCreated_at(new Date());
+
+            account.setUrl("https://" + instance + "/@" + account.getUsername());
+            account.setAvatar(resobj.get("avatarUrl").toString());
+            account.setAvatar_static(resobj.get("avatarUrl").toString());
+            try {
+                account.setBot(Boolean.parseBoolean(resobj.get("isBot").toString()));
+            } catch (Exception e) {
+                account.setBot(false);
+            }
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            if (resobj.has("emojis")) {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if (emojisTag != null) {
+                    for (int j = 0; j < emojisTag.length(); j++) {
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+            }
+            account.setEmojis(emojiList);
+        } catch (JSONException ignored) {
+            ignored.printStackTrace();
+        }
+        return account;
+    }
+
+    /**
+     * Parse json response for list of relationship
+     *
+     * @param jsonArray JSONArray
+     * @return List<Relationship>
+     */
+    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray) {
+
+        List<Attachment> attachments = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length()) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Attachment attachment = parseAttachmentResponse(resobj);
+                attachments.add(attachment);
+                i++;
+            }
+        } catch (JSONException ignored) {
+        }
+        return attachments;
+    }
+
+    /**
+     * Parse json response an unique attachment
+     *
+     * @param resobj JSONObject
+     * @return Relationship
+     */
+    public static Attachment parseAttachmentResponse(JSONObject resobj) {
+
+        Attachment attachment = new Attachment();
+        try {
+            attachment.setId(resobj.get("id").toString());
+            attachment.setType(resobj.get("type").toString());
+            attachment.setUrl(resobj.get("url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setRemote_url(resobj.get("remote_url").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setPreview_url(resobj.get("preview_url").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setMeta(resobj.get("meta").toString());
+            } catch (JSONException ignore) {
+            }
+            try {
+                attachment.setText_url(resobj.get("text_url").toString());
+            } catch (JSONException ignore) {
+            }
+
+        } catch (JSONException ignored) {
+        }
+        return attachment;
+    }
+
+    /**
+     * Parse json response an unique notification
+     *
+     * @param resobj JSONObject
+     * @return Account
+     */
+    public static Notification parseNotificationResponse(Context context, JSONObject resobj) {
+
+
+        Notification notification = new Notification();
+        try {
+            notification.setId(resobj.get("id").toString());
+            notification.setType(resobj.get("type").toString());
+            notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+            notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            try {
+                notification.setStatus(parseStatuses(context, resobj.getJSONObject("status")));
+            } catch (Exception ignored) {
+            }
+            notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+        } catch (JSONException ignored) {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return notification;
+    }
 
     /**
      * Execute admin get actions
@@ -359,7 +1848,6 @@ public class API {
         }
         return apiResponse;
     }
-
 
     /**
      * Execute admin post actions
@@ -561,11 +2049,7 @@ public class API {
                     apiResponse.setAccountAdmins(accountAdmins);
                     break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -574,130 +2058,16 @@ public class API {
         return apiResponse;
     }
 
-    public InstanceNodeInfo getNodeInfo(String domain) {
-
-        //Try to guess URL scheme for the onion instance
-        String scheme = "https";
-        if (domain.endsWith(".onion")) {
-            try {
-                new HttpsConnection(context, domain).get("http://" + domain, 30, null, null);
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_ONION_SCHEME + domain, "http");
-                scheme = "http";
-                editor.apply();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_ONION_SCHEME + domain, "https");
-                editor.apply();
-            }
-        }
-        String response;
-        InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
-        try {
-            response = new HttpsConnection(context, domain).get(scheme + "://" + domain + "/.well-known/nodeinfo", 30, null, null);
-            JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
-            ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
-            try {
-                int i = 0;
-                while (i < jsonArray.length()) {
-
-                    JSONObject resobj = jsonArray.getJSONObject(i);
-                    NodeInfo nodeInfo = new NodeInfo();
-                    nodeInfo.setHref(resobj.getString("href"));
-                    nodeInfo.setRel(resobj.getString("rel"));
-                    i++;
-                    nodeInfos.add(nodeInfo);
-                }
-                if (nodeInfos.size() > 0) {
-                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size() - 1);
-                    response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
-                    JSONObject resobj = new JSONObject(response);
-                    JSONObject jsonObject = resobj.getJSONObject("software");
-                    String name = null;
-                    if (resobj.has("metadata") && resobj.getJSONObject("metadata").has("features")) {
-                        JSONArray features = resobj.getJSONObject("metadata").getJSONArray("features");
-                        if (features != null && features.length() > 0) {
-                            for (int counter = 0; counter < features.length(); counter++) {
-                                if (features.getString(counter).toUpperCase().equals("MASTODON_API")) {
-                                    name = "MASTODON";
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (name == null) {
-                        name = jsonObject.getString("name").toUpperCase();
-                        if (jsonObject.getString("name") != null) {
-                            switch (jsonObject.getString("name").toUpperCase()) {
-                                case "PLEROMA":
-                                    name = "MASTODON";
-                                    break;
-                                case "GNUSOCIAL":
-                                case "HUBZILLA":
-                                case "REDMATRIX":
-                                case "FRIENDICA":
-                                    name = "GNU";
-                                    break;
-                            }
-                        }
-                    }
-                    instanceNodeInfo.setName(name);
-                    instanceNodeInfo.setVersion(jsonObject.getString("version"));
-                    instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
-                }
-            } catch (JSONException e) {
-                setDefaultError(e);
-            }
-        } catch (IOException e) {
-            instanceNodeInfo.setConnectionError(true);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            try {
-                response = new HttpsConnection(context, this.instance).get(scheme + "://" + domain + "/api/v1/instance", 30, null, null);
-                JSONObject jsonObject = new JSONObject(response);
-                instanceNodeInfo.setName("MASTODON");
-                instanceNodeInfo.setVersion(jsonObject.getString("version"));
-                instanceNodeInfo.setOpenRegistrations(true);
-            } catch (IOException e1) {
-                instanceNodeInfo.setConnectionError(true);
-                e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (KeyManagementException e1) {
-                e1.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e1) {
-                instanceNodeInfo.setName("GNU");
-                instanceNodeInfo.setVersion("unknown");
-                instanceNodeInfo.setOpenRegistrations(true);
-                e1.printStackTrace();
-            } catch (JSONException e1) {
-
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return instanceNodeInfo;
-    }
-
-
     public InstanceNodeInfo displayNodeInfo(String domain) {
 
         String response;
         InstanceNodeInfo instanceNodeInfo = new InstanceNodeInfo();
+        if( domain.startsWith("http://")){
+            domain = domain.replace("http://","");
+        }
+        if( domain.startsWith("https://")){
+            domain = domain.replace("https://","");
+        }
         try {
             response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
@@ -725,14 +2095,33 @@ public class API {
                     instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
                 }
             } catch (JSONException e) {
-                setDefaultError(e);
+
             }
-        } catch (IOException e) {
+        } catch (IOException | JSONException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
+            try {
+                response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
+                JSONObject jsonObject = new JSONObject(response);
+                instanceNodeInfo.setName("MASTODON");
+                instanceNodeInfo.setVersion(jsonObject.getString("version"));
+                instanceNodeInfo.setOpenRegistrations(true);
+            } catch (IOException e1) {
+                instanceNodeInfo.setConnectionError(true);
+                e1.printStackTrace();
+            } catch (NoSuchAlgorithmException | JSONException | KeyManagementException e1) {
+                e1.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e1) {
+                if (e1.getStatusCode() == 404 || e1.getStatusCode() == 501  ) {
+                    instanceNodeInfo.setName("GNU");
+                    instanceNodeInfo.setVersion("unknown");
+                    instanceNodeInfo.setOpenRegistrations(true);
+                    e1.printStackTrace();
+                } else {
+                    instanceNodeInfo.setName("MASTODON");
+                    instanceNodeInfo.setVersion("3.0");
+                    instanceNodeInfo.setOpenRegistrations(false);
+                }
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             try {
                 response = new HttpsConnection(context, this.instance).get("https://" + domain + "/api/v1/instance", 30, null, null);
@@ -743,48 +2132,133 @@ public class API {
             } catch (IOException e1) {
                 instanceNodeInfo.setConnectionError(true);
                 e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (KeyManagementException e1) {
+            } catch (NoSuchAlgorithmException | JSONException | KeyManagementException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
-                instanceNodeInfo.setName("GNU");
-                instanceNodeInfo.setVersion("unknown");
-                instanceNodeInfo.setOpenRegistrations(true);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
+                if (e1.getStatusCode() == 404|| e1.getStatusCode() == 501) {
+                    instanceNodeInfo.setName("GNU");
+                    instanceNodeInfo.setVersion("unknown");
+                    instanceNodeInfo.setOpenRegistrations(true);
+                    e1.printStackTrace();
+                } else {
+                    instanceNodeInfo.setName("MASTODON");
+                    instanceNodeInfo.setVersion("3.0");
+                    instanceNodeInfo.setOpenRegistrations(false);
+                }
             }
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return instanceNodeInfo;
     }
 
-    public API(Context context, String instance, String token) {
-        this.context = context;
-        if (context == null) {
-            apiResponse = new APIResponse();
-            APIError = new Error();
-            return;
-        }
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOT_PER_PAGE, Helper.TOOTS_PER_PAGE);
-        accountPerPage = Helper.ACCOUNTS_PER_PAGE;
-        notificationPerPage = Helper.NOTIFICATIONS_PER_PAGE;
-        if (instance != null)
-            this.instance = instance;
-        else
-            this.instance = Helper.getLiveInstance(context);
 
-        if (token != null)
-            this.prefKeyOauthTokenT = token;
-        else
-            this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        apiResponse = new APIResponse();
-        APIError = null;
+
+
+    public InstanceNodeInfo instanceInfo(String domain) {
+
+        String response;
+        InstanceNodeInfo instanceNodeInfo = null;
+        try {
+            response = new HttpsConnection(context, domain).get("https://" + domain + "/.well-known/nodeinfo", 30, null, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("links");
+            ArrayList<NodeInfo> nodeInfos = new ArrayList<>();
+            try {
+                instanceNodeInfo = new InstanceNodeInfo();
+                int i = 0;
+                while (i < jsonArray.length()) {
+
+                    JSONObject resobj = jsonArray.getJSONObject(i);
+                    NodeInfo nodeInfo = new NodeInfo();
+                    nodeInfo.setHref(resobj.getString("href"));
+                    nodeInfo.setRel(resobj.getString("rel"));
+                    i++;
+                    nodeInfos.add(nodeInfo);
+                }
+                if (nodeInfos.size() > 0) {
+                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size() - 1);
+                    response = new HttpsConnection(context, this.instance).get(nodeInfo.getHref(), 30, null, null);
+                    JSONObject resobj = new JSONObject(response);
+                    JSONObject jsonObject = resobj.getJSONObject("software");
+                    String name;
+                    name = jsonObject.getString("name").toUpperCase();
+                    instanceNodeInfo.setName(name);
+                    instanceNodeInfo.setVersion(jsonObject.getString("version"));
+                    instanceNodeInfo.setOpenRegistrations(resobj.getBoolean("openRegistrations"));
+                    if (name.trim().toUpperCase().compareTo("MASTODON") == 0 || name.trim().toUpperCase().compareTo("PLEROMA") == 0 || name.trim().toUpperCase().compareTo("PIXELFED") == 0){
+                        APIResponse apiResponse = getInstance(domain);
+                        Instance instanceNode = apiResponse.getInstance();
+                        instanceNodeInfo.setNodeDescription(instanceNode.getDescription());
+                        instanceNodeInfo.setNumberOfUsers(instanceNode.getUserCount());
+                        instanceNodeInfo.setNumberOfPosts(instanceNode.getStatusCount());
+                        instanceNodeInfo.setNumberOfInstance(instanceNode.getDomainCount());
+                        instanceNodeInfo.setStaffAccount(instanceNode.getContactAccount());
+                        instanceNodeInfo.setNodeName(instanceNode.getTitle());
+                        instanceNodeInfo.setThumbnail(instanceNode.getThumbnail());
+                        instanceNodeInfo.setVersion(instanceNode.getVersion());
+                    }
+                    if( resobj.has("metadata")){
+                        JSONObject metadata = resobj.getJSONObject("metadata");
+                        if( metadata.has("staffAccounts")){
+                            instanceNodeInfo.setStaffAccountStr(metadata.getString("staffAccounts"));
+                        }
+                        if( metadata.has("nodeName")){
+                            instanceNodeInfo.setNodeName(metadata.getString("nodeName"));
+                        }
+                    }
+                    if( resobj.has("usage")){
+                        JSONObject usage = resobj.getJSONObject("usage");
+                        if( usage.has("users") &&  usage.getJSONObject("users").has("total")){
+                            instanceNodeInfo.setNumberOfUsers(usage.getJSONObject("users").getInt("total"));
+                        }
+                        if( usage.has("localPosts") ){
+                            instanceNodeInfo.setNumberOfPosts(usage.getInt("localPosts"));
+                        }
+                    }
+                    if( instanceNodeInfo.getStaffAccountStr() != null && instanceNodeInfo.getStaffAccount() == null){
+                        APIResponse search = searchAccounts(instanceNodeInfo.getStaffAccountStr(), 1);
+                        if( search != null && search.getAccounts() != null && search.getAccounts().size() > 0 ){
+                            instanceNodeInfo.setStaffAccount(search.getAccounts().get(0));
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                setDefaultError(e);
+            }
+        } catch (IOException | JSONException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e){
+            APIResponse apiResponse = getInstance(domain);
+            instanceNodeInfo = new InstanceNodeInfo();
+            instanceNodeInfo.setName("MASTODON");
+            Instance instanceNode = apiResponse.getInstance();
+            instanceNodeInfo.setNodeDescription(instanceNode.getDescription());
+            instanceNodeInfo.setNumberOfUsers(instanceNode.getUserCount());
+            instanceNodeInfo.setNumberOfPosts(instanceNode.getStatusCount());
+            instanceNodeInfo.setNumberOfInstance(instanceNode.getDomainCount());
+            instanceNodeInfo.setStaffAccount(instanceNode.getContactAccount());
+            instanceNodeInfo.setNodeName(instanceNode.getTitle());
+            instanceNodeInfo.setThumbnail(instanceNode.getThumbnail());
+            instanceNodeInfo.setVersion(instanceNode.getVersion());
+        }
+        return instanceNodeInfo;
     }
 
+    /***
+     * Get info on the current Instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getInstance(String instance) {
+        try {
+            String response = new HttpsConnection(context, this.instance).get("https://"+instance+"/api/v1/instance", 30, null, prefKeyOauthTokenT);
+            Instance instanceEntity = parseInstance(new JSONObject(response));
+            apiResponse.setInstance(instanceEntity);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
 
     /***
      * Get info on the current Instance *synchronously*
@@ -797,18 +2271,11 @@ public class API {
             apiResponse.setInstance(instanceEntity);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
     }
-
 
     /***
      * Get instance for registering an account *synchronously*
@@ -822,18 +2289,11 @@ public class API {
             apiResponse.setInstanceRegs(instanceRegs);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
     }
-
 
     /***
      * Update credential of the authenticated user *synchronously*
@@ -889,6 +2349,11 @@ public class API {
      */
     public Account verifyCredentials() {
         account = new Account();
+        InstanceNodeInfo nodeinfo = displayNodeInfo(instance);
+        String social = null;
+        if (nodeinfo != null) {
+            social = nodeinfo.getName();
+        }
         try {
             if (context == null) {
                 setError(500, new Throwable("An error occured!"));
@@ -896,6 +2361,9 @@ public class API {
             }
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 10, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
+            if (social != null) {
+                account.setSocial(social.toUpperCase());
+            }
             if (account != null && account.getSocial() != null && account.getSocial().equals("PLEROMA")) {
                 isPleromaAdmin(account.getAcct());
             }
@@ -925,34 +2393,24 @@ public class API {
                 try {
                     response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/verify_credentials"), 10, null, targetedAccount.getToken());
                     account = parseAccountResponse(context, new JSONObject(response));
+                    if (social != null) {
+                        account.setSocial(social.toUpperCase());
+                    }
                     if (account.getSocial().equals("PLEROMA")) {
                         isPleromaAdmin(account.getAcct());
                     }
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NoSuchAlgorithmException e1) {
-                    e1.printStackTrace();
-                } catch (KeyManagementException e1) {
-                    e1.printStackTrace();
-                } catch (JSONException e1) {
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException | JSONException e1) {
                     e1.printStackTrace();
                 } catch (HttpsConnection.HttpsConnectionException e1) {
                     e1.printStackTrace();
                     setError(e.getStatusCode(), e);
                 }
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return account;
     }
-
 
     /***
      * Verifiy credential of the authenticated user *synchronously*
@@ -1017,7 +2475,7 @@ public class API {
             params.put("password", accountCreation.getPassword());
             params.put("agreement", "true");
             params.put("locale", Locale.getDefault().getLanguage());
-            response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 10, params, app_token);
+            response = new HttpsConnection(context, this.instance).post(getAbsoluteUrl("/accounts"), 30, params, app_token);
 
             /*res = new JSONObject(response);
             String access_token = res.getString("access_token");
@@ -1075,13 +2533,9 @@ public class API {
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl(String.format("/accounts/%s", accountId)), 10, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            if (account.getSocial().equals("PLEROMA") && accountId.equals(userId)) {
-                isPleromaAdmin(account.getAcct());
-            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1094,7 +2548,6 @@ public class API {
         return account;
     }
 
-
     /**
      * Returns a relationship between the authenticated account and an account
      *
@@ -1106,7 +2559,10 @@ public class API {
         List<Relationship> relationships;
         Relationship relationship = null;
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", accountId);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED)
+            params.put("id[]", accountId);
+        else
+            params.put("id", accountId);
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/accounts/relationships"), 10, params, prefKeyOauthTokenT);
             relationships = parseRelationshipResponse(new JSONArray(response));
@@ -1125,7 +2581,6 @@ public class API {
         }
         return relationship;
     }
-
 
     /**
      * Returns a relationship between the authenticated account and an account
@@ -1262,19 +2717,13 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Retrieves accounts that reblogged the status *synchronously*
@@ -1313,7 +2762,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves accounts that favourited the status *synchronously*
      *
@@ -1350,7 +2798,6 @@ public class API {
         apiResponse.setAccounts(accounts);
         return apiResponse;
     }
-
 
     /**
      * Retrieves one status *synchronously*
@@ -1438,6 +2885,32 @@ public class API {
         return statusContext;
     }
 
+    public APIResponse getReplies(String statusId, String max_id) {
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        params.put("limit", String.valueOf(30));
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUr2l(String.format("/status/%s/replies", statusId)), 10, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(context, new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
 
     /**
      * Retrieves direct timeline for the account *synchronously*
@@ -1557,7 +3030,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves home timeline for the account *synchronously*
      *
@@ -1567,7 +3039,6 @@ public class API {
     public APIResponse getHomeTimeline(String max_id) {
         return getHomeTimeline(max_id, null, null, tootPerPage);
     }
-
 
     /**
      * Retrieves home timeline for the account since an Id value *synchronously*
@@ -1586,7 +3057,6 @@ public class API {
     public APIResponse getHomeTimelineMinId(String min_id) {
         return getHomeTimeline(null, null, min_id, tootPerPage);
     }
-
 
     /**
      * Retrieves home timeline from cache the account *synchronously*
@@ -1615,7 +3085,7 @@ public class API {
                     }
                 }
             }
-            if (statuses == null || statuses.size() <= 1 ) {
+            if (statuses == null || statuses.size() <= 1) {
                 return getHomeTimeline(max_id);
             } else {
                 if (statuses.get(0).getId().matches("\\d+")) {
@@ -1633,7 +3103,6 @@ public class API {
         }
 
     }
-
 
     /**
      * Retrieves home timeline for the account *synchronously*
@@ -1666,15 +3135,13 @@ public class API {
             } else {
                 statuses = parseStatuses(context, new JSONArray(response));
             }
-        } catch (HttpsConnection.HttpsConnectionException e) {
+        } catch (UnknownHostException e){
+            if (since_id == null){
+                getHomeTimelineCache(max_id);
+            }
+        } catch(HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         if (apiResponse == null)
@@ -1682,6 +3149,32 @@ public class API {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
+
+    /**
+     *Get identy proof for an account *synchronously*
+     *
+     * @param userId   user_id String
+     * @return APIResponse
+     */
+    public APIResponse getIdentityProof(String userId) {
+        List<IdentityProof> identityProofs = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/identity_proofs", userId)), 10, null, prefKeyOauthTokenT);
+
+            identityProofs = parseIdentityProof(context, new JSONArray(response));
+        } catch (UnknownHostException e){
+        } catch(HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        if (apiResponse == null)
+            apiResponse = new APIResponse();
+        apiResponse.setIdentityProofs(identityProofs);
+        return apiResponse;
+    }
+
 
 
     /**
@@ -1723,7 +3216,6 @@ public class API {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Retrieves public pixelfed timeline for the account *synchronously*
@@ -1787,7 +3279,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves Peertube videos from an instance *synchronously*
      *
@@ -1835,17 +3326,18 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
             String response = httpsConnection.get("https://" + instance + "/api/v1/videos", 10, params, null);
-            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-            peertubes = parsePeertube(instance, jsonArray);
+            if( response == null) {
+                apiResponse.setPeertubes(peertubes);
+                return apiResponse;
+            }
+            JSONObject jsonObject = new JSONObject(response);
+            if( jsonObject.has("data")) {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                peertubes = parsePeertube(instance, jsonArray);
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
@@ -1979,7 +3471,50 @@ public class API {
 
 
     /**
-     * Retrieves Peertube videos from an instance *synchronously*
+     * Retrieves Nitter timeline from accounts *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getNitter(String instance, String max_id) {
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String nitterHost = sharedpreferences.getString(Helper.SET_NITTER_HOST, Helper.DEFAULT_NITTER_HOST).toLowerCase();
+        String[] usernames = instance.split(" ");
+        if( usernames.length == 0 ){
+            Error error = new Error();
+            error.setError(context.getString(R.string.toast_error));
+            error.setStatusCode(404);
+            apiResponse.setError(error);
+            return apiResponse;
+        }
+        StringBuilder urlparams = new StringBuilder();
+        for(String param: usernames){
+            urlparams.append(param.trim()).append(",");
+        }
+
+        String url = "https://" + nitterHost + "/" + urlparams + "/rss";
+        if( max_id != null ){
+            url += "?max_position=" + max_id;
+        }
+        try {
+            statuses = new ArrayList<>();
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(url, 30, null, null);
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseNitter(response);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves Misskey timeline from an instance *synchronously*
      *
      * @return APIResponse
      */
@@ -2102,19 +3637,12 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Retrieves news coming from Fedilab's account *synchronously*
@@ -2134,7 +3662,7 @@ public class API {
         apiResponse = new APIResponse();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get("https://framapiaf.org/api/v1/timelines/tag/fedilab", 10, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get("https://toot.fedilab.app/api/v1/timelines/tag/fedilab", 10, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             List<Status> tmp_status = parseStatuses(context, new JSONArray(response));
@@ -2170,7 +3698,6 @@ public class API {
     public APIResponse getDiscoverTimeline(boolean local, String max_id) {
         return getDiscoverTimeline(local, max_id, null, tootPerPage);
     }
-
 
     /**
      * Retrieves discover timeline for the account *synchronously*
@@ -2216,7 +3743,6 @@ public class API {
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none) {
         return getArtTimeline(local, tag, max_id, null, any, all, none);
@@ -2405,7 +3931,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves muted users by the authenticated account *synchronously*
      *
@@ -2425,7 +3950,6 @@ public class API {
     public APIResponse getBlocks(String max_id) {
         return getAccounts("/blocks", max_id, null, accountPerPage);
     }
-
 
     /**
      * Retrieves following for the account specified by targetedId  *synchronously*
@@ -2496,7 +4020,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves opencollective accounts *synchronously*
      *
@@ -2524,7 +4047,6 @@ public class API {
         results.setAccounts(accounts);
         return results;
     }
-
 
     /**
      * Retrieves blocked domains for the authenticated account *synchronously*
@@ -2560,7 +4082,6 @@ public class API {
         apiResponse.setDomains(domains);
         return apiResponse;
     }
-
 
     /**
      * Delete a blocked domains for the authenticated account *synchronously*
@@ -2641,7 +4162,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves favourited status for the authenticated account *synchronously*
      *
@@ -2693,6 +4213,34 @@ public class API {
         return apiResponse;
     }
 
+    /**
+     * Retrieves bookmarked status for the authenticated account *synchronously*
+     *
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getBookmarks(String max_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        params.put("limit", "40");
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/bookmarks"), 10, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(context, new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
 
     /**
      * Makes the post action for a status
@@ -2704,6 +4252,8 @@ public class API {
     public int postAction(StatusAction statusAction, String targetedId) {
         return postAction(statusAction, targetedId, null, null);
     }
+
+    //Pleroma admin calls
 
     /**
      * Makes the post action for a status
@@ -2779,6 +4329,12 @@ public class API {
             case UNFAVOURITE:
                 action = String.format("/statuses/%s/unfavourite", targetedId);
                 break;
+            case BOOKMARK:
+                action = String.format("/statuses/%s/bookmark", targetedId);
+                break;
+            case UNBOOKMARK:
+                action = String.format("/statuses/%s/unbookmark", targetedId);
+                break;
             case REBLOG:
                 action = String.format("/statuses/%s/reblog", targetedId);
                 break;
@@ -2824,6 +4380,12 @@ public class API {
                 break;
             case UNPIN:
                 action = String.format("/statuses/%s/unpin", targetedId);
+                break;
+            case REACT:
+                action = String.format("/pleroma/statuses/%s/react_with_emoji", targetedId);
+                break;
+            case UNREACT:
+                action = String.format("/pleroma/statuses/%s/unreact_with_emoji", targetedId);
                 break;
             case ENDORSE:
                 action = String.format("/accounts/%s/pin", targetedId);
@@ -2919,11 +4481,8 @@ public class API {
                 }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
+            } catch (NoSuchAlgorithmException | IOException | KeyManagementException e) {
                 e.printStackTrace();
             }
         } else {
@@ -2976,7 +4535,6 @@ public class API {
         }
         return actionCode;
     }
-
 
     /**
      * scheduled action for a status
@@ -3057,7 +4615,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Public api call to submit a vote
      *
@@ -3079,13 +4636,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return null;
@@ -3115,22 +4666,15 @@ public class API {
                 new TimelineCacheDAO(context, db).update(status.getId(), response, account.getId(), account.getInstance());
             }
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
-            return parsePoll(context, new JSONObject(response));
+            return poll;
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return null;
     }
-
 
     /**
      * Posts a status
@@ -3182,19 +4726,13 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
-
 
     /**
      * Posts a status
@@ -3224,7 +4762,6 @@ public class API {
         }
         return apiResponse;
     }
-
 
     /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
@@ -3256,7 +4793,6 @@ public class API {
     public APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, boolean display) {
         return getNotifications(type, max_id, null, notificationPerPage, display);
     }
-
 
     /**
      * Retrieves notifications for the authenticated account *synchronously*
@@ -3327,7 +4863,8 @@ public class API {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow, notif_add, notif_mention, notif_share, notif_poll;
         StringBuilder parameters = new StringBuilder();
-        if (type == DisplayNotificationsFragment.Type.ALL) {
+        //TODO: If pixelfed supports exclude_types this condition needs to be changed
+        if (type == DisplayNotificationsFragment.Type.ALL && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             if (display) {
                 notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
                 notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
@@ -3343,8 +4880,10 @@ public class API {
             }
 
 
-            if (!notif_follow)
+            if (!notif_follow) {
                 parameters.append("exclude_types[]=").append("follow").append("&");
+                parameters.append("exclude_types[]=").append("follow_request").append("&");
+            }
             if (!notif_add)
                 parameters.append("exclude_types[]=").append("favourite").append("&");
             if (!notif_share)
@@ -3359,6 +4898,7 @@ public class API {
             }
         } else if (type == DisplayNotificationsFragment.Type.MENTION) {
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("poll").append("&");
@@ -3366,6 +4906,7 @@ public class API {
             params.put("exclude_types[]", parameters.toString());
         } else if (type == DisplayNotificationsFragment.Type.FAVORITE) {
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("poll").append("&");
@@ -3373,6 +4914,7 @@ public class API {
             params.put("exclude_types[]", parameters.toString());
         } else if (type == DisplayNotificationsFragment.Type.BOOST) {
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters.append("exclude_types[]=").append("poll").append("&");
@@ -3381,6 +4923,7 @@ public class API {
         } else if (type == DisplayNotificationsFragment.Type.POLL) {
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("follow_request").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
@@ -3404,21 +4947,14 @@ public class API {
             notifications = parseNotificationResponse(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
-        if( apiResponse != null) {
+        if (apiResponse != null) {
             apiResponse.setNotifications(notifications);
         }
         return apiResponse;
     }
-
 
     /**
      * Changes media description
@@ -3474,24 +5010,41 @@ public class API {
         params.put("resolve", "true");
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/search"), 10, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUr2l("/search"), 10, params, prefKeyOauthTokenT);
             results = parseResultsResponse(new JSONObject(response));
             apiResponse.setResults(results);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         return apiResponse;
     }
 
+
+    /**
+     * Retrieves trends for Mastodon *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getTrends() {
+
+        List<Trends> trends;
+        apiResponse = new APIResponse();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
+            String response = httpsConnection.get(getAbsoluteUrl("/trends"), 10, null, null);
+            trends = parseTrends(new JSONArray(response));
+            apiResponse.setTrends(trends);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
+    }
 
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
@@ -3549,7 +5102,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      * Not limited to following
@@ -3604,7 +5156,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
@@ -3614,33 +5165,23 @@ public class API {
         List<Emojis> emojis = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
-            String response = httpsConnection.get(getAbsoluteUrl("/custom_emojis"), 10, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/custom_emojis"), 30, null, prefKeyOauthTokenT);
             emojis = parseEmojis(new JSONArray(response));
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         //Add custom emoji for Pleroma
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        /*if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             APIResponse apiResponsePleroma = getCustomPleromaEmoji();
             if (apiResponsePleroma != null && apiResponsePleroma.getEmojis() != null && apiResponsePleroma.getEmojis().size() > 0)
                 emojis.addAll(apiResponsePleroma.getEmojis());
-        }
+        }*/
         apiResponse.setEmojis(emojis);
         return apiResponse;
     }
-
-    //Pleroma admin calls
 
     /**
      * Check if it's a Pleroma admin account and change in settings *synchronously*
@@ -3666,7 +5207,7 @@ public class API {
      *
      * @return APIResponse
      */
-    public APIResponse getCustomPleromaEmoji() {
+    private APIResponse getCustomPleromaEmoji() {
         List<Emojis> emojis = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context, this.instance);
@@ -3675,13 +5216,7 @@ public class API {
 
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setEmojis(emojis);
@@ -3698,16 +5233,14 @@ public class API {
         List<Filters> filters = null;
         try {
             String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/filters"), 10, null, prefKeyOauthTokenT);
+            if (response == null) {
+                apiResponse.setFilters(new ArrayList<>());
+                return apiResponse;
+            }
             filters = parseFilters(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setFilters(filters);
@@ -3730,19 +5263,12 @@ public class API {
             filters.add(filter);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setFilters(filters);
         return apiResponse;
     }
-
 
     /**
      * Create a filter
@@ -3859,13 +5385,27 @@ public class API {
             lists = parseLists(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+    /**
+     * Get lists for the user
+     *
+     * @return APIResponse
+     */
+    public APIResponse getListsRemote(String prefKeyOauthTokenT) {
+        apiResponse = new APIResponse();
+        List<app.fedilab.android.client.Entities.List> lists = new ArrayList<>();
+        try {
+            String response = new HttpsConnection(context, this.instance).get(getAbsoluteUrl("/lists"), 5, null, prefKeyOauthTokenT);
+            lists = parseLists(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException | IOException | KeyManagementException | JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setLists(lists);
@@ -3943,7 +5483,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Get accounts in a list for a user
      *
@@ -3981,7 +5520,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Get a list
      *
@@ -4011,7 +5549,6 @@ public class API {
         apiResponse.setLists(lists);
         return apiResponse;
     }
-
 
     /**
      * Add an account in a list
@@ -4045,7 +5582,6 @@ public class API {
         }
         return apiResponse;
     }
-
 
     /**
      * Delete an account from a list
@@ -4110,7 +5646,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Update a list by its id
      *
@@ -4143,7 +5678,6 @@ public class API {
         return apiResponse;
     }
 
-
     /**
      * Delete a list by its id
      *
@@ -4162,7 +5696,6 @@ public class API {
         }
         return actionCode;
     }
-
 
     /**
      * Retrieves list from Communitywiki *synchronously*
@@ -4228,7 +5761,6 @@ public class API {
         return list;
     }
 
-
     /**
      * Parse json response an unique account
      *
@@ -4241,121 +5773,13 @@ public class API {
         try {
             results.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
             results.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
+            results.setTrends(parseTrends(resobj.getJSONArray("hashtags")));
             results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
         } catch (JSONException e) {
             setDefaultError(e);
         }
         return results;
     }
-
-    /**
-     * Parse json response an unique Car
-     *
-     * @param resobj JSONObject
-     * @return Card
-     */
-    private static Card parseCardResponse(JSONObject resobj) {
-
-        Card card = new Card();
-        try {
-            card.setUrl(resobj.get("url").toString());
-            card.setTitle(resobj.get("title").toString());
-            card.setDescription(resobj.get("description").toString());
-            card.setImage(resobj.get("image").toString());
-
-            card.setType(resobj.get("type").toString());
-            try {
-                card.setAuthor_name(resobj.get("author_name").toString());
-            } catch (Exception e) {
-                card.setAuthor_name(null);
-            }
-            try {
-                card.setAuthor_url(resobj.get("author_url").toString());
-            } catch (Exception e) {
-                card.setAuthor_url(null);
-            }
-            try {
-                card.setHtml(resobj.get("html").toString());
-            } catch (Exception e) {
-                card.setHtml(null);
-            }
-            try {
-                card.setEmbed_url(resobj.get("embed_url").toString());
-            } catch (Exception e) {
-                card.setEmbed_url(null);
-            }
-            try {
-                card.setProvider_name(resobj.get("provider_name").toString());
-            } catch (Exception e) {
-                card.setProvider_name(null);
-            }
-            try {
-                card.setProvider_url(resobj.get("provider_url").toString());
-            } catch (Exception e) {
-                card.setProvider_url(null);
-            }
-            try {
-                card.setHeight(Integer.parseInt(resobj.get("height").toString()));
-            } catch (Exception e) {
-                card.setHeight(0);
-            }
-            try {
-                card.setWidth(Integer.parseInt(resobj.get("width").toString()));
-            } catch (Exception e) {
-                card.setWidth(0);
-            }
-        } catch (JSONException e) {
-            card = null;
-        }
-        return card;
-    }
-
-    /**
-     * Parse json response an unique instance social result
-     *
-     * @param resobj JSONObject
-     * @return InstanceSocial
-     */
-    public static InstanceSocial parseInstanceSocialResponse(Context context, JSONObject resobj) {
-
-        InstanceSocial instanceSocial = new InstanceSocial();
-        try {
-
-
-            instanceSocial.setUptime(Float.parseFloat(resobj.get("uptime").toString()));
-            instanceSocial.setUp(Boolean.parseBoolean(resobj.get("up").toString()));
-
-            instanceSocial.setConnections(Long.parseLong(resobj.get("connections").toString()));
-            instanceSocial.setDead(Boolean.parseBoolean(resobj.get("dead").toString()));
-
-
-            instanceSocial.setId(resobj.get("id").toString());
-
-            instanceSocial.setInfo(resobj.get("info").toString());
-            instanceSocial.setVersion(resobj.get("version").toString());
-            instanceSocial.setName(resobj.get("name").toString());
-            instanceSocial.setObs_rank(resobj.get("obs_rank").toString());
-            instanceSocial.setThumbnail(resobj.get("thumbnail").toString());
-            instanceSocial.setIpv6(Boolean.parseBoolean(resobj.get("ipv6").toString()));
-            instanceSocial.setObs_score(Integer.parseInt(resobj.get("obs_score").toString()));
-            instanceSocial.setOpen_registrations(Boolean.parseBoolean(resobj.get("open_registrations").toString()));
-
-            instanceSocial.setUsers(Long.parseLong(resobj.get("users").toString()));
-            instanceSocial.setStatuses(Long.parseLong(resobj.get("statuses").toString()));
-
-            instanceSocial.setHttps_rank(resobj.get("https_rank").toString());
-            instanceSocial.setHttps_score(Integer.parseInt(resobj.get("https_score").toString()));
-            instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
-            instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
-            instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return instanceSocial;
-    }
-
 
     /**
      * Parse Domains
@@ -4373,7 +5797,6 @@ public class API {
         }
         return list_tmp;
     }
-
 
     /**
      * Parse Tags
@@ -4446,145 +5869,62 @@ public class API {
         return peertubes;
     }
 
-    /**
-     * Parse json response for unique how to
-     *
-     * @param resobj JSONObject
-     * @return Peertube
-     */
-    public static Peertube parsePeertube(Context context, String instance, JSONObject resobj) {
-        Peertube peertube = new Peertube();
-        try {
-            peertube.setId(resobj.get("id").toString());
-            peertube.setCache(resobj);
-            peertube.setUuid(resobj.get("uuid").toString());
-            peertube.setName(resobj.get("name").toString());
-            peertube.setDescription(resobj.get("description").toString());
-            peertube.setEmbedPath(resobj.get("embedPath").toString());
-            peertube.setPreviewPath(resobj.get("previewPath").toString());
-            peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
-            peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));
-            peertube.setInstance(instance);
-            peertube.setView(Integer.parseInt(resobj.get("views").toString()));
-            peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
-            peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
-            peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
-            try {
-                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return peertube;
-    }
 
     /**
-     * Parse json response for unique how to
+     * Parse json response for several trends
      *
-     * @param resobj JSONObject
-     * @return Peertube
+     * @param jsonArray JSONArray
+     * @return List<Trends>
      */
-    private static Peertube parseSinglePeertube(Context context, String instance, JSONObject resobj) {
-        Peertube peertube = new Peertube();
-        try {
-            peertube.setId(resobj.get("id").toString());
-            peertube.setUuid(resobj.get("uuid").toString());
-            peertube.setName(resobj.get("name").toString());
-            peertube.setCache(resobj);
-            peertube.setInstance(instance);
-            peertube.setHost(resobj.getJSONObject("account").get("host").toString());
-            peertube.setDescription(resobj.get("description").toString());
-            peertube.setEmbedPath(resobj.get("embedPath").toString());
-            peertube.setPreviewPath(resobj.get("previewPath").toString());
-            peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
-            peertube.setView(Integer.parseInt(resobj.get("views").toString()));
-            peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
-            peertube.setCommentsEnabled(Boolean.parseBoolean(resobj.get("commentsEnabled").toString()));
-            peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
-            peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
-            peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));
-            try {
-                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            JSONArray files = resobj.getJSONArray("files");
-            ArrayList<String> resolutions = new ArrayList<>();
-            for (int j = 0; j < files.length(); j++) {
-                JSONObject attObj = files.getJSONObject(j);
-                resolutions.add(attObj.getJSONObject("resolution").get("id").toString());
-            }
-            peertube.setResolution(resolutions);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private List<Trends> parseTrends(JSONArray jsonArray) {
 
-        return peertube;
-    }
-
-    /**
-     * Parse json response for peertube comments
-     *
-     * @param resobj JSONObject
-     * @return Peertube
-     */
-    private static List<Status> parseSinglePeertubeComments(Context context, String instance, JSONObject resobj) {
-        List<Status> statuses = new ArrayList<>();
+        List<Trends> trends = new ArrayList<>();
         try {
-            JSONArray jsonArray = resobj.getJSONArray("data");
             int i = 0;
             while (i < jsonArray.length()) {
-                Status status = new Status();
-                JSONObject comment = jsonArray.getJSONObject(i);
-                status.setId(comment.get("id").toString());
-                status.setUri(comment.get("url").toString());
-                status.setUrl(comment.get("url").toString());
-                status.setSensitive(false);
-                status.setSpoiler_text("");
-                status.setContent(comment.get("text").toString());
-                status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
-                status.setAccount(parseAccountResponsePeertube(context, instance, comment.getJSONObject("account")));
-                status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));
-                status.setMentions(new ArrayList<>());
-                status.setEmojis(new ArrayList<>());
-                status.setMedia_attachments(new ArrayList<>());
-                status.setVisibility("public");
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Trends trend = parseTrends(resobj);
                 i++;
-                statuses.add(status);
+                trends.add(trend);
             }
+
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+            setDefaultError(e);
         }
-        return statuses;
+        return trends;
     }
 
     /**
-     * Parse json response for unique how to
+     * Parse json response for unique trend
      *
      * @param resobj JSONObject
-     * @return HowToVideo
+     * @return Trend
      */
-    private static HowToVideo parseHowTo(Context context, JSONObject resobj) {
-        HowToVideo howToVideo = new HowToVideo();
+    private Trends parseTrends(JSONObject resobj) {
+        Trends trend = new Trends();
         try {
-            howToVideo.setId(resobj.get("id").toString());
-            howToVideo.setUuid(resobj.get("uuid").toString());
-            howToVideo.setName(resobj.get("name").toString());
-            howToVideo.setDescription(resobj.get("description").toString());
-            howToVideo.setEmbedPath(resobj.get("embedPath").toString());
-            howToVideo.setPreviewPath(resobj.get("previewPath").toString());
-            howToVideo.setThumbnailPath(resobj.get("thumbnailPath").toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
+            trend.setName(resobj.getString("name"));
+            trend.setUrl(resobj.getString("url"));
+            List<TrendsHistory> historyList = new ArrayList<>();
+            if( resobj.has("history")) {
+                JSONArray histories = resobj.getJSONArray("history");
+                for(int i = 0 ; i < histories.length() ; i++ ) {
+                    JSONObject hystory = histories.getJSONObject(i);
+                    TrendsHistory trendsHistory = new TrendsHistory();
+                    trendsHistory.setDays(hystory.getLong("day"));
+                    trendsHistory.setUses(hystory.getInt("uses"));
+                    trendsHistory.setAccounts(hystory.getInt("accounts"));
+                    historyList.add(trendsHistory);
+                }
+            }
+            trend.setTrendsHistory(historyList);
+        } catch (JSONException ignored) {
         }
-
-        return howToVideo;
+        return trend;
     }
+
+
 
     /**
      * Parse json response for several conversations
@@ -4631,64 +5971,6 @@ public class API {
     }
 
     /**
-     * Parse json response for several scheduled toots
-     *
-     * @param jsonObject JSONObject
-     * @return List<Status>
-     */
-    private static Schedule parseSimpleSchedule(Context context, JSONObject jsonObject) {
-        Schedule schedule = new Schedule();
-        try {
-            JSONObject resobj = jsonObject.getJSONObject("params");
-            Status status = parseSchedule(context, resobj);
-            List<Attachment> attachements = parseAttachmentResponse(jsonObject.getJSONArray("media_attachments"));
-            status.setMedia_attachments((ArrayList<Attachment>) attachements);
-            schedule.setStatus(status);
-            schedule.setAttachmentList(attachements);
-            schedule.setId(jsonObject.get("id").toString());
-            schedule.setScheduled_at(Helper.mstStringToDate(context, jsonObject.get("scheduled_at").toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return schedule;
-    }
-
-    /**
-     * Parse json response for several scheduled toots
-     *
-     * @param jsonArray JSONArray
-     * @return List<Status>
-     */
-    private static List<Schedule> parseSchedule(Context context, JSONArray jsonArray) {
-
-        List<Schedule> schedules = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length()) {
-                Schedule schedule = new Schedule();
-                JSONObject resobj = jsonArray.getJSONObject(i).getJSONObject("params");
-                Status status = parseSchedule(context, resobj);
-                List<Attachment> attachements = parseAttachmentResponse(jsonArray.getJSONObject(i).getJSONArray("media_attachments"));
-                status.setMedia_attachments((ArrayList<Attachment>) attachements);
-                schedule.setStatus(status);
-                schedule.setAttachmentList(attachements);
-                schedules.add(schedule);
-                schedule.setId(jsonArray.getJSONObject(i).get("id").toString());
-                schedule.setScheduled_at(Helper.mstStringToDate(context, jsonArray.getJSONObject(i).get("scheduled_at").toString()));
-                i++;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return schedules;
-    }
-
-
-    /**
      * Parse json response for several status
      *
      * @param jsonArray JSONArray
@@ -4705,7 +5987,7 @@ public class API {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Status status = parseStatuses(context, resobj);
                 Status alreadyCached = new TimelineCacheDAO(context, db).getSingle(status.getId());
-                if (alreadyCached == null) {
+                if (alreadyCached == null && account != null && account.getId() != null && account.getInstance() != null) {
                     new TimelineCacheDAO(context, db).insert(status.getId(), resobj.toString(), account.getId(), account.getInstance());
                 }
                 i++;
@@ -4716,433 +5998,6 @@ public class API {
             e.printStackTrace();
         }
         return statuses;
-    }
-
-    /**
-     * Parse json response for several status
-     *
-     * @param jsonArray JSONArray
-     * @return List<Status>
-     */
-    private static List<Status> parseStatuses(Context context, JSONArray jsonArray) {
-
-        List<Status> statuses = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length()) {
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Status status = parseStatuses(context, resobj);
-                i++;
-                if (status != null) {
-                    statuses.add(status);
-                }
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return statuses;
-    }
-
-
-    /**
-     * Parse a poll
-     *
-     * @param context
-     * @param resobj
-     * @return
-     */
-    public static Poll parsePoll(Context context, JSONObject resobj) {
-        Poll poll = new Poll();
-        try {
-            poll.setId(resobj.getString("id"));
-            poll.setExpires_at(Helper.mstStringToDate(context, resobj.getString("expires_at")));
-            poll.setExpired(resobj.getBoolean("expired"));
-            poll.setMultiple(resobj.getBoolean("multiple"));
-            poll.setVotes_count(resobj.getInt("votes_count"));
-            poll.setVoted(resobj.getBoolean("voted"));
-            JSONArray options = resobj.getJSONArray("options");
-            List<PollOptions> pollOptions = new ArrayList<>();
-            for (int i = 0; i < options.length(); i++) {
-                JSONObject option = options.getJSONObject(i);
-                PollOptions pollOption = new PollOptions();
-                pollOption.setTitle(option.getString("title"));
-                pollOption.setVotes_count(option.getInt("votes_count"));
-                pollOptions.add(pollOption);
-            }
-            poll.setOptionsList(pollOptions);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return poll;
-    }
-
-    /**
-     * Parse json response for unique status
-     *
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    public static Status parseStatuses(Context context, JSONObject resobj) {
-        Status status = new Status();
-        try {
-            status.setId(resobj.get("id").toString());
-            status.setUri(resobj.get("uri").toString());
-            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
-            status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
-            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
-            status.setSpoiler_text(resobj.get("spoiler_text").toString());
-            try {
-                status.setVisibility(resobj.get("visibility").toString());
-            } catch (Exception e) {
-                status.setVisibility("public");
-            }
-            try {
-                status.setLanguage(resobj.get("language").toString());
-            } catch (Exception e) {
-                status.setLanguage("ja");
-            }
-            status.setUrl(resobj.get("url").toString());
-            //Retrieves attachments
-            JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
-            ArrayList<Attachment> attachments = new ArrayList<>();
-            if (arrayAttachement != null) {
-                for (int j = 0; j < arrayAttachement.length(); j++) {
-                    JSONObject attObj = arrayAttachement.getJSONObject(j);
-                    Attachment attachment = new Attachment();
-                    attachment.setId(attObj.get("id").toString());
-                    attachment.setPreview_url(attObj.get("preview_url").toString());
-                    attachment.setRemote_url(attObj.get("remote_url").toString());
-                    attachment.setType(attObj.get("type").toString());
-                    attachment.setText_url(attObj.get("text_url").toString());
-                    attachment.setUrl(attObj.get("url").toString());
-                    try {
-                        attachment.setDescription(attObj.get("description").toString());
-                    } catch (JSONException ignore) {
-                    }
-                    attachments.add(attachment);
-                }
-            }
-
-            try {
-                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
-            } catch (Exception e) {
-                status.setCard(null);
-            }
-
-            status.setMedia_attachments(attachments);
-            //Retrieves mentions
-            List<Mention> mentions = new ArrayList<>();
-            JSONArray arrayMention = resobj.getJSONArray("mentions");
-            if (arrayMention != null) {
-                for (int j = 0; j < arrayMention.length(); j++) {
-                    JSONObject menObj = arrayMention.getJSONObject(j);
-                    Mention mention = new Mention();
-                    mention.setId(menObj.get("id").toString());
-                    mention.setUrl(menObj.get("url").toString());
-                    mention.setAcct(menObj.get("acct").toString());
-                    mention.setUsername(menObj.get("username").toString());
-                    mentions.add(mention);
-                }
-            }
-            status.setMentions(mentions);
-            //Retrieves tags
-            List<Tag> tags = new ArrayList<>();
-            JSONArray arrayTag = resobj.getJSONArray("tags");
-            if (arrayTag != null) {
-                for (int j = 0; j < arrayTag.length(); j++) {
-                    JSONObject tagObj = arrayTag.getJSONObject(j);
-                    Tag tag = new Tag();
-                    tag.setName(tagObj.get("name").toString());
-                    tag.setUrl(tagObj.get("url").toString());
-                    tags.add(tag);
-                }
-            }
-            status.setTags(tags);
-            //Retrieves emjis
-            List<Emojis> emojiList = new ArrayList<>();
-            try {
-                JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if (emojisTag != null) {
-                    for (int j = 0; j < emojisTag.length(); j++) {
-                        JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseEmojis(emojisObj);
-                        emojiList.add(emojis);
-                    }
-                }
-                status.setEmojis(emojiList);
-            } catch (Exception e) {
-                status.setEmojis(new ArrayList<>());
-            }
-            //Retrieve Application
-            Application application = new Application();
-            try {
-                if (resobj.getJSONObject("application") != null) {
-                    application.setName(resobj.getJSONObject("application").getString("name"));
-                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
-                }
-            } catch (Exception e) {
-                application = new Application();
-            }
-            status.setApplication(application);
-
-            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
-            status.setContent(resobj.get("content").toString());
-            status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
-            status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
-            try {
-                status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
-            } catch (Exception e) {
-                status.setReplies_count(-1);
-            }
-            try {
-                status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
-            } catch (Exception e) {
-                status.setReblogged(false);
-            }
-            try {
-                status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
-            } catch (Exception e) {
-                status.setFavourited(false);
-            }
-            try {
-                status.setMuted(Boolean.valueOf(resobj.get("muted").toString()));
-            } catch (Exception e) {
-                status.setMuted(false);
-            }
-            try {
-                status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
-            } catch (JSONException e) {
-                status.setPinned(false);
-            }
-            try {
-                status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
-            } catch (Exception ignored) {
-            }
-
-            if (resobj.has("poll") && !resobj.isNull("poll")) {
-                Poll poll = new Poll();
-                poll.setId(resobj.getJSONObject("poll").getString("id"));
-                try {
-                    poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
-                } catch (Exception e) {
-                    poll.setExpires_at(new Date());
-                }
-                poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
-                poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
-                poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
-                poll.setVoted(resobj.getJSONObject("poll").getBoolean("voted"));
-                JSONArray options = resobj.getJSONObject("poll").getJSONArray("options");
-                List<PollOptions> pollOptions = new ArrayList<>();
-                for (int i = 0; i < options.length(); i++) {
-                    JSONObject option = options.getJSONObject(i);
-                    PollOptions pollOption = new PollOptions();
-                    pollOption.setTitle(option.getString("title"));
-                    pollOption.setVotes_count(option.getInt("votes_count"));
-                    pollOptions.add(pollOption);
-                }
-                poll.setOptionsList(pollOptions);
-                status.setPoll(poll);
-            }
-
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        status.setViewType(context);
-        return status;
-    }
-
-
-    /**
-     * Parse json response for unique schedule
-     *
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private static Status parseSchedule(Context context, JSONObject resobj) {
-        Status status = new Status();
-        try {
-            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
-            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
-            status.setSpoiler_text(resobj.get("spoiler_text").toString());
-            try {
-                status.setVisibility(resobj.get("visibility").toString());
-            } catch (Exception e) {
-                status.setVisibility("public");
-            }
-            status.setContent(resobj.get("text").toString());
-        } catch (JSONException ignored) {
-        }
-        return status;
-    }
-
-    /**
-     * Parse json response for several notes (Misskey)
-     *
-     * @param jsonArray JSONArray
-     * @return List<Status>
-     */
-    public static List<Status> parseNotes(Context context, String instance, JSONArray jsonArray) {
-
-        List<Status> statuses = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length()) {
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Status status = parseNotes(context, instance, resobj);
-                i++;
-                statuses.add(status);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return statuses;
-    }
-
-    /**
-     * Parse json response for unique note (misskey)
-     *
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    public static Status parseNotes(Context context, String instance, JSONObject resobj) {
-        Status status = new Status();
-        try {
-
-            status.setId(resobj.get("id").toString());
-            status.setUri("https://" + instance + "/notes/" + resobj.get("id").toString());
-            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
-            status.setIn_reply_to_id(resobj.get("replyId").toString());
-            status.setSensitive(false);
-            if (resobj.get("cw") != null && !resobj.get("cw").toString().equals("null"))
-                status.setSpoiler_text(resobj.get("cw").toString());
-            try {
-                status.setVisibility(resobj.get("visibility").toString());
-            } catch (Exception e) {
-                status.setVisibility("public");
-                e.printStackTrace();
-            }
-            status.setUrl("https://" + instance + "/notes/" + resobj.get("id").toString());
-            //Retrieves attachments
-            if (resobj.has("media")) {
-                JSONArray arrayAttachement = resobj.getJSONArray("media");
-                ArrayList<Attachment> attachments = new ArrayList<>();
-                if (arrayAttachement != null) {
-                    for (int j = 0; j < arrayAttachement.length(); j++) {
-                        JSONObject attObj = arrayAttachement.getJSONObject(j);
-                        Attachment attachment = new Attachment();
-                        attachment.setId(attObj.get("id").toString());
-                        attachment.setPreview_url(attObj.get("thumbnailUrl").toString());
-                        attachment.setRemote_url(attObj.get("url").toString());
-                        if (attObj.get("type").toString().contains("/")) {
-                            attachment.setType(attObj.get("type").toString().split("/")[0]);
-                        } else
-                            attachment.setType(attObj.get("type").toString());
-                        attachment.setText_url(attObj.get("url").toString());
-                        attachment.setUrl(attObj.get("url").toString());
-                        if (attObj.get("isSensitive").toString().equals("true")) {
-                            status.setSensitive(true);
-                        }
-                        try {
-                            attachment.setDescription(attObj.get("comment").toString());
-                        } catch (JSONException ignore) {
-                            ignore.printStackTrace();
-                        }
-                        attachments.add(attachment);
-                    }
-                }
-                status.setMedia_attachments(attachments);
-            } else {
-                status.setMedia_attachments(new ArrayList<>());
-            }
-            try {
-                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
-            } catch (Exception e) {
-                status.setCard(null);
-            }
-
-
-            //Retrieves mentions
-            List<Mention> mentions = new ArrayList<>();
-
-            status.setAccount(parseMisskeyAccountResponse(context, instance, resobj.getJSONObject("user")));
-
-            status.setContent(resobj.get("text").toString());
-            try {
-                status.setReplies_count(Integer.valueOf(resobj.get("repliesCount").toString()));
-            } catch (Exception e) {
-                status.setReplies_count(-1);
-            }
-            try {
-                status.setFavourited(Boolean.valueOf(resobj.get("isFavorited").toString()));
-            } catch (Exception e) {
-                status.setFavourited(false);
-            }
-            try {
-                if (resobj.getJSONObject("renoteId") != null && !resobj.getJSONObject("renoteId").toString().equals("null"))
-                    status.setReblog(parseStatuses(context, resobj.getJSONObject("renote")));
-            } catch (Exception ignored) {
-            }
-
-            status.setMentions(mentions);
-            //Retrieves tags
-            List<Tag> tags = new ArrayList<>();
-            if (resobj.has("tags")) {
-                JSONArray arrayTag = resobj.getJSONArray("tags");
-                if (arrayTag != null) {
-                    for (int j = 0; j < arrayTag.length(); j++) {
-                        JSONObject tagObj = arrayTag.getJSONObject(j);
-                        Tag tag = new Tag();
-                        tag.setName(tagObj.get("name").toString());
-                        tag.setUrl(tagObj.get("url").toString());
-                        tags.add(tag);
-                    }
-                }
-            }
-            status.setTags(tags);
-
-            //Retrieves emjis
-            List<Emojis> emojiList = new ArrayList<>();
-            if (resobj.has("emojis")) {
-                JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if (emojisTag != null) {
-                    for (int j = 0; j < emojisTag.length(); j++) {
-                        JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseMisskeyEmojis(emojisObj);
-                        emojiList.add(emojis);
-                    }
-                }
-                status.setEmojis(emojiList);
-            }
-            status.setEmojis(emojiList);
-            //Retrieve Application
-            Application application = new Application();
-            try {
-                if (resobj.getJSONObject("application") != null) {
-                    application.setName(resobj.getJSONObject("application").getString("name"));
-                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
-                }
-            } catch (Exception e) {
-                application = new Application();
-            }
-            status.setApplication(application);
-
-
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return status;
     }
 
     /**
@@ -5179,12 +6034,29 @@ public class API {
                 poll_limits.put("max_expiration", polllimits.getInt("max_expiration"));
                 instance.setPoll_limits(poll_limits);
             }
+            if( resobj.has("thumbnail")){
+                instance.setThumbnail(resobj.getString("thumbnail"));
+            }
+            if( resobj.has("stats")){
+                JSONObject stats = resobj.getJSONObject("stats");
+                if( stats.has("user_count")) {
+                    instance.setUserCount(stats.getInt("user_count"));
+                }
+                if( stats.has("status_count")) {
+                    instance.setStatusCount(stats.getInt("status_count"));
+                }
+                if( stats.has("domain_count")) {
+                    instance.setDomainCount(stats.getInt("domain_count"));
+                }
+            }
+            if( resobj.has("contact_account")){
+                instance.setContactAccount(parseAccountResponse(context, resobj.getJSONObject("contact_account")));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return instance;
     }
-
 
     /**
      * Parse json response for several instance reg
@@ -5232,7 +6104,6 @@ public class API {
         return instanceReg;
     }
 
-
     /**
      * Parse Pleroma emojis
      *
@@ -5258,7 +6129,6 @@ public class API {
         return emojis;
     }
 
-
     /**
      * Parse emojis
      *
@@ -5282,30 +6152,6 @@ public class API {
         return emojis;
     }
 
-
-    /**
-     * Parse json response for emoji
-     *
-     * @param resobj JSONObject
-     * @return Emojis
-     */
-    private static Emojis parseEmojis(JSONObject resobj) {
-        Emojis emojis = new Emojis();
-        try {
-            emojis.setShortcode(resobj.get("shortcode").toString());
-            emojis.setStatic_url(resobj.get("static_url").toString());
-            emojis.setUrl(resobj.get("url").toString());
-            try {
-                emojis.setVisible_in_picker((resobj.getBoolean("visible_in_picker")));
-            } catch (Exception e) {
-                emojis.setVisible_in_picker(true);
-            }
-        } catch (Exception ignored) {
-        }
-        return emojis;
-    }
-
-
     /**
      * Parse emojis
      *
@@ -5327,25 +6173,6 @@ public class API {
         }
         return emojis;
     }
-
-
-    /**
-     * Parse json response for emoji
-     *
-     * @param resobj JSONObject
-     * @return Emojis
-     */
-    private static Emojis parseMisskeyEmojis(JSONObject resobj) {
-        Emojis emojis = new Emojis();
-        try {
-            emojis.setShortcode(resobj.get("name").toString());
-            emojis.setStatic_url(resobj.get("url").toString());
-            emojis.setUrl(resobj.get("url").toString());
-        } catch (Exception ignored) {
-        }
-        return emojis;
-    }
-
 
     /**
      * Parse Filters
@@ -5408,7 +6235,6 @@ public class API {
 
     }
 
-
     /**
      * Parse Lists
      *
@@ -5431,23 +6257,6 @@ public class API {
         return lists;
     }
 
-
-    /**
-     * Parse json response for emoji
-     *
-     * @param resobj JSONObject
-     * @return Emojis
-     */
-    private static app.fedilab.android.client.Entities.List parseList(JSONObject resobj) {
-        app.fedilab.android.client.Entities.List list = new app.fedilab.android.client.Entities.List();
-        try {
-            list.setId(resobj.get("id").toString());
-            list.setTitle(resobj.get("title").toString());
-        } catch (Exception ignored) {
-        }
-        return list;
-    }
-
     private List<Account> parseAccountResponsePeertube(Context context, String instance, JSONArray jsonArray) {
         List<Account> accounts = new ArrayList<>();
         try {
@@ -5463,53 +6272,6 @@ public class API {
         }
         return accounts;
     }
-
-    /**
-     * Parse json response an unique peertube account
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    private static Account parseAccountResponsePeertube(Context context, String instance, JSONObject resobj) {
-        Account account = new Account();
-        try {
-            account.setId(resobj.get("id").toString());
-            account.setUsername(resobj.get("name").toString());
-            account.setAcct(resobj.get("name").toString() + "@" + resobj.get("host").toString());
-            account.setDisplay_name(resobj.get("displayName").toString());
-            account.setHost(resobj.get("host").toString());
-            if (resobj.has("createdAt"))
-                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
-            else
-                account.setCreated_at(new Date());
-
-            if (resobj.has("followersCount"))
-                account.setFollowers_count(Integer.valueOf(resobj.get("followersCount").toString()));
-            else
-                account.setFollowers_count(0);
-            if (resobj.has("followingCount"))
-                account.setFollowing_count(Integer.valueOf(resobj.get("followingCount").toString()));
-            else
-                account.setFollowing_count(0);
-            account.setStatuses_count(0);
-            if (resobj.has("description"))
-                account.setNote(resobj.get("description").toString());
-            else
-                account.setNote("");
-            account.setUrl(resobj.get("url").toString());
-            account.setSocial("PEERTUBE");
-            if (resobj.has("avatar") && !resobj.get("avatar").toString().equals("null")) {
-                account.setAvatar("https://" + instance + resobj.getJSONObject("avatar").get("path"));
-            } else
-                account.setAvatar(null);
-            account.setAvatar_static(resobj.get("avatar").toString());
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return account;
-    }
-
 
     /**
      * Parse json response for list of reports for admins
@@ -5535,76 +6297,6 @@ public class API {
     }
 
     /**
-     * Parse json response an unique report for admins
-     *
-     * @param resobj JSONObject
-     * @return AccountAdmin
-     */
-    private static Report parseReportAdminResponse(Context context, JSONObject resobj) {
-
-        Report report = new Report();
-        try {
-            report.setId(resobj.getString("id"));
-            if (!resobj.isNull("action_taken")) {
-                report.setAction_taken(resobj.getBoolean("action_taken"));
-            } else if (!resobj.isNull("state")) {
-                report.setAction_taken(!resobj.getString("state").equals("open"));
-            }
-            if (!resobj.isNull("comment")) {
-                report.setComment(resobj.getString("comment"));
-            } else if (!resobj.isNull("content")) {
-                report.setComment(resobj.getString("content"));
-            }
-
-
-            report.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
-            if (!resobj.isNull("updated_at")) {
-                report.setUpdated_at(Helper.mstStringToDate(context, resobj.getString("updated_at")));
-            }
-            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-                if (!resobj.isNull("account")) {
-                    report.setAccount(parseAccountAdminResponse(context, resobj.getJSONObject("account")));
-                }
-                if (!resobj.isNull("target_account")) {
-                    report.setTarget_account(parseAccountAdminResponse(context, resobj.getJSONObject("target_account")));
-                }
-                if (!resobj.isNull("assigned_account")) {
-                    report.setAssigned_account(parseAccountAdminResponse(context, resobj.getJSONObject("assigned_account")));
-                }
-            } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-
-                if (!resobj.isNull("account")) {
-                    Account account = parseAccountResponse(context, resobj.getJSONObject("account"));
-                    AccountAdmin accountAdmin = new AccountAdmin();
-                    accountAdmin.setId(account.getId());
-                    accountAdmin.setUsername(account.getAcct());
-                    accountAdmin.setAccount(account);
-                    report.setTarget_account(accountAdmin);
-                }
-
-                if (!resobj.isNull("actor")) {
-                    Account account = parseAccountResponse(context, resobj.getJSONObject("actor"));
-                    AccountAdmin accountAdmin = new AccountAdmin();
-                    accountAdmin.setId(account.getId());
-                    accountAdmin.setUsername(account.getAcct());
-                    accountAdmin.setAccount(account);
-                    report.setAccount(accountAdmin);
-                }
-
-            }
-
-            if (!resobj.isNull("action_taken_by_account")) {
-                report.setAction_taken_by_account(parseAccountAdminResponse(context, resobj.getJSONObject("action_taken_by_account")));
-            }
-            report.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
-        }
-        return report;
-    }
-
-
-    /**
      * Parse json response for list of accounts for admins
      *
      * @param jsonArray JSONArray
@@ -5625,93 +6317,6 @@ public class API {
             setDefaultError(e);
         }
         return accountAdmins;
-    }
-
-    /**
-     * Parse json response an unique account for admins
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    private static AccountAdmin parseAccountAdminResponse(Context context, JSONObject resobj) {
-
-        AccountAdmin accountAdmin = new AccountAdmin();
-        try {
-            accountAdmin.setId(resobj.get("id").toString());
-            if (!resobj.isNull("username")) {
-                accountAdmin.setUsername(resobj.getString("username"));
-            }
-            if (!resobj.isNull("nickname")) {
-                accountAdmin.setUsername(resobj.getString("nickname"));
-            }
-            if (!resobj.isNull("created_at")) {
-                accountAdmin.setCreated_at(Helper.mstStringToDate(context, resobj.getString("created_at")));
-            }
-            if (!resobj.isNull("email")) {
-                accountAdmin.setEmail(resobj.getString("email"));
-            }
-            if (!resobj.isNull("role")) {
-                accountAdmin.setRole(resobj.getString("role"));
-            }
-            if (!resobj.isNull("roles")) {
-                if (resobj.getJSONObject("roles").getBoolean("admin")) {
-                    accountAdmin.setRole("admin");
-                } else if (resobj.getJSONObject("roles").getBoolean("moderator")) {
-                    accountAdmin.setRole("moderator");
-                } else {
-                    accountAdmin.setRole("user");
-                }
-            }
-            if (!resobj.isNull("ip")) {
-                accountAdmin.setIp(resobj.getString("ip"));
-            }
-            if (!resobj.isNull("domain")) {
-                accountAdmin.setDomain(resobj.getString("domain"));
-            }
-
-            if (!resobj.isNull("account")) {
-                accountAdmin.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
-            } else {
-                Account account = new Account();
-                account.setId(accountAdmin.getId());
-                account.setAcct(accountAdmin.getUsername());
-                account.setDisplay_name(accountAdmin.getUsername());
-                accountAdmin.setAccount(account);
-            }
-            if (!resobj.isNull("confirmed")) {
-                accountAdmin.setConfirmed(resobj.getBoolean("confirmed"));
-            } else {
-                accountAdmin.setConfirmed(true);
-            }
-            if (!resobj.isNull("suspended")) {
-                accountAdmin.setSuspended(resobj.getBoolean("suspended"));
-            } else {
-                accountAdmin.setSuspended(false);
-            }
-            if (!resobj.isNull("silenced")) {
-                accountAdmin.setSilenced(resobj.getBoolean("silenced"));
-            } else {
-                accountAdmin.setSilenced(false);
-            }
-            if (!resobj.isNull("disabled")) {
-                accountAdmin.setDisabled(resobj.getBoolean("disabled"));
-            } else {
-                if (!resobj.isNull("deactivated")) {
-                    accountAdmin.setDisabled(resobj.getBoolean("deactivated"));
-                } else {
-                    accountAdmin.setDisabled(false);
-                }
-            }
-
-            if (!resobj.isNull("approved")) {
-                accountAdmin.setApproved(resobj.getBoolean("approved"));
-            } else {
-                accountAdmin.setApproved(true);
-            }
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
-        }
-        return accountAdmin;
     }
 
     /**
@@ -5737,131 +6342,6 @@ public class API {
         return accounts;
     }
 
-    /**
-     * Parse json response an unique account
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private static Account parseAccountResponse(Context context, JSONObject resobj) {
-
-        Account account = new Account();
-        try {
-            account.setId(resobj.get("id").toString());
-            account.setUuid(resobj.get("id").toString());
-            account.setUsername(resobj.get("username").toString());
-            account.setAcct(resobj.get("acct").toString());
-            account.setDisplay_name(resobj.get("display_name").toString());
-            account.setLocked(Boolean.parseBoolean(resobj.get("locked").toString()));
-            if (resobj.has("created_at") && !resobj.isNull("created_at")) {
-                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            } else {
-                account.setCreated_at(new Date());
-            }
-            account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
-            account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
-            account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
-            account.setNote(resobj.get("note").toString());
-            try {
-                account.setBot(Boolean.parseBoolean(resobj.get("bot").toString()));
-            } catch (Exception e) {
-                account.setBot(false);
-            }
-            try {
-                account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
-            } catch (Exception ignored) {
-                account.setMoved_to_account(null);
-            }
-            account.setUrl(resobj.get("url").toString());
-            account.setAvatar(resobj.get("avatar").toString());
-            account.setAvatar_static(resobj.get("avatar_static").toString());
-            account.setHeader(resobj.get("header").toString());
-            account.setHeader_static(resobj.get("header_static").toString());
-
-            try {
-                account.setSocial(resobj.get("software").toString().toUpperCase());
-            } catch (Exception ignored) {
-                account.setSocial("MASTODON");
-            }
-            try {
-                if (resobj.has("pleroma")) {
-                    account.setSocial("PLEROMA");
-                    try {
-                        account.setModerator(resobj.getJSONObject("pleroma").getBoolean("is_moderator"));
-                        account.setAdmin(resobj.getJSONObject("pleroma").getBoolean("is_admin"));
-                    } catch (Exception ignored) {
-                        account.setModerator(false);
-                        account.setAdmin(false);
-                    }
-                }
-            } catch (Exception ignored) {
-            }
-
-            try {
-                JSONArray fields = resobj.getJSONArray("fields");
-                LinkedHashMap<String, String> fieldsMap = new LinkedHashMap<>();
-                LinkedHashMap<String, Boolean> fieldsMapVerified = new LinkedHashMap<>();
-                if (fields != null) {
-                    for (int j = 0; j < fields.length(); j++) {
-                        fieldsMap.put(fields.getJSONObject(j).getString("name"), fields.getJSONObject(j).getString("value"));
-                        try {
-                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"), (fields.getJSONObject(j).getString("verified_at") != null && !fields.getJSONObject(j).getString("verified_at").equals("null")));
-                        } catch (Exception e) {
-                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"), false);
-                        }
-
-                    }
-                }
-                account.setFields(fieldsMap);
-                account.setFieldsVerified(fieldsMapVerified);
-            } catch (Exception ignored) {
-            }
-
-
-            //Retrieves emjis
-            List<Emojis> emojiList = new ArrayList<>();
-            try {
-                JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if (emojisTag != null) {
-                    for (int j = 0; j < emojisTag.length(); j++) {
-                        JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseEmojis(emojisObj);
-                        emojiList.add(emojis);
-                    }
-                }
-                account.setEmojis(emojiList);
-            } catch (Exception e) {
-                account.setEmojis(new ArrayList<>());
-            }
-            if (resobj.has("source")) {
-                JSONObject source = resobj.getJSONObject("source");
-                try {
-                    if (source.has("privacy")) {
-                        account.setPrivacy(source.getString("privacy"));
-                    } else {
-                        account.setPrivacy("public");
-                    }
-                    if (source.has("sensitive")) {
-                        account.setSensitive(source.getBoolean("sensitive"));
-                    } else {
-                        account.setSensitive(false);
-                    }
-
-                } catch (Exception e) {
-                    account.setPrivacy("public");
-                    account.setSensitive(false);
-                    e.printStackTrace();
-                }
-            }
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return account;
-    }
-
-
     private List<Account> parseOpencollectiveAccountResponse(Context context, RetrieveOpenCollectiveAsyncTask.Type type, JSONArray jsonArray) {
         List<Account> accounts = new ArrayList<>();
         try {
@@ -5880,102 +6360,6 @@ public class API {
         }
         return accounts;
     }
-
-    /**
-     * Parse json response an unique account
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private static Account parseOpencollectiveAccountResponse(Context context, RetrieveOpenCollectiveAsyncTask.Type type, JSONObject resobj) {
-
-        Account account = new Account();
-        try {
-            account.setId(resobj.get("MemberId").toString());
-            account.setUuid(resobj.get("MemberId").toString());
-            account.setUsername(resobj.get("name").toString());
-            account.setAcct(resobj.get("tier").toString());
-            account.setDisplay_name(resobj.get("name").toString());
-            account.setLocked(false);
-            account.setCreated_at(Helper.opencollectivetStringToDate(context, resobj.get("createdAt").toString()));
-            account.setFollowers_count(0);
-            account.setFollowing_count(0);
-            account.setStatuses_count(0);
-            account.setNote(resobj.get("description").toString());
-            account.setBot(false);
-            account.setMoved_to_account(null);
-            account.setUrl(resobj.get("profile").toString());
-            account.setAvatar(resobj.get("image").toString());
-            account.setAvatar_static(resobj.get("image").toString());
-            account.setHeader(null);
-            account.setHeader_static(null);
-            if (resobj.get("role").toString().equals("BACKER"))
-                account.setSocial("OPENCOLLECTIVE_BACKER");
-            else if (resobj.get("role").toString().equals("SPONSOR"))
-                account.setSocial("OPENCOLLECTIVE_SPONSOR");
-            else
-                account.setSocial("OPENCOLLECTIVE");
-
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return account;
-    }
-
-    /**
-     * Parse json response an unique account
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private static Account parseMisskeyAccountResponse(Context context, String instance, JSONObject resobj) {
-
-        Account account = new Account();
-        try {
-            account.setId(resobj.get("id").toString());
-            account.setUsername(resobj.get("username").toString());
-            String host = null;
-            String acct;
-            if (resobj.isNull("host")) {
-                acct = resobj.get("username").toString();
-            } else {
-                host = resobj.get("host").toString();
-                acct = resobj.get("username").toString() + "@" + host;
-            }
-            account.setAcct(acct);
-            account.setDisplay_name(resobj.get("name").toString());
-            account.setCreated_at(new Date());
-
-            account.setUrl("https://" + instance + "/@" + account.getUsername());
-            account.setAvatar(resobj.get("avatarUrl").toString());
-            account.setAvatar_static(resobj.get("avatarUrl").toString());
-            try {
-                account.setBot(Boolean.parseBoolean(resobj.get("isBot").toString()));
-            } catch (Exception e) {
-                account.setBot(false);
-            }
-            //Retrieves emjis
-            List<Emojis> emojiList = new ArrayList<>();
-            if (resobj.has("emojis")) {
-                JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if (emojisTag != null) {
-                    for (int j = 0; j < emojisTag.length(); j++) {
-                        JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseEmojis(emojisObj);
-                        emojiList.add(emojis);
-                    }
-                }
-            }
-            account.setEmojis(emojiList);
-        } catch (JSONException ignored) {
-            ignored.printStackTrace();
-        }
-        return account;
-    }
-
 
     /**
      * Parse json response an unique relationship
@@ -6019,7 +6403,6 @@ public class API {
         return relationship;
     }
 
-
     /**
      * Parse json response for list of relationship
      *
@@ -6061,95 +6444,6 @@ public class API {
         return context;
     }
 
-
-    /**
-     * Parse json response for list of relationship
-     *
-     * @param jsonArray JSONArray
-     * @return List<Relationship>
-     */
-    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray) {
-
-        List<Attachment> attachments = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length()) {
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Attachment attachment = parseAttachmentResponse(resobj);
-                attachments.add(attachment);
-                i++;
-            }
-        } catch (JSONException ignored) {
-        }
-        return attachments;
-    }
-
-    /**
-     * Parse json response an unique attachment
-     *
-     * @param resobj JSONObject
-     * @return Relationship
-     */
-    public static Attachment parseAttachmentResponse(JSONObject resobj) {
-
-        Attachment attachment = new Attachment();
-        try {
-            attachment.setId(resobj.get("id").toString());
-            attachment.setType(resobj.get("type").toString());
-            attachment.setUrl(resobj.get("url").toString());
-            try {
-                attachment.setDescription(resobj.get("description").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setRemote_url(resobj.get("remote_url").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setPreview_url(resobj.get("preview_url").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setMeta(resobj.get("meta").toString());
-            } catch (JSONException ignore) {
-            }
-            try {
-                attachment.setText_url(resobj.get("text_url").toString());
-            } catch (JSONException ignore) {
-            }
-
-        } catch (JSONException ignored) {
-        }
-        return attachment;
-    }
-
-
-    /**
-     * Parse json response an unique notification
-     *
-     * @param resobj JSONObject
-     * @return Account
-     */
-    public static Notification parseNotificationResponse(Context context, JSONObject resobj) {
-
-        Notification notification = new Notification();
-        try {
-            notification.setId(resobj.get("id").toString());
-            notification.setType(resobj.get("type").toString());
-            notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
-            try {
-                notification.setStatus(parseStatuses(context, resobj.getJSONObject("status")));
-            } catch (Exception ignored) {
-            }
-            notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-        } catch (JSONException ignored) {
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return notification;
-    }
-
     /**
      * Parse json response for list of notifications
      *
@@ -6174,7 +6468,6 @@ public class API {
         return notifications;
     }
 
-
     /**
      * Set the error message
      *
@@ -6186,7 +6479,7 @@ public class API {
         APIError.setStatusCode(statusCode);
         String message = statusCode + " - " + error.getMessage();
         try {
-            JSONObject jsonObject = new JSONObject(error.getMessage());
+            JSONObject jsonObject = new JSONObject(Objects.requireNonNull(error.getMessage()));
             String errorM = jsonObject.get("error").toString();
             message = "Error " + statusCode + " : " + errorM;
         } catch (JSONException e) {
@@ -6201,6 +6494,9 @@ public class API {
 
     private void setDefaultError(Exception e) {
         APIError = new Error();
+        if (apiResponse == null) {
+            apiResponse = new APIResponse();
+        }
         if (e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
             APIError.setError(e.getLocalizedMessage());
         else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
@@ -6210,11 +6506,9 @@ public class API {
         apiResponse.setError(APIError);
     }
 
-
     public Error getError() {
         return APIError;
     }
-
 
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.context, this.instance) + "/api/v1" + action;
@@ -6234,6 +6528,78 @@ public class API {
 
     private String getAbsoluteUrlCommunitywiki(String action) {
         return "https://communitywiki.org/trunk/api/v1" + action;
+    }
+
+    public enum searchType {
+        TAGS,
+        STATUSES,
+        ACCOUNTS
+    }
+
+    public enum adminAction {
+        ENABLE,
+        APPROVE,
+        REJECT,
+        NONE,
+        SILENCE,
+        DISABLE,
+        UNSILENCE,
+        SUSPEND,
+        UNSUSPEND,
+        ASSIGN_TO_SELF,
+        UNASSIGN,
+        REOPEN,
+        RESOLVE,
+        GET_ACCOUNTS,
+        GET_ONE_ACCOUNT,
+        GET_REPORTS,
+        GET_ONE_REPORT
+    }
+
+    public enum StatusAction {
+        FAVOURITE,
+        UNFAVOURITE,
+        BOOKMARK,
+        UNBOOKMARK,
+        REBLOG,
+        UNREBLOG,
+        MUTE,
+        MUTE_NOTIFICATIONS,
+        UNMUTE,
+        MUTE_CONVERSATION,
+        UNMUTE_CONVERSATION,
+        BLOCK,
+        UNBLOCK,
+        FOLLOW,
+        UNFOLLOW,
+        CREATESTATUS,
+        UNSTATUS,
+        AUTHORIZE,
+        REJECT,
+        REPORT,
+        REMOTE_FOLLOW,
+        PIN,
+        UNPIN,
+        REACT,
+        UNREACT,
+        ENDORSE,
+        UNENDORSE,
+        SHOW_BOOST,
+        HIDE_BOOST,
+        BLOCK_DOMAIN,
+        RATEVIDEO,
+        PEERTUBECOMMENT,
+        PEERTUBEREPLY,
+        PEERTUBEDELETECOMMENT,
+        PEERTUBEDELETEVIDEO,
+        UPDATESERVERSCHEDULE,
+        DELETESCHEDULED,
+        REFRESHPOLL
+    }
+
+    public enum accountPrivacy {
+        PUBLIC,
+        LOCKED
     }
 
 }

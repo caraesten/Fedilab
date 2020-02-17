@@ -18,13 +18,9 @@ package app.fedilab.android.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,8 +28,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import app.fedilab.android.helper.Helper;
 import app.fedilab.android.R;
+import app.fedilab.android.helper.Helper;
 
 
 /**
@@ -48,25 +44,12 @@ public class ProxyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        switch (theme) {
-            case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme_NoActionBar_Fedilab);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC3__));
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC1));
-                break;
-            case Helper.THEME_BLACK:
-                setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.black_3));
-                break;
-            default:
-                setTheme(R.style.AppThemeDark_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC1));
+        if (theme == Helper.THEME_LIGHT) {
+            setTheme(R.style.Dialog);
+        } else {
+            setTheme(R.style.DialogDark);
         }
         setContentView(R.layout.activity_proxy);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -107,7 +90,7 @@ public class ProxyActivity extends BaseActivity {
         count2 = 0;
         final Spinner proxy_type = findViewById(R.id.type);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(ProxyActivity.this,
-                R.array.proxy_type_choice, android.R.layout.simple_spinner_item);
+                R.array.proxy_type_choice, android.R.layout.simple_spinner_dropdown_item);
         proxy_type.setAdapter(adapterTrans);
 
 

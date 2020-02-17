@@ -21,16 +21,16 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.InstanceNodeInfo;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.interfaces.OnRetrieveSearchInterface;
 
 
 /**
@@ -72,7 +72,9 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if (this.type == null) {
+        if( query.compareTo("fedilab_trend") == 0 ) {
+            apiResponse = new API(this.contextReference.get()).getTrends();
+        }else if (this.type == null) {
             if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 API api = new API(this.contextReference.get());
                 String[] split = query.trim().split("@");
@@ -88,11 +90,12 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
                         domain = split[2];
                     }
                     if (domain != null && username != null) {
-                        InstanceNodeInfo node = api.getNodeInfo(domain);
+                        InstanceNodeInfo node = api.displayNodeInfo(domain);
                         String url = null;
                         if (node != null && node.getName() != null) {
                             switch (node.getName().trim()) {
                                 case "MASTODON":
+                                case "PLEROMA":
                                     url = "https://" + domain + "/@" + username;
                                     break;
                                 case "PEERTUBE":
@@ -102,6 +105,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
                                     url = "https://" + domain + "/" + username;
                                     break;
                                 case "GNU":
+                                case "FRIENDICA":
                                     url = "https://" + domain + "/profile/" + username;
                                     break;
                             }

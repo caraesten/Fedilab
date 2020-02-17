@@ -20,22 +20,21 @@
 
     <ImageView
         android:id="@+id/tab_icon"
-        android:layout_centerInParent="true"
-        android:scaleType="fitXY"
         android:layout_width="25dp"
-        android:layout_height="25dp" />
+        android:layout_height="25dp"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tab_counter"
-        android:layout_alignRight="@+id/tab_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tab_icon"
         android:layout_alignEnd="@+id/tab_icon"
+        android:background="@drawable/shape_counter"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:textSize="12sp"
         android:textColor="@color/mastodonC1"
-        android:background="@drawable/shape_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textSize="12sp"
+        android:visibility="gone" />
 </RelativeLayout>

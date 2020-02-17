@@ -14,18 +14,14 @@
  * see <http://www.gnu.org/licenses>. */
 package app.fedilab.android.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
@@ -38,10 +34,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import app.fedilab.android.BuildConfig;
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
+import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.Entities.Relationship;
@@ -49,13 +52,9 @@ import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.drawers.AccountSearchDevAdapter;
 import app.fedilab.android.helper.ExpandableHeightListView;
 import app.fedilab.android.helper.Helper;
-import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.RetrieveRelationshipAsyncTask;
-import app.fedilab.android.asynctasks.RetrieveRemoteDataAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.interfaces.OnRetrieveRelationshipInterface;
 import app.fedilab.android.interfaces.OnRetrieveRemoteAccountInterface;
+import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -67,11 +66,9 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
 
     private List<Account> developers = new ArrayList<>();
     private List<Account> contributors = new ArrayList<>();
-    private List<Account> designers = new ArrayList<>();
     private List<Account> uxuidesigners = new ArrayList<>();
 
     private AccountSearchDevAdapter accountSearchWebAdapterDeveloper;
-    private AccountSearchDevAdapter accountSearchWebAdapterDesigner;
     private AccountSearchDevAdapter accountSearchWebAdapterContributors;
     private AccountSearchDevAdapter accountSearchWebAdapterUxUiDesigners;
 
@@ -82,10 +79,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -101,6 +95,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(AboutActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -112,10 +107,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 }
             });
             toolbar_title.setText(R.string.action_about);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, AboutActivity.this);
-            }
         }
         setContentView(R.layout.activity_about);
         TextView about_version = findViewById(R.id.about_version);
@@ -127,7 +118,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         }
 
         ExpandableHeightListView lv_developers = findViewById(R.id.lv_developers);
-        ExpandableHeightListView lv_designers = findViewById(R.id.lv_designers);
         ExpandableHeightListView lv_contributors = findViewById(R.id.lv_contributors);
         ExpandableHeightListView lv_ux = findViewById(R.id.lv_ux);
 
@@ -137,10 +127,9 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         Button about_trunk = findViewById(R.id.about_trunk);
 
 
-        TextView txt_developers, txt_ux, txt_designers, txt_thankyou1, txt_thankyou2;
+        TextView txt_developers, txt_ux, txt_thankyou3, txt_thankyou1, txt_thankyou2;
         txt_developers = findViewById(R.id.txt_developers);
         txt_ux = findViewById(R.id.txt_ux);
-        txt_designers = findViewById(R.id.txt_designers);
         txt_thankyou1 = findViewById(R.id.txt_thankyou1);
         txt_thankyou2 = findViewById(R.id.txt_thankyou2);
 
@@ -241,34 +230,30 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         setTitle(R.string.action_about);
         lv_contributors.setExpanded(true);
         lv_developers.setExpanded(true);
-        lv_designers.setExpanded(true);
         lv_ux.setExpanded(true);
 
         accountSearchWebAdapterContributors = new AccountSearchDevAdapter(contributors);
         lv_contributors.setAdapter(accountSearchWebAdapterContributors);
-        accountSearchWebAdapterDesigner = new AccountSearchDevAdapter(designers);
-        lv_designers.setAdapter(accountSearchWebAdapterDesigner);
         accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(developers);
         lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
         accountSearchWebAdapterUxUiDesigners = new AccountSearchDevAdapter(uxuidesigners);
         lv_ux.setAdapter(accountSearchWebAdapterUxUiDesigners);
 
         if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
-            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "framapiaf.org", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "fedilab", "toot.fedilab.app", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            SpannableString name = new SpannableString("@fedilab@framapiaf.org");
+            SpannableString name = new SpannableString("@fedilab@toot.fedilab.app");
             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
             txt_developers.setText(name);
             txt_developers.setVisibility(View.VISIBLE);
             txt_developers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Helper.openBrowser(AboutActivity.this, "https://framapiaf.org/@fedilab");
+                    Helper.openBrowser(AboutActivity.this, "https://toot.fedilab.app/@fedilab");
                 }
             });
             name = new SpannableString("@mmarif@mastodon.social");
@@ -307,19 +292,16 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
     @Override
-    public void onRetrieveRemoteAccount(Results results) {
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
+    public void onRetrieveRemoteAccount(Results results, boolean developerAccount) {
         if (results == null) {
             Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
@@ -333,10 +315,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 case "fedilab":
                     developers.add(account);
                     accountSearchWebAdapterDeveloper.notifyDataSetChanged();
-                    break;
-                case "kasun":
-                    designers.add(account);
-                    accountSearchWebAdapterDesigner.notifyDataSetChanged();
                     break;
                 case "mmarif":
                     uxuidesigners.add(account);
@@ -357,11 +335,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         super.onResume();
         if (developers != null) {
             for (Account account : developers) {
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        }
-        if (designers != null) {
-            for (Account account : designers) {
                 new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
@@ -388,13 +361,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             if (developers.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())) {
                 developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDeveloper.notifyDataSetChanged();
-                break;
-            }
-        }
-        for (int i = 0; i < designers.size(); i++) {
-            if (designers.get(i).getId() != null && designers.get(i).getId().equals(relationship.getId())) {
-                designers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
-                accountSearchWebAdapterDesigner.notifyDataSetChanged();
                 break;
             }
         }

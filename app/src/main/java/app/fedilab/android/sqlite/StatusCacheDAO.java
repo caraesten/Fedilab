@@ -42,13 +42,12 @@ import app.fedilab.android.helper.Helper;
  */
 public class StatusCacheDAO {
 
-    private SQLiteDatabase db;
-    public Context context;
-
     //Type of cache
     public static int BOOKMARK_CACHE = 0;
     public static int ARCHIVE_CACHE = 1;
     public static int NOTIFICATION_CACHE = 2;
+    public Context context;
+    private SQLiteDatabase db;
 
     public StatusCacheDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
@@ -329,9 +328,18 @@ public class StatusCacheDAO {
             }
             selection.append(")");
         }
+        String order = Sqlite.COL_CREATED_AT + " DESC";
+
+        if (filterToots.getOrder() != null) {
+            if (filterToots.getOrder() == FilterToots.typeOrder.ASC) {
+                order = Sqlite.COL_CREATED_AT + " ASC";
+            } else if (filterToots.getOrder() == FilterToots.typeOrder.DESC) {
+                order = Sqlite.COL_CREATED_AT + " DESC";
+            }
+        }
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " DESC", "40");
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, order, "40");
             return cursorToListStatuses(c);
         } catch (Exception e) {
             e.printStackTrace();
@@ -757,7 +765,7 @@ public class StatusCacheDAO {
         status.setIn_reply_to_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ID)));
         status.setIn_reply_to_account_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID)));
         status.setReblog(Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_REBLOG))));
-        status.setContent(c.getString(c.getColumnIndex(Sqlite.COL_CONTENT)));
+        status.setContent(context, c.getString(c.getColumnIndex(Sqlite.COL_CONTENT)));
         status.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
         status.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
         status.setReblogs_count(c.getInt(c.getColumnIndex(Sqlite.COL_REBLOGS_COUNT)));
@@ -804,7 +812,7 @@ public class StatusCacheDAO {
             status.setIn_reply_to_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ID)));
             status.setIn_reply_to_account_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID)));
             status.setReblog(Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_REBLOG))));
-            status.setContent(c.getString(c.getColumnIndex(Sqlite.COL_CONTENT)));
+            status.setContent(context, c.getString(c.getColumnIndex(Sqlite.COL_CONTENT)));
             status.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
             status.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
             status.setReblogs_count(c.getInt(c.getColumnIndex(Sqlite.COL_REBLOGS_COUNT)));

@@ -18,11 +18,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
@@ -30,19 +30,17 @@ import app.fedilab.android.client.Entities.Peertube;
 import app.fedilab.android.client.Entities.RemoteInstance;
 import app.fedilab.android.client.Entities.Results;
 import app.fedilab.android.client.Entities.RetrieveFeedsParam;
-import app.fedilab.android.client.Entities.Status;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.client.PeertubeAPI;
+import app.fedilab.android.fragments.DisplayStatusFragment;
 import app.fedilab.android.helper.FilterToots;
-import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.PeertubeFavoritesDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import app.fedilab.android.sqlite.TimelineCacheDAO;
 import app.fedilab.android.sqlite.TimelinesDAO;
-import app.fedilab.android.activities.MainActivity;
-import app.fedilab.android.interfaces.OnRetrieveFeedsInterface;
 
 
 /**
@@ -69,61 +67,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private int timelineId;
     private String currentfilter;
     private String social;
-
-    public enum Type {
-        HOME,
-        LOCAL,
-        DIRECT,
-        CONVERSATION,
-        PUBLIC,
-        HASHTAG,
-        LIST,
-        USER,
-        FAVOURITES,
-        ONESTATUS,
-        CONTEXT,
-        TAG,
-        REMOTE_INSTANCE,
-        REMOTE_INSTANCE_FILTERED,
-        ART,
-        PEERTUBE,
-        NOTIFICATION,
-        SEARCH,
-        NEWS,
-
-        PSUBSCRIPTIONS,
-        POVERVIEW,
-        PTRENDING,
-        PRECENTLYADDED,
-        PMYVIDEOS,
-        PLOCAL,
-        CHANNEL,
-        MYVIDEOS,
-        PEERTUBE_HISTORY,
-
-        PIXELFED,
-        PF_HOME,
-        PF_LOCAL,
-        PF_DISCOVER,
-        PF_NOTIFICATION,
-
-
-        GNU_HOME,
-        GNU_LOCAL,
-        GNU_WHOLE,
-        GNU_NOTIFICATION,
-        GNU_DM,
-        GNU_ART,
-        GNU_TAG,
-        GNU_GROUP_TIMELINE,
-
-        SCHEDULED_TOOTS,
-        CACHE_BOOKMARKS,
-        CACHE_BOOKMARKS_PEERTUBE,
-        CACHE_STATUS,
-
-    }
-
+    private boolean fromCahe;
 
     public RetrieveFeedsAsyncTask(Context context, FilterToots filterToots, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
@@ -131,15 +75,26 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.filterToots = filterToots;
+        this.fromCahe = false;
     }
-
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
+        this.fromCahe = false;
     }
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, boolean fromCahe, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
+        this.contextReference = new WeakReference<>(context);
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.fromCahe = fromCahe;
+    }
+
+
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
         this.contextReference = new WeakReference<>(context);
@@ -147,6 +102,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.instanceName = instanceName;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, int timelineId, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -155,6 +111,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.timelineId = timelineId;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -165,6 +122,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedID = targetedID;
         this.showMediaOnly = showMediaOnly;
         this.showPinned = showPinned;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, boolean showReply, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -176,6 +134,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.showMediaOnly = showMediaOnly;
         this.showPinned = showPinned;
         this.showReply = showReply;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -185,6 +144,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
         this.tag = tag;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, String remoteInstance, String name, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -194,6 +154,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.name = name;
         this.action = Type.REMOTE_INSTANCE;
+        this.fromCahe = false;
     }
 
     public RetrieveFeedsAsyncTask(Context context, RetrieveFeedsParam retrieveFeedsParam, OnRetrieveFeedsInterface onRetrieveFeedsInterface) {
@@ -211,7 +172,10 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.social = retrieveFeedsParam.getSocial();
         this.instanceName = retrieveFeedsParam.getInstanceName();
         this.remoteInstance = retrieveFeedsParam.getRemoteInstance();
+        this.fromCahe = false;
     }
+
+
 
 
     @Override
@@ -222,7 +186,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             return null;
         switch (action) {
             case HOME:
-                apiResponse = api.getHomeTimelineCache(max_id);
+                if (this.fromCahe) {
+                    apiResponse = api.getHomeTimelineCache(max_id);
+                } else {
+                    apiResponse = api.getHomeTimeline(max_id);
+                }
                 break;
             case LOCAL:
                 apiResponse = api.getPublicTimeline(true, max_id);
@@ -281,7 +249,15 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                 status.setType(action);
                             }
                         }
-                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
+                    } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("NITTER")) {
+                        apiResponse = api.getNitter(this.instanceName, max_id);
+                        List<app.fedilab.android.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if (statusesTemp != null) {
+                            for (app.fedilab.android.client.Entities.Status status : statusesTemp) {
+                                status.setType(action);
+                            }
+                        }
+                    }else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED")) {
                         apiResponse = api.getPixelfedTimeline(instanceName, max_id);
                     } else if (remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("GNU")) {
                         apiResponse = api.getGNUTimeline(instanceName, max_id);
@@ -299,7 +275,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case USER:
-                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                     if (showMediaOnly)
                         apiResponse = api.getStatusWithMedia(targetedID, max_id);
                     else if (showPinned)
@@ -443,16 +419,21 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 api = new API(this.contextReference.get());
                 apiResponse = api.getHomeTimeline(max_id);
                 break;
+            case PF_REPLIES:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getReplies(targetedID, max_id);
+                apiResponse.setTargetedId(targetedID);
+                break;
             case PF_LOCAL:
                 api = new API(this.contextReference.get());
                 apiResponse = api.getPublicTimeline(true, max_id);
+                break;
             case PF_DISCOVER:
                 api = new API(this.contextReference.get());
                 apiResponse = api.getDiscoverTimeline(true, max_id);
                 break;
             case HASHTAG:
                 break;
-
             case GNU_HOME:
                 GNUAPI gnuAPI = new GNUAPI(this.contextReference.get());
                 apiResponse = gnuAPI.getHomeTimeline(max_id);
@@ -474,7 +455,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = gnuAPI.getGroupTimeline(tag.trim(), max_id);
                 break;
         }
-        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
             if (apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0) {
                 List<app.fedilab.android.client.Entities.Status> statuses = apiResponse.getStatuses();
@@ -489,5 +470,60 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveFeeds(apiResponse);
+    }
+
+    public enum Type {
+        HOME,
+        LOCAL,
+        DIRECT,
+        CONVERSATION,
+        PUBLIC,
+        HASHTAG,
+        LIST,
+        USER,
+        FAVOURITES,
+        ONESTATUS,
+        CONTEXT,
+        TAG,
+        REMOTE_INSTANCE,
+        REMOTE_INSTANCE_FILTERED,
+        ART,
+        PEERTUBE,
+        NOTIFICATION,
+        SEARCH,
+        NEWS,
+
+        PSUBSCRIPTIONS,
+        POVERVIEW,
+        PTRENDING,
+        PRECENTLYADDED,
+        PMYVIDEOS,
+        PLOCAL,
+        CHANNEL,
+        MYVIDEOS,
+        PEERTUBE_HISTORY,
+
+        PIXELFED,
+        PF_HOME,
+        PF_LOCAL,
+        PF_DISCOVER,
+        PF_NOTIFICATION,
+        PF_REPLIES,
+
+
+        GNU_HOME,
+        GNU_LOCAL,
+        GNU_WHOLE,
+        GNU_NOTIFICATION,
+        GNU_DM,
+        GNU_ART,
+        GNU_TAG,
+        GNU_GROUP_TIMELINE,
+
+        SCHEDULED_TOOTS,
+        CACHE_BOOKMARKS,
+        CACHE_BOOKMARKS_PEERTUBE,
+        CACHE_STATUS,
+
     }
 }

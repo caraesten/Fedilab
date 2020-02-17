@@ -25,14 +25,32 @@ import android.os.Parcelable;
 
 public class PleromaAdmin implements Parcelable {
 
+    public static final Creator<PleromaAdmin> CREATOR = new Creator<PleromaAdmin>() {
+        @Override
+        public PleromaAdmin createFromParcel(Parcel source) {
+            return new PleromaAdmin(source);
+        }
+
+        @Override
+        public PleromaAdmin[] newArray(int size) {
+            return new PleromaAdmin[size];
+        }
+    };
     private String nickname;
     private String email;
     private String password;
     private String tags;
 
+
     public PleromaAdmin() {
     }
 
+    protected PleromaAdmin(Parcel in) {
+        this.nickname = in.readString();
+        this.email = in.readString();
+        this.password = in.readString();
+        this.tags = in.readString();
+    }
 
     public String getNickname() {
         return nickname;
@@ -78,23 +96,4 @@ public class PleromaAdmin implements Parcelable {
         dest.writeString(this.password);
         dest.writeString(this.tags);
     }
-
-    protected PleromaAdmin(Parcel in) {
-        this.nickname = in.readString();
-        this.email = in.readString();
-        this.password = in.readString();
-        this.tags = in.readString();
-    }
-
-    public static final Creator<PleromaAdmin> CREATOR = new Creator<PleromaAdmin>() {
-        @Override
-        public PleromaAdmin createFromParcel(Parcel source) {
-            return new PleromaAdmin(source);
-        }
-
-        @Override
-        public PleromaAdmin[] newArray(int size) {
-            return new PleromaAdmin[size];
-        }
-    };
 }

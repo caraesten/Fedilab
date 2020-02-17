@@ -14,14 +14,9 @@ package app.fedilab.android.webview;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -33,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import app.fedilab.android.R;
 
@@ -48,7 +46,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
 
     private ToggledFullscreenCallback toggledFullscreenCallback;
 
-    private WebView webView;
+    private CustomWebview webView;
     private View activityNonVideoView;
     private ViewGroup activityVideoView;
     private ProgressBar pbar;
@@ -56,11 +54,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     private Activity activity;
 
 
-    public interface ToggledFullscreenCallback {
-        void toggledFullscreen(boolean fullscreen);
-    }
-
-    public MastalabWebChromeClient(Activity activity, WebView webView, FrameLayout activityNonVideoView, ViewGroup activityVideoView) {
+    public MastalabWebChromeClient(Activity activity, CustomWebview webView, FrameLayout activityNonVideoView, ViewGroup activityVideoView) {
         this.activity = activity;
         this.isVideoFullscreen = false;
         this.webView = webView;
@@ -82,7 +76,6 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
         }
     }
 
-
     @Override
     public void onReceivedIcon(WebView view, Bitmap icon) {
         super.onReceivedIcon(view, icon);
@@ -103,9 +96,6 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
 
     }
 
-    //FULLSCREEN VIDEO
-    //Code from https://stackoverflow.com/a/16179544/3197259
-
     /**
      * Set a callback that will be fired when the video starts or finishes displaying using a custom view (typically full-screen)
      *
@@ -114,6 +104,9 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     public void setOnToggledFullscreen(ToggledFullscreenCallback callback) {
         this.toggledFullscreenCallback = callback;
     }
+
+    //FULLSCREEN VIDEO
+    //Code from https://stackoverflow.com/a/16179544/3197259
 
     @Override
     public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
@@ -226,6 +219,10 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         return false; // By returning false, onCompletion() will be called
+    }
+
+    public interface ToggledFullscreenCallback {
+        void toggledFullscreen(boolean fullscreen);
     }
 
 }

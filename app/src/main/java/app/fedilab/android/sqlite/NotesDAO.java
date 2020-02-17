@@ -19,7 +19,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.Date;
+
 import app.fedilab.android.client.Entities.UserNote;
 import app.fedilab.android.helper.Helper;
 
@@ -30,8 +32,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class NotesDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public NotesDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
@@ -53,7 +55,7 @@ public class NotesDAO {
 
         UserNote notes = getUserNote(userNote.getAcct());
         //There is a note
-        if( userNote.getNote() != null && userNote.getNote().trim().length() > 0) {
+        if (userNote.getNote() != null && userNote.getNote().trim().length() > 0) {
             if (notes != null) { //Notes already exist, it needs an update
                 ContentValues values = new ContentValues();
                 values.put(Sqlite.COL_NOTE, userNote.getNote());
@@ -72,12 +74,11 @@ public class NotesDAO {
                 } catch (Exception ignored) {
                 }
             }
-        }else{ //It's empty, it's a deletion
+        } else { //It's empty, it's a deletion
             db.delete(Sqlite.TABLE_USER_NOTES, Sqlite.COL_ACCT + " = \"" + userNote.getAcct() + "\"", null);
         }
 
     }
-
 
 
     //------- GETTERS  -------

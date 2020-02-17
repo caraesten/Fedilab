@@ -35,13 +35,13 @@
             android:padding="5dp">
 
             <TextView
-                android:drawableStart="@drawable/ic_opencollective"
-                android:drawableLeft="@drawable/ic_opencollective"
-                android:drawablePadding="5dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="2"
+                android:drawableStart="@drawable/ic_opencollective"
+                android:drawableLeft="@drawable/ic_opencollective"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="@string/about_opencollective"
                 android:textSize="16sp" />
@@ -57,22 +57,22 @@
         </LinearLayout>
 
         <TextView
-            android:text="@string/more_about_opencollective"
             android:layout_width="match_parent"
-            android:textSize="16sp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            android:text="@string/more_about_opencollective"
+            android:textSize="16sp" />
 
         <!-- About developer -->
         <TextView
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textColor="?colorAccent"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
+            android:padding="5dp"
             android:text="Backers"
+            android:textColor="?colorAccent"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
@@ -80,30 +80,29 @@
             android:id="@+id/lv_backers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
 
         <!-- About UX/UI designer -->
         <TextView
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/about_thanks_ux"
             android:layout_width="match_parent"
-            android:textColor="?colorAccent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:textSize="16sp"
+            android:padding="5dp"
             android:text="Sponsors"
+            android:textColor="?colorAccent"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
         <app.fedilab.android.helper.ExpandableHeightListView
             android:id="@+id/lv_sponsors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
     </LinearLayout>
 </ScrollView>

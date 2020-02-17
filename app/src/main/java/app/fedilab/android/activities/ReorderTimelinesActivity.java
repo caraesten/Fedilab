@@ -20,17 +20,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.ItemTouchHelper;
-
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -50,6 +43,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +59,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.fedilab.android.R;
+import app.fedilab.android.asynctasks.ManageListsAsyncTask;
+import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.ManageTimelines;
 import app.fedilab.android.client.Entities.RemoteInstance;
@@ -68,15 +71,12 @@ import app.fedilab.android.helper.Helper;
 import app.fedilab.android.helper.itemtouchhelper.OnStartDragListener;
 import app.fedilab.android.helper.itemtouchhelper.OnUndoListener;
 import app.fedilab.android.helper.itemtouchhelper.SimpleItemTouchHelperCallback;
+import app.fedilab.android.interfaces.OnListActionInterface;
 import app.fedilab.android.sqlite.InstancesDAO;
 import app.fedilab.android.sqlite.SearchDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TimelinesDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.asynctasks.ManageListsAsyncTask;
-import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
-import app.fedilab.android.interfaces.OnListActionInterface;
 
 
 /**
@@ -96,20 +96,16 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
     private ManageTimelines timeline;
     private boolean isLoadingInstance;
     private String oldSearch;
-    private int theme;
-    private String instance;
+    private boolean refresh_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, MODE_PRIVATE);
-        theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -128,7 +124,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
             style = R.style.Dialog;
         }
 
-
+        refresh_list = false;
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -136,6 +132,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_bar_add, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(ReorderTimelinesActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
@@ -163,13 +160,19 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                     AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
                     //Manage download of attachments
                     RadioGroup radioGroup = dialogView.findViewById(R.id.set_attachment_group);
-
+                    radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                        if( checkedId == R.id.twitter_accounts){
+                            instance_list.setHint(R.string.list_of_twitter_accounts);
+                        }else {
+                            instance_list.setHint(R.string.instance);
+                        }
+                    });
                     instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
                     dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                            String instanceName = instance_list.getText().toString().trim();
+                            String instanceName = instance_list.getText().toString().trim().replace("@","");
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -185,7 +188,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                         } else if (radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
                                             new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://" + instanceName + "/api/statuses/public_timeline.json", 10, null, null);
                                         }
-
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 dialog.dismiss();
@@ -199,6 +201,8 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "MISSKEY");
                                                 } else if (radioGroup.getCheckedRadioButtonId() == R.id.gnu_instance) {
                                                     new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "GNU");
+                                                }else if (radioGroup.getCheckedRadioButtonId() == R.id.twitter_accounts) {
+                                                    new InstancesDAO(ReorderTimelinesActivity.this, db).insertInstance(instanceName, "NITTER");
                                                 }
                                                 if (timelines != null && adapter != null) {
                                                     List<RemoteInstance> instance = new InstancesDAO(ReorderTimelinesActivity.this, db).getInstanceByName(instanceName);
@@ -259,87 +263,89 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
-                            Matcher matcher = host.matcher(s.toString().trim());
-                            if (s.toString().trim().length() == 0 || !matcher.find()) {
-                                alertDialog.getButton(
-                                        AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                            } else {
-                                // Something into edit text. Enable the button.
+                            if (radioGroup.getCheckedRadioButtonId() != R.id.twitter_accounts){
+                                Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
+                                Matcher matcher = host.matcher(s.toString().trim());
+                                if (s.toString().trim().length() == 0 || !matcher.find()) {
+                                    alertDialog.getButton(
+                                            AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                                } else {
+                                    // Something into edit text. Enable the button.
+                                    alertDialog.getButton(
+                                            AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                }
+                                if (s.length() > 2 && !isLoadingInstance) {
+                                    final String action = "/instances/search";
+                                    final HashMap<String, String> parameters = new HashMap<>();
+                                    parameters.put("q", s.toString().trim());
+                                    parameters.put("count", String.valueOf(1000));
+                                    parameters.put("name", String.valueOf(true));
+                                    isLoadingInstance = true;
+
+                                    if (oldSearch == null || !oldSearch.equals(s.toString().trim()))
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    final String response = new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            isLoadingInstance = false;
+                                                            String[] instances;
+                                                            try {
+                                                                JSONObject jsonObject = new JSONObject(response);
+                                                                JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                                                if (jsonArray != null) {
+                                                                    int length = 0;
+                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                        if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
+                                                                            length++;
+                                                                    }
+                                                                    instances = new String[length];
+                                                                    int j = 0;
+                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                        if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
+                                                                            instances[j] = jsonArray.getJSONObject(i).get("name").toString();
+                                                                            j++;
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    instances = new String[]{};
+                                                                }
+                                                                instance_list.setAdapter(null);
+                                                                ArrayAdapter<String> adapter =
+                                                                        new ArrayAdapter<>(ReorderTimelinesActivity.this, android.R.layout.simple_list_item_1, instances);
+                                                                instance_list.setAdapter(adapter);
+                                                                if (instance_list.hasFocus() && !ReorderTimelinesActivity.this.isFinishing())
+                                                                    instance_list.showDropDown();
+                                                                oldSearch = s.toString().trim();
+
+                                                            } catch (JSONException ignored) {
+                                                                isLoadingInstance = false;
+                                                            }
+                                                        }
+                                                    });
+
+                                                } catch (HttpsConnection.HttpsConnectionException e) {
+                                                    isLoadingInstance = false;
+                                                } catch (Exception e) {
+                                                    isLoadingInstance = false;
+                                                }
+                                            }
+                                        }).start();
+                                    else
+                                        isLoadingInstance = false;
+                                }
+                            }else {
                                 alertDialog.getButton(
                                         AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                             }
-                            if (s.length() > 2 && !isLoadingInstance) {
-                                final String action = "/instances/search";
-                                final HashMap<String, String> parameters = new HashMap<>();
-                                parameters.put("q", s.toString().trim());
-                                parameters.put("count", String.valueOf(1000));
-                                parameters.put("name", String.valueOf(true));
-                                isLoadingInstance = true;
 
-                                if (oldSearch == null || !oldSearch.equals(s.toString().trim()))
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                final String response = new HttpsConnection(ReorderTimelinesActivity.this, null).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                                                runOnUiThread(new Runnable() {
-                                                    public void run() {
-                                                        isLoadingInstance = false;
-                                                        String[] instances;
-                                                        try {
-                                                            JSONObject jsonObject = new JSONObject(response);
-                                                            JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                                            if (jsonArray != null) {
-                                                                int length = 0;
-                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
-                                                                        length++;
-                                                                }
-                                                                instances = new String[length];
-                                                                int j = 0;
-                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    if (!jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
-                                                                        instances[j] = jsonArray.getJSONObject(i).get("name").toString();
-                                                                        j++;
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                instances = new String[]{};
-                                                            }
-                                                            instance_list.setAdapter(null);
-                                                            ArrayAdapter<String> adapter =
-                                                                    new ArrayAdapter<>(ReorderTimelinesActivity.this, android.R.layout.simple_list_item_1, instances);
-                                                            instance_list.setAdapter(adapter);
-                                                            if (instance_list.hasFocus() && !ReorderTimelinesActivity.this.isFinishing())
-                                                                instance_list.showDropDown();
-                                                            oldSearch = s.toString().trim();
-
-                                                        } catch (JSONException ignored) {
-                                                            isLoadingInstance = false;
-                                                        }
-                                                    }
-                                                });
-
-                                            } catch (HttpsConnection.HttpsConnectionException e) {
-                                                isLoadingInstance = false;
-                                            } catch (Exception e) {
-                                                isLoadingInstance = false;
-                                            }
-                                        }
-                                    }).start();
-                                else
-                                    isLoadingInstance = false;
-                            }
                         }
                     });
                 }
             });
             toolbar_title.setText(R.string.action_reorder_timeline);
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, ReorderTimelinesActivity.this);
-            }
         }
         setContentView(R.layout.activity_reorder_tabs);
 
@@ -371,8 +377,6 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
 
     @Override
     public void onUndo(ManageTimelines manageTimelines, int position) {
-        if (theme == Helper.THEME_LIGHT)
-            undo_container.setBackgroundColor(getResources().getColor(R.color.mastodonC3));
         undo_container.setVisibility(View.VISIBLE);
         switch (manageTimelines.getType()) {
             case TAG:
@@ -404,6 +408,7 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
                         timeline = manageTimelines;
                         new ManageListsAsyncTask(getApplicationContext(), ManageListsAsyncTask.action.DELETE_LIST, null, null, manageTimelines.getListTimeline().getId(), null, ReorderTimelinesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         new TimelinesDAO(getApplicationContext(), db).remove(timeline);
+                        refresh_list = true;
                         break;
                 }
                 updated = true;
@@ -427,7 +432,9 @@ public class ReorderTimelinesActivity extends BaseActivity implements OnStartDra
         super.onStop();
         if (updated) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Helper.INTENT_ACTION, Helper.REFRESH_TIMELINE);
+            intent.putExtra(Helper.REFRESH_LIST_TIMELINE, refresh_list);
             startActivity(intent);
             updated = false;
         }

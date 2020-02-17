@@ -1,5 +1,0 @@
-Added
-- Add photo editor (can be disabled in settings)
-
-Fixed
-- Crashes with media on Fdroid

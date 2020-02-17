@@ -24,70 +24,70 @@
 
         <ImageView
             android:id="@+id/art_media"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
         <RelativeLayout
             android:id="@+id/status_show_more"
-            android:visibility="gone"
-            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
             android:background="@color/mastodonC1"
-            android:layout_height="match_parent">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/show_more_button_art"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_remove_red_eye"
-                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_remove_red_eye" />
         </RelativeLayout>
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="#44000000"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#44000000"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/art_pp"
-            android:layout_gravity="center"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_gravity="center" />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
             android:id="@+id/art_author"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/art_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/art_acct"
-                android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

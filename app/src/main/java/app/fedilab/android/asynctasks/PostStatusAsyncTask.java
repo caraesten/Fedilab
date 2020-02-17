@@ -22,16 +22,16 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.client.Entities.Error;
 import app.fedilab.android.client.GNUAPI;
 import app.fedilab.android.helper.Helper;
+import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.TagsCacheDAO;
-import app.fedilab.android.R;
-import app.fedilab.android.interfaces.OnPostStatusActionInterface;
 
 
 /**
@@ -88,7 +88,9 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse.setError(error);
             }
         }
-
+        if (status.getIn_reply_to_id() != null) {
+            apiResponse.setTargetedId(status.getIn_reply_to_id());
+        }
 
         return null;
     }
@@ -124,6 +126,11 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         };
         thread.start();
+        if (account != null) {
+            String key = account.getUsername() + "@" + account.getInstance();
+            Helper.sleeps.put(key, 30000);
+            Helper.startStreaming(contextReference.get());
+        }
     }
 
 }

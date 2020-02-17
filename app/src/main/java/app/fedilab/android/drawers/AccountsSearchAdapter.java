@@ -18,9 +18,6 @@ package app.fedilab.android.drawers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-
-import androidx.annotation.NonNull;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,17 +28,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fedilab.android.R;
 import app.fedilab.android.client.Entities.Account;
 import app.fedilab.android.helper.Helper;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
-import app.fedilab.android.R;
 
 
 /**
@@ -54,6 +52,40 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     private LayoutInflater layoutInflater;
     private boolean owner;
     private Context context;
+    private Filter accountFilter = new Filter() {
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+            Account account = (Account) resultValue;
+            return "@" + account.getAcct();
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint != null) {
+                suggestions.clear();
+                suggestions.addAll(tempAccounts);
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = suggestions;
+                filterResults.count = suggestions.size();
+                return filterResults;
+            } else {
+                return new FilterResults();
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            ArrayList<Account> c = (ArrayList<Account>) results.values;
+            if (results.count > 0) {
+                clear();
+                addAll(c);
+                notifyDataSetChanged();
+            } else {
+                clear();
+                notifyDataSetChanged();
+            }
+        }
+    };
 
     public AccountsSearchAdapter(Context context, List<Account> accounts) {
         super(context, android.R.layout.simple_list_item_1, accounts);
@@ -65,6 +97,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         this.owner = false;
     }
 
+
     public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner) {
         super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
@@ -74,7 +107,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         layoutInflater = LayoutInflater.from(context);
         this.owner = owner;
     }
-
 
     @Override
     public int getCount() {
@@ -90,7 +122,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     public long getItemId(int position) {
         return position;
     }
-
 
     @NonNull
     @Override
@@ -137,42 +168,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     public Filter getFilter() {
         return accountFilter;
     }
-
-
-    private Filter accountFilter = new Filter() {
-        @Override
-        public CharSequence convertResultToString(Object resultValue) {
-            Account account = (Account) resultValue;
-            return "@" + account.getAcct();
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            if (constraint != null) {
-                suggestions.clear();
-                suggestions.addAll(tempAccounts);
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = suggestions;
-                filterResults.count = suggestions.size();
-                return filterResults;
-            } else {
-                return new FilterResults();
-            }
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            ArrayList<Account> c = (ArrayList<Account>) results.values;
-            if (results.count > 0) {
-                clear();
-                addAll(c);
-                notifyDataSetChanged();
-            } else {
-                clear();
-                notifyDataSetChanged();
-            }
-        }
-    };
 
     private class ViewHolder {
         ImageView account_pp;

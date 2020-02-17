@@ -19,27 +19,27 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import app.fedilab.android.helper.Helper;
-import app.fedilab.android.helper.SwipeControledViewPager;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.Objects;
+
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.asynctasks.UpdateAccountInfoAsyncTask;
+import app.fedilab.android.helper.Helper;
+import app.fedilab.android.helper.SwipeControledViewPager;
 
 
 /**
@@ -60,7 +60,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.tablayout_notifications, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
-
+        tabLayout.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.cyanea_primary));
         if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)));
 
@@ -185,6 +185,24 @@ public class TabLayoutNotificationsFragment extends Fragment {
         this.context = context;
     }
 
+    public void refreshAll() {
+        if (viewPager == null)
+            return;
+        FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
+        if (a != null) {
+            DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
+            notifAll.refreshAll();
+        }
+    }
+
+    public void retrieveMissingNotifications(String sinceId) {
+        FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
+        if (a != null) {
+            DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
+            notifAll.retrieveMissingNotifications(sinceId);
+        }
+    }
+
     /**
      * Page Adapter for settings
      */
@@ -248,24 +266,6 @@ public class TabLayoutNotificationsFragment extends Fragment {
         @Override
         public int getCount() {
             return mNumOfTabs;
-        }
-    }
-
-    public void refreshAll() {
-        if (viewPager == null)
-            return;
-        FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
-        if (a != null) {
-            DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
-            notifAll.refreshAll();
-        }
-    }
-
-    public void retrieveMissingNotifications(String sinceId) {
-        FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
-        if (a != null) {
-            DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
-            notifAll.retrieveMissingNotifications(sinceId);
         }
     }
 }

@@ -15,12 +15,12 @@
 package app.fedilab.android.activities;
 
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,16 +34,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
@@ -75,7 +72,6 @@ import app.fedilab.android.interfaces.OnRetrieveChartsInterface;
 import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
-import es.dmoral.toasty.Toasty;
 
 
 /**
@@ -93,6 +89,31 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
     private int theme;
     private RelativeLayout loader;
     private ImageButton validate;
+    private DatePickerDialog.OnDateSetListener iniDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    dateIni = new Date(c.getTimeInMillis());
+                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private DatePickerDialog.OnDateSetListener endDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
+
+                    dateEnd = new Date(c.getTimeInMillis());
+                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +123,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme) {
             case Helper.THEME_LIGHT:
-                setTheme(R.style.AppTheme);
-                break;
-            case Helper.THEME_DARK:
-                setTheme(R.style.AppThemeDark);
+                setTheme(R.style.AppTheme_Fedilab);
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack);
@@ -120,6 +138,7 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             View view = inflater.inflate(R.layout.simple_action_bar, new LinearLayout(getApplicationContext()), false);
+            view.setBackground(new ColorDrawable(ContextCompat.getColor(OwnerChartsActivity.this, R.color.cyanea_primary)));
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.close_conversation);
@@ -145,10 +164,6 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
                 toolbar_title.setText(getString(R.string.owner_charts) + " - " + account.getUsername() + "@" + account.getInstance());
             } else {
                 toolbar_title.setText(R.string.owner_charts);
-            }
-            if (theme == Helper.THEME_LIGHT) {
-                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, OwnerChartsActivity.this);
             }
         }
         setContentView(R.layout.activity_ower_charts);
@@ -236,75 +251,13 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
 
     }
 
-    public class CustomMarkerView extends MarkerView {
-        private TextView tvContent;
-
-        public CustomMarkerView(Context context, int layoutResource) {
-            super(context, layoutResource);
-            tvContent = findViewById(R.id.tvContent);
-            if (theme == Helper.THEME_DARK) {
-                tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            } else if (theme == Helper.THEME_BLACK) {
-                tvContent.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
-            } else {
-                tvContent.setTextColor(ContextCompat.getColor(context, R.color.black));
-            }
-        }
-
-        @Override
-        public void refreshContent(Entry e, Highlight highlight) {
-            Date date = new Date(((long) e.getX()));
-            tvContent.setText(String.valueOf(Helper.shortDateToString(date) + " - " + (int) e.getY()));
-            super.refreshContent(e, highlight);
-        }
-
-        private MPPointF mOffset;
-
-        @Override
-        public MPPointF getOffset() {
-            if (mOffset == null) {
-                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
-            }
-            return mOffset;
-        }
-    }
-
-    private DatePickerDialog.OnDateSetListener iniDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
-                    dateIni = new Date(c.getTimeInMillis());
-                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-    private DatePickerDialog.OnDateSetListener endDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    Calendar c = Calendar.getInstance();
-                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
-
-                    dateEnd = new Date(c.getTimeInMillis());
-                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
-                }
-
-            };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadGraph(Date dateIni, Date dateEnd) {
@@ -324,7 +277,6 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
     public void onDestroy() {
         super.onDestroy();
     }
-
 
     @Override
     public void onCharts(Charts charts) {
@@ -456,6 +408,31 @@ public class OwnerChartsActivity extends BaseActivity implements OnRetrieveChart
         chart.invalidate();
     }
 
+    public class CustomMarkerView extends MarkerView {
+        private TextView tvContent;
+        private MPPointF mOffset;
+
+        public CustomMarkerView(Context context, int layoutResource) {
+            super(context, layoutResource);
+            tvContent = findViewById(R.id.tvContent);
+            tvContent.setTextColor(ContextCompat.getColor(context, R.color.cyanea_accent_reference));
+        }
+
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            Date date = new Date(((long) e.getX()));
+            tvContent.setText(Helper.shortDateToString(date) + " - " + (int) e.getY());
+            super.refreshContent(e, highlight);
+        }
+
+        @Override
+        public MPPointF getOffset() {
+            if (mOffset == null) {
+                mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
+            }
+            return mOffset;
+        }
+    }
 
     public class MyXAxisValueFormatter extends ValueFormatter {
         private DateFormat mDataFormat;

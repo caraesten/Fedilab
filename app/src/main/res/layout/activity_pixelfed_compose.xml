@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Fedilab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Fedilab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Fedilab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:ignore="NamespaceTypo">
+
+    <LinearLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/toot_padding"
+        android:paddingTop="@dimen/toot_padding"
+        android:paddingRight="@dimen/toot_padding"
+        android:paddingBottom="@dimen/toot_padding">
+
+        <LinearLayout
+            android:id="@+id/pickup_picture"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/add_photo_pixelfed"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/add_photo_indication_pixelfed"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            app:sliderAnimationDuration="1000"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:minHeight="30dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/upload_media"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:gravity="center"
+                android:text="@string/upload_media" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/pixelfed_story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pixelfed_story"/>
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green"
+            android:background="@drawable/green_border"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/story_indication"
+            android:id="@+id/indication_story"/>
+        <ScrollView
+            android:id="@+id/composer_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:fillViewport="true">
+
+            <app.fedilab.android.helper.MastalabAutoCompleteTextView
+                android:id="@+id/toot_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="top|start"
+                android:hint="@string/pixelfed_compose_placeholder"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="6" />
+        </ScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/bottom_bar_tooting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/progress_bar_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/upload_progress"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0" />
+
+                <TextView
+                    android:id="@+id/toolbar_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/dark_text"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/compression_loader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/please_wait_compression"
+                    android:textColor="?colorAccent"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/button_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/toot_visibility"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/post_visibility_tilte"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_public"
+                    android:tint="?attr/iconColor" />
+
+
+                <ImageButton
+                    android:id="@+id/toot_emoji"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/emoji_picker"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_insert_emoticon"
+                    android:tint="?attr/iconColor" />
+
+                <CheckBox
+                    android:id="@+id/toot_sensitive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:buttonTint="?attr/iconColor"
+                    android:text="@string/cw"
+                    android:textColor="?attr/iconColor" />
+
+
+                <TextView
+                    android:id="@+id/toot_space_left"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:textColor="?colorAccent" />
+
+                <Button
+                    android:id="@+id/toot_it"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/post" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

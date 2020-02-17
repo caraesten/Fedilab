@@ -69,6 +69,17 @@ public class StatusReportAdapter extends RecyclerView.Adapter<StatusReportAdapte
         return mData.size();
     }
 
+    String getItem(int id) {
+        return mData.get(id);
+    }
+
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView report_content;
@@ -83,17 +94,5 @@ public class StatusReportAdapter extends RecyclerView.Adapter<StatusReportAdapte
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
-    }
-
-    String getItem(int id) {
-        return mData.get(id);
-    }
-
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
     }
 }

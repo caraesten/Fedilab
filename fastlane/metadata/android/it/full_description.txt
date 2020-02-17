@@ -1,0 +1,16 @@
+Supporta:
+- Mastodon, Pleroma, Pixelfed, Peertube, GNU Social, Friendica.
+
+
+L'applicazione ha funzioni avanzate (specialmente per Pleroma e Mastodon):
+
+- Supporto a profili multipli
+- Programma messaggi dal dispositivo
+- Programma boost
+- Aggiungi messaggi ai segnalibri
+- Segui ed interagisci con istanze remote
+- Silenzio temporizzato per profili
+- Azioni cross-account con una lunga pressione
+- Funzione di Traduzione
+- Timeline arte
+- Timeline video

@@ -7,8 +7,8 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_bookmark"
-        android:title="@string/bookmark_add"
         android:actionLayout="@layout/bookmark_layout"
+        android:title="@string/bookmark_add"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_admin"
@@ -31,9 +31,9 @@
         android:title="@string/more_action_6"
         app:showAsAction="never" />
     <item
-        android:visible="false"
         android:id="@+id/action_custom_sharing"
         android:title="@string/settings_title_custom_sharing"
+        android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_copy_link"

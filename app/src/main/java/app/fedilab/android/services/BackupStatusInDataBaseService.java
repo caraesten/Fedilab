@@ -22,17 +22,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import android.os.SystemClock;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import app.fedilab.android.R;
+import app.fedilab.android.activities.MainActivity;
 import app.fedilab.android.client.API;
 import app.fedilab.android.client.APIResponse;
 import app.fedilab.android.client.Entities.Account;
@@ -42,8 +43,6 @@ import app.fedilab.android.sqlite.AccountDAO;
 import app.fedilab.android.sqlite.Sqlite;
 import app.fedilab.android.sqlite.StatusCacheDAO;
 import es.dmoral.toasty.Toasty;
-import app.fedilab.android.R;
-import app.fedilab.android.activities.MainActivity;
 
 
 /**
@@ -137,7 +136,11 @@ public class BackupStatusInDataBaseService extends IntentService {
                     new StatusCacheDAO(BackupStatusInDataBaseService.this, db).insertStatus(StatusCacheDAO.ARCHIVE_CACHE, tmpStatus, userId, instance);
                     backupStatus.add(tmpStatus);
                 }
-                SystemClock.sleep(500);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    SystemClock.sleep(2000);
+                }
             } while (max_id != null && canContinue);
 
             if (backupStatus.size() > 0) {
@@ -150,7 +153,7 @@ public class BackupStatusInDataBaseService extends IntentService {
             String title = getString(R.string.data_backup_toots, account.getAcct());
             if (finalToastMessage) {
                 Helper.notify_user(getApplicationContext(), account, mainActivity, BitmapFactory.decodeResource(getResources(),
-                        R.drawable.mastodonlogo), Helper.NotifType.BACKUP, title, message);
+                        Helper.getMainLogo(getApplicationContext())), Helper.NotifType.BACKUP, title, message);
             }
         } catch (Exception e) {
             e.printStackTrace();

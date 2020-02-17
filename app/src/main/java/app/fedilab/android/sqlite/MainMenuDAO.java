@@ -30,8 +30,8 @@ import app.fedilab.android.helper.Helper;
  */
 public class MainMenuDAO {
 
-    private SQLiteDatabase db;
     public Context context;
+    private SQLiteDatabase db;
 
     public MainMenuDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
@@ -100,6 +100,7 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
         values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_TRENDS, mainMenuItem.isNav_trends() ? 1 : 0);
         //Inserts menu conf
         try {
             db.insert(Sqlite.TABLE_MAIN_MENU_ITEMS, null, values);
@@ -132,6 +133,7 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
         values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_TRENDS, mainMenuItem.isNav_trends() ? 1 : 0);
         try {
             db.update(Sqlite.TABLE_MAIN_MENU_ITEMS, values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
                     new String[]{userId, instance});
@@ -166,6 +168,7 @@ public class MainMenuDAO {
         values.put(Sqlite.COL_NAV_MUTED, mainMenuItem.isNav_muted() ? 1 : 0);
         values.put(Sqlite.COL_NAV_BLOCKED_DOMAINS, mainMenuItem.isNav_blocked() ? 1 : 0);
         values.put(Sqlite.COL_NAV_HOWTO, mainMenuItem.isNav_howto() ? 1 : 0);
+        values.put(Sqlite.COL_NAV_TRENDS, mainMenuItem.isNav_trends() ? 1 : 0);
         try {
             db.update(Sqlite.TABLE_MAIN_MENU_ITEMS, values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
                     new String[]{userId, instance});
@@ -238,6 +241,7 @@ public class MainMenuDAO {
         mainMenuItem.setNav_news(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_NEWS)) == 1);
         mainMenuItem.setNav_peertube(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_PEERTUBE)) == 1);
         mainMenuItem.setNav_scheduled(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_SCHEDULED)) == 1);
+        mainMenuItem.setNav_trends(c.getInt(c.getColumnIndex(Sqlite.COL_NAV_TRENDS)) == 1);
         //Close the cursor
         c.close();
         return mainMenuItem;

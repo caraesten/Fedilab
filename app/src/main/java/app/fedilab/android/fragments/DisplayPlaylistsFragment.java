@@ -14,7 +14,6 @@ package app.fedilab.android.fragments;
  * You should have received a copy of the GNU General Public License along with Fedilab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,29 +21,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.jaredrummler.materialspinner.MaterialSpinner;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
@@ -59,6 +56,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import app.fedilab.android.R;
 import app.fedilab.android.activities.MainActivity;
@@ -93,8 +91,8 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
     private RelativeLayout textviewNoAction;
     private HashMap<Integer, String> privacyToSend;
     private HashMap<String, String> channelToSend;
-    private MaterialSpinner set_upload_channel;
-    private MaterialSpinner set_upload_privacy;
+    private Spinner set_upload_channel;
+    private Spinner set_upload_privacy;
     private HashMap<String, String> channels;
 
     @Override
@@ -138,10 +136,10 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         int i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
@@ -170,8 +168,6 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     set_upload_channel = dialogView.findViewById(R.id.set_upload_channel);
                     set_upload_privacy = dialogView.findViewById(R.id.set_upload_privacy);
 
-                    Helper.changeMaterialSpinnerColor(context, set_upload_privacy);
-                    Helper.changeMaterialSpinnerColor(context, set_upload_channel);
 
                     new RetrievePeertubeChannelsAsyncTask(context, DisplayPlaylistsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -319,7 +315,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if (apiResponse.getError() != null) {
-            Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            if (apiResponse.getError().getError().length() < 100) {
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            } else {
+                Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+            }
             return;
         }
 
@@ -342,7 +342,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                 playlistAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);
             } else {
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if (apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             }
         } else if (actionType == ManagePlaylistsAsyncTask.action.DELETE_PLAYLIST) {
             if (this.playlists.size() == 0)
@@ -365,7 +369,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if (apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0) {
             if (apiResponse.getError() != null && apiResponse.getError().getError() != null)
-                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                if (apiResponse.getError().getError().length() < 100) {
+                    Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(context, getString(R.string.long_api_error, "\ud83d\ude05"), Toast.LENGTH_LONG).show();
+                }
             else
                 Toasty.error(context, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
@@ -388,7 +396,7 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
 
         channelToSend = new HashMap<>();
         channelToSend.put(channelName[0], channelId[0]);
-        ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
@@ -407,22 +415,22 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
         i = 0;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if (translations == null || translations.size() == 0 || !translations.containsKey((String) pair.getValue()))
+            if (translations == null || translations.size() == 0 || !translations.containsKey(pair.getValue()))
                 privaciesA[i] = (String) pair.getValue();
             else
-                privaciesA[i] = translations.get((String) pair.getValue());
+                privaciesA[i] = translations.get(pair.getValue());
             it.remove();
             i++;
         }
 
-        ArrayAdapter<String> adapterPrivacies = new ArrayAdapter<>(context,
+        ArrayAdapter<String> adapterPrivacies = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_spinner_dropdown_item, privaciesA);
         set_upload_privacy.setAdapter(adapterPrivacies);
 
         //Manage privacies
-        set_upload_privacy.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_privacy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<Integer, String> privaciesCheck = new LinkedHashMap<>(peertubeInformation.getPrivacies());
                 Iterator it = privaciesCheck.entrySet().iterator();
                 int i = 0;
@@ -437,11 +445,16 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     i++;
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
         //Manage languages
-        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        set_upload_channel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
                 Iterator it = channelsCheck.entrySet().iterator();
                 int i = 0;
@@ -455,6 +468,11 @@ public class DisplayPlaylistsFragment extends Fragment implements OnPlaylistActi
                     it.remove();
                     i++;
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
