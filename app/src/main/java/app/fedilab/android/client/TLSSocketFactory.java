@@ -32,7 +32,7 @@ public class TLSSocketFactory extends SSLSocketFactory {
     public TLSSocketFactory(String instance) throws KeyManagementException, NoSuchAlgorithmException {
 
 
-        if (instance == null || !instance.endsWith(".onion")) {
+        if (instance == null || !instance.endsWith(".onion") || !instance.endsWith(".i2p")  ) {
             sslContext = SSLContext.getInstance("TLS");
             isOnion = false;
             sslContext.init(null, null, null);
