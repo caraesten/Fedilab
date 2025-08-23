@@ -1,62 +1,35 @@
-## For reporting issues, visit [Framagit](https://framagit.org/tom79/fedilab/issues)
+For reporting issues, visit [Codeberg](https://codeberg.org/tom79/Fedilab/issues).
 
-[![pipeline status](https://framagit.org/tom79/fedilab/badges/develop/pipeline.svg)](https://framagit.org/tom79/fedilab/commits/develop)
-&nbsp;&nbsp;&nbsp;[![Crowdin](https://d322cqt584bo4o.cloudfront.net/mastalab/localized.svg)](https://crowdin.com/project/mastalab)
-&nbsp;&nbsp;&nbsp;[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-# Fedilab is a multi-accounts client for Mastodon, Pleroma, Peertube, GNU Social, Friendica and Pixelfed
+# Fedilab
+A multi-accounts client for Mastodon, Pleroma, Friendica and Pixelfed
 
-## Donate
 
-[![Backers on Open Collective](https://opencollective.com/mastalab/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/mastalab/sponsors/badge.svg)](#sponsors)
-
-[<img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/patrons/tom79.svg?logo=liberapay"/>](https://liberapay.com/tom79/donate)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
+[![Weblate project translated](https://img.shields.io/weblate/progress/fedilab?server=https%3A%2F%2Fhosted.weblate.org&style=for-the-badge)](https://hosted.weblate.org/engage/fedilab/)
+[![F-Droid Version](https://img.shields.io/f-droid/v/fr.gouv.etalab.mastodon?label=F-Droid&style=for-the-badge)](https://f-droid.org/app/fr.gouv.etalab.mastodon)
+[![Liberapay patrons](https://img.shields.io/liberapay/patrons/tom79?label=Liberapay&style=for-the-badge)](https://liberapay.com/tom79/donate)
+[![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/fedilab?label=Open%20Collective&style=for-the-badge)](https://opencollective.com/fedilab)
 
 ## Download
 
-[<img alt='Get it on Google Play' src='./images/get-it-on-play.png' height="80"/>](https://play.google.com/store/apps/details?id=app.fedilab.android)
-&nbsp;&nbsp;[<img alt='Get it on F-Droid' src='./images/get-it-on-fdroid.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
+[<img alt='Get it on F-Droid' src='./images/get-it-on-fdroid.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)&nbsp;&nbsp;[<img alt='Get it on Google Play' src='./images/get-it-on-play.png' height="80"/>](https://play.google.com/store/apps/details?id=app.fedilab.android)
 
+## Translate
+
+- [Weblate](https://hosted.weblate.org/engage/fedilab/)
+
+## Donate
+
+- [Liberapay](https://liberapay.com/tom79/donate)
+- [Open Collective](https://opencollective.com/fedilab)
+- [More...](https://fedilab.app/page/donations/)
 
 ## Resources
 
-[WIKI](https://fedilab.app/wiki/home/)
+- [Wiki](https://wiki.fedilab.app)
+- [Releases + Changelogs](https://codeberg.org/tom79/Fedilab/releases)
 
-[Release notes](https://framagit.org/tom79/fedilab/tags)
+## Contact
+- Fedi:<br>[toot.fedilab.app/@apps](https://toot.fedilab.app/@apps)
 
-
-
-<img src="./images/device-2019-02-02-114505.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114648.png" width="250">
-
-<img src="./images/device-2019-02-02-114713.png" width="560">
-
-<img src="./images/device-2019-02-02-114742.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114751.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114808.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114823.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114834.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114845.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114854.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./images/device-2019-02-02-114910.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-Lead developer: [toot.fedilab.app/@fedilab](https://toot.fedilab.app/@fedilab)
-
-## Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/mastalab#backer)]
-
-<a href="https://opencollective.com/mastalab#backers" target="_blank"><img src="https://opencollective.com/mastalab/backers.svg?width=890"></a>
-## Sponsors
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/mastalab#sponsor)]
-<a href="https://opencollective.com/mastalab/sponsor/0/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/1/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/2/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/3/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/4/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/5/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/6/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/7/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/8/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/mastalab/sponsor/9/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/9/avatar.svg"></a>
 
